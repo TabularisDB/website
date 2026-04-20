@@ -1,0 +1,28 @@
+{
+  "name": "tabularis-website",
+  "version": "0.9.1",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "fetch-app-data": "node scripts/fetch-app-data.mjs",
+    "build": "node scripts/generate-search-index.mjs && next build && node scripts/generate-latest-posts.mjs",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@orama/orama": "^3.1.18",
+    "gray-matter": "^4.0.3",
+    "highlight.js": "^11.11.1",
+    "lucide-react": "^1.8.0",
+    "marked": "^15.0.12",
+    "marked-highlight": "^2.2.3",
+    "next": "^16.1.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.11",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3"
+  }
+}

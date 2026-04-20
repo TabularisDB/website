@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 430" style="max-width:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+  <path d="M 200,200 L 200.00,40.00 A 160,160 0 0,1 322.49,97.07 Z" fill="#3b82f6" stroke="#1a1a2e" stroke-width="1.5"/>
+  <path d="M 200,200 L 322.49,97.07 A 160,160 0 0,1 359.26,215.36 Z" fill="#ef4444" stroke="#1a1a2e" stroke-width="1.5"/>
+  <path d="M 200,200 L 359.26,215.36 A 160,160 0 0,1 338.90,279.41 Z" fill="#f59e0b" stroke="#1a1a2e" stroke-width="1.5"/>
+  <path d="M 200,200 L 338.90,279.41 A 160,160 0 0,1 298.95,325.73 Z" fill="#10b981" stroke="#1a1a2e" stroke-width="1.5"/>
+  <path d="M 200,200 L 298.95,325.73 A 160,160 0 0,1 246.51,353.09 Z" fill="#8b5cf6" stroke="#1a1a2e" stroke-width="1.5"/>
+  <path d="M 200,200 L 246.51,353.09 A 160,160 0 0,1 200.00,360.00 Z" fill="#ec4899" stroke="#1a1a2e" stroke-width="1.5"/>
+  <path d="M 200,200 L 200.00,360.00 A 160,160 0 0,1 159.42,354.77 Z" fill="#14b8a6" stroke="#1a1a2e" stroke-width="1.5"/>
+  <path d="M 200,200 L 159.42,354.77 A 160,160 0 0,1 126.90,342.33 Z" fill="#f97316" stroke="#1a1a2e" stroke-width="1.5"/>
+  <path d="M 200,200 L 126.90,342.33 A 160,160 0 0,1 99.44,324.45 Z" fill="#06b6d4" stroke="#1a1a2e" stroke-width="1.5"/>
+  <path d="M 200,200 L 99.44,324.45 A 160,160 0 0,1 78.84,304.50 Z" fill="#84cc16" stroke="#1a1a2e" stroke-width="1.5"/>
+  <path d="M 200,200 L 78.84,304.50 A 160,160 0 0,1 62.12,281.18 Z" fill="#a855f7" stroke="#1a1a2e" stroke-width="1.5"/>
+  <path d="M 200,200 L 62.12,281.18 A 160,160 0 0,1 52.88,262.88 Z" fill="#d946ef" stroke="#1a1a2e" stroke-width="1.5"/>
+  <path d="M 200,200 L 52.88,262.88 A 160,160 0 0,1 46.61,245.52 Z" fill="#0ea5e9" stroke="#1a1a2e" stroke-width="1.5"/>
+  <path d="M 200,200 L 46.61,245.52 A 160,160 0 0,1 42.39,227.56 Z" fill="#22d3ee" stroke="#1a1a2e" stroke-width="1.5"/>
+  <path d="M 200,200 L 42.39,227.56 A 160,160 0 0,1 200.00,40.00 Z" fill="#6b7280" stroke="#1a1a2e" stroke-width="1.5"/>
+  <rect x="420" y="30" width="12" height="12" rx="2" fill="#3b82f6"/>
+  <text x="438" y="41" fill="#e0e0e0" font-size="11">United States</text>
+  <text x="438" y="53" fill="#9ca3af" font-size="9">68 (13.9%)</text>
+  <rect x="420" y="58" width="12" height="12" rx="2" fill="#ef4444"/>
+  <text x="438" y="69" fill="#e0e0e0" font-size="11">China</text>
+  <text x="438" y="81" fill="#9ca3af" font-size="9">62 (12.7%)</text>
+  <rect x="420" y="86" width="12" height="12" rx="2" fill="#f59e0b"/>
+  <text x="438" y="97" fill="#e0e0e0" font-size="11">Germany</text>
+  <text x="438" y="109" fill="#9ca3af" font-size="9">33 (6.7%)</text>
+  <rect x="420" y="114" width="12" height="12" rx="2" fill="#10b981"/>
+  <text x="438" y="125" fill="#e0e0e0" font-size="11">South Korea</text>
+  <text x="438" y="137" fill="#9ca3af" font-size="9">30 (6.1%)</text>
+  <rect x="420" y="142" width="12" height="12" rx="2" fill="#8b5cf6"/>
+  <text x="438" y="153" fill="#e0e0e0" font-size="11">France</text>
+  <text x="438" y="165" fill="#9ca3af" font-size="9">29 (5.9%)</text>
+  <rect x="420" y="170" width="12" height="12" rx="2" fill="#ec4899"/>
+  <text x="438" y="181" fill="#e0e0e0" font-size="11">United Kingdom</text>
+  <text x="438" y="193" fill="#9ca3af" font-size="9">23 (4.7%)</text>
+  <rect x="420" y="198" width="12" height="12" rx="2" fill="#14b8a6"/>
+  <text x="438" y="209" fill="#e0e0e0" font-size="11">Brazil</text>
+  <text x="438" y="221" fill="#9ca3af" font-size="9">20 (4.1%)</text>
+  <rect x="420" y="226" width="12" height="12" rx="2" fill="#f97316"/>
+  <text x="438" y="237" fill="#e0e0e0" font-size="11">Italy</text>
+  <text x="438" y="249" fill="#9ca3af" font-size="9">17 (3.5%)</text>
+  <rect x="540" y="30" width="12" height="12" rx="2" fill="#06b6d4"/>
+  <text x="558" y="41" fill="#e0e0e0" font-size="11">India</text>
+  <text x="558" y="53" fill="#9ca3af" font-size="9">16 (3.3%)</text>
+  <rect x="540" y="58" width="12" height="12" rx="2" fill="#84cc16"/>
+  <text x="558" y="69" fill="#e0e0e0" font-size="11">Indonesia</text>
+  <text x="558" y="81" fill="#9ca3af" font-size="9">14 (2.9%)</text>
+  <rect x="540" y="86" width="12" height="12" rx="2" fill="#a855f7"/>
+  <text x="558" y="97" fill="#e0e0e0" font-size="11">Canada</text>
+  <text x="558" y="109" fill="#9ca3af" font-size="9">14 (2.9%)</text>
+  <rect x="540" y="114" width="12" height="12" rx="2" fill="#d946ef"/>
+  <text x="558" y="125" fill="#e0e0e0" font-size="11">Vietnam</text>
+  <text x="558" y="137" fill="#9ca3af" font-size="9">10 (2.0%)</text>
+  <rect x="540" y="142" width="12" height="12" rx="2" fill="#0ea5e9"/>
+  <text x="558" y="153" fill="#e0e0e0" font-size="11">Spain</text>
+  <text x="558" y="165" fill="#9ca3af" font-size="9">9 (1.8%)</text>
+  <rect x="540" y="170" width="12" height="12" rx="2" fill="#22d3ee"/>
+  <text x="558" y="181" fill="#e0e0e0" font-size="11">Poland</text>
+  <text x="558" y="193" fill="#9ca3af" font-size="9">9 (1.8%)</text>
+  <rect x="540" y="198" width="12" height="12" rx="2" fill="#6b7280"/>
+  <text x="558" y="209" fill="#e0e0e0" font-size="11">Other</text>
+  <text x="558" y="221" fill="#9ca3af" font-size="9">136 (27.8%)</text>
+  <text x="320" y="420" fill="#6b7280" font-size="10" text-anchor="middle">Based on 490 stargazers with a public location (490 of 1,086 · 45%)</text>
+</svg>
