@@ -143,6 +143,11 @@ Typos, broken links, new wiki articles and new blog posts are all welcome.
 
 Join the conversation on [Discord](https://discord.gg/YrZPHAwMSG).
 
+
+## Acknowledgements
+
+Special thanks to [@Nako0](https://github.com/Nako0) for creating the demo videos featured on the [Tabularis website](https://tabularis.dev).
+
 ## License
 
 Apache License 2.0 &mdash; same as the main [Tabularis](https://github.com/TabularisDB/tabularis) project.
