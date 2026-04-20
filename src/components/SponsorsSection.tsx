@@ -294,7 +294,7 @@ export function SponsorsSection() {
   return (
     <>
       <section className="section" id="sponsors">
-        <h2>_sponsors</h2>
+        <h2>Sponsors</h2>
         <p style={{ color: "var(--text-muted)", marginBottom: "2.5rem" }}>
           These companies support Tabularis development. Thank you for keeping
           the project alive and free.
