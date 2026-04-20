@@ -2,3 +2,4 @@
 out/
 node_modules/
 public/search-index.json
+public/sponsors.json

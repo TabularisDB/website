@@ -29,7 +29,7 @@ export function generateStaticParams() {
 }
 
 const OG_IMAGE =
-  "https://raw.githubusercontent.com/TabularisDB/website/public/img/og.png";
+  "https://github.com/TabularisDB/website/blob/main/public/img/og.png?raw=true";
 
 export async function generateMetadata({
   params,
