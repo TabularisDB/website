@@ -201,7 +201,7 @@ export default function HomePage() {
 
       {/* WHY TABULARIS */}
       <section className="section">
-        <h2>_why_tabularis</h2>
+        <h2>Why Tabularis</h2>
         <div
           className="post-content"
           dangerouslySetInnerHTML={{ __html: home.why_tabularis || "" }}
@@ -303,7 +303,7 @@ export default function HomePage() {
 
       {/* CAPABILITIES */}
       <section className="section">
-        <h2>_capabilities</h2>
+        <h2>Capabilities</h2>
         <CarouselGrid className="features-grid">
           <article className="feature-card has-screenshot">
             <Link href="/wiki/connections" className="feature-card-screenshot">
@@ -636,7 +636,7 @@ export default function HomePage() {
       </section>
 
       <section className="section">
-        <h2>_explore_by_intent</h2>
+        <h2>Explore by Intent</h2>
         <p>
           Start from the workflow you actually care about: PostgreSQL work,
           MySQL and SQLite work, reusable SQL analysis, secure access,
@@ -659,7 +659,7 @@ export default function HomePage() {
 
       {/* PLUGINS */}
       <section className="section" id="plugins">
-        <h2>_plugins</h2>
+        <h2>Plugins</h2>
         <div
           className="post-content"
           dangerouslySetInnerHTML={{ __html: home.plugins || "" }}
@@ -759,7 +759,7 @@ export default function HomePage() {
 
       {/* THEMES */}
       <section className="section">
-        <h2>_themes</h2>
+        <h2>Themes</h2>
         <p>
           Tabularis treats themes as part of the workflow, not a cosmetic extra.
           Switch between <strong>10+ presets</strong> instantly, with editor
@@ -817,7 +817,7 @@ export default function HomePage() {
 
       {/* WIKI */}
       <section className="section" id="wiki">
-        <h2>_wiki</h2>
+        <h2>Wiki</h2>
         <p>
           Need implementation details, setup steps, or feature walkthroughs? The
           wiki covers the workflows behind the UI.
@@ -831,7 +831,7 @@ export default function HomePage() {
 
       {/* BLOG */}
       <section className="section" id="blog">
-        <h2>_blog</h2>
+        <h2>Blog</h2>
         <div className="post-list">
           {posts.slice(0, 3).map((post) => (
             <PostCard key={post.slug} post={post} />
@@ -851,7 +851,7 @@ export default function HomePage() {
 
       {/* COMMUNITY */}
       <section className="section">
-        <h2>_community</h2>
+        <h2>Community</h2>
         <p>
           Join the <strong>Discord server</strong> to talk with maintainers,
           share feedback, report friction, and help shape the roadmap.
