@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { enhanceWrappedVideo } from "@/lib/videoLoader";
 
 export function PostContentLightbox() {
   const [src, setSrc] = useState<string | null>(null);
@@ -46,6 +47,9 @@ export function PostContentLightbox() {
         img.style.cursor = "zoom-in";
       }
     });
+    article
+      .querySelectorAll<HTMLVideoElement>(".video-wrapper video")
+      .forEach(enhanceWrappedVideo);
   }, []);
 
   if (!src) return null;
