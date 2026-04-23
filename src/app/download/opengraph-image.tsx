@@ -1,14 +1,16 @@
 import { OG_SIZE, OG_CONTENT_TYPE, renderSimpleOgImage } from "@/lib/ogImageSimple";
+import { APP_VERSION } from "@/lib/version";
 
 export const dynamic = "force-static";
-export const alt = "Tabularis Sponsors";
+export const alt = "Download Tabularis";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
 export default async function Image() {
   return renderSimpleOgImage({
-    kicker: "Sponsors",
-    title: "Support open-source database tooling",
-    subtitle: "Help keep Tabularis free for every developer.",
+    kicker: `Download · v${APP_VERSION}`,
+    title: "Get Tabularis",
+    subtitle:
+      "Windows, macOS, Linux — via WinGet, Homebrew, Snap, AUR, or direct download.",
   });
 }

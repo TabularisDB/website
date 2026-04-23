@@ -4,7 +4,6 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { GitHubIcon } from "@/components/Icons";
 import { getChangelog, type ChangelogVersion, type SectionType } from "@/lib/changelog";
-import { OG_IMAGE_URL } from "@/lib/siteConfig";
 
 export const metadata: Metadata = {
   title: "Changelog | Tabularis",
@@ -15,13 +14,11 @@ export const metadata: Metadata = {
     url: "https://tabularis.dev/changelog/",
     title: "Changelog | Tabularis",
     description: "Full release history and changelog for Tabularis.",
-    images: [OG_IMAGE_URL],
   },
   twitter: {
     card: "summary_large_image",
     title: "Changelog | Tabularis",
     description: "Full release history and changelog for Tabularis.",
-    images: [OG_IMAGE_URL],
   },
 };
 

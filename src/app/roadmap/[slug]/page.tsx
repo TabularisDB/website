@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/JsonLd";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
-import { OG_IMAGE_URL } from "@/lib/siteConfig";
 import { buildBreadcrumbJsonLd } from "@/lib/seo";
 import {
   getAllInitiativeSlugs,
@@ -40,13 +39,11 @@ export async function generateMetadata({
       url: `https://tabularis.dev/roadmap/${slug}/`,
       title: pageTitle,
       description: pageDesc,
-      images: [OG_IMAGE_URL],
     },
     twitter: {
       card: "summary_large_image",
       title: pageTitle,
       description: pageDesc,
-      images: [OG_IMAGE_URL],
     },
   };
 }

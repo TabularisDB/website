@@ -23,18 +23,14 @@ export const metadata: Metadata = {
     title: "Tabularis | Open-Source Desktop Client for Modern Databases",
     description:
       "Open-source desktop database client with support for PostgreSQL, MySQL/MariaDB, and SQLite. Hackable with plugins, with notebooks, AI, and MCP built in.",
-    images: [
-      OG_IMAGE_URL,
-    ],
+    images: [OG_IMAGE_URL],
   },
   twitter: {
     card: "summary_large_image",
     title: "Tabularis | Open-Source Desktop Client for Modern Databases",
     description:
       "Open-source desktop database client with support for PostgreSQL, MySQL/MariaDB, and SQLite. Hackable with plugins, with notebooks, AI, and MCP built in.",
-    images: [
-      OG_IMAGE_URL,
-    ],
+    images: [OG_IMAGE_URL],
   },
 };
 

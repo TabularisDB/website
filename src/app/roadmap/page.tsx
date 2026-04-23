@@ -4,7 +4,6 @@ import { JsonLd } from "@/components/JsonLd";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { GitHubIcon, DiscordIcon } from "@/components/Icons";
-import { OG_IMAGE_URL } from "@/lib/siteConfig";
 import { buildBreadcrumbJsonLd } from "@/lib/seo";
 import {
   getAllInitiativeMetas,
@@ -23,14 +22,12 @@ export const metadata: Metadata = {
     title: "Roadmap | Tabularis",
     description:
       "Tabularis roadmap. Active initiatives, open tasks, planned work.",
-    images: [OG_IMAGE_URL],
   },
   twitter: {
     card: "summary_large_image",
     title: "Roadmap | Tabularis",
     description:
       "Tabularis roadmap. Active initiatives, open tasks, planned work.",
-    images: [OG_IMAGE_URL],
   },
 };
 

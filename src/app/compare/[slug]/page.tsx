@@ -41,13 +41,11 @@ export async function generateMetadata({
       url: getSeoPagePath("compare", slug),
       title: page.meta.metaTitle || `${page.meta.title} | Tabularis`,
       description: page.meta.description || page.meta.excerpt,
-      images: page.meta.image ? [page.meta.image] : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title: page.meta.metaTitle || `${page.meta.title} | Tabularis`,
       description: page.meta.description || page.meta.excerpt,
-      images: page.meta.image ? [page.meta.image] : undefined,
     },
   };
 }

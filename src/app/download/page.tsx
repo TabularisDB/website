@@ -6,7 +6,6 @@ import { Footer } from "@/components/Footer";
 import { DownloadInline } from "@/components/DownloadInline";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { APP_VERSION } from "@/lib/version";
-import { OG_IMAGE_URL } from "@/lib/siteConfig";
 import { getReleaseDate, formatDate } from "@/lib/posts";
 import {
   buildBreadcrumbJsonLd,
@@ -24,14 +23,12 @@ export const metadata: Metadata = {
     title: "Download | Tabularis",
     description:
       "Download Tabularis for Windows, macOS, and Linux. Available via WinGet, Homebrew, Snap, AUR and more.",
-    images: [OG_IMAGE_URL],
   },
   twitter: {
     card: "summary_large_image",
     title: "Download | Tabularis",
     description:
       "Download Tabularis for Windows, macOS, and Linux. Available via WinGet, Homebrew, Snap, AUR and more.",
-    images: [OG_IMAGE_URL],
   },
 };
 

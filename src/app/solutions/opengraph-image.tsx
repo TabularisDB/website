@@ -1,14 +1,15 @@
 import { OG_SIZE, OG_CONTENT_TYPE, renderSimpleOgImage } from "@/lib/ogImageSimple";
 
 export const dynamic = "force-static";
-export const alt = "Tabularis Sponsors";
+export const alt = "Tabularis Solutions";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
 export default async function Image() {
   return renderSimpleOgImage({
-    kicker: "Sponsors",
-    title: "Support open-source database tooling",
-    subtitle: "Help keep Tabularis free for every developer.",
+    kicker: "Solutions",
+    title: "Tabularis by use case",
+    subtitle:
+      "PostgreSQL, MySQL, SQLite, notebooks, MCP workflows — explore Tabularis by the job you're doing.",
   });
 }

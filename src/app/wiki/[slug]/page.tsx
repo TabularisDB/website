@@ -28,9 +28,6 @@ export function generateStaticParams() {
   return getAllWikiPages().map((p) => ({ slug: p.slug }));
 }
 
-const OG_IMAGE =
-  "https://github.com/TabularisDB/website/blob/main/public/img/og.png?raw=true";
-
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -54,13 +51,11 @@ export async function generateMetadata({
       title,
       description,
       siteName: "Tabularis",
-      images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Tabularis" }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [OG_IMAGE],
     },
   };
 }
