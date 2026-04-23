@@ -1,18 +1,18 @@
 ---
-title: "SQL Server Driver: Phase 1 Done on feat/sql-server, Phase 2 Open"
+title: "SQL Server Driver: Looking for Contributors"
 date: "2026-04-23T12:00:00"
 tags: ["sql-server", "roadmap", "contribute", "rust"]
-excerpt: "Native Microsoft SQL Server — read-only preview, built-in, on the feat/sql-server branch. Tiberius + deadpool, 471 Rust tests green, zero regressions. Not on main, not released. Phase 2 (editing, TLS, composite keys) is six open issues."
+excerpt: "Native Microsoft SQL Server as a built-in driver, now on the feat/sql-server branch as a read-only preview. Phase 2 is open and needs contributors for editing, TLS options and composite primary keys."
 og:
   title: "SQL Server Driver:"
-  accent: "Phase 1 on feat/sql-server. Phase 2 Open."
-  claim: "Native SQL Server, built-in, on feat/sql-server — tiberius + deadpool, six open issues for Phase 2."
+  accent: "Looking for contributors."
+  claim: "Phase 1 is done on feat/sql-server. Phase 2 is open for contributors."
   image: "/img/overview.png"
 ---
 
-# SQL Server Driver: Phase 1 Done on `feat/sql-server`, Phase 2 Open
+# SQL Server Driver: Looking for Contributors
 
-SQL Server will be a built-in driver. Not a plugin — peer to MySQL, PostgreSQL, SQLite, registered in the same `lib.rs`, served out of the same `pool_manager`, showing up in the connection modal with nothing to install first. Code lives on [`feat/sql-server`](https://github.com/TabularisDB/tabularis/tree/feat/sql-server) today. Not on `main`. Not in any released build. Phase 1 on the branch is read-only browsing + query execution. Phase 2 — editing, TLS, composite primary keys — is six GitHub issues away. Help close it and the whole branch squashes back into `main`.
+SQL Server will be a built-in driver. Not a plugin — peer to MySQL, PostgreSQL, SQLite, registered in the same `lib.rs`, served out of the same `pool_manager`, showing up in the connection modal with nothing to install first. Code lives on [`feat/sql-server`](https://github.com/TabularisDB/tabularis/tree/feat/sql-server) today. Not on `main`. Not in any released build. Phase 1 on the branch is read-only browsing + query execution. Phase 2 — editing, TLS, composite primary keys — is six GitHub issues away. Help close it and the whole branch squashes back into `main`. Full scope, issue list and architecture notes are on the [roadmap page](/roadmap/sql-server/).
 
 ## Why built-in instead of a plugin
 

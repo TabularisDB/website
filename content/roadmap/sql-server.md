@@ -16,7 +16,7 @@ links:
     href: "https://github.com/TabularisDB/tabularis/tree/feat/sql-server"
     external: true
   - label: "Phase 1 post"
-    href: "/blog/sql-server-phase-1-ships-call-for-contributors"
+    href: "/blog/sql-server-looking-for-contributors"
 ---
 
 ## Why built-in, not a plugin
