@@ -48,34 +48,38 @@ function InitiativeCard({ meta }: { meta: InitiativeMeta }) {
 
   return (
     <Link href={`/roadmap/${meta.slug}`} className="rm-card">
-      <div className="rm-card-meta">
-        <span className={`rm-badge rm-badge-${meta.status}`}>
-          {STATUS_LABEL[meta.status]}
-        </span>
-        {meta.category && (
-          <span className="rm-card-category">{meta.category}</span>
+      <div className="rm-card-topline">
+        <div className="rm-card-meta">
+          <span className={`rm-badge rm-badge-${meta.status}`}>
+            {STATUS_LABEL[meta.status]}
+          </span>
+          {meta.category && (
+            <span className="rm-card-category">{meta.category}</span>
+          )}
+        </div>
+
+        {pct !== undefined && (
+          <div className="rm-card-progress-hero">
+            <span className="rm-card-progress-kicker">Completion</span>
+            <span className="rm-card-progress-value">{pct}%</span>
+            <div
+              className="rm-card-progress-track"
+              role="progressbar"
+              aria-valuenow={pct}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-label={meta.progressLabel ?? `${pct}% shipped`}
+            >
+              <div
+                className="rm-card-progress-fill"
+                style={{ width: `${pct}%` }}
+              />
+            </div>
+          </div>
         )}
       </div>
       <h2 className="rm-card-title">{meta.title}</h2>
       {meta.lede && <p className="rm-card-lede">{meta.lede}</p>}
-
-      {pct !== undefined && (
-        <div className="rm-progress-row rm-card-progress">
-          <div
-            className="rm-progress-bar"
-            role="progressbar"
-            aria-valuenow={pct}
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-label={meta.progressLabel ?? `${pct}% shipped`}
-          >
-            <div className="rm-progress-fill" style={{ width: `${pct}%` }} />
-          </div>
-          {meta.progressLabel && (
-            <span className="rm-progress-label">{meta.progressLabel}</span>
-          )}
-        </div>
-      )}
 
       <span className="rm-card-cta">Read details →</span>
     </Link>

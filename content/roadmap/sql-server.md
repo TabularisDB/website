@@ -6,11 +6,14 @@ status: "in-progress"
 order: 1
 progressDone: 1
 progressTotal: 3
-progressLabel: "1 of 3 phases shipped"
-lede: "Native Microsoft SQL Server as a built-in driver, next to MySQL, PostgreSQL and SQLite — no extra plugin to install. Phase 1 is live as a read-only preview: connect, browse schemas and tables, run SELECT queries. Phase 2 brings editing, TLS options and composite primary keys, and it's the part where we'd love some help."
+progressLabel: "1 of 3 phases done on feat/sql-server — not released yet"
+lede: "Native Microsoft SQL Server as a built-in driver, next to MySQL, PostgreSQL and SQLite — no extra plugin to install. Phase 1 is done on the `feat/sql-server` branch. Not on `main` yet, not in any release. Read-only for now: connect, browse schemas and tables, run SELECT queries. Phase 2 adds editing, TLS options and composite primary keys — that's where help's wanted."
 links:
   - label: "Epic #150"
     href: "https://github.com/TabularisDB/tabularis/issues/150"
+    external: true
+  - label: "feat/sql-server branch"
+    href: "https://github.com/TabularisDB/tabularis/tree/feat/sql-server"
     external: true
   - label: "Phase 1 post"
     href: "/blog/sql-server-phase-1-ships-call-for-contributors"
@@ -27,12 +30,12 @@ The plugin system (JSON-RPC over stdin/stdout, one subprocess per driver) is how
 
 Trade-offs: `~2.5 MB` added to the release binary (tiberius + deadpool + tokio-util compat layer), and the driver now ships on the same release cadence as the rest of the app — no independent fix channel.
 
-## Phase 1 — Shipped
+## Phase 1 — Done on `feat/sql-server`
 
-Read-only preview. The driver is registered in `lib.rs` peer to the other three built-ins, and the UI honours the `readonly: true` manifest flag by hiding INSERT / UPDATE / DELETE automatically.
+Read-only preview. Lives on [`feat/sql-server`](https://github.com/TabularisDB/tabularis/tree/feat/sql-server). Not on `main`, not in any release. The driver is registered in [`src-tauri/src/lib.rs`](https://github.com/TabularisDB/tabularis/blob/feat/sql-server/src-tauri/src/lib.rs) peer to the other three built-ins, and the UI honours the `readonly: true` manifest flag by hiding INSERT / UPDATE / DELETE automatically.
 
 - SQL auth connect, schema listing (`sys.schemas` filtered against role schemas), table / view / routine discovery
-- `execute_query` with streaming over `tiberius::Client::query`; pagination via dialect-aware `build_paginated_query_dialect` in `drivers/common/query.rs`
+- `execute_query` with streaming over `tiberius::Client::query`; pagination via dialect-aware `build_paginated_query_dialect` in [`src-tauri/src/drivers/common/query.rs`](https://github.com/TabularisDB/tabularis/blob/feat/sql-server/src-tauri/src/drivers/common/query.rs)
 - `OFFSET … FETCH NEXT` synthesised with `ORDER BY (SELECT NULL)` when the caller query has no top-level `ORDER BY` (paren-depth-aware matcher, documented false positives for string literals)
 - Type extraction keyed on `tiberius::ColumnType`: int family, float family, `Decimal` + `Numeric` fallback for NUMERIC(38), `Uuid`, chrono temporal types, `varbinary` → base64, `xml`, `sql_variant`
 - Runtime version detection from `SERVERPROPERTY('ProductMajorVersion')`; default major = 14 (2017) when parsing fails; feature gates for 2012 (`supports_offset_fetch`) and 2017 (`supports_string_agg`)
@@ -66,19 +69,19 @@ Not yet issue-tracked. Comment on [#150](https://github.com/TabularisDB/tabulari
 
 ### Module layout
 
-Everything lives under `src-tauri/src/drivers/sqlserver/`:
+Everything lives under [`src-tauri/src/drivers/sqlserver/`](https://github.com/TabularisDB/tabularis/tree/feat/sql-server/src-tauri/src/drivers/sqlserver):
 
 | File | Contents |
 |------|----------|
-| `mod.rs` | `SqlServerDriver` struct + `impl DatabaseDriver` (manifest, CRUD routes, batch snapshot) |
-| `pool.rs` | Custom `deadpool::managed::Manager` wrapping `tiberius::Client` over `tokio::net::TcpStream` via `tokio-util::compat`; `build_config` from `ConnectionParams` |
-| `helpers.rs` | `bracket_quote` / `quote_identifier` / `qualify` / `escape_single_quoted` — pure, unit-tested |
-| `version.rs` | `SERVERPROPERTY` parsing + feature gates (`supports_offset_fetch`, `supports_string_agg`, `supports_drop_if_exists`) |
-| `introspection.rs` | `sys.*` + `INFORMATION_SCHEMA.*` metadata queries; pure builders `build_table_column` / `build_foreign_key` |
-| `extract/mod.rs` | `ColumnType`-keyed dispatcher turning tiberius rows into `serde_json::Value` |
-| `extract/temporal.rs` | Pure chrono formatters for `date` / `time` / `datetime` / `datetimeoffset` |
+| [`mod.rs`](https://github.com/TabularisDB/tabularis/blob/feat/sql-server/src-tauri/src/drivers/sqlserver/mod.rs) | `SqlServerDriver` struct + `impl DatabaseDriver` (manifest, CRUD routes, batch snapshot) |
+| [`pool.rs`](https://github.com/TabularisDB/tabularis/blob/feat/sql-server/src-tauri/src/drivers/sqlserver/pool.rs) | Custom `deadpool::managed::Manager` wrapping `tiberius::Client` over `tokio::net::TcpStream` via `tokio-util::compat`; `build_config` from `ConnectionParams` |
+| [`helpers.rs`](https://github.com/TabularisDB/tabularis/blob/feat/sql-server/src-tauri/src/drivers/sqlserver/helpers.rs) | `bracket_quote` / `quote_identifier` / `qualify` / `escape_single_quoted` — pure, unit-tested |
+| [`version.rs`](https://github.com/TabularisDB/tabularis/blob/feat/sql-server/src-tauri/src/drivers/sqlserver/version.rs) | `SERVERPROPERTY` parsing + feature gates (`supports_offset_fetch`, `supports_string_agg`, `supports_drop_if_exists`) |
+| [`introspection.rs`](https://github.com/TabularisDB/tabularis/blob/feat/sql-server/src-tauri/src/drivers/sqlserver/introspection.rs) | `sys.*` + `INFORMATION_SCHEMA.*` metadata queries; pure builders `build_table_column` / `build_foreign_key` |
+| [`extract/mod.rs`](https://github.com/TabularisDB/tabularis/blob/feat/sql-server/src-tauri/src/drivers/sqlserver/extract/mod.rs) | `ColumnType`-keyed dispatcher turning tiberius rows into `serde_json::Value` |
+| [`extract/temporal.rs`](https://github.com/TabularisDB/tabularis/blob/feat/sql-server/src-tauri/src/drivers/sqlserver/extract/temporal.rs) | Pure chrono formatters for `date` / `time` / `datetime` / `datetimeoffset` |
 
-Pagination lives outside the driver. The `PaginationDialect` enum and `build_paginated_query_dialect` are in `drivers/common/query.rs` and are shared with the other three built-in drivers. The legacy `build_paginated_query(q, ps, p)` signature still produces the same output it always has.
+Pagination lives outside the driver. The `PaginationDialect` enum and `build_paginated_query_dialect` are in [`src-tauri/src/drivers/common/query.rs`](https://github.com/TabularisDB/tabularis/blob/feat/sql-server/src-tauri/src/drivers/common/query.rs) and are shared with the other three built-in drivers. The legacy `build_paginated_query(q, ps, p)` signature still produces the same output it always has.
 
 ### Version-gated features
 
@@ -119,15 +122,18 @@ docker run -e 'ACCEPT_EULA=Y' \
   mcr.microsoft.com/mssql/server:2022-latest
 ```
 
-Clone and confirm the baseline is green before you touch anything:
+The driver isn't on `main`. Clone, switch to `feat/sql-server`, confirm the baseline is green before you touch anything:
 
 ```bash
 git clone https://github.com/TabularisDB/tabularis.git
 cd tabularis
+git checkout feat/sql-server
 cargo test --lib     # expect 471 passing, 0 failed
 npm install
 npm run typecheck
 ```
+
+Branch off `feat/sql-server` and target your PR at it — not at `main`. The whole branch squashes into `main` once Phase 2 closes.
 
 Launch the app (`cargo tauri dev`) and add a connection — driver **SQL Server**, host `localhost`, port `1433`, user `sa`, password `Strong!Pass123`, database `master`. You should see `dbo`, `sys`, `INFORMATION_SCHEMA` in the schema tree and be able to run `SELECT TOP 10 * FROM sys.objects`.
 
