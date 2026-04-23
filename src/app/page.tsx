@@ -141,6 +141,7 @@ const THEMES = [
 
 export default function HomePage() {
   const posts = getAllPosts();
+  const latestPost = posts[0];
   const plugins = getAllPlugins()
     .slice(0, 3)
     .map((plugin) => ({
@@ -160,22 +161,21 @@ export default function HomePage() {
         ]}
       />
       <SiteHeader />
+      {latestPost && (
+        <Link href={`/blog/${latestPost.slug}`} className="home-latest-post">
+          <span className="home-latest-post-eyebrow">Latest from the blog</span>
+          <span className="home-latest-post-title">{latestPost.title} →</span>
+        </Link>
+      )}
       {/* HERO */}
       <header className="hero">
         <div className="hero-badges">
           <span className="badge version">v{APP_VERSION}</span>
           <span className="badge">Open Source</span>
           <span className="badge">Apache 2.0</span>
-          <span className="badge">🌍 EN | IT | ES | FR | DE | ZH</span>
         </div>
 
-        <p
-          style={{
-            fontSize: "1.2rem",
-            color: "var(--text-muted)",
-            marginTop: "1rem",
-          }}
-        >
+        <p>
           An open-source desktop client for modern databases.
           <br />
           Supports <strong>PostgreSQL</strong>, <strong>MySQL/MariaDB</strong>,

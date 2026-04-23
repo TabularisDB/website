@@ -4,6 +4,7 @@ import type { MetadataRoute } from "next";
 import { getAllWikiPages } from "@/lib/wiki";
 import { getAllPosts } from "@/lib/posts";
 import { getAllSeoPages, getSeoPagePath } from "@/lib/seoPages";
+import { getAllInitiativeSlugs } from "@/lib/roadmap";
 
 const BASE_URL = "https://tabularis.dev";
 
@@ -11,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const wikiPages = getAllWikiPages();
   const posts = getAllPosts();
   const seoPages = getAllSeoPages();
+  const initiativeSlugs = getAllInitiativeSlugs();
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -36,6 +38,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/roadmap`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
     },
     {
       url: `${BASE_URL}/solutions`,
@@ -72,5 +80,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...wikiRoutes, ...blogRoutes, ...seoRoutes];
+  const roadmapRoutes: MetadataRoute.Sitemap = initiativeSlugs.map((slug) => ({
+    url: `${BASE_URL}/roadmap/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly",
+    priority: 0.75,
+  }));
+
+  return [
+    ...staticRoutes,
+    ...wikiRoutes,
+    ...blogRoutes,
+    ...seoRoutes,
+    ...roadmapRoutes,
+  ];
 }
