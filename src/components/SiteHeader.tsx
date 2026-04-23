@@ -414,7 +414,7 @@ export function SiteHeader({ crumbs = [], announcement }: SiteHeaderProps) {
 
           <Link
             href="/download"
-            className={`mobile-nav-link ${pathname.startsWith("/download") ? "active" : ""}`}
+            className={`mobile-nav-cta ${pathname.startsWith("/download") ? "active" : ""}`}
           >
             Download
           </Link>

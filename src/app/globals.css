@@ -1423,6 +1423,27 @@ pre {
   display: block;
 }
 
+.site-header-unified.mobile-open {
+  background-color: rgb(8, 9, 10);
+  backdrop-filter: none;
+}
+
+.site-header-unified.mobile-open .mobile-menu.active {
+  position: fixed;
+  top: 4rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0.75rem 1rem 1.25rem;
+  background-color: rgb(8, 9, 10);
+  border-top: 1px solid var(--border);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  z-index: 99;
+}
+
 .mobile-nav {
   display: flex;
   flex-direction: column;
@@ -1528,6 +1549,27 @@ pre {
   font-size: 0.78rem;
   line-height: 1.5;
   color: var(--text-muted);
+}
+
+.mobile-nav-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.95rem 1rem;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: var(--accent);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.mobile-nav-cta:hover,
+.mobile-nav-cta.active {
+  color: var(--accent);
+  filter: none;
+  border-color: rgba(59, 130, 246, 0.45);
+  background: rgba(59, 130, 246, 0.14);
 }
 
 .mobile-search-btn {
