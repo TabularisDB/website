@@ -9,7 +9,5 @@ export default async function Image() {
   return renderSimpleOgImage({
     kicker: "Compare",
     title: "How Tabularis stacks up",
-    subtitle:
-      "Side-by-side comparisons against other database clients and SQL tools.",
   });
 }

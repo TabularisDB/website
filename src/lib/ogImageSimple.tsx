@@ -31,13 +31,11 @@ async function loadFont(weight: 400 | 800): Promise<ArrayBuffer | null> {
 export interface SimpleOgOptions {
   title: string;
   kicker?: string;
-  subtitle?: string;
 }
 
 export async function renderSimpleOgImage({
   title,
   kicker,
-  subtitle,
 }: SimpleOgOptions): Promise<ImageResponse> {
   const logoSrc = readPublicImage("/img/logo.png");
   const [font400, font800] = await Promise.all([loadFont(400), loadFont(800)]);
@@ -216,22 +214,6 @@ export async function renderSimpleOgImage({
           {title}
         </div>
 
-        {subtitle && (
-          <div
-            style={{
-              marginTop: "24px",
-              fontSize: "22px",
-              fontWeight: 400,
-              color: "#94a3b8",
-              textAlign: "center",
-              maxWidth: "860px",
-              letterSpacing: "-0.3px",
-              lineHeight: 1.35,
-            }}
-          >
-            {subtitle}
-          </div>
-        )}
       </div>
     </div>,
     { ...OG_SIZE, fonts },

@@ -9,6 +9,5 @@ export default async function Image() {
   return renderSimpleOgImage({
     kicker: "Changelog",
     title: "Release history",
-    subtitle: "Every version, every change — from features to fixes.",
   });
 }

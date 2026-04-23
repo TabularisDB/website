@@ -10,7 +10,5 @@ export default async function Image() {
   return renderSimpleOgImage({
     kicker: `Download · v${APP_VERSION}`,
     title: "Get Tabularis",
-    subtitle:
-      "Windows, macOS, Linux — via WinGet, Homebrew, Snap, AUR, or direct download.",
   });
 }

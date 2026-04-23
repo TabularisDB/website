@@ -38,6 +38,5 @@ export default async function Image({
   return renderSimpleOgImage({
     kicker: kickerParts.join(" · "),
     title: meta?.title ?? "Tabularis Roadmap",
-    subtitle: meta?.lede,
   });
 }

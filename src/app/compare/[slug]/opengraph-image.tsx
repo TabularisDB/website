@@ -23,6 +23,5 @@ export default async function Image({
   return renderSimpleOgImage({
     kicker: "Compare",
     title: page?.meta.title ?? "Compare Tabularis",
-    subtitle: page?.meta.excerpt,
   });
 }

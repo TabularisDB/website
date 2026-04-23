@@ -9,7 +9,5 @@ export default async function Image() {
   return renderSimpleOgImage({
     kicker: "Plugins",
     title: "Community drivers",
-    subtitle:
-      "Extend Tabularis with custom database drivers from the community.",
   });
 }

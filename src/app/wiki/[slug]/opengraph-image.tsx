@@ -23,6 +23,5 @@ export default async function Image({
   return renderSimpleOgImage({
     kicker: page ? `Wiki · ${page.meta.category}` : "Wiki",
     title: page?.meta.title ?? "Tabularis Wiki",
-    subtitle: page?.meta.excerpt,
   });
 }

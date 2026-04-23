@@ -9,6 +9,5 @@ export default async function Image() {
   return renderSimpleOgImage({
     kicker: "Sponsors",
     title: "Support open-source database tooling",
-    subtitle: "Help keep Tabularis free for every developer.",
   });
 }

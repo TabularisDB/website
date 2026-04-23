@@ -9,7 +9,5 @@ export default async function Image() {
   return renderSimpleOgImage({
     kicker: "Solutions",
     title: "Tabularis by use case",
-    subtitle:
-      "PostgreSQL, MySQL, SQLite, notebooks, MCP workflows — explore Tabularis by the job you're doing.",
   });
 }

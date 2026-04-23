@@ -23,6 +23,5 @@ export default async function Image({
   return renderSimpleOgImage({
     kicker: "Solutions",
     title: page?.meta.title ?? "Tabularis Solutions",
-    subtitle: page?.meta.excerpt,
   });
 }

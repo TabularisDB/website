@@ -9,7 +9,5 @@ export default async function Image() {
   return renderSimpleOgImage({
     kicker: "Roadmap",
     title: "What's shipping next",
-    subtitle:
-      "Active initiatives, open tasks, planned work — follow along and claim an issue.",
   });
 }

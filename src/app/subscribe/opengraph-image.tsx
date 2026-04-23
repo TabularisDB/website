@@ -9,7 +9,5 @@ export default async function Image() {
   return renderSimpleOgImage({
     kicker: "Newsletter",
     title: "Stay in the loop",
-    subtitle:
-      "Release announcements, development insights and project updates — straight to your inbox.",
   });
 }
