@@ -187,7 +187,6 @@ pre {
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
 }
 
 .brand-name {
@@ -459,6 +458,19 @@ pre {
   filter: none;
   border-color: rgba(59, 130, 246, 0.45);
   background: rgba(59, 130, 246, 0.14);
+}
+
+.discord-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--accent-soft);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 8px;
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
 .header-crumbs {
@@ -7081,5 +7093,2067 @@ footer {
 
   .rm-card-progress-hero {
     width: 100%;
+  }
+}
+
+/* Plugin Bounty Board --------------------------------------- */
+
+.plugin-bounty-teaser {
+  --bounty-accent: #38bdf8;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(260px, 0.95fr);
+  gap: 1.5rem;
+  align-items: center;
+  margin: 2.5rem 0;
+  padding: clamp(1.3rem, 3vw, 2rem);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 12% 20%, rgba(239, 68, 68, 0.18), transparent 30%),
+    radial-gradient(circle at 88% 18%, rgba(56, 189, 248, 0.22), transparent 34%),
+    linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(7, 10, 18, 0.98));
+  overflow: hidden;
+  box-shadow:
+    0 26px 80px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  isolation: isolate;
+}
+
+.plugin-bounty-teaser::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.82), transparent 88%);
+  opacity: 0.5;
+  z-index: -2;
+}
+
+.plugin-bounty-teaser-bg {
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  right: -120px;
+  top: -145px;
+  border-radius: 999px;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  background:
+    radial-gradient(circle, rgba(56, 189, 248, 0.16), transparent 58%),
+    conic-gradient(from 120deg, transparent, rgba(56, 189, 248, 0.2), transparent);
+  filter: blur(0.2px);
+  animation: bounty-orbit 15s linear infinite;
+  z-index: -1;
+}
+
+.plugin-bounty-kicker,
+.bounty-kicker,
+.bounty-section-heading span,
+.bounty-final-cta span {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7dd3fc;
+}
+
+.plugin-bounty-kicker::before,
+.bounty-kicker::before,
+.bounty-section-heading span::before,
+.bounty-final-cta span::before {
+  content: "";
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 18px currentColor;
+}
+
+.plugin-bounty-teaser h3 {
+  margin: 0.55rem 0 0.7rem;
+  font-size: clamp(1.35rem, 3vw, 2.15rem);
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: var(--text-bright);
+}
+
+.plugin-bounty-teaser p {
+  max-width: 56ch;
+  margin: 0;
+  color: rgba(209, 213, 219, 0.8);
+  font-size: 0.95rem;
+}
+
+.plugin-bounty-teaser-stats {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  margin: 1.1rem 0 1.25rem;
+}
+
+.plugin-bounty-teaser-stats span {
+  padding: 0.35rem 0.55rem;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.74);
+  color: rgba(226, 232, 240, 0.88);
+  font-size: 0.72rem;
+}
+
+.plugin-bounty-teaser-cta,
+.bounty-primary,
+.bounty-secondary,
+.bounty-action-primary,
+.bounty-action-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.55rem;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.plugin-bounty-teaser-cta,
+.bounty-primary,
+.bounty-action-primary {
+  color: #041014;
+  border: 1px solid rgba(125, 211, 252, 0.85);
+  background: linear-gradient(135deg, #7dd3fc, #34d399 58%, #facc15);
+  box-shadow:
+    0 0 28px rgba(56, 189, 248, 0.24),
+    0 16px 34px rgba(0, 0, 0, 0.28);
+}
+
+.plugin-bounty-teaser-cta:hover,
+.bounty-primary:hover,
+.bounty-action-primary:hover {
+  color: #020617;
+  transform: translateY(-2px);
+  filter: none;
+  box-shadow:
+    0 0 38px rgba(56, 189, 248, 0.38),
+    0 20px 40px rgba(0, 0, 0, 0.34);
+}
+
+.bounty-secondary,
+.bounty-action-secondary {
+  color: rgba(226, 232, 240, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  background: rgba(15, 23, 42, 0.68);
+}
+
+.bounty-secondary:hover,
+.bounty-action-secondary:hover {
+  color: var(--text-bright);
+  border-color: rgba(125, 211, 252, 0.5);
+  background: rgba(15, 23, 42, 0.94);
+  filter: none;
+  transform: translateY(-2px);
+}
+
+.plugin-bounty-teaser-stack {
+  position: relative;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.plugin-bounty-mini-card {
+  --bounty-accent: #38bdf8;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.8rem;
+  align-items: center;
+  min-height: 4.25rem;
+  padding: 0.8rem 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--bounty-accent) 34%, transparent);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 100% 0, color-mix(in srgb, var(--bounty-accent) 22%, transparent), transparent 42%),
+    rgba(3, 7, 18, 0.78);
+  color: inherit;
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 16px 32px rgba(0, 0, 0, 0.18);
+}
+
+.plugin-bounty-mini-card:nth-child(2) {
+  margin-left: 1.4rem;
+}
+
+.plugin-bounty-mini-card:nth-child(3) {
+  margin-left: 2.8rem;
+}
+
+.plugin-bounty-mini-card:hover {
+  transform: translateX(-4px);
+  filter: none;
+  border-color: var(--bounty-accent);
+}
+
+.plugin-bounty-mini-rank {
+  color: var(--bounty-accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.plugin-bounty-mini-main {
+  display: grid;
+  gap: 0.12rem;
+  min-width: 0;
+}
+
+.plugin-bounty-mini-main strong {
+  color: var(--text-bright);
+  font-size: 0.95rem;
+}
+
+.plugin-bounty-mini-main span {
+  color: rgba(148, 163, 184, 0.82);
+  font-size: 0.72rem;
+}
+
+.plugin-bounty-mini-stage {
+  display: grid;
+  place-items: center;
+  min-width: 4.25rem;
+  min-height: 2.2rem;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--bounty-accent) 48%, transparent);
+  border-radius: 999px;
+  color: var(--text-bright);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-align: center;
+  background: color-mix(in srgb, var(--bounty-accent) 13%, rgba(15, 23, 42, 0.9));
+  box-shadow: 0 0 24px color-mix(in srgb, var(--bounty-accent) 28%, transparent);
+}
+
+.bounty-page {
+  --bounty-panel: rgba(8, 13, 25, 0.86);
+  position: relative;
+  padding-bottom: 3rem;
+}
+
+.bounty-page h1,
+.bounty-page h2,
+.bounty-page h3 {
+  display: block;
+}
+
+.bounty-page h2::before {
+  display: none;
+}
+
+.bounty-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.82fr);
+  gap: clamp(1.25rem, 3vw, 2.2rem);
+  align-items: center;
+  min-height: 560px;
+  padding: clamp(1.2rem, 3vw, 2.35rem);
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 16% 16%, rgba(248, 113, 113, 0.18), transparent 26%),
+    radial-gradient(circle at 72% 18%, rgba(56, 189, 248, 0.2), transparent 32%),
+    radial-gradient(circle at 76% 84%, rgba(52, 211, 153, 0.14), transparent 34%),
+    linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(2, 6, 23, 0.98));
+  overflow: hidden;
+  box-shadow:
+    0 32px 110px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  isolation: isolate;
+}
+
+.bounty-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: radial-gradient(circle at 62% 46%, rgba(0, 0, 0, 0.95), transparent 76%);
+  opacity: 0.5;
+  z-index: -2;
+}
+
+.bounty-hero-orbit {
+  position: absolute;
+  width: 760px;
+  height: 760px;
+  right: -230px;
+  top: -160px;
+  border-radius: 999px;
+  border: 1px solid rgba(56, 189, 248, 0.13);
+  background:
+    radial-gradient(circle, transparent 44%, rgba(56, 189, 248, 0.1) 45%, transparent 46%),
+    conic-gradient(from 220deg, transparent 0 22%, rgba(56, 189, 248, 0.18), transparent 44% 100%);
+  filter: blur(0.2px);
+  animation: bounty-orbit 22s linear infinite;
+  z-index: -1;
+}
+
+.bounty-hero-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+}
+
+.bounty-hero h1 {
+  max-width: 620px;
+  margin: 0.65rem 0 1.05rem;
+  font-size: clamp(2.55rem, 6.2vw, 4.95rem);
+  line-height: 0.88;
+  letter-spacing: -0.09em;
+  color: #f8fafc;
+  text-wrap: balance;
+  text-shadow:
+    0 0 42px rgba(56, 189, 248, 0.16),
+    0 16px 50px rgba(0, 0, 0, 0.42);
+}
+
+.bounty-hero p {
+  max-width: 62ch;
+  margin: 0;
+  color: rgba(226, 232, 240, 0.78);
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  line-height: 1.75;
+}
+
+.bounty-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.7rem;
+}
+
+.bounty-radar-panel {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  min-width: 0;
+}
+
+.bounty-radar {
+  position: relative;
+  width: min(100%, 440px);
+  margin-left: auto;
+  aspect-ratio: 1;
+  border: 1px solid rgba(125, 211, 252, 0.18);
+  border-radius: 28px;
+  background:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.45), rgba(2, 6, 23, 0.1)),
+    radial-gradient(circle, rgba(125, 211, 252, 0.12), transparent 8%),
+    radial-gradient(circle, rgba(15, 23, 42, 0.12), rgba(2, 6, 23, 0.94) 70%);
+  box-shadow:
+    inset 0 0 48px rgba(56, 189, 248, 0.1),
+    0 0 90px rgba(56, 189, 248, 0.08);
+  overflow: hidden;
+}
+
+.bounty-radar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 18% 27%, rgba(255, 255, 255, 0.35) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 82% 24%, rgba(255, 255, 255, 0.28) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 70% 72%, rgba(255, 255, 255, 0.24) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 30% 80%, rgba(255, 255, 255, 0.24) 0 1px, transparent 1.5px);
+  background-size: 120px 120px, 170px 170px, 150px 150px, 190px 190px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.bounty-radar::before {
+  content: "";
+  position: absolute;
+  inset: 4.5rem 1rem 1rem;
+  border-radius: 24px;
+  background:
+    linear-gradient(rgba(125, 211, 252, 0.075) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(125, 211, 252, 0.075) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(circle at 50% 54%, #000 58%, transparent 75%);
+}
+
+.bounty-radar-panel-head {
+  position: absolute;
+  inset: 1rem 1rem auto;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 16px;
+  background: rgba(2, 6, 23, 0.66);
+  backdrop-filter: blur(12px);
+}
+
+.bounty-radar-panel-head span,
+.bounty-radar-panel-head strong {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.bounty-radar-panel-head span {
+  color: rgba(226, 232, 240, 0.78);
+}
+
+.bounty-radar-panel-head strong {
+  color: #7dd3fc;
+}
+
+.bounty-radar-ring {
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(125, 211, 252, 0.16);
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.bounty-radar-ring.ring-1 {
+  width: 72%;
+  height: 72%;
+}
+
+.bounty-radar-ring.ring-2 {
+  width: 48%;
+  height: 48%;
+}
+
+.bounty-radar-ring.ring-3 {
+  width: 24%;
+  height: 24%;
+}
+
+.bounty-radar-crosshair {
+  position: absolute;
+  inset: 0;
+}
+
+.bounty-radar-crosshair::before,
+.bounty-radar-crosshair::after {
+  content: "";
+  position: absolute;
+  background: rgba(125, 211, 252, 0.12);
+}
+
+.bounty-radar-crosshair::before {
+  left: 50%;
+  top: 19%;
+  bottom: 8%;
+  width: 1px;
+}
+
+.bounty-radar-crosshair::after {
+  top: 56%;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+}
+
+.bounty-radar-sweep {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: conic-gradient(
+    from var(--bounty-sweep-angle, 0deg) at 50% 56%,
+    rgba(125, 211, 252, 0.30) 0deg,
+    rgba(125, 211, 252, 0.08) 20deg,
+    rgba(125, 211, 252, 0.01) 40deg,
+    transparent 58deg
+  );
+  animation: bounty-sweep 7s linear infinite;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.bounty-radar.is-mouse-active .bounty-radar-sweep {
+  opacity: 0;
+}
+
+.bounty-radar-mouse-beam {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: conic-gradient(
+    from var(--mouse-angle, 0deg) at 50% 56%,
+    rgba(125, 211, 252, 0.34) 0deg,
+    rgba(125, 211, 252, 0.10) 16deg,
+    rgba(125, 211, 252, 0.02) 32deg,
+    transparent 50deg
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.bounty-radar.is-mouse-active .bounty-radar-mouse-beam {
+  opacity: 1;
+}
+
+.bounty-radar.is-mouse-active {
+  cursor: crosshair;
+}
+
+.bounty-radar-links {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  filter: drop-shadow(0 0 7px rgba(56, 189, 248, 0.18));
+}
+
+.bounty-radar-link {
+  stroke-width: 0.52;
+  stroke-linecap: round;
+  stroke-dasharray: 0.8 2.4;
+  opacity: 0.34;
+  vector-effect: non-scaling-stroke;
+  animation: bounty-link-flow 9s linear infinite;
+}
+
+.bounty-radar-link-most-wanted {
+  stroke-width: 0.85;
+  opacity: 0.62;
+}
+
+.bounty-radar-link-claimed,
+.bounty-radar-link-scoped {
+  opacity: 0.48;
+}
+
+.bounty-radar-link-coming-soon {
+  stroke-dasharray: 1.4 3.2;
+  opacity: 0.42;
+}
+
+.bounty-radar-zone {
+  position: absolute;
+  z-index: 1;
+  padding: 0.28rem 0.44rem;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 999px;
+  background: rgba(2, 6, 23, 0.42);
+  color: rgba(148, 163, 184, 0.62);
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.bounty-radar-zone-sql {
+  left: 7%;
+  top: 34%;
+}
+
+.bounty-radar-zone-cloud {
+  right: 7%;
+  top: 18%;
+}
+
+.bounty-radar-zone-nosql {
+  left: 8%;
+  bottom: 26%;
+}
+
+.bounty-radar-zone-federated {
+  right: 6%;
+  bottom: 22%;
+}
+
+.bounty-radar-core {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  top: 56%;
+  display: grid;
+  place-items: center;
+  width: 5.8rem;
+  height: 5.8rem;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(125, 211, 252, 0.24);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle, rgba(56, 189, 248, 0.18), rgba(2, 6, 23, 0.92) 70%),
+    rgba(2, 6, 23, 0.94);
+  box-shadow:
+    0 0 45px rgba(56, 189, 248, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.bounty-radar-core img {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.bounty-radar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  width: min(100%, 440px);
+  margin: 0.5rem 0 0 auto;
+}
+
+.bounty-radar-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(203, 213, 225, 0.78);
+  font-size: 0.6rem;
+  line-height: 1.2;
+}
+
+.bounty-radar-legend i {
+  display: inline-block;
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 999px;
+  background: var(--legend-color, #38bdf8);
+  box-shadow: 0 0 14px var(--legend-color, #38bdf8);
+}
+
+.legend-most-wanted {
+  --legend-color: #f43f5e;
+}
+
+.legend-scoped {
+  --legend-color: #7dd3fc;
+}
+
+.legend-coming-soon {
+  --legend-color: #facc15;
+}
+
+.legend-open {
+  --legend-color: #a78bfa;
+}
+
+.bounty-radar-node {
+  --bounty-accent: #38bdf8;
+  position: absolute;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 0.42rem;
+  row-gap: 0.04rem;
+  align-items: center;
+  min-width: 5.75rem;
+  max-width: 6.9rem;
+  padding: 0.38rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--bounty-accent) 56%, transparent);
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--bounty-accent) 28%, transparent), transparent 54%),
+    rgba(2, 6, 23, 0.78);
+  color: var(--text-bright);
+  text-align: left;
+  box-shadow:
+    0 0 22px color-mix(in srgb, var(--bounty-accent) 35%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.bounty-radar-node:hover {
+  filter: none;
+  border-color: var(--bounty-accent);
+  z-index: 7;
+  transform: translate(-50%, -50%) scale(1.08) !important;
+}
+
+.bounty-radar-node strong {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  color: rgba(248, 250, 252, 0.96);
+  font-size: 0.62rem;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bounty-radar-node small {
+  position: relative;
+  grid-column: 2;
+  z-index: 2;
+  color: var(--bounty-accent);
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bounty-radar-pulse {
+  position: absolute;
+  inset: -7px;
+  border: 1px solid color-mix(in srgb, var(--bounty-accent) 38%, transparent);
+  border-radius: inherit;
+  animation: bounty-pulse 2.4s ease-out infinite;
+  animation-delay: var(--pulse-delay, 0s);
+}
+
+.bounty-radar-node-dot {
+  position: relative;
+  z-index: 2;
+  grid-row: span 2;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 999px;
+  background: var(--bounty-accent);
+  box-shadow: 0 0 18px var(--bounty-accent);
+}
+
+.bounty-radar-node-most-wanted {
+  border-radius: 999px 12px 12px 999px;
+}
+
+.bounty-radar-node-most-wanted .bounty-radar-node-dot {
+  width: 0.92rem;
+  height: 0.92rem;
+}
+
+.bounty-radar-node-coming-soon {
+  border-style: dashed;
+}
+
+.bounty-radar-dot {
+  --bounty-accent: #38bdf8;
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  border-radius: 999px;
+  color: transparent;
+  transform: translate(-50%, -50%);
+}
+
+.bounty-radar-dot:hover {
+  z-index: 7;
+}
+
+.bounty-radar-dot .bounty-radar-node-dot {
+  width: 0.38rem;
+  height: 0.38rem;
+  opacity: 0.72;
+  transition: transform 0.18s, box-shadow 0.18s, opacity 0.18s;
+}
+
+.bounty-radar-dot.is-priority .bounty-radar-node-dot {
+  width: 0.52rem;
+  height: 0.52rem;
+}
+
+.bounty-radar-dot .bounty-radar-pulse {
+  inset: -4px;
+  opacity: 0.55;
+}
+
+.bounty-radar-dot strong {
+  position: absolute;
+  bottom: calc(100% + 5px);
+  left: 50%;
+  z-index: 2;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--bounty-accent) 32%, rgba(148, 163, 184, 0.22));
+  border-radius: 8px;
+  background: rgba(2, 6, 23, 0.92);
+  backdrop-filter: blur(12px);
+  color: rgba(226, 232, 240, 0.92);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) scale(0.88);
+  transform-origin: bottom center;
+  transition:
+    opacity 0.14s,
+    transform 0.14s;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--bounty-accent) 20%, transparent);
+}
+
+.bounty-radar-dot strong small {
+  display: block;
+  color: var(--bounty-accent);
+  font-size: 0.48rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  margin-top: 0.18rem;
+  line-height: 1;
+}
+
+.bounty-radar-dot:hover strong,
+.bounty-radar-dot:focus-visible strong,
+.bounty-radar-dot.is-lit strong {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+.bounty-radar-dot.is-lit .bounty-radar-node-dot {
+  opacity: 1;
+  transform: scale(1.5);
+  box-shadow: 0 0 28px var(--bounty-accent), 0 0 8px var(--bounty-accent);
+}
+
+.bounty-radar-dot[data-tip-pos="below"] strong {
+  top: calc(100% + 5px);
+  bottom: auto;
+}
+
+.bounty-radar-dot[data-tip-align="left"] strong {
+  left: -0.5rem;
+  transform: translateX(0) scale(0.88);
+  transform-origin: left bottom;
+}
+
+.bounty-radar-dot[data-tip-align="left"][data-tip-pos="below"] strong {
+  transform-origin: left top;
+}
+
+.bounty-radar-dot[data-tip-align="left"]:hover strong,
+.bounty-radar-dot[data-tip-align="left"]:focus-visible strong,
+.bounty-radar-dot[data-tip-align="left"].is-lit strong {
+  transform: translateX(0) scale(1);
+}
+
+.bounty-radar-dot[data-tip-align="right"] strong {
+  left: auto;
+  right: -0.5rem;
+  transform: translateX(0) scale(0.88);
+  transform-origin: right bottom;
+}
+
+.bounty-radar-dot[data-tip-align="right"][data-tip-pos="below"] strong {
+  transform-origin: right top;
+}
+
+.bounty-radar-dot[data-tip-align="right"]:hover strong,
+.bounty-radar-dot[data-tip-align="right"]:focus-visible strong,
+.bounty-radar-dot[data-tip-align="right"].is-lit strong {
+  transform: translateX(0) scale(1);
+}
+
+.bounty-radar-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.9rem;
+  width: min(100%, 440px);
+  margin: 0.85rem 0 0 auto;
+  color: rgba(148, 163, 184, 0.86);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.bounty-radar-caption strong {
+  color: #7dd3fc;
+}
+
+.bounty-mobile-constellation {
+  --bounty-accent: #38bdf8;
+  position: relative;
+  display: none;
+  padding: 0.95rem;
+  border: 1px solid rgba(125, 211, 252, 0.18);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 18% 10%, rgba(56, 189, 248, 0.18), transparent 34%),
+    radial-gradient(circle at 90% 100%, rgba(250, 204, 21, 0.12), transparent 34%),
+    rgba(2, 6, 23, 0.9);
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 22px 58px rgba(0, 0, 0, 0.24);
+}
+
+.bounty-mobile-constellation::before {
+  content: "";
+  position: absolute;
+  inset: 0.75rem auto 0.75rem 1.35rem;
+  width: 1px;
+  background: linear-gradient(transparent, rgba(125, 211, 252, 0.62), transparent);
+  box-shadow: 0 0 18px rgba(125, 211, 252, 0.32);
+  animation: bounty-signal-line 2.8s ease-in-out infinite;
+}
+
+.bounty-mobile-constellation-head {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.72rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.13);
+}
+
+.bounty-mobile-constellation-head span,
+.bounty-mobile-constellation-head strong {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.bounty-mobile-constellation-head span {
+  color: rgba(226, 232, 240, 0.78);
+}
+
+.bounty-mobile-constellation-head strong {
+  color: #7dd3fc;
+}
+
+.bounty-mobile-signal-list {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.bounty-mobile-signal {
+  --bounty-accent: #38bdf8;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.65rem;
+  align-items: center;
+  min-height: 3.65rem;
+  padding: 0.68rem 0.72rem;
+  border: 1px solid color-mix(in srgb, var(--bounty-accent) 30%, rgba(148, 163, 184, 0.12));
+  border-radius: 15px;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--bounty-accent) 12%, transparent), transparent 56%),
+    rgba(15, 23, 42, 0.78);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 10px 26px rgba(0, 0, 0, 0.16);
+  animation: bounty-signal-rise 0.62s ease both;
+  animation-delay: calc(var(--bounty-index, 0) * 42ms);
+}
+
+.bounty-mobile-signal:hover {
+  filter: none;
+  border-color: var(--bounty-accent);
+  transform: translateX(3px);
+}
+
+.bounty-mobile-signal-pin {
+  position: relative;
+  width: 0.82rem;
+  height: 0.82rem;
+  border-radius: 999px;
+  background: var(--bounty-accent);
+  box-shadow: 0 0 18px var(--bounty-accent);
+}
+
+.bounty-mobile-signal-pin::after {
+  content: "";
+  position: absolute;
+  inset: -0.42rem;
+  border: 1px solid color-mix(in srgb, var(--bounty-accent) 42%, transparent);
+  border-radius: inherit;
+  animation: bounty-pulse 2.3s ease-out infinite;
+}
+
+.bounty-mobile-signal-main {
+  display: grid;
+  min-width: 0;
+  gap: 0.08rem;
+}
+
+.bounty-mobile-signal-main strong {
+  overflow: hidden;
+  color: rgba(248, 250, 252, 0.96);
+  font-size: 0.88rem;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bounty-mobile-signal-main small {
+  overflow: hidden;
+  color: rgba(148, 163, 184, 0.82);
+  font-size: 0.66rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bounty-mobile-signal-meta {
+  padding: 0.25rem 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--bounty-accent) 38%, transparent);
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--bounty-accent) 78%, #ffffff);
+  font-size: 0.56rem;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.bounty-console-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(280px, 1.2fr);
+  gap: 1rem;
+  margin: 1rem 0 4rem;
+}
+
+.bounty-stat-card,
+.bounty-terminal {
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(56, 189, 248, 0.12), transparent 36%),
+    rgba(8, 13, 25, 0.88);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 18px 42px rgba(0, 0, 0, 0.18);
+}
+
+.bounty-stat-card {
+  padding: 1.1rem 1.15rem;
+}
+
+.bounty-stat-card span,
+.bounty-terminal-head {
+  color: rgba(148, 163, 184, 0.78);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.bounty-stat-card strong {
+  display: block;
+  margin: 0.2rem 0 0.4rem;
+  color: #f8fafc;
+  font-size: clamp(1.55rem, 3vw, 2.45rem);
+  line-height: 1;
+  letter-spacing: -0.06em;
+}
+
+.bounty-stat-card p {
+  margin: 0;
+  color: rgba(148, 163, 184, 0.78);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.bounty-terminal {
+  grid-row: span 2;
+  padding: 1rem;
+  background:
+    linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(2, 6, 23, 0.94)),
+    rgba(8, 13, 25, 0.88);
+}
+
+.bounty-terminal-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.13);
+}
+
+.bounty-terminal ol {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bounty-terminal li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.7rem;
+  align-items: center;
+  padding: 0.68rem 0.72rem;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.58);
+}
+
+.bounty-terminal li span {
+  color: #7dd3fc;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.bounty-terminal li a {
+  color: rgba(248, 250, 252, 0.9);
+  font-size: 0.84rem;
+}
+
+.bounty-terminal li strong {
+  color: #facc15;
+  font-size: 0.86rem;
+}
+
+.bounty-featured-section,
+.bounty-market,
+.bounty-trophies {
+  margin-bottom: 4.5rem;
+}
+
+.bounty-section-heading {
+  max-width: 760px;
+  margin-bottom: 1.35rem;
+}
+
+.bounty-section-heading h2,
+.bounty-final-cta h2 {
+  margin: 0.45rem 0 0.7rem;
+  color: #f8fafc;
+  font-size: clamp(1.8rem, 4vw, 3.4rem);
+  line-height: 0.95;
+  letter-spacing: -0.075em;
+}
+
+.bounty-section-heading p,
+.bounty-final-cta p {
+  margin: 0;
+  color: rgba(203, 213, 225, 0.76);
+  line-height: 1.7;
+}
+
+.bounty-filter-panel {
+  position: relative;
+  display: grid;
+  gap: 0.85rem;
+  margin: 0 0 1.1rem;
+  padding: 1rem;
+  border: 1px solid rgba(125, 211, 252, 0.16);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.14), transparent 36%),
+    linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(2, 6, 23, 0.92));
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.055),
+    0 18px 46px rgba(0, 0, 0, 0.2);
+}
+
+.bounty-filter-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.78), transparent 86%);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.bounty-filter-head,
+.bounty-filter-row {
+  position: relative;
+  z-index: 2;
+}
+
+.bounty-filter-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.13);
+}
+
+.bounty-filter-head div {
+  display: grid;
+  gap: 0.16rem;
+}
+
+.bounty-filter-head span,
+.bounty-filter-row > span {
+  color: rgba(148, 163, 184, 0.82);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.bounty-filter-head strong {
+  color: #f8fafc;
+  font-size: 0.9rem;
+}
+
+.bounty-filter-reset,
+.bounty-filter-btn {
+  border: 0;
+  font-family: var(--font-mono);
+  cursor: pointer;
+}
+
+.bounty-filter-reset {
+  min-height: 2.15rem;
+  padding: 0.5rem 0.72rem;
+  border: 1px solid rgba(250, 204, 21, 0.24);
+  border-radius: 999px;
+  background: rgba(250, 204, 21, 0.08);
+  color: #fde68a;
+  font-size: 0.66rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bounty-filter-reset:hover {
+  background: rgba(250, 204, 21, 0.14);
+}
+
+.bounty-filter-row {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.bounty-filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.bounty-filter-btn {
+  min-height: 2.05rem;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.005)),
+    rgba(15, 23, 42, 0.72);
+  color: rgba(226, 232, 240, 0.78);
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.bounty-filter-btn:hover {
+  color: #f8fafc;
+  border-color: rgba(125, 211, 252, 0.42);
+  transform: translateY(-1px);
+}
+
+.bounty-filter-btn.active {
+  color: #031316;
+  border-color: rgba(125, 211, 252, 0.72);
+  background: linear-gradient(135deg, #7dd3fc, #34d399 62%, #facc15);
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.2);
+}
+
+.bounty-empty-state {
+  padding: 1.35rem;
+  border: 1px dashed rgba(125, 211, 252, 0.22);
+  border-radius: 20px;
+  background: rgba(8, 13, 25, 0.74);
+  text-align: center;
+}
+
+.bounty-empty-state span {
+  display: block;
+  color: #f8fafc;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.bounty-empty-state p {
+  margin: 0.35rem 0 0;
+  color: rgba(203, 213, 225, 0.72);
+}
+
+.bounty-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+}
+
+.bounty-grid .bounty-card {
+  grid-column: span 3;
+}
+
+.bounty-grid .bounty-card:nth-child(3n + 1) {
+  grid-column: span 4;
+}
+
+.bounty-grid .bounty-card:nth-child(3n + 2) {
+  grid-column: span 2;
+}
+
+.bounty-card {
+  --bounty-accent: #38bdf8;
+  container-type: inline-size;
+  position: relative;
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  gap: 1rem;
+  padding: clamp(1.05rem, 2vw, 1.35rem);
+  border: 1px solid color-mix(in srgb, var(--bounty-accent) 28%, rgba(148, 163, 184, 0.12));
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 100% 0, color-mix(in srgb, var(--bounty-accent) 19%, transparent), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01)),
+    rgba(8, 13, 25, 0.9);
+  overflow: hidden;
+  scroll-margin-top: calc(var(--header-height) + 1.25rem);
+  box-shadow:
+    0 22px 58px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055);
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.bounty-card:hover {
+  transform: translateY(-5px);
+  border-color: color-mix(in srgb, var(--bounty-accent) 72%, rgba(255, 255, 255, 0.12));
+  box-shadow:
+    0 28px 76px rgba(0, 0, 0, 0.34),
+    0 0 46px color-mix(in srgb, var(--bounty-accent) 16%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.bounty-card-featured {
+  min-height: auto;
+  padding: clamp(1.3rem, 3vw, 2rem);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 85% 12%, color-mix(in srgb, var(--bounty-accent) 26%, transparent), transparent 32%),
+    radial-gradient(circle at 16% 86%, rgba(250, 204, 21, 0.14), transparent 30%),
+    linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(2, 6, 23, 0.98));
+}
+
+.bounty-card-glow {
+  position: absolute;
+  inset: auto -18% -34% 18%;
+  height: 48%;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bounty-accent) 16%, transparent);
+  filter: blur(52px);
+  opacity: 0.82;
+  pointer-events: none;
+}
+
+.bounty-card-scan {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.045), transparent);
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bounty-card:hover .bounty-card-scan {
+  animation: bounty-scan 1.8s ease;
+}
+
+.bounty-card-top,
+.bounty-card-main,
+.bounty-card-footer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.9rem;
+}
+
+.bounty-card-top {
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.bounty-status,
+.bounty-target {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.55rem;
+  padding: 0.22rem 0.55rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bounty-status {
+  color: #020617;
+  background: var(--bounty-accent);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--bounty-accent) 34%, transparent);
+}
+
+.bounty-status-shipped {
+  background: #34d399;
+}
+
+.bounty-status-claimed {
+  background: #7dd3fc;
+}
+
+.bounty-status-scoped {
+  background: #facc15;
+}
+
+.bounty-status-open {
+  background: #a78bfa;
+}
+
+.bounty-target {
+  color: rgba(226, 232, 240, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(15, 23, 42, 0.72);
+}
+
+.bounty-card-main {
+  align-items: flex-start;
+}
+
+.bounty-card-main > div {
+  min-width: 0;
+}
+
+.bounty-card h3 {
+  margin: 0;
+  color: #f8fafc;
+  font-size: clamp(1.5rem, 4vw, 2.7rem);
+  line-height: 0.95;
+  letter-spacing: -0.07em;
+  overflow-wrap: break-word;
+}
+
+.bounty-card-tagline {
+  margin: 0.55rem 0 0;
+  color: rgba(226, 232, 240, 0.84);
+  font-size: 0.96rem;
+  line-height: 1.45;
+}
+
+
+.bounty-card-desc {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  color: rgba(203, 213, 225, 0.72);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+.bounty-capabilities {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.bounty-tags {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.bounty-tags span {
+  padding: 0.18rem 0.45rem;
+  border: 1px solid rgba(148, 163, 184, 0.13);
+  border-radius: 999px;
+  background: rgba(2, 6, 23, 0.34);
+  color: rgba(148, 163, 184, 0.8);
+  font-size: 0.62rem;
+  letter-spacing: 0.02em;
+}
+
+.bounty-tags span:first-child {
+  border-color: color-mix(in srgb, var(--bounty-accent) 32%, transparent);
+  color: color-mix(in srgb, var(--bounty-accent) 72%, #ffffff);
+}
+
+.bounty-capability {
+  padding: 0.25rem 0.48rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(15, 23, 42, 0.7);
+  color: rgba(226, 232, 240, 0.76);
+  font-size: 0.66rem;
+  line-height: 1;
+}
+
+.bounty-capability-ready {
+  border-color: rgba(52, 211, 153, 0.32);
+  color: #86efac;
+  background: rgba(22, 163, 74, 0.08);
+}
+
+.bounty-capability-needed {
+  border-color: color-mix(in srgb, var(--bounty-accent) 36%, transparent);
+  color: color-mix(in srgb, var(--bounty-accent) 78%, #ffffff);
+}
+
+.bounty-capability-stretch {
+  border-style: dashed;
+  color: rgba(203, 213, 225, 0.64);
+}
+
+.bounty-signal,
+.bounty-next-step {
+  position: relative;
+  z-index: 2;
+}
+
+.bounty-signal,
+.bounty-next-step {
+  padding: 0.85rem 0.9rem;
+  border: 1px solid rgba(148, 163, 184, 0.13);
+  border-radius: 16px;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--bounty-accent) 9%, transparent), transparent),
+    rgba(2, 6, 23, 0.38);
+}
+
+.bounty-next-step {
+  background:
+    linear-gradient(90deg, rgba(250, 204, 21, 0.08), transparent),
+    rgba(2, 6, 23, 0.28);
+}
+
+.bounty-signal span,
+.bounty-next-step span {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--bounty-accent);
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.bounty-next-step span {
+  color: #facc15;
+}
+
+.bounty-signal p,
+.bounty-next-step p {
+  margin: 0;
+  color: rgba(226, 232, 240, 0.76);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.bounty-card-footer {
+  margin-top: auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  padding-top: 0.45rem;
+}
+
+.bounty-action-primary,
+.bounty-action-secondary {
+  position: relative;
+  isolation: isolate;
+  min-height: 2.8rem;
+  padding: 0.72rem 0.95rem;
+  border-radius: 0.9rem;
+  font-size: 0.7rem;
+  overflow: hidden;
+}
+
+.bounty-action-primary {
+  grid-column: 1 / -1;
+  gap: 0.55rem;
+  color: #031316;
+  border: 1px solid color-mix(in srgb, var(--bounty-accent) 62%, #ffffff 18%);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--bounty-accent) 72%, #ffffff), #34d399 58%, #facc15),
+    var(--bounty-accent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--bounty-accent) 22%, transparent),
+    0 14px 34px color-mix(in srgb, var(--bounty-accent) 18%, rgba(0, 0, 0, 0.2));
+}
+
+.bounty-action-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, transparent 0 28%, rgba(255, 255, 255, 0.5) 44%, transparent 62% 100%);
+  transform: translateX(-120%);
+  transition: transform 0.45s ease;
+}
+
+.bounty-action-primary:hover::before {
+  transform: translateX(120%);
+}
+
+.bounty-action-primary svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  transition: transform 0.18s ease;
+}
+
+.bounty-action-primary:hover svg {
+  transform: translateX(3px);
+}
+
+.bounty-action-secondary {
+  gap: 0.45rem;
+  width: 100%;
+  color: rgba(226, 232, 240, 0.88);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.005)),
+    rgba(15, 23, 42, 0.74);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 10px 24px rgba(0, 0, 0, 0.14);
+}
+
+.bounty-action-secondary:hover {
+  color: #f8fafc;
+  border-color: color-mix(in srgb, var(--bounty-accent) 42%, rgba(148, 163, 184, 0.18));
+  background:
+    radial-gradient(circle at 0 0, color-mix(in srgb, var(--bounty-accent) 16%, transparent), transparent 58%),
+    rgba(15, 23, 42, 0.9);
+}
+
+.bounty-action-icon {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex: 0 0 auto;
+  color: color-mix(in srgb, var(--bounty-accent) 78%, #ffffff);
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--bounty-accent) 34%, transparent));
+}
+
+.bounty-action-sponsor .bounty-action-icon {
+  fill: none;
+  stroke: currentColor;
+  stroke-linejoin: round;
+  stroke-width: 1.45;
+}
+
+.bounty-action-discord:hover {
+  border-color: rgba(88, 101, 242, 0.5);
+}
+
+.bounty-action-discord:hover .bounty-action-icon {
+  color: #8ea1ff;
+}
+
+.bounty-action-sponsor:hover .bounty-action-icon {
+  color: #fde68a;
+}
+
+.bounty-action-share.is-active {
+  border-color: color-mix(in srgb, var(--bounty-accent) 42%, rgba(148, 163, 184, 0.18));
+  color: var(--bounty-accent);
+}
+
+@container (max-width: 320px) {
+  .bounty-action-label {
+    display: none;
+  }
+
+  .bounty-action-secondary {
+    justify-content: center;
+    padding: 0.72rem 0.5rem;
+  }
+}
+
+.bounty-share-panel {
+  position: relative;
+  z-index: 2;
+  padding: 0.9rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--bounty-accent) 22%, rgba(148, 163, 184, 0.14));
+  border-radius: 14px;
+  background: rgba(2, 6, 23, 0.68);
+  backdrop-filter: blur(14px);
+  animation: bounty-signal-rise 0.18s ease both;
+}
+
+.bounty-share-preview {
+  margin: 0 0 0.7rem;
+  color: rgba(203, 213, 225, 0.72);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.bounty-share-preview strong {
+  color: rgba(226, 232, 240, 0.95);
+  font-weight: 600;
+}
+
+.bounty-share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.bounty-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  padding: 0.42rem 0.72rem;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.72);
+  color: rgba(226, 232, 240, 0.82);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: border-color 0.14s, background 0.14s, color 0.14s;
+}
+
+.bounty-share-btn:hover {
+  border-color: rgba(125, 211, 252, 0.38);
+  background: rgba(15, 23, 42, 0.94);
+  color: #f8fafc;
+}
+
+.bounty-trophy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.bounty-trophy {
+  --bounty-accent: #34d399;
+  position: relative;
+  min-height: 12rem;
+  padding: 1.1rem;
+  border: 1px solid color-mix(in srgb, var(--bounty-accent) 26%, rgba(148, 163, 184, 0.1));
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 100% 0, color-mix(in srgb, var(--bounty-accent) 18%, transparent), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.005)),
+    rgba(8, 13, 25, 0.88);
+  overflow: hidden;
+}
+
+.bounty-trophy::after {
+  content: "";
+  position: absolute;
+  width: 9rem;
+  height: 9rem;
+  right: -3.5rem;
+  bottom: -3.8rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--bounty-accent) 24%, transparent);
+  box-shadow: inset 0 0 36px color-mix(in srgb, var(--bounty-accent) 14%, transparent);
+}
+
+.bounty-trophy:hover {
+  transform: translateY(-4px);
+  border-color: var(--bounty-accent);
+  filter: none;
+}
+
+.bounty-trophy-medal {
+  display: inline-flex;
+  margin-bottom: 1.3rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  background: #34d399;
+  color: #03130d;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.bounty-trophy strong {
+  display: block;
+  color: #f8fafc;
+  font-size: 1.35rem;
+  letter-spacing: -0.04em;
+}
+
+.bounty-trophy p {
+  margin: 0.5rem 0 0;
+  color: rgba(203, 213, 225, 0.72);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.bounty-final-cta {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(1.35rem, 4vw, 2.4rem);
+  border: 1px solid rgba(250, 204, 21, 0.24);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 0 0, rgba(250, 204, 21, 0.18), transparent 34%),
+    radial-gradient(circle at 100% 90%, rgba(56, 189, 248, 0.14), transparent 30%),
+    rgba(8, 13, 25, 0.94);
+  overflow: hidden;
+}
+
+.bounty-final-cta > div {
+  max-width: 680px;
+}
+
+@keyframes bounty-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@property --bounty-sweep-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes bounty-sweep {
+  from { --bounty-sweep-angle: 0deg; }
+  to { --bounty-sweep-angle: 360deg; }
+}
+
+@keyframes bounty-link-flow {
+  to {
+    stroke-dashoffset: -22;
+  }
+}
+
+@keyframes bounty-pulse {
+  0% {
+    opacity: 0.72;
+    transform: scale(0.82);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.55);
+  }
+}
+
+@keyframes bounty-scan {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  22% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+@keyframes bounty-signal-line {
+  0%,
+  100% {
+    opacity: 0.42;
+    transform: scaleY(0.72);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes bounty-signal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 980px) {
+  .plugin-bounty-teaser,
+  .bounty-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .bounty-hero {
+    min-height: auto;
+  }
+
+  .bounty-radar,
+  .bounty-radar-caption {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .bounty-console-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bounty-terminal {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .bounty-grid,
+  .bounty-grid .bounty-card,
+  .bounty-grid .bounty-card:nth-child(3n + 1),
+  .bounty-grid .bounty-card:nth-child(3n + 2) {
+    grid-template-columns: 1fr;
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .plugin-bounty-teaser {
+    padding: 1.1rem;
+    border-radius: 18px;
+  }
+
+  .plugin-bounty-mini-card:nth-child(2),
+  .plugin-bounty-mini-card:nth-child(3) {
+    margin-left: 0;
+  }
+
+  .bounty-hero {
+    padding: 1.1rem;
+    border-radius: 22px;
+  }
+
+  .bounty-hero h1 {
+    font-size: clamp(2.28rem, 14vw, 3.55rem);
+  }
+
+  .bounty-mobile-constellation {
+    display: none;
+  }
+
+  .bounty-radar-caption {
+    width: 100%;
+    margin-top: 0.75rem;
+  }
+
+  .bounty-radar-caption,
+  .bounty-console-grid,
+  .bounty-card-main,
+  .bounty-final-cta {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .bounty-console-grid {
+    display: grid;
+  }
+
+  .bounty-filter-head,
+  .bounty-filter-row {
+    grid-template-columns: 1fr;
+  }
+
+  .bounty-filter-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .bounty-filter-options {
+    flex-wrap: nowrap;
+    margin: 0 -1rem;
+    padding: 0 1rem 0.1rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .bounty-filter-options::-webkit-scrollbar {
+    display: none;
+  }
+
+  .bounty-filter-btn {
+    flex: 0 0 auto;
+  }
+
+.bounty-card-footer,
+  .bounty-hero-actions {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .bounty-primary,
+  .bounty-secondary,
+  .bounty-action-primary,
+  .bounty-action-secondary,
+  .plugin-bounty-teaser-cta {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plugin-bounty-teaser-bg,
+  .bounty-hero-orbit,
+  .bounty-radar-sweep,
+  .bounty-radar-link,
+  .bounty-radar-pulse,
+  .bounty-mobile-constellation::before,
+  .bounty-mobile-signal,
+  .bounty-mobile-signal-pin::after,
+  .bounty-card:hover .bounty-card-scan {
+    animation: none;
   }
 }

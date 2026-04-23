@@ -40,6 +40,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
+      url: `${BASE_URL}/plugins/bounties`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.75,
+    },
+    {
       url: `${BASE_URL}/roadmap`,
       lastModified: new Date(),
       changeFrequency: "weekly",

@@ -12,6 +12,7 @@ import { getAllPlugins } from "@/lib/plugins";
 
 import { SiteHeader } from "@/components/SiteHeader";
 import { DownloadButtons } from "@/components/DownloadButtons";
+import { PluginBountyTeaser } from "@/components/PluginBountyTeaser";
 import { SponsorsSection, IconExternalLink, IconArrow } from "@/components/SponsorsSection";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { ExpandableText } from "@/components/ExpandableText";
@@ -686,6 +687,8 @@ export default function HomePage() {
           </svg>
           Edit on GitHub
         </a>
+
+        <PluginBountyTeaser />
 
         <h3
           style={{

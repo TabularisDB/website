@@ -112,6 +112,11 @@ const navGroups: NavGroup[] = [
             description: "Extend engines and workflows with the plugin ecosystem.",
           },
           {
+            label: "Bounty Board",
+            href: "/plugins/bounties",
+            description: "Vote, sponsor, or claim the next database drivers.",
+          },
+          {
             label: "Roadmap",
             href: "/roadmap",
             description: "See what is shipping next and where the product is going.",

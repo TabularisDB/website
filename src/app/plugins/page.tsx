@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
+import { PluginBountyTeaser } from "@/components/PluginBountyTeaser";
 import { getAllPlugins, getLatestRelease } from "@/lib/plugins";
 
 export const metadata: Metadata = {
@@ -134,6 +135,8 @@ export default function PluginsPage() {
             );
           })}
         </div>
+
+        <PluginBountyTeaser />
 
         <div className="plugin-cta">
           <h3>Build Your Own Plugin</h3>
