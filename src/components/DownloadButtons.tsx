@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { DownloadModal } from "./DownloadModal";
 import type { Platform } from "./DownloadModal";
 
@@ -41,7 +41,13 @@ function PlatformIcon({ platform }: { platform: Platform }) {
   );
 }
 
-export function DownloadButtons({ showInstallLink = false }: { showInstallLink?: boolean }) {
+export function DownloadButtons({
+  showInstallLink = false,
+  trailing,
+}: {
+  showInstallLink?: boolean;
+  trailing?: ReactNode;
+}) {
   const [modalPlatform, setModalPlatform] = useState<Platform | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [detected, setDetected] = useState<Platform>("windows");
@@ -65,23 +71,26 @@ export function DownloadButtons({ showInstallLink = false }: { showInstallLink?:
   return (
     <>
       <div className="download-wrap" ref={wrapperRef}>
-        <div className="download-split">
-          <button
-            className="download-split__main"
-            onClick={() => { setModalPlatform(detected); setDropdownOpen(false); }}
-          >
-            <PlatformIcon platform={detected} />
-            Download for <strong>{PLATFORM_LABELS[detected]}</strong>
-          </button>
-          <button
-            className={`download-split__chevron${dropdownOpen ? " download-split__chevron--open" : ""}`}
-            onClick={() => setDropdownOpen((v) => !v)}
-            aria-label="Other platforms"
-          >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-              <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
+        <div className="download-row">
+          <div className="download-split">
+            <button
+              className="download-split__main"
+              onClick={() => { setModalPlatform(detected); setDropdownOpen(false); }}
+            >
+              <PlatformIcon platform={detected} />
+              Download for <strong>{PLATFORM_LABELS[detected]}</strong>
+            </button>
+            <button
+              className={`download-split__chevron${dropdownOpen ? " download-split__chevron--open" : ""}`}
+              onClick={() => setDropdownOpen((v) => !v)}
+              aria-label="Other platforms"
+            >
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+          </div>
+          {trailing}
         </div>
 
         {dropdownOpen && (

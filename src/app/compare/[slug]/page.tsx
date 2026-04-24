@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { WikiContent } from "@/components/WikiContent";
 import { ComparisonTable } from "@/components/ComparisonTable";
 import { SeoPageHeroVisual } from "@/components/SeoPagePreview";
+import { SeoCapture } from "@/components/SeoCapture";
 import {
   getAdjacentSeoPages,
   getSeoPageBySlug,
@@ -93,6 +94,8 @@ export default async function CompareDetailPage({ params }: PageProps) {
         <ComparisonTable slug={slug} />
 
         <WikiContent html={page.html} />
+
+        <SeoCapture section="compare" title={page.meta.title} />
 
         <div className="post-footer-cta">
           <p>Compare on your own workflow with the desktop app and docs.</p>

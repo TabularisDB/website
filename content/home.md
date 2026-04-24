@@ -6,7 +6,7 @@ Tabularis started from a simple frustration: too many database clients make rout
 
 It supports **PostgreSQL**, **MySQL/MariaDB**, and **SQLite** out of the box, and it is **hackable with plugins** when your workflow needs more. Query data, inspect schemas, manage connections, and document analysis without constantly switching tools.
 
-# Capabilities
+# Features
 
 ### 🔌 Multi-Database
 Use **PostgreSQL** (with multi-schema support), **MySQL/MariaDB**, and **SQLite** from one consistent interface. Save connection profiles locally and switch contexts quickly.

@@ -5,6 +5,7 @@ import { getAllWikiPages } from "@/lib/wiki";
 import { getAllPosts } from "@/lib/posts";
 import { getAllSeoPages, getSeoPagePath } from "@/lib/seoPages";
 import { getAllInitiativeSlugs } from "@/lib/roadmap";
+import { getAllVideoDemos } from "@/lib/videos";
 
 const BASE_URL = "https://tabularis.dev";
 
@@ -13,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts();
   const seoPages = getAllSeoPages();
   const initiativeSlugs = getAllInitiativeSlugs();
+  const videos = getAllVideoDemos();
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -63,6 +65,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    {
+      url: `${BASE_URL}/videos`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.75,
+    },
   ];
 
   const wikiRoutes: MetadataRoute.Sitemap = wikiPages.map((page) => ({
@@ -93,11 +101,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.75,
   }));
 
+  const videoRoutes: MetadataRoute.Sitemap = videos.map((video) => ({
+    url: `${BASE_URL}/videos/${video.slug}`,
+    lastModified: new Date(video.uploadDate),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
   return [
     ...staticRoutes,
     ...wikiRoutes,
     ...blogRoutes,
     ...seoRoutes,
     ...roadmapRoutes,
+    ...videoRoutes,
   ];
 }

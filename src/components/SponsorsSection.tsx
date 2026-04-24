@@ -52,7 +52,7 @@ function IconStar() {
 
 // ─── Shared sub-components ────────────────────────────────────────────────────
 
-export function SponsorLogo({ sponsor, size, imgOverride }: { sponsor: Sponsor; size: number; imgOverride?: string }) {
+export function SponsorLogo({ sponsor, size, imgOverride, priority }: { sponsor: Sponsor; size: number; imgOverride?: string; priority?: boolean }) {
   const containerStyle = sponsor.logoImgBg
     ? { background: sponsor.logoImgBg, borderRadius: "10px", padding: "0.4rem" }
     : undefined;
@@ -66,6 +66,7 @@ export function SponsorLogo({ sponsor, size, imgOverride }: { sponsor: Sponsor; 
           alt={sponsor.name}
           width={size}
           height={size}
+          priority={priority}
           style={{ objectFit: "contain", width: size, height: size, display: "block" }}
         />
       ) : (
@@ -208,7 +209,7 @@ export function SponsorModal({ sponsor, onClose }: { sponsor: Sponsor | null; on
 
 // ─── Card ─────────────────────────────────────────────────────────────────────
 
-export function SponsorCard({ sponsor, onLearnMore }: { sponsor: Sponsor; onLearnMore: () => void }) {
+export function SponsorCard({ sponsor, onLearnMore, priority }: { sponsor: Sponsor; onLearnMore: () => void; priority?: boolean }) {
   return (
     <div
       className="sponsor-card"
@@ -218,7 +219,7 @@ export function SponsorCard({ sponsor, onLearnMore }: { sponsor: Sponsor; onLear
 
       <div className="sponsor-card-top">
         <div className="sponsor-logo">
-          <SponsorLogo sponsor={sponsor} size={100} />
+          <SponsorLogo sponsor={sponsor} size={100} priority={priority} />
         </div>
         <a
           href={withUtm(sponsor.url)}
@@ -307,11 +308,12 @@ export function SponsorsSection() {
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          {SPONSORS.map((sponsor) => (
+          {SPONSORS.map((sponsor, i) => (
             <SponsorCard
               key={sponsor.id}
               sponsor={sponsor}
               onLearnMore={() => setActiveSponsor(sponsor)}
+              priority={i === 0}
             />
           ))}
         </div>

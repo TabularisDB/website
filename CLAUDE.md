@@ -59,7 +59,12 @@ Almost every page is driven by Markdown in `content/`, loaded by a matching `src
 
 Loaders all follow the same pattern: read files with `fs` at module scope, parse frontmatter with `gray-matter`, render body with the shared `marked` instance from `src/lib/markdown.ts`. This only works because `next build` runs Node — do not import these loaders into a client component.
 
-`src/app/sitemap.ts` fans out over every loader and must be updated when adding a new content type.
+Two exceptions to the loader pattern:
+
+- **`content/home.md`** is parsed inline by `getHomeContent()` inside `src/app/page.tsx` (not via a `src/lib/home.ts` module). It's split by `#`/`###` headings into the hero, capabilities grid, and closing CTA — edits to `home.md` structure need to stay compatible with that parser.
+- **`/videos` and `/videos/[slug]`** are **not** markdown-driven. They render from a hardcoded `VIDEO_DEMOS` array in `src/lib/videos.ts`; add/edit demos there, and remember the referenced `public/videos/...` asset must also exist.
+
+`src/app/sitemap.ts` fans out over every loader **and** the `videos` array, and must be updated when adding a new content type or code-driven route family.
 
 ### Custom Markdown extensions
 

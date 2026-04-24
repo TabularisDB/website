@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { PLATFORM_CONFIG } from "@/lib/downloadConfig";
 
 export type { Platform } from "@/lib/downloadConfig";
@@ -13,6 +14,11 @@ interface DownloadModalProps {
 export function DownloadModal({ platform, onClose }: DownloadModalProps) {
   const open = platform !== null;
   const config = platform ? PLATFORM_CONFIG[platform] : null;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!open || !platform) return;
@@ -34,7 +40,7 @@ export function DownloadModal({ platform, onClose }: DownloadModalProps) {
     if (e.target === e.currentTarget) onClose();
   }
 
-  return (
+  const modal = (
     <div
       className={`dl-overlay${open ? " open" : ""}`}
       onClick={handleOverlayClick}
@@ -112,4 +118,8 @@ export function DownloadModal({ platform, onClose }: DownloadModalProps) {
       )}
     </div>
   );
+
+  if (!mounted) return null;
+
+  return createPortal(modal, document.body);
 }

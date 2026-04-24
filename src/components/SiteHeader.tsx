@@ -132,7 +132,7 @@ const navGroups: NavGroup[] = [
   },
   {
     label: "Resources",
-    matchPrefixes: ["/blog", "/changelog", "/compare", "/solutions"],
+    matchPrefixes: ["/blog", "/changelog", "/compare", "/solutions", "/videos"],
     columns: [
       {
         title: "Learn",
@@ -151,6 +151,11 @@ const navGroups: NavGroup[] = [
             label: "Solutions",
             href: "/solutions",
             description: "Use-case pages for developer workflows and teams.",
+          },
+          {
+            label: "Product Demos",
+            href: "/videos",
+            description: "Short videos for the workflows developers evaluate first.",
           },
         ],
       },

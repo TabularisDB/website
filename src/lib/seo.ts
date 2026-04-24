@@ -92,3 +92,31 @@ export function buildArticleJsonLd(input: {
     mainEntityOfPage: toAbsoluteUrl(input.path),
   };
 }
+
+export function buildVideoObjectJsonLd(input: {
+  title: string;
+  description: string;
+  src: string;
+  poster: string;
+  uploadDate: string;
+  slug: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name: input.title,
+    description: input.description,
+    thumbnailUrl: [toAbsoluteUrl(input.poster)],
+    uploadDate: input.uploadDate,
+    contentUrl: toAbsoluteUrl(input.src),
+    embedUrl: toAbsoluteUrl(`/videos/${input.slug}`),
+    publisher: {
+      "@type": "Organization",
+      name: "Tabularis",
+      logo: {
+        "@type": "ImageObject",
+        url: toAbsoluteUrl("/img/logo.png"),
+      },
+    },
+  };
+}

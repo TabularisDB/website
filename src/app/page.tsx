@@ -7,11 +7,10 @@ import { Footer } from "@/components/Footer";
 import { DiscordIcon } from "@/components/Icons";
 import { getAllPosts } from "@/lib/posts";
 import { PostCard } from "@/components/PostCard";
-import { APP_VERSION } from "@/lib/version";
 import { getAllPlugins } from "@/lib/plugins";
 
 import { SiteHeader } from "@/components/SiteHeader";
-import { DownloadButtons } from "@/components/DownloadButtons";
+import { HomeHero } from "@/components/HomeHero";
 import { PluginBountyTeaser } from "@/components/PluginBountyTeaser";
 import { SponsorsSection, IconExternalLink, IconArrow } from "@/components/SponsorsSection";
 import { VideoPlayer } from "@/components/VideoPlayer";
@@ -162,32 +161,7 @@ export default function HomePage() {
         ]}
       />
       <SiteHeader />
-      {latestPost && (
-        <Link href={`/blog/${latestPost.slug}`} className="home-latest-post">
-          <span className="home-latest-post-eyebrow">Latest from the blog</span>
-          <span className="home-latest-post-title">{latestPost.title} →</span>
-        </Link>
-      )}
-      {/* HERO */}
-      <header className="hero">
-        <div className="hero-badges">
-          <span className="badge version">v{APP_VERSION}</span>
-          <span className="badge">Open Source</span>
-          <span className="badge">Apache 2.0</span>
-        </div>
-
-        <p>
-          An open-source desktop client for modern databases.
-          <br />
-          Supports <strong>PostgreSQL</strong>, <strong>MySQL/MariaDB</strong>,
-          and <strong>SQLite</strong>. Hackable with plugins.
-          <br />
-          Notebooks, AI, and MCP included for real daily work.
-        </p>
-
-        <DownloadButtons showInstallLink />
-
-      </header>
+      <HomeHero latestPost={latestPost} />
 
       {/* MAIN SCREENSHOT */}
       <VideoPlayer
@@ -304,7 +278,7 @@ export default function HomePage() {
 
       {/* CAPABILITIES */}
       <section className="section">
-        <h2>Capabilities</h2>
+        <h2>Features</h2>
         <CarouselGrid className="features-grid">
           <article className="feature-card has-screenshot">
             <Link href="/wiki/connections" className="feature-card-screenshot">

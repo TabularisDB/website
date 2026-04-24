@@ -4,22 +4,34 @@ import Script from "next/script";
 
 interface NewsletterFormProps {
   compact?: boolean;
+  title?: string;
+  description?: string;
+  buttonLabel?: string;
 }
 
 const EMAILCHEF_SCRIPT =
   "https://app.emailchef.com/signup/form.js/7o22666s726q5s6964223n2237353333227q/en/api";
 
-export function NewsletterForm({ compact = false }: NewsletterFormProps) {
+export function NewsletterForm({
+  compact = false,
+  title,
+  description,
+  buttonLabel = "Subscribe",
+}: NewsletterFormProps) {
+  const resolvedTitle = title ?? (compact ? "Stay in the loop" : "Subscribe to the newsletter");
+  const resolvedDescription =
+    description ??
+    (compact
+      ? "Get release notes, tips, and project updates. No spam, unsubscribe anytime."
+      : "Get release announcements, development insights, tips, and project updates delivered to your inbox. No spam, unsubscribe anytime.");
+
   if (compact) {
     return (
       <div className="newsletter-box newsletter-compact">
         <div className="newsletter-compact-body">
           <div className="newsletter-compact-text">
-            <h3>Stay in the loop</h3>
-            <p>
-              Get release notes, tips, and project updates. No spam,
-              unsubscribe anytime.
-            </p>
+            <h3>{resolvedTitle}</h3>
+            <p>{resolvedDescription}</p>
           </div>
           <form
             method="POST"
@@ -40,7 +52,7 @@ export function NewsletterForm({ compact = false }: NewsletterFormProps) {
                 aria-label="Email address"
               />
               <button type="submit" className="newsletter-btn">
-                Subscribe &rarr;
+                {buttonLabel} &rarr;
               </button>
             </div>
             <Script src={EMAILCHEF_SCRIPT} strategy="lazyOnload" />
@@ -53,11 +65,8 @@ export function NewsletterForm({ compact = false }: NewsletterFormProps) {
   return (
     <div className="newsletter-box">
       <div className="newsletter-header">
-        <h3>Subscribe to the newsletter</h3>
-        <p>
-          Get release announcements, development insights, and project updates
-          delivered to your inbox. No spam, unsubscribe anytime.
-        </p>
+        <h3>{resolvedTitle}</h3>
+        <p>{resolvedDescription}</p>
       </div>
       <form
         method="POST"
@@ -67,31 +76,7 @@ export function NewsletterForm({ compact = false }: NewsletterFormProps) {
         <input type="hidden" name="form_id" value="7533" />
         <input type="hidden" name="lang" value="" />
         <input type="hidden" name="referrer" value="" />
-        <div className="newsletter-fields">
-          <div className="newsletter-row">
-            <label className="newsletter-label" htmlFor="nl-fname">
-              First name
-            </label>
-            <input
-              type="text"
-              id="nl-fname"
-              name="field[-2]"
-              className="newsletter-input"
-              placeholder="John"
-            />
-          </div>
-          <div className="newsletter-row">
-            <label className="newsletter-label" htmlFor="nl-lname">
-              Last name
-            </label>
-            <input
-              type="text"
-              id="nl-lname"
-              name="field[-3]"
-              className="newsletter-input"
-              placeholder="Doe"
-            />
-          </div>
+        <div className="newsletter-fields newsletter-fields-single">
           <div className="newsletter-row">
             <label className="newsletter-label" htmlFor="nl-email">
               Email <span className="newsletter-required">*</span>
@@ -107,7 +92,7 @@ export function NewsletterForm({ compact = false }: NewsletterFormProps) {
           </div>
         </div>
         <button type="submit" className="newsletter-btn">
-          Subscribe
+          {buttonLabel}
         </button>
         <Script src={EMAILCHEF_SCRIPT} strategy="lazyOnload" />
       </form>

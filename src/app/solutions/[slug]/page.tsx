@@ -5,6 +5,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { WikiContent } from "@/components/WikiContent";
+import { SeoCapture } from "@/components/SeoCapture";
 import {
   getAdjacentSeoPages,
   getSeoPageBySlug,
@@ -93,6 +94,8 @@ export default async function SolutionDetailPage({ params }: PageProps) {
         </div>
 
         <WikiContent html={page.html} />
+
+        <SeoCapture section="solutions" title={page.meta.title} />
 
         <div className="post-footer-cta">
           <p>Try the workflow locally or dig into the product docs.</p>
