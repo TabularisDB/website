@@ -66,6 +66,28 @@ const VIDEO_DEMOS: VideoDemo[] = [
     relatedLabel: "Read the Visual EXPLAIN guide",
   },
   {
+    slug: "data-grid",
+    title: "Interactive Data Grid Demo",
+    description:
+      "Explore query results in the Tabularis data grid with inline editing, filtering, sorting, and column tools.",
+    src: "/videos/wiki/06-data-grid.mp4",
+    poster: "/videos/wiki/06-data-grid.jpg",
+    uploadDate: "2026-04-24",
+    relatedHref: "/wiki/data-grid",
+    relatedLabel: "Read the data grid guide",
+  },
+  {
+    slug: "split-view",
+    title: "Split View for Parallel Database Work",
+    description:
+      "Open multiple editors, notebooks, and result grids side by side to compare queries and work across connections.",
+    src: "/videos/wiki/07-split-view.mp4",
+    poster: "/videos/wiki/07-split-view.jpg",
+    uploadDate: "2026-04-24",
+    relatedHref: "/wiki/split-view",
+    relatedLabel: "Read the split view guide",
+  },
+  {
     slug: "plugins",
     title: "Plugin Manager and Extensible Database Support",
     description:
@@ -86,6 +108,28 @@ const VIDEO_DEMOS: VideoDemo[] = [
     uploadDate: "2026-04-24",
     relatedHref: "/wiki/ai-assistant",
     relatedLabel: "Read the AI assistant guide",
+  },
+  {
+    slug: "keyboard-shortcuts",
+    title: "Keyboard Shortcuts for Fast Database Work",
+    description:
+      "Navigate Tabularis, run queries, and manage tabs with keyboard shortcuts built for keyboard-driven workflows.",
+    src: "/videos/wiki/10-keyboard-shortcuts.mp4",
+    poster: "/videos/wiki/10-keyboard-shortcuts.jpg",
+    uploadDate: "2026-04-24",
+    relatedHref: "/wiki/keyboard-shortcuts",
+    relatedLabel: "Read the keyboard shortcuts guide",
+  },
+  {
+    slug: "favorites-history",
+    title: "Favorites and Query History",
+    description:
+      "Save frequently used queries, browse your query history, and quickly return to recent SQL across sessions.",
+    src: "/videos/wiki/11-favorites-history.mp4",
+    poster: "/videos/wiki/11-favorites-history.jpg",
+    uploadDate: "2026-04-24",
+    relatedHref: "/wiki/saved-queries",
+    relatedLabel: "Read the saved queries guide",
   },
 ];
 
