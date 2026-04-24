@@ -1,10 +1,15 @@
 # Why Tabularis
 
-Tabularis started from a simple frustration: too many database clients make routine work feel heavier than it should.
+Most database clients are still designed for a world where a human writes every query. That world is changing fast: in 2026 a lot of real SQL gets drafted, iterated, and sometimes executed by AI agents inside Claude Code, Cursor, and Windsurf.
 
-**Tabularis** is an open-source desktop database client. It gives you one fast workspace for everyday SQL work without locking you into a single engine or a bloated UI.
+**Tabularis** is the open-source desktop database client built for that reality — without giving up what a good SQL tool already has to be.
 
-It supports **PostgreSQL**, **MySQL/MariaDB**, and **SQLite** out of the box, and it is **hackable with plugins** when your workflow needs more. Query data, inspect schemas, manage connections, and document analysis without constantly switching tools.
+- **MCP-native.** A built-in Model Context Protocol server lets compatible AI agents inspect schemas and run queries *through the same app* where you manage your connections — no fragile ad-hoc scripts, no credentials leaking into chat windows.
+- **Still a first-class human workspace.** Monaco SQL editor, notebooks with inline charts, visual query builder, visual EXPLAIN, ER diagrams, split view. You don't give up the IDE to get the agent.
+- **Multi-engine, extensible.** PostgreSQL (multi-schema), MySQL/MariaDB, SQLite built in. Anything else via plugins over JSON-RPC — write a driver in Rust, Go, Python, or any language.
+- **Local-first, secure.** SSH tunneling, system keychain for secrets, your data and credentials stay on your machine.
+
+Rust + Tauri backend, React 19 frontend, Apache 2.0.
 
 # Features
 

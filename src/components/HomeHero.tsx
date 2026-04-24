@@ -46,16 +46,18 @@ export async function HomeHero({ latestPost }: HomeHeroProps) {
           <div className="hero-copy">
             <div className="hero-badges">
               <span className="badge version">v{APP_VERSION}</span>
-              <span className="badge">Open Source</span>
-              <span className="badge">Apache 2.0</span>
+              <span className="badge">MCP-native</span>
+              <span className="badge">Open Source · Apache 2.0</span>
             </div>
 
-            <h1>Open-source database client for real developer workflows.</h1>
+            <h1>The database client your AI agent can actually use.</h1>
 
             <p className="hero-lede">
-              Tabularis brings SQL editing, schema work, notebooks, plugins, AI,
-              and MCP into one local desktop app for <strong>PostgreSQL</strong>,{" "}
-              <strong>MySQL/MariaDB</strong>, and <strong>SQLite</strong>.
+              Tabularis is an open-source desktop SQL workspace for{" "}
+              <strong>PostgreSQL</strong>, <strong>MySQL/MariaDB</strong>, and{" "}
+              <strong>SQLite</strong>, with a built-in <strong>MCP</strong>{" "}
+              server so Claude, Cursor, and Windsurf can read your schema and
+              run queries through the same app you already use.
             </p>
 
             <DownloadButtons
@@ -65,6 +67,9 @@ export async function HomeHero({ latestPost }: HomeHeroProps) {
             />
 
             <div className="hero-secondary-actions">
+              <Link href="/solutions/mcp-database-client">
+                For AI agents (MCP) →
+              </Link>
               <Link href="/videos">Watch product demos →</Link>
               <Link href="/compare/dbeaver-alternative">
                 Compare with DBeaver →

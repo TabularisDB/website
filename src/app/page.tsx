@@ -26,6 +26,12 @@ const GITHUB_EDIT_HOME_URL =
 
 const SEO_ENTRY_POINTS = [
   {
+    href: "/solutions/mcp-database-client",
+    title: "For AI Agents (MCP-native)",
+    excerpt:
+      "Give Claude, Cursor, and Windsurf safe, schema-aware access to your real databases through Tabularis.",
+  },
+  {
     href: "/solutions/postgresql-client",
     title: "PostgreSQL Client",
     excerpt:
@@ -36,12 +42,6 @@ const SEO_ENTRY_POINTS = [
     title: "SQL Notebooks",
     excerpt:
       "Reusable SQL analysis with cells, markdown, inline charts, and parameters.",
-  },
-  {
-    href: "/solutions/mcp-database-client",
-    title: "MCP Database Client",
-    excerpt:
-      "A local database workflow for Claude, Cursor, and other MCP-compatible AI tools.",
   },
   {
     href: "/compare/dbeaver-alternative",
