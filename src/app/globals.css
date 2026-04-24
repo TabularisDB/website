@@ -946,7 +946,6 @@ pre {
 
 /* SPLIT DOWNLOAD BUTTON */
 .download-wrap {
-  position: relative;
   display: block;
   margin: 1rem 0;
 }
@@ -959,6 +958,7 @@ pre {
 }
 
 .download-split {
+  position: relative;
   display: inline-flex;
   align-items: stretch;
   border-radius: 10px;
@@ -1108,6 +1108,18 @@ pre {
 
 .download-dropdown__item + .download-dropdown__item {
   border-top: 1px solid var(--border);
+}
+
+.download-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--text-muted);
+}
+
+.download-count strong {
+  color: var(--text-bright);
+  font-weight: 600;
 }
 
 /* DOWNLOAD MODAL */

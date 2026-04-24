@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { DownloadModal } from "./DownloadModal";
 import type { Platform } from "./DownloadModal";
+import { formatDownloads } from "@/lib/github";
 
 function detectPlatform(): Platform {
   if (typeof navigator === "undefined") return "windows";
@@ -43,9 +44,11 @@ function PlatformIcon({ platform }: { platform: Platform }) {
 
 export function DownloadButtons({
   showInstallLink = false,
+  downloads = null,
   trailing,
 }: {
   showInstallLink?: boolean;
+  downloads?: number | null;
   trailing?: ReactNode;
 }) {
   const [modalPlatform, setModalPlatform] = useState<Platform | null>(null);
@@ -89,27 +92,49 @@ export function DownloadButtons({
                 <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
+            {dropdownOpen && (
+              <div className="download-dropdown">
+                {others.map((p) => (
+                  <button
+                    key={p}
+                    className="download-dropdown__item"
+                    onClick={() => { setModalPlatform(p); setDropdownOpen(false); }}
+                  >
+                    <PlatformIcon platform={p} />
+                    {PLATFORM_LABELS[p]}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
           {trailing}
         </div>
-
-        {dropdownOpen && (
-          <div className="download-dropdown">
-            {others.map((p) => (
-              <button
-                key={p}
-                className="download-dropdown__item"
-                onClick={() => { setModalPlatform(p); setDropdownOpen(false); }}
-              >
-                <PlatformIcon platform={p} />
-                {PLATFORM_LABELS[p]}
-              </button>
-            ))}
-          </div>
-        )}
       </div>
 
-      <p style={{ fontSize: "0.85rem", color: "var(--text-muted)", marginTop: "0.75rem", display: "flex", gap: "1.25rem", flexWrap: "wrap" }}>
+      <p style={{ fontSize: "0.85rem", color: "var(--text-muted)", marginTop: "0.75rem", display: "flex", gap: "1.25rem", flexWrap: "wrap", alignItems: "center" }}>
+        {downloads !== null && downloads > 0 && (
+          <span
+            className="download-count"
+            title={`${downloads.toLocaleString("en-US")} downloads from GitHub releases`}
+          >
+            <svg
+              width="13"
+              height="13"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            <strong>{formatDownloads(downloads)}</strong> downloads
+          </span>
+        )}
         {showInstallLink && (
           <a
             href="/download"

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { CarouselGrid } from "@/components/CarouselGrid";
 import { DownloadButtons } from "@/components/DownloadButtons";
 import { GithubStarsButton } from "@/components/GithubStarsButton";
-import { getRepoStars } from "@/lib/github";
+import { getRepoStars, getTotalDownloads } from "@/lib/github";
 import type { PostMeta } from "@/lib/posts";
 import { APP_VERSION } from "@/lib/version";
 
@@ -13,7 +13,10 @@ interface HomeHeroProps {
 }
 
 export async function HomeHero({ latestPost }: HomeHeroProps) {
-  const stars = await getRepoStars();
+  const [stars, downloads] = await Promise.all([
+    getRepoStars(),
+    getTotalDownloads(),
+  ]);
   return (
     <>
       {latestPost && (
@@ -57,6 +60,7 @@ export async function HomeHero({ latestPost }: HomeHeroProps) {
 
             <DownloadButtons
               showInstallLink
+              downloads={downloads}
               trailing={<GithubStarsButton stars={stars} />}
             />
 

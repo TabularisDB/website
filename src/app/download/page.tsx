@@ -7,6 +7,7 @@ import { DownloadInline } from "@/components/DownloadInline";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { APP_VERSION } from "@/lib/version";
 import { getReleaseDate, formatDate } from "@/lib/posts";
+import { getTotalDownloads, formatDownloads } from "@/lib/github";
 import {
   buildBreadcrumbJsonLd,
   buildSoftwareApplicationJsonLd,
@@ -32,10 +33,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function DownloadPage() {
+export default async function DownloadPage() {
   const rawDate = getReleaseDate(APP_VERSION);
   const isoDate = rawDate?.slice(0, 10) ?? "";
   const releaseDate = rawDate ? formatDate(rawDate) : "";
+  const downloads = await getTotalDownloads();
 
   return (
     <div className="container">
@@ -61,6 +63,32 @@ export default function DownloadPage() {
               <Link href="/changelog" className="dl-page-changelog-link">
                 View changelog →
               </Link>
+              {downloads !== null && downloads > 0 && (
+                <>
+                  <span className="dl-page-sep">·</span>
+                  <span
+                    className="download-count"
+                    title={`${downloads.toLocaleString("en-US")} downloads from GitHub releases`}
+                  >
+                    <svg
+                      width="13"
+                      height="13"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="7 10 12 15 17 10" />
+                      <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    <strong>{formatDownloads(downloads)}</strong> downloads
+                  </span>
+                </>
+              )}
             </div>
           </div>
         </div>

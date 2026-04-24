@@ -5,6 +5,10 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  # Periodic rebuild to refresh baked-in values that come from the
+  # GitHub API (stargazers, total release downloads). Every 6 hours.
+  schedule:
+    - cron: "0 */6 * * *"
   # Allow the app repo to trigger a rebuild when version / CHANGELOG /
   # plugin registry change. Send a `repository_dispatch` with
   # event_type = "app-data-updated".
@@ -55,6 +59,8 @@ jobs:
 
       - name: Build
         run: pnpm build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Fix opengraph-image extension for GitHub Pages
         run: |
