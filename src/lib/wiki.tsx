@@ -9,7 +9,8 @@ export type WikiCategory =
   | "Core Features"
   | "Database Objects"
   | "Security & Networking"
-  | "AI & Integration"
+  | "AI & MCP"
+  | "Integration"
   | "Customization"
   | "Reference";
 
@@ -18,7 +19,8 @@ export const WIKI_CATEGORIES: WikiCategory[] = [
   "Core Features",
   "Database Objects",
   "Security & Networking",
-  "AI & Integration",
+  "AI & MCP",
+  "Integration",
   "Customization",
   "Reference",
 ];

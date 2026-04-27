@@ -2,7 +2,7 @@
 title: "AI Assistant"
 order: 7
 excerpt: "Use AI to generate SQL from natural language and explain complex queries."
-category: "AI & Integration"
+category: "AI & MCP"
 ---
 
 # AI Assistant & Context Engine

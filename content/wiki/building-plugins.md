@@ -2,7 +2,7 @@
 title: "Building Your First Plugin"
 order: 8.5
 excerpt: "Scaffold a working database driver in minutes using @tabularis/create-plugin and @tabularis/plugin-api."
-category: "AI & Integration"
+category: "Integration"
 ---
 
 # Building Your First Plugin
