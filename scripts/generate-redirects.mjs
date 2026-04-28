@@ -1,12 +1,28 @@
 import fs from "fs";
 import path from "path";
+import matter from "gray-matter";
 
-const OUT_DIR = path.join(process.cwd(), "out");
+const ROOT = process.cwd();
+const OUT_DIR = path.join(ROOT, "out");
 
-const REDIRECTS = [
+// Content dir → canonical URL builder. The redirect target is the
+// canonical URL of the file that declared `redirect_from:` in its frontmatter.
+const SOURCES = [
   {
-    from: "/blog/v0100-ai-safety-audit-approvals",
-    to: "/blog/v0100-ai-safety-audit-approval",
+    dir: path.join(ROOT, "content", "posts"),
+    canonical: (slug) => `/blog/${slug}`,
+  },
+  {
+    dir: path.join(ROOT, "content", "wiki"),
+    canonical: (slug) => `/wiki/${slug}`,
+  },
+  {
+    dir: path.join(ROOT, "content", "seo"),
+    canonical: (slug, data) => `/${data.section ?? "solutions"}/${slug}`,
+  },
+  {
+    dir: path.join(ROOT, "content", "roadmap"),
+    canonical: (slug) => `/roadmap/${slug}`,
   },
 ];
 
@@ -29,16 +45,54 @@ function renderHtml(target) {
 `;
 }
 
-for (const { from, to } of REDIRECTS) {
+function emitRedirect(from, to) {
+  if (!from.startsWith("/")) {
+    throw new Error(`redirect_from must be an absolute path starting with /: ${from}`);
+  }
+  if (from === to) {
+    throw new Error(`redirect_from points at its own canonical URL: ${from}`);
+  }
+
   const html = renderHtml(to);
-  const flatPath = path.join(OUT_DIR, `${from}.html`);
-  const dirPath = path.join(OUT_DIR, from, "index.html");
+  const rel = from.replace(/^\/+/, "");
+  const flat = path.join(OUT_DIR, `${rel}.html`);
+  const idx = path.join(OUT_DIR, rel, "index.html");
 
-  fs.mkdirSync(path.dirname(flatPath), { recursive: true });
-  fs.writeFileSync(flatPath, html);
+  // Refuse to clobber a real exported page (catches typos in redirect_from)
+  for (const target of [flat, idx]) {
+    if (fs.existsSync(target)) {
+      throw new Error(
+        `redirect_from "${from}" would overwrite existing file at ${target} — fix the slug or remove the entry`,
+      );
+    }
+  }
 
-  fs.mkdirSync(path.dirname(dirPath), { recursive: true });
-  fs.writeFileSync(dirPath, html);
-
+  fs.mkdirSync(path.dirname(flat), { recursive: true });
+  fs.writeFileSync(flat, html);
+  fs.mkdirSync(path.dirname(idx), { recursive: true });
+  fs.writeFileSync(idx, html);
   console.log(`Redirect: ${from} -> ${to}`);
+}
+
+let total = 0;
+for (const { dir, canonical } of SOURCES) {
+  if (!fs.existsSync(dir)) continue;
+  const files = fs.readdirSync(dir).filter((f) => f.endsWith(".md"));
+  for (const file of files) {
+    const slug = file.replace(/\.md$/, "");
+    const raw = fs.readFileSync(path.join(dir, file), "utf-8");
+    const { data } = matter(raw);
+    const list = data.redirect_from;
+    if (!list) continue;
+    const entries = Array.isArray(list) ? list : [list];
+    const to = canonical(slug, data);
+    for (const from of entries) {
+      emitRedirect(from, to);
+      total++;
+    }
+  }
+}
+
+if (total === 0) {
+  console.log("No redirect_from entries found");
 }

@@ -4,6 +4,8 @@ date: "2026-04-25T10:00:00"
 release: "v0.10.0"
 tags: ["release", "mcp", "ai", "safety", "audit"]
 excerpt: "v0.10.0 ships an AI audit log, MCP read-only mode, and approval gates with pre-flight EXPLAIN preview. Built around a 200-line file-queue between two processes."
+redirect_from:
+  - /blog/v0100-ai-safety-audit-approvals
 og:
   title: "AI Safety, Audit Log,"
   accent: "v0.10.0."
