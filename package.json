@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "fetch-app-data": "node scripts/fetch-app-data.mjs",
-    "build": "node scripts/generate-search-index.mjs  && node scripts/generate-sponsors.mjs && next build && node scripts/generate-latest-posts.mjs",
+    "build": "node scripts/generate-search-index.mjs  && node scripts/generate-sponsors.mjs && next build && node scripts/generate-latest-posts.mjs && node scripts/generate-redirects.mjs",
     "start": "next start"
   },
   "dependencies": {

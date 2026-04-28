@@ -21,12 +21,13 @@ Package manager is pinned: **pnpm 10.33.0** (see `packageManager` in `package.js
 
 There is **no lint or test command**. `eslint.config.mjs` explicitly ignores `**/*`; do not try to add lint runs to "verify" a change.
 
-`pnpm build` runs four steps in order, all of which must succeed:
+`pnpm build` runs five steps in order, all of which must succeed:
 
 1. `scripts/generate-search-index.mjs` → `public/search-index.json` (Orama index built from wiki + posts + SEO + plugin registry).
 2. `scripts/generate-sponsors.mjs` → `public/sponsors.json` (re-emits `src/lib/sponsors.ts` as JSON).
 3. `next build` → emits the site to `out/`.
 4. `scripts/generate-latest-posts.mjs` → `public/latest-posts.json` (top-5 posts for the home widget). Runs **after** `next build` because it writes into the build output.
+5. `scripts/generate-redirects.mjs` → emits `meta refresh` HTML stubs under `out/` for the entries in its `REDIRECTS` array. Used to point legacy/wrong URLs at canonical posts (GitHub Pages can't issue real HTTP 301s); add a new `{ from, to }` entry there if you need another redirect.
 
 ## Upstream app data
 
