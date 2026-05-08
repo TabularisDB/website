@@ -52,8 +52,19 @@ When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`)
 | **Save in keychain** | — | Controls whether the password persists after closing |
 | **SSH enabled** | No | Activates the SSH tunnel for this connection |
 | **SSH profile** | — | Which saved SSH profile to use for the tunnel |
+| **CA Certificate** | No | Path to a PEM bundle to trust for TLS (PostgreSQL only). See [TLS & CA Certificates](#tls--ca-certificates) below. |
 
 *Not required for SQLite, which takes a file path instead.
+
+### TLS & CA Certificates (PostgreSQL)
+
+Tabularis terminates Postgres TLS with [`tokio-postgres-rustls`](https://crates.io/crates/tokio-postgres-rustls) and verifies the server certificate via [`rustls-platform-verifier`](https://crates.io/crates/rustls-platform-verifier), so the platform's trust store (macOS Keychain, Windows certificate store, Linux CA bundle) is honored automatically.
+
+If your database uses a CA the system store doesn't trust — typical for **AWS RDS**, GCP Cloud SQL with private CAs, or self-hosted Postgres behind a private PKI — paste the path to a PEM bundle into the connection's **CA Certificate** field. The bundle is loaded as an additional trust anchor only for that connection.
+
+**AWS RDS in particular**: download the global certificate bundle from <https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem> and point the field at it. Tabularis intentionally does not vendor the bundle — AWS rotates these CAs every one to three years, and a vendored copy would silently break released apps the moment the next rotation lands.
+
+MySQL/MariaDB connections continue to use `native-tls` and the system trust store; the `ssl_ca` field is a Postgres-only option for now.
 
 ### SQLite
 

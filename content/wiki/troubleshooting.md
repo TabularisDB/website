@@ -16,6 +16,7 @@ This page covers the most common issues users encounter and how to resolve them.
 - **Check the host and port.** Ensure the database server is running and accepting connections on the configured port. Use `telnet <host> <port>` or `nc -zv <host> <port>` from a terminal to verify network reachability.
 - **Firewall rules.** Cloud databases (AWS RDS, GCP Cloud SQL, Azure) often restrict inbound connections to specific IP ranges or VPCs. Verify your IP is allowlisted.
 - **SSL/TLS requirements.** Some servers require encrypted connections. Check if your provider mandates `sslmode=require` or similar.
+- **AWS RDS / private CA.** If "Test connection" succeeds but the connection drops shortly after with a TLS handshake error, the system trust store likely doesn't trust the database's CA. Paste the path to a PEM bundle in the connection's **CA Certificate** field — for AWS RDS, use <https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem>. See [Connections → TLS & CA Certificates](/wiki/connections#tls--ca-certificates).
 
 ### "Authentication failed"
 

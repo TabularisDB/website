@@ -72,7 +72,7 @@ Any key omitted from the file falls back to its default value. You do not need a
 | `selectedSchemas` | `object` | `{}` | Per-connection visible schemas in the sidebar (map of connection ID → string[]). |
 | `queryHistoryMaxEntries` | `number` | `500` | Maximum number of query history entries retained per connection. |
 | `maxBlobSize` | `number` | `1048576` | Max bytes to load into UI for BLOB/bytea columns (default 1 MB). |
-| `copyFormat` | `string` | `"csv"` | Default row copy format: `csv` or `json`. |
+| `copyFormat` | `string` | `"csv"` | Default row copy format: `csv`, `json`, or `sql-insert`. Configurable from **Settings → General → Default Copy Format**. See [Data Grid → Copying Data](/wiki/data-grid#copying-data). |
 | `csvDelimiter` | `string` | `","` | Default delimiter used when copying or exporting CSV. |
 | `pingInterval` | `number` | `30` | Connection health check interval in seconds. `0` disables pings. See [Connection Health Check](/wiki/connections#connection-health-check). |
 | `activeExternalDrivers` | `string[]` | `[]` | List of plugin driver IDs loaded at startup. |

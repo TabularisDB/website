@@ -19,7 +19,7 @@ If v0.10.1 was about smoothing the AI safety release, v0.10.2 is about getting c
 
 ---
 
-## Postgres on AWS RDS Works Again
+## Postgres on AWS RDS Works now
 
 This is the headline fix, and the kind of bug that's particularly painful: "Test connection" succeeds, schemas load, then 30 seconds later the health check pings the pool, the TLS handshake fails, and the UI tells you the connection was lost. Reproducible across restarts. Indistinguishable from "the database is down" if you don't read the logs.
 

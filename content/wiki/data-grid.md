@@ -61,7 +61,23 @@ A DDL preview showing the exact SQL that will be executed is available before yo
 
 ## Copying Data
 
-Select one or more rows (or cells), then use `Ctrl/Cmd + C` to copy. The selection is placed on the clipboard as tab-separated values, compatible with spreadsheet applications like Excel or LibreOffice Calc.
+Tabularis supports both **row-level** and **cell-level** copy from the data grid. The two modes don't fight each other: clicking a row checkbox clears the cell focus, clicking a cell clears the row selection. So `Ctrl/Cmd + C` with an active cell focus copies the cell, and `Ctrl/Cmd + C` with selected rows copies the rows.
+
+### Cell-level selection
+
+Click any cell to give it a focused outline; the row checkbox stays untouched. Press `Ctrl/Cmd + C` to copy just that cell value to the clipboard, formatted using the same null/length/type rules used for row copy. The cell context menu also exposes a **Copy cell** action.
+
+### Row-level selection and copy formats
+
+Select one or more rows by clicking the row header checkbox (or shift-click / ctrl-click for ranges and multi-select), then use `Ctrl/Cmd + C` to copy. The default format is **CSV**; you can change it in **Settings → General → Default Copy Format** to one of:
+
+| Format | Output |
+| :--- | :--- |
+| **CSV** | Tab- or comma-separated values (delimiter follows `csvDelimiter`), spreadsheet-friendly. |
+| **JSON** | A JSON array of objects with column names as keys. |
+| **SQL INSERT** | A sequence of `INSERT INTO \`table\` (col1, col2, …) VALUES (…);` statements, one per row. NULLs render as `NULL`, booleans as `TRUE`/`FALSE`, numbers unquoted, strings single-quoted with single quotes doubled-up. |
+
+The setting maps to the `copyFormat` key in `config.json` (see [Configuration](/wiki/configuration)).
 
 ## Exporting Results
 
@@ -102,7 +118,7 @@ The grid displays `NULL` values with a distinct grey `NULL` badge to differentia
 | Edit selected cell | `Enter` / `F2` |
 | Confirm edit | `Enter` |
 | Cancel edit | `Escape` |
-| Copy selection | `Ctrl/Cmd + C` |
+| Copy selection (row or cell, depending on focus) | `Ctrl/Cmd + C` |
 | Move between cells | Arrow keys |
 | Next page | `Ctrl/Cmd + Right` |
 | Previous page | `Ctrl/Cmd + Left` |
