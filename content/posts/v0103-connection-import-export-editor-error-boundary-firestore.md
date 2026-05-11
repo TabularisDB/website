@@ -92,6 +92,8 @@ To make it findable from inside the app, a small tile appears in the sidebar the
 
 Come say hi.
 
+<p style="margin-top: 1.5rem;"><a href="https://discord.com/invite/K2hmhfHRSt" class="discord-btn" target="_blank" rel="noopener noreferrer" style="padding: 0.75rem 1.5rem; font-size: 1rem; text-decoration: none;">Join the Discord →</a></p>
+
 ---
 
 ## Smaller Things
