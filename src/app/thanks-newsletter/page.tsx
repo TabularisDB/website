@@ -60,7 +60,7 @@ export default function ThanksNewsletterPage() {
           </Link>
 
           <a
-            href="https://discord.gg/YrZPHAwMSG"
+            href="https://discord.com/invite/K2hmhfHRSt"
             target="_blank"
             rel="noopener noreferrer"
             className="dl-thankyou-card"

@@ -41,7 +41,7 @@ export default function SponsorsConfirmPage() {
               GitHub →
             </a>
             <a
-              href="https://discord.gg/YrZPHAwMSG"
+              href="https://discord.com/invite/K2hmhfHRSt"
               target="_blank"
               rel="noopener noreferrer"
               className="discord-btn"

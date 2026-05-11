@@ -260,7 +260,7 @@ export default function CookiePolicyPage() {
             </a>{" "}
             or join our{" "}
             <a
-              href="https://discord.gg/YrZPHAwMSG"
+              href="https://discord.com/invite/K2hmhfHRSt"
               target="_blank"
               rel="noopener noreferrer"
             >

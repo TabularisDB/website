@@ -189,7 +189,7 @@ const navGroups: NavGroup[] = [
           },
           {
             label: "Discord",
-            href: "https://discord.gg/YrZPHAwMSG",
+            href: "https://discord.com/invite/K2hmhfHRSt",
             description: "Talk to users, contributors, and maintainers.",
           },
         ],

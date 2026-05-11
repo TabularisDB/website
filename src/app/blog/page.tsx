@@ -79,7 +79,7 @@ export default function BlogPage() {
           </a>
           <a
             className="btn-cta discord"
-            href="https://discord.gg/YrZPHAwMSG"
+            href="https://discord.com/invite/K2hmhfHRSt"
           >
             <DiscordIcon size={16} />
             Join Discord

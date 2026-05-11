@@ -108,7 +108,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             <GitHubIcon size={15} />
             Star on GitHub
           </a>
-          <a className="btn-cta discord" href="https://discord.gg/YrZPHAwMSG">
+          <a className="btn-cta discord" href="https://discord.com/invite/K2hmhfHRSt">
             <DiscordIcon size={15} />
             Join Discord
           </a>

@@ -34,7 +34,7 @@ export function buildOrganizationJsonLd() {
     logo: toAbsoluteUrl("/img/logo.png"),
     sameAs: [
       "https://github.com/TabularisDB/tabularis",
-      "https://discord.gg/YrZPHAwMSG",
+      "https://discord.com/invite/K2hmhfHRSt",
     ],
   };
 }

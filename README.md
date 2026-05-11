@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="https://github.com/TabularisDB/website/actions/workflows/static.yml"><img src="https://github.com/TabularisDB/website/actions/workflows/static.yml/badge.svg" alt="Deploy website to Pages" /></a>
-  <a href="https://discord.gg/YrZPHAwMSG"><img src="https://img.shields.io/discord/1470772941296894128?color=5865F2&logo=discord&logoColor=white" alt="Discord" /></a>
+  <a href="https://discord.com/invite/K2hmhfHRSt"><img src="https://img.shields.io/discord/1470772941296894128?color=5865F2&logo=discord&logoColor=white" alt="Discord" /></a>
 </p>
 
 ## About
@@ -141,7 +141,7 @@ Typos, broken links, new wiki articles and new blog posts are all welcome.
 - **UI or components**: keep in mind the site must statically export &mdash; avoid runtime-only Next.js features (`getServerSideProps`, API routes, on-demand ISR, etc.).
 - **Feature or bug reports about the app itself**: please open them on [`TabularisDB/tabularis`](https://github.com/TabularisDB/tabularis/issues) instead.
 
-Join the conversation on [Discord](https://discord.gg/YrZPHAwMSG).
+Join the conversation on [Discord](https://discord.com/invite/K2hmhfHRSt).
 
 
 ## Acknowledgements

@@ -195,7 +195,7 @@ A special thanks to our sponsors: [turboSMTP](https://www.serversmtp.com/?utm_so
 
 To every contributor, every user, every person who mentioned Tabularis to a colleague or dropped a link in a chat: thank you. This stopped being a solo project the moment you showed up.
 
-If you want to get involved, the [Discord](https://discord.gg/YrZPHAwMSG) is the fastest way in. Come say hi. There's plenty to build.
+If you want to get involved, the [Discord](https://discord.com/invite/K2hmhfHRSt) is the fastest way in. Come say hi. There's plenty to build.
 
 Here's to the next thousand.
 

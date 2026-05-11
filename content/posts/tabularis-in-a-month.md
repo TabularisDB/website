@@ -78,7 +78,7 @@ But more than any specific feature, what we want is for Tabularis to keep earnin
 
 If Tabularis has been useful to you — tell someone. Open source lives and dies by word of mouth. A mention in a Slack channel, a post on a forum, a link in a README. Small things compound.
 
-And if you want to get more involved: the [Discord](https://discord.gg/YrZPHAwMSG) is the fastest way to reach the team. Come say hi.
+And if you want to get more involved: the [Discord](https://discord.com/invite/K2hmhfHRSt) is the fastest way to reach the team. Come say hi.
 
 Here's to month two.
 

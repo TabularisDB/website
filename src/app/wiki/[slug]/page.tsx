@@ -131,7 +131,7 @@ export default async function WikiPageDetail({ params }: PageProps) {
             </a>
             <a
               className="btn-cta discord"
-              href="https://discord.gg/YrZPHAwMSG"
+              href="https://discord.com/invite/K2hmhfHRSt"
             >
               <DiscordIcon size={15} />
               Join Discord

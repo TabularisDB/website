@@ -835,7 +835,7 @@ export default function HomePage() {
         </p>
         <div style={{ marginTop: "2rem" }}>
           <a
-            href="https://discord.gg/YrZPHAwMSG"
+            href="https://discord.com/invite/K2hmhfHRSt"
             className="discord-btn"
             style={{
               padding: "0.75rem 1.5rem",

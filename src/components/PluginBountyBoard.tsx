@@ -34,7 +34,7 @@ type DifficultyFilter = "all" | BountyDifficulty;
 
 const ACTION_TARGET = {
   request: "https://github.com/TabularisDB/tabularis/discussions",
-  discord: "https://discord.gg/YrZPHAwMSG",
+  discord: "https://discord.com/invite/K2hmhfHRSt",
   sponsor: "/sponsors",
 };
 
