@@ -137,6 +137,16 @@ Right-click any connection in the sidebar for:
 
 Connections can be organized into collapsible folder groups in the sidebar. Right-click on the connection list background and select **New Group**. Drag connections between groups by grabbing them in the sidebar.
 
+## Export / Import
+
+The toolbar on the Connections page exposes **Export** and **Import** buttons (the Import button also appears on the empty-state view of a fresh install). Both operate on a single JSON payload that round-trips your full connection set between machines.
+
+**Export** walks every connection group, saved database connection, and SSH profile, resolves the password stored in the OS keychain for each one (database password, SSH password, SSH key passphrase), and writes the lot into a JSON file. The payload contains plaintext credentials — treat it like a `.env` and store it accordingly. If you only need to move connection shape and not secrets, strip the password fields before importing.
+
+**Import** takes that payload, merges it with the existing config (existing connection IDs are kept; new ones are appended), writes any embedded passwords back into the OS keychain under the same service-name conventions described in [Keychain Details](#keychain-details), and persists `connections.json` and `ssh_connections.json`. Empty password fields leave the matching keychain entry untouched, so partial payloads are safe.
+
+A confirmation dialog is shown before import; the dialog uses a non-destructive variant to signal that nothing is being overwritten in place.
+
 ## Multi-Database Support (MySQL / MariaDB)
 
 MySQL and MariaDB allow a single connection to read and write across multiple databases on the same server. Tabularis exposes this natively: when creating or editing a MySQL connection, open the **Databases** tab and click **Load Databases** to fetch every database visible to your user. Check the ones you want and save.
