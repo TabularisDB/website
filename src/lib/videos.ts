@@ -131,6 +131,17 @@ const VIDEO_DEMOS: VideoDemo[] = [
     relatedHref: "/wiki/saved-queries",
     relatedLabel: "Read the saved queries guide",
   },
+  {
+    slug: "ai-approval-gate",
+    title: "AI Approval Gate with Pre-flight EXPLAIN",
+    description:
+      "Pause an MCP write before it runs, review the SQL and the execution plan inside the approval modal, then approve, edit, or deny.",
+    src: "/videos/wiki/ai-gate-approval.mp4",
+    poster: "/videos/wiki/ai-gate-approval.jpg",
+    uploadDate: "2026-05-13",
+    relatedHref: "/wiki/mcp-approval-gates",
+    relatedLabel: "Read the approval gates guide",
+  },
 ];
 
 export function getAllVideoDemos(): VideoDemo[] {

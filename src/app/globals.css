@@ -5832,6 +5832,7 @@ footer {
 
 .newsletter-box {
   margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
   padding: 1.5rem;
   background: var(--card-bg);
   border: 1px solid var(--border);
