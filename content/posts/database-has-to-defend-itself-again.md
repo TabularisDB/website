@@ -12,6 +12,8 @@ og:
 
 # The Database Has to Defend Itself Again
 
+<p><em><a href="https://arpitbhayani.me/blogs/defensive-databases" target="_blank" rel="noopener noreferrer">Arpit Bhayani&rsquo;s &ldquo;Defensive Databases for Agentic AI Systems&rdquo;</a> makes the same argument very well, and extends it from a more technical angle — broken assumptions about deterministic callers, intentional writes and brief connections, with concrete patterns like idempotency keys, role-per-agent connection pools, soft deletes and query tagging.</em></p>
+
 For two decades the database has been able to outsource trust to the application layer. The app authenticated users, sanitized inputs, enforced business rules, and the DB just executed whatever came through the connection pool. That worked because the caller was almost always software written by someone, reviewed by someone, and shipped on a release train.
 
 Agents don't fit that picture.
