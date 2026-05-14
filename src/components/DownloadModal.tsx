@@ -72,12 +72,14 @@ export function DownloadModal({ platform, onClose }: DownloadModalProps) {
           <div className="dl-modal-body">
             {config.options.map((opt) =>
               opt.kind === "command" ? (
-                <div key={opt.command} className="dl-option dl-option--command">
+                <div key={opt.label} className="dl-option dl-option--command">
                   <div className="dl-option-info">
                     <span className="dl-option-label">{opt.label}</span>
                     <span className="dl-option-desc">{opt.desc}</span>
                   </div>
-                  <code className="dl-option-cmd">{opt.command}</code>
+                  {(Array.isArray(opt.command) ? opt.command : [opt.command]).map((cmd) => (
+                    <code key={cmd} className="dl-option-cmd">{cmd}</code>
+                  ))}
                 </div>
               ) : (
                 <a key={opt.url} href={`/download/thank-you?url=${encodeURIComponent(opt.url)}`} className="dl-option">
