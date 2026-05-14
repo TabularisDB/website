@@ -6,8 +6,13 @@ status: "in-progress"
 order: 1
 progressDone: 1
 progressTotal: 3
-progressLabel: "1 of 3 phases done on feat/sql-server — not released yet"
-lede: "Native Microsoft SQL Server as a built-in driver, next to MySQL, PostgreSQL and SQLite — no extra plugin to install. Phase 1 is done on the `feat/sql-server` branch. Not on `main` yet, not in any release. Read-only for now: connect, browse schemas and tables, run SELECT queries. Phase 2 adds editing, TLS options and composite primary keys — that's where help's wanted."
+progressLabel: "Phase 1 done · Phase 2 underway on feat/sql-server — not released yet"
+lede: "Native Microsoft SQL Server as a built-in driver, next to MySQL, PostgreSQL and SQLite — no extra plugin to install. Phase 1 is done on the `feat/sql-server` branch and Phase 2 is in progress (driver migrated to `mssql-tiberius-bridge`, TLS/auth fields merged). Not on `main` yet, not in any release. Read-only for now: connect, browse schemas and tables, run SELECT queries. Phase 2 still needs the editing path — composite primary keys, FK aggregation, `IDENTITY_INSERT`, and the frontend wiring."
+contributors:
+  - username: debba
+    role: Maintainer
+  - username: saurabh500
+    role: SQL Server driver lead
 links:
   - label: "Epic #150"
     href: "https://github.com/TabularisDB/tabularis/issues/150"
@@ -42,18 +47,31 @@ Read-only preview. Lives on [`feat/sql-server`](https://github.com/TabularisDB/t
 - ER-diagram batch endpoints: `get_all_columns_batch` + `get_all_foreign_keys_batch` + `get_schema_snapshot`
 - 471 Rust tests, 0 regressions; every pure util (query builders, SQL constants, decimal normalizer, datetime formatters) has co-located `#[cfg(test)] mod tests`
 
+## Phase 1.5 — TDS backend swap (merged on `feat/sql-server`)
+
+Between Phase 1 landing and Phase 2 starting, the driver was migrated from the community `tiberius` crate to [`mssql-tiberius-bridge`](https://crates.io/crates/mssql-tiberius-bridge) — a tiberius-compatible API facade over Microsoft's official [`mssql-tds`](https://github.com/microsoft/mssql-rs) Rust implementation ([#170](https://github.com/TabularisDB/tabularis/pull/170), closes [#171](https://github.com/TabularisDB/tabularis/issues/171)).
+
+- Same API surface (`Client`, `Row`, `Config`, `query` / `simple_query` / `into_first_result`, `FromSql` / `ToSql`) — mechanical rewrite, no SQL changes
+- `pool.rs` `TiberiusManager` → `BridgeManager`; no more manual `TcpStream` + `compat_write()` boilerplate
+- All 471 Rust tests still green; clippy clean
+- Unlocks JSON columns, Vector type (SQL Server 2025) and Azure AD auth on the official upstream cadence
+
+Known limitation: `execute()` returns `0` for DML because `mssql-tds` doesn't expose `DONE` token row counts yet. No impact on Phase 1 (read-only); tracked upstream in [`mssql-tiberius-bridge#1`](https://github.com/saurabh500/mssql-tiberius-bridge/issues/1).
+
 ## Phase 2 — Open
 
-Six issues. Independent where the dependency column is empty. First is `good first issue`.
+Six issues. Independent where the dependency column is empty. One is merged, five still open.
 
-| # | Task | Area | Depends on |
-|---|------|------|------------|
-| [#144](https://github.com/TabularisDB/tabularis/issues/144) | ConnectionParams: `trust_server_certificate`, `encrypt`, `instance_name`, `domain`, `auth_mode` | good first issue | — |
-| [#145](https://github.com/TabularisDB/tabularis/issues/145) | `delete_record_composite` / `update_record_composite` trait defaults + `commands.rs` wiring | rust | — |
-| [#146](https://github.com/TabularisDB/tabularis/issues/146) | FK aggregation via `STRING_AGG` (2017+) with `FOR XML PATH` fallback for 2012–2016 | rust | — |
-| [#147](https://github.com/TabularisDB/tabularis/issues/147) | `IDENTITY_INSERT ON/OFF` wrapper + transactional guard | rust | — |
-| [#148](https://github.com/TabularisDB/tabularis/issues/148) | DataGrid `pkColumns?: string[]` + Editor composite invoke + SchemaDiagram group-by-constraint | ts / react | #145, #146 |
-| [#149](https://github.com/TabularisDB/tabularis/issues/149) | Flip manifest `readonly:false`, `manage_tables:true` (closes Phase 2) | close-out | #144, #145, #146, #147, #148 |
+| # | Task | Area | Depends on | State |
+|---|------|------|------------|-------|
+| [#144](https://github.com/TabularisDB/tabularis/issues/144) | ConnectionParams: `trust_server_certificate`, `encrypt`, `auth_mode` | good first issue | — | **Merged** via [#180](https://github.com/TabularisDB/tabularis/pull/180) on `feat/sql-server` |
+| [#145](https://github.com/TabularisDB/tabularis/issues/145) | `delete_record_composite` / `update_record_composite` trait defaults + `commands.rs` wiring | rust | — | Open |
+| [#146](https://github.com/TabularisDB/tabularis/issues/146) | FK aggregation via `STRING_AGG` (2017+) with `FOR XML PATH` fallback for 2012–2016 | rust | — | Open |
+| [#147](https://github.com/TabularisDB/tabularis/issues/147) | `IDENTITY_INSERT ON/OFF` wrapper + transactional guard | rust | — | Open |
+| [#148](https://github.com/TabularisDB/tabularis/issues/148) | DataGrid `pkColumns?: string[]` + Editor composite invoke + SchemaDiagram group-by-constraint | ts / react | #145, #146 | Open |
+| [#149](https://github.com/TabularisDB/tabularis/issues/149) | Flip manifest `readonly:false`, `manage_tables:true` (closes Phase 2) | close-out | #144, #145, #146, #147, #148 | Open |
+
+`#144` shipped `encrypt: "strict" | "no" | default → On / NotSupported / Required` and `trust_server_certificate` (defaults `true` for backward compat). The `auth_mode` field is accepted and stored; the actual auth wiring (Azure AD / Windows Integrated) is deferred to Phase 3.
 
 ## Phase 3 — Planned
 

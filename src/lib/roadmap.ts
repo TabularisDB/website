@@ -11,6 +11,12 @@ export interface InitiativeLink {
   external?: boolean;
 }
 
+export interface InitiativeContributor {
+  username: string;
+  role?: string;
+  avatar?: string;
+}
+
 export interface InitiativeMeta {
   slug: string;
   title: string;
@@ -22,6 +28,7 @@ export interface InitiativeMeta {
   progressTotal?: number;
   progressLabel?: string;
   links?: InitiativeLink[];
+  contributors?: InitiativeContributor[];
 }
 
 export interface Initiative {
@@ -43,6 +50,15 @@ function parseMeta(slug: string, data: Record<string, unknown>): InitiativeMeta 
     progressTotal: data.progressTotal as number | undefined,
     progressLabel: data.progressLabel as string | undefined,
     links: (data.links as InitiativeLink[] | undefined) ?? [],
+    contributors:
+      (data.contributors as InitiativeContributor[] | undefined)?.map(
+        (c) => ({
+          username: c.username,
+          role: c.role,
+          avatar:
+            c.avatar ?? `https://github.com/${c.username}.png?size=120`,
+        }),
+      ) ?? [],
   };
 }
 

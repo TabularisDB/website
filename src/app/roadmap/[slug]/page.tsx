@@ -148,6 +148,45 @@ export default async function InitiativePage({ params }: PageProps) {
                 )}
               </div>
             )}
+
+            {meta.contributors && meta.contributors.length > 0 && (
+              <div className="rm-contributors">
+                <span className="rm-contributors-label">
+                  Working on this
+                </span>
+                <ul className="rm-contributors-list">
+                  {meta.contributors.map((c) => (
+                    <li key={c.username} className="rm-contributor">
+                      <a
+                        href={`https://github.com/${c.username}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rm-contributor-link"
+                      >
+                        <img
+                          src={c.avatar}
+                          alt={`@${c.username}`}
+                          className="rm-contributor-avatar"
+                          width={32}
+                          height={32}
+                          loading="lazy"
+                        />
+                        <span className="rm-contributor-meta">
+                          <span className="rm-contributor-username">
+                            @{c.username}
+                          </span>
+                          {c.role && (
+                            <span className="rm-contributor-role">
+                              {c.role}
+                            </span>
+                          )}
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </header>
 
           <div
