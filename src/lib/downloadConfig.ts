@@ -13,7 +13,7 @@ export type CommandOption = {
   kind: "command";
   label: string;
   desc: string;
-  command: string;
+  command: string | string[];
 };
 export type DownloadOption = FileOption | CommandOption;
 export type DownloadNote = { text: string; command?: string };
@@ -66,7 +66,10 @@ export const PLATFORM_CONFIG: Record<Platform, PlatformConfig> = {
         kind: "command",
         label: "Homebrew",
         desc: "Recommended — installs and auto-updates",
-        command: "brew tap TabularisDB/tabularis && brew install --cask tabularis",
+        command: [
+          "brew tap TabularisDB/tabularis",
+          "brew install --cask tabularis",
+        ],
       },
       {
         kind: "file",

@@ -84,15 +84,17 @@ export function DownloadInline() {
             <div className="dli-options">
               {config.options.map((opt) =>
                 opt.kind === "command" ? (
-                  <div key={opt.command} className="dli-option dli-option--command">
+                  <div key={opt.label} className="dli-option dli-option--command">
                     <div className="dli-option-info">
                       <span className="dli-option-label">{opt.label}</span>
                       <span className="dli-option-desc">{opt.desc}</span>
                     </div>
-                    <div className="dli-cmd-row">
-                      <code className="dli-cmd">{opt.command}</code>
-                      <CopyButton text={opt.command} />
-                    </div>
+                    {(Array.isArray(opt.command) ? opt.command : [opt.command]).map((cmd) => (
+                      <div key={cmd} className="dli-cmd-row">
+                        <code className="dli-cmd">{cmd}</code>
+                        <CopyButton text={cmd} />
+                      </div>
+                    ))}
                   </div>
                 ) : (
                   <a key={opt.url} href={`/download/thank-you?url=${encodeURIComponent(opt.url)}`} className="dli-option">
