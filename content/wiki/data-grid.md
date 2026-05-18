@@ -97,7 +97,7 @@ Choose **JSON** from the export menu. The full result set is written as a JSON a
 
 `json` / `jsonb` columns and long text columns (`TEXT`, `LONGTEXT`, `VARCHAR(MAX)` and any string value longer than 80 characters or containing a newline) get a richer in-grid editor than the default single-line input.
 
-<video src="/videos/posts/tabularis-json-viewer.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+<video src="/videos/wiki/13-json-viewer.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
 ### Chevron expand
 
@@ -122,7 +122,7 @@ Some applications store JSON inside plain `TEXT` columns. To route those values 
 
 The same toggle also enables native array detection for `text[]` / `int[]` (PostgreSQL) and Firestore arrays.
 
-<video src="/videos/posts/tabularis-json-textmode.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+<video src="/videos/wiki/14-long-text-cells.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
 ### Round-trip through pending changes
 

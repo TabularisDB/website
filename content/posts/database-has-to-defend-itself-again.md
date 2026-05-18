@@ -35,7 +35,7 @@ A few of the pieces we shipped:
 
 **[Approval gates](/wiki/mcp-approval-gates) with pre-flight `EXPLAIN`.** Before a write (or a heavy read) actually runs, we surface the statement together with the planner's view of it for human approval. `EXPLAIN` turns out to be the right unit here: it shows the model's intent translated into what the database will really do, and that's often where the divergence between "what the agent said" and "what would have happened" shows up. You can fix the WHERE clause inside the modal, then approve. Both the original and the edited query are kept, linked by the same approval id.
 
-<video src="/videos/wiki/ai-gate-approval.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+<video src="/videos/wiki/12-ai-approval-gate.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
 :::newsletter:::
 

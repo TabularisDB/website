@@ -25,7 +25,7 @@ The most-requested data-grid issue since the project started ([#24](https://gith
 
 [@NewtTheWolf](https://github.com/NewtTheWolf) shipped the fix in PR [#181](https://github.com/TabularisDB/tabularis/pull/181) — and it's the kind of feature you can tell was reverse-engineered from how DBeaver's Value Panel and DataGrip's Value Editor actually feel to use, not just what they look like.
 
-<video src="/videos/posts/tabularis-json-viewer.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+<video src="/videos/wiki/13-json-viewer.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
 A JSON / JSONB cell now gets three affordances:
 
@@ -39,7 +39,7 @@ On the PostgreSQL side the driver finally **binds `json` / `jsonb` natively** th
 
 The same PR also lands a **per-connection toggle** that scans plain text columns for JSON-shaped content and routes them through the same cell renderer. It's per-connection on purpose — you almost always want it on for your audit-log database and off for the one where TEXT means "free-form prose".
 
-<video src="/videos/posts/tabularis-json-textmode.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+<video src="/videos/wiki/14-long-text-cells.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
 Full reference in the wiki: [Data Grid → JSON & long text cells](/wiki/data-grid#json--long-text-cells).
 

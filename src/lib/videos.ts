@@ -136,8 +136,8 @@ const VIDEO_DEMOS: VideoDemo[] = [
     title: "AI Approval Gate with Pre-flight EXPLAIN",
     description:
       "Pause an MCP write before it runs, review the SQL and the execution plan inside the approval modal, then approve, edit, or deny.",
-    src: "/videos/wiki/ai-gate-approval.mp4",
-    poster: "/videos/wiki/ai-gate-approval.jpg",
+    src: "/videos/wiki/12-ai-approval-gate.mp4",
+    poster: "/videos/wiki/12-ai-approval-gate.jpg",
     uploadDate: "2026-05-13",
     relatedHref: "/wiki/mcp-approval-gates",
     relatedLabel: "Read the approval gates guide",
@@ -147,8 +147,8 @@ const VIDEO_DEMOS: VideoDemo[] = [
     title: "JSON / JSONB Cell Viewer with Diff",
     description:
       "Expand JSON and JSONB cells into a Monaco editor with syntax highlighting, open them in a dedicated window, and diff edits before commit.",
-    src: "/videos/posts/tabularis-json-viewer.mp4",
-    poster: "/videos/posts/tabularis-json-viewer.jpg",
+    src: "/videos/wiki/13-json-viewer.mp4",
+    poster: "/videos/wiki/13-json-viewer.jpg",
     uploadDate: "2026-05-18",
     relatedHref: "/wiki/data-grid#json--long-text-cells",
     relatedLabel: "Read the data grid guide",
@@ -158,8 +158,8 @@ const VIDEO_DEMOS: VideoDemo[] = [
     title: "Long Text Cells with Monaco and Diff",
     description:
       "Edit TEXT, LONGTEXT, and long VARCHAR columns inline with a Monaco editor, resize the pane, and review changes side-by-side before saving.",
-    src: "/videos/posts/tabularis-json-textmode.mp4",
-    poster: "/videos/posts/tabularis-json-textmode.jpg",
+    src: "/videos/wiki/14-long-text-cells.mp4",
+    poster: "/videos/wiki/14-long-text-cells.jpg",
     uploadDate: "2026-05-18",
     relatedHref: "/wiki/data-grid#json--long-text-cells",
     relatedLabel: "Read the data grid guide",

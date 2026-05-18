@@ -11,7 +11,7 @@ Approval gates are the middle ground between letting the agent do whatever it wa
 
 This is the feature that makes "give your AI agent access to your production database" not entirely insane.
 
-<video src="/videos/wiki/ai-gate-approval.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+<video src="/videos/wiki/12-ai-approval-gate.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
 ## How it works end-to-end
 
