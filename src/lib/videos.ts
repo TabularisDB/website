@@ -142,6 +142,28 @@ const VIDEO_DEMOS: VideoDemo[] = [
     relatedHref: "/wiki/mcp-approval-gates",
     relatedLabel: "Read the approval gates guide",
   },
+  {
+    slug: "json-viewer",
+    title: "JSON / JSONB Cell Viewer with Diff",
+    description:
+      "Expand JSON and JSONB cells into a Monaco editor with syntax highlighting, open them in a dedicated window, and diff edits before commit.",
+    src: "/videos/posts/tabularis-json-viewer.mp4",
+    poster: "/videos/posts/tabularis-json-viewer.jpg",
+    uploadDate: "2026-05-18",
+    relatedHref: "/wiki/data-grid#json--long-text-cells",
+    relatedLabel: "Read the data grid guide",
+  },
+  {
+    slug: "long-text-cells",
+    title: "Long Text Cells with Monaco and Diff",
+    description:
+      "Edit TEXT, LONGTEXT, and long VARCHAR columns inline with a Monaco editor, resize the pane, and review changes side-by-side before saving.",
+    src: "/videos/posts/tabularis-json-textmode.mp4",
+    poster: "/videos/posts/tabularis-json-textmode.jpg",
+    uploadDate: "2026-05-18",
+    relatedHref: "/wiki/data-grid#json--long-text-cells",
+    relatedLabel: "Read the data grid guide",
+  },
 ];
 
 export function getAllVideoDemos(): VideoDemo[] {
