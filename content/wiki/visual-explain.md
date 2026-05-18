@@ -88,7 +88,7 @@ The raw view shows the database response in a read-only Monaco editor with synta
 
 The AI tab sends the query and the raw EXPLAIN output to the configured AI provider and returns a structured analysis: what the query is doing, where the bottlenecks are, which indexes might help, and which rewrites are worth testing.
 
-The analysis is generated in the language configured in Tabularis (English, Italian, Spanish, or Chinese), so you do not need to reason about plans in English if that is not your working language.
+The analysis is generated in the language configured in Tabularis (English, Italian, Spanish, Chinese, French, German, or Japanese), so you do not need to reason about plans in English if that is not your working language.
 
 This tab requires an AI provider to be configured in **Settings > AI**. If none is set up, a warning is shown. It works with all supported providers: OpenAI, Anthropic, Ollama, OpenRouter, MiniMax, and custom OpenAI-compatible endpoints.
 

@@ -18,7 +18,7 @@ Open the Settings panel from:
 
 ![General settings panel with data editor, ping interval, and ER diagram layout options](/img/tabularis-settings-general.png)
 
-- **Language Support**: Native translations for **English**, **Italian**, **Spanish**, **Chinese (Simplified)**, **French**, and **German**. The app defaults to your OS locale, and changing the language applies immediately.
+- **Language Support**: Native translations for **English**, **Italian**, **Spanish**, **Chinese (Simplified)**, **French**, **German**, and **Japanese**. The app defaults to your OS locale, and changing the language applies immediately.
 - **Update Checks**: Enable or disable automatic update checks on startup. Checks query the GitHub Releases API — no version data is sent, only a GET request is made.
 
 ## Storage Paths & config.json
@@ -53,7 +53,7 @@ Any key omitted from the file falls back to its default value. You do not need a
 | Key | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
 | `theme` | `string` | `null` | Active UI theme ID. See [Themes](/wiki/themes). |
-| `language` | `string` | `"auto"` | Preferred locale: `en`, `it`, `es`, `zh`, `fr`, `de`, or `auto` (follows OS). |
+| `language` | `string` | `"auto"` | Preferred locale: `en`, `it`, `es`, `zh`, `fr`, `de`, `ja`, or `auto` (follows OS). |
 | `resultPageSize` | `number` | `500` | Rows fetched per pagination request in the Data Grid. |
 | `fontFamily` | `string` | `"System"` | Editor font. Must be installed on the system. |
 | `fontSize` | `number` | `14` | Editor font size in pixels. |

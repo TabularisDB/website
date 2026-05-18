@@ -11,6 +11,8 @@ Tabularis manages **triggers** as a first-class database object across all three
 
 ## Browsing Triggers
 
+![Triggers accordion in the Tabularis Explorer sidebar with timing and event badges next to a read-only View Definition tab](/img/tabularis-triggers-sidebar.png)
+
 A **Triggers** accordion appears under every schema (PostgreSQL), database (MySQL multi-db), and in the flat layout for MySQL single-db / SQLite. Each entry shows:
 
 | Field | Description |
@@ -33,6 +35,8 @@ The definition is fetched directly from the database catalog:
 
 ## Creating a Trigger
 
+![Create Trigger modal in Guided mode with name and table fields, BEFORE / AFTER / INSTEAD OF timing pills, INSERT / UPDATE / DELETE event buttons, a Monaco body editor, and a generated SQL preview](/img/tabularis-trigger-editor-modal.png)
+
 Right-click a table (or the Triggers accordion header) → **Create Trigger**. The **Trigger Editor Modal** opens in **Guided mode** with:
 
 | Field | Description |
@@ -47,6 +51,8 @@ Right-click a table (or the Triggers accordion header) → **Create Trigger**. T
 A **Raw SQL** tab is always available alongside Guided mode for hand-written DDL.
 
 ## Editing a Trigger
+
+![Edit Trigger modal with the existing trg_employees_au_audit_salary trigger loaded — name, table, AFTER timing, and UPDATE event pre-selected from the parsed definition, with the IF OLD.salary <> NEW.salary body in the Monaco editor and a Save Changes button](/img/tabularis-trigger-editor-modal-edit.png)
 
 Right-click a trigger → **Edit**. The modal opens in Guided mode by default and parses the loaded definition to populate the fields (timing, events, and body extracted from `FOR EACH ROW`). The **Raw SQL** tab shows the original definition unchanged.
 

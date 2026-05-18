@@ -61,10 +61,14 @@ Stored procedures and functions have been browsable for a while. Triggers — th
 
 The Explorer sidebar grows a **Triggers** accordion under every schema (PostgreSQL), database (MySQL multi-db), and in the flat layout for MySQL single-db / SQLite. Each entry shows the trigger name, a timing/event badge (`BEFORE INSERT`, `AFTER UPDATE`, `INSTEAD OF DELETE`…), and a tooltip with the target table. There's a filter field at the top of the accordion, matching the existing table-filter pattern.
 
+![Triggers accordion in the Tabularis Explorer sidebar listing eight MySQL triggers with BEFORE / AFTER and INSERT / UPDATE / DELETE badges, alongside a read-only View Definition tab on the right](/img/tabularis-triggers-sidebar.png)
+
 Right-click a trigger for the actions you'd expect:
 
 - **View Definition** — opens the trigger SQL in a read-only editor tab (Run and Explain Plan are hidden, since you're looking at DDL).
 - **Edit** — opens the **Trigger Editor Modal** in *Guided mode*: name, table, timing (BEFORE / AFTER / INSTEAD OF), event checkboxes (INSERT / UPDATE / DELETE / TRUNCATE), a body editor, and a live SQL preview. A *Raw SQL* tab is always available for hand-edits. Editing a trigger warns that it's executed as drop + recreate and runs the two statements atomically.
+
+![Create Trigger modal in Guided mode with name and table fields, BEFORE / AFTER / INSTEAD OF timing pills, INSERT / UPDATE / DELETE event buttons, a Monaco body editor, and a generated SQL preview](/img/tabularis-trigger-editor-modal.png)
 - **Create Trigger** from the table or accordion header — same modal, blank slate.
 - **Drop Trigger** — with the standard confirmation.
 
