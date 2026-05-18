@@ -53,6 +53,7 @@ When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`)
 | **SSH enabled** | No | Activates the SSH tunnel for this connection |
 | **SSH profile** | — | Which saved SSH profile to use for the tunnel |
 | **CA Certificate** | No | Path to a PEM bundle to trust for TLS (PostgreSQL only). See [TLS & CA Certificates](#tls--ca-certificates) below. |
+| **Detect JSON in text columns** | No | Per-connection toggle: when enabled, plain `TEXT` / `VARCHAR` values that parse as JSON are routed through the JSON cell renderer in the data grid (chevron, viewer window, diff). The same flag also enables native array detection for `text[]` / `int[]` (PostgreSQL) and Firestore arrays. See [Data Grid → JSON & long text cells](/wiki/data-grid#json--long-text-cells). |
 
 *Not required for SQLite, which takes a file path instead.
 

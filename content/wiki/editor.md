@@ -21,6 +21,12 @@ Unlike basic editors that simply suggest a static list of SQL keywords and table
 3. **Alias Mapping**: It maps aliases to their source tables (e.g., `FROM customer_orders AS co`).
 4. **Targeted Suggestions**: When you type `co.`, the editor immediately suggests only the columns belonging to the `customer_orders` table, along with their data types.
 
+### Accepting suggestions
+
+When the autocomplete dropdown is open, **Enter accepts the highlighted suggestion by default** (matching the behavior of every other Monaco-based editor). If you prefer Enter to insert a newline instead, toggle **Settings → Editor → Accept suggestion on Enter** off. The setting is honored across every editor surface — main SQL tabs, notebook cells, and the Raw SQL tab of the trigger editor.
+
+`Tab` always accepts the highlighted suggestion, regardless of the setting.
+
 ### Caching Strategy
 To ensure the editor remains responsive even on databases with thousands of tables, Tabularis caches schema metadata:
 - **TTL**: Table metadata is cached in memory for 5 minutes.
@@ -56,6 +62,8 @@ Click any query in the list (or press its number `1`–`9`) to execute just that
 ### Run All
 
 Click **Run All** (or press `Ctrl/Cmd + Enter` inside the modal) to execute every query in the editor. Results from each query appear in separate tabs in the results panel.
+
+**Session continuity** — multi-statement scripts run via Run All share a single physical database connection across all statements (built-in drivers only). User variables (`SET @var := …`), `LAST_INSERT_ID()` / `LASTVAL()`, explicit `BEGIN` / `COMMIT` blocks, temporary tables, and `PREPARE` / `EXECUTE` pairs all behave the way they do in `mysql` CLI / `psql` / DBeaver. Plugin drivers fall back to sequential execution on separate pooled connections (ordering preserved, session state not guaranteed).
 
 ### Run Selected
 
@@ -187,6 +195,7 @@ By default, queries are executed in auto-commit mode. However, you can manually 
 ### Powerful Data Grid
 The results grid is heavily optimized to handle thousands of rows without dropping frames:
 - **Inline Editing**: Double-click any cell to modify its content. Changes are marked in yellow and can be committed back to the database with a single click (generating `UPDATE` statements securely via primary keys).
-- **Rich Data Types**: JSON columns include a built-in JSON viewer/formatter. Spatial data displays coordinates.
+- **Rich Data Types**: JSON / JSONB columns and long text columns open in a Monaco editor with diff and side-by-side toggles; JSON cells additionally open in a standalone Tauri window (see [Data Grid → JSON & long text cells](/wiki/data-grid#json--long-text-cells)). Spatial data displays coordinates.
+- **Foreign Key Navigation**: FK cells get a click-to-navigate affordance and a context-menu entry that opens the referenced table filtered to the matching row. See [Data Grid → Foreign Key Navigation](/wiki/data-grid#foreign-key-navigation).
 - **Exporting**: Export the current view to CSV or JSON instantly.
 - **Copy with Headers**: Highlight cells, right-click, and select "Copy with Headers" to easily paste data into Excel or Google Sheets.

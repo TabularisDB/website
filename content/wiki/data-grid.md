@@ -93,9 +93,59 @@ Choose **JSON** from the export menu. The full result set is written as a JSON a
 
 > Exports are always performed on the **complete result set** — all rows that match the current filter, not just the visible page.
 
+## JSON & Long Text Cells
+
+`json` / `jsonb` columns and long text columns (`TEXT`, `LONGTEXT`, `VARCHAR(MAX)` and any string value longer than 80 characters or containing a newline) get a richer in-grid editor than the default single-line input.
+
+<video src="/videos/posts/tabularis-json-viewer.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
+### Chevron expand
+
+A chevron icon appears next to the cell value. Click it to open an **inline editor pane** below the row:
+
+- For JSON / JSONB cells: Monaco runs in JSON mode with syntax highlighting and bracket matching.
+- For long text cells: Monaco runs in `plaintext` mode.
+
+The expansion editor supports a **Diff toggle** (off by default) that compares the original cell value against the current pending edit. A second **Side-by-side toggle** flips the diff from unified to a two-pane view. Both toggles are persisted only within the open expansion — closing it discards the toggle state.
+
+### Standalone viewer window (JSON / JSONB only)
+
+JSON cells additionally show a **braces icon**. Clicking it opens the cell in a **standalone Tauri window** dedicated to the value, with the same JSON editor and Diff / Side-by-side toggles plus a Save button. Multiple cells can have their viewers open at the same time — each window keeps its own session and remembers its bounds. Saving flows back to the grid as a pending change; close the window without saving to discard the edit.
+
+Double-clicking a JSON cell opens the viewer directly in edit mode (skipping the chevron).
+
+There is no separate viewer window for plain text cells — text values aren't compared across windows as often as JSON, and the inline chevron is the entry point that mattered.
+
+### "Detect JSON in text columns" (per-connection)
+
+Some applications store JSON inside plain `TEXT` columns. To route those values through the JSON cell renderer, open the connection edit modal and enable **Detect JSON in text columns**. The flag is per-connection — toggle it on for your audit-log database and off for the one where TEXT means "free-form prose".
+
+The same toggle also enables native array detection for `text[]` / `int[]` (PostgreSQL) and Firestore arrays.
+
+<video src="/videos/posts/tabularis-json-textmode.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
+### Round-trip through pending changes
+
+Edits made in the inline expansion editor or the viewer window are queued as **pending row changes** rather than committed immediately. You can review the unified diff, decide you don't like it, close the editor, and hit **Submit** on the row when you do. PostgreSQL binds `json` / `jsonb` values natively (no string round-trip), so structured objects and arrays go through as typed parameters.
+
+The same diff toggles are available in the **row-editor sidebar** for long fields, and that pane is drag-resizable so a long markdown article can occupy the height it deserves.
+
 ## BLOB / Binary Columns
 
 Large binary columns (BLOB, `bytea`, etc.) are truncated in the grid to avoid loading multi-megabyte values into memory. The maximum bytes loaded per cell is controlled by `maxBlobSize` in `config.json` (default: 1 MB). Values exceeding this limit are shown as a truncated hex preview with the full size in bytes.
+
+## Foreign Key Navigation
+
+When the active result is a table with foreign keys, FK cells get a click-to-navigate affordance:
+
+- **Hover** an FK cell → a small ↗ icon appears on the right of the cell. Clicking it opens (or reuses) a tab against the referenced table with `WHERE "ref_col" = value` pre-applied and runs the query.
+- **Right-click** an FK cell → the context menu's first entry is **Open referenced row in `<table>`**.
+
+The icon and menu entry only appear when the cell value is non-null, the row is not a pending insertion, and the row is not pending deletion. Identifier quoting follows the driver (backticks for MySQL/MariaDB, double-quotes elsewhere); numeric, bigint, boolean, and string values are formatted with the same rules used by the SQL INSERT copy format.
+
+If the referenced table is already open as a tab, that tab is reused — the WHERE filter is overwritten and the query re-runs.
+
+**V1 limitations**: only single-column foreign keys are surfaced; composite constraints and cross-schema navigation are not yet supported.
 
 ## Column Header Context Menu
 

@@ -63,3 +63,7 @@ Each routine is represented as:
 - **RoutineParameter**: name, data type, mode (`IN`/`OUT`/`INOUT`), and ordinal position.
 
 This metadata is queried from `INFORMATION_SCHEMA.ROUTINES` and `INFORMATION_SCHEMA.PARAMETERS` (or the driver-equivalent catalog views).
+
+## Related
+
+- [Triggers](/wiki/triggers) — managed alongside routines from the same sidebar accordion pattern.
