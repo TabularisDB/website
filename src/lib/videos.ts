@@ -164,6 +164,17 @@ const VIDEO_DEMOS: VideoDemo[] = [
     relatedHref: "/wiki/data-grid#json--long-text-cells",
     relatedLabel: "Read the data grid guide",
   },
+  {
+    slug: "foreign-key-navigation",
+    title: "Foreign Key Navigation in the Data Grid",
+    description:
+      "Click the ↗ icon on a foreign key cell — or use the context menu — to jump straight to the referenced row in the parent table.",
+    src: "/videos/wiki/15-foreign-key-navigation.mp4",
+    poster: "/videos/wiki/15-foreign-key-navigation.jpg",
+    uploadDate: "2026-05-19",
+    relatedHref: "/wiki/data-grid#foreign-key-navigation",
+    relatedLabel: "Read the data grid guide",
+  },
 ];
 
 export function getAllVideoDemos(): VideoDemo[] {

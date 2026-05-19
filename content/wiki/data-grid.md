@@ -138,6 +138,8 @@ Large binary columns (BLOB, `bytea`, etc.) are truncated in the grid to avoid lo
 
 When the active result is a table with foreign keys, FK cells get a click-to-navigate affordance:
 
+<img src="/img/tabularis-foreignkey.gif" alt="Hovering a foreign key cell in the Tabularis data grid and clicking the arrow to open the referenced row in the parent table" loading="lazy" decoding="async" style="width:100%;border-radius:8px;margin:1rem 0" />
+
 - **Hover** an FK cell → a small ↗ icon appears on the right of the cell. Clicking it opens (or reuses) a tab against the referenced table with `WHERE "ref_col" = value` pre-applied and runs the query.
 - **Right-click** an FK cell → the context menu's first entry is **Open referenced row in `<table>`**.
 
