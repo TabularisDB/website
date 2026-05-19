@@ -44,6 +44,18 @@ const SEO_ENTRY_POINTS = [
       "Reusable SQL analysis with cells, markdown, inline charts, and parameters.",
   },
   {
+    href: "/solutions/visual-explain",
+    title: "Visual EXPLAIN Tool",
+    excerpt:
+      "Inspect execution plans as interactive color-coded graphs, tree tables, and get instant AI-powered performance suggestions.",
+  },
+  {
+    href: "/solutions/visual-query-builder",
+    title: "Visual Query Builder",
+    excerpt:
+      "Construct complex SQL statements visually by dragging tables, drawing JOINs, and applying point-and-click aggregations.",
+  },
+  {
     href: "/compare/dbeaver-alternative",
     title: "DBeaver Alternative",
     excerpt:
