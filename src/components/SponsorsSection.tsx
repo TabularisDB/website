@@ -251,32 +251,74 @@ export function SponsorCard({ sponsor, onLearnMore, priority }: { sponsor: Spons
   );
 }
 
-// ─── Section (homepage) ───────────────────────────────────────────────────────
+// ─── Shared carousel (homepage + /sponsors page) ──────────────────────────────
 
-export function SponsorsSection() {
+function IconChevron({ direction }: { direction: "left" | "right" }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {direction === "left" ? <polyline points="15 18 9 12 15 6" /> : <polyline points="9 18 15 12 9 6" />}
+    </svg>
+  );
+}
+
+export function SponsorsCarousel() {
   const [activeSponsor, setActiveSponsor] = useState<Sponsor | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [pageCount, setPageCount] = useState(SPONSORS.length);
+  const [maxScroll, setMaxScroll] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [mounted, setMounted] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number>(0);
 
-  function handleScroll() {
-    const el = sliderRef.current;
-    if (!el) return;
-    const index = Math.round(el.scrollLeft / el.offsetWidth);
-    setActiveIndex(index);
+  function getCardStep(el: HTMLDivElement): number {
+    const first = el.firstElementChild as HTMLElement | null;
+    const second = first?.nextElementSibling as HTMLElement | null;
+    if (first && second) return second.offsetLeft - first.offsetLeft;
+    if (first) return first.offsetWidth;
+    return el.offsetWidth;
   }
 
-  function scrollTo(index: number) {
-    const clamped = Math.max(0, Math.min(SPONSORS.length - 1, index));
+  function updateScrollState() {
     const el = sliderRef.current;
     if (!el) return;
-    el.scrollTo({ left: el.offsetWidth * clamped, behavior: "smooth" });
+    const step = getCardStep(el);
+    const visibleCount = step > 0 ? Math.max(1, Math.round(el.clientWidth / step)) : 1;
+    const pages = Math.max(1, SPONSORS.length - visibleCount + 1);
+    const rawIdx = step > 0 ? Math.round(el.scrollLeft / step) : 0;
+    setScrollLeft(el.scrollLeft);
+    setMaxScroll(el.scrollWidth - el.clientWidth);
+    setPageCount(pages);
+    setActiveIndex(Math.max(0, Math.min(pages - 1, rawIdx)));
+  }
+
+  function scrollToCard(index: number) {
+    const el = sliderRef.current;
+    if (!el) return;
+    const card = el.children[index] as HTMLElement | undefined;
+    if (!card) return;
+    const sliderRect = el.getBoundingClientRect();
+    const cardRect = card.getBoundingClientRect();
+    const target = el.scrollLeft + (cardRect.left - sliderRect.left);
+    el.scrollTo({ left: target, behavior: "smooth" });
+  }
+
+  function scrollByCard(direction: 1 | -1) {
+    const next = Math.max(0, Math.min(pageCount - 1, activeIndex + direction));
+    scrollToCard(next);
   }
 
   useEffect(() => {
+    setMounted(true);
+    updateScrollState();
+    window.addEventListener("resize", updateScrollState);
+    return () => window.removeEventListener("resize", updateScrollState);
+  }, []);
+
+  useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "ArrowLeft") scrollTo(activeIndex - 1);
-      if (e.key === "ArrowRight") scrollTo(activeIndex + 1);
+      if (e.key === "ArrowLeft") scrollByCard(-1);
+      if (e.key === "ArrowRight") scrollByCard(1);
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -289,22 +331,33 @@ export function SponsorsSection() {
   function handleTouchEnd(e: React.TouchEvent) {
     const delta = touchStartX.current - e.changedTouches[0].clientX;
     if (Math.abs(delta) < 40) return;
-    scrollTo(delta > 0 ? activeIndex + 1 : activeIndex - 1);
+    scrollByCard(delta > 0 ? 1 : -1);
   }
+
+  const atStart = scrollLeft <= 1;
+  const atEnd = maxScroll > 0 && scrollLeft >= maxScroll - 1;
+  const hasOverflow = mounted && maxScroll > 1;
+  const showDots = mounted && hasOverflow && pageCount > 1;
 
   return (
     <>
-      <section className="section" id="sponsors">
-        <h2>Sponsors</h2>
-        <p style={{ color: "var(--text-muted)", marginBottom: "2.5rem" }}>
-          These companies support Tabularis development. Thank you for keeping
-          the project alive and free.
-        </p>
+      <div className="sponsors-carousel">
+        {mounted && (
+          <button
+            type="button"
+            className="sponsors-arrow sponsors-arrow-prev"
+            onClick={() => scrollByCard(-1)}
+            disabled={atStart || !hasOverflow}
+            aria-label="Previous sponsors"
+          >
+            <IconChevron direction="left" />
+          </button>
+        )}
 
         <div
           className="sponsors-grid"
           ref={sliderRef}
-          onScroll={handleScroll}
+          onScroll={updateScrollState}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
@@ -318,26 +371,57 @@ export function SponsorsSection() {
           ))}
         </div>
 
+        {mounted && (
+          <button
+            type="button"
+            className="sponsors-arrow sponsors-arrow-next"
+            onClick={() => scrollByCard(1)}
+            disabled={atEnd || !hasOverflow}
+            aria-label="Next sponsors"
+          >
+            <IconChevron direction="right" />
+          </button>
+        )}
+      </div>
+
+      {showDots && (
         <div className="sponsors-dots">
-          {SPONSORS.map((_, i) => (
+          {Array.from({ length: pageCount }).map((_, i) => (
             <button
               key={i}
+              type="button"
               className={`sponsors-dot${i === activeIndex ? " active" : ""}`}
-              onClick={() => scrollTo(i)}
-              aria-label={`Go to sponsor ${i + 1}`}
+              onClick={() => scrollToCard(i)}
+              aria-label={`Go to position ${i + 1}`}
             />
           ))}
         </div>
-
-        <p className="sponsor-footnote">
-          Interested in sponsoring Tabularis?{" "}
-          <a href="/sponsors">
-            Get in touch →
-          </a>
-        </p>
-      </section>
+      )}
 
       <SponsorModal sponsor={activeSponsor} onClose={() => setActiveSponsor(null)} />
     </>
+  );
+}
+
+// ─── Section (homepage) ───────────────────────────────────────────────────────
+
+export function SponsorsSection() {
+  return (
+    <section className="section" id="sponsors">
+      <h2>Sponsors</h2>
+      <p style={{ color: "var(--text-muted)", marginBottom: "2.5rem" }}>
+        These companies support Tabularis development. Thank you for keeping
+        the project alive and free.
+      </p>
+
+      <SponsorsCarousel />
+
+      <p className="sponsor-footnote">
+        Interested in sponsoring Tabularis?{" "}
+        <a href="/sponsors">
+          Get in touch →
+        </a>
+      </p>
+    </section>
   );
 }

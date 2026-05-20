@@ -76,6 +76,30 @@ export const SPONSORS: Sponsor[] = [
     },
   },
   {
+    id: "digitalocean",
+    name: "DigitalOcean",
+    tagline: "Simple, predictable cloud infrastructure — powering the Tabularis plugin registry.",
+    url: "https://m.do.co/c/f6ab3d158275",
+    accentColor: "#0080FF",
+    highlightColor: "#0069D9",
+    logoImg: "/img/sponsors/digitalocean.png",
+    logoImgCompact: "/img/sponsors/digitalocean_compact.png",
+    modalDescription:
+      "DigitalOcean is the developer cloud built for shipping. Droplets, managed databases, App Platform, Spaces object storage and Kubernetes — all with predictable pricing and documentation developers actually want to read. Tabularis was accepted into the DigitalOcean Open Source Credits Program, and we're using that credit to host the upcoming plugin registry infrastructure.",
+    features: [
+      { icon: "💧", text: "Droplets, App Platform, Kubernetes — the full developer cloud" },
+      { icon: "🗄️", text: "Managed PostgreSQL, MySQL, Redis and MongoDB" },
+      { icon: "📦", text: "Spaces — S3-compatible object storage with CDN included" },
+      { icon: "💸", text: "Predictable pricing, no surprise bills at the end of the month" },
+      { icon: "❤️", text: "Open Source Credits Program — supporting maintainers since day one" },
+    ],
+    offer: {
+      title: "$25 in cloud credits for new accounts",
+      description:
+        "Sign up via the DigitalOcean referral program and get $25 in credit to spend over 60 days — enough to run a plugin registry, a side project, or both.",
+    },
+  },
+  {
     id: "usero",
     name: "Usero",
     tagline: "Feedback becomes code. Automatically.",

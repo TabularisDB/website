@@ -132,7 +132,7 @@ const navGroups: NavGroup[] = [
   },
   {
     label: "Resources",
-    matchPrefixes: ["/blog", "/changelog", "/compare", "/solutions", "/videos"],
+    matchPrefixes: ["/blog", "/changelog", "/compare", "/solutions", "/videos", "/sponsors"],
     columns: [
       {
         title: "Learn",
@@ -191,6 +191,11 @@ const navGroups: NavGroup[] = [
             label: "Discord",
             href: "https://discord.com/invite/K2hmhfHRSt",
             description: "Talk to users, contributors, and maintainers.",
+          },
+          {
+            label: "Sponsors",
+            href: "/sponsors",
+            description: "The companies that help keep Tabularis free and independent.",
           },
         ],
       },
