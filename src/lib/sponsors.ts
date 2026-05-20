@@ -78,7 +78,7 @@ export const SPONSORS: Sponsor[] = [
   {
     id: "digitalocean",
     name: "DigitalOcean",
-    tagline: "Simple, predictable cloud infrastructure — powering the Tabularis plugin registry.",
+    tagline: "Simple, predictable cloud infrastructure for developers and growing teams.",
     url: "https://m.do.co/c/f6ab3d158275",
     accentColor: "#0080FF",
     highlightColor: "#0069D9",
