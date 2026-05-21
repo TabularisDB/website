@@ -18,6 +18,7 @@ export function PostContentLightbox() {
       if (img.tagName !== "IMG") return;
       const imgEl = img as HTMLImageElement;
       if (imgEl.closest(".post-author")) return;
+      if (imgEl.classList.contains("no-lightbox")) return;
       setSrc(imgEl.src);
       setAlt(imgEl.alt || "");
     };
@@ -43,7 +44,7 @@ export function PostContentLightbox() {
     const article = document.querySelector("article.post-content");
     if (!article) return;
     article.querySelectorAll<HTMLImageElement>("img").forEach((img) => {
-      if (!img.closest(".post-author")) {
+      if (!img.closest(".post-author") && !img.classList.contains("no-lightbox")) {
         img.style.cursor = "zoom-in";
       }
     });

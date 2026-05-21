@@ -14,7 +14,7 @@ redirect_from:
 
 # Tabularis Is Now Backed by DigitalOcean
 
-<p style="text-align:center;margin:1.5rem 0 2rem;"><img src="/img/posts/digitalocean-partnership.png" alt="Tabularis is now part of the DigitalOcean Open Source Credits Program" style="max-width:280px;height:auto;display:inline-block;" /></p>
+<p style="text-align:center;margin:1.5rem 0 2rem;"><img class="no-lightbox" src="/img/posts/digitalocean-partnership.png" alt="Tabularis is now part of the DigitalOcean Open Source Credits Program" style="width:100%;max-width:800px;height:auto;display:block;margin:0 auto;" /></p>
 
 We have some news we're genuinely excited to share: **[DigitalOcean](https://m.do.co/c/f6ab3d158275) has welcomed Tabularis into its Open Source Credits Program**.
 
