@@ -122,7 +122,7 @@ If you've been editing rows in a Discord-style table and watching the wrong ones
 
 ---
 
-## PostgreSQL TLS: `verify-ca`, `verify-full`, and `require` Actually Meaning `require`
+## PostgreSQL TLS Modes, Aligned with libpq
 
 [#209](https://github.com/TabularisDB/tabularis/issues/209) was a precise report: Tabularis' PostgreSQL SSL modes (`disable`, `allow`, `prefer`, `require`) all behaved like they demanded a valid CA — which broke connection to AWS RDS instances with self-signed certs that work fine in `psql` and DBeaver with `sslmode=require`. The expected behavior, the one every other Postgres client ships, is:
 
@@ -142,7 +142,7 @@ Full reference in the wiki: [Connections → TLS & CA Certificates](/wiki/connec
 
 ---
 
-## Delete Rows with `Delete` or `Backspace`
+## Delete Rows with the Delete or Backspace Key
 
 [@thomaswasle](https://github.com/thomaswasle) closes [#218](https://github.com/TabularisDB/tabularis/issues/218) with PR [#221](https://github.com/TabularisDB/tabularis/pull/221). Pressing `Delete` or `Backspace` with one or more rows selected now marks them for deletion — the same behavior already available from the right-click context menu, just reachable from the keyboard.
 
@@ -166,11 +166,15 @@ A handful of UI surfaces remain not-yet-wired-to-i18n and render in English: the
 
 ## A New macOS Dock Icon
 
+<img src="/img/tabularis-macos-dock-icon.png" alt="The new Tabularis macOS dock icon — an Apple squircle with a light glass background, subtle teal and violet auroras, and the isometric cube logo centered" style="width: 160px; float: right; margin: 0.25rem 0 1rem 1.5rem; border: none; box-shadow: none; border-radius: 0;" />
+
 The old macOS dock icon was a bare isometric cube on a transparent background. On modern macOS (Tahoe and friends) that looked out of place next to system apps that all sit inside a proper squircle — the cube floated, had no glass treatment, and on light wallpapers the dark edges fought the dock.
 
 PR [#217](https://github.com/TabularisDB/tabularis/pull/217) replaces `icon.icns` with a Tahoe-style design: a proper Apple squircle, a light glass background with a top sheen, very subtle teal and violet auroras in opposite corners picking up the cube's own gradient colors, and the cube logo centered with a soft drop shadow.
 
 Windows `.ico` and Linux PNGs are untouched; iOS / Android folders unchanged.
+
+<div style="clear: both;"></div>
 
 ---
 
