@@ -67,6 +67,17 @@ If your database uses a CA the system store doesn't trust — typical for **AWS 
 
 MySQL/MariaDB connections continue to use `native-tls` and the system trust store; the `ssl_ca` field is a Postgres-only option for now.
 
+The **SSL Mode** selector aligns with libpq semantics:
+
+| Mode | Behavior |
+| :--- | :--- |
+| `disable` | No encryption. |
+| `allow` | Try non-SSL first; fall back to SSL if the server requires it. |
+| `prefer` | Try SSL first; fall back to non-SSL. |
+| `require` | Force encryption, but **do not** require certificate validation. Use this with self-signed certificates (e.g., default AWS RDS without an explicit CA). |
+| `verify-ca` | Force encryption **and** validate that the server certificate is signed by a trusted CA (paste the CA bundle into the **CA Certificate** field). |
+| `verify-full` | Same as `verify-ca`, plus verify that the server hostname matches the certificate CN or SAN. Strictest mode; recommended for production. |
+
 ### SQLite
 
 For SQLite, provide the absolute path to the `.db` or `.sqlite` file using the file picker. There is no host, port, or authentication.
@@ -133,6 +144,19 @@ Right-click any connection in the sidebar for:
 - **Duplicate** — clone the profile with a new name and ID
 - **Delete** — removes the profile from `connections.json` and the associated keychain entry
 - **Disconnect** — closes the active connection pool and SSH tunnel without deleting the profile
+
+## Per-Connection Appearance
+
+Every saved connection can override its driver's default icon and accent color. Open the New Connection modal (or edit an existing one) and expand the **Appearance** section in the General tab.
+
+- **Accent color** — pick from a 12-swatch curated palette or paste a custom hex. The accent applies to the connection card on the Connections page, the sidebar entry once the connection is open, and the Visual Explain modal's connection chip. Falls back to the driver manifest color when no override is set.
+- **Icon** — four mutually-exclusive tabs:
+  - **Default** — keeps the driver's manifest icon.
+  - **Pack** — a curated 30-icon subset of lucide-react covering the common shapes (cubes, clouds, layers, shields, branches…).
+  - **Emoji** — a single emoji grapheme of your choice.
+  - **Image** — upload a PNG, JPG, WebP, or SVG (max 512 KB). MIME type is validated against the file's magic bytes; SVGs are rejected if they contain `<script>`, `javascript:` URLs, or `on*=` event handlers. Custom images are stored under `<app_data>/connection-icons/` and cascade-deleted when the connection is removed.
+
+The override is persisted alongside the rest of the connection profile in `connections.json` and round-trips through Export / Import like every other field. The classic use case is differentiating two same-driver connections that would otherwise look identical in the sidebar — for example, a `MySQL local` in green next to a `MySQL prod` in red, each with its own icon.
 
 ## Connection Groups
 

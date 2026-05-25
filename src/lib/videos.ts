@@ -175,6 +175,39 @@ const VIDEO_DEMOS: VideoDemo[] = [
     relatedHref: "/wiki/data-grid#foreign-key-navigation",
     relatedLabel: "Read the data grid guide",
   },
+  {
+    slug: "per-connection-appearance",
+    title: "Per-Connection Accent Color and Icon",
+    description:
+      "Paint each connection with its own accent color and icon — pick from a curated palette, a 30-icon pack, an emoji, or upload your own image — so two MySQL connections never look the same again.",
+    src: "/videos/wiki/16-per-connection-appearance.mp4",
+    poster: "/videos/wiki/16-per-connection-appearance.jpg",
+    uploadDate: "2026-05-25",
+    relatedHref: "/wiki/connections#per-connection-appearance",
+    relatedLabel: "Read the connections guide",
+  },
+  {
+    slug: "related-records-panel",
+    title: "Related Records Panel for Foreign Keys",
+    description:
+      "Click any foreign key value to slide up an inline panel with the referenced row — drag to resize, swap content by clicking other FKs, or hand off to a full tab when you're ready to navigate.",
+    src: "/videos/wiki/17-related-records-panel.mp4",
+    poster: "/videos/wiki/17-related-records-panel.jpg",
+    uploadDate: "2026-05-25",
+    relatedHref: "/wiki/data-grid#related-records-panel",
+    relatedLabel: "Read the data grid guide",
+  },
+  {
+    slug: "delete-row-shortcut",
+    title: "Delete Rows with Delete or Backspace",
+    description:
+      "Select one or more rows and press Delete or Backspace to mark them for deletion — same behavior as the context menu, just reachable from the keyboard.",
+    src: "/videos/wiki/18-delete-row-shortcut.mp4",
+    poster: "/videos/wiki/18-delete-row-shortcut.jpg",
+    uploadDate: "2026-05-25",
+    relatedHref: "/wiki/data-grid#deleting-rows",
+    relatedLabel: "Read the data grid guide",
+  },
 ];
 
 export function getAllVideoDemos(): VideoDemo[] {

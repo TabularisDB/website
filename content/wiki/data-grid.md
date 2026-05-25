@@ -51,7 +51,7 @@ Click the **+ Add Row** button at the bottom of the grid. A new empty row appear
 
 ### Deleting Rows
 
-Select one or more rows by clicking the row header checkbox, then click **Delete Selected**. A confirmation is shown before the `DELETE` statement is executed.
+Select one or more rows by clicking the row header checkbox, then click **Delete Selected** — or press `Delete` / `Backspace` with the rows selected (works whenever no cell is being edited and the grid isn't read-only). A confirmation is shown before the `DELETE` statement is executed.
 
 ### Committing Changes
 
@@ -149,6 +149,15 @@ If the referenced table is already open as a tab, that tab is reused — the WHE
 
 **V1 limitations**: only single-column foreign keys are surfaced; composite constraints and cross-schema navigation are not yet supported.
 
+### Related Records Panel
+
+When you want to *check* what a foreign key points at without losing the row you're already on, click the FK value (or pick **Show related record** from the cell context menu) and a **Related Records Panel** slides up from the bottom of the data grid. The parent table stays visible and interactive above it.
+
+- The panel renders a mini result grid of `SELECT * FROM <ref_table> WHERE <ref_col> = <value> LIMIT 100`, using the same identifier-quoting rules as FK navigation.
+- Clicking a different FK in the parent grid **swaps the panel content in place** — no close-then-reopen.
+- The panel is **drag-resizable** from the grip in its header, so a wide referenced row can claim the height it needs.
+- An **Open in tab** button hands off to the navigation path above when you decide you do want to leave for the referenced table after all.
+
 ## Column Header Context Menu
 
 Right-click any column header to open the header context menu. Available actions:
@@ -174,3 +183,4 @@ The grid displays `NULL` values with a distinct grey `NULL` badge to differentia
 | Move between cells | Arrow keys |
 | Next page | `Ctrl/Cmd + Right` |
 | Previous page | `Ctrl/Cmd + Left` |
+| Mark selected rows for deletion | `Delete` / `Backspace` |
