@@ -208,6 +208,17 @@ const VIDEO_DEMOS: VideoDemo[] = [
     relatedHref: "/wiki/data-grid#deleting-rows",
     relatedLabel: "Read the data grid guide",
   },
+  {
+    slug: "quick-navigator",
+    title: "Quick Navigator for Schema Objects",
+    description:
+      "Press Cmd+P / Ctrl+P to jump to any table, view, routine, or trigger in any database or schema of the active connection — in the spirit of the \"go to anything\" palette every code editor has.",
+    src: "/videos/wiki/19-quick-navigator.mp4",
+    poster: "/videos/wiki/19-quick-navigator.jpg",
+    uploadDate: "2026-06-03",
+    relatedHref: "/wiki/quick-navigator",
+    relatedLabel: "Read the Quick Navigator guide",
+  },
 ];
 
 export function getAllVideoDemos(): VideoDemo[] {
