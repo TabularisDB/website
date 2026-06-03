@@ -17,6 +17,7 @@ Tabularis ships with a set of keyboard shortcuts for common actions across navig
 
 | Action | macOS | Windows / Linux |
 | :--- | :--- | :--- |
+| Quick Navigator (search tables, views, routines, triggers) | `⌘+P` | `Ctrl+P` |
 | Toggle sidebar | `⌘+B` | `Ctrl+B` |
 | Open connections page | `⌘+Shift+C` | `Ctrl+Shift+C` |
 | New connection (opens modal) | `⌘+Shift+N` | `Ctrl+Shift+N` |

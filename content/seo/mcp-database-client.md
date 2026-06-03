@@ -59,7 +59,13 @@ The agent inspects the real schema before writing SQL. Fewer hallucinated column
 Save a connection once in Tabularis. Use it manually. Use it from the AI. No `.env` file to keep in sync, no credentials in chat logs.
 
 ### Works with every major agent
-Claude Desktop, Claude Code, Cursor, Windsurf — one-click install for all of them from Settings, or drop a config block into the relevant file by hand.
+Claude Desktop, Claude Code, Cursor, Windsurf, Antigravity, Codex — one-click install for all of them from Settings, or drop a config block into the relevant file by hand.
+
+### Plugin drivers included
+Connections backed by plugin drivers from the [plugin registry](/plugins) work over MCP exactly like the built-in PostgreSQL, MySQL, and SQLite drivers — the agent reaches whatever Tabularis reaches.
+
+### Safety gates that fail closed
+Per-connection [read-only mode](/wiki/mcp-readonly-mode) and [approval gates](/wiki/mcp-approval-gates) with pre-flight EXPLAIN sit between the agent and your data. The classifier fails closed on anything ambiguous — including stacked multi-statement payloads — and approver-edited queries are re-validated before execution.
 
 ### Local-first by design
 The MCP server runs on your machine. Queries execute against your databases directly. Nothing is proxied through a third-party cloud.

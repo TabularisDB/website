@@ -52,6 +52,7 @@ When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`)
 | **Save in keychain** | — | Controls whether the password persists after closing |
 | **SSH enabled** | No | Activates the SSH tunnel for this connection |
 | **SSH profile** | — | Which saved SSH profile to use for the tunnel |
+| **Kubernetes** | No | Tunnels the connection through a managed `kubectl port-forward`. Mutually exclusive with SSH. See [Kubernetes Tunneling](/wiki/kubernetes-tunneling). |
 | **CA Certificate** | No | Path to a PEM bundle to trust for TLS (PostgreSQL only). See [TLS & CA Certificates](#tls--ca-certificates) below. |
 | **Detect JSON in text columns** | No | Per-connection toggle: when enabled, plain `TEXT` / `VARCHAR` values that parse as JSON are routed through the JSON cell renderer in the data grid (chevron, viewer window, diff). The same flag also enables native array detection for `text[]` / `int[]` (PostgreSQL) and Firestore arrays. See [Data Grid → JSON & long text cells](/wiki/data-grid#json--long-text-cells). |
 
@@ -65,7 +66,7 @@ If your database uses a CA the system store doesn't trust — typical for **AWS 
 
 **AWS RDS in particular**: download the global certificate bundle from <https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem> and point the field at it. Tabularis intentionally does not vendor the bundle — AWS rotates these CAs every one to three years, and a vendored copy would silently break released apps the moment the next rotation lands.
 
-MySQL/MariaDB connections continue to use `native-tls` and the system trust store; the `ssl_ca` field is a Postgres-only option for now.
+MySQL/MariaDB connections continue to use `native-tls` and the system trust store; the `ssl_ca` field is a Postgres-only option for now. As of v0.13.0 the selected MySQL **SSL Mode** is honored on every code path — including the test-connection path, which previously attempted TLS even with `ssl_mode=disabled` — and connection pools are keyed by their TLS settings, so editing a connection's SSL mode can never silently reuse a pool created under the old mode.
 
 The **SSL Mode** selector aligns with libpq semantics:
 
@@ -135,6 +136,12 @@ Host db-host
 ```
 
 Set the SSH profile host to `db-host`, auth type to `ssh_key`, and leave the password field empty. With no password provided, Tabularis uses the System SSH backend, which delegates to `ssh` and resolves the chain automatically.
+
+## Kubernetes Tunnels
+
+For databases running inside a Kubernetes cluster, the connection modal's **Kubernetes** tab runs a managed `kubectl port-forward` as the transport — pick a context, namespace, resource, and container port via cascading dropdowns discovered from your kubeconfig. Saved K8s profiles live in `k8s_connections.json` and are reusable across connections, mirroring the SSH profile pattern. Connections with a tunnel show a blue **K8s badge** in the sidebar and on the Connections page.
+
+Full reference: [Kubernetes Tunneling](/wiki/kubernetes-tunneling).
 
 ## Connection Actions
 

@@ -26,7 +26,7 @@ This is the feature that makes "give your AI agent access to your production dat
 5. You decide. Tabularis writes a `decision` file.
 6. The MCP server, polling every 500 ms, sees the decision:
    - **Approve** → executes (using the edited query if you changed it). Status: `success`.
-   - **Approve + edited** → executes the new SQL. Status: `success`, the audit log captures both original and approval id.
+   - **Approve + edited** → the edited SQL is **re-classified and re-checked against read-only mode** before executing (since v0.13.0 — an approved `SELECT` can't be flipped into an unchecked `DELETE` in the modal). Status: `success`, the audit log captures the original, the effective query, and the approval id.
    - **Deny** → returns `Query denied by user[: <reason>]` to the agent. Status: `denied`.
    - **Timeout** (default 120 s) → returns `Approval timed out after 120s — open Tabularis to approve writes`. Status: `timeout`.
 

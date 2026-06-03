@@ -26,6 +26,8 @@ Before the MCP `run_query` tool dispatches to a driver, the SQL is run through a
 
 Read-only mode lets `select` through and **rejects everything else** — including `unknown`. That's deliberate (fail-closed): the classifier strips strings, comments and quoted identifiers before scanning, and CTEs that end in a write are caught, but if it can't classify with confidence the call is blocked rather than guessed at.
 
+Since v0.13.0 the classifier also **fails closed on multi-statement payloads**: a stacked query like `SELECT 1; DROP TABLE users` is classified `unknown` — not `select` from its leading keyword — and blocked. String literals are stripped under both the SQL-standard (`''`) and MySQL backslash-escape (`\'`) readings, so a payload can't hide the `;` separator inside a string under either dialect. A single trailing `;` keeps its classification.
+
 When a call is rejected, the agent gets:
 
 ```

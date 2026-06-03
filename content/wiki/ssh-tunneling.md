@@ -9,6 +9,8 @@ category: "Security & Networking"
 
 Tabularis includes a full SSH tunneling implementation written in Rust. It supports both password and key-based authentication, multi-hop proxy chains, and automatic dynamic port assignment. No external tools are required — everything runs inside the application process.
 
+For databases running inside Kubernetes clusters, see [Kubernetes Tunneling](/wiki/kubernetes-tunneling) — the same managed-tunnel pattern over `kubectl port-forward`. SSH and Kubernetes tunnels are mutually exclusive on a connection.
+
 ![SSH tunneling configuration with reusable profile settings](/img/tabularis-ssh-tunneling.png)
 
 ## How It Works

@@ -27,6 +27,8 @@ Staging, production replicas, customer environments, private hosts behind bastio
 
 Tabularis includes built-in SSH tunneling, which makes it a useful fit when you need a database client that can handle remote environments without turning setup into a separate engineering task.
 
+Since v0.13.0 the same managed-tunnel pattern also covers **Kubernetes**: a connection can run through a managed `kubectl port-forward` — context, namespace, resource, and port picked from your kubeconfig — instead of a terminal you have to keep alive. See [Kubernetes Tunneling](/wiki/kubernetes-tunneling).
+
 ## Why SSH Support Matters
 
 Without integrated SSH support, teams often end up with:

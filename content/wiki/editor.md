@@ -189,6 +189,10 @@ This makes the sidebar history a fast iteration loop: run a query, tweak it, and
 
 The maximum number of stored entries is controlled in **Settings → General → Query History**. The backing config key is `queryHistoryMaxEntries`, with a default of `500`.
 
+### Durability & corruption recovery
+
+Since v0.13.0, history writes are **atomic** (written to a temp file, then renamed onto the target) and serialized per connection, so multi-statement scripts recording many entries concurrently can never corrupt the file. If a history file from an earlier version is found corrupt, Tabularis backs it up as `<id>.json.corrupt-<timestamp>`, starts fresh, and shows a dismissible banner in the History panel with the backup path — instead of silently showing an empty panel and recording nothing.
+
 ### Transaction Management
 By default, queries are executed in auto-commit mode. However, you can manually wrap your statements in `BEGIN; ... COMMIT;` blocks. If an error occurs midway through a block, Tabularis halts execution and outputs the precise line and database engine error.
 

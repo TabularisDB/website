@@ -7,7 +7,7 @@ Most database clients are still designed for a world where a human writes every 
 - **MCP-native.** A built-in Model Context Protocol server lets compatible AI agents inspect schemas and run queries *through the same app* where you manage your connections — no fragile ad-hoc scripts, no credentials leaking into chat windows.
 - **Still a first-class human workspace.** Monaco SQL editor, notebooks with inline charts, visual query builder, visual EXPLAIN, ER diagrams, split view. You don't give up the IDE to get the agent.
 - **Multi-engine, extensible.** PostgreSQL (multi-schema), MySQL/MariaDB, SQLite built in. Anything else via plugins over JSON-RPC — write a driver in Rust, Go, Python, or any language.
-- **Local-first, secure.** SSH tunneling, system keychain for secrets, your data and credentials stay on your machine.
+- **Local-first, secure.** SSH and Kubernetes tunneling, system keychain for secrets, your data and credentials stay on your machine.
 
 Rust + Tauri backend, React 19 frontend, Apache 2.0.
 
@@ -32,8 +32,8 @@ Turn execution plans into interactive graphs, exact node tables, raw output, and
 
 Built-in shortcuts cover navigation, the SQL editor, and the data grid. Remap combinations from **Settings → Keyboard Shortcuts**, reset them in one click, or edit `keybindings.json` directly.
 
-### 🔒 SSH Tunneling & Security
-Reach remote databases through SSH tunnels directly from the connection manager. Passwords and API keys are stored securely in your system keychain.
+### 🔒 SSH & Kubernetes Tunneling
+Reach remote databases through SSH tunnels or managed `kubectl port-forward` tunnels directly from the connection manager. Passwords and API keys are stored securely in your system keychain.
 
 ### 📝 Modern SQL Editor
 Monaco-powered SQL editing with syntax highlighting, multiple tabs, and precise execution controls for selected text or full scripts.

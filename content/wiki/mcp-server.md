@@ -7,7 +7,9 @@ category: "AI & MCP"
 
 # MCP Server
 
-Tabularis includes a built-in **Model Context Protocol (MCP)** server. Once configured, external AI assistants — including **Claude Desktop**, **Claude Code**, **Cursor**, **Windsurf**, and **Antigravity** — can list your saved connections, inspect schemas, describe tables, and run SQL queries, all without leaving their chat interface.
+Tabularis includes a built-in **Model Context Protocol (MCP)** server. Once configured, external AI assistants — including **Claude Desktop**, **Claude Code**, **Cursor**, **Windsurf**, **Antigravity**, and **Codex** — can list your saved connections, inspect schemas, describe tables, and run SQL queries, all without leaving their chat interface.
+
+Starting with v0.13.0, MCP operations are dispatched through the same driver registry the GUI uses — so connections backed by **plugin drivers** (installed from the [plugin registry](/wiki/plugins)) work over MCP exactly like the built-in MySQL, PostgreSQL, and SQLite drivers.
 
 ![MCP Server Integration](/img/tabularis-mcp-server.png)
 
@@ -28,7 +30,7 @@ Starting with v0.9.9, Tabularis detects all supported AI clients automatically a
 
 1. Open **Settings → MCP** (or click the plug icon in the sidebar).
 2. The **MCP Server Integration** panel lists every detected AI client alongside the resolved path to its config file.
-3. Click **Install Config** next to the client you want to connect. For file-based clients, Tabularis writes or patches the required `mcpServers` entry directly into the config file. For Claude Code, it runs `claude mcp add --scope user ...` instead.
+3. Click **Install Config** next to the client you want to connect. For file-based clients, Tabularis writes or patches the required `mcpServers` entry directly into the config file. For command-based clients it runs the client's own CLI instead — `claude mcp add --scope user ...` for Claude Code, `codex mcp add tabularis -- ...` for Codex.
 4. Restart the target AI client. It will immediately see Tabularis as an available MCP server.
 
 ### Supported AI Clients
@@ -40,6 +42,7 @@ Starting with v0.9.9, Tabularis detects all supported AI clients automatically a
 | **Cursor** | `~/.cursor/mcp.json` |
 | **Windsurf** | `~/.codeium/windsurf/mcp_config.json` |
 | **Antigravity** | `~/.gemini/antigravity/mcp_config.json` |
+| **Codex** | `~/.codex/config.toml` (installed via `codex mcp add`) |
 
 On macOS and Windows the paths are resolved automatically to their platform equivalents.
 
@@ -74,6 +77,12 @@ For Claude Code, the equivalent manual command is:
 
 ```bash
 claude mcp add --scope user tabularis /path/to/tabularis -- --mcp
+```
+
+For Codex:
+
+```bash
+codex mcp add tabularis -- /path/to/tabularis --mcp
 ```
 
 ## Resources
@@ -161,7 +170,8 @@ Claude (or any connected AI) will call the appropriate tool with the resolved `c
 - The MCP server runs with the **same OS permissions** as your Tabularis process — it can read any database you have credentials for.
 - Only connections already saved in Tabularis (with credentials in the OS keychain) are accessible.
 - Passwords and API keys are **never** exposed through MCP resources or tool outputs.
-- The tool can execute **any SQL**, including `DELETE` or `DROP`. Use read-only database users if you want to restrict the AI to safe operations.
+- The tool can execute **any SQL**, including `DELETE` or `DROP`. Use [Read-only Mode](/wiki/mcp-readonly-mode), [Approval Gates](/wiki/mcp-approval-gates), or read-only database users if you want to restrict the AI to safe operations. As of v0.13.0 the safety classifier **fails closed on multi-statement payloads** (a stacked `SELECT 1; DROP TABLE …` can no longer pass as a read), and approver-edited queries are re-validated before execution.
+- Plugin drivers reached over MCP run with timeouts and are terminated with the MCP subprocess — a wedged plugin can't block the request loop, and no plugin process is left orphaned.
 - Communication happens entirely **locally** — no data leaves your machine via the MCP channel.
 
 ## Troubleshooting

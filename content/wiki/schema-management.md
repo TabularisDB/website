@@ -40,6 +40,24 @@ The type picker includes types from popular PostgreSQL extensions — `hstore`, 
 ### Safe DDL Generation
 When you make visual changes, Tabularis does not apply them blindly. It compiles your actions into a set of precise DDL (`CREATE`, `ALTER`, `DROP`) statements and presents them in a preview window. You can review the exact SQL that will run, copy it for version control migrations, or click "Apply" to execute it.
 
+## Generate SQL
+
+Right-click any table in the sidebar and choose **Generate SQL** to open a modal with ready-made statements for that table. Starting with v0.13.0, the modal is organized into tabs:
+
+| Tab | Generates |
+| :--- | :--- |
+| **CREATE TABLE** | The full DDL for the table |
+| **SELECT \*** | A select-all query |
+| **SELECT [fields]** | A select with every column listed explicitly |
+| **UPDATE** | An update template with every column, using `:named` bind parameters derived from the column names |
+| **DELETE** | A delete template |
+
+![The Generate SQL modal with tabs for CREATE TABLE, SELECT *, SELECT fields, UPDATE, and DELETE](/img/tabularis-generate-sql-dml-tabs.png)
+
+Each tab has a copy button, and the **Run in Console** button opens the generated statement in a new editor tab. The `UPDATE` template uses `:named` parameters instead of bare `?` placeholders, so it binds correctly the moment it lands in the query editor.
+
+The modal is also reachable from the [Quick Navigator](/wiki/quick-navigator)'s hover actions.
+
 ## ER Diagrams
 
 Right-click any database or schema in the sidebar and choose **Open ER Diagram** to open a live, interactive entity-relationship diagram for that schema. Tables appear as nodes, foreign keys as directed edges. The layout is computed automatically using the **Dagre** engine.
