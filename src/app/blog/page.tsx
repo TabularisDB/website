@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { GitHubIcon, DiscordIcon } from "@/components/Icons";
+import { Rss } from "lucide-react";
 import { PostCard } from "@/components/PostCard";
 import { TagFilter } from "@/components/TagFilter";
 import { Pagination } from "@/components/Pagination";
@@ -83,6 +84,10 @@ export default function BlogPage() {
           >
             <DiscordIcon size={16} />
             Join Discord
+          </a>
+          <a className="btn-cta" href="/feed.xml">
+            <Rss size={16} />
+            RSS feed
           </a>
         </div>
       </section>

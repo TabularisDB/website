@@ -17,6 +17,16 @@ export const metadata: Metadata = {
   description:
     "Open-source desktop database client with support for PostgreSQL, MySQL/MariaDB, and SQLite. Hackable with plugins, with notebooks, AI, and MCP built in.",
   icons: { icon: "/img/logo.png" },
+  alternates: {
+    types: {
+      "application/rss+xml": [
+        { url: "/feed.xml", title: "Tabularis Blog" },
+      ],
+      "application/feed+json": [
+        { url: "/feed.json", title: "Tabularis Blog" },
+      ],
+    },
+  },
   openGraph: {
     type: "website",
     url: "https://tabularis.dev/",
