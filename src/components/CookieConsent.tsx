@@ -52,10 +52,10 @@ function initMatomo(cookieConsent: boolean) {
     _paq.push(['disableCookies']);
   }
 
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
   _paq.push(['setTrackerUrl', MATOMO_URL + 'matomo.php']);
   _paq.push(['setSiteId', MATOMO_SITE_ID]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
 
   const d = document;
   const g = d.createElement('script');
