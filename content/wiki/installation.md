@@ -45,7 +45,9 @@ brew install --cask tabularis
 
 Download the `.dmg` from [GitHub Releases](https://github.com/TabularisDB/tabularis/releases), open it, drag **tabularis** to your Applications folder, then launch it.
 
-If macOS blocks the app with a "cannot be opened" warning (Gatekeeper quarantine), run:
+As of **v0.13.1**, macOS builds are code-signed with a Developer ID certificate and notarized by Apple, so the `.dmg` opens with the normal "downloaded from the internet" confirmation — no "unidentified developer" warning and no manual workaround.
+
+If you are running an **older, unsigned build** and macOS blocks it with a "cannot be opened" warning (Gatekeeper quarantine), run:
 
 ```bash
 xattr -c /Applications/tabularis.app
