@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { MenuIcon, XIcon, SearchIcon } from "@/components/Icons";
+import { MenuIcon, XIcon, SearchIcon, DiscordIcon, GitHubIcon } from "@/components/Icons";
 import { usePathname } from "next/navigation";
+import { getRepoStars, formatStars } from "@/lib/github";
 
 interface SiteHeaderProps {
   crumbs?: Array<{ label: string; href?: string }>;
@@ -220,10 +221,15 @@ function isActive(pathname: string, prefixes: string[]) {
 export function SiteHeader({ crumbs = [], announcement }: SiteHeaderProps) {
   const [isMac, setIsMac] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [stars, setStars] = useState<number | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
     setIsMac(navigator.platform.toUpperCase().includes("MAC"));
+  }, []);
+
+  useEffect(() => {
+    getRepoStars().then(setStars);
   }, []);
 
   useEffect(() => {
@@ -328,15 +334,25 @@ export function SiteHeader({ crumbs = [], announcement }: SiteHeaderProps) {
             </Link>
           </nav>
 
-          <button
-            type="button"
-            className="mobile-toggle"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle Menu"
-            aria-expanded={isMobileMenuOpen}
-          >
-            {isMobileMenuOpen ? <XIcon /> : <MenuIcon />}
-          </button>
+          <div className="mobile-header-actions">
+            <button
+              type="button"
+              className="mobile-toggle"
+              onClick={openSearch}
+              aria-label="Search documentation"
+            >
+              <SearchIcon size={20} />
+            </button>
+            <button
+              type="button"
+              className="mobile-toggle"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle Menu"
+              aria-expanded={isMobileMenuOpen}
+            >
+              {isMobileMenuOpen ? <XIcon /> : <MenuIcon />}
+            </button>
+          </div>
         </div>
 
         {announcement && (
@@ -427,17 +443,42 @@ export function SiteHeader({ crumbs = [], announcement }: SiteHeaderProps) {
             );
           })}
 
-          <Link
-            href="/download"
-            className={`mobile-nav-cta ${pathname.startsWith("/download") ? "active" : ""}`}
-          >
-            Download
-          </Link>
+          <div className="mobile-nav-download-row">
+            <Link
+              href="/download"
+              className={`mobile-nav-cta ${pathname.startsWith("/download") ? "active" : ""}`}
+            >
+              Download
+            </Link>
 
-          <button className="mobile-search-btn" onClick={openSearch} type="button">
-            <SearchIcon size={18} />
-            Search documentation
-          </button>
+            {stars !== null && (
+              <a
+                href="https://github.com/TabularisDB/tabularis"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mobile-nav-stars"
+                aria-label={`Tabularis on GitHub (${stars} stars)`}
+              >
+                <GitHubIcon size={18} />
+                <span className="mobile-nav-stars__count">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27Z" />
+                  </svg>
+                  {formatStars(stars)}
+                </span>
+              </a>
+            )}
+          </div>
+
+          <a
+            href="https://discord.com/invite/K2hmhfHRSt"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mobile-nav-discord"
+          >
+            <DiscordIcon size={18} />
+            Join us on Discord
+          </a>
         </nav>
       </div>
     </header>

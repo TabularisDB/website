@@ -1937,6 +1937,10 @@ pre {
 }
 
 /* MOBILE TOGGLE & MENU */
+.mobile-header-actions {
+  display: contents;
+}
+
 .mobile-toggle {
   display: none;
   align-items: center;
@@ -2114,20 +2118,66 @@ pre {
   background: rgba(59, 130, 246, 0.14);
 }
 
-.mobile-search-btn {
+.mobile-nav-download-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.mobile-nav-download-row .mobile-nav-cta {
+  flex: 1 1 auto;
+}
+
+.mobile-nav-stars {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  cursor: pointer;
-  padding: 0.75rem;
-  margin-top: 0.35rem;
-  width: 100%;
+  justify-content: center;
+  flex: 0 0 auto;
+  gap: 0.45rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: 12px;
+  background: rgba(17, 18, 20, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  color: var(--text-bright);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.mobile-nav-stars:hover {
+  filter: none;
+  color: var(--text-bright);
+  border-color: rgba(148, 163, 184, 0.5);
+  background: rgba(30, 32, 36, 0.96);
+}
+
+.mobile-nav-stars__count {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: #facc15;
+  font-variant-numeric: tabular-nums;
+}
+
+.mobile-nav-discord {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+  padding: 0.95rem 1rem;
+  border-radius: 12px;
+  background: rgba(88, 101, 242, 0.12);
+  border: 1px solid rgba(88, 101, 242, 0.4);
+  color: #a5b4fc;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.mobile-nav-discord:hover {
+  filter: none;
+  color: #c7d2fe;
+  border-color: rgba(88, 101, 242, 0.65);
+  background: rgba(88, 101, 242, 0.2);
 }
 
 .mobile-social-links {
@@ -2275,6 +2325,11 @@ pre {
   }
   .mobile-toggle {
     display: flex;
+  }
+  .mobile-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
   .site-header-unified {
     padding: 0 0.85rem;
@@ -4891,7 +4946,7 @@ pre {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding-top: 15vh;
+  padding: 15vh 1rem 0;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.18s ease;
