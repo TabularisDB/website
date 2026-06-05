@@ -241,6 +241,7 @@ export function SiteHeader({ crumbs = [], announcement }: SiteHeaderProps) {
   }
 
   const handleLogoClick = (e: React.MouseEvent) => {
+    setIsMobileMenuOpen(false);
     if (pathname === "/") {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: "smooth" });
