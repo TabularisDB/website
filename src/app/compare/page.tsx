@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { getSeoPagesBySection, getSeoPagePath } from "@/lib/seoPages";
 import { SeoPageThumb } from "@/components/SeoPagePreview";
 import { ComparisonBuilder } from "@/components/ComparisonBuilder";
+import { GitHubIcon, DiscordIcon } from "@/components/Icons";
 import { buildBreadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -90,6 +91,27 @@ export default function ComparePage() {
           >
             Browse solutions &rarr;
           </Link>
+        </div>
+
+        <div className="cta-strip">
+          <a
+            className="btn-cta"
+            href="https://github.com/TabularisDB/tabularis"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <GitHubIcon size={16} />
+            Star on GitHub
+          </a>
+          <a
+            className="btn-cta discord"
+            href="https://discord.com/invite/K2hmhfHRSt"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <DiscordIcon size={16} />
+            Join Discord
+          </a>
         </div>
       </section>
 

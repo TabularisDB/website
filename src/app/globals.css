@@ -1014,6 +1014,21 @@ pre {
   font-variant-numeric: tabular-nums;
 }
 
+/* Compact variant used in the site header next to the Download button */
+.github-stars-btn--compact {
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+.github-stars-btn--compact .github-stars-btn__logo {
+  padding: 0 0.45rem 0 0.7rem;
+}
+.github-stars-btn--compact .github-stars-btn__label {
+  padding: 0.45rem 0.6rem 0.45rem 0;
+}
+.github-stars-btn--compact .github-stars-btn__count {
+  padding: 0 0.65rem;
+}
+
 .download-split__main {
   display: flex;
   align-items: center;

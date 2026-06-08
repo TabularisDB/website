@@ -3,18 +3,20 @@ import { formatStars } from "@/lib/github";
 interface GithubStarsButtonProps {
   stars: number | null;
   href?: string;
+  compact?: boolean;
 }
 
 export function GithubStarsButton({
   stars,
   href = "https://github.com/TabularisDB/tabularis",
+  compact = false,
 }: GithubStarsButtonProps) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="github-stars-btn"
+      className={`github-stars-btn${compact ? " github-stars-btn--compact" : ""}`}
       aria-label={
         stars !== null
           ? `Tabularis on GitHub (${stars} stars)`

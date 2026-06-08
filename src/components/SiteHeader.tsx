@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { MenuIcon, XIcon, SearchIcon, DiscordIcon, GitHubIcon } from "@/components/Icons";
 import { usePathname } from "next/navigation";
 import { getRepoStars, formatStars } from "@/lib/github";
+import { GithubStarsButton } from "@/components/GithubStarsButton";
 
 interface SiteHeaderProps {
   crumbs?: Array<{ label: string; href?: string }>;
@@ -327,6 +328,7 @@ export function SiteHeader({ crumbs = [], announcement }: SiteHeaderProps) {
               <span>Search</span>
               <kbd>{isMac ? "⌘K" : "Ctrl+K"}</kbd>
             </button>
+            <GithubStarsButton stars={stars} compact />
             <Link
               href="/download"
               className={`header-download-btn ${pathname.startsWith("/download") ? "active" : ""}`}

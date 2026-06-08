@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { DownloadInline } from "@/components/DownloadInline";
 import { NewsletterForm } from "@/components/NewsletterForm";
+import { GitHubIcon, DiscordIcon } from "@/components/Icons";
 import { APP_VERSION } from "@/lib/version";
 import { getReleaseDate, formatDate } from "@/lib/posts";
 import { getTotalDownloads, formatDownloads } from "@/lib/github";
@@ -94,6 +95,27 @@ export default async function DownloadPage() {
         </div>
 
         <DownloadInline />
+
+        <div className="cta-strip" style={{ justifyContent: "center", marginBottom: "2.5rem" }}>
+          <a
+            className="btn-cta"
+            href="https://github.com/TabularisDB/tabularis"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <GitHubIcon size={16} />
+            Star on GitHub
+          </a>
+          <a
+            className="btn-cta discord"
+            href="https://discord.com/invite/K2hmhfHRSt"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <DiscordIcon size={16} />
+            Join Discord
+          </a>
+        </div>
 
         <div className="dl-page-footer-links">
           <a
