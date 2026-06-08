@@ -73,6 +73,8 @@ Every executed statement is recorded in the Explorer's **History** tab for the c
 
 History is isolated per connection, so a PostgreSQL session and a MySQL session keep separate timelines.
 
+:::star:::
+
 ## 4. Edit data
 
 Double-click any cell in the Data Grid to edit it inline. Modified cells are highlighted. When you are ready, click **Commit** to generate and execute the `UPDATE` statements using the table's primary key. Click **Discard** to revert all pending changes.

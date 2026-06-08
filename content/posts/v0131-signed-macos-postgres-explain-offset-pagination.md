@@ -109,6 +109,8 @@ Opening the **AI** settings tab on macOS used to fire the Keychain authorization
 
 - **Big-JSON demo rows** (part of PR [#285](https://github.com/TabularisDB/tabularis/pull/285)) — the MySQL and Postgres demo seeds gained ~1 MB JSON rows so the grid freeze stays reproducible and regression-tested.
 
+:::star:::
+
 ---
 
 ## Thanks
