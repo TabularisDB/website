@@ -1014,19 +1014,35 @@ pre {
   font-variant-numeric: tabular-nums;
 }
 
-/* Compact variant used in the site header next to the Download button */
+/* Compact variant used in the site header next to the Download button.
+   Matches the search-trigger surface so the two outlined controls read as a
+   pair, leaving the filled Download button as the only accent CTA. */
 .github-stars-btn--compact {
   border-radius: 8px;
   font-size: 0.85rem;
+  background: var(--card-bg);
+  border-color: var(--border);
+}
+.github-stars-btn--compact:hover {
+  background: var(--card-bg);
+  border-color: var(--border-bright);
 }
 .github-stars-btn--compact .github-stars-btn__logo {
-  padding: 0 0.45rem 0 0.7rem;
+  padding: 0.45rem 0.55rem 0.45rem 0.7rem;
+  color: var(--text-main);
 }
+/* Header shows only the GitHub mark + star count — drop the text label */
 .github-stars-btn--compact .github-stars-btn__label {
-  padding: 0.45rem 0.6rem 0.45rem 0;
+  display: none;
 }
 .github-stars-btn--compact .github-stars-btn__count {
-  padding: 0 0.65rem;
+  padding: 0 0.7rem;
+  border-left-color: var(--border);
+}
+
+/* Separate the utility cluster (search / star / download) from the nav links */
+.desktop-nav .search-trigger {
+  margin-left: 0.4rem;
 }
 
 .download-split__main {
