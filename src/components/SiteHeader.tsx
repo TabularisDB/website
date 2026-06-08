@@ -323,9 +323,13 @@ export function SiteHeader({ crumbs = [], announcement }: SiteHeaderProps) {
               );
             })}
 
-            <button className="search-trigger" onClick={openSearch} type="button">
+            <button
+              className="search-trigger"
+              onClick={openSearch}
+              type="button"
+              aria-label="Search"
+            >
               <SearchIcon size={14} />
-              <span>Search</span>
               <kbd>{isMac ? "⌘K" : "Ctrl+K"}</kbd>
             </button>
             <GithubStarsButton stars={stars} compact />
