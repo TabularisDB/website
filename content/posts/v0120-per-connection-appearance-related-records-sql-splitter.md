@@ -164,6 +164,9 @@ A handful of UI surfaces remain not-yet-wired-to-i18n and render in English: the
 
 ---
 
+
+:::star:::
+
 ## A New macOS Dock Icon
 
 <img src="/img/tabularis-macos-dock-icon.png" alt="The new Tabularis macOS dock icon — an Apple squircle with a light glass background, subtle teal and violet auroras, and the isometric cube logo centered" style="width: 160px; float: right; margin: 0.25rem 0 1rem 1.5rem; border: none; box-shadow: none; border-radius: 0;" />

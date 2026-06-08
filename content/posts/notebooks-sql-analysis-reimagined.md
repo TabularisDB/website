@@ -163,6 +163,9 @@ Notebooks plug into the AI features that already exist in Tabularis, in two ways
 
 ---
 
+
+:::star:::
+
 ## Organization
 
 Notebooks can grow. To keep them manageable:

@@ -41,6 +41,9 @@ More actions will be added to this menu in upcoming releases.
 
 ---
 
+
+:::star:::
+
 ## Bug Fixes
 
 ### MySQL: Per-Database Connection Pools

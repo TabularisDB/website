@@ -24,6 +24,9 @@ We don't take this lightly. For a project that's only a few months old, being si
 
 So the honest version of "we won an award" is: **you won it for us.** Every star, every release downloaded, every Discord question — that's the engagement SourceForge measured. We just got to put our name on it.
 
+
+:::star:::
+
 ## Onward
 
 The badge now lives on our [SourceForge project page](https://sourceforge.net/projects/tabularis/), and you'll see it pop up across our channels. But the part that matters isn't the badge — it's the trajectory it marks. A database client that respects your machine, your credentials, and your time is resonating with people, and that's exactly the signal we needed to keep building.

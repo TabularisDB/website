@@ -43,6 +43,9 @@ More languages are planned. If you'd like to contribute a translation, the i18n 
 
 A smaller addition from this release: right-clicking an editor tab opens a context menu with Rename, Close, Close Others, and Close All. The kind of polish that makes the editor feel like a proper application rather than a prototype.
 
+
+:::star:::
+
 ## What This Signals
 
 Neither keychain integration nor i18n is a shiny demo feature. They're infrastructure. Getting them right in v0.6.0 means future releases can focus on capabilities rather than catching up on correctness. That was the point.

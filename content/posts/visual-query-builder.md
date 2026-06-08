@@ -33,6 +33,9 @@ Large schemas need room. The canvas supports zoom and pan so you can work with c
 
 Once the SQL is generated, you own it. Tabularis doesn't try to round-trip edits back to the visual representation. Edit the query freely and run it.
 
+
+:::star:::
+
 ## Multiple Tabs, Finally
 
 The tab system was the other major addition in v0.4.0. Before this release, the editor was a single pane. Now you can open as many tabs as you need, name them, and rearrange them. Closing the app saves your tabs; reopening restores them.

@@ -47,6 +47,9 @@ This is not the kind of change that needs a screenshot, but it is the kind that 
 
 ---
 
+
+:::star:::
+
 ## Small Follow-Up Fix
 
 A small UI follow-up also landed right after the drag-and-drop work: a corrected `useDatabase` destructure in the sidebar. Not headline material, but exactly the kind of cleanup worth shipping in a point release.

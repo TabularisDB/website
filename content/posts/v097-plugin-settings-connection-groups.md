@@ -91,6 +91,9 @@ v0.9.7 introduces an **in-memory credential cache** that:
 
 ---
 
+
+:::star:::
+
 ## New `Select` Component and UI Consistency
 
 The `SearchableSelect` component has been replaced by a new `Select` component that is more robust and consistent across the app. This also brings full i18n support for SSL mode labels in the connection form. The plugin version dropdown in Settings now uses a portal-based approach so it layers correctly above any open modals. Input padding has been standardized across all connection form fields.

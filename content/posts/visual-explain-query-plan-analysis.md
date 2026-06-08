@@ -165,6 +165,9 @@ MariaDB has similar capabilities, but with different syntax and fields. Tabulari
 
 ---
 
+
+:::star:::
+
 ## Current State
 
 This feature is still under active development. Current status:

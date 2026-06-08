@@ -50,6 +50,9 @@ No restart required. Open Settings → Plugins, paste a GitHub URL or a local pa
 
 We shipped the plugin system alongside a reference implementation: [tabularis-duckdb-plugin](https://github.com/TabularisDB/tabularis-duckdb-plugin). DuckDB is an in-process OLAP engine — fast, file-based, no server required. Perfect for analytics on local datasets.
 
+
+:::star:::
+
 Install it from Settings → Plugins, point it at your `.db` file, and you have full DuckDB support in under a minute.
 
 :::contributors:::

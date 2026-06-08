@@ -122,6 +122,9 @@ This is the kind of work that's invisible until the moment it isn't.
 
 ---
 
+
+:::star:::
+
 ## A Bigger Cancellation Fix, Too
 
 [@ymadd](https://github.com/ymadd) also lands PR [#203](https://github.com/TabularisDB/tabularis/pull/203), closing [#201](https://github.com/TabularisDB/tabularis/issues/201).

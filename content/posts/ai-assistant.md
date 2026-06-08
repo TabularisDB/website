@@ -40,6 +40,9 @@ Alongside the AI assistant, v0.8.0 ships a built-in **Model Context Protocol** s
 
 Enable the MCP server in Settings, connect your AI tool to the local endpoint, and it can query your schema, list tables, and run SELECT statements directly. No copy-pasting table names into a chat window.
 
+
+:::star:::
+
 ## Schema-Aware Completions
 
 The SQL editor autocomplete got a significant upgrade in this release. It now reads your live schema — tables, columns, foreign keys — and surfaces relevant suggestions as you type. DataGrip-style completions, without the DataGrip price tag.

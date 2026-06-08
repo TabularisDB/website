@@ -63,6 +63,9 @@ For boolean columns, the column type was correctly identified, but the value sti
 
 ---
 
+
+:::star:::
+
 ## Smaller Things
 
 Two community-reported regressions round out the release, both from [@MischaKr](https://github.com/MischaKr):

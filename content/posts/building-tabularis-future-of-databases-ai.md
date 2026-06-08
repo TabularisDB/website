@@ -163,6 +163,9 @@ Maybe some of what I think will become core will remain peripheral. Maybe the av
 
 I try to keep that possibility in mind because future-facing product conviction can become self-indulgent very quickly.
 
+
+:::star:::
+
 ## What I Think Is Actually Emerging
 
 I do not think databases are going away.

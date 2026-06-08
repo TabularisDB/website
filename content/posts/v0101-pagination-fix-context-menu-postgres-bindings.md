@@ -61,6 +61,9 @@ This is the kind of refactor where the user-facing diff is "nothing changed". 20
 
 ---
 
+
+:::star:::
+
 ## Smaller Things
 
 A handful of polish items round out the release:

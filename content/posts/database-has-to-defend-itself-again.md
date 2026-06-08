@@ -43,6 +43,9 @@ A few of the pieces we shipped:
 
 ![Tabularis MCP Activity panel grouped into sessions, with an Export as Notebook button on each session](/img/tabularis-ai-audit-log-sessions.png)
 
+
+:::star:::
+
 **Full MCP activity tracing.** Tool calls, results, errors, timing: the whole exchange between the agent and Tabularis is observable. Events can be flat-filtered or auto-grouped into sessions by inactivity gaps, and any session can be exported as a SQL notebook you can replay, diff against another run, or attach to a PR. When a model starts improvising, you can usually pinpoint the exact tool call where it happened.
 
 ![Detail view of a single MCP audit event, showing the query, classifier kind, connection, status and the row of context surrounding it](/img/tabularis-ai-audit-log-event-details.png)

@@ -92,6 +92,9 @@ To reset a customized shortcut to its default, click the **↺** button on its r
 
 ---
 
+
+:::star:::
+
 ## Redesigned Connections UI
 
 The Connections page has been rebuilt with i18n support across all labels and a tighter visual hierarchy. Two display modes — **grid** and **list** — are switchable from the toolbar. Grid mode shows each connection as a card with driver icon, status badge, host info, and an SSH indicator. List mode lays the same data in compact rows.

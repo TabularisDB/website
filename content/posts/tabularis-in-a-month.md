@@ -60,6 +60,9 @@ One month. That's the velocity the community made possible.
 
 Starting today, the [Tabularis Wiki](/wiki) is live and open for contributions. Every page has an **Edit on GitHub** link — if you spot something wrong, outdated, or missing, you can fix it directly.
 
+
+:::star:::
+
 This is intentional. Documentation written only by the maintainers reflects only the maintainers' perspective. If you've figured out a non-obvious workflow, found a gotcha during setup, or have a tip that saved you time — the wiki is the right place for it.
 
 The wiki belongs to whoever writes it. Consider this an open invitation.

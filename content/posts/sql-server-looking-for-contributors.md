@@ -59,6 +59,9 @@ What's left is scoped and mostly independent. The epic is [#150](https://github.
 
 Everything — architecture, module layout, type coverage, dependencies between issues, local setup — is on the [roadmap page](/roadmap/).
 
+
+:::star:::
+
 ## Ground rules
 
 Three invariants get checked at review, they're not negotiable:

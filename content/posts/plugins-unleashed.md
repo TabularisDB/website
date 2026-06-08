@@ -101,6 +101,9 @@ The official registry at `tabularis.dev` is the default, but organizations somet
 
 The format is identical to the public registry — same schema, same version structure. This lets teams distribute internal drivers, or run a local registry for plugins in development, without touching the main app.
 
+
+:::star:::
+
 ## Smarter Pagination: LIMIT+1 Instead of COUNT
 
 Every paginated query previously fired two database round-trips: the data query, and a `SELECT COUNT(*) FROM (...)` wrapper to know the total number of rows. On large tables that count can be slow — a full sequential scan just to display "page 1 of 847".

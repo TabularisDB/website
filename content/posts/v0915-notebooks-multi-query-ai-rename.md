@@ -72,6 +72,9 @@ The query selection modal also got a revamp — you can now run a single query f
 
 ---
 
+
+:::star:::
+
 ## Query Splitting: Done Right
 
 This is [@dev-void-7](https://github.com/dev-void-7)'s contribution in PR [#119](https://github.com/TabularisDB/tabularis/pull/119). The old regex-based query splitter had blind spots — string literals containing semicolons, dollar-quoted blocks in PostgreSQL, comments with semicolons — all would trip it up and split queries in the wrong places.

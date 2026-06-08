@@ -98,6 +98,9 @@ Both flags are declared in the manifest's `capabilities` object and evaluated on
 
 ---
 
+
+:::star:::
+
 ## Error Modal
 
 Native browser `dialog()` calls have been replaced with a proper in-app error modal. When an async operation fails — a query that errors out, a save that can't complete — the error is now displayed in a themed, keyboard-accessible modal instead of an OS-native popup that ignores your dark theme and can't be styled.

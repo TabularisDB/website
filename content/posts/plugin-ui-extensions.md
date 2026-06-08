@@ -84,6 +84,9 @@ On the frontend, the new slot anchors render nothing when the registry is empty.
 
 The community has active plugin authors. I am not going to ask them to rewrite their manifests. Phase 2 is additive.
 
+
+:::star:::
+
 ## The hard problems
 
 I do not want to pretend this is simple. There are real challenges.

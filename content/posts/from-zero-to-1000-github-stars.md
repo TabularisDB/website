@@ -161,6 +161,9 @@ If you're an experienced developer and you're not using AI-assisted tools yet: t
 
 ---
 
+
+:::star:::
+
 ## What I'd Tell Someone Starting Today
 
 If you're building an open source project and wondering whether it can find an audience, here's what I actually believe after ten weeks:

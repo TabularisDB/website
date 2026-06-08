@@ -96,6 +96,9 @@ Come say hi.
 
 ---
 
+
+:::star:::
+
 ## Smaller Things
 
 A handful of polish items round out the release:

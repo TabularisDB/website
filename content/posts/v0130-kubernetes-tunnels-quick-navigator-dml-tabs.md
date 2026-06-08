@@ -123,6 +123,9 @@ If a corrupt file was recovered, the History sidebar shows a dismissible banner 
 
 ---
 
+
+:::star:::
+
 ## Failed Schema Loads Now Say So
 
 When `get_schemas` failed — bad search path, permissions, a flaky tunnel — the sidebar rendered `TABLES (0)` / `VIEWS (0)` and nothing else. The connection looked open (the connection test runs on a separate code path), so it *appeared* connected while showing nothing, with no hint anything went wrong.

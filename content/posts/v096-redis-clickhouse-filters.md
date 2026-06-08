@@ -58,6 +58,9 @@ If a download times out, an asset hash mismatches, or the archive is malformed, 
 
 ---
 
+
+:::star:::
+
 ## Bug Fixes
 
 ### Connection Dialog: Autocomplete and Autocorrect Disabled

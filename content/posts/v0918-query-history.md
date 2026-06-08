@@ -116,6 +116,9 @@ This makes column-wise edits, repeated line transformations, and bulk query rewr
 
 ---
 
+
+:::star:::
+
 ## Other Notable Improvements in v0.9.18
 
 The release is centered on History, but there are several other useful additions and fixes around it.

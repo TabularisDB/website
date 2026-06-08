@@ -45,6 +45,9 @@ Joins, aggregations, subqueries stay read-only. There's no safe way to map an ed
 
 ---
 
+
+:::star:::
+
 ## JSON Copy and CSV Delimiter
 
 - You can copy selected rows as **JSON** now. Set it as your default copy format in Settings if you want.

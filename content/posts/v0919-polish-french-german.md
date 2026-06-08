@@ -59,6 +59,9 @@ On top of that, connections that transition from a **single-database** setup to 
 
 ---
 
+
+:::star:::
+
 ## Other Fixes
 
 A handful of smaller improvements rounding out the release:

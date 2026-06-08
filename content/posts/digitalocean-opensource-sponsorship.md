@@ -40,6 +40,9 @@ Without going into the technical weeds (there's a [full roadmap page](/roadmap/p
 
 It's the difference between "a list of plugins I review by hand" and "an actual platform other people can build on." That's a step Tabularis needs to take, and the DigitalOcean credits make it possible to take it properly, not as a side project squeezed in between bug fixes.
 
+
+:::star:::
+
 ## A thank you, and what comes next
 
 To the team at DigitalOcean and the people running the Open Source Credits Program: thank you. Genuinely. Backing a four-month-old open source project takes a kind of long-term thinking that's rare, and we don't take it lightly.

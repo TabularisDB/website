@@ -75,6 +75,9 @@ Makes it much easier to share a plan and reason about it together, instead of tr
 
 ---
 
+
+:::star:::
+
 ## Comparison Pages and Other Website Work
 
 v0.9.20 also ships the first batch of **comparison pages**: side-by-side pages showing where Tabularis lines up with (and differs from) other database clients. They use a shared comparison-builder component, proper logos (now in PNG for crisper rendering), and styling consistent with the rest of the site.

@@ -61,6 +61,9 @@ Now the error display splits the message: you see the brief summary first, and a
 
 ---
 
+
+:::star:::
+
 ## MySQL JSON Columns
 
 JSON columns in MySQL were showing as `NULL` in the data grid. The root cause was a misread of the field type bytes in the MySQL binary protocol — the JSON type flag was being skipped during extraction. Fixed by [midasism](https://github.com/midasism) in PR [#107](https://github.com/TabularisDB/tabularis/pull/107).

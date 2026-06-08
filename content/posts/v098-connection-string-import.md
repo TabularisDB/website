@@ -65,6 +65,9 @@ Example for a ClickHouse plugin:
 
 ---
 
+
+:::star:::
+
 ## Bug Fixes
 
 ### Visual Query Builder: Drag-and-Drop on Windows

@@ -39,6 +39,9 @@ The data grid gains multi-row selection in this release. Select several rows wit
 
 Small feature, significant quality-of-life improvement when cleaning up test data or doing bulk exports.
 
+
+:::star:::
+
 ## ER Diagrams
 
 v0.5.0 also ships auto-generated ER diagrams. Open the diagram view and Tabularis draws your entire schema as an interactive graph — tables as nodes, foreign keys as edges. Zoom, pan, switch to fullscreen.

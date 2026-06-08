@@ -38,6 +38,9 @@ Tabularis is built on the opposite bet, so let me be concrete about what "local-
 
 **AI is bring-your-own-key, and optional.** If you turn the assistant on, your key goes in the keychain and calls go directly to the provider you chose. Point it at Ollama and nothing leaves your machine at all. We never see your schema, your queries, or your prompts, because there is no "we" in the request path.
 
+
+:::star:::
+
 In the interest of honesty, here is the complete list of network calls Tabularis makes on its own: the updater checks GitHub releases for a new version. That's it. No telemetry SDK, no crash reporter phoning home, no anonymous usage pings. You can confirm this the boring way — [the code is open](https://github.com/TabularisDB/tabularis), grep it.
 
 This costs us real things, and I'd rather name them than pretend otherwise. We don't have sync, so your connections don't follow you between machines unless you copy the config files yourself. We don't have shared team workspaces. And because there is no telemetry, I genuinely don't know how many people use Tabularis or which features they touch — I find out when someone opens an issue, which makes every bug report worth more and every silent user invisible. Those are the terms of the trade, and I think they're good terms, but they are a trade.

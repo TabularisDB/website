@@ -89,6 +89,9 @@ It also uses the [`no_connection_required`](/posts/v097-plugin-settings-connecti
 
 ---
 
+
+:::star:::
+
 ## How It Works
 
 Tabularis spawns the plugin as a child process and communicates via **JSON-RPC 2.0 over stdio**. On the first query, the plugin fetches from the HN API, builds an in-memory DuckDB instance, and keeps it alive for the session duration (or until the TTL expires). Subsequent queries hit the local DuckDB instance directly — no network round-trips.

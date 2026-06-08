@@ -71,6 +71,9 @@ The AI calls `run_query` under the hood, receives structured JSON results, and f
 
 ---
 
+
+:::star:::
+
 ## Connection UI Improvements
 
 ### Input validation on new connections

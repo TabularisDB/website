@@ -89,6 +89,9 @@ The UI also got a sync pass: enabling auto-increment now forces `NOT NULL` check
 
 ---
 
+
+:::star:::
+
 ## Query Selection Modal: Keyboard Navigation
 
 The modal that appears when you execute a script with multiple semicolon-separated queries now supports full keyboard navigation:

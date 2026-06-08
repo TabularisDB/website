@@ -97,6 +97,9 @@ That cross-driver work is a large part of what makes this release important. The
 
 ---
 
+
+:::star:::
+
 ## Safer Explain Workflows
 
 There are also a few practical guardrails in this release.

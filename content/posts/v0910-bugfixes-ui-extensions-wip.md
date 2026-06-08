@@ -128,6 +128,9 @@ The `driver` filter on the second slot is worth noting: `connection-modal.connec
 
 ---
 
+
+:::star:::
+
 ## What Is Still Missing
 
 Running two real plugins surfaced a few gaps that will need to land before the branch merges:

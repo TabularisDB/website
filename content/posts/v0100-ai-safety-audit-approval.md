@@ -132,6 +132,9 @@ A nice side effect of the file queue is that the flow is testable end-to-end wit
 
 ---
 
+
+:::star:::
+
 ## Defaults
 
 After this upgrade:

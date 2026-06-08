@@ -279,6 +279,9 @@ cargo build --release
 
 ---
 
+
+:::star:::
+
 ## 6. UI extensions, the typed way
 
 Tabularis loads plugin UI as **IIFE bundles** — self-contained `.js` files assigning a React component to `__tabularis_plugin__`. You can hand-write raw IIFE and drop it in, or — the point of this whole exercise — you write TSX, Vite produces the IIFE, and the [`@tabularis/plugin-api`](https://www.npmjs.com/package/@tabularis/plugin-api) npm package gives you typed slot contracts and hook signatures.
