@@ -3870,6 +3870,78 @@ pre {
   color: #5865f2;
 }
 
+/* Inline ":::star:::" call-to-action card for long-form content */
+.star-cta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2.5rem 0;
+  padding: 1.1rem 1.3rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid #facc15;
+  border-radius: 12px;
+  background: var(--card-bg);
+  color: var(--text-main);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+/* The card is an <a>; neutralize prose link styling (blue color, underline,
+   brightness) so only the card-level hover defined here applies. */
+.star-cta,
+.star-cta:hover {
+  text-decoration: none !important;
+  filter: none !important;
+}
+.star-cta:hover {
+  border-color: var(--border-bright);
+  border-left-color: #facc15;
+  background: rgba(30, 32, 36, 0.7);
+}
+.star-cta__mark {
+  display: inline-flex;
+  flex: 0 0 auto;
+  color: var(--text-bright, #f3f4f6);
+}
+.star-cta__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 1 1 auto;
+}
+.star-cta__body strong {
+  font-size: 0.98rem;
+  color: var(--text-bright, #f3f4f6);
+}
+.star-cta__body span {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+.star-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 0 0 auto;
+  padding: 0.55rem 0.95rem;
+  border-radius: 8px;
+  background: #facc15;
+  color: #1a1205;
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.star-cta:hover .star-cta__btn {
+  background: #fde047;
+}
+@media (max-width: 640px) {
+  .star-cta {
+    flex-wrap: wrap;
+  }
+  .star-cta__btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* WIKI EDIT LINK */
 .wiki-edit-link-container {
   margin-top: 2rem;
