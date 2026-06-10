@@ -9,6 +9,9 @@ export interface PostOg {
   accent: string;
   claim: string;
   image: string;
+  // When set, forces this exact 1200×630 image as the OG card, bypassing the
+  // generated title/accent/claim template. Path is relative to /public.
+  cover?: string;
 }
 
 export interface PostMeta {

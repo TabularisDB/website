@@ -1722,6 +1722,11 @@ pre {
   max-width: none;
 }
 
+/* Opt-in smaller player: <video class="video-compact" ...> in markdown content */
+.video-wrapper:has(video.video-compact) {
+  max-width: 520px;
+}
+
 .video-demo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));

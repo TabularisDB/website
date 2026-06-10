@@ -47,6 +47,19 @@ export default async function Image({
   const logoSrc = readPublicImage("/img/logo.png");
   const screenshotSrc = og?.image ? readPublicImage(og.image) : null;
 
+  // Forced cover: a post can supply a ready-made 1200×630 image via `og.cover`,
+  // which is rendered full-bleed and bypasses the generated template entirely.
+  const coverSrc = og?.cover ? readPublicImage(og.cover) : null;
+  if (coverSrc) {
+    return new ImageResponse(
+      <div style={{ display: "flex", width: "1200px", height: "630px" }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={coverSrc} alt="" width={1200} height={630} style={{ objectFit: "cover" }} />
+      </div>,
+      { ...size },
+    );
+  }
+
   const [font400, font800] = await Promise.all([loadFont(400), loadFont(800)]);
 
   const fonts: NonNullable<ConstructorParameters<typeof ImageResponse>[1]>["fonts"] = [];

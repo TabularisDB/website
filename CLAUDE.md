@@ -90,7 +90,7 @@ Code blocks are syntax-highlighted by `marked-highlight` + `highlight.js`. The t
 
 ## Content authoring conventions
 
-- New blog post → add a `.md` file under `content/posts/` with frontmatter: `title`, `date` (ISO, include time for same-day ordering), `tags` (array), `excerpt`, optional `release` (e.g. `"v0.9.20"`) to link to a Tabularis release and enable `:::contributors:::`, optional `og: { title, accent, claim, image }` for custom OG cards. Reading time is auto-estimated (200 wpm).
+- New blog post → add a `.md` file under `content/posts/` with frontmatter: `title`, `date` (ISO, include time for same-day ordering), `tags` (array), `excerpt`, optional `release` (e.g. `"v0.9.20"`) to link to a Tabularis release and enable `:::contributors:::`, optional `og: { title, accent, claim, image }` for custom OG cards. To **force** a fully pre-made OG image (skip the generated template), add `og.cover` pointing to a ready 1200×630 image under `/public`; `blog/[slug]/opengraph-image.tsx` renders it full-bleed. Reading time is auto-estimated (200 wpm).
 - Wiki page → frontmatter needs `title`, `order`, `excerpt`, `category` (one of the values in `WIKI_CATEGORIES` in `src/lib/wiki.tsx`).
 - SEO page → frontmatter needs `section: solutions \| compare` plus `title`, `order`, `excerpt`, `description`. The section determines which route ( `/solutions/...` vs `/compare/...`) the page lives under.
 - Roadmap initiative → frontmatter needs `title`, `slug`, `category`, `status` (`in-progress | planned | done`), `order`, `lede`, and optionally `progressDone`/`progressTotal`/`progressLabel` and a `links:` array.
