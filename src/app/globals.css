@@ -3590,7 +3590,7 @@ pre {
   grid-template-columns: 1.3fr 1fr;
   gap: 3rem;
   margin-bottom: 3.5rem;
-  align-items: center;
+  align-items: start;
   background: linear-gradient(180deg, rgba(17, 18, 20, 0.4), rgba(11, 12, 14, 0.4));
   border: 1px solid var(--border);
   border-radius: 16px;
@@ -3605,6 +3605,7 @@ pre {
 
 .blog-hero-visual {
   display: block;
+  align-self: center;
   aspect-ratio: 1200 / 630;
   border-radius: 10px;
   overflow: hidden;
@@ -3646,11 +3647,16 @@ pre {
 }
 
 .blog-hero-title {
-  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-  line-height: 1.25;
+  display: block;
+  font-size: 1.15rem;
+  line-height: 1.4;
   margin-bottom: 1rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.blog-hero-title::before {
+  content: none;
 }
 
 .blog-hero-title a {
@@ -4017,9 +4023,6 @@ pre {
   .blog-posts-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
-  }
-  .blog-hero-title {
-    font-size: 1.5rem;
   }
   .blog-hero-excerpt {
     font-size: 0.9rem;
