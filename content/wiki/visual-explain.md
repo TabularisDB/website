@@ -78,6 +78,10 @@ Selecting a row opens the **detail panel** on the right, which displays every me
 
 ![Table view with hierarchical tree, cost columns, and node detail panel](/img/posts/tabularis-visual-explain-table-view-detail-panel.png)
 
+When the plan comes from `EXPLAIN ANALYZE` (or MariaDB `ANALYZE`), an **Actual Rows** column appears next to Est. Rows, so you can see where the optimizer's estimate diverged from what the query actually scanned.
+
+![Table view showing the Actual Rows column next to Est. Rows](/img/posts/tabularis-explain-actual-rows.png)
+
 ### Raw Output
 
 The raw view shows the database response in a read-only Monaco editor with syntax highlighting, word wrap, and search. No transformation — exactly what the server returned. JSON output from PostgreSQL or MySQL is detected automatically and highlighted as JSON; text-based output (like MySQL ANALYZE trees) renders as plain text.

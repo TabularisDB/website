@@ -66,13 +66,13 @@ Markdown cells support standard Markdown syntax. Toggle between **Edit** and **P
 
 ## Cross-Cell Variables
 
-SQL cells support cross-cell references using `{{cellName.columnName}}` syntax. When you run a cell that contains unresolved references, the notebook automatically identifies the dependency and executes the required cells first.
+SQL cells can reference another cell's result using `{{cell_N}}` syntax, where `N` is the cell's position in the notebook (1-based, counting Markdown cells too). At execution time, `{{cell_N}}` is expanded into a Common Table Expression (CTE) named `cell_N` holding the **full result** of that cell, so you use it like a table. When you run a cell that contains an unresolved reference, the notebook automatically detects the dependency and executes the referenced cell first.
 
 **Example:**
 
-1. A cell named `top_users` runs `SELECT id, username FROM users LIMIT 10`.
-2. A second cell uses `SELECT * FROM orders WHERE user_id IN ({{top_users.id}})`.
-3. When you run the second cell, Tabularis detects the dependency, runs `top_users` first (if needed), and substitutes the values.
+1. The third cell runs `SELECT id, username FROM users LIMIT 10`.
+2. A later cell uses `SELECT * FROM orders WHERE user_id IN (SELECT id FROM {{cell_3}})`.
+3. When you run that cell, Tabularis detects the dependency, runs cell 3 first (if needed), wraps its result in a `WITH cell_3 AS (...)` CTE, and runs your query against it.
 
 This enables building multi-step analytical workflows where each cell builds on the results of previous ones.
 
@@ -80,7 +80,7 @@ This enables building multi-step analytical workflows where each cell builds on 
 
 ## Notebook Parameters
 
-Notebooks support a global parameter system using `{{$paramName}}` syntax. Open the **Parameters** panel from the toolbar to define name/value pairs. These parameters are substituted into all SQL cells at execution time.
+Notebooks support a global parameter system using `@paramName` syntax. Open the **Parameters** panel from the toolbar to define name/value pairs. Each `@paramName` token is substituted with its value across all SQL cells at execution time.
 
 This is useful for:
 - Running the same notebook against different date ranges or IDs without editing every cell.
@@ -131,9 +131,25 @@ If you have an AI provider configured in Settings, notebooks offer additional ca
 
 ![AI explain buttons and history](/img/posts/tabularis-notebook-ai-explain-buttons-history.png)
 
+## Managing Notebooks
+
+Notebooks are managed from the **Notebooks** section in the sidebar, which lists the saved notebooks for the active connection. From here you can:
+
+- **Search** the list by name.
+- **Open** a notebook with a single click.
+- Use the context menu to **rename**, **export**, **import**, **delete** (with confirmation), or **Save as HTML**.
+
+The list refreshes live — creating a notebook adds it immediately, and renames or deletions reflect without a manual reload. You can also rename a notebook directly from its editor tab by double-clicking the title.
+
+### Edit History
+
+Notebook editing is undoable. Every structural change — adding, removing, reordering, or editing cells — is captured into a timeline. Open the **history panel** to scrub back through previous states and jump to any point; each entry is labeled by what changed.
+
+![Notebook edit history panel](/img/posts/tabularis-notebook-edit-history.png)
+
 ## Persistence
 
-Notebooks are saved automatically to disk in the app config directory as `.tabularis-notebook` files (JSON format). Saving is debounced — changes are written after you stop editing, not on every keystroke.
+Notebooks are saved automatically to disk in the app config directory (JSON format), organized **per connection** under `notebooks/<connectionId>/<notebookId>`. Legacy flat notebooks from older versions are migrated automatically the first time their connection loads. Saving is debounced — changes are written after you stop editing, not on every keystroke.
 
 | Platform | Path |
 |----------|------|
