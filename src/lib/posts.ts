@@ -34,7 +34,16 @@ function estimateReadingTime(text: string): number {
 
 const POSTS_DIR = path.join(process.cwd(), "content", "posts");
 
-export const POSTS_PER_PAGE = 5;
+// The first page shows a featured hero post + a 6-card grid (7 total);
+// every subsequent page shows a full 6-card grid.
+export const FIRST_PAGE_POSTS = 7;
+export const POSTS_PER_PAGE = 6;
+
+export function getTotalPages(): number {
+  const total = getAllPosts().length;
+  if (total <= FIRST_PAGE_POSTS) return 1;
+  return 1 + Math.ceil((total - FIRST_PAGE_POSTS) / POSTS_PER_PAGE);
+}
 
 export function getAllPosts(): PostMeta[] {
   const files = fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith(".md"));
@@ -68,11 +77,15 @@ export function getPaginatedPosts(page: number): {
   currentPage: number;
 } {
   const all = getAllPosts();
-  const totalPages = Math.max(1, Math.ceil(all.length / POSTS_PER_PAGE));
+  const totalPages = getTotalPages();
   const currentPage = Math.max(1, Math.min(page, totalPages));
-  const start = (currentPage - 1) * POSTS_PER_PAGE;
+  const start =
+    currentPage === 1
+      ? 0
+      : FIRST_PAGE_POSTS + (currentPage - 2) * POSTS_PER_PAGE;
+  const count = currentPage === 1 ? FIRST_PAGE_POSTS : POSTS_PER_PAGE;
   return {
-    posts: all.slice(start, start + POSTS_PER_PAGE),
+    posts: all.slice(start, start + count),
     totalPages,
     currentPage,
   };

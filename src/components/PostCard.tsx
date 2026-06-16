@@ -4,16 +4,43 @@ import { PostMetaBar } from "./PostMetaBar";
 
 interface PostCardProps {
   post: PostMeta;
+  /** Original text-only layout, used by the home page blog section. */
+  compact?: boolean;
 }
 
-export function PostCard({ post }: PostCardProps) {
+export function PostCard({ post, compact = false }: PostCardProps) {
+  if (compact) {
+    return (
+      <div className="post-card post-card-compact">
+        <PostMetaBar date={post.date} readingTime={post.readingTime} release={post.release} tags={post.tags} />
+        <Link href={`/blog/${post.slug}`} className="post-card-body">
+          <div className="post-title">{post.title}</div>
+          <div className="post-excerpt">{post.excerpt}</div>
+        </Link>
+      </div>
+    );
+  }
+
+  // Use the post's own Open Graph image as the card visual.
+  const imageSrc = `/blog/${post.slug}/opengraph-image`;
+
   return (
     <div className="post-card">
-      <PostMetaBar date={post.date} readingTime={post.readingTime} release={post.release} tags={post.tags} />
-      <Link href={`/blog/${post.slug}`} className="post-card-body">
-        <div className="post-title">{post.title}</div>
-        <div className="post-excerpt">{post.excerpt}</div>
+      <Link href={`/blog/${post.slug}`} className="post-card-visual" aria-hidden="true" tabIndex={-1}>
+        <img
+          src={imageSrc}
+          alt=""
+          className="post-card-image"
+          loading="lazy"
+        />
       </Link>
+      <div className="post-card-content">
+        <PostMetaBar date={post.date} readingTime={post.readingTime} release={post.release} tags={post.tags} />
+        <Link href={`/blog/${post.slug}`} className="post-card-body">
+          <h3 className="post-title">{post.title}</h3>
+          <p className="post-excerpt">{post.excerpt}</p>
+        </Link>
+      </div>
     </div>
   );
 }

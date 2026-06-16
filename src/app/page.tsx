@@ -823,7 +823,7 @@ export default function HomePage() {
         <h2>Blog</h2>
         <div className="post-list">
           {posts.slice(0, 3).map((post) => (
-            <PostCard key={post.slug} post={post} />
+            <PostCard key={post.slug} post={post} compact />
           ))}
         </div>
         <p className="blog-all-link" style={{ marginTop: "2rem" }}>
