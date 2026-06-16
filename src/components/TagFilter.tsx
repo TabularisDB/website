@@ -1,101 +1,48 @@
-"use client";
-
-import { useState, useRef, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface TagFilterProps {
-  tags: string[];
+  tags?: string[]; // Kept for interface compatibility
   activeTag?: string;
 }
 
-export function TagFilter({ tags, activeTag }: TagFilterProps) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const router = useRouter();
+const PRIMARY_TAGS = [
+  { label: "All", tag: null, path: "/blog" },
+  { label: "Releases", tag: "release", path: "/blog/tag/release" },
+  { label: "AI", tag: "ai", path: "/blog/tag/ai" },
+  { label: "Plugins", tag: "plugins", path: "/blog/tag/plugins" },
+  { label: "Community", tag: "community", path: "/blog/tag/community" },
+  { label: "Open Source", tag: "open-source", path: "/blog/tag/open-source" },
+  { label: "UX & UI", tag: "ux", path: "/blog/tag/ux" },
+];
 
-  useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
+export function TagFilter({ activeTag }: TagFilterProps) {
+  const displayTags = [...PRIMARY_TAGS];
+  const isPrimary = activeTag ? PRIMARY_TAGS.some((p) => p.tag === activeTag) : true;
 
-  function select(tag: string | null) {
-    setOpen(false);
-    if (tag === null) {
-      router.push("/blog");
-    } else {
-      router.push(`/blog/tag/${encodeURIComponent(tag)}`);
-    }
+  if (activeTag && !isPrimary) {
+    displayTags.push({
+      label: `#${activeTag}`,
+      tag: activeTag,
+      path: `/blog/tag/${encodeURIComponent(activeTag)}`,
+    });
   }
 
   return (
-    <div className="tag-filter" ref={ref}>
-      <button
-        className="tag-filter-trigger"
-        onClick={() => setOpen((o) => !o)}
-        aria-expanded={open}
-      >
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
-        </svg>
-        {activeTag ? (
-          <>
-            <span className="tag-filter-label">Tag:</span>
-            <span className="tag-filter-active">#{activeTag}</span>
-          </>
-        ) : (
-          <span className="tag-filter-label">Filter by tag</span>
-        )}
-        <svg
-          className={`tag-filter-chevron${open ? " tag-filter-chevron--open" : ""}`}
-          width="12"
-          height="12"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
-      </button>
-
-      {open && (
-        <div className="tag-filter-dropdown">
-          {activeTag && (
-            <button
-              className="tag-filter-item tag-filter-item--clear"
-              onClick={() => select(null)}
+    <div className="tag-filter-bar">
+      <div className="tag-filter-scroll">
+        {displayTags.map((t) => {
+          const isActive = t.tag === null ? !activeTag : t.tag === activeTag;
+          return (
+            <Link
+              key={t.label}
+              href={t.path}
+              className={`tag-filter-tab${isActive ? " active" : ""}`}
             >
-              All posts
-            </button>
-          )}
-          {tags.map((t) => (
-            <button
-              key={t}
-              className={`tag-filter-item${t === activeTag ? " tag-filter-item--active" : ""}`}
-              onClick={() => select(t)}
-            >
-              <span className="tag-filter-hash">#</span>
-              {t}
-            </button>
-          ))}
-        </div>
-      )}
+              {t.label}
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 }

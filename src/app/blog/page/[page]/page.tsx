@@ -4,15 +4,14 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { GitHubIcon, DiscordIcon } from "@/components/Icons";
 import { PostCard } from "@/components/PostCard";
+import { TagFilter } from "@/components/TagFilter";
 import { Pagination } from "@/components/Pagination";
-import { getPaginatedPosts, getAllPosts, POSTS_PER_PAGE } from "@/lib/posts";
+import { BlogNewsletter } from "@/components/BlogNewsletter";
+import { getPaginatedPosts, getTotalPages } from "@/lib/posts";
 
 export function generateStaticParams() {
-  const total = getAllPosts().length;
-  const totalPages = Math.max(1, Math.ceil(total / POSTS_PER_PAGE));
-  // With output: export, returning [] is treated as missing generateStaticParams.
-  // Always generate at least page "2"; the component calls notFound() when out of range.
-  const count = Math.max(1, totalPages - 1);
+  const totalPages = getTotalPages();
+  const count = Math.max(0, totalPages - 1);
   return Array.from({ length: count }, (_, i) => ({
     page: String(i + 2),
   }));
@@ -53,14 +52,23 @@ export default async function BlogPageN({
         ]}
       />
 
-      <section>
-        <div className="post-list">
-          {posts.map((p) => (
-            <PostCard key={p.slug} post={p} />
-          ))}
+      <section className="blog-section">
+        <TagFilter activeTag={undefined} />
+
+        <div className="blog-archive">
+          <div className="blog-archive-head">
+            <h2>All posts</h2>
+          </div>
+          <div className="blog-posts-grid">
+            {posts.map((post) => (
+              <PostCard key={post.slug} post={post} />
+            ))}
+          </div>
         </div>
 
         <Pagination currentPage={currentPage} totalPages={totalPages} />
+
+        <BlogNewsletter />
 
         <div className="cta-strip">
           <a className="btn-cta" href="https://github.com/TabularisDB/tabularis">

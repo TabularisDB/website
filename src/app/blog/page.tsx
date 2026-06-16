@@ -7,7 +7,8 @@ import { Rss } from "lucide-react";
 import { PostCard } from "@/components/PostCard";
 import { TagFilter } from "@/components/TagFilter";
 import { Pagination } from "@/components/Pagination";
-import { getPaginatedPosts, getAllTags } from "@/lib/posts";
+import { BlogNewsletter } from "@/components/BlogNewsletter";
+import { getPaginatedPosts, getAllTags, formatDate } from "@/lib/posts";
 import { OG_IMAGE_URL } from "@/lib/siteConfig";
 
 export const metadata: Metadata = {
@@ -39,39 +40,79 @@ export default function BlogPage() {
   const { posts, totalPages, currentPage } = getPaginatedPosts(1);
   const tags = getAllTags();
 
+  const isFirstPage = currentPage === 1;
+  const featuredPost = isFirstPage && posts.length > 0 ? posts[0] : null;
+  const gridPosts = isFirstPage ? posts.slice(1) : posts;
+
   return (
     <div className="container">
       <SiteHeader crumbs={[{ label: "blog" }]} />
 
-      <section>
-        <div className="blog-intro">
-          <img
-            src="/img/logo.png"
-            alt="Tabularis Logo"
-            className="blog-intro-logo"
-          />
-          <div className="blog-intro-body">
-            <h3>What is Tabularis?</h3>
-            <p>
-              Tabularis is a lightweight, developer-focused database management
-              tool built with <strong>Tauri</strong> and <strong>React</strong>.
-              It supports PostgreSQL, MySQL, SQLite, and more via a plugin system
-              — with a Monaco SQL editor, AI assistance, visual query builder,
-              and a clean dark UI. Open source, Apache 2.0.{" "}
-              <Link href="/">Learn more →</Link>
-            </p>
-          </div>
-        </div>
-
+      <section className="blog-section">
         <TagFilter tags={tags} />
 
-        <div className="post-list">
-          {posts.map((p) => (
-            <PostCard key={p.slug} post={p} />
-          ))}
-        </div>
+        {/* Featured Post (Hero) */}
+        {featuredPost && (
+          <div className="blog-hero-post">
+            <Link
+              href={`/blog/${featuredPost.slug}`}
+              className="blog-hero-visual"
+              aria-hidden="true"
+              tabIndex={-1}
+            >
+              <img
+                src={`/blog/${featuredPost.slug}/opengraph-image`}
+                alt=""
+                className="blog-hero-image"
+              />
+            </Link>
+            
+            <div className="blog-hero-content">
+              <div className="blog-hero-meta">
+                <span>{formatDate(featuredPost.date)}</span>
+                <span>&middot;</span>
+                <span>{featuredPost.readingTime} min read</span>
+                {featuredPost.release && (
+                  <>
+                    <span>&middot;</span>
+                    <span className="post-release">{featuredPost.release}</span>
+                  </>
+                )}
+                {featuredPost.tags && featuredPost.tags.length > 0 && (
+                  <>
+                    <span>&middot;</span>
+                    <span className="blog-hero-tag-badge">#{featuredPost.tags[0]}</span>
+                  </>
+                )}
+              </div>
+              <h2 className="blog-hero-title">
+                <Link href={`/blog/${featuredPost.slug}`}>{featuredPost.title}</Link>
+              </h2>
+              <p className="blog-hero-excerpt">{featuredPost.excerpt}</p>
+              <Link href={`/blog/${featuredPost.slug}`} className="blog-hero-cta">
+                Read article <span className="arrow">&rarr;</span>
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {/* Posts archive */}
+        {gridPosts.length > 0 && (
+          <div className="blog-archive">
+            <div className="blog-archive-head">
+              <h2>{featuredPost ? "More posts" : "All posts"}</h2>
+            </div>
+            <div className="blog-posts-grid">
+              {gridPosts.map((post) => (
+                <PostCard key={post.slug} post={post} />
+              ))}
+            </div>
+          </div>
+        )}
 
         <Pagination currentPage={currentPage} totalPages={totalPages} />
+
+        <BlogNewsletter />
 
         <div className="cta-strip">
           <a className="btn-cta" href="https://github.com/TabularisDB/tabularis">
