@@ -8,7 +8,8 @@ og:
   title: "v0.13.2:"
   accent: "Managed, and live."
   claim: "Per-connection notebooks with undo and a visual history, a results panel that streams progress while statements run, fluid scrolling on wide tables, clause-aware cross-database autocomplete, and honest Visual EXPLAIN numbers."
-  image: "/img/posts/tabularis-notebooks-managed.png"
+  image: "/img/og/v0132-managed-notebooks.png"
+  cover: "/img/og/v0132-managed-notebooks.png"
 ---
 
 # v0.13.2: Notebooks You Can Manage, Query Progress in Real Time, and a Grid That Scrolls
