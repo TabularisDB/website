@@ -4,3 +4,6 @@ node_modules/
 public/search-index.json
 public/sponsors.json
 .DS_Store
+
+# Local pre-publication drafts (mirrored in a private gist)
+drafts/

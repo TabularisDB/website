@@ -5163,6 +5163,67 @@ pre {
   line-height: 1.5;
 }
 
+/* Stacked co-authors: tighten the gap after the first card. */
+.post-author + .post-author {
+  margin-top: 0.75rem;
+}
+
+.post-author-name a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.post-author-name a:hover {
+  text-decoration: underline;
+}
+
+/* AUTHOR ARCHIVE (/blog/author/<handle>) */
+.author-archive-header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.author-archive-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.author-archive-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.author-archive-name {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--text-bright);
+}
+
+.author-archive-bio {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.author-archive-count {
+  margin: 0;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
 /* CONTRIBUTORS BLOCK */
 .contributors-block {
   margin: 2rem 0;

@@ -13,6 +13,8 @@ export function Footer() {
         <Link href="/cookie-policy">Cookie Policy</Link>
         <a href="https://github.com/TabularisDB/tabularis" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://discord.com/invite/K2hmhfHRSt" target="_blank" rel="noopener noreferrer">Discord</a>
+        <a href="https://bsky.app/profile/tabularis.bsky.social" target="_blank" rel="noopener noreferrer">Bluesky</a>
+        <a href="https://x.com/tabularisdb" target="_blank" rel="noopener noreferrer">X</a>
         <ManageCookiesButton />
       </p>
     </footer>
