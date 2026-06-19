@@ -15,6 +15,12 @@
   <a href="https://vercel.com/open-source-program"><img src="https://vercel.com/oss/program-badge-2026.svg" alt="Vercel OSS Program" /></a>
 </p>
 
+<br />
+<br />
+<a href="https://vercel.com/open-source-program">
+  <img alt="Vercel OSS Program" src="https://vercel.com/oss/program-badge-2026.svg" />
+</a>
+
 ## About
 
 This repository hosts the source of [tabularis.dev](https://tabularis.dev). It is a [Next.js](https://nextjs.org) static-export site deployed to GitHub Pages on every push to `main`.
