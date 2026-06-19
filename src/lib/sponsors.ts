@@ -152,7 +152,7 @@ export const SPONSORS: Sponsor[] = [
     id: "devglobe",
     name: "DevGlobe",
     tagline: "Connect your IDE, show up on the globe, and showcase your projects to a community of builders.",
-    url: "https://devglobe.xyz",
+    url: "https://devglobe.app",
     accentColor: "#115BCA",
     highlightColor: "#1870F4",
     logoImg: "/img/sponsors/devglobe.png",
