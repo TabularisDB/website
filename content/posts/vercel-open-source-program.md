@@ -1,6 +1,6 @@
 ---
 title: "Tabularis Joins the Vercel Open Source Program"
-date: "2026-06-19T12:00:00"
+date: "2026-06-19T08:00:00"
 tags: ["community", "sponsors", "partnership", "open-source"]
 excerpt: "Tabularis has been accepted into Vercel's Open Source Program for the Spring 2026 cohort. Twelve months of support for the site you're reading right now — which is open source, built with Next.js, and about to get a lot better."
 og:
