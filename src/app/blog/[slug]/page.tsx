@@ -87,7 +87,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             path: `/blog/${slug}`,
             publishedTime: meta.date,
             image: meta.og?.image,
-            authors: resolveAuthors(meta.authors).map((a) => ({
+            authors: authors.map((a) => ({
               name: a.name,
               url: authorGitHubUrl(a.github),
             })),
