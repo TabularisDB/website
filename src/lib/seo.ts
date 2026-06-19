@@ -35,6 +35,9 @@ export function buildOrganizationJsonLd() {
     sameAs: [
       "https://github.com/TabularisDB/tabularis",
       "https://discord.com/invite/K2hmhfHRSt",
+      "https://bsky.app/profile/tabularis.bsky.social",
+      "https://x.com/tabularisdb",
+      "https://mastodon.social/@tabularis",
     ],
   };
 }

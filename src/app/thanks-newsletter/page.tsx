@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { NewsletterGoal } from "@/components/NewsletterGoal";
+import { SocialLinks } from "@/components/SocialLinks";
 
 export const metadata: Metadata = {
   title: "You're subscribed! | Tabularis",
@@ -106,6 +107,13 @@ export default function ThanksNewsletterPage() {
               about Tabularis development.
             </p>
           </Link>
+        </div>
+
+        <div className="thankyou-socials">
+          <span className="thankyou-socials-label">Follow Tabularis</span>
+          <div className="social-links-row">
+            <SocialLinks linkClassName="social-links-row-link" iconSize={18} />
+          </div>
         </div>
       </section>
 
