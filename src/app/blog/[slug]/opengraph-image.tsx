@@ -66,6 +66,223 @@ export default async function Image({
   if (font400) fonts.push({ name: "Inter", data: font400, weight: 400 });
   if (font800) fonts.push({ name: "Inter", data: font800, weight: 800 });
 
+  // Bespoke partnership lockup for the Vercel Open Source Program post — a
+  // logo composition (Vercel △ + Tabularis cube) on the house background,
+  // instead of the screenshot template.
+  if (slug === "vercel-open-source-program") {
+    return new ImageResponse(
+      <div
+        style={{
+          width: "1200px",
+          height: "630px",
+          background: "#020617",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          position: "relative",
+          overflow: "hidden",
+          fontFamily: "Inter, system-ui, sans-serif",
+        }}
+      >
+        {/* Grid */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px)",
+            backgroundSize: "27px 27px",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            backgroundImage:
+              "linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
+            backgroundSize: "27px 27px",
+          }}
+        />
+        {/* Glows */}
+        <div
+          style={{
+            position: "absolute",
+            top: "-180px",
+            left: "300px",
+            width: "700px",
+            height: "500px",
+            background:
+              "radial-gradient(ellipse at center, rgba(14,165,233,0.22) 0%, transparent 65%)",
+            borderRadius: "50%",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: "-160px",
+            right: "-80px",
+            width: "560px",
+            height: "560px",
+            background:
+              "radial-gradient(circle at center, rgba(99,102,241,0.18) 0%, transparent 65%)",
+            borderRadius: "50%",
+          }}
+        />
+
+        {/* Tabularis Blog pill */}
+        <div
+          style={{
+            position: "absolute",
+            top: "44px",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            padding: "4px 14px 4px 4px",
+            background: "rgba(15,23,42,0.7)",
+            border: "1px solid rgba(56,189,248,0.3)",
+            borderRadius: "100px",
+          }}
+        >
+          {logoSrc && (
+            <div
+              style={{
+                width: "24px",
+                height: "24px",
+                background: "#020617",
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                border: "1px solid rgba(255,255,255,0.1)",
+              }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={logoSrc} width={14} height={14} alt="" style={{ objectFit: "contain" }} />
+            </div>
+          )}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "4px",
+              color: "#e2e8f0",
+              fontSize: "14px",
+              fontWeight: 400,
+            }}
+          >
+            <span style={{ color: "#38bdf8", fontWeight: 800 }}>Tabularis</span>
+            <span>Blog</span>
+          </div>
+        </div>
+
+        {/* Logo lockup: Vercel △  +  Tabularis cube */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "40px",
+            marginBottom: "56px",
+          }}
+        >
+          <div
+            style={{
+              width: "152px",
+              height: "152px",
+              borderRadius: "34px",
+              background: "#ffffff",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <svg width="94" height="80" viewBox="0 0 94 80">
+              <path d="M47 0 L94 80 L0 80 Z" fill="#000000" />
+            </svg>
+          </div>
+
+          <div style={{ display: "flex", fontSize: "60px", fontWeight: 400, color: "#475569" }}>
+            +
+          </div>
+
+          <div
+            style={{
+              width: "152px",
+              height: "152px",
+              borderRadius: "34px",
+              background: "#0b0c0e",
+              border: "1px solid rgba(255,255,255,0.12)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {logoSrc && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={logoSrc} width={100} height={100} alt="" style={{ objectFit: "contain" }} />
+            )}
+          </div>
+        </div>
+
+        {/* Headline */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            fontSize: "52px",
+            fontWeight: 800,
+            letterSpacing: "-1.4px",
+            lineHeight: 1.08,
+            textAlign: "center",
+          }}
+        >
+          <span
+            style={{
+              backgroundImage: "linear-gradient(135deg, #38bdf8 0%, #818cf8 100%)",
+              backgroundClip: "text",
+              color: "transparent",
+            }}
+          >
+            Tabularis joins the
+          </span>
+          <span style={{ color: "#ffffff" }}>Vercel Open Source Program</span>
+        </div>
+
+        {/* Subtitle */}
+        <div
+          style={{
+            display: "flex",
+            fontSize: "21px",
+            fontWeight: 400,
+            color: "#94a3b8",
+            letterSpacing: "-0.2px",
+            marginTop: "22px",
+          }}
+        >
+          Spring 2026 cohort · a year of support for the open-source web
+        </div>
+
+        {/* tabularis.dev */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: "40px",
+            left: "64px",
+            display: "flex",
+            color: "#64748b",
+            fontSize: "20px",
+            fontWeight: 800,
+            letterSpacing: "-0.3px",
+          }}
+        >
+          tabularis.dev
+        </div>
+      </div>,
+      { ...size, fonts },
+    );
+  }
+
   if (!og) {
     return new ImageResponse(
       <div

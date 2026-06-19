@@ -12,6 +12,7 @@
 <p align="center">
   <a href="https://github.com/TabularisDB/website/actions/workflows/static.yml"><img src="https://github.com/TabularisDB/website/actions/workflows/static.yml/badge.svg" alt="Deploy website to Pages" /></a>
   <a href="https://discord.com/invite/K2hmhfHRSt"><img src="https://img.shields.io/discord/1470772941296894128?color=5865F2&logo=discord&logoColor=white" alt="Discord" /></a>
+  <a href="https://vercel.com/open-source-program"><img src="https://vercel.com/oss/program-badge-2026.svg" alt="Vercel OSS Program" /></a>
 </p>
 
 ## About

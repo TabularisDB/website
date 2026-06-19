@@ -69,10 +69,11 @@ Two exceptions to the loader pattern:
 
 ### Custom Markdown extensions
 
-`src/lib/markdown.ts` is the **only** place `marked` should be imported from — it registers two custom fenced-block extensions that work in any Markdown content:
+`src/lib/markdown.ts` is the **only** place `marked` should be imported from — it registers three custom fenced-block extensions that work in any Markdown content:
 
 - `:::plugin <plugin-id>:::` → renders a plugin card using the registry (`plugins/registry.json`). Plugin id must match `registry.json`.
 - `:::newsletter:::` → inserts `<div data-newsletter></div>`, hydrated on the client.
+- `:::star:::` → renders a "Star on GitHub" call-to-action card (`renderStarCta`) linking to the Tabularis app repo. Must be on its own line; takes no arguments. Use sparingly — typically once near the end of a post.
 
 Blog posts additionally support a `:::contributors:::` placeholder expanded in `getPostBySlug` in `src/lib/posts.ts`. It fires **live GitHub API calls** at build time (comparing releases and searching merged PRs between two tags) to render per-release contributor avatars. A post's frontmatter `release:` tag is required for this to resolve.
 
