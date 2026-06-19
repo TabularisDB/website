@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { DiscordIcon } from "@/components/Icons";
+import { SocialLinks } from "@/components/SocialLinks";
 
 export function DownloadThankYou() {
   const searchParams = useSearchParams();
@@ -92,6 +93,13 @@ export function DownloadThankYou() {
             contribute to the project on GitHub.
           </p>
         </a>
+      </div>
+
+      <div className="thankyou-socials">
+        <span className="thankyou-socials-label">Follow Tabularis</span>
+        <div className="social-links-row">
+          <SocialLinks linkClassName="social-links-row-link" iconSize={18} />
+        </div>
       </div>
     </>
   );
