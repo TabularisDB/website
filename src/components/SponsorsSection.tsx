@@ -403,6 +403,40 @@ export function SponsorsCarousel() {
   );
 }
 
+// ─── Scrolling logo marquee (homepage) ─────────────────────────────────────────
+
+export function SponsorsMarquee() {
+  const [activeSponsor, setActiveSponsor] = useState<Sponsor | null>(null);
+
+  // Duplicate the list so the track can loop seamlessly.
+  const loop = [...SPONSORS, ...SPONSORS];
+
+  return (
+    <>
+      <div className="sponsors-marquee" aria-label="Project sponsors">
+        <div className="sponsors-marquee-track">
+          {loop.map((sponsor, i) => (
+            <button
+              key={`${sponsor.id}-${i}`}
+              type="button"
+              className="sponsors-marquee-item"
+              onClick={() => setActiveSponsor(sponsor)}
+              aria-label={`About ${sponsor.name}`}
+              aria-hidden={i >= SPONSORS.length}
+              tabIndex={i >= SPONSORS.length ? -1 : 0}
+            >
+              <SponsorLogo sponsor={sponsor} size={32} imgOverride={sponsor.logoImgCompact} />
+              <span>{sponsor.name}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <SponsorModal sponsor={activeSponsor} onClose={() => setActiveSponsor(null)} />
+    </>
+  );
+}
+
 // ─── Section (homepage) ───────────────────────────────────────────────────────
 
 export function SponsorsSection() {
@@ -414,7 +448,7 @@ export function SponsorsSection() {
         the project alive and free.
       </p>
 
-      <SponsorsCarousel />
+      <SponsorsMarquee />
 
       <p className="sponsor-footnote">
         Interested in sponsoring Tabularis?{" "}

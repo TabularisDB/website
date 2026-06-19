@@ -100,6 +100,31 @@ export const SPONSORS: Sponsor[] = [
     },
   },
   {
+    id: "vercel",
+    name: "Vercel",
+    tagline: "The platform for the modern web — ship, preview, and scale frontend apps with zero config.",
+    url: "https://vercel.com",
+    accentColor: "#000000",
+    highlightColor: "#e5e7eb",
+    ctaTextColor: "#ffffff",
+    logoImg: "/img/sponsors/vercel.svg",
+    logoImgCompact: "/img/sponsors/vercel_compact.svg",
+    modalDescription:
+      "Vercel is the platform for building and deploying the modern web — Git-based deploys, a preview URL for every change, a global edge network, and a developer experience that turns shipping into a non-event. tabularis.dev itself is an open-source Next.js app deployed on Vercel. Tabularis was accepted into the Vercel Open Source Program for the Spring 2026 cohort.",
+    features: [
+      { icon: "▲", text: "Git-based deploys — a live preview URL for every push" },
+      { icon: "⚡", text: "Global edge network — fast everywhere, by default" },
+      { icon: "🧩", text: "First-class Next.js — framework and platform, one team" },
+      { icon: "🔍", text: "Preview deployments — review changes before they go live" },
+      { icon: "❤️", text: "Open Source Program — a year of support for maintainers" },
+    ],
+    offer: {
+      title: "Start building for free",
+      description:
+        "Vercel's Hobby tier is free for personal projects and open source — deploy a Next.js app in minutes, no credit card required.",
+    },
+  },
+  {
     id: "usero",
     name: "Usero",
     tagline: "Feedback becomes code. Automatically.",
