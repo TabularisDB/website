@@ -35,6 +35,9 @@ export function buildOrganizationJsonLd() {
     sameAs: [
       "https://github.com/TabularisDB/tabularis",
       "https://discord.com/invite/K2hmhfHRSt",
+      "https://bsky.app/profile/tabularis.bsky.social",
+      "https://x.com/tabularisdb",
+      "https://mastodon.social/@tabularis",
     ],
   };
 }
@@ -67,7 +70,12 @@ export function buildArticleJsonLd(input: {
   path: string;
   publishedTime?: string;
   image?: string;
+  authors?: { name: string; url: string }[];
 }) {
+  const authors =
+    input.authors && input.authors.length
+      ? input.authors
+      : [{ name: "Andrea Debernardi", url: "https://github.com/debba" }];
   return {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -75,11 +83,11 @@ export function buildArticleJsonLd(input: {
     description: input.description,
     url: toAbsoluteUrl(input.path),
     datePublished: input.publishedTime,
-    author: {
+    author: authors.map((a) => ({
       "@type": "Person",
-      name: "Andrea Debernardi",
-      url: "https://github.com/debba",
-    },
+      name: a.name,
+      url: a.url,
+    })),
     publisher: {
       "@type": "Organization",
       name: "Tabularis",

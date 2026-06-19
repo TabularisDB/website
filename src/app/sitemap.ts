@@ -2,7 +2,8 @@ export const dynamic = "force-static";
 
 import type { MetadataRoute } from "next";
 import { getAllWikiPages } from "@/lib/wiki";
-import { getAllPosts } from "@/lib/posts";
+import { getAllPosts, getAllAuthorHandles } from "@/lib/posts";
+import { AUTHORS } from "@/lib/authors";
 import { getAllSeoPages, getSeoPagePath } from "@/lib/seoPages";
 import { getAllInitiativeSlugs } from "@/lib/roadmap";
 import { getAllVideoDemos } from "@/lib/videos";
@@ -108,6 +109,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  const authorRoutes: MetadataRoute.Sitemap = getAllAuthorHandles()
+    .filter((handle) => handle in AUTHORS)
+    .map((handle) => ({
+      url: `${BASE_URL}/blog/author/${handle}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.5,
+    }));
+
   return [
     ...staticRoutes,
     ...wikiRoutes,
@@ -115,5 +125,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...seoRoutes,
     ...roadmapRoutes,
     ...videoRoutes,
+    ...authorRoutes,
   ];
 }

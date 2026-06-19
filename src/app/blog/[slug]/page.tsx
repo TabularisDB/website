@@ -4,10 +4,15 @@ import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/JsonLd";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
-import { GitHubIcon, DiscordIcon } from "@/components/Icons";
+import { GitHubIcon, DiscordIcon, XBrandIcon, BlueskyIcon } from "@/components/Icons";
 import { ShareButton } from "@/components/ShareButton";
 import { PostContentLightbox } from "@/components/PostContentLightbox";
 import { getAllPosts, getPostBySlug, getAdjacentPosts } from "@/lib/posts";
+import {
+  resolveAuthors,
+  authorAvatarUrl,
+  authorGitHubUrl,
+} from "@/lib/authors";
 import { PostMetaBar } from "@/components/PostMetaBar";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { PostNewsletterSlots } from "@/components/PostNewsletterSlots";
@@ -62,6 +67,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   const { prev, next } = getAdjacentPosts(slug);
   const relatedLinks = getRelatedLinksForPost(meta.tags);
+  const authors = resolveAuthors(meta.authors);
 
   const crumbTitle =
     meta.title.length > 40 ? meta.title.slice(0, 40) + "…" : meta.title;
@@ -81,6 +87,10 @@ export default async function BlogPostPage({ params }: PageProps) {
             path: `/blog/${slug}`,
             publishedTime: meta.date,
             image: meta.og?.image,
+            authors: authors.map((a) => ({
+              name: a.name,
+              url: authorGitHubUrl(a.github),
+            })),
           }),
         ]}
       />
@@ -112,33 +122,54 @@ export default async function BlogPostPage({ params }: PageProps) {
             <DiscordIcon size={15} />
             Join Discord
           </a>
+          <a
+            className="btn-cta"
+            href="https://bsky.app/profile/tabularis.bsky.social"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <BlueskyIcon size={15} />
+            Bluesky
+          </a>
+          <a
+            className="btn-cta"
+            href="https://x.com/tabularisdb"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <XBrandIcon size={15} />
+            Follow on X
+          </a>
           <ShareButton />
         </div>
       </div>
 
       <NewsletterForm compact />
 
-      <div className="post-author">
-        <img
-          src="https://github.com/debba.png"
-          alt="Andrea Debernardi"
-          className="post-author-avatar"
-        />
-        <div className="post-author-info">
-          <span className="post-author-name">Andrea Debernardi</span>
-          <span className="post-author-bio">
-            Developer & creator of Tabularis. Building open-source tools for
-            developers.{" "}
-            <a
-              href="https://github.com/debba"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              @debba
-            </a>
-          </span>
+      {authors.map((author) => (
+        <div className="post-author" key={author.handle}>
+          <img
+            src={authorAvatarUrl(author.github)}
+            alt={author.name}
+            className="post-author-avatar"
+          />
+          <div className="post-author-info">
+            <span className="post-author-name">
+              <Link href={`/blog/author/${author.handle}`}>{author.name}</Link>
+            </span>
+            <span className="post-author-bio">
+              {author.bio}{" "}
+              <a
+                href={authorGitHubUrl(author.github)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                @{author.github}
+              </a>
+            </span>
+          </div>
         </div>
-      </div>
+      ))}
 
       <nav className="post-nav">
         <div className="post-nav-item post-nav-prev">

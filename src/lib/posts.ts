@@ -3,6 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import { marked } from "@/lib/markdown";
 import { wrapVideosInHtml } from "@/lib/markdownVideos";
+import { DEFAULT_AUTHOR_HANDLE } from "@/lib/authors";
 
 export interface PostOg {
   title: string;
@@ -23,6 +24,14 @@ export interface PostMeta {
   excerpt: string;
   og?: PostOg;
   readingTime: number;
+  /** Lowercased author handles; first is the primary author. */
+  authors: string[];
+}
+
+function parseAuthors(data: Record<string, unknown>): string[] {
+  const raw = data.authors as string[] | undefined;
+  const handles = raw && raw.length ? raw : [DEFAULT_AUTHOR_HANDLE];
+  return handles.map((h) => String(h).toLowerCase());
 }
 
 const WORDS_PER_MINUTE = 200;
@@ -61,6 +70,7 @@ export function getAllPosts(): PostMeta[] {
       excerpt: (data.excerpt as string) ?? "",
       og: data.og as PostOg | undefined,
       readingTime: estimateReadingTime(content),
+      authors: parseAuthors(data),
     } satisfies PostMeta;
   });
 
@@ -69,6 +79,19 @@ export function getAllPosts(): PostMeta[] {
     const d = b.date.localeCompare(a.date);
     return d !== 0 ? d : a.slug.localeCompare(b.slug);
   });
+}
+
+/** Posts authored (or co-authored) by the given handle, newest first. */
+export function getPostsByAuthor(handle: string): PostMeta[] {
+  const h = handle.toLowerCase();
+  return getAllPosts().filter((p) => p.authors.includes(h));
+}
+
+/** Every author handle that has at least one published post. */
+export function getAllAuthorHandles(): string[] {
+  const set = new Set<string>();
+  for (const p of getAllPosts()) for (const a of p.authors) set.add(a);
+  return [...set];
 }
 
 export function getPaginatedPosts(page: number): {
@@ -119,6 +142,7 @@ export async function getPostBySlug(
     excerpt: (data.excerpt as string) ?? "",
     og: data.og as PostOg | undefined,
     readingTime: estimateReadingTime(content),
+    authors: parseAuthors(data),
   };
 
   let processedContent = content;
