@@ -1,6 +1,6 @@
 ---
 title: "Translating Tabularis, the Right Way: Why We Chose Tolgee"
-date: "2026-06-17T10:00:00"
+date: "2026-06-19T10:00:00"
 authors: ["NewtTheWolf"]
 tags: ["community", "i18n", "localization", "lingui", "open-source", "sponsors", "roadmap"]
 excerpt: "Tabularis ships in 8 languages, but contributing a translation has meant editing raw JSON in a Git diff with no idea where the string lived. We've picked Tolgee to change that: open source, self-hostable, context-rich translating. Tolgee is also backing the project while we do it. Here's the honest why, and what's coming: community translations from the web, delivered over the air, with in-app translating as the long-term goal."

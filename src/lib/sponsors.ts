@@ -172,4 +172,28 @@ export const SPONSORS: Sponsor[] = [
         "Pick your editor, install the plugin, and join hundreds of developers already on the globe.",
     },
   },
+  {
+    id: "tolgee",
+    name: "Tolgee",
+    tagline: "Open-source localization platform — translate your app in context, without the spreadsheet chaos.",
+    url: "https://tolgee.io",
+    accentColor: "#EC407A",
+    highlightColor: "#F06292",
+    logoImg: "/img/sponsors/tolgee.svg",
+    logoImgCompact: "/img/sponsors/tolgee_compact.svg",
+    modalDescription:
+      "Tolgee is an open-source localization platform built for developers. Translate your app in context with an in-place editor, leverage AI-assisted translations and translation memory, and keep your team in sync — all without copy-pasting strings into spreadsheets. Tabularis uses Tolgee to manage its translations across every supported language.",
+    features: [
+      { icon: "🌍", text: "In-context editing — translate directly inside your running app" },
+      { icon: "🤖", text: "AI-powered translations, machine translation & translation memory" },
+      { icon: "🔓", text: "Open source — self-host it or use the managed cloud" },
+      { icon: "🧩", text: "SDKs & integrations for React, Vue, Angular, Next.js and more" },
+      { icon: "⚡", text: "One-click translation updates without redeploying" },
+    ],
+    offer: {
+      title: "Free tier for open source & small teams",
+      description:
+        "Get started with Tolgee for free — self-host the platform or use the cloud free tier to localize your project from day one.",
+    },
+  },
 ];
