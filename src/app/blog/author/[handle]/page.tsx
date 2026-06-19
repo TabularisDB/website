@@ -21,7 +21,9 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { handle } = await params;
-  const author = getAuthor(handle);
+  const key = handle.toLowerCase();
+  if (!(key in AUTHORS)) notFound();
+  const author = getAuthor(key);
   const title = `${author.name} | Tabularis Blog`;
   const description = `Posts by ${author.name} on the Tabularis blog. ${author.bio}`;
   return {
