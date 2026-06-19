@@ -39,7 +39,7 @@ Here's the overview video itself, the one that sits at the top of the home page.
 
 <video src="/videos/overview.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
-Nako's own project, [devglobe.xyz](https://devglobe.xyz), is a genius idea and worth a detour. It's a live 3D globe of developers coding around the world in real time: you can see who is writing what, in which language, from which city, right now. A small Language Server plugin sends a heartbeat every 30 seconds while you're active, sharing only the language, a city-level location, and the editor name. There's a [Zed extension](https://github.com/CaadriFR/zed-devglobe) already, and more editors in the works. It's the kind of thing that sounds obvious in hindsight and somehow nobody had built yet.
+Nako's own project, [devglobe.app](https://devglobe.app), is a genius idea and worth a detour. It's a live 3D globe of developers coding around the world in real time: you can see who is writing what, in which language, from which city, right now. A small Language Server plugin sends a heartbeat every 30 seconds while you're active, sharing only the language, a city-level location, and the editor name. There's a [Zed extension](https://github.com/CaadriFR/zed-devglobe) already, and more editors in the works. It's the kind of thing that sounds obvious in hindsight and somehow nobody had built yet.
 
 :::newsletter:::
 
@@ -103,7 +103,7 @@ Two smaller changes worth calling out:
 
 Worth naming plainly what this release is: of the six headline changes, **three came from outside contributors**. That ratio is new for Tabularis, and it's a good sign.
 
-To **[@Nako0](https://github.com/Nako0)** for turning the site from screenshots into demos: thank you, seriously. Tabularis looks like a different product now. And go check out [devglobe.xyz](https://devglobe.xyz) while you're at it.
+To **[@Nako0](https://github.com/Nako0)** for turning the site from screenshots into demos: thank you, seriously. Tabularis looks like a different product now. And go check out [devglobe.app](https://devglobe.app) while you're at it.
 
 To **[@thomaswasle](https://github.com/thomaswasle)** for quietly pushing the themes towards being uniformly readable: the app is more comfortable to spend a day in because of your work.
 
