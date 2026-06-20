@@ -1295,13 +1295,21 @@ pre {
 
 .dl-option--command {
   cursor: default;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: stretch;
   gap: 0.6rem;
 }
 
 .dl-option--command:hover {
   border-color: var(--border-bright);
   transform: none;
+}
+
+.dl-cmd-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  width: 100%;
 }
 
 .dl-option-cmd {
@@ -1312,8 +1320,13 @@ pre {
   border: 1px solid rgba(59, 130, 246, 0.2);
   border-radius: 5px;
   padding: 0.2rem 0.55rem;
-  white-space: nowrap;
   user-select: all;
+  flex: 1;
+  min-width: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.45;
 }
 
 .dl-modal-note {
@@ -6277,6 +6290,7 @@ footer {
   flex-direction: column;
   gap: 0.85rem;
   height: 100%;
+  min-width: 0;
 }
 
 .dli-card--detected {
@@ -6393,7 +6407,7 @@ footer {
 
 .dli-cmd-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.4rem;
   width: 100%;
 }
@@ -6408,9 +6422,11 @@ footer {
   padding: 0.2rem 0.5rem;
   user-select: all;
   flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  min-width: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.45;
 }
 
 .dli-copy-btn {

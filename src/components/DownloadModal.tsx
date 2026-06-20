@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { PLATFORM_CONFIG } from "@/lib/downloadConfig";
+import { CopyButton } from "@/components/CopyButton";
 
 export type { Platform } from "@/lib/downloadConfig";
 
@@ -78,7 +79,10 @@ export function DownloadModal({ platform, onClose }: DownloadModalProps) {
                     <span className="dl-option-desc">{opt.desc}</span>
                   </div>
                   {(Array.isArray(opt.command) ? opt.command : [opt.command]).map((cmd) => (
-                    <code key={cmd} className="dl-option-cmd">{cmd}</code>
+                    <div key={cmd} className="dl-cmd-row">
+                      <code className="dl-option-cmd">{cmd}</code>
+                      <CopyButton text={cmd} />
+                    </div>
                   ))}
                 </div>
               ) : (
