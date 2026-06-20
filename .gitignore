@@ -10,17 +10,3 @@ public/feed.json
 
 # Local pre-publication drafts (mirrored in a private gist)
 drafts/
-
-# >>> generated redirect stubs (scripts/generate-redirects.mjs)
-public/blog/digitalocean-open-source-credits.html
-public/blog/digitalocean-open-source-credits/index.html
-public/blog/v0100-ai-safety-audit-approvals.html
-public/blog/v0100-ai-safety-audit-approvals/index.html
-# <<< generated redirect stubs
-
-# >>> generated redirect stubs (scripts/generate-redirects.mjs)
-public/blog/digitalocean-open-source-credits.html
-public/blog/digitalocean-open-source-credits/index.html
-public/blog/v0100-ai-safety-audit-approvals.html
-public/blog/v0100-ai-safety-audit-approvals/index.html
-# <<< generated redirect stubs

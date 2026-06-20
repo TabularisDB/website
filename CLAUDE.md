@@ -21,13 +21,14 @@ Package manager is pinned: **pnpm 10.33.0** (see `packageManager` in `package.js
 
 There is **no lint or test command**. `eslint.config.mjs` explicitly ignores `**/*`; do not try to add lint runs to "verify" a change.
 
-`pnpm build` runs five steps in order, all of which must succeed:
+`pnpm build` runs four steps in order, all of which must succeed:
 
 1. `scripts/generate-search-index.mjs` → `public/search-index.json` (Orama index built from wiki + posts + SEO + plugin registry).
 2. `scripts/generate-sponsors.mjs` → `public/sponsors.json` (re-emits `src/lib/sponsors.ts` as JSON).
 3. `next build` → emits the site to `out/`.
 4. `scripts/generate-latest-posts.mjs` → `public/latest-posts.json` (top-5 posts for the home widget). Runs **after** `next build` because it writes into the build output.
-5. `scripts/generate-redirects.mjs` → scans `content/posts/`, `content/wiki/`, `content/seo/`, `content/roadmap/` for files with a `redirect_from:` frontmatter array and emits `meta refresh` HTML stubs under `out/` pointing at each file's canonical URL. Used to keep legacy/wrong URLs working after a rename (a static export can't issue real HTTP 301s, so this is the closest host-agnostic equivalent — Google treats a 0-delay meta refresh as a 301). The script aborts if a stub would overwrite a real exported page, which catches typos in `redirect_from`.
+
+Redirects (e.g. after renaming a slug) are configured in `vercel.json` under the `redirects` array, which Vercel serves as real HTTP 308/301 redirects.
 
 ## Upstream app data
 
@@ -95,7 +96,7 @@ Code blocks are syntax-highlighted by `marked-highlight` + `highlight.js`. The t
 - Wiki page → frontmatter needs `title`, `order`, `excerpt`, `category` (one of the values in `WIKI_CATEGORIES` in `src/lib/wiki.tsx`).
 - SEO page → frontmatter needs `section: solutions \| compare` plus `title`, `order`, `excerpt`, `description`. The section determines which route ( `/solutions/...` vs `/compare/...`) the page lives under.
 - Roadmap initiative → frontmatter needs `title`, `slug`, `category`, `status` (`in-progress | planned | done`), `order`, `lede`, and optionally `progressDone`/`progressTotal`/`progressLabel` and a `links:` array.
-- `redirect_from:` (optional, supported on posts/wiki/seo/roadmap) → an array of absolute URL paths that should redirect to this page. The build emits a static `meta refresh` stub at each path. Use after renaming a slug or fixing a published-but-wrong URL.
+- After renaming a slug or fixing a published-but-wrong URL, add a redirect entry to the `redirects` array in `vercel.json` (`source` → `destination`, `permanent: true`).
 
 ## Contribution boundary
 

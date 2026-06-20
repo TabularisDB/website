@@ -1,6 +1,18 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "pnpm build",
+  "redirects": [
+    {
+      "source": "/blog/v0100-ai-safety-audit-approvals",
+      "destination": "/blog/v0100-ai-safety-audit-approval",
+      "permanent": true
+    },
+    {
+      "source": "/blog/digitalocean-open-source-credits",
+      "destination": "/blog/digitalocean-opensource-sponsorship",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/blog/:slug/opengraph-image.png",
