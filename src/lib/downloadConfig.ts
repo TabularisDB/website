@@ -102,6 +102,15 @@ export const PLATFORM_CONFIG: Record<Platform, PlatformConfig> = {
       },
       {
         kind: "command",
+        label: "Flatpak",
+        desc: "Most Linux distributions",
+        command: [
+          "flatpak remote-add --if-not-exists flatpark https://dl.flatpark.org/flatpark.flatpakrepo",
+          "flatpak install flatpark dev.tabularis.Tabularis",
+        ],
+      },
+      {
+        kind: "command",
         label: "AUR",
         desc: "Arch Linux / Manjaro",
         command: "yay -S tabularis-bin",
