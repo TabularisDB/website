@@ -302,8 +302,9 @@ function DesktopRadar({
   const [activeDotId, setActiveDotId] = useState<string | null>(null);
 
   const radarRef = useRef<HTMLDivElement>(null);
-  const mouseBeamRef = useRef<HTMLDivElement>(null);
+  const sweepBeamRef = useRef<HTMLDivElement>(null);
   const mouseAngleRef = useRef<number | null>(null);
+  const startTimeRef = useRef<number>(Date.now());
 
   const dotAngles = useMemo(
     () => new Map(activeBounties.map((b) => [b.id, computeRadarAngle(b.radar.x, b.radar.y)])),
@@ -311,12 +312,12 @@ function DesktopRadar({
   );
 
   useEffect(() => {
-    const start = Date.now();
+    startTimeRef.current = Date.now();
     const timer = setInterval(() => {
       const activeAngle =
         mouseAngleRef.current !== null
           ? mouseAngleRef.current
-          : (((Date.now() - start) % SWEEP_MS) / SWEEP_MS) * 360;
+          : (((Date.now() - startTimeRef.current) % SWEEP_MS) / SWEEP_MS) * 360;
       const newLit = new Set<string>();
       for (const [id, angle] of dotAngles) {
         if (Math.abs(((activeAngle - angle + 540) % 360) - 180) < SWEEP_WINDOW_DEG) {
@@ -331,6 +332,25 @@ function DesktopRadar({
     return () => clearInterval(timer);
   }, [dotAngles]);
 
+  // Synchroniser l'angle du rayon avec la souris ou l'animation
+  useEffect(() => {
+    const sweepElement = sweepBeamRef.current;
+    if (!sweepElement) return;
+
+    const updateAngle = () => {
+      if (mouseAngleRef.current !== null) {
+        // Souris active : désactiver l'animation CSS et piloter l'angle manuellement
+        if (sweepElement.style.animation !== "none") {
+          sweepElement.style.animation = "none";
+        }
+        sweepElement.style.setProperty("--bounty-sweep-angle", `${mouseAngleRef.current}deg`);
+      }
+    };
+
+    const interval = setInterval(updateAngle, 16); // ~60 FPS
+    return () => clearInterval(interval);
+  }, []);
+
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     const radar = radarRef.current;
     if (!radar) return;
@@ -339,11 +359,26 @@ function DesktopRadar({
     const dy = e.clientY - rect.top - rect.height * 0.56;
     const angle = (Math.atan2(dx, -dy) * (180 / Math.PI) + 360) % 360;
     mouseAngleRef.current = angle;
-    mouseBeamRef.current?.style.setProperty("--mouse-angle", `${angle}deg`);
     radar.classList.add("is-mouse-active");
   }
 
   function handleMouseLeave() {
+    const currentMouseAngle = mouseAngleRef.current;
+    if (currentMouseAngle !== null) {
+      // Mettre à jour l'angle de départ pour le balayage automatique
+      startTimeRef.current = Date.now() - ((currentMouseAngle / 360) * SWEEP_MS);
+
+      // Redémarrer l'animation CSS depuis l'angle de la souris
+      const sweepElement = sweepBeamRef.current;
+      if (sweepElement) {
+        const delayS = -(currentMouseAngle / 360) * (SWEEP_MS / 1000);
+        sweepElement.style.animation = "none";
+        // Forcer le reflow pour que le navigateur prenne en compte le reset
+        void sweepElement.offsetWidth;
+        sweepElement.style.animation = `bounty-sweep ${SWEEP_MS / 1000}s linear infinite`;
+        sweepElement.style.animationDelay = `${delayS}s`;
+      }
+    }
     mouseAngleRef.current = null;
     radarRef.current?.classList.remove("is-mouse-active");
   }
@@ -377,8 +412,7 @@ function DesktopRadar({
       <div className="bounty-radar-ring ring-2" aria-hidden="true" />
       <div className="bounty-radar-ring ring-3" aria-hidden="true" />
       <div className="bounty-radar-crosshair" aria-hidden="true" />
-      <div className="bounty-radar-sweep" aria-hidden="true" />
-      <div className="bounty-radar-mouse-beam" ref={mouseBeamRef} aria-hidden="true" />
+      <div className="bounty-radar-sweep" ref={sweepBeamRef} aria-hidden="true" />
       <svg
         className="bounty-radar-links"
         viewBox="0 0 100 100"

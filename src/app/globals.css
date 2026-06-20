@@ -9048,26 +9048,6 @@ footer {
 }
 
 .bounty-radar.is-mouse-active .bounty-radar-sweep {
-  opacity: 0;
-}
-
-.bounty-radar-mouse-beam {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: conic-gradient(
-    from var(--mouse-angle, 0deg) at 50% 56%,
-    rgba(125, 211, 252, 0.34) 0deg,
-    rgba(125, 211, 252, 0.10) 16deg,
-    rgba(125, 211, 252, 0.02) 32deg,
-    transparent 50deg
-  );
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
-}
-
-.bounty-radar.is-mouse-active .bounty-radar-mouse-beam {
   opacity: 1;
 }
 
@@ -9302,7 +9282,7 @@ footer {
 .bounty-radar-dot {
   --bounty-accent: #38bdf8;
   position: absolute;
-  z-index: 3;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9313,7 +9293,7 @@ footer {
 }
 
 .bounty-radar-dot:hover {
-  z-index: 7;
+  z-index: 20;
 }
 
 .bounty-radar-dot .bounty-radar-node-dot {
@@ -9337,7 +9317,7 @@ footer {
   position: absolute;
   bottom: calc(100% + 5px);
   left: 50%;
-  z-index: 2;
+  z-index: 10;
   padding: 0.2rem 0.5rem;
   border: 1px solid color-mix(in srgb, var(--bounty-accent) 32%, rgba(148, 163, 184, 0.22));
   border-radius: 8px;
