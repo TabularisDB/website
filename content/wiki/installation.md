@@ -71,6 +71,15 @@ sudo snap install tabularis
 
 [![Snap Store](https://img.shields.io/badge/snap-tabularis-blue?logo=snapcraft)](https://snapcraft.io/tabularis)
 
+### Flatpak
+
+```bash
+flatpak remote-add --if-not-exists flatpark https://dl.flatpark.org/flatpark.flatpakrepo
+flatpak install flatpark dev.tabularis.Tabularis
+```
+
+[![flatpak (Flatpark)](https://img.shields.io/badge/flatpak-tabularis-4A90D9?logo=flatpak&logoColor=white)](https://flatpark.org/apps/dev.tabularis.Tabularis/)
+
 ### AppImage
 
 Download the `.AppImage` from [GitHub Releases](https://github.com/TabularisDB/tabularis/releases), make it executable and run it:
