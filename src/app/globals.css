@@ -9032,26 +9032,6 @@ footer {
 }
 
 .bounty-radar.is-mouse-active .bounty-radar-sweep {
-  opacity: 0;
-}
-
-.bounty-radar-mouse-beam {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: conic-gradient(
-    from var(--mouse-angle, 0deg) at 50% 56%,
-    rgba(125, 211, 252, 0.34) 0deg,
-    rgba(125, 211, 252, 0.10) 16deg,
-    rgba(125, 211, 252, 0.02) 32deg,
-    transparent 50deg
-  );
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
-}
-
-.bounty-radar.is-mouse-active .bounty-radar-mouse-beam {
   opacity: 1;
 }
 
