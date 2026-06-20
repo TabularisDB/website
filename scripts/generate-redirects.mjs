@@ -3,7 +3,13 @@ import path from "path";
 import matter from "gray-matter";
 
 const ROOT = process.cwd();
-const OUT_DIR = path.join(ROOT, "out");
+// Stubs are written into public/ (before next build) so Next copies them
+// into the static export — Vercel only serves files emitted by the export,
+// not post-build additions to out/. The generated files are kept out of git
+// via a managed block in .gitignore (see updateGitignore below).
+const OUT_DIR = path.join(ROOT, "public");
+
+const generated = [];
 
 // Content dir → canonical URL builder. The redirect target is the
 // canonical URL of the file that declared `redirect_from:` in its frontmatter.
@@ -26,9 +32,14 @@ const SOURCES = [
   },
 ];
 
+// Marks a file as one of our own generated stubs, so re-runs can safely
+// overwrite it without tripping the real-page collision guard below.
+const STUB_SENTINEL = "<!-- generated-redirect-stub -->";
+
 function renderHtml(target) {
   const safe = target.replace(/"/g, "&quot;");
   return `<!doctype html>
+${STUB_SENTINEL}
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -58,9 +69,13 @@ function emitRedirect(from, to) {
   const flat = path.join(OUT_DIR, `${rel}.html`);
   const idx = path.join(OUT_DIR, rel, "index.html");
 
-  // Refuse to clobber a real exported page (catches typos in redirect_from)
+  // Refuse to clobber a real page (catches typos in redirect_from), but
+  // allow overwriting our own stubs from a previous run (idempotent).
   for (const target of [flat, idx]) {
-    if (fs.existsSync(target)) {
+    if (
+      fs.existsSync(target) &&
+      !fs.readFileSync(target, "utf-8").includes(STUB_SENTINEL)
+    ) {
       throw new Error(
         `redirect_from "${from}" would overwrite existing file at ${target} — fix the slug or remove the entry`,
       );
@@ -71,7 +86,29 @@ function emitRedirect(from, to) {
   fs.writeFileSync(flat, html);
   fs.mkdirSync(path.dirname(idx), { recursive: true });
   fs.writeFileSync(idx, html);
+  generated.push(`public/${rel}.html`, `public/${rel}/index.html`);
   console.log(`Redirect: ${from} -> ${to}`);
+}
+
+const GITIGNORE = path.join(ROOT, ".gitignore");
+const MARK_START = "# >>> generated redirect stubs (scripts/generate-redirects.mjs)";
+const MARK_END = "# <<< generated redirect stubs";
+
+function updateGitignore() {
+  const block =
+    generated.length > 0
+      ? [MARK_START, ...generated.sort(), MARK_END].join("\n")
+      : "";
+  let current = fs.existsSync(GITIGNORE)
+    ? fs.readFileSync(GITIGNORE, "utf-8")
+    : "";
+  // Drop any previous managed block, then append the fresh one.
+  current = current
+    .replace(new RegExp(`\\n*${MARK_START}[\\s\\S]*?${MARK_END}\\n*`, "g"), "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .replace(/\s+$/, "\n");
+  const next = block ? `${current.replace(/\n*$/, "")}\n\n${block}\n` : current;
+  if (next !== current) fs.writeFileSync(GITIGNORE, next);
 }
 
 let total = 0;
@@ -92,6 +129,8 @@ for (const { dir, canonical } of SOURCES) {
     }
   }
 }
+
+updateGitignore();
 
 if (total === 0) {
   console.log("No redirect_from entries found");
