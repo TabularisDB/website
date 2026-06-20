@@ -1,4 +1,16 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "pnpm build"
+  "buildCommand": "pnpm build",
+  "rewrites": [
+    {
+      "source": "/blog/:slug/opengraph-image.png",
+      "destination": "/blog/:slug/opengraph-image"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/blog/:slug/opengraph-image.png",
+      "headers": [{ "key": "Content-Type", "value": "image/png" }]
+    }
+  ]
 }
