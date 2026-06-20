@@ -10,9 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/TabularisDB/website/actions/workflows/static.yml"><img src="https://github.com/TabularisDB/website/actions/workflows/static.yml/badge.svg" alt="Deploy website to Pages" /></a>
   <a href="https://discord.com/invite/K2hmhfHRSt"><img src="https://img.shields.io/discord/1470772941296894128?color=5865F2&logo=discord&logoColor=white" alt="Discord" /></a>
-  <a href="https://vercel.com/open-source-program"><img src="https://vercel.com/oss/program-badge-2026.svg" alt="Vercel OSS Program" /></a>
 </p>
 
 <br />
@@ -23,7 +21,7 @@
 
 ## About
 
-This repository hosts the source of [tabularis.dev](https://tabularis.dev). It is a [Next.js](https://nextjs.org) static-export site deployed to GitHub Pages on every push to `main`.
+This repository hosts the source of [tabularis.dev](https://tabularis.dev). It is a [Next.js](https://nextjs.org) static-export site deployed to Vercel on every push to `main`.
 
 Content served here:
 
@@ -34,7 +32,7 @@ Content served here:
 - **Download page** &mdash; always points at the latest Tabularis release, driven by the upstream app version.
 - **Plugin registry** &mdash; rendered from `plugins/registry.json`, the same registry consumed by the desktop app.
 
-The site is statically generated (`next build` with `output: "export"`) so it can be hosted on GitHub Pages without a runtime server.
+The site is statically generated (`next build` with `output: "export"`) so it can be hosted on any static host without a runtime server.
 
 ## Relation to the main app repo
 
@@ -56,9 +54,9 @@ Run it manually:
 pnpm fetch-app-data
 ```
 
-In CI the step runs before `pnpm build` &mdash; see [`.github/workflows/static.yml`](./.github/workflows/static.yml).
+On Vercel the step runs before `pnpm build` via the `buildCommand` in [`vercel.json`](./vercel.json) (`pnpm fetch-app-data && pnpm build`).
 
-The three fetched files are committed to the repo so local development works without network access; CI overwrites them with the latest upstream versions.
+The three fetched files are committed to the repo so local development works without network access; the Vercel build overwrites them with the latest upstream versions.
 
 ### Triggering rebuilds from the app repo
 
@@ -114,7 +112,7 @@ The build:
 2. Runs `next build` with `output: "export"` &mdash; the static site is emitted to `out/`.
 3. Generates `public/latest-posts.json` for the widget on the home page (`scripts/generate-latest-posts.mjs`).
 
-The output in `out/` is what GitHub Pages serves.
+The output in `out/` is what Vercel serves.
 
 ## Project layout
 
