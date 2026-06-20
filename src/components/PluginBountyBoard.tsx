@@ -312,13 +312,12 @@ function DesktopRadar({
   );
 
   useEffect(() => {
-    const start = Date.now();
-    startTimeRef.current = start;
+    startTimeRef.current = Date.now();
     const timer = setInterval(() => {
       const activeAngle =
         mouseAngleRef.current !== null
           ? mouseAngleRef.current
-          : (((Date.now() - start) % SWEEP_MS) / SWEEP_MS) * 360;
+          : (((Date.now() - startTimeRef.current) % SWEEP_MS) / SWEEP_MS) * 360;
       const newLit = new Set<string>();
       for (const [id, angle] of dotAngles) {
         if (Math.abs(((activeAngle - angle + 540) % 360) - 180) < SWEEP_WINDOW_DEG) {
