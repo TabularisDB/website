@@ -3,6 +3,9 @@ out/
 node_modules/
 public/search-index.json
 public/sponsors.json
+public/latest-posts.json
+public/feed.xml
+public/feed.json
 .DS_Store
 
 # Local pre-publication drafts (mirrored in a private gist)

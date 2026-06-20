@@ -8,8 +8,6 @@ og:
   accent: "Backed by DigitalOcean."
   claim: "Welcomed into the DigitalOcean Open Source Credits Program — a milestone for the community and the project."
   image: "/img/overview.png"
-redirect_from:
-  - "/blog/digitalocean-open-source-credits"
 ---
 
 # Tabularis Is Now Backed by DigitalOcean

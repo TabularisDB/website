@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-The source of [tabularis.dev](https://tabularis.dev) — the marketing site, wiki, blog, changelog and plugin registry for [Tabularis](https://github.com/TabularisDB/tabularis), an open-source desktop database client. It is a Next.js App Router project that **must build as a static export** (`output: "export"` in `next.config.ts`). It is deployed to GitHub Pages by `.github/workflows/static.yml` on every push to `main`.
+The source of [tabularis.dev](https://tabularis.dev) — the marketing site, wiki, blog, changelog and plugin registry for [Tabularis](https://github.com/TabularisDB/tabularis), an open-source desktop database client. It is a Next.js App Router project that **must build as a static export** (`output: "export"` in `next.config.ts`). It is deployed to Vercel on every push to `main`; the Vercel build command (see `vercel.json`) runs `pnpm fetch-app-data && pnpm build`.
 
 Hard constraint: no runtime-only Next.js features (`getServerSideProps`, API routes, on-demand ISR, middleware, runtime image optimization). Images are `unoptimized: true`. Any new route must be fully expressible at build time.
 
@@ -21,13 +21,14 @@ Package manager is pinned: **pnpm 10.33.0** (see `packageManager` in `package.js
 
 There is **no lint or test command**. `eslint.config.mjs` explicitly ignores `**/*`; do not try to add lint runs to "verify" a change.
 
-`pnpm build` runs five steps in order, all of which must succeed:
+`pnpm build` runs four steps in order, all of which must succeed:
 
 1. `scripts/generate-search-index.mjs` → `public/search-index.json` (Orama index built from wiki + posts + SEO + plugin registry).
 2. `scripts/generate-sponsors.mjs` → `public/sponsors.json` (re-emits `src/lib/sponsors.ts` as JSON).
 3. `next build` → emits the site to `out/`.
 4. `scripts/generate-latest-posts.mjs` → `public/latest-posts.json` (top-5 posts for the home widget). Runs **after** `next build` because it writes into the build output.
-5. `scripts/generate-redirects.mjs` → scans `content/posts/`, `content/wiki/`, `content/seo/`, `content/roadmap/` for files with a `redirect_from:` frontmatter array and emits `meta refresh` HTML stubs under `out/` pointing at each file's canonical URL. Used to keep legacy/wrong URLs working after a rename (GitHub Pages can't issue real HTTP 301s, so this is the closest equivalent — Google treats a 0-delay meta refresh as a 301). The script aborts if a stub would overwrite a real exported page, which catches typos in `redirect_from`.
+
+Redirects (e.g. after renaming a slug) are configured in `vercel.json` under the `redirects` array, which Vercel serves as real HTTP 308/301 redirects.
 
 ## Upstream app data
 
@@ -39,9 +40,9 @@ Three pieces of data are fetched from `TabularisDB/tabularis` at build time by `
 | `CHANGELOG.md` | `CHANGELOG.md` | `/changelog` page via `src/lib/changelog.ts` |
 | `plugins/registry.json` | `plugins/registry.json` | `/plugins` page via `src/lib/plugins.ts`, and the `:::plugin <id>:::` markdown extension |
 
-These three files are **committed** to the repo so local dev works without network access. CI overwrites them before build. When editing them locally, be aware CI will blow your changes away — fix upstream instead.
+These three files are **committed** to the repo so local dev works without network access. The Vercel build overwrites them before `next build` (via the `fetch-app-data` step in the build command). When editing them locally, be aware the deploy will blow your changes away — fix upstream instead.
 
-Rebuilds can be triggered from the app repo via a `repository_dispatch` event of type `app-data-updated`.
+Rebuilds can be triggered from the app repo via a `repository_dispatch` event of type `app-data-updated`, handled by `.github/workflows/vercel-rebuild.yml`, which POSTs to a Vercel deploy hook (`VERCEL_DEPLOY_HOOK_URL` secret). The same workflow also rebuilds on a 6-hour cron to refresh baked-in GitHub API values (stargazers, total downloads).
 
 ## Architecture
 
@@ -95,7 +96,7 @@ Code blocks are syntax-highlighted by `marked-highlight` + `highlight.js`. The t
 - Wiki page → frontmatter needs `title`, `order`, `excerpt`, `category` (one of the values in `WIKI_CATEGORIES` in `src/lib/wiki.tsx`).
 - SEO page → frontmatter needs `section: solutions \| compare` plus `title`, `order`, `excerpt`, `description`. The section determines which route ( `/solutions/...` vs `/compare/...`) the page lives under.
 - Roadmap initiative → frontmatter needs `title`, `slug`, `category`, `status` (`in-progress | planned | done`), `order`, `lede`, and optionally `progressDone`/`progressTotal`/`progressLabel` and a `links:` array.
-- `redirect_from:` (optional, supported on posts/wiki/seo/roadmap) → an array of absolute URL paths that should redirect to this page. The build emits a static `meta refresh` stub at each path. Use after renaming a slug or fixing a published-but-wrong URL.
+- After renaming a slug or fixing a published-but-wrong URL, add a redirect entry to the `redirects` array in `vercel.json` (`source` → `destination`, `permanent: true`).
 
 ## Contribution boundary
 

@@ -9,7 +9,10 @@ const SITE_DESCRIPTION =
   "Releases, guides and product notes from Tabularis — the open-source desktop database client.";
 const AUTHOR = "Andrea Debernardi";
 const POSTS_DIR = path.join(process.cwd(), "content", "posts");
-const OUT_DIR = path.join(process.cwd(), "out");
+// Written into public/ (before next build) so Next includes it in the
+// static export — Vercel only serves files emitted by the export, not
+// post-build additions to out/.
+const OUT_DIR = path.join(process.cwd(), "public");
 const MAX_ITEMS = 30;
 
 function escapeXml(str) {

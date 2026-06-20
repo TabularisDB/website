@@ -4,7 +4,10 @@ import matter from "gray-matter";
 
 const BASE_URL = "https://tabularis.dev";
 const POSTS_DIR = path.join(process.cwd(), "content", "posts");
-const OUT_DIR = path.join(process.cwd(), "out");
+// Written into public/ (before next build) so Next includes it in the
+// static export — Vercel only serves files emitted by the export, not
+// post-build additions to out/.
+const OUT_DIR = path.join(process.cwd(), "public");
 
 const files = fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith(".md"));
 
