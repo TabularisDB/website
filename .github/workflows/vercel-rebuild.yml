@@ -1,0 +1,29 @@
+# Trigger a Vercel rebuild via Deploy Hook.
+# Replaces the periodic-rebuild + repository_dispatch behaviour that the
+# GitHub Pages workflow (static.yml) used to provide:
+#   - refresh baked-in GitHub API values (stargazers, total downloads)
+#   - rebuild when the app repo bumps version / changelog / plugin registry
+#
+# Requires repo secret VERCEL_DEPLOY_HOOK_URL
+# (Vercel → Project → Settings → Git → Deploy Hooks).
+name: Rebuild on Vercel
+
+on:
+  # Periodic rebuild to refresh GitHub API values. Every 6 hours.
+  schedule:
+    - cron: "0 */6 * * *"
+  # Manual trigger from the Actions tab.
+  workflow_dispatch:
+  # Allow the app repo to trigger a rebuild when version / CHANGELOG /
+  # plugin registry change. Send a `repository_dispatch` with
+  # event_type = "app-data-updated".
+  repository_dispatch:
+    types: [app-data-updated]
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Vercel deploy hook
+        run: |
+          curl -fsS -X POST "${{ secrets.VERCEL_DEPLOY_HOOK_URL }}"
