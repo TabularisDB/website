@@ -29,7 +29,7 @@ const SEO_ENTRY_POINTS = [
     href: "/solutions/mcp-database-client",
     title: "For AI Agents (MCP-native)",
     excerpt:
-      "Give Claude, Cursor, and Windsurf safe, schema-aware access to your real databases through Tabularis.",
+      "Give Claude, Cursor, and Devin (Windsurf) safe, schema-aware access to your real databases through Tabularis.",
   },
   {
     href: "/solutions/postgresql-client",

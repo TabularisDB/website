@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CarouselGrid } from "@/components/CarouselGrid";
 import { DownloadButtons } from "@/components/DownloadButtons";
 import { GithubStarsButton } from "@/components/GithubStarsButton";
+import { FeaturedOn } from "@/components/FeaturedOn";
 import { getRepoStars, getTotalDownloads } from "@/lib/github";
 import type { PostMeta } from "@/lib/posts";
 import { APP_VERSION } from "@/lib/version";
@@ -56,7 +57,7 @@ export async function HomeHero({ latestPost }: HomeHeroProps) {
               Tabularis is an open-source desktop SQL workspace for{" "}
               <strong>PostgreSQL</strong>, <strong>MySQL/MariaDB</strong>, and{" "}
               <strong>SQLite</strong>, with a built-in <strong>MCP</strong>{" "}
-              server so Claude, Cursor, and Windsurf can read your schema and
+              server so Claude, Cursor, and Devin (Windsurf) can read your schema and
               run queries through the same app you already use.
             </p>
 
@@ -65,6 +66,8 @@ export async function HomeHero({ latestPost }: HomeHeroProps) {
               downloads={downloads}
               trailing={<GithubStarsButton stars={stars} />}
             />
+
+            <FeaturedOn />
 
             <div className="hero-secondary-actions">
               <Link href="/solutions/mcp-database-client">

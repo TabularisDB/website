@@ -116,8 +116,19 @@
       "description": "ClickHouse columnar OLAP database driver",
       "author": "debba <https://github.com/debba>",
       "homepage": "https://github.com/TabularisDB/tabularis-clickhouse-plugin",
-      "latest_version": "0.1.0",
+      "latest_version": "0.1.1",
       "releases": [
+        {
+          "version": "0.1.1",
+          "min_tabularis_version": "0.9.5",
+          "assets": {
+            "linux-x64": "https://github.com/TabularisDB/tabularis-clickhouse-plugin/releases/download/v0.1.1/clickhouse-plugin-linux-x64.zip",
+            "linux-arm64": "https://github.com/TabularisDB/tabularis-clickhouse-plugin/releases/download/v0.1.1/clickhouse-plugin-linux-arm64.zip",
+            "darwin-x64": "https://github.com/TabularisDB/tabularis-clickhouse-plugin/releases/download/v0.1.1/clickhouse-plugin-darwin-x64.zip",
+            "darwin-arm64": "https://github.com/TabularisDB/tabularis-clickhouse-plugin/releases/download/v0.1.1/clickhouse-plugin-darwin-arm64.zip",
+            "win-x64": "https://github.com/TabularisDB/tabularis-clickhouse-plugin/releases/download/v0.1.1/clickhouse-plugin-win-x64.zip"
+          }
+        },
         {
           "version": "0.1.0",
           "min_tabularis_version": "0.9.5",

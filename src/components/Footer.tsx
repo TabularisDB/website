@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ManageCookiesButton } from "./ManageCookiesButton";
 import { SocialLinks } from "./SocialLinks";
+import { REVIEWS, withReviewUtm } from "@/lib/reviews";
+import { ReviewLogo } from "./ReviewLogo";
 
 export function Footer() {
   return (
@@ -14,6 +16,24 @@ export function Footer() {
         </div>
         <nav className="footer-social" aria-label="Social links">
           <SocialLinks linkClassName="footer-social-link" iconSize={16} />
+        </nav>
+      </div>
+
+      <div className="footer-reviews">
+        <span className="footer-reviews-label">As featured on</span>
+        <nav className="footer-reviews-links" aria-label="Reviews and listings">
+          {REVIEWS.map((review) => (
+            <a
+              key={review.id}
+              href={withReviewUtm(review.href)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-social-link footer-review-link"
+            >
+              <ReviewLogo review={review} size={18} />
+              <span>{review.name}</span>
+            </a>
+          ))}
         </nav>
       </div>
 

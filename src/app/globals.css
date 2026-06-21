@@ -544,7 +544,7 @@ pre {
 
 .hero-main {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   display: block;
   max-width: 760px;
 }
@@ -2333,6 +2333,9 @@ pre {
   .download-row {
     gap: 0.5rem;
     align-items: stretch;
+    /* Keep the GitHub stars button beside the Download CTA on every phone
+       width instead of letting it wrap onto its own line. */
+    flex-wrap: nowrap;
   }
   .download-split {
     flex: 1 1 auto;
@@ -2340,9 +2343,13 @@ pre {
   }
   .download-split__main {
     flex: 1 1 auto;
+    min-width: 0;
     justify-content: center;
     padding: 0.8rem 1rem;
     font-size: 0.92rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .github-stars-btn {
     flex: 0 0 auto;
@@ -5886,6 +5893,132 @@ footer {
   color: var(--text-main);
   border-color: var(--text-muted);
   background: var(--surface, rgba(255, 255, 255, 0.03));
+}
+
+.footer-reviews {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  margin-top: 2rem;
+}
+
+.footer-reviews-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.footer-reviews-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.footer-review-link img {
+  flex-shrink: 0;
+}
+
+/* AS FEATURED ON — compact hero proof (stacked avatars + popover) */
+.featured-on {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 0.55rem;
+}
+
+/* Tighten the gap to the secondary actions directly below. */
+.featured-on + .hero-secondary-actions {
+  margin-top: 0.55rem;
+}
+
+.featured-on-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.featured-on-cluster {
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.18s ease;
+}
+
+.featured-on-cluster:hover {
+  transform: translateY(-1px);
+}
+
+.featured-on-avatar {
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid var(--bg-color);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -12px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: margin 0.22s ease, width 0.25s ease, opacity 0.2s ease;
+}
+
+.featured-on-avatar:first-child {
+  margin-left: 0;
+}
+
+/* Fan the cluster apart on hover / when open so each mark is legible. */
+.featured-on-cluster:hover .featured-on-avatar:not(.featured-on-extra),
+.featured-on-cluster.is-open .featured-on-avatar {
+  margin-left: -4px;
+}
+
+.featured-on-cluster:hover .featured-on-avatar:first-child,
+.featured-on-cluster.is-open .featured-on-avatar:first-child {
+  margin-left: 0;
+}
+
+/* Extra platforms: zero footprint until the cluster is expanded. */
+.featured-on-extra {
+  width: 0;
+  margin-left: 0;
+  border-color: transparent;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.featured-on-cluster.is-open .featured-on-extra {
+  width: 36px;
+  margin-left: -4px;
+  border-color: var(--bg-color);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.featured-on-more {
+  background: var(--card-bg);
+  color: var(--text-bright);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+@media (max-width: 480px) {
+  .featured-on {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
 }
 
 .footer-bottom {

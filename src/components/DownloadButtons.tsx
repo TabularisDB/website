@@ -111,7 +111,7 @@ export function DownloadButtons({
         </div>
       </div>
 
-      <p style={{ fontSize: "0.85rem", color: "var(--text-muted)", marginTop: "0.75rem", display: "flex", gap: "1.25rem", flexWrap: "wrap", alignItems: "center" }}>
+      <p style={{ fontSize: "0.85rem", color: "var(--text-muted)", marginTop: "0.4rem", marginBottom: 0, display: "flex", gap: "1.25rem", flexWrap: "wrap", alignItems: "center" }}>
         {downloads !== null && downloads > 0 && (
           <span
             className="download-count"
