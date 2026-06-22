@@ -6273,6 +6273,302 @@ footer {
   border-color: #2563eb;
 }
 
+/* ─── SURVEY PROMPT ──────────────────────────────────────────────────────── */
+
+.survey-prompt {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9998;
+  width: 360px;
+  max-width: calc(100vw - 2rem);
+  background: var(--card-bg);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+  color: var(--text-main);
+  animation: survey-in 0.25s ease-out;
+}
+
+@keyframes survey-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.survey-close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: color 0.15s;
+}
+
+.survey-close:hover {
+  color: var(--text-bright);
+}
+
+.survey-progress {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.survey-dot {
+  width: 1.5rem;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--border-bright);
+  transition: background 0.2s;
+}
+
+.survey-dot--on {
+  background: var(--accent);
+}
+
+.survey-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.survey-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.survey-question {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-bright);
+  margin-bottom: 0.85rem;
+  line-height: 1.4;
+}
+
+.survey-required {
+  color: var(--accent);
+}
+
+.survey-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-bottom: 0.25rem;
+}
+
+.survey-option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.survey-option:hover {
+  border-color: var(--border-bright);
+}
+
+.survey-option--on {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--text-bright);
+}
+
+.survey-option input {
+  accent-color: var(--accent);
+  flex-shrink: 0;
+}
+
+.survey-textarea,
+.survey-input {
+  width: 100%;
+  background: var(--bg-color);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.85rem;
+  padding: 0.6rem 0.7rem;
+  margin-bottom: 0.85rem;
+  resize: vertical;
+}
+
+.survey-textarea:focus,
+.survey-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.survey-checkline {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--text-main);
+  cursor: pointer;
+  margin-bottom: 0.85rem;
+}
+
+.survey-checkline input {
+  accent-color: var(--accent);
+  flex-shrink: 0;
+}
+
+.survey-fineprint {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: -0.4rem 0 0;
+}
+
+.survey-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1.1rem;
+}
+
+.survey-btn {
+  flex: 1;
+  padding: 0.55rem 0.7rem;
+  border-radius: calc(var(--radius) - 2px);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s,
+    opacity 0.15s;
+}
+
+.survey-btn--ghost {
+  flex: 0 0 auto;
+  background: transparent;
+  border-color: var(--border-bright);
+  color: var(--text-muted);
+}
+
+.survey-btn--ghost:hover {
+  color: var(--text-main);
+  border-color: var(--text-muted);
+}
+
+.survey-btn--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.survey-btn--primary:hover {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.survey-btn--primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* "Made with [emailchef]" — the logo SVG is cropped to its ink box so its
+   bottom edge IS the wordmark baseline; pairing inline text with
+   `vertical-align: baseline` lands both baselines on the same line, and the
+   text size is matched to the logo wordmark. */
+.survey-credit {
+  display: block;
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 13px;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--text-muted);
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity 0.15s;
+}
+
+.survey-credit:hover {
+  opacity: 1;
+}
+
+.survey-credit img {
+  height: 14px;
+  width: auto;
+  vertical-align: baseline;
+  margin-left: 0.4em;
+}
+
+/* ─── SURVEY PAGE (/survey) ──────────────────────────────────────────────── */
+
+.survey-page {
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 2.5rem 0 4rem;
+}
+
+.survey-page-hero {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.survey-page-kicker {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-radius: 100px;
+  padding: 0.3rem 0.8rem;
+  margin-bottom: 1.25rem;
+}
+
+.survey-page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  margin: 0 0 0.85rem;
+  letter-spacing: -0.02em;
+}
+
+.survey-page-desc {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.survey-page-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
 /* ─── COOKIE POLICY PAGE ─────────────────────────────────────────────────── */
 
 .cookie-policy-updated {
