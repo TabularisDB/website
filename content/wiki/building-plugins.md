@@ -99,8 +99,30 @@ Every hook is a thin, typed wrapper over the runtime `window.__TABULARIS_API__`:
 | `usePluginSetting(pluginId)` | typed `getSetting<T>`, `setSetting`, `setSettings` |
 | `usePluginModal()` | `openModal({ title, content, size })`, `closeModal` |
 | `usePluginTheme()` | `themeId`, `isDark`, full `ThemeColors` token set |
-| `usePluginTranslation(pluginId)` | i18next-compatible translator |
+| `usePluginTranslation(pluginId)` | translator for your plugin's `locales/<lang>.json` (ICU `{var}` placeholders) |
 | `openUrl(url)` | launches the **system** browser (not the Tauri webview) |
+
+### Translating your plugin
+
+The host app is localized with [Lingui](https://lingui.dev), and your plugin's UI can be too. The `--with-ui` scaffold ships a `locales/` folder — drop one JSON file per language beside your bundle and the host loads them automatically:
+
+```
+my-driver/
+├── manifest.json
+├── locales/
+│   ├── en.json   # { "preview.title": "Geometry preview" }
+│   └── de.json   # { "preview.title": "Geometrie-Vorschau" }
+└── ui/…
+```
+
+Read them in a slot component with `usePluginTranslation`:
+
+```tsx
+const t = usePluginTranslation("my-driver");
+return <h3>{t("preview.title")}</h3>;
+```
+
+Author keys ICU-style (`{var}`); legacy i18next `{{var}}` placeholders still resolve, so existing plugins keep working. Untranslated keys fall back to your `en.json`, then to the key itself — so a missing translation never breaks the UI.
 
 ### Multiple slots in one plugin
 

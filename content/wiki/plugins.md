@@ -496,7 +496,7 @@ Slot components can import hooks from `@tabularis/plugin-api`:
 | `usePluginModal()` | Open host-managed modals with custom content |
 | `usePluginSetting(pluginId)` | Read and write plugin-specific settings |
 | `usePluginTheme()` | Access theme information (dark/light, colors) |
-| `usePluginTranslation(pluginId)` | Access plugin-specific i18n translations |
+| `usePluginTranslation(pluginId)` | Translate from the plugin's `locales/<lang>.json` (ICU `{var}`; `{{var}}` still supported) |
 | `openUrl(url)` | Open a URL in the system browser |
 
 ### Error Isolation
