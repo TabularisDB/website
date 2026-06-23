@@ -2752,6 +2752,44 @@ pre {
   }
 }
 
+/* SEO solutions intro — compact lead card.
+   Every solutions page already carries a video/visual in the body, so the
+   lead image stays small to avoid competing with it. */
+.solutions-intro {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.solutions-intro-logo {
+  width: 236px;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  flex-shrink: 0;
+}
+
+.solutions-intro-body {
+  flex: 1;
+  min-width: 240px;
+}
+
+.solutions-intro-body h3 {
+  margin-bottom: 0.4rem;
+}
+
+@media (max-width: 768px) {
+  .solutions-intro-logo {
+    width: 100%;
+  }
+}
+
 .seo-content-box {
   margin-top: 0;
 }

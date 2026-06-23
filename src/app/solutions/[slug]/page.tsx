@@ -81,13 +81,13 @@ export default async function SolutionDetailPage({ params }: PageProps) {
       />
 
       <section>
-        <div className="blog-intro">
+        <div className="solutions-intro">
           <img
             src={page.meta.image || "/img/logo.png"}
             alt={page.meta.title}
-            className="blog-intro-logo"
+            className="solutions-intro-logo"
           />
-          <div className="blog-intro-body">
+          <div className="solutions-intro-body">
             <h3>{page.meta.title}</h3>
             <p>{page.meta.excerpt}</p>
           </div>
