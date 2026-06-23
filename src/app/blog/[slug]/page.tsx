@@ -36,6 +36,20 @@ export async function generateMetadata({
   if (!post) return {};
 
   const { meta } = post;
+  // When a post ships a ready-made cover image, point og:image at the real
+  // .png asset rather than the extension-less /opengraph-image route. Static
+  // hosts serve the route as application/octet-stream, which link-card
+  // scrapers (Bluesky's CardyB, etc.) reject; the .png is served as image/png.
+  const coverImages = meta.og?.cover
+    ? [
+        {
+          url: `https://tabularis.dev${meta.og.cover}`,
+          width: 1200,
+          height: 630,
+          alt: meta.title,
+        },
+      ]
+    : undefined;
   return {
     title: `${meta.title} | Tabularis Blog`,
     description: meta.excerpt,
@@ -45,9 +59,11 @@ export async function generateMetadata({
       title: `${meta.title} | Tabularis Blog`,
       description: meta.excerpt,
       siteName: "Tabularis Blog",
+      images: coverImages,
     },
     twitter: {
       card: "summary_large_image",
+      images: coverImages,
       title: `${meta.title} | Tabularis Blog`,
       description: meta.excerpt,
     },
