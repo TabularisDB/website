@@ -5287,6 +5287,8 @@ pre {
   border-radius: 50%;
   border: 1px solid var(--border);
   flex-shrink: 0;
+  object-fit: cover;
+  background: var(--bg-base);
 }
 
 .post-author-info {
@@ -5315,10 +5317,184 @@ pre {
 .post-author-name a {
   color: inherit;
   text-decoration: none;
+  transition: color 0.15s ease;
 }
 
 .post-author-name a:hover {
-  text-decoration: underline;
+  color: var(--accent);
+}
+
+/* AUTHOR BYLINE — compact avatar + name (post top + cards) */
+.author-byline {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.author-byline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--text-secondary, var(--text-muted));
+  transition: color 0.15s ease;
+}
+
+.author-byline-link:hover .author-byline-name {
+  color: var(--accent);
+}
+
+.author-byline-avatar {
+  display: block;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+  object-fit: cover;
+  background: var(--bg-base);
+}
+
+.author-byline-name {
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-bright);
+  transition: color 0.15s ease;
+}
+
+/* The avatar lives inside .post-content, so opt it out of the content-image
+   styles (margin, square radius, drop shadow, full width) it would inherit. */
+.post-content img.author-byline-avatar {
+  margin: 0;
+  max-width: none;
+  border-radius: 50%;
+  box-shadow: none;
+}
+
+/* md — author-led byline at the top of a post */
+.author-byline-md .author-byline-avatar {
+  width: 28px;
+  height: 28px;
+}
+.author-byline-md .author-byline-name {
+  font-size: 0.92rem;
+  color: var(--text-bright);
+}
+
+/* POST HEADER — kicker (topics) → title → deck → byline → divider */
+.post-header {
+  margin-bottom: 2.25rem;
+}
+.post-eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-bottom: 1.15rem;
+}
+.post-eyebrow-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  opacity: 0.82;
+  transition: opacity 0.15s ease;
+}
+.post-eyebrow-tag:hover {
+  opacity: 1;
+}
+/* Title: drop the standalone hairline; one divider closes the whole header. */
+.post-content .post-header h1 {
+  font-size: clamp(1.95rem, 4.5vw, 2.6rem);
+  line-height: 1.14;
+  letter-spacing: -0.5px;
+  border-bottom: none;
+  padding-bottom: 0;
+  margin: 0 0 1.1rem;
+}
+/* Post-page byline: author leads, then date · reading time. */
+.post-byline-wrap {
+  margin: 0.5rem 0 0;
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Tighten the whole post header on mobile. */
+@media (max-width: 768px) {
+  .post-header {
+    margin-bottom: 1.5rem;
+  }
+  .post-content .post-header h1 {
+    font-size: 1.65rem;
+    line-height: 1.2;
+    margin-bottom: 0.85rem;
+  }
+  .post-eyebrow {
+    gap: 0.5rem 0.7rem;
+    margin-bottom: 0.8rem;
+  }
+  .post-eyebrow-tag {
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+  }
+  .post-byline {
+    gap: 0.55rem;
+  }
+  .post-byline-meta {
+    font-size: 0.78rem;
+    gap: 0.5rem;
+  }
+  /* The meta wraps to its own line here; drop the now-orphan leading separator. */
+  .post-byline-meta > .post-byline-sep:first-child {
+    display: none;
+  }
+  .post-byline-wrap {
+    padding-bottom: 1.1rem;
+  }
+}
+.post-byline {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+.post-byline-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+.post-byline-sep {
+  color: var(--text-muted);
+  opacity: 0.45;
+}
+.post-byline-tags {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+/* Featured hero: dedicated author byline line above the meta. */
+.blog-hero-byline {
+  margin-bottom: 0.7rem;
+}
+
+/* Byline line at the top of a post card (consistent with the hero). */
+.post-card-byline {
+  margin-bottom: 0.55rem;
+}
+
+/* sm — byline on post cards */
+.author-byline-sm .author-byline-avatar {
+  width: 22px;
+  height: 22px;
+}
+.author-byline-sm .author-byline-name {
+  font-size: 0.8rem;
 }
 
 /* AUTHOR ARCHIVE (/blog/author/<handle>) */
@@ -5339,6 +5515,8 @@ pre {
   border-radius: 50%;
   border: 1px solid var(--border);
   flex-shrink: 0;
+  object-fit: cover;
+  background: var(--bg-base);
 }
 
 .author-archive-info {

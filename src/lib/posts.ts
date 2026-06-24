@@ -13,6 +13,13 @@ export interface PostOg {
   // When set, forces this exact 1200×630 image as the OG card, bypassing the
   // generated title/accent/claim template. Path is relative to /public.
   cover?: string;
+  // Selects the generated OG template. Omitted / "default" → the screenshot
+  // template; "code-terminal" → the JetBrains Mono terminal template.
+  template?: "default" | "code-terminal";
+  // Terminal template only: title-bar label and the monospace body lines
+  // (lightly syntax-highlighted; prefix a line with "> ", "< ", "$ " or "# ").
+  codeTitle?: string;
+  codeLines?: string[];
 }
 
 export interface PostMeta {

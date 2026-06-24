@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
+import { renderCodeTerminalOgImage } from "@/lib/ogCodeTerminal";
 import fs from "fs";
 import path from "path";
 
@@ -58,6 +59,19 @@ export default async function Image({
       </div>,
       { ...size },
     );
+  }
+
+  // Alternative template, opt-in per post via `og.template`. The JetBrains
+  // Mono terminal card lives in its own module; the screenshot template below
+  // stays the default.
+  if (og?.template === "code-terminal") {
+    return renderCodeTerminalOgImage({
+      title: og.title,
+      accent: og.accent,
+      claim: og.claim,
+      codeTitle: og.codeTitle,
+      codeLines: og.codeLines,
+    });
   }
 
   const [font400, font800] = await Promise.all([loadFont(400), loadFont(800)]);

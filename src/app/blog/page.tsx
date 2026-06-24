@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { GitHubIcon, DiscordIcon } from "@/components/Icons";
 import { Rss } from "lucide-react";
 import { PostCard } from "@/components/PostCard";
+import { AuthorByline } from "@/components/AuthorByline";
 import { TagFilter } from "@/components/TagFilter";
 import { Pagination } from "@/components/Pagination";
 import { BlogNewsletter } from "@/components/BlogNewsletter";
@@ -68,20 +69,17 @@ export default function BlogPage() {
             </Link>
             
             <div className="blog-hero-content">
+              <div className="blog-hero-byline">
+                <AuthorByline handles={featuredPost.authors} size="md" />
+              </div>
               <div className="blog-hero-meta">
                 <span>{formatDate(featuredPost.date)}</span>
-                <span>&middot;</span>
+                <span className="post-byline-sep">&middot;</span>
                 <span>{featuredPost.readingTime} min read</span>
                 {featuredPost.release && (
                   <>
-                    <span>&middot;</span>
+                    <span className="post-byline-sep">&middot;</span>
                     <span className="post-release">{featuredPost.release}</span>
-                  </>
-                )}
-                {featuredPost.tags && featuredPost.tags.length > 0 && (
-                  <>
-                    <span>&middot;</span>
-                    <span className="blog-hero-tag-badge">#{featuredPost.tags[0]}</span>
                   </>
                 )}
               </div>

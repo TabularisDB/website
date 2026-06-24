@@ -13,7 +13,7 @@ import {
   authorAvatarUrl,
   authorGitHubUrl,
 } from "@/lib/authors";
-import { PostMetaBar } from "@/components/PostMetaBar";
+import { PostByline } from "@/components/PostByline";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { PostNewsletterSlots } from "@/components/PostNewsletterSlots";
 import { buildArticleJsonLd, buildBreadcrumbJsonLd } from "@/lib/seo";
@@ -115,8 +115,29 @@ export default async function BlogPostPage({ params }: PageProps) {
       />
 
       <article className="post-content">
-        {htmlBefore && <div dangerouslySetInnerHTML={{ __html: htmlBefore }} />}
-        <PostMetaBar date={meta.date} readingTime={meta.readingTime} release={meta.release} tags={meta.tags} />
+        <header className="post-header">
+          {meta.tags && meta.tags.length > 0 && (
+            <div className="post-eyebrow">
+              {meta.tags.map((t) => (
+                <Link key={t} href={`/blog/tag/${t}`} className="post-eyebrow-tag">
+                  {t}
+                </Link>
+              ))}
+            </div>
+          )}
+          {htmlBefore && (
+            <div
+              className="post-header-title"
+              dangerouslySetInnerHTML={{ __html: htmlBefore }}
+            />
+          )}
+          <PostByline
+            authors={meta.authors}
+            date={meta.date}
+            readingTime={meta.readingTime}
+            release={meta.release}
+          />
+        </header>
         {htmlAfter && <div dangerouslySetInnerHTML={{ __html: htmlAfter }} />}
       </article>
       <PostNewsletterSlots />
