@@ -13,16 +13,15 @@
       "permanent": true
     }
   ],
-  "rewrites": [
-    {
-      "source": "/blog/:slug/opengraph-image.png",
-      "destination": "/blog/:slug/opengraph-image"
-    }
-  ],
   "headers": [
     {
-      "source": "/blog/:slug/opengraph-image.png",
-      "headers": [{ "key": "Content-Type", "value": "image/png" }]
+      "source": "/:path*/opengraph-image",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "image/png"
+        }
+      ]
     }
   ]
 }

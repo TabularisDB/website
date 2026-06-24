@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "fetch-app-data": "node scripts/fetch-app-data.mjs",
-    "build": "node scripts/fetch-app-data.mjs && node scripts/generate-search-index.mjs && node scripts/generate-sponsors.mjs && node scripts/generate-latest-posts.mjs && node scripts/generate-feed.mjs && next build",
+    "build": "node scripts/fetch-app-data.mjs && node scripts/generate-search-index.mjs && node scripts/generate-sponsors.mjs && node scripts/generate-latest-posts.mjs && node scripts/generate-feed.mjs && next build && node scripts/rename-opengraph-images.mjs",
     "start": "next start"
   },
   "dependencies": {

@@ -26,6 +26,18 @@ export async function generateMetadata({
   const author = getAuthor(key);
   const title = `${author.name} | Tabularis Blog`;
   const description = `Posts by ${author.name} on the Tabularis blog. ${author.bio}`;
+  // No per-author card exists, and the opengraph-image convention does not
+  // cascade into this nested segment, so fall back to the generated blog-section
+  // card (renamed to `.png` by scripts/finalize-og-images.mjs). Setting `images`
+  // explicitly is required: an openGraph block without it emits no og:image.
+  const images = [
+    {
+      url: "https://tabularis.dev/blog/opengraph-image.png",
+      width: 1200,
+      height: 630,
+      alt: title,
+    },
+  ];
   return {
     title,
     description,
@@ -34,11 +46,13 @@ export async function generateMetadata({
       url: `https://tabularis.dev/blog/author/${author.handle}`,
       title,
       description,
+      images,
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title,
       description,
+      images,
     },
   };
 }
