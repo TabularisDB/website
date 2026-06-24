@@ -34,11 +34,11 @@ Tunnels are **reused**: two connections targeting the same context/namespace/res
 
 1. Open the connection editor (new or existing connection).
 2. Switch to the **Kubernetes** tab and enable it.
-3. Pick the configuration with cascading dropdowns, each discovered live via kubectl:
+3. Pick the configuration with cascading dropdowns, each discovered live via kubectl. The context, namespace, saved-connection, and resource-name selectors are **searchable** — type to filter long lists instead of scrolling.
    - **Context** — from your kubeconfig.
    - **Namespace** — listed from the selected context.
    - **Resource type** and **resource name** — services and pods in the selected namespace.
-   - **Container port** — the port the database listens on inside the cluster (e.g. `5432`).
+   - **Container port** — the port the database listens on inside the cluster. The default is **driver-aware**: it follows the selected driver's manifest `default_port` (MySQL → `3306`, Postgres → `5432`, ClickHouse → `8123`, plugin drivers → their declared port) and can be derived from a service's actually-exposed port rather than always defaulting to MySQL's `3306`.
 4. Set the database credentials on the General tab as usual — host/port are replaced by the tunnel automatically.
 5. **Test** and save.
 

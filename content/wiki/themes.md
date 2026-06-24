@@ -1,7 +1,7 @@
 ---
 title: "Themes & Customization"
 order: 9
-excerpt: "Personalize your workspace with 10 built-in themes and full typography control."
+excerpt: "Personalize your workspace with 12 built-in themes and full typography control."
 category: "Customization"
 ---
 
@@ -14,8 +14,8 @@ A developer tool should adapt to your preferences. Tabularis ships with a robust
 ## Built-In Themes
 
 Switch themes instantly in **Settings → Appearance**. Changes apply immediately without requiring a restart or refreshing the DOM.
-- **Dark Themes**: Tabularis Dark, Monokai, One Dark Pro, Nord, Dracula, GitHub Dark, Solarized Dark, High Contrast.
-- **Light Themes**: Tabularis Light, Solarized Light.
+- **Dark Themes**: Tabularis Dark, Monokai, One Dark Pro, Nord, Dracula, GitHub Dark, Solarized Dark, Gruvbox Material Dark, High Contrast.
+- **Light Themes**: Tabularis Light, Solarized Light, Gruvbox Material Light.
 
 ## Typography Configuration
 

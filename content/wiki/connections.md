@@ -156,7 +156,7 @@ Right-click any connection in the sidebar for:
 
 Every saved connection can override its driver's default icon and accent color. Open the New Connection modal (or edit an existing one) and expand the **Appearance** section in the General tab.
 
-- **Accent color** — pick from a 12-swatch curated palette or paste a custom hex. The accent applies to the connection card on the Connections page, the sidebar entry once the connection is open, and the Visual Explain modal's connection chip. Falls back to the driver manifest color when no override is set.
+- **Accent color** — pick from a 12-swatch curated palette or paste a custom hex. The accent applies to the connection card on the Connections page, the sidebar entry once the connection is open, the Visual Explain modal's connection chip, and the **editor tab bar** of the active connection — the active-tab indicator, body gradient, loading bar, rename input, and split-pane panel headers all follow the connection color (falling back to the default blue when no connection is active). Falls back to the driver manifest color when no override is set.
 - **Icon** — four mutually-exclusive tabs:
   - **Default** — keeps the driver's manifest icon.
   - **Pack** — a curated 30-icon subset of lucide-react covering the common shapes (cubes, clouds, layers, shields, branches…).

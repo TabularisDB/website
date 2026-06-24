@@ -146,6 +146,14 @@ const THEMES = [
     colors: ["#fdf6e3", "#eee8d5", "#268bd2", "#b58900"],
   },
   {
+    name: "Gruvbox Material Dark",
+    colors: ["#282828", "#32302f", "#a9b665", "#ea6962"],
+  },
+  {
+    name: "Gruvbox Material Light",
+    colors: ["#fbf1c7", "#f2e5bc", "#6f8352", "#c14a4a"],
+  },
+  {
     name: "High Contrast",
     colors: ["#000000", "#1a1a1a", "#ffffff", "#ffff00"],
   },

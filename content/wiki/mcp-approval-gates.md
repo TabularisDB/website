@@ -67,6 +67,23 @@ To turn pre-flight off entirely, untick **Pre-flight EXPLAIN**.
 
 :::newsletter:::
 
+## Never miss a pending approval
+
+An approval gate only helps if you notice it. When a pending approval appears, Tabularis runs an attention flow so the request reaches you even when the window is in the background:
+
+- Brings the window to the front with a user-attention request.
+- Sends an OS notification with a localized title and body (on Linux the alert plays through the OS notification sound).
+- Optionally plays an alert sound.
+
+Two toggles under **MCP → Safety** tune how insistent it is:
+
+| Setting | Effect |
+|---------|--------|
+| **Keep approval window on top** (`mcpApprovalAlwaysOnTop`) | The approval window stays above other windows while a request is pending. |
+| **Play alert sound** (`mcpApprovalNotifySound`) | Plays a sound alongside the notification. |
+
+Both labels are localized across all eight UI languages.
+
 ## What the agent experiences
 
 The agent's `tools/call` request blocks until you decide (or the timeout fires). Most clients (Claude Desktop, Cursor) handle this fine — the agent sees a normal long-running tool call.

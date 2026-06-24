@@ -73,11 +73,22 @@ Select one or more rows by clicking the row header checkbox (or shift-click / ct
 
 | Format | Output |
 | :--- | :--- |
-| **CSV** | Tab- or comma-separated values (delimiter follows `csvDelimiter`), spreadsheet-friendly. |
+| **CSV** | Tab- or comma-separated values (delimiter follows `csvDelimiter`), spreadsheet-friendly. A toolbar toggle controls whether the column-header row is included (`csvIncludeHeaders`, on by default). |
 | **JSON** | A JSON array of objects with column names as keys. |
 | **SQL INSERT** | A sequence of `INSERT INTO \`table\` (col1, col2, …) VALUES (…);` statements, one per row. NULLs render as `NULL`, booleans as `TRUE`/`FALSE`, numbers unquoted, strings single-quoted with single quotes doubled-up. |
 
 The setting maps to the `copyFormat` key in `config.json` (see [Configuration](/wiki/configuration)).
+
+## Result Colors
+
+By default every cell value renders in the same text color. Enable **Result Colors** under **Settings → Appearance → General** to tint cell values by their data type — **numbers, text, dates/times, and booleans** each get their own color, so you can read a row's shape at a glance.
+
+![Query result grid with cells colored by data type](/img/tabularis-result-colors.png)
+
+- The defaults follow the active theme's semantic palette (`--semantic-number`, `--semantic-string`, `--semantic-date`, `--semantic-boolean`).
+- A per-type color picker with a live preview and a **Reset to theme** button lets you override any of them; overrides are saved in `config.json` and applied on top of the theme.
+- Colorization is **off by default** — values render as before until you opt in.
+- Colors apply only to plain data cells. Edited, inserted, and deleted rows, and `NULL` values, keep their existing styling. Per-column colors are precomputed once, so there is no scroll-time cost.
 
 ## Exporting Results
 
