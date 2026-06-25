@@ -235,7 +235,7 @@ function BountyCard({ bounty, featured = false }: { bounty: PluginBounty; featur
 
       <div className="bounty-card-footer">
         <a href={bounty.claimUrl} className="bounty-action-primary" {...actionAttrs(bounty.claimUrl)} onClick={() => trackMatomoEvent("Bounty", "Claim Work", bounty.id)}>
-          <span>{bounty.status === "shipped" ? "View plugin" : "Claim work"}</span>
+          <span>{bounty.status === "shipped" ? "View plugin" : bounty.status === "claimed" ? "Follow work" : "Claim work"}</span>
           <svg viewBox="0 0 16 16" aria-hidden="true">
             <path d="M6 3l5 5-5 5M11 8H2" />
           </svg>

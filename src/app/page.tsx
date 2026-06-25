@@ -12,6 +12,7 @@ import { getAllPlugins } from "@/lib/plugins";
 import { SiteHeader } from "@/components/SiteHeader";
 import { HomeHero } from "@/components/HomeHero";
 import { PluginBountyTeaser } from "@/components/PluginBountyTeaser";
+import { HomeDriverStatus } from "@/components/HomeDriverStatus";
 import { SponsorsSection, IconExternalLink, IconArrow } from "@/components/SponsorsSection";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { ExpandableText } from "@/components/ExpandableText";
@@ -29,7 +30,7 @@ const SEO_ENTRY_POINTS = [
     href: "/solutions/mcp-database-client",
     title: "For AI Agents (MCP-native)",
     excerpt:
-      "Give Claude, Cursor, and Devin (Windsurf) safe, schema-aware access to your real databases through Tabularis.",
+      "Give Claude, Cursor, and Devin (formerly Windsurf) safe, schema-aware access to your real databases through Tabularis.",
   },
   {
     href: "/solutions/postgresql-client",
@@ -295,6 +296,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* DRIVER & PLUGIN COVERAGE */}
+      <HomeDriverStatus />
 
       {/* CAPABILITIES */}
       <section className="section">

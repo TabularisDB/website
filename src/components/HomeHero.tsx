@@ -4,6 +4,7 @@ import { DownloadButtons } from "@/components/DownloadButtons";
 import { GithubStarsButton } from "@/components/GithubStarsButton";
 import { FeaturedOn } from "@/components/FeaturedOn";
 import { getRepoStars, getTotalDownloads } from "@/lib/github";
+import { getAllPlugins } from "@/lib/plugins";
 import type { PostMeta } from "@/lib/posts";
 import { APP_VERSION } from "@/lib/version";
 
@@ -18,6 +19,7 @@ export async function HomeHero({ latestPost }: HomeHeroProps) {
     getRepoStars(),
     getTotalDownloads(),
   ]);
+  const pluginCount = getAllPlugins().length;
   return (
     <>
       {latestPost && (
@@ -55,10 +57,12 @@ export async function HomeHero({ latestPost }: HomeHeroProps) {
 
             <p className="hero-lede">
               Tabularis is an open-source desktop SQL workspace for{" "}
-              <strong>PostgreSQL</strong>, <strong>MySQL/MariaDB</strong>, and{" "}
-              <strong>SQLite</strong>, with a built-in <strong>MCP</strong>{" "}
-              server so Claude, Cursor, and Devin (Windsurf) can read your schema and
-              run queries through the same app you already use.
+              <strong>PostgreSQL</strong>, <strong>MySQL/MariaDB</strong>,{" "}
+              <strong>SQLite</strong> and <strong>{pluginCount}+ more databases</strong>{" "}
+              like DuckDB, ClickHouse, Redis and Firestore. Its built-in{" "}
+              <strong>MCP</strong> server lets Claude, Cursor and Devin (formerly
+              Windsurf) read your schema and run queries in the same app you
+              already use.
             </p>
 
             <DownloadButtons

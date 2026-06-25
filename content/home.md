@@ -1,6 +1,6 @@
 # Why Tabularis
 
-Most database clients are still designed for a world where a human writes every query. That world is changing fast: in 2026 a lot of real SQL gets drafted, iterated, and sometimes executed by AI agents inside Claude Code, Cursor, and Devin (Windsurf).
+Most database clients are still designed for a world where a human writes every query. That world is changing fast: in 2026 a lot of real SQL gets drafted, iterated, and sometimes executed by AI agents inside Claude Code, Cursor, and Devin (formerly Windsurf).
 
 **Tabularis** is the open-source desktop database client built for that reality — without giving up what a good SQL tool already has to be.
 

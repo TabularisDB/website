@@ -10628,6 +10628,137 @@ footer {
   background: rgba(15, 23, 42, 0.72);
 }
 
+.driver-status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.driver-status-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(15, 23, 42, 0.6);
+  text-decoration: none;
+  transition:
+    border-color 0.18s ease,
+    transform 0.18s ease,
+    background 0.18s ease;
+}
+
+.driver-status-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.driver-status-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--bounty-accent) 55%, transparent);
+  background: rgba(15, 23, 42, 0.85);
+}
+
+.driver-status-logo {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: #ffffff;
+}
+
+.driver-status-name {
+  flex: 1 1 auto;
+  color: #f1f5f9;
+  font-weight: 600;
+  font-size: 0.92rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.driver-status-card .bounty-status {
+  flex-shrink: 0;
+}
+
+.driver-status-request {
+  align-items: center;
+  justify-content: center;
+  border-style: dashed;
+  border-color: rgba(148, 163, 184, 0.3);
+  background: rgba(15, 23, 42, 0.35);
+}
+
+.driver-status-request .driver-status-name {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.driver-status-request:hover {
+  border-color: rgba(148, 163, 184, 0.55);
+}
+
+.driver-status-request:hover .driver-status-name {
+  color: #f1f5f9;
+}
+
+@media (max-width: 600px) {
+  .driver-status-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .driver-status-card {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    padding: 0.85rem 0.4rem 0.75rem;
+    border-radius: 14px;
+    text-align: center;
+    min-height: 100%;
+  }
+
+  .driver-status-head {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
+    width: 100%;
+  }
+
+  .driver-status-logo {
+    width: 26px;
+    height: 26px;
+  }
+
+  .driver-status-name {
+    flex: 0 0 auto;
+    font-size: 0.74rem;
+    line-height: 1.15;
+    text-align: center;
+  }
+
+  .driver-status-card .bounty-status {
+    margin-top: auto;
+    min-height: 0;
+    padding: 0.2rem 0.45rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.03em;
+  }
+
+  /* Request tile spans the full row at the bottom. */
+  .driver-status-request {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    padding: 0.7rem;
+  }
+}
+
 .bounty-card-main {
   align-items: flex-start;
 }
