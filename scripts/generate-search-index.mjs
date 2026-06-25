@@ -7,7 +7,7 @@ const CONTENT_DIR = path.join(process.cwd(), "content");
 const WIKI_DIR = path.join(CONTENT_DIR, "wiki");
 const POSTS_DIR = path.join(CONTENT_DIR, "posts");
 const SEO_DIR = path.join(CONTENT_DIR, "seo");
-const REGISTRY_PATH = path.join(process.cwd(), "..", "plugins", "registry.json");
+const REGISTRY_PATH = path.join(process.cwd(), "plugins", "registry.json");
 const OUT_PATH = path.join(process.cwd(), "public", "search-index.json");
 
 function stripMarkdown(md) {

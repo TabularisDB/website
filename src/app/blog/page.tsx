@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { GitHubIcon, DiscordIcon } from "@/components/Icons";
 import { Rss } from "lucide-react";
 import { PostCard } from "@/components/PostCard";
-import { AuthorByline } from "@/components/AuthorByline";
+import { FeaturedPost } from "@/components/FeaturedPost";
 import { TagFilter } from "@/components/TagFilter";
 import { Pagination } from "@/components/Pagination";
 import { BlogNewsletter } from "@/components/BlogNewsletter";
-import { getPaginatedPosts, getAllTags, formatDate } from "@/lib/posts";
+import { getPaginatedPosts, getAllTags } from "@/lib/posts";
 import { OG_IMAGE_URL } from "@/lib/siteConfig";
 
 export const metadata: Metadata = {
@@ -49,51 +48,7 @@ export default function BlogPage() {
         <TagFilter tags={tags} />
 
         {/* Featured Post (Hero) */}
-        {featuredPost && (
-          <div className="blog-hero-post">
-            <Link
-              href={`/blog/${featuredPost.slug}`}
-              className="blog-hero-visual"
-              aria-hidden="true"
-              tabIndex={-1}
-            >
-              <img
-                src={`/blog/${featuredPost.slug}/opengraph-image.png`}
-                alt=""
-                className="blog-hero-image"
-              />
-            </Link>
-
-            <div className="blog-hero-content">
-              <div className="blog-hero-byline">
-                <AuthorByline handles={featuredPost.authors} size="md" />
-              </div>
-              <div className="blog-hero-meta">
-                <span>{formatDate(featuredPost.date)}</span>
-                <span className="post-byline-sep">&middot;</span>
-                <span>{featuredPost.readingTime} min read</span>
-                {featuredPost.release && (
-                  <>
-                    <span className="post-byline-sep">&middot;</span>
-                    <span className="post-release">{featuredPost.release}</span>
-                  </>
-                )}
-              </div>
-              <h2 className="blog-hero-title">
-                <Link href={`/blog/${featuredPost.slug}`}>
-                  {featuredPost.title}
-                </Link>
-              </h2>
-              <p className="blog-hero-excerpt">{featuredPost.excerpt}</p>
-              <Link
-                href={`/blog/${featuredPost.slug}`}
-                className="blog-hero-cta"
-              >
-                Read article <span className="arrow">&rarr;</span>
-              </Link>
-            </div>
-          </div>
-        )}
+        {featuredPost && <FeaturedPost post={featuredPost} showByline />}
 
         {/* Posts archive */}
         {gridPosts.length > 0 && (

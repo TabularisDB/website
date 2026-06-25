@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { type PostMeta } from "@/lib/posts";
+import { type PostMeta, postOgImage } from "@/lib/posts";
 import { PostMetaBar } from "./PostMetaBar";
 import { AuthorByline } from "./AuthorByline";
 
@@ -30,7 +30,7 @@ export function PostCard({ post, compact = false }: PostCardProps) {
   }
 
   // Use the post's own Open Graph image as the card visual.
-  const imageSrc = `/blog/${post.slug}/opengraph-image.png`;
+  const imageSrc = postOgImage(post.slug);
 
   return (
     <div className="post-card">

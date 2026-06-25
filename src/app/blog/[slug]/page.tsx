@@ -7,7 +7,12 @@ import { Footer } from "@/components/Footer";
 import { GitHubIcon, DiscordIcon, XBrandIcon, BlueskyIcon } from "@/components/Icons";
 import { ShareButton } from "@/components/ShareButton";
 import { PostContentLightbox } from "@/components/PostContentLightbox";
-import { getAllPosts, getPostBySlug, getAdjacentPosts } from "@/lib/posts";
+import {
+  getAllPosts,
+  getPostBySlug,
+  getAdjacentPosts,
+  postOgImage,
+} from "@/lib/posts";
 import {
   resolveAuthors,
   authorAvatarUrl,
@@ -46,7 +51,7 @@ export async function generateMetadata({
   // suppresses the automatic file-convention fallback, leaving no og:image.
   const ogImageUrl = meta.og?.cover
     ? `https://tabularis.dev${meta.og.cover}`
-    : `https://tabularis.dev/blog/${slug}/opengraph-image.png`;
+    : `https://tabularis.dev${postOgImage(slug)}`;
   const coverImages = [
     {
       url: ogImageUrl,
