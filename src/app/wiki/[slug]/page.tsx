@@ -112,7 +112,7 @@ export default async function WikiPageDetail({ params }: PageProps) {
 
         <div className="wiki-edit-link-container">
           <a
-            href={`https://github.com/TabularisDB/tabularis/edit/main/website/content/wiki/${slug}.md`}
+            href={`https://github.com/TabularisDB/website/edit/main/content/wiki/${slug}.md`}
             target="_blank"
             rel="noopener noreferrer"
             className="wiki-edit-link"
