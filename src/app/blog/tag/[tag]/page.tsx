@@ -65,7 +65,7 @@ export default async function TagPage({
               tabIndex={-1}
             >
               <img
-                src={`/blog/${featuredPost.slug}/opengraph-image`}
+                src={`/blog/${featuredPost.slug}/opengraph-image.png`}
                 alt=""
                 className="blog-hero-image"
               />

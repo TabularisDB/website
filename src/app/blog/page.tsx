@@ -22,18 +22,14 @@ export const metadata: Metadata = {
     title: "Blog | Tabularis",
     description:
       "Release notes and updates from the Tabularis project — one post per release.",
-    images: [
-      OG_IMAGE_URL,
-    ],
+    images: [OG_IMAGE_URL],
   },
   twitter: {
     card: "summary_large_image",
     title: "Blog | Tabularis",
     description:
       "Release notes and updates from the Tabularis project — one post per release.",
-    images: [
-      OG_IMAGE_URL,
-    ],
+    images: [OG_IMAGE_URL],
   },
 };
 
@@ -62,12 +58,12 @@ export default function BlogPage() {
               tabIndex={-1}
             >
               <img
-                src={`/blog/${featuredPost.slug}/opengraph-image`}
+                src={`/blog/${featuredPost.slug}/opengraph-image.png`}
                 alt=""
                 className="blog-hero-image"
               />
             </Link>
-            
+
             <div className="blog-hero-content">
               <div className="blog-hero-byline">
                 <AuthorByline handles={featuredPost.authors} size="md" />
@@ -84,10 +80,15 @@ export default function BlogPage() {
                 )}
               </div>
               <h2 className="blog-hero-title">
-                <Link href={`/blog/${featuredPost.slug}`}>{featuredPost.title}</Link>
+                <Link href={`/blog/${featuredPost.slug}`}>
+                  {featuredPost.title}
+                </Link>
               </h2>
               <p className="blog-hero-excerpt">{featuredPost.excerpt}</p>
-              <Link href={`/blog/${featuredPost.slug}`} className="blog-hero-cta">
+              <Link
+                href={`/blog/${featuredPost.slug}`}
+                className="blog-hero-cta"
+              >
                 Read article <span className="arrow">&rarr;</span>
               </Link>
             </div>
@@ -113,7 +114,10 @@ export default function BlogPage() {
         <BlogNewsletter />
 
         <div className="cta-strip">
-          <a className="btn-cta" href="https://github.com/TabularisDB/tabularis">
+          <a
+            className="btn-cta"
+            href="https://github.com/TabularisDB/tabularis"
+          >
             <GitHubIcon size={16} />
             Star on GitHub
           </a>
