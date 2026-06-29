@@ -196,4 +196,29 @@ export const SPONSORS: Sponsor[] = [
         "Get started with Tolgee for free — self-host the platform or use the cloud free tier to localize your project from day one.",
     },
   },
+  {
+    id: "1password",
+    name: "1Password",
+    tagline: "The password and secrets manager developers trust — free for open-source projects.",
+    url: "https://1password.com/developers?utm_source=tabularis.dev&utm_medium=sponsor&utm_campaign=1password-thank-you",
+    accentColor: "#145FE4",
+    highlightColor: "#3B7BF0",
+    logoImg: "/img/sponsors/1password.png",
+    logoImgCompact: "/img/sponsors/1password_compact.png",
+    logoImgBg: "#ffffff",
+    modalDescription:
+      "1Password keeps passwords, passkeys, SSH keys and secrets in one end-to-end encrypted vault, with your data secured by a key only you hold. It's also built for developers: a secret manager for GitHub Actions via op:// references, an SSH agent that approves connections with biometrics, and CLI integration that keeps secrets out of your dotfiles. Tabularis was accepted into 1Password's free plan for open-source projects, and uses it to manage the team's accounts — with CI secrets next.",
+    features: [
+      { icon: "🔐", text: "End-to-end encrypted vaults — data encrypted with a key only you hold" },
+      { icon: "🤖", text: "Secret manager for CI — op:// references resolved by load-secrets-action" },
+      { icon: "🔑", text: "Built-in SSH agent — biometric approvals, keys never touch disk" },
+      { icon: "🪪", text: "Passkeys, one-time codes and secure sharing across your team" },
+      { icon: "❤️", text: "Free plan for open-source projects" },
+    ],
+    offer: {
+      title: "Free for open-source projects",
+      description:
+        "1Password gives qualifying open-source projects a free Teams plan. Apply through their open-source program and manage your project's secrets the way larger teams do.",
+    },
+  },
 ];
