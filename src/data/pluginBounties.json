@@ -552,6 +552,45 @@
       "sponsorUrl": "/plugins"
     },
     {
+      "id": "dameng",
+      "name": "DM (Dameng)",
+      "target": "SQL driver plugin",
+      "status": "shipped",
+      "tagline": "Connect to DM (Dameng) databases widely deployed across Chinese enterprises.",
+      "description": "DM (Dameng) support brings the Chinese enterprise database into Tabularis through the plugin ecosystem, with connection setup, schema inspection and query execution. Requires a user-provided Dameng JDBC driver jar.",
+      "stage": "Shipped",
+      "nextStep": "Use the shipped DM (Dameng) plugin as a reference for enterprise SQL drivers.",
+      "difficulty": "High",
+      "accent": "#c8102e",
+      "radar": {
+        "x": 18,
+        "y": 58,
+        "scale": 0.8
+      },
+      "tags": [
+        "shipped",
+        "enterprise",
+        "sql"
+      ],
+      "capabilities": [
+        {
+          "label": "connect",
+          "state": "ready"
+        },
+        {
+          "label": "schema",
+          "state": "ready"
+        },
+        {
+          "label": "query",
+          "state": "ready"
+        }
+      ],
+      "signal": "Shipped through the plugin registry as a community-contributed enterprise SQL driver.",
+      "claimUrl": "/plugins",
+      "sponsorUrl": "/plugins"
+    },
+    {
       "id": "trino-presto",
       "name": "Trino / Presto",
       "target": "Federated query plugin",
