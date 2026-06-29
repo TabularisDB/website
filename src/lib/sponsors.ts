@@ -200,7 +200,7 @@ export const SPONSORS: Sponsor[] = [
     id: "1password",
     name: "1Password",
     tagline: "The password and secrets manager developers trust — free for open-source projects.",
-    url: "https://1password.com/developers?utm_source=tabularis.dev&utm_medium=sponsor&utm_campaign=1password-thank-you",
+    url: "https://1password.com/developers",
     accentColor: "#145FE4",
     highlightColor: "#3B7BF0",
     logoImg: "/img/sponsors/1password.png",
