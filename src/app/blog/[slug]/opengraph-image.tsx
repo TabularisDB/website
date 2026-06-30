@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import { renderCodeTerminalOgImage } from "@/lib/ogCodeTerminal";
+import { renderScreenshotSplitOgImage } from "@/lib/ogScreenshotSplit";
 import fs from "fs";
 import path from "path";
 
@@ -71,6 +72,18 @@ export default async function Image({
       claim: og.claim,
       codeTitle: og.codeTitle,
       codeLines: og.codeLines,
+    });
+  }
+
+  // Split layout with a framed product screenshot on the right.
+  if (og?.template === "screenshot-split") {
+    return renderScreenshotSplitOgImage({
+      title: og.title,
+      accent: og.accent,
+      claim: og.claim,
+      image: og.image,
+      appLabel: og.appLabel,
+      release,
     });
   }
 

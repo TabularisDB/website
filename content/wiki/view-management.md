@@ -30,6 +30,10 @@ The sidebar refreshes automatically after creation.
 
 Right-click an existing view in the sidebar and choose **Edit View**. The View Editor Modal opens pre-populated with the view name (read-only) and the current `SELECT` definition.
 
+Databases often hand back a view definition as a single dense line — MySQL, for example, stores `SELECT c.id,c.name,...` with no whitespace. Click the **Beautify** button (available in both the create and edit views) to pretty-print the definition using the active driver's SQL dialect before you start editing.
+
+![View Editor modal with the Beautify button and a multi-join view definition](/img/posts/tabularis-view-beautify.png)
+
 Modify the definition and click **Save**. Tabularis executes an `ALTER VIEW` (or `CREATE OR REPLACE VIEW`, depending on the driver) to update the view in place.
 
 ## Dropping a View

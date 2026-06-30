@@ -52,6 +52,8 @@ When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`)
 | **Save in keychain** | — | Controls whether the password persists after closing |
 | **SSH enabled** | No | Activates the SSH tunnel for this connection |
 | **SSH profile** | — | Which saved SSH profile to use for the tunnel |
+| **Allow interactive prompts** | No | Lets the SSH tunnel prompt in-app for a key passphrase, security-key PIN, or password when it can't authenticate silently. See [SSH Tunneling → Interactive Authentication](/wiki/ssh-tunneling#interactive-authentication-passphrases--security-keys). |
+| **Startup script** | No | SQL run on every new pooled connection (see [Startup Script](#startup-script) below). |
 | **Kubernetes** | No | Tunnels the connection through a managed `kubectl port-forward`. Mutually exclusive with SSH. See [Kubernetes Tunneling](/wiki/kubernetes-tunneling). |
 | **CA Certificate** | No | Path to a PEM bundle to trust for TLS (PostgreSQL only). See [TLS & CA Certificates](#tls--ca-certificates) below. |
 | **Detect JSON in text columns** | No | Per-connection toggle: when enabled, plain `TEXT` / `VARCHAR` values that parse as JSON are routed through the JSON cell renderer in the data grid (chevron, viewer window, diff). The same flag also enables native array detection for `text[]` / `int[]` (PostgreSQL) and Firestore arrays. See [Data Grid → JSON & long text cells](/wiki/data-grid#json--long-text-cells). |
@@ -78,6 +80,20 @@ The **SSL Mode** selector aligns with libpq semantics:
 | `require` | Force encryption, but **do not** require certificate validation. Use this with self-signed certificates (e.g., default AWS RDS without an explicit CA). |
 | `verify-ca` | Force encryption **and** validate that the server certificate is signed by a trusted CA (paste the CA bundle into the **CA Certificate** field). |
 | `verify-full` | Same as `verify-ca`, plus verify that the server hostname matches the certificate CN or SAN. Strictest mode; recommended for production. |
+
+### Startup Script
+
+A connection can carry an optional **startup script** — SQL that Tabularis runs on every new physical connection in the pool. Because it executes per pooled connection (MySQL/SQLite via `after_connect`, PostgreSQL via the pool's `post_create` hook), session-level settings stick across the whole pool regardless of which connection serves a given query.
+
+![Startup script field in the Advanced tab of the connection modal](/img/posts/tabularis-startup-script.png)
+
+The motivating case is development against row-level security: a script like
+
+```sql
+SELECT set_config('app.bypass_rls', 'on', false);
+```
+
+applies to every subsequent query instead of randomly depending on which pooled connection you landed on. Any `SET` or session-setup statement works; multiple statements can be separated normally, and blank or whitespace-only scripts are skipped. The script is stored with the connection profile as non-secret configuration.
 
 ### SQLite
 

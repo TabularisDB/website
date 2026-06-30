@@ -46,6 +46,20 @@ Used when **no password** is provided (key-only authentication). Tabularis spawn
 - `BatchMode=yes` is set so the process never hangs waiting for interactive input.
 - `StrictHostKeyChecking=accept-new` — new hosts are accepted, changed keys are rejected.
 
+## Interactive Authentication (Passphrases & Security Keys)
+
+Some keys can't be unlocked non-interactively. A passphrase-protected private key that isn't loaded into an agent, or a key that lives on a **hardware security token** (a YubiKey or any FIDO/PKCS#11 device that asks for a PIN or a touch), needs to *prompt* you at connect time. Tabularis serves those prompts through a native in-app dialog instead of failing the tunnel.
+
+<video src="/videos/posts/tabularis-ssh-askpass.mp4" poster="/videos/posts/tabularis-ssh-askpass.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
+When **interactive prompts** are enabled on a connection and the tunnel needs a secret mid-connect — a key passphrase, a security-key PIN, or an SSH password — a modal asks for exactly that value and hands it straight to SSH. The secret is never written to disk.
+
+- Enable it with the **Allow interactive prompts** toggle in the connection modal.
+- Leave it off for fully non-interactive setups (agent or stored credentials) so a connection can never block waiting for input.
+- Prompt text is localized across all eight supported languages.
+
+This is what makes a YubiKey-backed jump host usable: when the token needs its PIN, Tabularis surfaces the request rather than giving up.
+
 ## SSH Profiles
 
 SSH connections are stored as reusable profiles in `ssh_connections.json`, separate from database connections. A single SSH profile (e.g., your production bastion) can be reused across multiple database connections.

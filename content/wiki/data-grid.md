@@ -59,6 +59,8 @@ Pending edits (cell modifications, new rows, deleted rows) are shown with a visu
 
 A DDL preview showing the exact SQL that will be executed is available before you confirm.
 
+Edits and deletes are matched on the table's **full primary key**. For a table with a composite primary key (e.g. `PRIMARY KEY (profile_id, phone_type, key)`), the generated `WHERE` clause includes every PK column — `WHERE col1 = ? AND col2 = ? AND …` — so a change targets exactly one row rather than every row that happens to share part of the key.
+
 ## Copying Data
 
 Tabularis supports both **row-level** and **cell-level** copy from the data grid. The two modes don't fight each other: clicking a row checkbox clears the cell focus, clicking a cell clears the row selection. So `Ctrl/Cmd + C` with an active cell focus copies the cell, and `Ctrl/Cmd + C` with selected rows copies the rows.

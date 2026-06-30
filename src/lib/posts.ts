@@ -14,12 +14,15 @@ export interface PostOg {
   // generated title/accent/claim template. Path is relative to /public.
   cover?: string;
   // Selects the generated OG template. Omitted / "default" → the screenshot
-  // template; "code-terminal" → the JetBrains Mono terminal template.
-  template?: "default" | "code-terminal";
+  // template; "code-terminal" → the JetBrains Mono terminal template;
+  // "screenshot-split" → the split layout with a framed product screenshot.
+  template?: "default" | "code-terminal" | "screenshot-split";
   // Terminal template only: title-bar label and the monospace body lines
   // (lightly syntax-highlighted; prefix a line with "> ", "< ", "$ " or "# ").
   codeTitle?: string;
   codeLines?: string[];
+  // screenshot-split template only: window title-bar label above the screenshot.
+  appLabel?: string;
 }
 
 export interface PostMeta {

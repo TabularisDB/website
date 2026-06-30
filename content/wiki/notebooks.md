@@ -104,6 +104,10 @@ Click the collapse arrow in the cell header to minimize a cell — useful for hi
 
 ![Collapsed and expanded cells](/img/posts/tabularis-notebook-collapsed-expanded-cells-organization.png)
 
+Inside an SQL cell you can also collapse its three areas **independently** — the **Query** editor, the **Results** grid, and the **Chart** — each via a thin labelled header with its own chevron, on top of the master cell collapse. The chart header appears only when the result is chartable. The collapsed state of every section is saved with the notebook, so it persists across reloads, and chart visibility is persisted too (it defaults to whether a chart config already exists, so notebooks created before this change keep showing their charts).
+
+<video src="/videos/posts/tabularis-notebooks-collapse.mp4" poster="/videos/posts/tabularis-notebooks-collapse.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
 ## Run All
 
 Click **Run All** in the notebook toolbar (or press `Cmd/Ctrl + Shift + Enter`) to execute all SQL cells sequentially from top to bottom. Options:

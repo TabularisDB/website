@@ -121,13 +121,34 @@ Inspired by SQL Server Management Studio, the stacked view displays **all query 
 
 Each result section shows the query label, a collapsible SQL preview, row count, execution time, and pagination controls — all inline in the header. When collapsed, the header still shows key metadata (row count, execution time, error summary).
 
+### Window Controls & Detachable Results
+
+The right side of the results bar carries a set of window controls:
+
+| Control | What it does |
+|---------|--------------|
+| **Minimize** | Collapses the panel without losing data — the **Show Results** button restores it. |
+| **Maximize** | Hides the editor so results take the full height; click again to restore the split. |
+| **Detach** | Pops the active tab's results into a separate OS window. |
+| **Close** | Collapses the panel (same as Minimize; data is kept). |
+
+Manual drag-to-resize of the panel is unchanged.
+
+**Detach** is the one to reach for on a multi-monitor setup: it moves the active tab's results into their own window so you can keep the grid on one screen while you keep editing SQL on the other. The detached window stays in sync with the tab it came from, and closing it folds the results back into the main layout.
+
+<video src="/videos/posts/tabularis-detach-results.mp4" poster="/videos/posts/tabularis-detach-results.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
+### Success Feedback for Non-SELECT Statements
+
+A statement that returns no result set — `INSERT`/`UPDATE`/`DELETE` or DDL such as `CREATE`/`ALTER`/`DROP` — no longer shows a misleading "0 rows retrieved" empty grid. Instead the result area renders a success panel: a check icon, "Query executed successfully", the affected-row count when there is one, and the execution time. This applies to both single statements and multi-statement batches.
+
 ### Query Parameters
 
 When running multiple queries that contain `:param` placeholders, Tabularis collects parameters across all queries and prompts you **once** via the parameters modal before execution begins.
 
 ## Query Splitting
 
-Tabularis uses [dbgate-query-splitter](https://github.com/nicedoc/dbgate-query-splitter) to split multi-statement SQL. This handles complex syntax like stored procedures and functions that contain internal semicolons:
+Tabularis splits multi-statement SQL with its own **dialect-aware splitter** — a tokenizer that understands the quoting and block rules of each engine (`postgres`, `mysql`, `mssql`, `sqlite`, `oracle`, and a `generic` fallback) rather than naively breaking on every `;`. It correctly handles stored procedures and functions that contain internal semicolons:
 
 ```sql
 CREATE FUNCTION example()
@@ -140,7 +161,13 @@ END;
 $$;
 ```
 
-The splitter correctly treats this as a single statement rather than breaking on the internal `;` inside the `$$` block.
+The splitter treats this as a single statement rather than breaking on the internal `;` inside the `$$` dollar-quoted block. Beyond dollar-quoting, it also tracks:
+
+- **Comments** — leading/trailing comment-only segments are folded into the adjacent statement instead of becoming empty statements.
+- **Oracle PL/SQL blocks** — `BEGIN ... END;` source units are merged up to the terminating `/`.
+- **MySQL `DELIMITER` changes** — the active statement delimiter is tracked as it is redefined.
+
+Each split statement is also classified (e.g. result-set-returning vs. not) to drive the Query Selection Modal and per-statement result handling.
 
 ## Autocomplete: Multi-Database and Multi-Schema
 
