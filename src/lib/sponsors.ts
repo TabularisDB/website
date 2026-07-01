@@ -222,3 +222,79 @@ export const SPONSORS: Sponsor[] = [
     },
   },
 ];
+
+// GitHub Sponsors tiers — https://github.com/sponsors/debba
+// These mirror the tiers configured in the Sponsors dashboard. GitHub does not
+// expose tier creation via API, so the dashboard remains the source of truth;
+// this array keeps a code-side copy for display and reference.
+export interface SponsorTier {
+  id: string;
+  name: string;
+  /** Price in USD. */
+  amount: number;
+  /** "recurring" = monthly, "one-time" = single donation. */
+  frequency: "recurring" | "one-time";
+  description: string;
+  benefits: string[];
+  /** Highlighted as the suggested tier in the UI. */
+  featured?: boolean;
+}
+
+export const SPONSOR_TIERS: SponsorTier[] = [
+  {
+    id: "coffee",
+    name: "Buy me a coffee ☕",
+    amount: 15,
+    frequency: "one-time",
+    description: "A one-off thank-you to keep Tabularis moving.",
+    benefits: ["Your name in the backers list"],
+  },
+  {
+    id: "supporter",
+    name: "Supporter",
+    amount: 5,
+    frequency: "recurring",
+    description: "Support Tabularis development every month.",
+    benefits: [
+      "Sponsor badge on your GitHub profile",
+      "Our gratitude in the release notes shout-outs",
+    ],
+  },
+  {
+    id: "backer",
+    name: "Backer",
+    amount: 20,
+    frequency: "recurring",
+    description: "Everything in Supporter, plus a spot in the README.",
+    benefits: [
+      "Sponsor badge on your GitHub profile",
+      "Your logo or name in the Tabularis project README",
+    ],
+    featured: true,
+  },
+  {
+    id: "bronze",
+    name: "Bronze Sponsor",
+    amount: 50,
+    frequency: "recurring",
+    description: "Everything in Backer, plus visibility on the website.",
+    benefits: [
+      "Your logo or name on the Tabularis website (tabularis.dev)",
+      "Logo or name in the project README",
+      "Sponsor badge on your GitHub profile",
+    ],
+  },
+  {
+    id: "gold",
+    name: "Company / Gold Sponsor",
+    amount: 250,
+    frequency: "recurring",
+    description: "For companies backing Tabularis.",
+    benefits: [
+      "Prominent logo on tabularis.dev/sponsors with link + tagline",
+      "Logo on the project website & README",
+      "A social shout-out on our channels (Bluesky / X)",
+      "Priority consideration for feature discussions",
+    ],
+  },
+];

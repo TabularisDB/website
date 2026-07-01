@@ -2790,6 +2790,31 @@ pre {
   }
 }
 
+/* Section index/lead intro (sponsors, compare, plugins, roadmap, videos,
+   solutions): render the title like a blog post title (see
+   `.post-content .post-header h1`). */
+.blog-intro {
+  margin-bottom: 2.25rem;
+}
+.blog-intro-body h3 {
+  font-size: clamp(1.95rem, 4.5vw, 2.6rem);
+  line-height: 1.14;
+  letter-spacing: -0.5px;
+  border-bottom: none;
+  padding-bottom: 0;
+  margin: 0 0 1.1rem;
+}
+@media (max-width: 768px) {
+  .blog-intro {
+    margin-bottom: 1.5rem;
+  }
+  .blog-intro-body h3 {
+    font-size: 1.65rem;
+    line-height: 1.2;
+    margin-bottom: 0.85rem;
+  }
+}
+
 .seo-content-box {
   margin-top: 0;
 }
@@ -3411,6 +3436,121 @@ pre {
 }
 
 .sponsor-modal-cta:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+/* GITHUB SPONSORS TIERS MODAL */
+.tiers-modal {
+  --sponsor-accent: #238636;
+}
+
+.tiers-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.tier-card {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.15rem;
+  background: color-mix(in srgb, var(--sponsor-accent) 3%, transparent);
+}
+
+.tier-card.featured {
+  border-color: color-mix(in srgb, var(--sponsor-accent) 55%, transparent);
+  background: color-mix(in srgb, var(--sponsor-accent) 8%, transparent);
+}
+
+.tier-badge {
+  position: absolute;
+  top: -0.6rem;
+  right: 1rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  color: #fff;
+  background: var(--sponsor-accent);
+}
+
+.tier-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.tier-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.tier-price {
+  font-weight: 700;
+  font-size: 1.15rem;
+  white-space: nowrap;
+}
+
+.tier-freq {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.tier-desc {
+  margin: 0.4rem 0 0.65rem;
+  font-size: 0.83rem;
+  color: var(--text-muted);
+}
+
+.tier-benefits {
+  list-style: none;
+  margin: 0 0 0.9rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.tier-benefits li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+}
+
+.tier-benefits li svg {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  color: var(--sponsor-accent);
+}
+
+.tier-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.55rem 1rem;
+  border-radius: 9px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #fff;
+  background: var(--sponsor-accent);
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+}
+
+.tier-cta:hover {
   opacity: 0.88;
   transform: translateY(-1px);
 }
@@ -4216,6 +4356,18 @@ pre {
 .btn-cta.discord:hover {
   border-color: #5865f2;
   color: #5865f2;
+}
+
+.btn-cta.github {
+  background: #238636;
+  border-color: #238636;
+  color: #ffffff;
+}
+
+.btn-cta.github:hover {
+  background: #2ea043;
+  border-color: #2ea043;
+  color: #ffffff;
 }
 
 /* Inline ":::star:::" call-to-action card for long-form content */

@@ -6,7 +6,6 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { WikiContent } from "@/components/WikiContent";
 import { ComparisonTable } from "@/components/ComparisonTable";
-import { SeoPageHeroVisual } from "@/components/SeoPagePreview";
 import { SeoCapture } from "@/components/SeoCapture";
 import {
   getAdjacentSeoPages,
@@ -84,7 +83,6 @@ export default async function CompareDetailPage({ params }: PageProps) {
 
       <section>
         <div className="blog-intro">
-          <SeoPageHeroVisual meta={page.meta} />
           <div className="blog-intro-body">
             <h3>{page.meta.title}</h3>
             <p>{page.meta.excerpt}</p>

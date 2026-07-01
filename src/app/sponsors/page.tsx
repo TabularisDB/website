@@ -2,6 +2,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { SponsorsGrid } from "@/components/SponsorsGrid";
 import { SponsorContactForm } from "@/components/SponsorContactForm";
+import { GitHubSponsorButton } from "@/components/GitHubSponsorButton";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -29,17 +30,17 @@ export default function SponsorsPage() {
 
       <section>
         <div className="blog-intro">
-          <img
-            src="/img/logo.png"
-            alt="Tabularis Logo"
-            className="blog-intro-logo"
-          />
           <div className="blog-intro-body">
             <h3>Our Sponsors</h3>
             <p>
               These companies support Tabularis development and help keep it
               free and open source for everyone. Thank you.
             </p>
+            <p>
+              Want to support development directly? You can sponsor the
+              maintainer on GitHub.
+            </p>
+            <GitHubSponsorButton />
           </div>
         </div>
 

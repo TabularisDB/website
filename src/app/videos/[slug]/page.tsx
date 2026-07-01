@@ -74,11 +74,6 @@ export default async function VideoDemoPage({ params }: PageProps) {
 
       <section className="video-demo-page">
         <div className="blog-intro">
-          <img
-            src="/img/logo.png"
-            alt="Tabularis Logo"
-            className="blog-intro-logo"
-          />
           <div className="blog-intro-body">
             <h3>{video.title}</h3>
             <p>{video.description}</p>

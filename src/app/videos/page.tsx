@@ -54,11 +54,6 @@ export default function VideosPage() {
 
       <section>
         <div className="blog-intro">
-          <img
-            src="/img/logo.png"
-            alt="Tabularis Logo"
-            className="blog-intro-logo"
-          />
           <div className="blog-intro-body">
             <h3>Product Demos</h3>
             <p>

@@ -106,11 +106,6 @@ export default function RoadmapPage() {
 
       <section>
         <div className="blog-intro">
-          <img
-            src="/img/logo.png"
-            alt="Tabularis Logo"
-            className="blog-intro-logo"
-          />
           <div className="blog-intro-body">
             <h3>Roadmap</h3>
             <p>
