@@ -6688,6 +6688,50 @@ footer {
   color: var(--text-bright);
 }
 
+.promo-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding-right: 1rem;
+}
+
+.promo-cta__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.promo-cta__text {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--text-main);
+}
+
+.promo-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1rem;
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.promo-cta__btn:hover {
+  opacity: 0.9;
+}
+
 .survey-progress {
   display: flex;
   gap: 0.4rem;

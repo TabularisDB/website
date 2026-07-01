@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@/components/Analytics";
 import { CookieConsent } from "@/components/CookieConsent";
-import { SurveyPrompt } from "@/components/SurveyPrompt";
+import { EngagementPrompt } from "@/components/EngagementPrompt";
 import { JsonLd } from "@/components/JsonLd";
 import { SearchModal } from "@/components/SearchModal";
 import { OG_IMAGE_URL } from "@/lib/siteConfig";
@@ -62,7 +62,7 @@ export default function RootLayout({
         {children}
         <Analytics />
         <CookieConsent />
-        <SurveyPrompt />
+        <EngagementPrompt />
         <SearchModal />
       </body>
     </html>
