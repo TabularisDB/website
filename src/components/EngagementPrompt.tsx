@@ -44,6 +44,13 @@ const SCROLL_TRIGGER = 0.6;
 
 type Content = "survey" | "star" | "download";
 
+// Matomo event category per prompt variant.
+const EVENT_CATEGORY: Record<Content, string> = {
+  survey: "survey",
+  star: "invite-github-star",
+  download: "invite-download",
+};
+
 function promoInCooldown(): boolean {
   try {
     const raw = localStorage.getItem(PROMO_STORAGE_KEY);
@@ -94,16 +101,14 @@ export function EngagementPrompt() {
         picked === "survey" ? "survey" : Math.random() < 0.5 ? "star" : "download";
 
       setContent(chosen);
-      if (chosen === "survey") {
-        trackEvent("Survey", "shown");
-      } else {
+      if (chosen !== "survey") {
         try {
           localStorage.setItem(PROMO_STORAGE_KEY, String(Date.now()));
         } catch {
           // localStorage unavailable (private mode) — non-fatal.
         }
-        trackEvent("PromoCta", "shown", chosen);
       }
+      trackEvent(EVENT_CATEGORY[chosen], "shown");
       cleanup();
     };
 
@@ -130,19 +135,18 @@ export function EngagementPrompt() {
   }, [excluded]);
 
   if (excluded || !content) return null;
+  const shown = content;
 
   function dismiss() {
-    if (content === "survey") {
+    if (shown === "survey") {
       // Closing counts as "seen" — the prompt won't reappear on later visits.
       try {
         localStorage.setItem(SURVEY_STORAGE_KEY, "dismissed");
       } catch {
         // localStorage unavailable (private mode) — non-fatal.
       }
-      trackEvent("Survey", "dismissed");
-    } else {
-      trackEvent("PromoCta", "dismissed", content ?? undefined);
     }
+    trackEvent(EVENT_CATEGORY[shown], "dismissed");
     setContent(null);
   }
 
@@ -179,7 +183,7 @@ export function EngagementPrompt() {
             target="_blank"
             rel="noopener noreferrer"
             className="promo-cta__btn"
-            onClick={() => trackEvent("PromoCta", "click", "star")}
+            onClick={() => trackEvent(EVENT_CATEGORY.star, "click")}
           >
             Star on GitHub{stars !== null ? ` · ${formatStars(stars)}` : ""}
           </a>
@@ -212,7 +216,7 @@ export function EngagementPrompt() {
           <Link
             href="/download"
             className="promo-cta__btn"
-            onClick={() => trackEvent("PromoCta", "click", "download")}
+            onClick={() => trackEvent(EVENT_CATEGORY.download, "click")}
           >
             Download for free
           </Link>

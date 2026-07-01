@@ -72,7 +72,7 @@ export function SurveyForm({ source, onSubmitted }: SurveyFormProps) {
     } catch {
       // localStorage unavailable (private mode) — non-fatal.
     }
-    trackEvent("Survey", "submitted", `${source}:${role || "unknown"}`);
+    trackEvent("survey", "submitted", `${source}:${role || "unknown"}`);
     onSubmitted?.();
   }
 
