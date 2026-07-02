@@ -3,6 +3,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { ClosingCta } from "@/components/ClosingCta";
 import { CtaSocialLinks } from "@/components/CtaSocialLinks";
 import { NotFoundQueryPath } from "@/components/NotFoundQueryPath";
+import { Footer } from "@/components/Footer";
 
 export default function NotFound() {
   return (
@@ -90,14 +91,7 @@ export default function NotFound() {
         <CtaSocialLinks />
       </ClosingCta>
 
-      <footer>
-        <p>
-          &copy; 2026 Tabularis Project &mdash;{" "}
-          <Link href="/">tabularis.dev</Link> &middot;{" "}
-          <a href="https://github.com/TabularisDB/tabularis">GitHub</a> &middot;{" "}
-          <a href="https://discord.com/invite/K2hmhfHRSt">Discord</a>
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 }
