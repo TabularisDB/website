@@ -422,7 +422,8 @@ pre {
   gap: 0.45rem;
   background: var(--card-bg);
   border: 1px solid var(--border);
-  padding: 0.5rem 0.6rem;
+  padding: 0 0.6rem;
+  height: 2.35rem;
   border-radius: 8px;
   color: var(--text-muted);
   font-family: var(--font-mono);
@@ -449,7 +450,8 @@ pre {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0 1rem;
+  height: 2.35rem;
   border-radius: 8px;
   background: var(--accent);
   border: 1px solid var(--accent);
@@ -1022,6 +1024,9 @@ pre {
   font-size: 0.85rem;
   background: var(--card-bg);
   border-color: var(--border);
+  /* Shared control height keeps the header cluster (search / stars /
+     download) visually aligned regardless of each control's content. */
+  height: 2.35rem;
 }
 .github-stars-btn--compact:hover {
   background: var(--card-bg);
