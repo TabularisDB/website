@@ -939,6 +939,15 @@ pre {
   }
 }
 
+/* 44 animated glowing swifts are a real main-thread cost on phones and
+   barely visible at that size — drop them (and the scanline) on mobile. */
+@media (max-width: 768px) {
+  .hero-swift,
+  .hero-scanline {
+    display: none;
+  }
+}
+
 .download-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));

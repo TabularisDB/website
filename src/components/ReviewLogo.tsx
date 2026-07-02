@@ -34,7 +34,13 @@ export function ReviewLogo({
         };
     return (
       // eslint-disable-next-line @next/next/no-img-element
-      <img src={review.logoImg} alt={review.name} style={style} />
+      <img
+        src={review.logoImg}
+        alt={review.name}
+        style={style}
+        loading="lazy"
+        decoding="async"
+      />
     );
   }
 

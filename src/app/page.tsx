@@ -307,7 +307,7 @@ export default function HomePage() {
         <CarouselGrid className="features-grid">
           <article className="feature-card has-screenshot">
             <Link href="/wiki/connections" className="feature-card-screenshot">
-              <img src="/img/tabularis-connection-manager.png" alt="Connection Manager" />
+              <img loading="lazy" decoding="async" src="/img/tabularis-connection-manager.png" alt="Connection Manager" />
             </Link>
             <div className="feature-card-body">
               <div className="feature-card-header">
@@ -331,7 +331,7 @@ export default function HomePage() {
           </article>
           <article className="feature-card has-screenshot">
             <Link href="/wiki/ai-assistant" className="feature-card-screenshot">
-              <img src="/img/tabularis-ai-assistant.png" alt="AI Assistant" />
+              <img loading="lazy" decoding="async" src="/img/tabularis-ai-assistant.png" alt="AI Assistant" />
             </Link>
             <div className="feature-card-body">
               <div className="feature-card-header">
@@ -355,7 +355,7 @@ export default function HomePage() {
           </article>
           <article className="feature-card has-screenshot">
             <Link href="/wiki/mcp-server" className="feature-card-screenshot">
-              <img src="/img/tabularis-mcp-server.png" alt="MCP Server Integration" />
+              <img loading="lazy" decoding="async" src="/img/tabularis-mcp-server.png" alt="MCP Server Integration" />
             </Link>
             <div className="feature-card-body">
               <div className="feature-card-header">
@@ -378,7 +378,7 @@ export default function HomePage() {
           </article>
           <article className="feature-card has-screenshot">
             <Link href="/wiki/visual-query-builder" className="feature-card-screenshot">
-              <img src="/img/tabularis-visual-query-builder.png" alt="Visual Query Builder" />
+              <img loading="lazy" decoding="async" src="/img/tabularis-visual-query-builder.png" alt="Visual Query Builder" />
             </Link>
             <div className="feature-card-body">
               <div className="feature-card-header">
@@ -401,7 +401,7 @@ export default function HomePage() {
           </article>
           <article className="feature-card has-screenshot">
             <Link href="/wiki/visual-explain" className="feature-card-screenshot">
-              <img src="/img/posts/tabularis-visual-explain-graph-view-execution-plan.png" alt="Visual EXPLAIN" />
+              <img loading="lazy" decoding="async" src="/img/posts/tabularis-visual-explain-graph-view-execution-plan.png" alt="Visual EXPLAIN" />
             </Link>
             <div className="feature-card-body">
               <div className="feature-card-header">
@@ -424,7 +424,7 @@ export default function HomePage() {
           </article>
           <article className="feature-card has-screenshot">
             <Link href="/wiki/editor" className="feature-card-screenshot">
-              <img src="/img/tabularis-sql-editor-data-grid.png" alt="SQL Editor" />
+              <img loading="lazy" decoding="async" src="/img/tabularis-sql-editor-data-grid.png" alt="SQL Editor" />
             </Link>
             <div className="feature-card-body">
               <div className="feature-card-header">
@@ -447,7 +447,7 @@ export default function HomePage() {
           </article>
           <article className="feature-card has-screenshot">
             <Link href="/wiki/notebooks" className="feature-card-screenshot">
-              <img src="/img/posts/tabularis-notebook-sql-cell-pie-chart-data-grid.png" alt="SQL Notebooks" />
+              <img loading="lazy" decoding="async" src="/img/posts/tabularis-notebook-sql-cell-pie-chart-data-grid.png" alt="SQL Notebooks" />
             </Link>
             <div className="feature-card-body">
               <div className="feature-card-header">
@@ -471,7 +471,7 @@ export default function HomePage() {
           </article>
           <article className="feature-card has-screenshot">
             <Link href="/wiki/schema-management" className="feature-card-screenshot">
-              <img src="/img/tabularis-schema-management-er-diagram.png" alt="ER Diagram" />
+              <img loading="lazy" decoding="async" src="/img/tabularis-schema-management-er-diagram.png" alt="ER Diagram" />
             </Link>
             <div className="feature-card-body">
               <div className="feature-card-header">
@@ -494,7 +494,7 @@ export default function HomePage() {
           </article>
           <article className="feature-card has-screenshot">
             <Link href="/wiki/task-manager" className="feature-card-screenshot">
-              <img src="/img/tabularis-task-manager.png" alt="Task Manager" />
+              <img loading="lazy" decoding="async" src="/img/tabularis-task-manager.png" alt="Task Manager" />
             </Link>
             <div className="feature-card-body">
               <div className="feature-card-header">
@@ -518,7 +518,7 @@ export default function HomePage() {
           </article>
           <article className="feature-card has-screenshot">
             <Link href="/wiki/data-grid" className="feature-card-screenshot">
-              <img src="/img/tabularis-sql-editor-data-grid.png" alt="Data Grid" />
+              <img loading="lazy" decoding="async" src="/img/tabularis-sql-editor-data-grid.png" alt="Data Grid" />
             </Link>
             <div className="feature-card-body">
               <div className="feature-card-header">
@@ -541,7 +541,7 @@ export default function HomePage() {
           </article>
           <article className="feature-card has-screenshot">
             <Link href="/wiki/connections" className="feature-card-screenshot">
-              <img src="/img/tabularis-ssh-tunneling.png" alt="SSH Tunneling & Security" />
+              <img loading="lazy" decoding="async" src="/img/tabularis-ssh-tunneling.png" alt="SSH Tunneling & Security" />
             </Link>
             <div className="feature-card-body">
               <div className="feature-card-header">
@@ -564,7 +564,7 @@ export default function HomePage() {
           </article>
           <article className="feature-card has-screenshot">
             <Link href="/wiki/split-view" className="feature-card-screenshot">
-              <img src="/img/tabularis-split-view.png" alt="Split View" />
+              <img loading="lazy" decoding="async" src="/img/tabularis-split-view.png" alt="Split View" />
             </Link>
             <div className="feature-card-body">
               <div className="feature-card-header">
@@ -587,7 +587,7 @@ export default function HomePage() {
           </article>
           <article className="feature-card has-screenshot">
             <Link href="/wiki/dump-import" className="feature-card-screenshot">
-              <img src="/img/tabularis-sql-dump-import.png" alt="SQL Dump & Import" />
+              <img loading="lazy" decoding="async" src="/img/tabularis-sql-dump-import.png" alt="SQL Dump & Import" />
             </Link>
             <div className="feature-card-body">
               <div className="feature-card-header">
@@ -610,7 +610,7 @@ export default function HomePage() {
           </article>
           <article className="feature-card has-screenshot">
             <Link href="/wiki/updates" className="feature-card-screenshot">
-              <img src="/img/tabularis-automatic-updates.png" alt="Seamless Updates" />
+              <img loading="lazy" decoding="async" src="/img/tabularis-automatic-updates.png" alt="Seamless Updates" />
             </Link>
             <div className="feature-card-body">
               <div className="feature-card-header">

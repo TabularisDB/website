@@ -24,12 +24,35 @@ export function VideoPlayer({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [status, setStatus] = useState<VideoStatus>("loading");
+  const [inView, setInView] = useState(false);
   const resolvedPoster =
     poster ?? (src.endsWith(".mp4") ? src.replace(/\.mp4$/, ".jpg") : undefined);
 
   useEffect(() => {
     setStatus("loading");
   }, [src]);
+
+  // Defer fetching the (multi-MB) video until the player is near the
+  // viewport, so it doesn't compete with above-the-fold resources.
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setInView(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const markReady = () => setStatus("ready");
   const markError = () => setStatus("error");
@@ -44,8 +67,9 @@ export function VideoPlayer({
       {status === "error" && <VideoErrorOverlay onRetry={handleRetry} />}
       <video
         ref={videoRef}
-        src={src}
+        src={inView ? src : undefined}
         poster={resolvedPoster}
+        preload="none"
         controls
         muted
         playsInline
