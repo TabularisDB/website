@@ -4442,6 +4442,33 @@ pre {
   }
 }
 
+/* CLOSING CTA */
+.closing-cta__card {
+  padding: 2.5rem 2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  background: var(--card-surface);
+  box-shadow: var(--card-surface-inset);
+}
+.closing-cta__title {
+  font-size: 1.6rem;
+  color: var(--text-bright);
+  margin-bottom: 0.75rem;
+}
+.closing-cta__title::before {
+  content: none;
+}
+.closing-cta__lede {
+  color: var(--text-muted);
+  max-width: 620px;
+  margin-bottom: 1.75rem;
+}
+@media (max-width: 640px) {
+  .closing-cta__card {
+    padding: 1.75rem 1.25rem;
+  }
+}
+
 /* WIKI EDIT LINK */
 .wiki-edit-link-container {
   margin-top: 2rem;

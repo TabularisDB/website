@@ -11,6 +11,7 @@ import { getAllPlugins } from "@/lib/plugins";
 
 import { SiteHeader } from "@/components/SiteHeader";
 import { HomeHero } from "@/components/HomeHero";
+import { ClosingCta } from "@/components/ClosingCta";
 import { PluginBountyTeaser } from "@/components/PluginBountyTeaser";
 import { HomeDriverStatus } from "@/components/HomeDriverStatus";
 import { SponsorsSection, IconExternalLink, IconArrow } from "@/components/SponsorsSection";
@@ -871,6 +872,9 @@ export default function HomePage() {
           </a>
         </div>
       </section>
+
+      {/* CLOSING CTA */}
+      <ClosingCta />
 
       <Footer />
     </div>
