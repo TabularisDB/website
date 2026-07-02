@@ -4,7 +4,7 @@ import path from "path";
 import { JsonLd } from "@/components/JsonLd";
 import { marked } from "@/lib/markdown";
 import { Footer } from "@/components/Footer";
-import { DiscordIcon } from "@/components/Icons";
+import { CtaSocialLinks } from "@/components/CtaSocialLinks";
 import { getAllPosts } from "@/lib/posts";
 import { PostCard } from "@/components/PostCard";
 import { getAllPlugins } from "@/lib/plugins";
@@ -851,30 +851,10 @@ export default function HomePage() {
         </p>
       </section>
 
-      {/* COMMUNITY */}
-      <section className="section">
-        <h2>Community</h2>
-        <p>
-          Join the <strong>Discord server</strong> to talk with maintainers,
-          share feedback, report friction, and help shape the roadmap.
-        </p>
-        <div style={{ marginTop: "2rem" }}>
-          <a
-            href="https://discord.com/invite/K2hmhfHRSt"
-            className="discord-btn"
-            style={{
-              padding: "0.75rem 1.5rem",
-              fontSize: "1rem",
-            }}
-          >
-            <DiscordIcon size={20} />
-            <span>Join Discord</span>
-          </a>
-        </div>
-      </section>
-
       {/* CLOSING CTA */}
-      <ClosingCta />
+      <ClosingCta>
+        <CtaSocialLinks />
+      </ClosingCta>
 
       <Footer />
     </div>

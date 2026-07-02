@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/JsonLd";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
+import { ClosingCta } from "@/components/ClosingCta";
+import { CtaSocialLinks } from "@/components/CtaSocialLinks";
 import { buildBreadcrumbJsonLd } from "@/lib/seo";
 import {
   getAllInitiativeSlugs,
@@ -194,6 +196,13 @@ export default async function InitiativePage({ params }: PageProps) {
             dangerouslySetInnerHTML={{ __html: html }}
           />
         </section>
+
+        <ClosingCta
+          title="Help shape this roadmap"
+          lede="The best feedback comes from real usage. Tabularis is free and open source (Apache 2.0) — download it, try it on your databases, and tell us what should come next. A star on GitHub supports the project too."
+        >
+          <CtaSocialLinks />
+        </ClosingCta>
       </main>
 
       <Footer />

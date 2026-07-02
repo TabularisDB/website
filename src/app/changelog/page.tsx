@@ -3,6 +3,8 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { GitHubIcon } from "@/components/Icons";
+import { ClosingCta } from "@/components/ClosingCta";
+import { CtaSocialLinks } from "@/components/CtaSocialLinks";
 import { getChangelog, type ChangelogVersion, type SectionType } from "@/lib/changelog";
 
 export const metadata: Metadata = {
@@ -131,15 +133,15 @@ export default function ChangelogPage() {
           ))}
         </div>
 
-        <div className="cta-strip">
-          <a className="btn-cta" href="https://github.com/TabularisDB/tabularis">
-            <GitHubIcon size={16} />
-            Star on GitHub
-          </a>
+        <ClosingCta
+          title="Get the latest version"
+          lede="Every release above ships to Windows, macOS, and Linux. Tabularis is free and open source (Apache 2.0) — and a star on GitHub helps more developers discover it."
+        >
           <Link className="btn-cta" href="/blog">
             Read the Blog
           </Link>
-        </div>
+          <CtaSocialLinks />
+        </ClosingCta>
       </section>
 
       <Footer />

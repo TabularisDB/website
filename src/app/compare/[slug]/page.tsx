@@ -7,6 +7,8 @@ import { Footer } from "@/components/Footer";
 import { WikiContent } from "@/components/WikiContent";
 import { ComparisonTable } from "@/components/ComparisonTable";
 import { SeoCapture } from "@/components/SeoCapture";
+import { ClosingCta } from "@/components/ClosingCta";
+import { CtaSocialLinks } from "@/components/CtaSocialLinks";
 import {
   getAdjacentSeoPages,
   getSeoPageBySlug,
@@ -95,17 +97,15 @@ export default async function CompareDetailPage({ params }: PageProps) {
 
         <SeoCapture section="compare" title={page.meta.title} />
 
-        <div className="post-footer-cta">
-          <p>Compare on your own workflow with the desktop app and docs.</p>
-          <div className="cta-links">
-            <Link className="btn-cta" href="/download">
-              Download Tabularis
-            </Link>
-            <Link className="btn-cta discord" href="/wiki">
-              Read the docs
-            </Link>
-          </div>
-        </div>
+        <ClosingCta
+          title="Run the comparison on your own workflow"
+          lede="The honest benchmark is your own database. Tabularis is free and open source (Apache 2.0) — download it, connect it to a real project, and see how it compares."
+        >
+          <Link className="btn-cta" href="/wiki">
+            Read the docs
+          </Link>
+          <CtaSocialLinks />
+        </ClosingCta>
 
         <nav className="post-nav">
           <div className="post-nav-item post-nav-prev">

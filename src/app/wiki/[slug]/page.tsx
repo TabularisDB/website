@@ -3,11 +3,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/JsonLd";
 import { SiteHeader } from "@/components/SiteHeader";
-import { GitHubIcon, DiscordIcon } from "@/components/Icons";
+import { GitHubIcon } from "@/components/Icons";
+import { CtaSocialLinks } from "@/components/CtaSocialLinks";
 import { ShareButton } from "@/components/ShareButton";
 import { WikiLayout } from "@/components/WikiLayout";
 import { WikiTableOfContents } from "@/components/WikiTableOfContents";
 import { WikiContent } from "@/components/WikiContent";
+import { ClosingCta } from "@/components/ClosingCta";
 import { Footer } from "@/components/Footer";
 import {
   getAllWikiPages,
@@ -122,23 +124,13 @@ export default async function WikiPageDetail({ params }: PageProps) {
           </a>
         </div>
 
-        <div className="post-footer-cta">
-          <p>Need more help? Join our community or check the source code.</p>
-          <div className="cta-links">
-            <a className="btn-cta" href="https://github.com/TabularisDB/tabularis">
-              <GitHubIcon size={15} />
-              Star on GitHub
-            </a>
-            <a
-              className="btn-cta discord"
-              href="https://discord.com/invite/K2hmhfHRSt"
-            >
-              <DiscordIcon size={15} />
-              Join Discord
-            </a>
-            <ShareButton />
-          </div>
-        </div>
+        <ClosingCta
+          title="Reading the docs without the app?"
+          lede="Tabularis is free and open source (Apache 2.0). Download it and try this workflow against a real database — and if the docs helped, a star on GitHub goes a long way."
+        >
+          <CtaSocialLinks />
+          <ShareButton />
+        </ClosingCta>
 
         <nav className="post-nav">
           <div className="post-nav-item post-nav-prev">

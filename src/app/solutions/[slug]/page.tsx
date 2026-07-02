@@ -6,6 +6,8 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { WikiContent } from "@/components/WikiContent";
 import { SeoCapture } from "@/components/SeoCapture";
+import { ClosingCta } from "@/components/ClosingCta";
+import { CtaSocialLinks } from "@/components/CtaSocialLinks";
 import {
   getAdjacentSeoPages,
   getSeoPageBySlug,
@@ -97,17 +99,15 @@ export default async function SolutionDetailPage({ params }: PageProps) {
 
         <SeoCapture section="solutions" title={page.meta.title} />
 
-        <div className="post-footer-cta">
-          <p>Try the workflow locally or dig into the product docs.</p>
-          <div className="cta-links">
-            <Link className="btn-cta" href="/download">
-              Download Tabularis
-            </Link>
-            <Link className="btn-cta discord" href="/wiki">
-              Read the docs
-            </Link>
-          </div>
-        </div>
+        <ClosingCta
+          title="Try this workflow locally"
+          lede="Tabularis is free and open source (Apache 2.0). Download it for your platform and test it against a real development database — a star on GitHub helps more developers find it."
+        >
+          <Link className="btn-cta" href="/wiki">
+            Read the docs
+          </Link>
+          <CtaSocialLinks />
+        </ClosingCta>
 
         <nav className="post-nav">
           <div className="post-nav-item post-nav-prev">

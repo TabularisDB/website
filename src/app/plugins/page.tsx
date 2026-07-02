@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { PluginBountyTeaser } from "@/components/PluginBountyTeaser";
+import { ClosingCta } from "@/components/ClosingCta";
+import { CtaSocialLinks } from "@/components/CtaSocialLinks";
 import { getAllPlugins, getLatestRelease } from "@/lib/plugins";
 
 export const metadata: Metadata = {
@@ -148,6 +150,13 @@ export default function PluginsPage() {
             Read the Plugin Guide &rarr;
           </a>
         </div>
+
+        <ClosingCta
+          title="Plugins need the app first"
+          lede="Every driver above installs in one click from Settings → Plugins. Tabularis is free and open source (Apache 2.0) — download it and extend it with the engines you actually use."
+        >
+          <CtaSocialLinks />
+        </ClosingCta>
       </section>
 
       <Footer />

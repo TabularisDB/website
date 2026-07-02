@@ -4,8 +4,9 @@ import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/JsonLd";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
-import { GitHubIcon, DiscordIcon, XBrandIcon, BlueskyIcon } from "@/components/Icons";
 import { ShareButton } from "@/components/ShareButton";
+import { ClosingCta } from "@/components/ClosingCta";
+import { CtaSocialLinks } from "@/components/CtaSocialLinks";
 import { PostContentLightbox } from "@/components/PostContentLightbox";
 import {
   getAllPosts,
@@ -155,41 +156,13 @@ export default async function BlogPostPage({ params }: PageProps) {
 
       <RelatedLinks title="Related Guides" links={relatedLinks} />
 
-      <div className="post-footer-cta">
-        <p>
-          Enjoyed this post? Try Tabularis, star the repo, or join the
-          community.
-        </p>
-        <div className="cta-links">
-          <a className="btn-cta" href="https://github.com/TabularisDB/tabularis">
-            <GitHubIcon size={15} />
-            Star on GitHub
-          </a>
-          <a className="btn-cta discord" href="https://discord.com/invite/K2hmhfHRSt">
-            <DiscordIcon size={15} />
-            Join Discord
-          </a>
-          <a
-            className="btn-cta"
-            href="https://bsky.app/profile/tabularis.bsky.social"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <BlueskyIcon size={15} />
-            Bluesky
-          </a>
-          <a
-            className="btn-cta"
-            href="https://x.com/tabularisdb"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <XBrandIcon size={15} />
-            Follow on X
-          </a>
-          <ShareButton />
-        </div>
-      </div>
+      <ClosingCta
+        title="Enjoyed this post? Try Tabularis."
+        lede="Free and open source (Apache 2.0). Download it for Windows, macOS, or Linux — and if you like what you read, a star on GitHub helps more developers discover it."
+      >
+        <CtaSocialLinks />
+        <ShareButton />
+      </ClosingCta>
 
       <NewsletterForm compact />
 

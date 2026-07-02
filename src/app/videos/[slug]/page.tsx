@@ -6,6 +6,8 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { VideoPlayer } from "@/components/VideoPlayer";
+import { ClosingCta } from "@/components/ClosingCta";
+import { CtaSocialLinks } from "@/components/CtaSocialLinks";
 import { getAllVideoDemos, getVideoDemoBySlug } from "@/lib/videos";
 import {
   buildBreadcrumbJsonLd,
@@ -87,21 +89,15 @@ export default async function VideoDemoPage({ params }: PageProps) {
           ariaLabel={video.title}
         />
 
-        <div className="video-demo-copy">
-          <p>
-            This demo is a quick way to evaluate the workflow before installing
-            Tabularis locally. If it matches your use case, download the desktop
-            app and test it against a real development database.
-          </p>
-          <div className="cta-links">
-            <Link className="btn-cta" href="/download">
-              Download Tabularis
-            </Link>
-            <Link className="btn-cta discord" href={video.relatedHref}>
-              {video.relatedLabel}
-            </Link>
-          </div>
-        </div>
+        <ClosingCta
+          title="Like what you just saw?"
+          lede="This demo is a quick way to evaluate the workflow before installing Tabularis locally. If it matches your use case, download the desktop app and test it against a real development database."
+        >
+          <Link className="btn-cta" href={video.relatedHref}>
+            {video.relatedLabel}
+          </Link>
+          <CtaSocialLinks />
+        </ClosingCta>
 
         <NewsletterForm
           compact

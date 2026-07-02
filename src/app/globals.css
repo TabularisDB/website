@@ -4443,6 +4443,9 @@ pre {
 }
 
 /* CLOSING CTA */
+.closing-cta {
+  margin-top: 3rem;
+}
 .closing-cta__card {
   padding: 2.5rem 2rem;
   border: 1px solid var(--border);
@@ -4462,6 +4465,11 @@ pre {
   color: var(--text-muted);
   max-width: 620px;
   margin-bottom: 1.75rem;
+}
+.closing-cta__secondary {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
 }
 @media (max-width: 640px) {
   .closing-cta__card {
