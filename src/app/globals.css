@@ -6037,51 +6037,206 @@ pre {
   text-overflow: ellipsis;
 }
 
-/* 404 NOT FOUND PAGE */
-.not-found-page {
+/* 404 NOT FOUND PAGE — hero-style layout: copy left, SQL window right */
+.nf-hero {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  align-items: center;
+  gap: 3.5rem;
+  padding: 5rem 0 4rem;
+}
+
+.nf-hero-copy {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 5rem 0 4rem;
-  gap: 1.25rem;
 }
 
-.not-found-code {
+.nf-badge-error {
+  color: var(--error);
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.nf-title {
+  font-size: 2.8rem;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--text-bright);
+  margin-bottom: 1.25rem;
+}
+
+.nf-desc {
+  font-size: 0.98rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 1.75rem;
+  max-width: 30rem;
+}
+
+.nf-hero-visual {
+  min-width: 0;
+}
+
+/* Fake SQL editor window */
+.nf-window {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  background: var(--card-surface);
+  box-shadow:
+    var(--card-surface-inset),
+    0 24px 60px -24px rgba(59, 130, 246, 0.25),
+    var(--shadow-lg);
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .nf-hero {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding: 3rem 0;
+  }
+  .nf-title {
+    font-size: 2.1rem;
+  }
+}
+
+.nf-window-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(17, 18, 20, 0.85);
+}
+
+.nf-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+.nf-dot--red {
+  background: #f87171;
+}
+.nf-dot--yellow {
+  background: #fbbf24;
+}
+.nf-dot--green {
+  background: #34d399;
+}
+
+.nf-window-title {
+  margin-left: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.nf-window-body {
+  padding: 1.4rem 1.5rem 1.5rem;
+}
+
+.nf-sql {
+  margin: 0 0 1.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text-main);
+}
+
+.nf-line {
   display: flex;
   align-items: baseline;
-  gap: 0.5rem;
-  line-height: 1;
 }
 
-.not-found-prompt {
-  font-size: 2rem;
-  color: var(--accent);
-  font-family: var(--font-mono);
-  opacity: 0.5;
-}
-
-.not-found-number {
-  font-size: 6rem;
-  font-weight: 700;
-  color: var(--accent);
-  font-family: var(--font-mono);
-  letter-spacing: -0.04em;
-  line-height: 1;
-}
-
-.not-found-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--text-bright);
-  letter-spacing: -0.02em;
-  margin: 0;
-}
-
-.not-found-description {
-  font-size: 0.95rem;
+.nf-line-no {
+  flex: 0 0 auto;
+  width: 1.5ch;
+  margin-right: 1.25rem;
+  text-align: right;
   color: var(--text-muted);
-  margin: 0;
-  max-width: 36rem;
+  opacity: 0.45;
+  font-size: 0.85em;
+  user-select: none;
+}
+
+.nf-line-code {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.nf-sql-kw {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.nf-sql-string {
+  color: #34d399;
+}
+
+.nf-result {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.nf-result-time {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.nf-result-badge {
+  padding: 0.15rem 0.55rem;
+  border-radius: 6px;
+  background: rgba(239, 68, 68, 0.14);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #f87171;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+}
+
+.nf-result-text {
+  color: var(--text-bright);
+  font-size: 0.9rem;
+}
+
+.nf-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  margin-left: 3px;
+  vertical-align: text-bottom;
+  background: var(--text-bright);
+  animation: nf-caret-blink 1.1s steps(1) infinite;
+}
+
+@keyframes nf-caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.nf-hint {
+  margin-top: 0.7rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.nf-hint-label {
+  color: var(--warning);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nf-caret {
+    animation: none;
+  }
 }
 
 .not-found-nav {
