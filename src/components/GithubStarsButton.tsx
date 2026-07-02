@@ -5,6 +5,7 @@ interface GithubStarsButtonProps {
   href?: string;
   compact?: boolean;
   label?: string;
+  onClick?: () => void;
 }
 
 export function GithubStarsButton({
@@ -12,6 +13,7 @@ export function GithubStarsButton({
   href = "https://github.com/TabularisDB/tabularis",
   compact = false,
   label = "GitHub",
+  onClick,
 }: GithubStarsButtonProps) {
   return (
     <a
@@ -19,6 +21,7 @@ export function GithubStarsButton({
       target="_blank"
       rel="noopener noreferrer"
       className={`github-stars-btn${compact ? " github-stars-btn--compact" : ""}`}
+      onClick={onClick}
       aria-label={
         stars !== null
           ? `Tabularis on GitHub (${stars} stars)`

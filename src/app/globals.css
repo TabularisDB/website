@@ -1007,7 +1007,7 @@ pre {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  padding: 0 0.85rem;
+  padding: 0 0.9rem;
   border-left: 1px solid rgba(148, 163, 184, 0.22);
   background: rgba(30, 32, 36, 0.6);
   color: #facc15;
@@ -7689,6 +7689,52 @@ footer {
   color: var(--text-muted);
   line-height: 1.7;
   margin: 0;
+}
+
+.dl-star-banner {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem 1.75rem;
+  border: 1px solid var(--border);
+  border-left: 4px solid #facc15;
+  border-radius: var(--card-radius);
+  background: var(--card-surface);
+  box-shadow: var(--card-surface-inset);
+}
+.dl-star-banner__mark {
+  display: inline-flex;
+  flex: 0 0 auto;
+  color: #facc15;
+}
+.dl-star-banner__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1 1 auto;
+}
+.dl-star-banner__body strong {
+  font-size: 1.05rem;
+  color: var(--text-bright);
+}
+.dl-star-banner__body span {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+/* The button clips overflow, so any flex compression eats its right padding. */
+.dl-star-banner .github-stars-btn {
+  flex: 0 0 auto;
+}
+@media (max-width: 640px) {
+  .dl-star-banner {
+    flex-wrap: wrap;
+  }
+  .dl-star-banner .github-stars-btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 .dl-thankyou-cards {
