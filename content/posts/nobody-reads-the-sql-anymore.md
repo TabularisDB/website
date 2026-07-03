@@ -41,7 +41,7 @@ This is, honestly, a big part of why I build Tabularis the way I do. The [visual
 
 <video src="/videos/wiki/05-visual-explain.mp4" poster="/videos/wiki/05-visual-explain.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture style="width:100%;border-radius:8px;margin:1rem 0"></video>
 
-*(There is a longer walkthrough on the [demo page](/videos/visual-explain).)*
+*(There is a longer walkthrough in the [visual EXPLAIN wiki page](/wiki/visual-explain).)*
 
 Note that none of this is an anti-AI position — there is a model in the loop right there in the previous paragraph. The position is narrower: **generation without inspection is debt**, and since the generation became effortless, the inspection has to become effortless too, otherwise it simply stops happening. Which is what we are watching happen.
 
