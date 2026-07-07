@@ -221,6 +221,31 @@ export const SPONSORS: Sponsor[] = [
         "1Password gives qualifying open-source projects a free Teams plan. Apply through their open-source program and manage your project's secrets the way larger teams do.",
     },
   },
+  {
+    id: "jetbrains",
+    name: "JetBrains",
+    tagline: "Professional developer tools — IntelliJ IDEA, WebStorm, DataGrip and the rest of the All Products Pack.",
+    url: "https://www.jetbrains.com",
+    accentColor: "#000000",
+    highlightColor: "#e5e7eb",
+    ctaTextColor: "#ffffff",
+    logoImg: "/img/sponsors/jetbrains.png",
+    logoImgCompact: "/img/sponsors/jetbrains_compact.png",
+    modalDescription:
+      "JetBrains makes the IDEs a huge share of professional developers reach for every day — IntelliJ IDEA, WebStorm, PyCharm, GoLand, RustRover and the rest of the lineup, all built on the same fast, deeply-integrated tooling philosophy. Tabularis was accepted into the JetBrains Open Source Support program, which provides maintainers with a free All Products Pack license to build with the same tools their users rely on.",
+    features: [
+      { icon: "🧠", text: "IntelliJ-based IDEs for every language — one philosophy, many tools" },
+      { icon: "🔍", text: "Deep static analysis, refactoring and debugging built in" },
+      { icon: "🧩", text: "All Products Pack — every JetBrains IDE under one license" },
+      { icon: "🤝", text: "Long-running Open Source Support program for maintainers" },
+      { icon: "❤️", text: "The Drive to Develop" },
+    ],
+    offer: {
+      title: "Free All Products Pack for the Tabularis maintainers",
+      description:
+        "JetBrains is providing Tabularis maintainers with a free annual All Products Pack subscription, covering the full suite of JetBrains IDEs.",
+    },
+  },
 ];
 
 // GitHub Sponsors tiers — https://github.com/sponsors/debba
