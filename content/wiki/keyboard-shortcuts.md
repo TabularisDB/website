@@ -18,10 +18,12 @@ Tabularis ships with a set of keyboard shortcuts for common actions across navig
 | Action | macOS | Windows / Linux |
 | :--- | :--- | :--- |
 | Quick Navigator (search tables, views, routines, triggers) | `⌘+P` | `Ctrl+P` |
+| Focus the sidebar table filter | `⌘+Shift+F` | `Ctrl+Shift+F` |
 | Toggle sidebar | `⌘+B` | `Ctrl+B` |
 | Open connections page | `⌘+Shift+C` | `Ctrl+Shift+C` |
 | New connection (opens modal) | `⌘+Shift+N` | `Ctrl+Shift+N` |
 | Switch to Nth open connection | `⌘+Shift+1–9` | `Ctrl+Shift+1–9` |
+| Paste / import from clipboard | `⌘+Shift+V` | `Ctrl+Shift+V` |
 
 ---
 
@@ -32,6 +34,7 @@ Tabularis ships with a set of keyboard shortcuts for common actions across navig
 | Run query | `⌘+F5` | `Ctrl+F5` |
 | Run query (from Monaco editor) | `⌘+Enter` | `Ctrl+Enter` |
 | New console tab | `⌘+T` | `Ctrl+T` |
+| Close current tab | `⌘+W` | `Ctrl+W` |
 | Switch tab (circular) | `Ctrl+Tab` | `Ctrl+Tab` |
 | Copy selection | `⌘+C` | `Ctrl+C` |
 | Multi-Cursor (click) | `⌘+Click` | `Ctrl+Click` |
@@ -57,6 +60,7 @@ Tabularis ships with a set of keyboard shortcuts for common actions across navig
 | :--- | :--- | :--- |
 | Next page | `⌘+→` | `Ctrl+→` |
 | Previous page | `⌘+←` | `Ctrl+←` |
+| Save grid changes | `⌘+S` | `Ctrl+S` |
 
 ---
 

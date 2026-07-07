@@ -161,12 +161,19 @@ Full reference: [Kubernetes Tunneling](/wiki/kubernetes-tunneling).
 
 ## Connection Actions
 
-Right-click any connection in the sidebar for:
+Right-click any connection — in the sidebar or on the Connections page — for:
 
 - **Edit** — modify any field, including switching the SSH profile
 - **Duplicate** — clone the profile with a new name and ID
 - **Delete** — removes the profile from `connections.json` and the associated keychain entry
 - **Disconnect** — closes the active connection pool and SSH tunnel without deleting the profile
+- **Open in New Window** — opens the connection in its own standalone window (see below)
+
+### Open in New Window
+
+**Open in New Window** spins a connection out into its own OS window — useful for keeping one database on a second monitor while you work in the main window. Tabularis **test-connects first** and only creates the window on success, so a failing connection surfaces its error where you triggered it rather than in a freshly-opened empty window.
+
+A connection opened this way is **owned** by its window and detaches from the originating sidebar rail (its underlying pool stays warm and is reused). Open state is shared across every window — a connection open anywhere shows as open on every window's Connections page. Disconnecting closes the dedicated window; the main window is never auto-closed. Closing a dedicated window tears its connection down so nothing leaks.
 
 ## Per-Connection Appearance
 
@@ -206,6 +213,12 @@ Cross-database references use fully qualified names (`database_name.table_name`)
 The connection format accepts either a plain string (`"mydb"`) or an array (`["db1", "db2", "db3"]`). Existing single-database connections continue to work without any changes.
 
 This feature applies only to drivers that support cross-database access from a single connection. SQLite (file-based) and PostgreSQL (schema-based) are unaffected.
+
+### Cleartext Password Plugin (MySQL bastions)
+
+Some MySQL proxies — notably [Warpgate](https://github.com/warp-tech/warpgate) — require the `mysql_clear_password` auth plugin and do not implement the prepared-statement protocol, so ordinary prepared queries fail with server error 1047. Enable **Cleartext password plugin** in the MySQL connection's advanced options to authenticate through them; when it's on, the driver routes every statement through the text protocol instead of preparing it.
+
+Because the plugin sends the password in cleartext, the toggle is only available when an **enforced** TLS mode is selected (`require`, `verify-ca`, or `verify-full`) — `prefer` and `disable` are rejected, since they can silently fall back to an unencrypted link.
 
 ## Multi-Schema Support (PostgreSQL)
 

@@ -53,6 +53,17 @@ Expand a view in the sidebar to see its output columns. Each column shows:
 
 This information is fetched via the driver's `get_view_columns` command, which queries `INFORMATION_SCHEMA.COLUMNS` (or the driver-equivalent catalog).
 
+## Materialized Views (PostgreSQL)
+
+PostgreSQL materialized views are browsed in their own **Materialized Views** section in the sidebar, separate from regular views and collapsed by default. The section only appears when the connection's driver reports support for them, so MySQL and SQLite connections never show an empty group.
+
+![The Materialized Views group in the Explorer sidebar, listed separately from Views, Triggers, and Routines](/img/tabularis-materialized-views-sidebar.png)
+
+- **Browse columns and indexes** — expand a materialized view to see its columns; its indexes render with the same list Tabularis uses for tables.
+- **Open the data** — double-click to load the materialized data in the Data Grid. Because a materialized view holds a stored snapshot rather than a live query, it is **read-only** in the grid — inline editing is disabled.
+- **Refresh** — refreshing runs `REFRESH MATERIALIZED VIEW` and shows an in-flight spinner on the item until the server finishes.
+- **Active schema** — materialized views are resolved against the schema currently selected in the sidebar header (see [Multi-Schema Support](/wiki/connections#multi-schema-support-postgresql)).
+
 ## Driver Support
 
 | Feature | PostgreSQL | MySQL / MariaDB | SQLite |
@@ -63,3 +74,4 @@ This information is fetched via the driver's `get_view_columns` command, which q
 | Create view | Yes | Yes | Yes |
 | Alter view | Yes | Yes | Yes |
 | Drop view | Yes | Yes | Yes |
+| Materialized views | Yes | — | — |

@@ -146,6 +146,18 @@ A statement that returns no result set — `INSERT`/`UPDATE`/`DELETE` or DDL suc
 
 When running multiple queries that contain `:param` placeholders, Tabularis collects parameters across all queries and prompts you **once** via the parameters modal before execution begins.
 
+### Destructive Query Confirmation
+
+Both the SQL editor and notebook cells guard against the queries that are easiest to regret. Before it runs a `DELETE` or `UPDATE` with **no `WHERE` clause**, or a `DROP` or `TRUNCATE`, Tabularis pops a confirmation dialog with kind-specific copy and a read-only preview of the exact statement it flagged. The confirm button stays disabled for a **five-second countdown** so the warning is actually read.
+
+The detection is not a naïve substring match — it ignores comments and string literals (including backslash-escaped quotes), understands data-modifying CTEs, and handles multi-statement batches.
+
+### Total Row Count
+
+The pager shows the exact size of the current result — `{total} rows` next to the page indicator — counted against the *reconstructed filtered query*, so a filtered grid reports the filtered total rather than the base table's. The count resets when the query or filter changes and is preserved across pagination.
+
+![A filtered grid showing the total row count next to the page indicator](/img/posts/tabularis-total-row-count.png)
+
 ## Query Splitting
 
 Tabularis splits multi-statement SQL with its own **dialect-aware splitter** — a tokenizer that understands the quoting and block rules of each engine (`postgres`, `mysql`, `mssql`, `sqlite`, `oracle`, and a `generic` fallback) rather than naively breaking on every `;`. It correctly handles stored procedures and functions that contain internal semicolons:

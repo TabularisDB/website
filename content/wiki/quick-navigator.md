@@ -17,7 +17,7 @@ Press `⌘+P` (macOS) or `Ctrl+P` (Windows/Linux) while a connection is open. Th
 
 ## What It Searches
 
-The navigator filters **tables, views, routines, and triggers** as you type. When the overlay opens, Tabularis resolves and indexes *all* databases and schemas configured for the active connection in the background:
+The navigator filters **tables, views, routines, and triggers** as you type, using **typo-tolerant fuzzy matching** — a misspelling like `ordrs` still finds `orders`, and the closest names rank first. When the overlay opens, Tabularis resolves and indexes *all* databases and schemas configured for the active connection in the background:
 
 - A [multi-database MySQL/MariaDB connection](/wiki/connections#multi-database-support-mysql--mariadb) is searched across every selected database.
 - A [multi-schema PostgreSQL connection](/wiki/connections#multi-schema-support-postgresql) is searched across every visible schema.
