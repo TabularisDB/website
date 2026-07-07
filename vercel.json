@@ -11,6 +11,11 @@
       "source": "/blog/digitalocean-open-source-credits",
       "destination": "/blog/digitalocean-opensource-sponsorship",
       "permanent": true
+    },
+    {
+      "source": "/blog/jetbrains-open-source-support",
+      "destination": "/blog/jetbrains-open-source-program",
+      "permanent": true
     }
   ],
   "headers": [
