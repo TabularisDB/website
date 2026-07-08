@@ -10,7 +10,9 @@ const ALERT_ICON_SVG = `<svg ${SVG_DEFAULTS} class="lucide lucide-triangle-alert
 
 const RETRY_ICON_SVG = `<svg ${SVG_DEFAULTS} class="lucide lucide-rotate-cw video-error-retry-icon" aria-hidden="true"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>`;
 
-const LOADER_HTML = `<div class="video-loader" aria-hidden="true">${LOADER_ICON_SVG}</div>`;
+// Emitted hidden: nothing is loading until the client-side lazy loader
+// (videoLoader.ts) swaps data-src in when the video nears the viewport.
+const LOADER_HTML = `<div class="video-loader" hidden aria-hidden="true">${LOADER_ICON_SVG}</div>`;
 
 const ERROR_HTML = `<div class="video-error" hidden role="alert">${ALERT_ICON_SVG}<p class="video-error-text">Video unavailable</p><button type="button" class="video-error-retry">${RETRY_ICON_SVG}Retry</button></div>`;
 
@@ -22,6 +24,18 @@ export function wrapVideosInHtml(html: string): string {
       if (!/\bposter=/i.test(updatedAttrs)) {
         const m = updatedAttrs.match(/\bsrc=["']([^"']+\.mp4)["']/i);
         if (m) updatedAttrs += ` poster="${m[1].replace(/\.mp4$/, ".jpg")}"`;
+      }
+      // Defer fetching the (multi-MB) video until it nears the viewport:
+      // autoplay becomes data-autoplay (restored client-side by
+      // enhanceWrappedVideo via IntersectionObserver), and preload="none"
+      // stops the browser from buffering ahead. src stays real so without
+      // JavaScript the video still plays natively via its controls.
+      updatedAttrs = updatedAttrs.replace(
+        /\bautoplay(?:=["'][^"']*["'])?/i,
+        'data-autoplay=""',
+      );
+      if (!/\bpreload=/i.test(updatedAttrs)) {
+        updatedAttrs += ' preload="none"';
       }
       return `<div class="video-wrapper">${LOADER_HTML}${ERROR_HTML}<video${updatedAttrs}>${content}</video></div>`;
     },

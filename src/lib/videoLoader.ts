@@ -56,6 +56,41 @@ export function enhanceWrappedVideo(video: HTMLVideoElement): void {
 
   attachEvents();
 
+  // Markdown-rendered videos ship with preload="none" and autoplay moved to
+  // data-autoplay (see markdownVideos.ts), so nothing downloads up front:
+  // restore autoplay only when the player nears the viewport, mirroring what
+  // VideoPlayer.tsx does for the /videos page. Without JavaScript the video
+  // still works natively — real src, controls, download starts on play.
+  const showLoader = () => {
+    loader.hidden = false;
+  };
+  if (video.dataset.autoplay !== undefined) {
+    const startPlayback = () => {
+      showLoader();
+      video.autoplay = true;
+      delete video.dataset.autoplay;
+      video.play().catch(() => {});
+    };
+    if (typeof IntersectionObserver === "undefined") {
+      startPlayback();
+    } else {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            observer.disconnect();
+            startPlayback();
+          }
+        },
+        { rootMargin: "300px" },
+      );
+      observer.observe(wrapper);
+    }
+  } else {
+    // Click-to-play video: surface the spinner once loading actually starts.
+    video.addEventListener("loadstart", showLoader, { once: true });
+    if (video.networkState === HTMLMediaElement.NETWORK_LOADING) showLoader();
+  }
+
   const retryBtn = errorEl?.querySelector<HTMLButtonElement>(".video-error-retry");
   retryBtn?.addEventListener("click", () => {
     loader.hidden = false;
