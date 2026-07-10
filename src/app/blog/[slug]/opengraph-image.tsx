@@ -83,6 +83,7 @@ export default async function Image({
       claim: og.claim,
       image: og.image,
       appLabel: og.appLabel,
+      frameless: og.frameless,
       release,
     });
   }

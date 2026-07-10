@@ -23,6 +23,9 @@ export interface PostOg {
   codeLines?: string[];
   // screenshot-split template only: window title-bar label above the screenshot.
   appLabel?: string;
+  // screenshot-split template only: drop the border/shadow frame around the
+  // right-hand image — for transparent artwork (logos) instead of screenshots.
+  frameless?: boolean;
 }
 
 export interface PostMeta {

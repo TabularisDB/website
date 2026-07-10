@@ -13,7 +13,7 @@ og:
 
 # Tabularis Joins the JetBrains Open Source Program
 
-<p style="text-align:center;margin:1.5rem 0 2rem;"><img class="no-lightbox" src="/img/posts/jetbrains-partnership.svg" alt="Tabularis has joined the JetBrains Open Source Support program" style="width:100%;max-width:800px;height:auto;display:block;margin:0 auto;" /></p>
+<p style="text-align:center;margin:1.5rem 0 2rem;"><img class="no-lightbox borderless" src="/img/posts/jetbrains-partnership.svg" alt="Tabularis has joined the JetBrains Open Source Support program" style="width:100%;max-width:800px;height:auto;display:block;margin:0 auto;" /></p>
 
 There's a small loop closing here that we find genuinely funny: several of the people who write Tabularis do it inside a JetBrains IDE, and now JetBrains is backing the project on the other side of that screen. **We've been accepted into the [JetBrains Open Source Support program](https://www.jetbrains.com/community/opensource/)**, which comes with a free annual All Products Pack for the maintainers — every IDE they make, one license.
 

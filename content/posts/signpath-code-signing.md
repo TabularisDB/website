@@ -9,11 +9,12 @@ og:
   accent: "SignPath.io open source program."
   claim: "Tabularis joined the SignPath.io open source program — free code signing from the SignPath Foundation. Next up: wiring it into the release pipeline, so Windows builds ship signed instead of triggering SmartScreen."
   image: "/img/posts/signpath-og-shot.png"
+  frameless: true
 ---
 
 # Tabularis Joins the SignPath.io Open Source Program
 
-<p style="text-align:center;margin:1.5rem 0 2rem;"><img class="no-lightbox" src="/img/posts/signpath-partnership.svg" alt="Tabularis has joined the SignPath.io open source program" style="width:100%;max-width:800px;height:auto;display:block;margin:0 auto;" /></p>
+<p style="text-align:center;margin:1.5rem 0 2rem;"><img class="no-lightbox borderless" src="/img/posts/signpath-partnership.svg" alt="Tabularis has joined the SignPath.io open source program" style="width:100%;max-width:800px;height:auto;display:block;margin:0 auto;" /></p>
 
 If you've ever installed Tabularis on Windows, you've probably met the blue screen. Not *that* blue screen — the other one. "Windows protected your PC." The one where a perfectly ordinary open-source database client gets treated like something you downloaded from a forum signature in 2009, and the install instructions have to include the phrase *click "More info", then "Run anyway"*.
 

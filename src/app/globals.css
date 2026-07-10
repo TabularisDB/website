@@ -4616,6 +4616,13 @@ pre {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
+/* Opt-out for artwork that draws its own frame (e.g. partnership banners) */
+.post-content img.borderless {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
 .post-content video::-webkit-media-controls-volume-slider,
 .post-content video::-webkit-media-controls-volume-control-container,
 .post-content video::-webkit-media-controls-mute-button {

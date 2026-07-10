@@ -40,6 +40,8 @@ export interface ScreenshotSplitOgOptions {
   appLabel?: string;
   /** Optional version badge (e.g. "v0.13.4"). */
   release?: string;
+  /** Drop the border/shadow frame around the image — for transparent artwork. */
+  frameless?: boolean;
 }
 
 /**
@@ -54,6 +56,7 @@ export async function renderScreenshotSplitOgImage({
   claim,
   image,
   release,
+  frameless,
 }: ScreenshotSplitOgOptions): Promise<ImageResponse> {
   const logoSrc = readPublicImage("/img/logo.png");
   const shotSrc = image ? readPublicImage(image) : null;
@@ -275,10 +278,14 @@ export async function renderScreenshotSplitOgImage({
               height: "520px",
               overflow: "hidden",
               alignItems: "center",
-              border: "1px solid rgba(255,255,255,0.1)",
-              borderRight: "none",
-              borderRadius: "12px 0 0 12px",
-              boxShadow: "0 30px 80px rgba(0,0,0,0.5)",
+              ...(frameless
+                ? {}
+                : {
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    borderRight: "none",
+                    borderRadius: "12px 0 0 12px",
+                    boxShadow: "0 30px 80px rgba(0,0,0,0.5)",
+                  }),
             }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
