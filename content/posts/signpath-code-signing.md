@@ -1,17 +1,17 @@
 ---
-title: "Our Windows Installer Is About to Stop Looking Suspicious"
+title: "Tabularis Joins the SignPath.io Open Source Program"
 date: "2026-07-10T09:00:00"
 tags: ["community", "sponsors", "partnership", "open-source", "windows"]
 excerpt: "Tabularis has been accepted into the SignPath.io open source program: a free code signing certificate from the SignPath Foundation for our Windows releases. Over the next few weeks we'll wire signing into the release pipeline — and then the days of telling users to click 'More info → Run anyway' are over."
 og:
   template: "screenshot-split"
-  title: "Our Windows installer is about"
-  accent: "to stop looking suspicious."
+  title: "Tabularis joins the"
+  accent: "SignPath.io open source program."
   claim: "Tabularis joined the SignPath.io open source program — free code signing from the SignPath Foundation. Next up: wiring it into the release pipeline, so Windows builds ship signed instead of triggering SmartScreen."
   image: "/img/posts/signpath-og-shot.png"
 ---
 
-# Our Windows Installer Is About to Stop Looking Suspicious
+# Tabularis Joins the SignPath.io Open Source Program
 
 <p style="text-align:center;margin:1.5rem 0 2rem;"><img class="no-lightbox" src="/img/posts/signpath-partnership.svg" alt="Tabularis has joined the SignPath.io open source program" style="width:100%;max-width:800px;height:auto;display:block;margin:0 auto;" /></p>
 
