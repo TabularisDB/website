@@ -246,6 +246,31 @@ export const SPONSORS: Sponsor[] = [
         "JetBrains is providing Tabularis maintainers with a free annual All Products Pack subscription, covering the full suite of JetBrains IDEs.",
     },
   },
+  {
+    id: "signpath",
+    name: "SignPath",
+    tagline: "Code signing for open source — signed Windows releases without the certificate bill.",
+    url: "https://signpath.io",
+    accentColor: "#00BAF2",
+    highlightColor: "#33C9F5",
+    logoImg: "/img/sponsors/signpath.png",
+    logoImgCompact: "/img/sponsors/signpath_compact.png",
+    logoImgBg: "#ffffff",
+    modalDescription:
+      "SignPath.io is a code signing platform that keeps private keys on Hardware Security Modules and plugs signing directly into CI pipelines — no USB tokens, no keys on build machines. Through the SignPath Foundation, it provides free code signing certificates to qualifying open source projects, verifying that every signed binary was built from the project's public repository. Tabularis was accepted into the program, and its Windows releases now ship signed.",
+    features: [
+      { icon: "✍️", text: "Free code signing certificates for open source projects" },
+      { icon: "🔐", text: "Private keys on HSMs — never on build machines or USB tokens" },
+      { icon: "⚙️", text: "Signing integrated into CI — every release signed automatically" },
+      { icon: "🔍", text: "Verified builds — signed binaries provably come from the public repo" },
+      { icon: "🛡️", text: "No more \"unknown publisher\" warnings on Windows installers" },
+    ],
+    offer: {
+      title: "Free code signing for open source",
+      description:
+        "SignPath Foundation issues free code signing certificates to qualifying open source projects. Apply through their program and ship signed releases without buying a certificate.",
+    },
+  },
 ];
 
 // GitHub Sponsors tiers — https://github.com/sponsors/debba
