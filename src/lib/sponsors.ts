@@ -257,7 +257,7 @@ export const SPONSORS: Sponsor[] = [
     logoImgCompact: "/img/sponsors/signpath_compact.png",
     logoImgBg: "#ffffff",
     modalDescription:
-      "SignPath.io is a code signing platform that keeps private keys on Hardware Security Modules and plugs signing directly into CI pipelines — no USB tokens, no keys on build machines. Through the SignPath Foundation, it provides free code signing certificates to qualifying open source projects, verifying that every signed binary was built from the project's public repository. Tabularis was accepted into the program, and its Windows releases now ship signed.",
+      "SignPath.io is a code signing platform that keeps private keys on Hardware Security Modules and plugs signing directly into CI pipelines — no USB tokens, no keys on build machines. Through the SignPath Foundation, it provides free code signing certificates to qualifying open source projects, verifying that every signed binary was built from the project's public repository. Tabularis was accepted into the program, and signing is being wired into the release pipeline so Windows builds ship signed.",
     features: [
       { icon: "✍️", text: "Free code signing certificates for open source projects" },
       { icon: "🔐", text: "Private keys on HSMs — never on build machines or USB tokens" },

@@ -1,16 +1,17 @@
 ---
-title: "Our Windows Installer No Longer Looks Suspicious"
+title: "Our Windows Installer Is About to Stop Looking Suspicious"
 date: "2026-07-10T09:00:00"
 tags: ["community", "sponsors", "partnership", "open-source", "windows"]
-excerpt: "Tabularis has been accepted into the SignPath.io open source program. Every Windows release now ships with a real code signing certificate from the SignPath Foundation — which means the days of telling users to click 'More info → Run anyway' are over."
+excerpt: "Tabularis has been accepted into the SignPath.io open source program: a free code signing certificate from the SignPath Foundation for our Windows releases. Over the next few weeks we'll wire signing into the release pipeline — and then the days of telling users to click 'More info → Run anyway' are over."
 og:
-  title: "Our Windows installer"
-  accent: "no longer looks suspicious."
-  claim: "Tabularis joined the SignPath.io open source program — free code signing from the SignPath Foundation, so Windows releases ship signed instead of triggering SmartScreen warnings."
-  image: "/img/overview.png"
+  template: "screenshot-split"
+  title: "Our Windows installer is about"
+  accent: "to stop looking suspicious."
+  claim: "Tabularis joined the SignPath.io open source program — free code signing from the SignPath Foundation. Next up: wiring it into the release pipeline, so Windows builds ship signed instead of triggering SmartScreen."
+  image: "/img/posts/signpath-og-shot.png"
 ---
 
-# Our Windows Installer No Longer Looks Suspicious
+# Our Windows Installer Is About to Stop Looking Suspicious
 
 <p style="text-align:center;margin:1.5rem 0 2rem;"><img class="no-lightbox" src="/img/posts/signpath-partnership.svg" alt="Tabularis has joined the SignPath.io open source program" style="width:100%;max-width:800px;height:auto;display:block;margin:0 auto;" /></p>
 
@@ -18,7 +19,7 @@ If you've ever installed Tabularis on Windows, you've probably met the blue scre
 
 That screen exists because unsigned binaries are, from Windows' point of view, anonymous. And it goes away with a code signing certificate — which, for years, has been the single most disproportionate expense an open-source desktop project can face. Hundreds of dollars a year, identity validation paperwork, and increasingly a hardware token requirement, all to prove that a project whose entire source code is public is not hiding anything.
 
-So here's the news: **Tabularis has been accepted into the [SignPath.io](https://signpath.io) open source program.** The [SignPath Foundation](https://signpath.org) provides free code signing certificates to qualifying open-source projects, and starting with our upcoming releases, the Windows builds ship signed.
+So here's the news: **Tabularis has been accepted into the [SignPath.io](https://signpath.io) open source program.** The [SignPath Foundation](https://signpath.org) provides free code signing certificates to qualifying open-source projects — and over the next few weeks, we'll be working on integrating SignPath into our release pipeline so that Windows builds ship signed.
 
 ## What SignPath actually does (and why it's clever)
 
@@ -32,17 +33,27 @@ For us, it means no key material sitting on a build machine waiting to be leaked
 
 :::newsletter:::
 
-## What changes for you
+## The honest part: it's not wired up yet
 
-If you're on Windows, the practical changes are simple:
+Being accepted is the milestone; the engineering starts now. That provenance guarantee — *this binary came from that repository* — is exactly what makes the integration non-trivial. SignPath doesn't sign whatever you upload; it signs what your pipeline provably built. Which means the work ahead of us looks like this:
 
-- **SmartScreen stops interrogating you.** The installer carries a valid signature, so new releases install like any other signed software — no "unknown publisher", no "Run anyway".
+- **Restructuring the release workflow** so the Windows artifacts flow from CI through SignPath and back before they're published — signing becomes a pipeline stage, not an afterthought.
+- **Getting the build to verify cleanly.** The link between the public repo and the submitted binary has to hold up to SignPath's checks, and desktop app builds have a way of accumulating steps that make provenance harder to trace than it should be.
+- **Not breaking releases while we do it.** Tabularis ships roughly every two weeks, and that cadence doesn't pause for plumbing work.
+
+We'd rather tell you this now and write the "it's live" post when it's actually live, than quietly flip a switch and hope nobody checks the dates. If you're curious how it goes, the work will happen in the open like everything else — watch the [repo](https://github.com/TabularisDB/tabularis).
+
+## What will change for you
+
+Once the integration lands, if you're on Windows:
+
+- **SmartScreen stops interrogating you.** The installer will carry a valid signature, so new releases install like any other signed software — no "unknown publisher", no "Run anyway".
 - **The publisher name means something.** The signature identifies the build as coming from the Tabularis open-source repository, certified by the SignPath Foundation.
 - **Tampering is detectable.** If a downloaded installer has been modified anywhere between our CI and your disk, the signature breaks and Windows tells you.
 
 If you're on macOS or Linux, nothing changes today — but fewer scary dialogs on any platform makes the whole project easier to recommend, and that helps everyone.
 
-In line with the program's terms, you'll find the credit in our README: free code signing is provided by [SignPath.io](https://signpath.io), with a certificate from the [SignPath Foundation](https://signpath.org). It's the easiest attribution requirement we've ever agreed to, given that the alternative was a recurring bill.
+In line with the program's terms, we'll be adding the credit to our README: free code signing provided by [SignPath.io](https://signpath.io), with a certificate from the [SignPath Foundation](https://signpath.org). It's the easiest attribution requirement we've ever agreed to, given that the alternative was a recurring bill.
 
 :::star:::
 
