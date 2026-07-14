@@ -117,7 +117,17 @@ Tools are actions the AI can call to retrieve or manipulate data.
 
 ### `list_connections`
 
-Returns the same safe connection list exposed by `tabularis://connections`.
+Returns the same safe connection list exposed by `tabularis://connections`. For multi-database connections (MySQL / MariaDB), every selected database is serialized — not just the first.
+
+### `list_databases`
+
+Lists the databases available on a multi-database connection.
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `connection_id` | `string` | Connection UUID or exact name |
 
 ### `list_tables`
 

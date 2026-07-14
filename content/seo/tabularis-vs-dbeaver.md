@@ -87,7 +87,7 @@ Both run on macOS, Linux, and Windows. Tabularis is built on Tauri, so the deskt
 
 Run one real task in both:
 
-1. Connect to a real staging database.
+1. Connect to a real staging database. Tabularis can import your saved DBeaver connections directly (beta), so this step takes a minute.
 2. Do a multi-step investigation end to end.
 3. Document that investigation or make it reusable.
 4. Try an AI-assisted flow against your schema.

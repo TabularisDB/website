@@ -82,7 +82,7 @@ Two toggles under **MCP → Safety** tune how insistent it is:
 | **Keep approval window on top** (`mcpApprovalAlwaysOnTop`) | The approval window stays above other windows while a request is pending. |
 | **Play alert sound** (`mcpApprovalNotifySound`) | Plays a sound alongside the notification. |
 
-Both labels are localized across all eight UI languages.
+Both labels are localized across all nine UI languages.
 
 ## What the agent experiences
 

@@ -88,7 +88,7 @@ Both run on macOS, Linux, and Windows. Tabularis is Tauri-based, so bundles stay
 
 Run a real task in both, with the same database:
 
-1. Connect and explore schema.
+1. Connect and explore schema. Tabularis can import your saved TablePlus connections directly (beta), so this step takes a minute.
 2. Run a multi-step investigation end to end.
 3. Document or reuse that investigation.
 4. Try an AI-assisted flow against your connection.

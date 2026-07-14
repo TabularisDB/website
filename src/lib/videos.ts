@@ -219,6 +219,28 @@ const VIDEO_DEMOS: VideoDemo[] = [
     relatedHref: "/wiki/quick-navigator",
     relatedLabel: "Read the Quick Navigator guide",
   },
+  {
+    slug: "import-connections",
+    title: "Import Connections from Other SQL Clients",
+    description:
+      "Import saved connections from DBeaver, Beekeeper Studio, TablePlus, DataGrip, or Sequel Ace — review what was found, resolve duplicates, and assign groups before merging.",
+    src: "/videos/posts/tabularis-import-connections.mp4",
+    poster: "/videos/posts/tabularis-import-connections.jpg",
+    uploadDate: "2026-07-14",
+    relatedHref: "/wiki/connections",
+    relatedLabel: "Read the connections guide",
+  },
+  {
+    slug: "nested-connection-groups",
+    title: "Nested Connection Groups",
+    description:
+      "Organize connections in folders inside folders: create whole group chains with slash-separated paths, add subfolders inline, and drag groups into one another.",
+    src: "/videos/posts/tabularis-nested-groups.mp4",
+    poster: "/videos/posts/tabularis-nested-groups.jpg",
+    uploadDate: "2026-07-14",
+    relatedHref: "/wiki/connections",
+    relatedLabel: "Read the connections guide",
+  },
 ];
 
 export function getAllVideoDemos(): VideoDemo[] {

@@ -71,7 +71,7 @@ Beekeeper Studio may still be the better fit if your team wants a simpler mental
 
 Run the same short workflow in both tools:
 
-1. connect to a staging database
+1. connect to a staging database — Tabularis can import your saved Beekeeper Studio connections directly (beta), so there is nothing to retype
 2. perform a multi-step investigation
 3. decide whether the tool should stop at query execution or support reusable analysis too
 

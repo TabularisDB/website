@@ -76,7 +76,7 @@ DataGrip may still be the better fit if your team already lives inside JetBrains
 
 Run the same workflow in both tools:
 
-1. connect to a real development or staging database
+1. connect to a real development or staging database — Tabularis can import your saved DataGrip connections directly (beta), so setup costs nothing
 2. perform a short but reusable SQL investigation
 3. test whether the tool fits your team's AI and extensibility needs
 

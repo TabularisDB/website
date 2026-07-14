@@ -85,7 +85,7 @@ Tabularis has a stronger current direction around local AI database workflows vi
 
 Instead of feature-checking, run one shared exercise:
 
-1. connect to the same staging database
+1. connect to the same staging database — Tabularis imports saved connections from both TablePlus and DataGrip (beta)
 2. perform a short multi-step SQL investigation
 3. document that work or try to make it reusable
 4. test whether AI-assisted workflow matters in practice

@@ -100,7 +100,7 @@ Evaluate Tabularis if your team wants:
 
 Run the same three tasks in both tools:
 
-1. connect to a shared staging database
+1. connect to a shared staging database — Tabularis can import your saved TablePlus connections directly (beta), so there is nothing to retype
 2. perform a short multi-step analysis
 3. test the tool in a realistic cross-platform workflow
 

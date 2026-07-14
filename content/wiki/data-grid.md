@@ -45,6 +45,10 @@ Tabularis supports **inline cell editing** for tables. Changes are tracked as pe
 
 Double-click a cell to enter edit mode. Type the new value and press `Enter` to confirm or `Escape` to cancel. Edited cells are highlighted to distinguish them from unchanged values.
 
+**ENUM columns** (MySQL and PostgreSQL) render a **dropdown of the allowed values** instead of a free-text input — both in the grid and in the row-editor sidebar. Nullable ENUM columns include a NULL option. The allowed values are introspected from the database (`information_schema` on MySQL, `pg_enum` on PostgreSQL), and MySQL SET columns get the same treatment with multi-value checkboxes.
+
+![Editing a MySQL SET cell in the grid: a dropdown lists the allowed values with checkboxes and a NULL option](/img/tabularis-enum-dropdown.png)
+
 ### Adding a Row
 
 Click the **+ Add Row** button at the bottom of the grid. A new empty row appears at the end. Fill in the values for each cell and commit when ready.

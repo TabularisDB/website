@@ -97,7 +97,7 @@ Tabularis is especially worth testing if your team:
 
 Instead of checking feature boxes only, compare both tools on three live tasks:
 
-1. Connect to a real development or staging database.
+1. Connect to a real development or staging database — Tabularis can import your saved DBeaver connections directly (beta), so setup takes a minute instead of an afternoon.
 2. Run a multi-step analysis and document it.
 3. Test whether the tool fits your AI and automation workflow.
 

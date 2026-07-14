@@ -190,17 +190,43 @@ The override is persisted alongside the rest of the connection profile in `conne
 
 ## Connection Groups
 
-Connections can be organized into collapsible folder groups in the sidebar. Right-click on the connection list background and select **New Group**. Drag connections between groups by grabbing them in the sidebar.
+Connections can be organized into collapsible folder groups, and since v0.15.0 groups can be **nested** to arbitrary depth — folders inside folders. Right-click on the connection list background and select **New Group**, or hover a group header and click the **+** button to create a subfolder inline.
+
+Both inputs accept `/` as a path separator: typing `clients/acme/staging` creates the whole chain in one go, reusing any existing segment case-insensitively. Drag connections between groups by grabbing them in the sidebar; dragging a group onto another group's header past one indent step moves it *inside* that group, while dropping near the left edge keeps the plain reorder. Moving a folder into one of its own descendants is rejected with an error.
+
+Deleting a group **cascade-deletes its entire subtree** — nested groups and every connection inside them. A folder's count badge sums direct and descendant connections, so a collapsed tree still shows what it holds.
+
+### Multi-Select and Bulk Actions
+
+Hovering a connection card (grid or list view) reveals a selection checkbox. With one or more connections selected, a pinned action bar shows the count and offers **Move to group** (a submenu of the nested group tree, plus *Ungrouped*), **Delete selected** (behind a confirmation), and **Export** — which writes only the selected connections, pruning the group list to the ancestor chains they actually need. Credentials of unselected connections are never resolved from the keychain during a selective export.
+
+![Three connections selected with the pinned action bar showing Export selected, Move to group with its nested-group submenu open, and Delete selected](/img/tabularis-connections-multiselect.png)
 
 ## Export / Import
 
-The toolbar on the Connections page exposes **Export** and **Import** buttons (the Import button also appears on the empty-state view of a fresh install). Both operate on a single JSON payload that round-trips your full connection set between machines.
+The toolbar on the Connections page exposes **Export** and **Import** buttons (the Import button also appears on the empty-state view of a fresh install). Both operate on a single JSON payload that round-trips your full connection set — including the nested group hierarchy — between machines.
 
-**Export** walks every connection group, saved database connection, and SSH profile, resolves the password stored in the OS keychain for each one (database password, SSH password, SSH key passphrase), and writes the lot into a JSON file. The payload contains plaintext credentials — treat it like a `.env` and store it accordingly. If you only need to move connection shape and not secrets, strip the password fields before importing.
+**Export** opens a modal offering three modes:
 
-**Import** takes that payload, merges it with the existing config (existing connection IDs are kept; new ones are appended), writes any embedded passwords back into the OS keychain under the same service-name conventions described in [Keychain Details](#keychain-details), and persists `connections.json` and `ssh_connections.json`. Empty password fields leave the matching keychain entry untouched, so partial payloads are safe.
+- **Encrypted with a password** (default) — the payload is encrypted with AES-256-GCM under an Argon2id-derived key. This is the mode to use whenever the file will cross a machine boundary.
+- **Plain text without passwords** — secrets are stripped from the payload; useful for sharing a connection topology without credentials.
+- **Plain text with all passwords** — every credential (database password, SSH password, SSH key passphrase) is resolved from the OS keychain and written in cleartext. Treat the file like a `.env` and store it accordingly.
+
+![Export Connections modal with the three export modes, the encrypted option selected and password fields below](/img/tabularis-export-connections-modes.png)
+
+**Import** takes that payload — detecting the encrypted envelope and prompting for the password when needed — and merges it with the existing config (existing connection IDs are kept; new ones are appended), writes any embedded passwords back into the OS keychain under the same service-name conventions described in [Keychain Details](#keychain-details), and persists `connections.json` and `ssh_connections.json`. Empty password fields leave the matching keychain entry untouched, so partial payloads are safe. Plain exports produced by older versions import unchanged.
 
 A confirmation dialog is shown before import; the dialog uses a non-destructive variant to signal that nothing is being overwritten in place.
+
+## Import From Other SQL Clients (Beta)
+
+Since v0.15.0, the **Import** dropup next to *Add Connection* can also read saved connections directly from other clients installed on your machine: **DBeaver**, **Beekeeper Studio**, **TablePlus**, **DataGrip**, and **Sequel Ace**. Each source is parsed into a neutral format, and stored credentials are decrypted or read from the source client's keychain when you opt in.
+
+![Import from App modal reviewing connections found in DBeaver, with per-connection action and target-group selectors](/img/tabularis-import-from-app.png)
+
+Nothing is merged blindly: a preview lists every connection found, flags duplicates against your existing set (keep, replace, or skip), and lets each new connection pick a target group — or create one on the fly — with defaults seeded from the source app's own folder structure.
+
+The feature is marked **beta**: parser coverage across five apps and three platforms will keep improving, and the modal links directly to the [issue tracker](https://github.com/TabularisDB/tabularis/issues) for files that don't parse cleanly.
 
 ## Multi-Database Support (MySQL / MariaDB)
 

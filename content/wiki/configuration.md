@@ -18,7 +18,7 @@ Open the Settings panel from:
 
 ![General settings panel with data editor, ping interval, and ER diagram layout options](/img/tabularis-settings-general.png)
 
-- **Language Support**: Native translations for **English**, **Italian**, **Spanish**, **Chinese (Simplified)**, **French**, **German**, **Japanese**, and **Russian**. The app defaults to your OS locale, and changing the language applies immediately.
+- **Language Support**: Native translations for **English**, **Italian**, **Spanish**, **Chinese (Simplified)**, **French**, **German**, **Japanese**, **Russian**, and **Tagalog** (added in v0.15.0). The app defaults to your OS locale — Filipino (`fil`) systems map to Tagalog automatically — and changing the language applies immediately.
 - **Display Timezone**: A searchable picker of IANA timezones (with current UTC-offset labels) under **Settings → Localization**, defaulting to **Auto** (your OS zone). The selected zone drives every UI timestamp — AI activity log, query history, favorites — plus CSV / JSON / notebook exports and their default filenames. Query-history date grouping (today / yesterday / older) is classified in the same zone, so headers and per-row times always agree.
 - **Update Checks**: Enable or disable automatic update checks on startup. Checks query the GitHub Releases API — no version data is sent, only a GET request is made.
 
@@ -54,7 +54,7 @@ Any key omitted from the file falls back to its default value. You do not need a
 | Key | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
 | `theme` | `string` | `null` | Active UI theme ID. See [Themes](/wiki/themes). |
-| `language` | `string` | `"auto"` | Preferred locale: `en`, `it`, `es`, `zh`, `fr`, `de`, `ja`, or `auto` (follows OS). |
+| `language` | `string` | `"auto"` | Preferred locale: `en`, `it`, `es`, `zh`, `fr`, `de`, `ja`, `ru`, `tl`, or `auto` (follows OS; `fil` falls back to `tl`). |
 | `displayTimezone` | `string` | `"auto"` | IANA timezone (e.g. `"Asia/Tokyo"`) used for UI timestamps and exports, or `auto` (OS zone). Configurable from **Settings → Localization → Timezone**. |
 | `resultPageSize` | `number` | `500` | Rows fetched per pagination request in the Data Grid. |
 | `fontFamily` | `string` | `"System"` | Editor font. Must be installed on the system. |
