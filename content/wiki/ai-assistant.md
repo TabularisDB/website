@@ -19,6 +19,8 @@ A common failure of generic AI tools (like ChatGPT) is hallucinating column name
 
 When you ask the AI to "Find users who ordered in the last 30 days", Tabularis intercepts the request and builds a condensed, token-optimized snapshot of your current database structure.
 
+The snapshot is loaded through the driver of the editor's active connection and schema. Tabularis waits for that metadata before sending the request, so a fast click on **Generate SQL** cannot race ahead with an empty schema. Up to 20 tables are included with their columns, primary-key markers, nullability, defaults, and available foreign-key relationships; the prompt notes when additional tables were omitted.
+
 **Example Snapshot injected into the system prompt:**
 ```text
 === DATABASE SCHEMA ===
@@ -28,6 +30,12 @@ Table: orders (id: uuid, user_id: uuid, total: numeric, status: varchar)
 FK: orders.user_id -> users.id
 ```
 By feeding this exact structural context to the LLM alongside your natural language prompt, the AI knows exactly which `JOIN` clauses to write and which data types it is dealing with.
+
+### Plugin drivers
+
+AI Query Assist uses the same driver registry as the rest of Tabularis, so it also works with external database plugins. Existing plugins receive automatic support through their standard `get_tables`, `get_columns`, and `get_foreign_keys` metadata methods. A plugin can optionally implement the batched `get_ai_schema_context` JSON-RPC method when its database offers a more efficient metadata query; if that method is absent, Tabularis falls back automatically.
+
+Plugins return structured metadata only. Tabularis keeps ownership of truncation safeguards, prompt formatting, and provider dispatch, which gives built-in and external drivers the same behavior.
 
 ## Supported Providers & Local Privacy
 

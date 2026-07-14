@@ -52,6 +52,8 @@ Handlers you fill in first → features that light up:
 5. `insert_record` / `update_record` / `delete_record` — inline row editing in the data grid.
 6. `get_create_table_sql` and friends — SQL preview for DDL operations.
 
+Once `get_tables` and `get_columns` work, the driver also supplies schema context to **AI Query Assist** automatically. For databases that can fetch the first tables, columns, and foreign keys more efficiently in one operation, optionally add `get_ai_schema_context`; returning `-32601` keeps the host's standard metadata fallback. The plugin returns structured metadata, while Tabularis formats and sends the AI prompt.
+
 Every step is independently shippable. A plugin with only the first three is already useful as a read-only viewer.
 
 ## UI extensions

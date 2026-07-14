@@ -198,6 +198,27 @@ Your plugin runs a continuous read loop on `stdin`. For each line received, pars
 
 The `params.params` object (a `ConnectionParams`) contains the values the user entered in the connection form. Additional fields at the top level of `params` are method-specific (e.g. `schema`, `table`, `query`).
 
+### Optional AI schema context
+
+External drivers automatically participate in **AI Query Assist** when they implement the standard `get_tables`, `get_columns`, and `get_foreign_keys` metadata methods. The host limits the selected tables and builds the final system prompt, so plugins do not need to know which AI provider the user configured.
+
+Drivers with an efficient batch metadata API can additionally implement `get_ai_schema_context`:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 12,
+  "method": "get_ai_schema_context",
+  "params": {
+    "params": { "driver": "my-driver", "database": "app" },
+    "schema": "public",
+    "max_tables": 20
+  }
+}
+```
+
+Return a result shaped as `{ "tables": [{ "name", "columns", "foreign_keys" }], "total_table_count": 42 }`. Respect `max_tables` while reporting the pre-limit count in `total_table_count`. If the method is not implemented, return `-32601`; Tabularis automatically falls back to the standard metadata calls, keeping existing plugins compatible.
+
 ### Successful response
 
 ```json
