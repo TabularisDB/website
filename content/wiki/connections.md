@@ -46,6 +46,7 @@ When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`)
 | **Driver** | Yes | Selects the database type |
 | **Host** | Yes* | Hostname or IP address |
 | **Port** | Yes* | Auto-filled from the driver default |
+| **Socket path** | No | Unix socket the database listens on at the connection's destination, replacing Host and Port. Dialed directly on this machine without a tunnel (MySQL/PostgreSQL); with SSH, the SSH server connects to it. Disables database TLS. Ignored with Kubernetes. See [Connecting over a Unix socket](#connecting-over-a-unix-socket) below. |
 | **Database** | Yes* | The database name to connect to |
 | **Username** | Yes* | Database user |
 | **Password** | No | Stored in OS keychain; never written to disk |
@@ -94,6 +95,18 @@ SELECT set_config('app.bypass_rls', 'on', false);
 ```
 
 applies to every subsequent query instead of randomly depending on which pooled connection you landed on. Any `SET` or session-setup statement works; multiple statements can be separated normally, and blank or whitespace-only scripts are skipped. The script is stored with the connection profile as non-secret configuration.
+
+### Connecting over a Unix socket
+
+The optional **Socket Path** field in the General tab names the Unix socket the database listens on, replacing Host and Port. Like Host and Port, it is interpreted from the perspective of whoever dials the destination:
+
+- **No tunnel** — the drivers connect to the socket on this machine directly (MySQL and PostgreSQL). Typical values: `/tmp/mysql.sock` (MySQL on macOS/Homebrew), `/var/run/mysqld/mysqld.sock` (MySQL on Linux), `/var/run/postgresql/.s.PGSQL.5432` (PostgreSQL). For PostgreSQL, a plain socket *directory* also works, paired with the Port field.
+- **SSH tunnel** — the SSH server connects to the socket, so the path is as it appears on that server. See [SSH Tunneling → Forwarding to a Unix Socket](/wiki/ssh-tunneling#forwarding-to-a-unix-socket).
+- **Kubernetes tunnel** — the field is ignored (`kubectl port-forward` is TCP-only).
+
+While a socket path is in effect, Host and Port grey out, and database TLS is turned off automatically — it cannot be negotiated over a Unix socket, and the traffic is either local or already encrypted by the SSH tunnel.
+
+Without a tunnel the field appears for drivers that support local socket dialing (built-in MySQL and PostgreSQL; plugins opt in with the `unix_socket` capability, see [Plugins → Capabilities](/wiki/plugins#capabilities)). With SSH enabled it is available for any network driver, since the drivers still connect over TCP to the tunnel's local port.
 
 ### SQLite
 
