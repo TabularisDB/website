@@ -46,6 +46,7 @@ When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`)
 | **Driver** | Yes | Selects the database type |
 | **Host** | Yes* | Hostname or IP address |
 | **Port** | Yes* | Auto-filled from the driver default |
+| **Local socket path** | No | Unix socket on this machine the drivers connect to instead of Host and Port (MySQL and PostgreSQL). Disables database TLS. Ignored while an SSH or Kubernetes tunnel is enabled. See [Local Unix socket](#local-unix-socket-mysql--postgresql) below. |
 | **Database** | Yes* | The database name to connect to |
 | **Username** | Yes* | Database user |
 | **Password** | No | Stored in OS keychain; never written to disk |
@@ -95,6 +96,19 @@ SELECT set_config('app.bypass_rls', 'on', false);
 ```
 
 applies to every subsequent query instead of randomly depending on which pooled connection you landed on. Any `SET` or session-setup statement works; multiple statements can be separated normally, and blank or whitespace-only scripts are skipped. The script is stored with the connection profile as non-secret configuration.
+
+### Local Unix socket (MySQL / PostgreSQL)
+
+A database on the same machine can be reached through its Unix socket instead of TCP: set the optional **Local Socket Path** field in the General tab. No tunnel is involved — the drivers dial the socket directly.
+
+When a local socket path is set:
+
+- The drivers connect to that socket instead of Host and Port (both fields grey out).
+- Point at the socket file itself: typically `/tmp/mysql.sock` (MySQL on macOS/Homebrew), `/var/run/mysqld/mysqld.sock` (MySQL on Linux), or `/var/run/postgresql/.s.PGSQL.5432` (PostgreSQL). For PostgreSQL, a plain socket *directory* also works, paired with the Port field.
+- Database TLS is turned off automatically — it cannot be negotiated over a Unix socket, and the traffic never leaves the machine.
+- The field is ignored while an SSH or Kubernetes tunnel is enabled: the tunnel owns the route to the database. To reach a *remote* socket-only database, use [SSH Tunneling → Forwarding to a Unix Socket](/wiki/ssh-tunneling#forwarding-to-a-unix-socket) instead.
+
+Plugin drivers can opt into the field with the `unix_socket` capability in their manifest (see [Plugins → Capabilities](/wiki/plugins#capabilities)).
 
 ### SQLite
 

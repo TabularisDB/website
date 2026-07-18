@@ -94,7 +94,7 @@ When you connect, the tunnel is established first, then the database driver conn
 
 ## Forwarding to a Unix Socket
 
-Some databases only listen on a Unix socket: MySQL with `skip_networking`, PostgreSQL with `listen_addresses = ''`. For those, set the optional **Socket Path** field in the SSH section of the connection editor.
+Some databases only listen on a Unix socket: MySQL with `skip_networking`, PostgreSQL with `listen_addresses = ''`. For those, set the optional **Socket Path** field in the SSH section of the connection editor. (For a socket-only database on *your own* machine, no tunnel is needed — use the **Local Socket Path** field instead; see [Connections → Local Unix socket](/wiki/connections#local-unix-socket-mysql--postgresql).)
 
 When a socket path is set:
 
