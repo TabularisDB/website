@@ -92,6 +92,18 @@ Click **Test** before saving. Tabularis performs a real SSH handshake and report
 
 When you connect, the tunnel is established first, then the database driver connects through it. If the tunnel fails, the exact SSH error is surfaced — no generic "connection refused" messages.
 
+## Forwarding to a Unix Socket
+
+Some databases only listen on a Unix socket: MySQL with `skip_networking`, PostgreSQL with `listen_addresses = ''`. For those, set the optional **Socket Path** field in the SSH section of the connection editor.
+
+When a socket path is set:
+
+- The SSH server connects to that socket instead of Host and Port (both fields grey out). Under the hood this is a `direct-streamlocal@openssh.com` channel on the Russh backend, and `ssh -L <local_port>:/path/to/socket` on the System SSH backend.
+- Database TLS is turned off automatically. A server listening on a Unix socket cannot negotiate TLS, and the SSH tunnel already encrypts the whole path.
+- The path must be absolute, as it appears on the SSH server, and must point at the socket file itself — not the directory holding it. Typical values are `/var/run/mysqld/mysqld.sock` (MySQL) and `/var/run/postgresql/.s.PGSQL.5432` (PostgreSQL).
+
+The socket path belongs to the database connection, not to the SSH profile, so a single bastion profile can serve both TCP and socket-only databases.
+
 ## Multi-Hop / ProxyJump
 
 For databases behind multiple bastion layers, define the chain in `~/.ssh/config` and use the System SSH backend (key-only auth, no password):

@@ -52,6 +52,7 @@ When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`)
 | **Save in keychain** | — | Controls whether the password persists after closing |
 | **SSH enabled** | No | Activates the SSH tunnel for this connection |
 | **SSH profile** | — | Which saved SSH profile to use for the tunnel |
+| **Socket path** | No | Unix socket on the SSH server the tunnel forwards to instead of Host and Port, for databases that only listen on a socket. Disables database TLS (the SSH tunnel still encrypts the path). See [SSH Tunneling → Forwarding to a Unix Socket](/wiki/ssh-tunneling#forwarding-to-a-unix-socket). |
 | **Allow interactive prompts** | No | Lets the SSH tunnel prompt in-app for a key passphrase, security-key PIN, or password when it can't authenticate silently. See [SSH Tunneling → Interactive Authentication](/wiki/ssh-tunneling#interactive-authentication-passphrases--security-keys). |
 | **Startup script** | No | SQL run on every new pooled connection (see [Startup Script](#startup-script) below). |
 | **Kubernetes** | No | Tunnels the connection through a managed `kubectl port-forward`. Mutually exclusive with SSH. See [Kubernetes Tunneling](/wiki/kubernetes-tunneling). |
