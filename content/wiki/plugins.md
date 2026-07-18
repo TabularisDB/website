@@ -92,7 +92,7 @@ Every plugin must include a `manifest.json` that tells Tabularis its capabilitie
 | `connection_string_example` | string | Optional placeholder example shown in the connection string import field (e.g. `"clickhouse://user:pass@localhost:9000/db"`). `connectionStringExample` is also accepted. |
 | `manage_tables` | bool | `true` to enable table and column management UI (Create Table, Add/Modify/Drop Column, Drop Table). Does not control index or FK operations. Defaults to `true`. |
 | `readonly` | bool | When `true`, the driver is read-only: all data modification operations (INSERT, UPDATE, DELETE) are disabled in the UI. Table and column management is also hidden regardless of `manage_tables`. Defaults to `false`. |
-| `unix_socket` | bool | `true` if the driver can connect through a local Unix socket instead of host:port. Shows the **Local Socket Path** field in the connection editor; the path reaches the plugin in the connection params as `unix_socket_path`. `unixSocket` is also accepted. Defaults to `false`. |
+| `unix_socket` | bool | `true` if the driver can dial a local Unix socket instead of host:port. Shows the **Socket Path** field in the connection editor even without an SSH tunnel (with SSH enabled the field appears for every network driver, since the tunnel does the socket dialing); the path reaches the plugin in the connection params as `unix_socket_path`. `unixSocket` is also accepted. Defaults to `false`. |
 
 ### Data Type Categories
 
