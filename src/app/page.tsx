@@ -15,12 +15,12 @@ import { ClosingCta } from "@/components/ClosingCta";
 import { PluginBountyTeaser } from "@/components/PluginBountyTeaser";
 import { HomeDriverStatus } from "@/components/HomeDriverStatus";
 import { SponsorsSection, IconExternalLink, IconArrow } from "@/components/SponsorsSection";
-import { VideoPlayer } from "@/components/VideoPlayer";
 import { ExpandableText } from "@/components/ExpandableText";
 import { CarouselGrid } from "@/components/CarouselGrid";
 import {
   buildBreadcrumbJsonLd,
   buildSoftwareApplicationJsonLd,
+  buildVideoObjectJsonLd,
 } from "@/lib/seo";
 
 const GITHUB_EDIT_HOME_URL =
@@ -180,18 +180,19 @@ export default function HomePage() {
         data={[
           buildBreadcrumbJsonLd([{ name: "Home", path: "/" }]),
           buildSoftwareApplicationJsonLd(),
+          buildVideoObjectJsonLd({
+            title: "Tabularis Product Overview",
+            description:
+              "A 53-second tour of Tabularis: connect to a database, browse tables, run queries with the visual query builder, and inspect results.",
+            src: "/videos/overview.mp4",
+            poster: "/videos/overview-hero.webp",
+            uploadDate: "2026-07-21",
+            duration: "PT53S",
+          }),
         ]}
       />
       <SiteHeader />
       <HomeHero latestPost={latestPost} />
-
-      {/* MAIN SCREENSHOT */}
-      <VideoPlayer
-        src="/videos/overview.mp4"
-        wrapperClassName="screenshot-container"
-        videoClassName="screenshot-main"
-        ariaLabel="Tabularis Overview"
-      />
 
       {/* SPONSORS */}
       <SponsorsSection />

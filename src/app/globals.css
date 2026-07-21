@@ -537,7 +537,7 @@ pre {
   text-align: left;
   min-height: 0;
   margin-bottom: 2.2rem;
-  padding: clamp(1.2rem, 2.5vw, 2.15rem) clamp(1rem, 4vw, 3.5rem);
+  padding: 0.7rem 0.95rem;
   border: 1px solid rgba(55, 65, 81, 0.72);
   border-radius: 24px;
   background: var(--bg-color);
@@ -547,12 +547,233 @@ pre {
 .hero-main {
   position: relative;
   z-index: 3;
-  display: block;
-  max-width: 760px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 1fr);
+  grid-template-areas:
+    "copy demo"
+    "followup demo";
+  align-items: center;
+  column-gap: clamp(1.4rem, 3vw, 2.5rem);
+  row-gap: 0.2rem;
 }
 
 .hero-copy {
+  grid-area: copy;
   min-width: 0;
+}
+
+.hero-followup {
+  grid-area: followup;
+  min-width: 0;
+}
+
+.hero-demo {
+  position: relative;
+  grid-area: demo;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1592 / 1080;
+  padding: 0;
+  overflow: visible;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 14px;
+  background: var(--card-bg);
+  color: var(--text-bright);
+  font: inherit;
+  cursor: pointer;
+  box-shadow:
+    0 24px 55px rgba(0, 0, 0, 0.48),
+    0 0 0 1px rgba(59, 130, 246, 0.06);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.hero-demo:hover {
+  border-color: rgba(139, 184, 255, 0.58);
+  box-shadow:
+    0 28px 65px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(59, 130, 246, 0.14);
+  transform: translateY(-2px);
+}
+
+.hero-demo:focus-visible {
+  outline: 2px solid #8bb8ff;
+  outline-offset: 3px;
+}
+
+.hero-demo-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  transition: transform 0.35s ease;
+}
+
+.hero-demo:hover .hero-demo-image {
+  transform: scale(1.015);
+}
+
+.hero-demo-shade {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at center, transparent 24%, rgba(3, 5, 10, 0.14) 100%),
+    linear-gradient(180deg, rgba(3, 5, 10, 0.04), rgba(3, 5, 10, 0.34));
+}
+
+.hero-demo-cta {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  background: rgba(12, 15, 21, 0.96);
+  color: var(--text-main);
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  transform: translate(-50%, -50%);
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.hero-demo:hover .hero-demo-cta {
+  background: rgba(22, 28, 38, 0.98);
+  color: #fff;
+  transform: translate(-50%, -50%) scale(1.025);
+}
+
+.hero-demo-cta-label {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Azure fill that sweeps across the CTA while the 3s hover-to-play timer
+   runs (see CHARGE_MS in HeroVideoPreview). Keep both durations in sync. */
+.hero-demo-cta-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.hero-demo.is-charging .hero-demo-cta-fill {
+  transform: scaleX(1);
+  transition: transform 3s linear;
+}
+
+.hero-demo.is-charging .hero-demo-cta {
+  border-color: rgba(96, 165, 250, 0.7);
+  color: #fff;
+}
+
+.hero-video-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(4, 5, 6, 0.92);
+  backdrop-filter: blur(12px);
+  animation: hero-video-fade-in 0.18s ease both;
+}
+
+.hero-video-dialog {
+  width: min(1120px, calc(100vw - 2rem));
+  overflow: hidden;
+  border: 1px solid var(--border-bright);
+  border-radius: 16px;
+  background: #090b0e;
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.78);
+  animation: hero-video-rise-in 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-video-dialog:focus {
+  outline: none;
+}
+
+.hero-video-player {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1656 / 1080;
+  max-height: calc(100dvh - 2rem);
+  background: #03050a;
+}
+
+.hero-video-player-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@keyframes hero-video-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes hero-video-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-video-overlay {
+    padding:
+      max(0.5rem, env(safe-area-inset-top))
+      max(0.5rem, env(safe-area-inset-right))
+      max(0.5rem, env(safe-area-inset-bottom))
+      max(0.5rem, env(safe-area-inset-left));
+  }
+
+  .hero-video-dialog {
+    width: 100%;
+    border-radius: 12px;
+  }
+
+  .hero-video-player {
+    max-height: calc(100dvh - 1rem);
+  }
+}
+
+@media (max-width: 960px) {
+  .hero-main {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "copy"
+      "followup"
+      "demo";
+    gap: 0.8rem;
+  }
+
+  .hero-demo {
+    max-width: 760px;
+    margin-top: 1rem;
+  }
 }
 
 .hero h1 {
@@ -569,6 +790,20 @@ pre {
   line-height: 1.58;
   color: var(--text-main);
   margin-bottom: 0.8rem;
+}
+
+.hero-lede-link {
+  color: inherit;
+  text-decoration: underline dotted rgba(139, 184, 255, 0.9);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.hero-lede-link:hover {
+  color: #8bb8ff;
+  text-decoration-color: #8bb8ff;
+  filter: none;
 }
 
 .logo-img {
@@ -609,6 +844,20 @@ pre {
   flex-wrap: wrap;
   margin-top: 0.55rem;
   font-size: 0.86rem;
+}
+
+/* Keep the three links on a single row on desktop, where they share the
+   left hero column with the copy. */
+@media (min-width: 961px) {
+  .hero-secondary-actions {
+    flex-wrap: nowrap;
+    gap: clamp(0.6rem, 1.1vw, 1rem);
+    font-size: clamp(0.78rem, 0.85vw, 0.86rem);
+  }
+
+  .hero-secondary-actions a {
+    white-space: nowrap;
+  }
 }
 
 .hero-secondary-actions a {
@@ -934,7 +1183,17 @@ pre {
   .hero-visual-grid::after,
   .hero-aurora,
   .hero-swift,
-  .hero-scanline {
+  .hero-scanline,
+  .hero-demo,
+  .hero-demo-image,
+  .hero-demo-cta,
+  .hero-demo-cta-fill {
+    animation: none;
+    transition: none;
+  }
+
+  .hero-video-overlay,
+  .hero-video-dialog {
     animation: none;
   }
 }
@@ -2357,7 +2616,7 @@ pre {
     font-size: 2.2rem !important;
   }
   .hero {
-    padding: 1rem 0 1.15rem;
+    padding: 0;
     border: none;
     border-radius: 0;
     box-shadow: none;
@@ -2413,7 +2672,8 @@ pre {
     font-size: 0.94rem;
   }
   .hero-main {
-    display: block;
+    display: grid;
+    gap: 0.7rem;
     min-height: auto;
   }
   .hero-visual {

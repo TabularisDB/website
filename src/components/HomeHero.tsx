@@ -3,6 +3,7 @@ import { CarouselGrid } from "@/components/CarouselGrid";
 import { DownloadButtons } from "@/components/DownloadButtons";
 import { GithubStarsButton } from "@/components/GithubStarsButton";
 import { FeaturedOn } from "@/components/FeaturedOn";
+import { HeroVideoPreview } from "@/components/HeroVideoPreview";
 import { getRepoStars, getTotalDownloads } from "@/lib/github";
 import { getAllPlugins } from "@/lib/plugins";
 import type { PostMeta } from "@/lib/posts";
@@ -57,12 +58,46 @@ export async function HomeHero({ latestPost }: HomeHeroProps) {
 
             <p className="hero-lede">
               Tabularis is an open-source desktop SQL workspace for{" "}
-              <strong>PostgreSQL</strong>, <strong>MySQL/MariaDB</strong>,{" "}
-              <strong>SQLite</strong> and <strong>{pluginCount}+ more databases</strong>{" "}
+              <strong>
+                <Link href="/solutions/postgresql-client" className="hero-lede-link">
+                  PostgreSQL
+                </Link>
+              </strong>
+              ,{" "}
+              <strong>
+                <Link
+                  href="/solutions/mysql-client-for-developers"
+                  className="hero-lede-link"
+                >
+                  MySQL/MariaDB
+                </Link>
+              </strong>
+              ,{" "}
+              <strong>
+                <Link
+                  href="/solutions/sqlite-client-for-developers"
+                  className="hero-lede-link"
+                >
+                  SQLite
+                </Link>
+              </strong>{" "}
+              and{" "}
+              <strong>
+                <a href="#driver-coverage" className="hero-lede-link">
+                  {pluginCount}+ more databases
+                </a>
+              </strong>{" "}
               like DuckDB, ClickHouse, Redis and Firestore. Its built-in{" "}
-              <strong>MCP</strong> server lets Claude, Cursor and Devin (formerly
-              Windsurf) read your schema and run queries in the same app you
-              already use.
+              <strong>
+                <Link
+                  href="/solutions/mcp-database-client"
+                  className="hero-lede-link"
+                >
+                  MCP
+                </Link>
+              </strong>{" "}
+              server lets Claude, Cursor and Devin (formerly Windsurf) read your
+              schema and run queries in the same app you already use.
             </p>
 
             <DownloadButtons
@@ -70,7 +105,15 @@ export async function HomeHero({ latestPost }: HomeHeroProps) {
               downloads={downloads}
               trailing={<GithubStarsButton stars={stars} />}
             />
+          </div>
 
+          <HeroVideoPreview
+            src="/videos/overview.mp4"
+            poster="/videos/overview-hero.webp"
+            posterSmall="/videos/overview-hero-800.webp"
+          />
+
+          <div className="hero-followup">
             <FeaturedOn />
 
             <div className="hero-secondary-actions">

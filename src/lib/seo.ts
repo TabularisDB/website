@@ -107,7 +107,8 @@ export function buildVideoObjectJsonLd(input: {
   src: string;
   poster: string;
   uploadDate: string;
-  slug: string;
+  slug?: string;
+  duration?: string;
 }) {
   return {
     "@context": "https://schema.org",
@@ -116,8 +117,9 @@ export function buildVideoObjectJsonLd(input: {
     description: input.description,
     thumbnailUrl: [toAbsoluteUrl(input.poster)],
     uploadDate: input.uploadDate,
+    ...(input.duration ? { duration: input.duration } : {}),
     contentUrl: toAbsoluteUrl(input.src),
-    embedUrl: toAbsoluteUrl(`/videos/${input.slug}`),
+    ...(input.slug ? { embedUrl: toAbsoluteUrl(`/videos/${input.slug}`) } : {}),
     publisher: {
       "@type": "Organization",
       name: "Tabularis",
