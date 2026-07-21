@@ -11,7 +11,7 @@ category: "Core Features"
 
 <video src="/videos/wiki/05-visual-explain.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
-It works with PostgreSQL, MySQL, MariaDB, and SQLite. Each engine uses different EXPLAIN formats and capabilities, and Tabularis handles the differences automatically.
+It works with PostgreSQL, MySQL, MariaDB, and SQLite, plus any plugin driver that declares EXPLAIN support. Each engine uses different EXPLAIN formats and capabilities, and Tabularis handles the differences automatically.
 
 ![Visual EXPLAIN modal with graph view showing execution plan nodes, cost heatmap, and summary bar](/img/posts/tabularis-visual-explain-graph-view-execution-plan.png)
 
@@ -160,6 +160,12 @@ MariaDB's JSON format includes additional fields like subquery cache status, fil
 SQLite uses `EXPLAIN QUERY PLAN`, which returns a flat list of operations. Tabularis reconstructs the tree structure from the parent-child relationships in the output.
 
 SQLite does not expose execution metrics — there is no ANALYZE equivalent for query plans. The plan structure is shown (scan types, index usage, join order), but timing and row count data are not available. The ANALYZE toggle is accepted but has no effect.
+
+### Plugin Drivers
+
+Plugin drivers opt in to Visual EXPLAIN through the `explain` capability flag in their `manifest.json`. When a plugin declares `"explain": true` and implements the `explain_query` method, the EXPLAIN button and the editor context-menu entry work exactly as they do for the built-in drivers.
+
+For drivers that do not declare the capability — or omit it entirely — the Visual EXPLAIN button is hidden in the SQL editor and in notebook cells, so you will only see it on connections that can actually produce a plan. See the [Plugins](/wiki/plugins) page for the full capability reference.
 
 ## Re-running a Plan
 
