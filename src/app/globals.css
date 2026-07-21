@@ -385,10 +385,10 @@ pre {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.25rem;
   min-height: 0;
-  margin: -0.35rem 0 2rem;
-  padding: 0.9rem 1.1rem;
+  margin: -0.35rem 0 1.3rem;
+  padding: 0.7rem 0.95rem;
   text-align: left;
   color: var(--text-main);
   background: var(--card-surface);
@@ -536,8 +536,8 @@ pre {
   overflow: hidden;
   text-align: left;
   min-height: 0;
-  margin-bottom: 2.75rem;
-  padding: clamp(1.4rem, 3vw, 2.65rem) clamp(1rem, 4vw, 3.5rem);
+  margin-bottom: 2.2rem;
+  padding: clamp(1.2rem, 2.5vw, 2.15rem) clamp(1rem, 4vw, 3.5rem);
   border: 1px solid rgba(55, 65, 81, 0.72);
   border-radius: 24px;
   background: var(--bg-color);
@@ -559,16 +559,16 @@ pre {
   max-width: 21ch;
   font-size: clamp(2.12rem, 3.05vw, 2.85rem);
   line-height: 1.09;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
   letter-spacing: -0.042em;
 }
 
 .hero-lede {
   max-width: 49rem;
   font-size: 1.08rem;
-  line-height: 1.65;
+  line-height: 1.58;
   color: var(--text-main);
-  margin-bottom: 1.1rem;
+  margin-bottom: 0.8rem;
 }
 
 .logo-img {
@@ -579,13 +579,13 @@ pre {
 
 .hero-badges {
   display: flex;
-  gap: 0.75rem;
-  margin-bottom: 1.15rem;
+  gap: 0.55rem;
+  margin-bottom: 0.85rem;
   flex-wrap: wrap;
 }
 
 .badge {
-  padding: 0.3rem 0.8rem;
+  padding: 0.25rem 0.7rem;
   border-radius: 6px;
   border: 1px solid var(--border);
   color: var(--text-muted);
@@ -605,9 +605,9 @@ pre {
 .hero-secondary-actions {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1rem;
   flex-wrap: wrap;
-  margin-top: 1rem;
+  margin-top: 0.55rem;
   font-size: 0.86rem;
 }
 
@@ -623,7 +623,7 @@ pre {
 .hero-proof {
   position: relative;
   z-index: 2;
-  margin: 1.4rem 0 0;
+  margin: 1rem 0 0;
 }
 
 /* Override carousel-grid defaults when used for hero-proof */
@@ -634,8 +634,8 @@ pre {
 .hero-proof-card {
   display: flex;
   flex-direction: column;
-  min-height: 9.2rem;
-  padding: 1rem;
+  min-height: 8.25rem;
+  padding: 0.85rem 0.9rem;
   color: var(--text-main);
   background: var(--card-surface);
   border: 1px solid var(--border);
@@ -650,7 +650,7 @@ pre {
 }
 
 .hero-proof-kicker {
-  margin-bottom: 0.65rem;
+  margin-bottom: 0.45rem;
   color: #8bb8ff;
   font-size: 0.72rem;
   text-transform: uppercase;
@@ -660,7 +660,7 @@ pre {
 .hero-proof-card strong {
   color: var(--text-bright);
   font-size: 0.98rem;
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.3rem;
 }
 
 .hero-proof-card span:last-child {
@@ -959,6 +959,12 @@ pre {
 .download-wrap {
   display: block;
   margin: 1rem 0;
+}
+
+/* Keep the homepage CTA group dense without changing the shared download
+   component's spacing on dedicated download and closing-CTA surfaces. */
+.hero .download-wrap {
+  margin: 0.7rem 0 0.55rem;
 }
 
 .download-row {
@@ -2351,28 +2357,28 @@ pre {
     font-size: 2.2rem !important;
   }
   .hero {
-    padding: 1.35rem 0 1.5rem;
+    padding: 1rem 0 1.15rem;
     border: none;
     border-radius: 0;
     box-shadow: none;
     background: transparent;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
   .hero h1 {
     font-size: 1.85rem !important;
     max-width: 100%;
     line-height: 1.12;
     letter-spacing: -0.03em;
-    margin-bottom: 0.85rem;
+    margin-bottom: 0.7rem;
   }
   .hero-lede {
     font-size: 0.98rem;
-    line-height: 1.55;
-    margin-bottom: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 0.7rem;
   }
   .hero-badges {
     gap: 0.4rem;
-    margin-bottom: 0.9rem;
+    margin-bottom: 0.7rem;
   }
   .hero-badges .badge {
     padding: 0.22rem 0.6rem;
@@ -2380,7 +2386,7 @@ pre {
   }
   .hero-secondary-actions {
     gap: 0.35rem 1rem;
-    margin-top: 0.75rem;
+    margin-top: 0.45rem;
     font-size: 0.85rem;
     flex-direction: row;
     flex-wrap: wrap;
@@ -2392,11 +2398,11 @@ pre {
     align-items: center;
   }
   .hero-proof {
-    margin-top: 1.25rem;
+    margin-top: 0.9rem;
   }
   .hero-proof-card {
     min-height: auto;
-    padding: 0.9rem 1rem;
+    padding: 0.75rem 0.85rem;
     height: 100%;
   }
   .hero-proof-kicker {
@@ -2414,7 +2420,7 @@ pre {
     display: none;
   }
   .download-wrap {
-    margin: 0.75rem 0;
+    margin: 0.6rem 0 0.45rem;
     width: 100%;
   }
   .download-row {
@@ -2503,8 +2509,9 @@ pre {
     padding-bottom: 0.85rem;
   }
   .home-latest-post {
-    margin: 0 0 1.35rem;
-    padding: 0.85rem 0.95rem;
+    gap: 0.2rem;
+    margin: 0 0 0.95rem;
+    padding: 0.65rem 0.8rem;
   }
   .home-latest-post-title {
     font-size: 0.92rem;
@@ -6577,13 +6584,13 @@ footer {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.7rem;
-  margin-top: 0.55rem;
+  gap: 0.6rem;
+  margin-top: 0.35rem;
 }
 
 /* Tighten the gap to the secondary actions directly below. */
 .featured-on + .hero-secondary-actions {
-  margin-top: 0.55rem;
+  margin-top: 0.35rem;
 }
 
 .featured-on-label {
@@ -6670,6 +6677,7 @@ footer {
   .featured-on {
     flex-wrap: wrap;
     gap: 0.5rem;
+    margin-top: 0.3rem;
   }
 }
 
