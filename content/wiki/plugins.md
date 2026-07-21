@@ -441,6 +441,17 @@ You should see a valid JSON-RPC response on `stdout`.
 3. On Linux/macOS, make it executable: `chmod +x myplugin`
 4. Open Tabularis and refresh the plugins list if needed. A locally installed plugin can be loaded directly from the plugins directory.
 
+## The Hosted Registry and the Connection Catalogue
+
+Since v0.16.0, plugin discovery runs through the hosted **Tabularium** registry at `registry.tabularis.dev` instead of a static JSON file:
+
+- **The connection catalogue.** Creating a new connection starts from a searchable catalogue that merges built-in drivers with registry plugins into one grid, with paradigm facets for filtering. Drivers your platform can't run are badged and dimmed. Picking an uninstalled driver install-gates it — you can install the plugin inline and continue straight to the connection form.
+- **Deep-link installs.** Links of the form `tabularis://install/<slug>` open the app with a version-aware confirmation: **Install** for a new plugin, **Update** when a newer version exists, or an already-installed notice. An optional `?version=` pins a specific release.
+- **Version picking and updates.** Catalogue cards let you install a specific released version, and the **Installed** tab shows an Update button when a newer compatible release exists for your platform and app version.
+- **Backwards compatibility.** The legacy static [`registry.json`](https://github.com/TabularisDB/tabularis/blob/main/plugins/registry.json) is still merged into the catalogue (the hosted API wins on conflicting ids), so plugins that haven't migrated remain visible and installable, and older app versions keep working unchanged.
+
+The manifest format also has a new canonical name: **`.tabularium`** — same JSON content as the legacy `manifest.json`, which is still read as a fallback. `@tabularis/create-plugin` 0.2.0 scaffolds `.tabularium` directly and ships a `migrate` command that converts an existing `manifest.json` plugin (and, with `--ci`, regenerates a registry-ready release workflow).
+
 ## Using a Custom Plugin Registry
 
 By default, Tabularis fetches the plugin list from the official registry. You can point the app to a different registry (e.g., a self-hosted or company-internal one) by setting `customRegistryUrl` in your `config.json`:
@@ -550,6 +561,6 @@ For the full specification, see the [Plugin UI Extensions Spec](/docs/plugin-ui-
 To make your plugin available in the official in-app plugin browser:
 
 1. Build release binaries for all target platforms.
-2. Package each binary with `manifest.json` into a `.zip` file.
-3. Publish a GitHub Release with the ZIP assets.
-4. Open a pull request adding your entry to [`plugins/registry.json`](https://github.com/TabularisDB/tabularis/blob/main/plugins/registry.json).
+2. Package each binary with your manifest into a `.zip` file.
+3. Publish a GitHub Release with the ZIP assets — and, for the hosted registry, the `.tabularium` manifest as a standalone release asset (the registry resolves your plugin's metadata from it). The release workflow scaffolded by `@tabularis/create-plugin` 0.2.0 (or regenerated via `create-plugin migrate --ci`) does this for you.
+4. Open a pull request adding your entry to [`plugins/registry.json`](https://github.com/TabularisDB/tabularis/blob/main/plugins/registry.json). During the registry transition this remains the way to get listed; legacy entries are merged into the hosted catalogue automatically.

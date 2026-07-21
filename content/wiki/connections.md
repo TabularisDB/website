@@ -218,6 +218,19 @@ The toolbar on the Connections page exposes **Export** and **Import** buttons (t
 
 A confirmation dialog is shown before import; the dialog uses a non-destructive variant to signal that nothing is being overwritten in place.
 
+## Automatic Backups
+
+Since v0.16.0, the manual export has an automated counterpart: a **Backup** tab in Settings that periodically writes an encrypted export of your connections. Automatic backups always use the encrypted envelope (AES-256-GCM under an Argon2id-derived key) — plaintext automatic backups are deliberately not offered.
+
+<video src="/videos/posts/tabularis-backup-settings.mp4" poster="/videos/posts/tabularis-backup-settings.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
+- **Triggers** — manual ("Back up now"), on an interval (6h / 12h / daily / weekly presets or a custom value, with the next scheduled run shown in the settings), on app launch, or on app close. The on-close backup is bounded by a timeout so it can never prevent the app from quitting.
+- **Destinations** — a local folder, or a **WebDAV** collection (Nextcloud and compatible servers).
+- **Retention** — old backups are rotated by count; rotation only ever touches `tabularis-backup-*.json` files, so other files in the same directory are never removed.
+- **Credentials** — the backup encryption password and WebDAV credentials are stored in the OS keychain, never in `config.json`. Changing the backup password only affects future backups; files already written keep the password they were encrypted with.
+
+Settings changes apply without a restart, and each backup run is logged — including which trigger fired it — in the Logs tab. A backup file is a regular encrypted export: restore it through the normal [Import](#export--import) flow.
+
 ## Import From Other SQL Clients (Beta)
 
 Since v0.15.0, the **Import** dropup next to *Add Connection* can also read saved connections directly from other clients installed on your machine: **DBeaver**, **Beekeeper Studio**, **TablePlus**, **DataGrip**, and **Sequel Ace**. Each source is parsed into a neutral format, and stored credentials are decrypted or read from the source client's keychain when you opt in.

@@ -16,7 +16,7 @@ Starting with v0.13.0, Tabularis supports **Kubernetes port-forward tunnels** as
 - `kubectl` installed and available in your `$PATH`.
 - A valid kubeconfig (`~/.kube/config` or `$KUBECONFIG`) with access to the target cluster.
 
-Tabularis does not embed a Kubernetes client — it delegates to your `kubectl`, so whatever contexts, auth plugins, and exec credentials work in your terminal work here too.
+Tabularis does not embed a Kubernetes client — it delegates to your `kubectl`, so whatever contexts, auth plugins, and exec credentials work in your terminal work here too. If the defaults don't fit, both the binary and the kubeconfig can be [overridden per connection](#advanced-kubectl-and-kubeconfig-overrides).
 
 ## How It Works
 
@@ -56,6 +56,19 @@ In the Kubernetes tab you choose between:
 Profiles are managed from the K8s Connections modal, where you can add, edit, delete, and **Test** each profile — the test performs a real port-forward attempt and reports the exact error on failure.
 
 K8s profiles and per-connection settings round-trip through connection [Export / Import](/wiki/connections#export--import) like every other field.
+
+## Advanced: kubectl and kubeconfig Overrides
+
+Since v0.16.0, each Kubernetes tunnel — inline or saved profile — has an **Advanced settings** section that overrides the two assumptions above:
+
+- **kubectl binary** — point Tabularis at a specific `kubectl` (a pinned version, a corporate wrapper, a shim outside `$PATH`) instead of whatever the app inherits from the environment.
+- **kubeconfig file** — use a per-project or per-cluster kubeconfig instead of `~/.kube/config` / `$KUBECONFIG`.
+
+![The Advanced kubectl settings section of a saved Kubernetes tunnel, with kubectl and kubeconfig path overrides validated inline](/img/tabularis-k8s-advanced-settings.png)
+
+Both paths are validated before they are used: leaving the field triggers a preflight check that runs the configured binary against the configured kubeconfig and reports the exact error on failure, and incomplete or invalid pairs are refused before they can be applied. The overrides flow through every path that shells out to kubectl — dropdown discovery, the port-forward tunnel itself, profile tests, and the [MCP server](/wiki/mcp-server) — and tunnel reuse takes them into account, so two connections reaching the same service through different kubeconfigs get separate tunnels rather than sharing a cached one.
+
+Leave both fields empty to keep the default behavior.
 
 ## Badges
 

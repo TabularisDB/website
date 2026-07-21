@@ -39,7 +39,8 @@ The Monaco integration brings powerful developer features:
 
 | Feature | Shortcut (Mac) | Shortcut (Win/Linux) | Description |
 | :--- | :--- | :--- | :--- |
-| **Execute** | `Cmd + Enter` or `Cmd + F5` | `Ctrl + Enter` or `Ctrl + F5` | Runs the selected text, or the entire script if nothing is selected. |
+| **Execute** | `Cmd + Enter` or `Cmd + F5` | `Ctrl + Enter` or `Ctrl + F5` | Runs the selected text; with nothing selected, runs the statement under the cursor. |
+| **Run All** | `Cmd + Shift + Enter` | `Ctrl + Shift + Enter` | Executes every statement in the editor (also `Ctrl/Cmd + Shift + F5`, or the entry at the top of the Run dropdown). |
 | **Execute Selection** | *(context menu only)* | *(context menu only)* | Right-click → "Execute Selection" to run highlighted text. |
 | **Format SQL** | `Shift + Option + F` | `Shift + Alt + F` | Prettifies the SQL syntax (built-in Monaco). |
 | **Toggle Comment** | `Cmd + /` | `Ctrl + /` | Comments/uncomments the current line or selection (built-in Monaco). |
@@ -53,32 +54,29 @@ The Monaco integration brings powerful developer features:
 
 ## Multi-Statement Execution
 
-When the editor contains multiple semicolon-separated queries and you press Execute, Tabularis opens a **Query Selection Modal** with three execution modes:
+When the editor contains multiple semicolon-separated statements, execution is **cursor-driven** (since v0.16.0):
 
-### Run a Single Query
+### Run the Statement at the Cursor
 
-Click any query in the list (or press its number `1`–`9`) to execute just that one.
+Press **Execute** (`Ctrl/Cmd + Enter` or `Ctrl/Cmd + F5`) with nothing selected and Tabularis runs the single statement the cursor is inside — no whole-file execution, no picker dialog. A subtle highlight shows which statement is *armed* to run; it disappears as soon as you make a selection. **Explain** follows the same rule, explaining the statement under the cursor.
+
+<video src="/videos/posts/tabularis-run-at-cursor.mp4" poster="/videos/posts/tabularis-run-at-cursor.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
+Prefer picking from a list? Turn off **Run statement under cursor** in **Settings → General → Query Execution** to restore the [Query Selection Modal](#the-query-selection-modal-optional) instead.
 
 ### Run All
 
-Click **Run All** (or press `Ctrl/Cmd + Enter` inside the modal) to execute every query in the editor. Results from each query appear in separate tabs in the results panel.
+Press `Ctrl/Cmd + Shift + Enter` in the editor (`Ctrl/Cmd + Shift + F5` globally), or pick **Run All** at the top of the Run dropdown, to execute every statement in the editor. Results from each query appear in separate tabs in the results panel.
 
 **Session continuity** — multi-statement scripts run via Run All share a single physical database connection across all statements (built-in drivers only). User variables (`SET @var := …`), `LAST_INSERT_ID()` / `LASTVAL()`, explicit `BEGIN` / `COMMIT` blocks, temporary tables, and `PREPARE` / `EXECUTE` pairs all behave the way they do in `mysql` CLI / `psql` / DBeaver. Plugin drivers fall back to sequential execution on separate pooled connections (ordering preserved, session state not guaranteed).
 
-### Run Selected
+### The Query Selection Modal (Optional)
 
-Use the checkboxes to pick specific queries, then click **Run Selected (N)** (or press `Shift + Enter`). Only the checked queries are executed. Use **Select All / Deselect All** to toggle the entire list, or press `Space` to toggle the focused query.
+With **Run statement under cursor** turned off in Settings → General, pressing Execute on a multi-statement buffer opens the **Query Selection Modal** instead:
 
-### Keyboard Navigation
-
-| Shortcut | Action |
-|----------|--------|
-| `↑` / `↓` | Move focus between queries |
-| `Enter` | Execute the focused query |
-| `1`–`9` | Directly execute query N |
-| `Space` | Toggle checkbox on focused query |
-| `Ctrl/Cmd + Enter` | Run All |
-| `Shift + Enter` | Run Selected |
+- **Run a single query** — click any query in the list, or press its number `1`–`9`.
+- **Run All** — press `Ctrl/Cmd + Enter` inside the modal.
+- **Run Selected** — check specific queries and press `Shift + Enter` (or click **Run Selected (N)**); `Space` toggles the focused query, `↑`/`↓` move focus.
 
 ### Execute Selection
 
@@ -86,7 +84,7 @@ If you highlight a text selection in the editor and run it, Tabularis splits the
 
 ## Multi-Result Panel
 
-When multiple queries are executed (via Run All, Run Selected, or Execute Selection), results are displayed in a **results panel** at the bottom of the editor. Each query gets its own result with independent pagination, error handling, and loading state.
+When multiple queries are executed (via Run All or Execute Selection), results are displayed in a **results panel** at the bottom of the editor. Each query gets its own result with independent pagination, error handling, and loading state.
 
 The panel supports two view modes — **Tab view** (default) and **Stacked view** — switchable via the toggle button in the top-right corner of the results bar.
 

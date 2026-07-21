@@ -854,11 +854,11 @@
       "id": "elasticsearch",
       "name": "Elasticsearch",
       "target": "Search plugin",
-      "status": "open",
-      "tagline": "Inspect indices, sample documents and run search queries from Tabularis.",
-      "description": "A search-oriented plugin for index browsing, mappings, document samples and query execution without building a full observability platform.",
-      "stage": "Open brief",
-      "nextStep": "Limit the first version to inspection, mappings, document samples, and search queries.",
+      "status": "shipped",
+      "tagline": "Inspect indices, sample documents and run SQL, ES|QL and REST queries from Tabularis.",
+      "description": "The community Elasticsearch plugin ships index browsing, a mapping viewer, document sampling, and query execution in three modes: Elasticsearch SQL, ES|QL, and raw REST requests.",
+      "stage": "Shipped",
+      "nextStep": "Install the Elasticsearch plugin from the registry and file issues on its repository for anything missing.",
       "difficulty": "Medium",
       "accent": "#a78bfa",
       "radar": {
@@ -867,6 +867,7 @@
         "scale": 0.92
       },
       "tags": [
+        "shipped",
         "search",
         "indices",
         "json"
@@ -874,24 +875,24 @@
       "capabilities": [
         {
           "label": "indices",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "mappings",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "search",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "bulk ops",
           "state": "stretch"
         }
       ],
-      "signal": "Useful if scoped around inspection and query workflows, not cluster ops.",
-      "claimUrl": "https://github.com/TabularisDB/tabularis/discussions",
-      "sponsorUrl": "/sponsors"
+      "signal": "Shipped by the community as v0.1.0 — scoped around inspection and query workflows, not cluster ops.",
+      "claimUrl": "/plugins",
+      "sponsorUrl": "/plugins"
     },
     {
       "id": "meilisearch",
