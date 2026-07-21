@@ -196,8 +196,15 @@ async function fetchReleaseContributors(tag: string): Promise<string[]> {
       "https://api.github.com/repos/TabularisDB/tabularis/releases?per_page=100",
       { headers },
     );
-    const releases: { tag_name: string; published_at: string }[] =
-      await relRes.json();
+    const allReleases: {
+      tag_name: string;
+      published_at: string;
+      prerelease: boolean;
+      draft: boolean;
+    }[] = await relRes.json();
+    // Nightly builds are published as prereleases; only stable releases
+    // define the contributor window.
+    const releases = allReleases.filter((r) => !r.prerelease && !r.draft);
     const idx = releases.findIndex((r) => r.tag_name === tag);
     const prevTag =
       idx >= 0 && idx + 1 < releases.length
