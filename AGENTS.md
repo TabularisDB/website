@@ -32,15 +32,16 @@ Redirects (e.g. after renaming a slug) are configured in `vercel.json` under the
 
 ## Upstream app data
 
-Three pieces of data are fetched from `TabularisDB/tabularis` at build time by `scripts/fetch-app-data.mjs` (defaults: `TABULARIS_APP_REPO=TabularisDB/tabularis`, `TABULARIS_APP_REF=main`):
+Four pieces of data are fetched from `TabularisDB/tabularis` at build time by `scripts/fetch-app-data.mjs` (defaults: `TABULARIS_APP_REPO=TabularisDB/tabularis`, `TABULARIS_APP_REF=main`):
 
 | Upstream | Local file | Consumer |
 | --- | --- | --- |
 | `src/version.ts` | `src/lib/version.ts` (re-emitted as a single `APP_VERSION` export) | download links, SEO metadata, JSON-LD |
 | `CHANGELOG.md` | `CHANGELOG.md` | `/changelog` page via `src/lib/changelog.ts` |
 | `plugins/registry.json` | `plugins/registry.json` | `/plugins` page via `src/lib/plugins.ts`, and the `:::plugin <id>:::` markdown extension |
+| Latest GitHub release tagged `nightly-*` | `src/lib/nightly.ts` | stable/nightly download channel selector and exact nightly asset URLs |
 
-These three files are **committed** to the repo so local dev works without network access. The Vercel build overwrites them before `next build` (via the `fetch-app-data` step in the build command). When editing them locally, be aware the deploy will blow your changes away — fix upstream instead.
+These four files are **committed** to the repo so local dev works without network access. The Vercel build overwrites them before `next build` (via the `fetch-app-data` step in the build command). When editing them locally, be aware the deploy will blow your changes away — fix upstream instead.
 
 Rebuilds can be triggered from the app repo via a `repository_dispatch` event of type `app-data-updated`, handled by `.github/workflows/vercel-rebuild.yml`, which POSTs to a Vercel deploy hook (`VERCEL_DEPLOY_HOOK_URL` secret). The same workflow also rebuilds on a 6-hour cron to refresh baked-in GitHub API values (stargazers, total downloads).
 

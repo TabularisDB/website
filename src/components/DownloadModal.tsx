@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { PLATFORM_CONFIG } from "@/lib/downloadConfig";
+import { getPlatformConfig } from "@/lib/downloadConfig";
+import type { ReleaseChannel } from "@/lib/downloadConfig";
 import { CopyButton } from "@/components/CopyButton";
+import { DownloadChannelPicker } from "@/components/DownloadChannelPicker";
 
 export type { Platform } from "@/lib/downloadConfig";
 
@@ -14,12 +16,17 @@ interface DownloadModalProps {
 
 export function DownloadModal({ platform, onClose }: DownloadModalProps) {
   const open = platform !== null;
-  const config = platform ? PLATFORM_CONFIG[platform] : null;
+  const [channel, setChannel] = useState<ReleaseChannel>("stable");
+  const config = platform ? getPlatformConfig(platform, channel) : null;
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    setChannel("stable");
+  }, [platform]);
 
   useEffect(() => {
     if (!open || !platform) return;
@@ -71,6 +78,7 @@ export function DownloadModal({ platform, onClose }: DownloadModalProps) {
           </div>
 
           <div className="dl-modal-body">
+            <DownloadChannelPicker channel={channel} onChange={setChannel} compact />
             {config.options.map((opt) =>
               opt.kind === "command" ? (
                 <div key={opt.label} className="dl-option dl-option--command">

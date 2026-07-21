@@ -1,6 +1,8 @@
 import { APP_VERSION } from "@/lib/version";
+import { NIGHTLY_RELEASE } from "@/lib/nightly";
 
 export type Platform = "windows" | "macos" | "linux";
+export type ReleaseChannel = "stable" | "nightly";
 
 export type FileOption = {
   kind: "file";
@@ -139,5 +141,72 @@ export const PLATFORM_CONFIG: Record<Platform, PlatformConfig> = {
     ],
   },
 };
+
+function nightlyFile(
+  label: string,
+  desc: string,
+  ext: string,
+  matches: (name: string) => boolean,
+): FileOption | null {
+  const asset = NIGHTLY_RELEASE.assets.find((candidate) => matches(candidate.name));
+  return asset ? { kind: "file", label, desc, ext, url: asset.url } : null;
+}
+
+function available(options: Array<FileOption | null>): DownloadOption[] {
+  return options.filter((option): option is FileOption => option !== null);
+}
+
+export const NIGHTLY_PLATFORM_CONFIG: Record<Platform, PlatformConfig> = {
+  windows: {
+    label: "Windows",
+    options: available([
+      nightlyFile("Installer", "Direct nightly download", ".exe", (name) =>
+        name.endsWith("_x64-setup.exe"),
+      ),
+      nightlyFile("MSI Package", "Enterprise / group policy deployment", ".msi", (name) =>
+        name.endsWith("_x64_en-US.msi"),
+      ),
+      nightlyFile("Portable", "No installation required — run anywhere", ".exe", (name) =>
+        name.endsWith("_x64-portable.exe"),
+      ),
+    ]),
+  },
+  macos: {
+    label: "macOS",
+    options: available([
+      nightlyFile("Apple Silicon", "M1 / M2 / M3 / M4 / M5 (aarch64)", ".dmg", (name) =>
+        name.endsWith("_aarch64.dmg"),
+      ),
+      nightlyFile("Intel", "x86_64", ".dmg", (name) => name.endsWith("_x64.dmg")),
+    ]),
+    note: {
+      text: "If macOS blocks the app after a direct download, run:",
+      command: "xattr -c /Applications/tabularis.app",
+    },
+  },
+  linux: {
+    label: "Linux",
+    options: available([
+      nightlyFile("AppImage", "Universal — no installation needed", ".AppImage", (name) =>
+        name.endsWith("_amd64.AppImage"),
+      ),
+      nightlyFile("Debian / Ubuntu", "apt-based distros", ".deb", (name) =>
+        name.endsWith("_amd64.deb"),
+      ),
+      nightlyFile("Fedora / RHEL", "rpm-based distros", ".rpm", (name) =>
+        name.endsWith(".x86_64.rpm"),
+      ),
+    ]),
+  },
+};
+
+export function getPlatformConfig(
+  platform: Platform,
+  channel: ReleaseChannel,
+): PlatformConfig {
+  return channel === "nightly"
+    ? NIGHTLY_PLATFORM_CONFIG[platform]
+    : PLATFORM_CONFIG[platform];
+}
 
 export const ALL_PLATFORMS: Platform[] = ["windows", "macos", "linux"];

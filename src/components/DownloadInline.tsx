@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { PLATFORM_CONFIG, ALL_PLATFORMS } from "@/lib/downloadConfig";
-import type { Platform } from "@/lib/downloadConfig";
+import { ALL_PLATFORMS, getPlatformConfig } from "@/lib/downloadConfig";
+import type { Platform, ReleaseChannel } from "@/lib/downloadConfig";
 import { CopyButton } from "@/components/CopyButton";
+import { DownloadChannelPicker } from "@/components/DownloadChannelPicker";
 
 const PLATFORM_ICONS: Record<Platform, React.ReactNode> = {
   windows: (
@@ -32,7 +33,12 @@ function detectPlatform(): Platform {
   return "windows";
 }
 
-export function DownloadInline() {
+interface DownloadInlineProps {
+  channel: ReleaseChannel;
+  onChannelChange: (channel: ReleaseChannel) => void;
+}
+
+export function DownloadInline({ channel, onChannelChange }: DownloadInlineProps) {
   const [detected, setDetected] = useState<Platform | null>(null);
 
   useEffect(() => {
@@ -44,12 +50,14 @@ export function DownloadInline() {
     : ALL_PLATFORMS;
 
   return (
-    <div className="dli-grid">
-      {orderedPlatforms.map((platform) => {
-        const config = PLATFORM_CONFIG[platform];
-        const isDetected = platform === detected;
-        return (
-          <div key={platform} className={`dli-card${isDetected ? " dli-card--detected" : ""}`}>
+    <>
+      <DownloadChannelPicker channel={channel} onChange={onChannelChange} />
+      <div className="dli-grid">
+        {orderedPlatforms.map((platform) => {
+          const config = getPlatformConfig(platform, channel);
+          const isDetected = platform === detected;
+          return (
+            <div key={platform} className={`dli-card${isDetected ? " dli-card--detected" : ""}`}>
             <div className="dli-card-header">
               <span className="dli-platform-icon">{PLATFORM_ICONS[platform]}</span>
               <h3 className="dli-platform-name">{config.label}</h3>
@@ -96,9 +104,10 @@ export function DownloadInline() {
                 </span>
               </div>
             )}
-          </div>
-        );
-      })}
-    </div>
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 }

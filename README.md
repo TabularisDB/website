@@ -38,15 +38,16 @@ The site is statically generated (`next build` with `output: "export"`) so it ca
 
 The main app lives at [`TabularisDB/tabularis`](https://github.com/TabularisDB/tabularis). This website used to live inside that repo under `website/` as part of a pnpm workspace and was released in lockstep with the app.
 
-It is now a **standalone repo**. Three pieces of data still come from the app repo &mdash; they are fetched over HTTPS from `raw.githubusercontent.com` before each build:
+It is now a **standalone repo**. Four pieces of data still come from the app repo and its GitHub releases before each build:
 
 | Upstream file | Where it lands | Consumed by |
 | --- | --- | --- |
 | `src/version.ts` | `src/lib/version.ts` | `APP_VERSION` used in download links, SEO metadata, JSON-LD |
 | `CHANGELOG.md` | `CHANGELOG.md` | `/changelog` page (`src/lib/changelog.ts`) |
 | `plugins/registry.json` | `plugins/registry.json` | `/plugins` page (`src/lib/plugins.ts`) |
+| Latest `nightly-*` GitHub release | `src/lib/nightly.ts` | Stable/nightly selector and direct asset links on `/download` |
 
-The fetcher is `scripts/fetch-app-data.mjs`. It hits `https://raw.githubusercontent.com/${TABULARIS_APP_REPO}/${TABULARIS_APP_REF}/...` and writes the files into place. Defaults: `TABULARIS_APP_REPO=TabularisDB/tabularis`, `TABULARIS_APP_REF=main`.
+The fetcher is `scripts/fetch-app-data.mjs`. It reads repository files from `raw.githubusercontent.com` and the latest nightly metadata from the GitHub Releases API, then writes the local files into place. Defaults: `TABULARIS_APP_REPO=TabularisDB/tabularis`, `TABULARIS_APP_REF=main`.
 
 Run it manually:
 
@@ -56,7 +57,7 @@ pnpm fetch-app-data
 
 On Vercel the step runs before `pnpm build` via the `buildCommand` in [`vercel.json`](./vercel.json) (`pnpm fetch-app-data && pnpm build`).
 
-The three fetched files are committed to the repo so local development works without network access; the Vercel build overwrites them with the latest upstream versions.
+The four fetched files are committed to the repo so local development works without network access; the Vercel build overwrites them with the latest upstream versions.
 
 ### Triggering rebuilds from the app repo
 
@@ -127,7 +128,7 @@ The output in `out/` is what Vercel serves.
 │   └── registry.json         # fetched from app repo
 ├── public/                   # static assets (images, videos, robots.txt)
 ├── scripts/
-│   ├── fetch-app-data.mjs    # pulls version/changelog/registry from app repo
+│   ├── fetch-app-data.mjs    # pulls version/changelog/registry/nightly data
 │   ├── generate-search-index.mjs
 │   └── generate-latest-posts.mjs
 ├── src/

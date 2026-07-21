@@ -3,12 +3,13 @@ import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
-import { DownloadInline } from "@/components/DownloadInline";
+import { DownloadReleaseChooser } from "@/components/DownloadReleaseChooser";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { GitHubIcon, DiscordIcon } from "@/components/Icons";
 import { APP_VERSION } from "@/lib/version";
+import { NIGHTLY_RELEASE } from "@/lib/nightly";
 import { getReleaseDate, formatDate } from "@/lib/posts";
-import { getTotalDownloads, formatDownloads } from "@/lib/github";
+import { getTotalDownloads } from "@/lib/github";
 import {
   buildBreadcrumbJsonLd,
   buildSoftwareApplicationJsonLd,
@@ -38,6 +39,8 @@ export default async function DownloadPage() {
   const rawDate = getReleaseDate(APP_VERSION);
   const isoDate = rawDate?.slice(0, 10) ?? "";
   const releaseDate = rawDate ? formatDate(rawDate) : "";
+  const nightlyIsoDate = NIGHTLY_RELEASE.publishedAt.slice(0, 10);
+  const nightlyDate = formatDate(NIGHTLY_RELEASE.publishedAt);
   const downloads = await getTotalDownloads();
 
   return (
@@ -54,47 +57,13 @@ export default async function DownloadPage() {
       <SiteHeader crumbs={[{ label: "download" }]} />
 
       <section className="dl-page">
-        <div className="dl-page-hero">
-          <img src="/img/logo.png" alt="Tabularis" className="dl-page-logo" />
-          <div className="dl-page-meta">
-            <h1 className="dl-page-version">v{APP_VERSION}</h1>
-            <div className="dl-page-submeta">
-              {releaseDate && <time dateTime={isoDate}>{releaseDate}</time>}
-              <span className="dl-page-sep">·</span>
-              <Link href="/changelog" className="dl-page-changelog-link">
-                View changelog →
-              </Link>
-              {downloads !== null && downloads > 0 && (
-                <>
-                  <span className="dl-page-sep">·</span>
-                  <span
-                    className="download-count"
-                    title={`${downloads.toLocaleString("en-US")} downloads from GitHub releases`}
-                  >
-                    <svg
-                      width="13"
-                      height="13"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden="true"
-                    >
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="7 10 12 15 17 10" />
-                      <line x1="12" y1="15" x2="12" y2="3" />
-                    </svg>
-                    <strong>{formatDownloads(downloads)}</strong> downloads
-                  </span>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <DownloadInline />
+        <DownloadReleaseChooser
+          stableDate={releaseDate}
+          stableIsoDate={isoDate}
+          nightlyDate={nightlyDate}
+          nightlyIsoDate={nightlyIsoDate}
+          downloads={downloads}
+        />
 
         <div className="cta-strip" style={{ justifyContent: "center", marginBottom: "2.5rem" }}>
           <a
