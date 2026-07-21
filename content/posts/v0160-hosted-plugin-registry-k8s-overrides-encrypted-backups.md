@@ -9,7 +9,7 @@ og:
   title: "Plugins, hosted."
   accent: "Catalogue. Deep links. Registry."
   claim: "A hosted plugin registry with a searchable driver catalogue and one-click installs, kubectl and kubeconfig overrides for Kubernetes, automatic encrypted backups, run-at-cursor, and AWS RDS IAM auth for MySQL."
-  image: "/img/tabularis-plugin-manager.png"
+  image: "/img/tabularis-connection-catalogue.png"
   appLabel: "tabularis"
 ---
 
@@ -93,6 +93,8 @@ If your MySQL lives on RDS behind IAM database authentication, Tabularis can now
 ## Stored Procedures Show All Their Result Sets
 
 A MySQL `CALL` to a stored procedure with several `SELECT`s streams back several result sets — and Tabularis only ever showed the first one. PR [#415](https://github.com/TabularisDB/tabularis/pull/415) (fixes [#414](https://github.com/TabularisDB/tabularis/issues/414)) rebuilds the MySQL execution path around result-set boundaries: every set now arrives, rendered through the multi-result tab UI with one tab per result set, and the per-page row cap applies to each set independently. The extra sets travel in a new optional field that other drivers and plugins simply never see, so nothing else changes shape. One known limit: a result set with zero rows is indistinguishable from the statement's OK packet at the driver level, so empty sets are still dropped.
+
+![A stored procedure CALL in the editor returning multiple result sets, each in its own result tab](/img/tabularis-multi-result-sets.png)
 
 ---
 

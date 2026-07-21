@@ -445,6 +445,8 @@ You should see a valid JSON-RPC response on `stdout`.
 
 Since v0.16.0, plugin discovery runs through the hosted **Tabularium** registry at `registry.tabularis.dev` instead of a static JSON file:
 
+![The connection catalogue merging built-in drivers and registry plugins, with paradigm facets, Installed badges, and per-plugin download counts](/img/tabularis-connection-catalogue.png)
+
 - **The connection catalogue.** Creating a new connection starts from a searchable catalogue that merges built-in drivers with registry plugins into one grid, with paradigm facets for filtering. Drivers your platform can't run are badged and dimmed. Picking an uninstalled driver install-gates it — you can install the plugin inline and continue straight to the connection form.
 - **Deep-link installs.** Links of the form `tabularis://install/<slug>` open the app with a version-aware confirmation: **Install** for a new plugin, **Update** when a newer version exists, or an already-installed notice. An optional `?version=` pins a specific release.
 - **Version picking and updates.** Catalogue cards let you install a specific released version, and the **Installed** tab shows an Update button when a newer compatible release exists for your platform and app version.

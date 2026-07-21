@@ -16,7 +16,7 @@ Open the Settings panel from:
 
 ## General Settings
 
-![General settings panel with data editor, ping interval, and ER diagram layout options](/img/tabularis-settings-general.png)
+![General settings panel with startup, data editor, query execution, and connection health check options](/img/tabularis-settings-general.png)
 
 - **Language Support**: Native translations for **English**, **Italian**, **Spanish**, **Chinese (Simplified)**, **French**, **German**, **Japanese**, **Russian**, **Tagalog** (added in v0.15.0), and **Korean** (added in v0.16.0). The app defaults to your OS locale — Filipino (`fil`) systems map to Tagalog automatically — and changing the language applies immediately.
 - **Display Timezone**: A searchable picker of IANA timezones (with current UTC-offset labels) under **Settings → Localization**, defaulting to **Auto** (your OS zone). The selected zone drives every UI timestamp — AI activity log, query history, favorites — plus CSV / JSON / notebook exports and their default filenames. Query-history date grouping (today / yesterday / older) is classified in the same zone, so headers and per-row times always agree.
