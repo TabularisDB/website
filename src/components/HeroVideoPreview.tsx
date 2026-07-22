@@ -20,9 +20,12 @@ export function HeroVideoPreview({ poster, posterSmall, src }: HeroVideoPreviewP
   const [open, setOpen] = useState(false);
   const [charging, setCharging] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [previewReady, setPreviewReady] = useState(false);
+  const [hovering, setHovering] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const preloadRef = useRef<HTMLVideoElement | null>(null);
+  const previewRef = useRef<HTMLVideoElement | null>(null);
   const chargeTimerRef = useRef<number | null>(null);
 
   useEffect(() => setMounted(true), []);
@@ -37,6 +40,9 @@ export function HeroVideoPreview({ poster, posterSmall, src }: HeroVideoPreviewP
     video.preload = "auto";
     video.muted = true;
     video.src = src;
+    video.addEventListener("canplaythrough", () => setPreviewReady(true), {
+      once: true,
+    });
     video.load();
     preloadRef.current = video;
   }, [src]);
@@ -56,6 +62,35 @@ export function HeroVideoPreview({ poster, posterSmall, src }: HeroVideoPreviewP
   }, [cancelCharge]);
 
   const close = useCallback(() => setOpen(false), []);
+
+  const handleEnter = useCallback(() => {
+    preloadVideo();
+    if (!window.matchMedia("(hover: hover)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    setHovering(true);
+  }, [preloadVideo]);
+
+  const handleLeave = useCallback(() => setHovering(false), []);
+
+  // Inline preview: once the preload finished, hovering the hero plays the
+  // video muted in place of the poster. Pauses and rewinds on leave/open.
+  const previewing = hovering && previewReady && !open;
+
+  useEffect(() => {
+    const video = previewRef.current;
+    if (!video) return;
+    if (previewing) {
+      video.play().catch(() => {});
+      return;
+    }
+    // Keep playing through the fade-out so it doesn't freeze mid-dissolve
+    // (duration matches the .hero-demo-preview opacity transition).
+    const timer = window.setTimeout(() => {
+      video.pause();
+      video.currentTime = 0;
+    }, 1200);
+    return () => window.clearTimeout(timer);
+  }, [previewing]);
 
   // Hovering the CTA chip fills it over 3s, then the video opens on its own.
   const startCharge = useCallback(() => {
@@ -156,7 +191,8 @@ export function HeroVideoPreview({ poster, posterSmall, src }: HeroVideoPreviewP
         type="button"
         className={`hero-demo${charging ? " is-charging" : ""}`}
         onClick={openPlayer}
-        onPointerEnter={preloadVideo}
+        onPointerEnter={handleEnter}
+        onPointerLeave={handleLeave}
         onFocus={preloadVideo}
         onTouchStart={preloadVideo}
         aria-haspopup="dialog"
@@ -177,6 +213,19 @@ export function HeroVideoPreview({ poster, posterSmall, src }: HeroVideoPreviewP
           loading="eager"
           fetchPriority="high"
         />
+        {previewReady && (
+          <video
+            ref={previewRef}
+            className={`hero-demo-preview${previewing ? " is-playing" : ""}`}
+            src={src}
+            muted
+            loop
+            playsInline
+            preload="none"
+            aria-hidden="true"
+            tabIndex={-1}
+          />
+        )}
         <span className="hero-demo-shade" aria-hidden="true" />
         <span
           className="hero-demo-cta"

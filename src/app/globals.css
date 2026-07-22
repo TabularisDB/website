@@ -616,6 +616,24 @@ pre {
   transform: scale(1.015);
 }
 
+/* Muted inline playback over the poster once the preload is warm — fades in
+   on hover, hidden again on leave (see previewing in HeroVideoPreview). */
+.hero-demo-preview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s ease-in-out;
+}
+
+.hero-demo-preview.is-playing {
+  opacity: 1;
+}
+
 .hero-demo-shade {
   position: absolute;
   inset: 0;
@@ -1186,6 +1204,7 @@ pre {
   .hero-scanline,
   .hero-demo,
   .hero-demo-image,
+  .hero-demo-preview,
   .hero-demo-cta,
   .hero-demo-cta-fill {
     animation: none;
