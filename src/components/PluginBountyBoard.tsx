@@ -221,12 +221,29 @@ function BountyCard({ bounty, featured = false }: { bounty: PluginBounty; featur
         ))}
       </div>
 
-      <BountyCapabilities bounty={bounty} />
-
-      <div className="bounty-signal">
-        <span>Signal</span>
-        <p>{bounty.signal}</p>
-      </div>
+      {featured ? (
+        <>
+          <BountyCapabilities bounty={bounty} />
+          <div className="bounty-signal">
+            <span>Signal</span>
+            <p>{bounty.signal}</p>
+          </div>
+        </>
+      ) : (
+        <details className="bounty-card-details">
+          <summary>
+            <span>Scope &amp; signals</span>
+            <span className="bounty-details-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div className="bounty-card-details-body">
+            <BountyCapabilities bounty={bounty} />
+            <div className="bounty-signal">
+              <span>Signal</span>
+              <p>{bounty.signal}</p>
+            </div>
+          </div>
+        </details>
+      )}
 
       <div className="bounty-next-step">
         <span>Next step</span>
@@ -438,7 +455,13 @@ function DesktopRadar({
         Federated analytics
       </span>
       <div className="bounty-radar-core" aria-hidden="true">
-        <Image src="/img/logo.png" alt="Tabularis logo" width={40} height={40} />
+        <Image
+          src="/img/logo.png"
+          alt="Tabularis logo"
+          width={40}
+          height={40}
+          loading="eager"
+        />
       </div>
       {activeBounties.map((bounty) => {
         const isLit = litDotIds.has(bounty.id) || activeDotId === bounty.id;
@@ -515,6 +538,7 @@ export function PluginBountyBoard() {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [focusFilter, setFocusFilter] = useState<FocusFilter>("all");
   const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter>("all");
+  const [query, setQuery] = useState("");
 
   const activeBounties = getActiveBounties().sort(
     (a, b) => STATUS_WEIGHT[a.status] - STATUS_WEIGHT[b.status],
@@ -523,14 +547,32 @@ export function PluginBountyBoard() {
   const constellationBounties = getConstellationBounties(activeBounties);
   const featured = getFeaturedBounty();
   const stats = getBountyStats();
+  const normalizedQuery = query.trim().toLowerCase();
+  const availableStatusFilters = STATUS_FILTERS.filter(
+    (filter) =>
+      filter.id === "all" ||
+      activeBounties.some((bounty) => matchesStatusFilter(bounty, filter.id)),
+  );
   const filteredBounties = activeBounties.filter(
     (bounty) =>
       matchesStatusFilter(bounty, statusFilter) &&
       matchesFocusFilter(bounty, focusFilter) &&
-      (difficultyFilter === "all" || bounty.difficulty === difficultyFilter),
+      (difficultyFilter === "all" || bounty.difficulty === difficultyFilter) &&
+      (!normalizedQuery ||
+        [
+          bounty.name,
+          bounty.target,
+          bounty.tagline,
+          bounty.description,
+          bounty.stage,
+          ...bounty.tags,
+        ].some((value) => value.toLowerCase().includes(normalizedQuery))),
   );
   const hasActiveFilters =
-    statusFilter !== "all" || focusFilter !== "all" || difficultyFilter !== "all";
+    statusFilter !== "all" ||
+    focusFilter !== "all" ||
+    difficultyFilter !== "all" ||
+    normalizedQuery.length > 0;
 
   return (
     <main className="bounty-page">
@@ -538,18 +580,20 @@ export function PluginBountyBoard() {
         <div className="bounty-hero-orbit" aria-hidden="true" />
         <div className="bounty-hero-copy">
           <span className="bounty-kicker">Plugin Bounty Board</span>
-          <h1>Fund the next database driver.</h1>
+          <h1>Help ship the next database driver.</h1>
           <p>
-            A public market for the integrations Tabularis should support next.
-            Request, sponsor, or claim a plugin and turn scattered requests into
-            shipped drivers. Discord is for fast discussion; GitHub is for durable
-            proposals.
+            See what the community is building, find a concrete contribution, or
+            propose the integration Tabularis should support next. GitHub tracks
+            the work; Discord is the fastest place to shape an idea.
           </p>
 
           <div className="bounty-hero-actions">
+            <Link href="#market" className="bounty-primary">
+              Browse open work
+            </Link>
             <a
               href={ACTION_TARGET.request}
-              className="bounty-primary"
+              className="bounty-secondary"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -561,11 +605,8 @@ export function PluginBountyBoard() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Pitch on Discord
+              Discuss on Discord
             </a>
-            <Link href="#market" className="bounty-secondary">
-              Enter market
-            </Link>
           </div>
         </div>
 
@@ -574,7 +615,7 @@ export function PluginBountyBoard() {
             activeBounties={activeBounties}
             constellationBounties={constellationBounties}
           />
-          <MobileConstellation bounties={activeBounties} />
+          <MobileConstellation bounties={constellationBounties} />
           <div className="bounty-radar-caption">
             <span>Curated driver map</span>
             <strong>Status, scope, next action</strong>
@@ -604,21 +645,6 @@ export function PluginBountyBoard() {
           <strong>{stats.shippedCount}</strong>
           <p>Existing plugin wins that prove external drivers can land.</p>
         </div>
-        <div className="bounty-terminal">
-          <div className="bounty-terminal-head">
-            <span>mission-feed</span>
-            <span>curated queue</span>
-          </div>
-          <ol>
-            {activeBounties.slice(0, 5).map((bounty, index) => (
-              <li key={bounty.id}>
-                <span>0{index + 1}</span>
-                <a href={`#${bounty.id}`}>{bounty.name}</a>
-                <strong>{BOUNTY_STATUS_LABEL[bounty.status]}</strong>
-              </li>
-            ))}
-          </ol>
-        </div>
       </section>
 
       {featured && (
@@ -639,11 +665,11 @@ export function PluginBountyBoard() {
 
       <section className="bounty-market" id="market">
         <div className="bounty-section-heading">
-          <span>Open market</span>
-          <h2>Pick a target. Move the ecosystem.</h2>
+          <span>Active work</span>
+          <h2>Find the right target.</h2>
           <p>
-            Every card is designed to become a real issue, discussion, sponsor
-            target, or plugin owner handoff as the board matures.
+            Search by database or narrow the board by status, focus, and difficulty.
+            Each card points to the discussion, issue, or repository where work happens.
           </p>
         </div>
 
@@ -663,6 +689,7 @@ export function PluginBountyBoard() {
                   setStatusFilter("all");
                   setFocusFilter("all");
                   setDifficultyFilter("all");
+                  setQuery("");
                 }}
               >
                 Reset
@@ -671,9 +698,26 @@ export function PluginBountyBoard() {
           </div>
 
           <div className="bounty-filter-row">
+            <span>Search</span>
+            <div className="bounty-filter-search-wrap">
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <circle cx="8.5" cy="8.5" r="5.5" />
+                <path d="m13 13 4 4" />
+              </svg>
+              <input
+                type="search"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Database, capability, or tag…"
+                aria-label="Search bounty targets"
+              />
+            </div>
+          </div>
+
+          <div className="bounty-filter-row">
             <span>Status</span>
             <div className="bounty-filter-options">
-              {STATUS_FILTERS.map((filter) => (
+              {availableStatusFilters.map((filter) => (
                 <button
                   key={filter.id}
                   type="button"

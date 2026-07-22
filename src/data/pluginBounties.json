@@ -5,7 +5,6 @@
     "amazon-redshift",
     "snowflake",
     "dynamodb",
-    "mongodb",
     "trino-presto"
   ],
   "bounties": [
@@ -681,11 +680,11 @@
       "id": "dynamodb",
       "name": "DynamoDB",
       "target": "AWS NoSQL plugin",
-      "status": "coming-soon",
+      "status": "claimed",
       "tagline": "Inspect tables, keys, indexes, and targeted reads without building an AWS console clone.",
-      "description": "DynamoDB support should be scoped around table discovery, key/index inspection, safe item reads, and AWS credential handling.",
-      "stage": "Coming soon",
-      "nextStep": "Write the first technical brief around AWS auth, table metadata, query/scan safety, and local DynamoDB testing.",
+      "description": "A community DynamoDB plugin is in active development, focused on table discovery, key and index inspection, safe item reads, and AWS credential handling.",
+      "stage": "Work in progress",
+      "nextStep": "Follow the plugin repository for implementation progress, testing opportunities, and contribution details.",
       "difficulty": "High",
       "accent": "#facc15",
       "radar": {
@@ -696,7 +695,8 @@
       "tags": [
         "aws",
         "nosql",
-        "coming-soon"
+        "community",
+        "work-in-progress"
       ],
       "capabilities": [
         {
@@ -716,19 +716,19 @@
           "state": "stretch"
         }
       ],
-      "signal": "A good future target, but only if the first version avoids dangerous broad scans by default.",
-      "claimUrl": "https://github.com/TabularisDB/tabularis/discussions",
+      "signal": "Claimed by a community contributor and now moving through active plugin development.",
+      "claimUrl": "https://github.com/fuleinist/tabularis-dynamodb-plugin",
       "sponsorUrl": "/sponsors"
     },
     {
       "id": "mongodb",
       "name": "MongoDB",
       "target": "Document plugin",
-      "status": "claimed",
-      "tagline": "Bridge document collections into a focused desktop workflow.",
-      "description": "A plugin for browsing collections, inspecting document shape, running filtered reads and exporting result sets without turning Tabularis into a generic NoSQL IDE. Implementation is currently in progress.",
-      "stage": "In progress",
-      "nextStep": "Development is underway — follow the discussion for the first read-only workflow milestone.",
+      "status": "shipped",
+      "tagline": "Browse MongoDB databases, collections and documents from Tabularis.",
+      "description": "The community MongoDB plugin ships multi-database browsing, schema inference, native find, aggregate and CRUD queries, index management, exports, and ObjectId-aware editing.",
+      "stage": "Shipped",
+      "nextStep": "Install the MongoDB plugin from the registry and file issues on its repository for anything missing.",
       "difficulty": "High",
       "accent": "#22c55e",
       "radar": {
@@ -737,6 +737,7 @@
         "scale": 0.96
       },
       "tags": [
+        "shipped",
         "nosql",
         "documents",
         "community"
@@ -744,24 +745,24 @@
       "capabilities": [
         {
           "label": "collections",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "filter",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "json grid",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "writes",
-          "state": "stretch"
+          "state": "ready"
         }
       ],
-      "signal": "Strong community pull — now claimed and in active development with a deliberately narrow scope.",
-      "claimUrl": "https://github.com/TabularisDB/tabularis/discussions",
-      "sponsorUrl": "/sponsors"
+      "signal": "Shipped through the plugin registry with support for both document browsing and native MongoDB workflows.",
+      "claimUrl": "/plugins",
+      "sponsorUrl": "/plugins"
     },
     {
       "id": "snowflake",

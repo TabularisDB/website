@@ -77,10 +77,7 @@ export function getConstellationBounties(bounties = getActiveBounties()) {
 }
 
 export function getFeaturedBounty() {
-  return (
-    getActiveBounties().find((bounty) => bounty.status === "most-wanted") ??
-    getActiveBounties()[0]
-  );
+  return getActiveBounties().find((bounty) => bounty.status === "most-wanted");
 }
 
 export function getBountyStats() {
