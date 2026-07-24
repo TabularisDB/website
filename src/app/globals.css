@@ -6409,6 +6409,48 @@ a.badge.version:hover {
   border-color: rgba(16, 185, 129, 0.55);
 }
 
+/* Newsletter capture card between the pitch card and the share block. The
+   compact form lays out as a text/form row elsewhere; the 280px rail stacks
+   it, and the heading/copy must out-rank the .post-content prose rules. */
+.post-rail-newsletter {
+  margin-top: 0.75rem;
+  padding: 1.1rem 1.2rem;
+}
+
+.post-rail-newsletter .newsletter-box.newsletter-compact {
+  margin: 0;
+  border-left: none;
+  padding-left: 0;
+}
+
+.post-rail-newsletter .newsletter-compact-body {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.75rem;
+}
+
+.post-content .post-rail-newsletter .newsletter-compact-text h3 {
+  margin: 0 0 0.3rem;
+  color: var(--text-bright);
+  font-size: 0.95rem;
+}
+
+.post-content .post-rail-newsletter .newsletter-compact-text p {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.post-rail-newsletter .newsletter-inline-fields {
+  flex-direction: column;
+}
+
+.post-rail-newsletter .newsletter-input,
+.post-rail-newsletter .newsletter-btn {
+  font-size: 0.8rem;
+}
+
 .post-byline {
   display: flex;
   align-items: center;

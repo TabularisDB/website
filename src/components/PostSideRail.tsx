@@ -2,6 +2,7 @@ import Link from "next/link";
 import { DownloadButtons } from "@/components/DownloadButtons";
 import { GithubStarsButton } from "@/components/GithubStarsButton";
 import { HeroVideoPreview } from "@/components/HeroVideoPreview";
+import { NewsletterForm } from "@/components/NewsletterForm";
 import { PostShareBlock } from "@/components/PostShareBlock";
 import { getRepoStars, getTotalDownloads, formatDownloads } from "@/lib/github";
 import { getPostByRelease } from "@/lib/posts";
@@ -64,6 +65,13 @@ export async function PostSideRail({ title, url }: PostSideRailProps) {
             {formatDownloads(downloads)} downloads · Apache 2.0
           </p>
         )}
+      </div>
+      <div className="post-rail-card post-rail-newsletter">
+        <NewsletterForm
+          compact
+          title="Never miss a release"
+          description="Release notes and database tips in your inbox. No spam, unsubscribe anytime."
+        />
       </div>
       <PostShareBlock title={title} url={url} compact />
     </aside>
