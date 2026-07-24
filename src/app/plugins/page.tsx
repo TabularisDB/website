@@ -5,6 +5,7 @@ import { PluginBountyTeaser } from "@/components/PluginBountyTeaser";
 import { ClosingCta } from "@/components/ClosingCta";
 import { CtaSocialLinks } from "@/components/CtaSocialLinks";
 import { getAllPlugins, getLatestRelease } from "@/lib/plugins";
+import { SOCIAL_URLS } from "@/lib/social";
 
 export const metadata: Metadata = {
   title: "Plugins | Tabularis",
@@ -143,7 +144,7 @@ export default function PluginsPage() {
             skeleton to get you started in minutes.
           </p>
           <a
-            href="https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md"
+            href={`${SOCIAL_URLS.github}/blob/main/plugins/PLUGIN_GUIDE.md`}
             className="btn-download"
             style={{ display: "inline-flex", width: "auto" }}
           >

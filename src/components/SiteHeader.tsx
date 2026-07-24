@@ -6,6 +6,7 @@ import { MenuIcon, XIcon, SearchIcon, DiscordIcon, GitHubIcon } from "@/componen
 import { usePathname } from "next/navigation";
 import { getRepoStars, formatStars } from "@/lib/github";
 import { GithubStarsButton } from "@/components/GithubStarsButton";
+import { SOCIAL_URLS } from "@/lib/social";
 
 interface SiteHeaderProps {
   crumbs?: Array<{ label: string; href?: string }>;
@@ -186,12 +187,12 @@ const navGroups: NavGroup[] = [
         links: [
           {
             label: "GitHub",
-            href: "https://github.com/TabularisDB/tabularis",
+            href: SOCIAL_URLS.github,
             description: "Source code, issues, discussions, and stars.",
           },
           {
             label: "Discord",
-            href: "https://discord.com/invite/K2hmhfHRSt",
+            href: SOCIAL_URLS.discord,
             description: "Talk to users, contributors, and maintainers.",
           },
           {
@@ -460,7 +461,7 @@ export function SiteHeader({ crumbs = [], announcement }: SiteHeaderProps) {
 
             {stars !== null && (
               <a
-                href="https://github.com/TabularisDB/tabularis"
+                href={SOCIAL_URLS.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mobile-nav-stars"
@@ -478,7 +479,7 @@ export function SiteHeader({ crumbs = [], announcement }: SiteHeaderProps) {
           </div>
 
           <a
-            href="https://discord.com/invite/K2hmhfHRSt"
+            href={SOCIAL_URLS.discord}
             target="_blank"
             rel="noopener noreferrer"
             className="mobile-nav-discord"

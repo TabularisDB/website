@@ -4,10 +4,10 @@ import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/JsonLd";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
-import { ShareButton } from "@/components/ShareButton";
 import { ClosingCta } from "@/components/ClosingCta";
 import { CtaSocialLinks } from "@/components/CtaSocialLinks";
 import { PostContentLightbox } from "@/components/PostContentLightbox";
+import { PostSideRail } from "@/components/PostSideRail";
 import {
   getAllPosts,
   getPostBySlug,
@@ -125,7 +125,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         crumbs={[{ label: "blog", href: "/blog" }, { label: crumbTitle }]}
       />
 
-      <article className="post-content">
+      <article className="post-content post-layout">
         <header className="post-header">
           {meta.tags && meta.tags.length > 0 && (
             <div className="post-eyebrow">
@@ -149,7 +149,13 @@ export default async function BlogPostPage({ params }: PageProps) {
             release={meta.release}
           />
         </header>
-        {htmlAfter && <div dangerouslySetInnerHTML={{ __html: htmlAfter }} />}
+        {htmlAfter && (
+          <div
+            className="post-body"
+            dangerouslySetInnerHTML={{ __html: htmlAfter }}
+          />
+        )}
+        <PostSideRail title={meta.title} url={`/blog/${slug}`} />
       </article>
       <PostNewsletterSlots />
       <PostContentLightbox />
@@ -159,9 +165,9 @@ export default async function BlogPostPage({ params }: PageProps) {
       <ClosingCta
         title="Enjoyed this post? Try Tabularis."
         lede="Free and open source (Apache 2.0). Download it for Windows, macOS, or Linux — and if you like what you read, a star on GitHub helps more developers discover it."
+        showVideo
       >
         <CtaSocialLinks />
-        <ShareButton />
       </ClosingCta>
 
       <NewsletterForm compact />

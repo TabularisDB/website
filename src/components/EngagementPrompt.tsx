@@ -7,6 +7,7 @@ import { trackEvent } from "@/lib/analytics";
 import { SURVEY_CONFIGURED } from "@/lib/siteConfig";
 import { getRepoStars, formatStars } from "@/lib/github";
 import { GitHubIcon } from "@/components/Icons";
+import { SOCIAL_URLS } from "@/lib/social";
 import { SurveyForm, SURVEY_STORAGE_KEY } from "./SurveyForm";
 
 // Routes where the floating prompt must never appear: the survey already lives
@@ -68,6 +69,9 @@ export function EngagementPrompt() {
   const shownRef = useRef(false);
   const pathname = usePathname();
   const excluded = isExcluded(pathname);
+  // The blog already pitches download + star (side rail, closing CTA), so the
+  // floating prompt there is survey-only — promo variants would be redundant.
+  const surveyOnly = pathname?.startsWith("/blog") ?? false;
 
   useEffect(() => {
     getRepoStars().then(setStars);
@@ -78,7 +82,7 @@ export function EngagementPrompt() {
 
     const surveyEligible =
       SURVEY_CONFIGURED && !localStorage.getItem(SURVEY_STORAGE_KEY);
-    const promoEligible = !promoInCooldown();
+    const promoEligible = !surveyOnly && !promoInCooldown();
     if (!surveyEligible && !promoEligible) return;
 
     const mountedAt = Date.now();
@@ -132,7 +136,7 @@ export function EngagementPrompt() {
     window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("mouseout", onMouseOut);
     return cleanup;
-  }, [excluded]);
+  }, [excluded, surveyOnly]);
 
   if (excluded || !content) return null;
   const shown = content;
@@ -179,7 +183,7 @@ export function EngagementPrompt() {
             discover it.
           </p>
           <a
-            href="https://github.com/TabularisDB/tabularis"
+            href={SOCIAL_URLS.github}
             target="_blank"
             rel="noopener noreferrer"
             className="promo-cta__btn"

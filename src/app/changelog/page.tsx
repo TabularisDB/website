@@ -6,6 +6,7 @@ import { GitHubIcon } from "@/components/Icons";
 import { ClosingCta } from "@/components/ClosingCta";
 import { CtaSocialLinks } from "@/components/CtaSocialLinks";
 import { getChangelog, type ChangelogVersion, type SectionType } from "@/lib/changelog";
+import { SOCIAL_URLS } from "@/lib/social";
 
 export const metadata: Metadata = {
   title: "Changelog | Tabularis",
@@ -117,7 +118,7 @@ export default function ChangelogPage() {
           <p className="cl-page-subtitle">
             Every release, documented. Source of truth is{" "}
             <a
-              href="https://github.com/TabularisDB/tabularis/blob/main/CHANGELOG.md"
+              href={`${SOCIAL_URLS.github}/blob/main/CHANGELOG.md`}
               target="_blank"
               rel="noopener noreferrer"
             >

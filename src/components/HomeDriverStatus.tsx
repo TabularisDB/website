@@ -6,6 +6,7 @@ import {
   getAllBounties,
   type BountyStatus,
 } from "@/lib/pluginBounties";
+import { SOCIAL_URLS } from "@/lib/social";
 
 type AccentStyle = CSSProperties & {
   "--bounty-accent": string;
@@ -172,7 +173,7 @@ export function HomeDriverStatus() {
         ))}
 
         <a
-          href="https://github.com/TabularisDB/tabularis/discussions"
+          href={`${SOCIAL_URLS.github}/discussions`}
           target="_blank"
           rel="noopener noreferrer"
           className="driver-status-card driver-status-request"

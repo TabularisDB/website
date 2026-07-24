@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { GitHubIcon, DiscordIcon } from "@/components/Icons";
 import { buildBreadcrumbJsonLd } from "@/lib/seo";
+import { SOCIAL_URLS } from "@/lib/social";
 import {
   getAllInitiativeMetas,
   type InitiativeMeta,
@@ -131,7 +132,7 @@ export default function RoadmapPage() {
             Other drivers and major features land here as they move from
             idea to scoped work. Propose one via a{" "}
             <a
-              href="https://github.com/TabularisDB/tabularis/discussions"
+              href={`${SOCIAL_URLS.github}/discussions`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -144,14 +145,14 @@ export default function RoadmapPage() {
         <div className="cta-strip">
           <a
             className="btn-cta"
-            href="https://github.com/TabularisDB/tabularis"
+            href={SOCIAL_URLS.github}
           >
             <GitHubIcon size={16} />
             Star on GitHub
           </a>
           <a
             className="btn-cta discord"
-            href="https://discord.com/invite/K2hmhfHRSt"
+            href={SOCIAL_URLS.discord}
           >
             <DiscordIcon size={16} />
             Join Discord

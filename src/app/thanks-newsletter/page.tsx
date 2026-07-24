@@ -4,6 +4,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { NewsletterGoal } from "@/components/NewsletterGoal";
 import { SocialLinks } from "@/components/SocialLinks";
+import { SOCIAL_URLS } from "@/lib/social";
 
 export const metadata: Metadata = {
   title: "You're subscribed! | Tabularis",
@@ -61,7 +62,7 @@ export default function ThanksNewsletterPage() {
           </Link>
 
           <a
-            href="https://discord.com/invite/K2hmhfHRSt"
+            href={SOCIAL_URLS.discord}
             target="_blank"
             rel="noopener noreferrer"
             className="dl-thankyou-card"

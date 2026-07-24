@@ -6,6 +6,7 @@ import { getPlatformConfig } from "@/lib/downloadConfig";
 import type { ReleaseChannel } from "@/lib/downloadConfig";
 import { CopyButton } from "@/components/CopyButton";
 import { DownloadChannelPicker } from "@/components/DownloadChannelPicker";
+import { SOCIAL_URLS } from "@/lib/social";
 
 export type { Platform } from "@/lib/downloadConfig";
 
@@ -121,7 +122,7 @@ export function DownloadModal({ platform, onClose }: DownloadModalProps) {
 
           <div className="dl-modal-footer">
             <a
-              href="https://github.com/TabularisDB/tabularis/releases"
+              href={`${SOCIAL_URLS.github}/releases`}
               target="_blank"
               rel="noopener noreferrer"
             >

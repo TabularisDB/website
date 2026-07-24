@@ -6,6 +6,7 @@ import {
   XBrandIcon,
   MastodonIcon,
 } from "@/components/Icons";
+import { SOCIAL_URLS } from "@/lib/social";
 
 interface IconProps {
   size?: number;
@@ -23,27 +24,27 @@ interface Social {
 export const SOCIAL_LINKS: Social[] = [
   {
     label: "GitHub",
-    href: "https://github.com/TabularisDB/tabularis",
+    href: SOCIAL_URLS.github,
     Icon: GitHubIcon,
   },
   {
     label: "Discord",
-    href: "https://discord.com/invite/K2hmhfHRSt",
+    href: SOCIAL_URLS.discord,
     Icon: DiscordIcon,
   },
   {
     label: "Bluesky",
-    href: "https://bsky.app/profile/tabularis.bsky.social",
+    href: SOCIAL_URLS.bluesky,
     Icon: BlueskyIcon,
   },
   {
     label: "X",
-    href: "https://x.com/tabularisdb",
+    href: SOCIAL_URLS.x,
     Icon: XBrandIcon,
   },
   {
     label: "Mastodon",
-    href: "https://mastodon.social/@tabularis",
+    href: SOCIAL_URLS.mastodon,
     Icon: MastodonIcon,
     rel: "me",
   },

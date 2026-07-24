@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { DownloadModal } from "./DownloadModal";
 import type { Platform } from "./DownloadModal";
 import { formatDownloads } from "@/lib/github";
+import { SOCIAL_URLS } from "@/lib/social";
 
 function detectPlatform(): Platform {
   if (typeof navigator === "undefined") return "windows";
@@ -46,10 +47,12 @@ export function DownloadButtons({
   showInstallLink = false,
   downloads = null,
   trailing,
+  showReleasesLink = true,
 }: {
   showInstallLink?: boolean;
   downloads?: number | null;
   trailing?: ReactNode;
+  showReleasesLink?: boolean;
 }) {
   const [modalPlatform, setModalPlatform] = useState<Platform | null>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -111,47 +114,53 @@ export function DownloadButtons({
         </div>
       </div>
 
-      <p style={{ fontSize: "0.85rem", color: "var(--text-muted)", marginTop: "0.4rem", marginBottom: 0, display: "flex", gap: "1.25rem", flexWrap: "wrap", alignItems: "center" }}>
-        {downloads !== null && downloads > 0 && (
-          <span
-            className="download-count"
-            title={`${downloads.toLocaleString("en-US")} downloads from GitHub releases`}
-          >
-            <svg
-              width="13"
-              height="13"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
+      {(showInstallLink ||
+        showReleasesLink ||
+        (downloads !== null && downloads > 0)) && (
+        <p style={{ fontSize: "0.85rem", color: "var(--text-muted)", marginTop: "0.4rem", marginBottom: 0, display: "flex", gap: "1.25rem", flexWrap: "wrap", alignItems: "center" }}>
+          {downloads !== null && downloads > 0 && (
+            <span
+              className="download-count"
+              title={`${downloads.toLocaleString("en-US")} downloads from GitHub releases`}
             >
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" />
-              <line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-            <strong>{formatDownloads(downloads)}</strong> downloads
-          </span>
-        )}
-        {showInstallLink && (
-          <a
-            href="/download"
-            style={{ color: "var(--text-muted)", textDecoration: "none" }}
-          >
-            Homebrew, Snap, AUR and more →
-          </a>
-        )}
-        <a
-          href="https://github.com/TabularisDB/tabularis/releases"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: "var(--accent)", textDecoration: "none" }}
-        >
-          View all releases on GitHub →
-        </a>
-      </p>
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              <strong>{formatDownloads(downloads)}</strong> downloads
+            </span>
+          )}
+          {showInstallLink && (
+            <a
+              href="/download"
+              style={{ color: "var(--text-muted)", textDecoration: "none" }}
+            >
+              Homebrew, Snap, AUR and more →
+            </a>
+          )}
+          {showReleasesLink && (
+            <a
+              href={`${SOCIAL_URLS.github}/releases`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "var(--accent)", textDecoration: "none" }}
+            >
+              View all releases on GitHub →
+            </a>
+          )}
+        </p>
+      )}
 
       <DownloadModal platform={modalPlatform} onClose={() => setModalPlatform(null)} />
     </>

@@ -4,6 +4,7 @@ import {
   MastodonIcon,
   XBrandIcon,
 } from "@/components/Icons";
+import { SOCIAL_URLS } from "@/lib/social";
 
 /** The standard social row for ClosingCta secondary links. */
 export function CtaSocialLinks() {
@@ -11,14 +12,14 @@ export function CtaSocialLinks() {
     <>
       <a
         className="btn-cta discord"
-        href="https://discord.com/invite/K2hmhfHRSt"
+        href={SOCIAL_URLS.discord}
       >
         <DiscordIcon size={15} />
         Join Discord
       </a>
       <a
         className="btn-cta"
-        href="https://bsky.app/profile/tabularis.bsky.social"
+        href={SOCIAL_URLS.bluesky}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -27,7 +28,7 @@ export function CtaSocialLinks() {
       </a>
       <a
         className="btn-cta"
-        href="https://mastodon.social/@tabularis"
+        href={SOCIAL_URLS.mastodon}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -36,7 +37,7 @@ export function CtaSocialLinks() {
       </a>
       <a
         className="btn-cta"
-        href="https://x.com/tabularisdb"
+        href={SOCIAL_URLS.x}
         target="_blank"
         rel="noopener noreferrer"
       >

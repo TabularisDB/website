@@ -2,6 +2,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { SOCIAL_URLS } from "@/lib/social";
 
 export const metadata: Metadata = {
   title: "Thank you | Tabularis Sponsors",
@@ -32,7 +33,7 @@ export default function SponsorsConfirmPage() {
           </p>
           <div className="sponsor-confirm-actions">
             <a
-              href="https://github.com/TabularisDB/tabularis"
+              href={SOCIAL_URLS.github}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-download"
@@ -41,7 +42,7 @@ export default function SponsorsConfirmPage() {
               GitHub →
             </a>
             <a
-              href="https://discord.com/invite/K2hmhfHRSt"
+              href={SOCIAL_URLS.discord}
               target="_blank"
               rel="noopener noreferrer"
               className="discord-btn"

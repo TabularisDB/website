@@ -22,9 +22,10 @@ import {
   buildSoftwareApplicationJsonLd,
   buildVideoObjectJsonLd,
 } from "@/lib/seo";
+import { SOCIAL_URLS } from "@/lib/social";
 
 const GITHUB_EDIT_HOME_URL =
-  "https://github.com/TabularisDB/tabularis/edit/main/website/content/home.md";
+  `${SOCIAL_URLS.github}/edit/main/website/content/home.md`;
 
 const SEO_ENTRY_POINTS = [
   {

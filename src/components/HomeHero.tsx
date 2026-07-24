@@ -6,8 +6,9 @@ import { FeaturedOn } from "@/components/FeaturedOn";
 import { HeroVideoPreview } from "@/components/HeroVideoPreview";
 import { getRepoStars, getTotalDownloads } from "@/lib/github";
 import { getAllPlugins } from "@/lib/plugins";
-import type { PostMeta } from "@/lib/posts";
+import { getPostByRelease, type PostMeta } from "@/lib/posts";
 import { APP_VERSION } from "@/lib/version";
+import { SOCIAL_URLS } from "@/lib/social";
 
 const SWIFT_COUNT = 44;
 
@@ -21,6 +22,7 @@ export async function HomeHero({ latestPost }: HomeHeroProps) {
     getTotalDownloads(),
   ]);
   const pluginCount = getAllPlugins().length;
+  const releasePost = getPostByRelease(APP_VERSION);
   return (
     <>
       {latestPost && (
@@ -49,7 +51,17 @@ export async function HomeHero({ latestPost }: HomeHeroProps) {
         <div className="hero-main">
           <div className="hero-copy">
             <div className="hero-badges">
-              <span className="badge version">v{APP_VERSION}</span>
+              {releasePost ? (
+                <Link
+                  href={`/blog/${releasePost.slug}`}
+                  className="badge version"
+                  title={`Read the v${APP_VERSION} release notes`}
+                >
+                  v{APP_VERSION}
+                </Link>
+              ) : (
+                <span className="badge version">v{APP_VERSION}</span>
+              )}
               <span className="badge">MCP-native</span>
               <span className="badge">Open Source · Apache 2.0</span>
             </div>
@@ -130,7 +142,7 @@ export async function HomeHero({ latestPost }: HomeHeroProps) {
 
         <CarouselGrid className="hero-proof">
           <a
-            href="https://github.com/TabularisDB/tabularis"
+            href={SOCIAL_URLS.github}
             target="_blank"
             rel="noopener noreferrer"
             className="hero-proof-card"

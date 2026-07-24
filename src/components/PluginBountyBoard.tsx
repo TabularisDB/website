@@ -16,6 +16,7 @@ import {
   getShippedBounties,
   type PluginBounty,
 } from "@/lib/pluginBounties";
+import { buildSocialShareUrls, SOCIAL_URLS } from "@/lib/social";
 
 function trackMatomoEvent(category: string, action: string, name?: string) {
   const _paq = (window as unknown as { _paq?: unknown[][] })._paq;
@@ -33,8 +34,8 @@ type FocusFilter = "all" | "compatibility" | "warehouse" | "nosql" | "sql" | "do
 type DifficultyFilter = "all" | BountyDifficulty;
 
 const ACTION_TARGET = {
-  request: "https://github.com/TabularisDB/tabularis/discussions",
-  discord: "https://discord.com/invite/K2hmhfHRSt",
+  request: `${SOCIAL_URLS.github}/discussions`,
+  discord: SOCIAL_URLS.discord,
   sponsor: "/sponsors",
 };
 
@@ -141,26 +142,32 @@ function SharePanel({ bounty }: { bounty: PluginBounty }) {
   const xText = `Looking for ${bounty.difficulty.toLowerCase()} contributors to implement ${bounty.name} for Tabularis!\n${bounty.tagline}`;
   const bskyText = `Looking for contributors to implement ${bounty.name} for Tabularis!\n\n${bounty.tagline}\n\nDifficulty: ${bounty.difficulty} · ${bounty.target}\n${url}`;
   const redditTitle = `Anyone working on a ${bounty.name} plugin for Tabularis? There's an open bounty (${bounty.difficulty} difficulty)`;
+  const shareUrls = buildSocialShareUrls({
+    url,
+    text: xText,
+    blueskyText: bskyText,
+    redditTitle,
+  });
 
   const platforms = [
     {
       label: "X",
-      href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(xText)}&url=${encodeURIComponent(url)}`,
+      href: shareUrls.x,
       icon: <XBrandIcon size={13} />,
     },
     {
       label: "LinkedIn",
-      href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+      href: shareUrls.linkedin,
       icon: <LinkedInIcon size={13} />,
     },
     {
       label: "Bluesky",
-      href: `https://bsky.app/intent/compose?text=${encodeURIComponent(bskyText)}`,
+      href: shareUrls.bluesky,
       icon: <BlueskyIcon size={13} />,
     },
     {
       label: "Reddit",
-      href: `https://reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(redditTitle)}`,
+      href: shareUrls.reddit,
       icon: <RedditIcon size={13} />,
     },
   ];

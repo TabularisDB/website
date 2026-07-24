@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { getSeoPagesBySection, getSeoPagePath } from "@/lib/seoPages";
 import { GitHubIcon, DiscordIcon } from "@/components/Icons";
 import { buildBreadcrumbJsonLd } from "@/lib/seo";
+import { SOCIAL_URLS } from "@/lib/social";
 
 export const metadata: Metadata = {
   title: "Solutions | Tabularis",
@@ -92,7 +93,7 @@ export default function SolutionsPage() {
         <div className="cta-strip">
           <a
             className="btn-cta"
-            href="https://github.com/TabularisDB/tabularis"
+            href={SOCIAL_URLS.github}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -101,7 +102,7 @@ export default function SolutionsPage() {
           </a>
           <a
             className="btn-cta discord"
-            href="https://discord.com/invite/K2hmhfHRSt"
+            href={SOCIAL_URLS.discord}
             target="_blank"
             rel="noopener noreferrer"
           >

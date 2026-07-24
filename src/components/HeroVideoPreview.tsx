@@ -9,6 +9,12 @@ interface HeroVideoPreviewProps {
   poster: string;
   posterSmall?: string;
   src: string;
+  /** Matomo event category — override when embedding outside the hero. */
+  analyticsCategory?: string;
+  /** Poster <img sizes>; the default matches the home hero column. */
+  sizes?: string;
+  /** Load the poster eagerly at high priority (the hero is the LCP). */
+  eager?: boolean;
 }
 
 const CHARGE_MS = 3000;
@@ -16,7 +22,14 @@ const CHARGE_MS = 3000;
 const FOCUSABLE_SELECTOR =
   'video, button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
-export function HeroVideoPreview({ poster, posterSmall, src }: HeroVideoPreviewProps) {
+export function HeroVideoPreview({
+  poster,
+  posterSmall,
+  src,
+  analyticsCategory = "hero-video",
+  sizes = "(max-width: 960px) 100vw, 50vw",
+  eager = true,
+}: HeroVideoPreviewProps) {
   const [open, setOpen] = useState(false);
   const [charging, setCharging] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -57,9 +70,9 @@ export function HeroVideoPreview({ poster, posterSmall, src }: HeroVideoPreviewP
 
   const openPlayer = useCallback(() => {
     cancelCharge();
-    trackEvent("hero-video", "open", "click");
+    trackEvent(analyticsCategory, "open", "click");
     setOpen(true);
-  }, [cancelCharge]);
+  }, [analyticsCategory, cancelCharge]);
 
   const close = useCallback(() => setOpen(false), []);
 
@@ -102,10 +115,10 @@ export function HeroVideoPreview({ poster, posterSmall, src }: HeroVideoPreviewP
     chargeTimerRef.current = window.setTimeout(() => {
       chargeTimerRef.current = null;
       setCharging(false);
-      trackEvent("hero-video", "open", "hover-charge");
+      trackEvent(analyticsCategory, "open", "hover-charge");
       setOpen(true);
     }, CHARGE_MS);
-  }, [open, preloadVideo]);
+  }, [analyticsCategory, open, preloadVideo]);
 
   useEffect(() => cancelCharge, [cancelCharge]);
 
@@ -204,14 +217,14 @@ export function HeroVideoPreview({ poster, posterSmall, src }: HeroVideoPreviewP
           srcSet={
             posterSmall ? `${posterSmall} 800w, ${poster} 1592w` : undefined
           }
-          sizes={posterSmall ? "(max-width: 960px) 100vw, 50vw" : undefined}
+          sizes={posterSmall ? sizes : undefined}
           alt=""
           width="1592"
           height="1080"
           className="hero-demo-image"
           decoding="async"
-          loading="eager"
-          fetchPriority="high"
+          loading={eager ? "eager" : "lazy"}
+          fetchPriority={eager ? "high" : "auto"}
         />
         {previewReady && (
           <video

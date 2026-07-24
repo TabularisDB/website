@@ -8,6 +8,7 @@ import { FeaturedPost } from "@/components/FeaturedPost";
 import { TagFilter } from "@/components/TagFilter";
 import { BlogNewsletter } from "@/components/BlogNewsletter";
 import { getAllTags, getPostsByTag } from "@/lib/posts";
+import { SOCIAL_URLS } from "@/lib/social";
 
 export function generateStaticParams() {
   return getAllTags().map((tag) => ({ tag }));
@@ -75,13 +76,13 @@ export default async function TagPage({
         <BlogNewsletter />
 
         <div className="cta-strip">
-          <a className="btn-cta" href="https://github.com/TabularisDB/tabularis">
+          <a className="btn-cta" href={SOCIAL_URLS.github}>
             <GitHubIcon size={16} />
             Star on GitHub
           </a>
           <a
             className="btn-cta discord"
-            href="https://discord.com/invite/K2hmhfHRSt"
+            href={SOCIAL_URLS.discord}
           >
             <DiscordIcon size={16} />
             Join Discord

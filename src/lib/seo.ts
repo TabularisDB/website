@@ -1,4 +1,5 @@
 import { APP_VERSION } from "./version";
+import { SOCIAL_URLS } from "./social";
 
 const BASE_URL = "https://tabularis.dev";
 
@@ -33,11 +34,11 @@ export function buildOrganizationJsonLd() {
     url: BASE_URL,
     logo: toAbsoluteUrl("/img/logo.png"),
     sameAs: [
-      "https://github.com/TabularisDB/tabularis",
-      "https://discord.com/invite/K2hmhfHRSt",
-      "https://bsky.app/profile/tabularis.bsky.social",
-      "https://x.com/tabularisdb",
-      "https://mastodon.social/@tabularis",
+      SOCIAL_URLS.github,
+      SOCIAL_URLS.discord,
+      SOCIAL_URLS.bluesky,
+      SOCIAL_URLS.x,
+      SOCIAL_URLS.mastodon,
     ],
   };
 }

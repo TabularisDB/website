@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
+import { SOCIAL_URLS } from "@/lib/social";
 
 export const metadata: Metadata = {
   title: "Cookie Policy | Tabularis",
@@ -252,7 +253,7 @@ export default function CookiePolicyPage() {
             If you have any questions about this cookie policy, please open an
             issue on{" "}
             <a
-              href="https://github.com/TabularisDB/tabularis"
+              href={SOCIAL_URLS.github}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -260,7 +261,7 @@ export default function CookiePolicyPage() {
             </a>{" "}
             or join our{" "}
             <a
-              href="https://discord.com/invite/K2hmhfHRSt"
+              href={SOCIAL_URLS.discord}
               target="_blank"
               rel="noopener noreferrer"
             >

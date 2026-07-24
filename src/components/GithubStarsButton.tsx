@@ -1,4 +1,5 @@
 import { formatStars } from "@/lib/github";
+import { SOCIAL_URLS } from "@/lib/social";
 
 interface GithubStarsButtonProps {
   stars: number | null;
@@ -10,7 +11,7 @@ interface GithubStarsButtonProps {
 
 export function GithubStarsButton({
   stars,
-  href = "https://github.com/TabularisDB/tabularis",
+  href = SOCIAL_URLS.github,
   compact = false,
   label = "GitHub",
   onClick,

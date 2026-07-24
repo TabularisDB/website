@@ -7,6 +7,7 @@ import { SocialLinks } from "@/components/SocialLinks";
 import { getRepoStars } from "@/lib/github";
 import { GithubStarsButton } from "@/components/GithubStarsButton";
 import { trackEvent } from "@/lib/analytics";
+import { SOCIAL_URLS } from "@/lib/social";
 
 export function DownloadThankYou() {
   const searchParams = useSearchParams();
@@ -75,7 +76,7 @@ export function DownloadThankYou() {
 
       <div className="dl-thankyou-cards">
         <a
-          href="https://discord.com/invite/K2hmhfHRSt"
+          href={SOCIAL_URLS.discord}
           target="_blank"
           rel="noopener noreferrer"
           className="dl-thankyou-card"
@@ -110,7 +111,7 @@ export function DownloadThankYou() {
         </a>
 
         <a
-          href="https://github.com/TabularisDB/tabularis"
+          href={SOCIAL_URLS.github}
           target="_blank"
           rel="noopener noreferrer"
           className="dl-thankyou-card"

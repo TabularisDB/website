@@ -10,6 +10,7 @@ import { APP_VERSION } from "@/lib/version";
 import { NIGHTLY_RELEASE } from "@/lib/nightly";
 import { getReleaseDate, formatDate } from "@/lib/posts";
 import { getTotalDownloads } from "@/lib/github";
+import { SOCIAL_URLS } from "@/lib/social";
 import {
   buildBreadcrumbJsonLd,
   buildSoftwareApplicationJsonLd,
@@ -68,7 +69,7 @@ export default async function DownloadPage() {
         <div className="cta-strip" style={{ justifyContent: "center", marginBottom: "2.5rem" }}>
           <a
             className="btn-cta"
-            href="https://github.com/TabularisDB/tabularis"
+            href={SOCIAL_URLS.github}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -77,7 +78,7 @@ export default async function DownloadPage() {
           </a>
           <a
             className="btn-cta discord"
-            href="https://discord.com/invite/K2hmhfHRSt"
+            href={SOCIAL_URLS.discord}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -88,14 +89,14 @@ export default async function DownloadPage() {
 
         <div className="dl-page-footer-links">
           <a
-            href={`https://github.com/TabularisDB/tabularis/releases/tag/v${APP_VERSION}`}
+            href={`${SOCIAL_URLS.github}/releases/tag/v${APP_VERSION}`}
             target="_blank"
             rel="noopener noreferrer"
           >
             Release notes on GitHub →
           </a>
           <a
-            href="https://github.com/TabularisDB/tabularis/releases"
+            href={`${SOCIAL_URLS.github}/releases`}
             target="_blank"
             rel="noopener noreferrer"
           >

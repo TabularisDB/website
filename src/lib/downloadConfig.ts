@@ -1,5 +1,6 @@
 import { APP_VERSION } from "@/lib/version";
 import { NIGHTLY_RELEASE } from "@/lib/nightly";
+import { SOCIAL_URLS } from "@/lib/social";
 
 export type Platform = "windows" | "macos" | "linux";
 export type ReleaseChannel = "stable" | "nightly";
@@ -26,7 +27,7 @@ export interface PlatformConfig {
   note?: DownloadNote;
 }
 
-const BASE = `https://github.com/TabularisDB/tabularis/releases/download/v${APP_VERSION}`;
+const BASE = `${SOCIAL_URLS.github}/releases/download/v${APP_VERSION}`;
 
 export const PLATFORM_CONFIG: Record<Platform, PlatformConfig> = {
   windows: {
