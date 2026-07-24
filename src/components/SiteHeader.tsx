@@ -23,7 +23,7 @@ type NavGroup = {
   matchPrefixes: string[];
   columns?: Array<{
     title: string;
-    links: Array<{ label: string; href: string; description: string }>;
+    links: Array<{ label: string; href: string; description: string; badge?: string }>;
   }>;
 };
 
@@ -166,6 +166,12 @@ const navGroups: NavGroup[] = [
         title: "Evaluate",
         links: [
           {
+            label: "Visual Explain Online",
+            href: "https://explain.tabularis.dev",
+            description: "Paste an execution plan and explore it in your browser.",
+            badge: "New",
+          },
+          {
             label: "Compare",
             href: "/compare",
             description: "See how Tabularis stacks up against other database tools.",
@@ -215,6 +221,21 @@ const navGroups: NavGroup[] = [
     matchPrefixes: ["/plugins"],
   },
 ];
+
+function NavLinkLabel({ label, badge }: { label: string; badge?: string }) {
+  if (!badge) return <strong>{label}</strong>;
+  const words = label.split(" ");
+  const last = words.pop();
+  return (
+    <strong>
+      {words.length > 0 && <>{words.join(" ")} </>}
+      <span className="nav-badge-keep">
+        {last}
+        <span className="nav-badge-new">{badge}</span>
+      </span>
+    </strong>
+  );
+}
 
 function isActive(pathname: string, prefixes: string[]) {
   return prefixes.some((prefix) => pathname.startsWith(prefix));
@@ -287,6 +308,10 @@ export function SiteHeader({ crumbs = [], announcement }: SiteHeaderProps) {
                                 pathname.startsWith(link.href) ? "active" : ""
                               }`;
 
+                              const labelNode = (
+                                <NavLinkLabel label={link.label} badge={link.badge} />
+                              );
+
                               return external ? (
                                 <a
                                   key={link.href}
@@ -295,12 +320,12 @@ export function SiteHeader({ crumbs = [], announcement }: SiteHeaderProps) {
                                   rel="noopener noreferrer"
                                   className={className}
                                 >
-                                  <strong>{link.label}</strong>
+                                  {labelNode}
                                   <span>{link.description}</span>
                                 </a>
                               ) : (
                                 <Link key={link.href} href={link.href} className={className}>
-                                  <strong>{link.label}</strong>
+                                  {labelNode}
                                   <span>{link.description}</span>
                                 </Link>
                               );
@@ -415,6 +440,10 @@ export function SiteHeader({ crumbs = [], announcement }: SiteHeaderProps) {
                             !external && pathname.startsWith(link.href) ? "active" : ""
                           }`;
 
+                          const labelNode = (
+                            <NavLinkLabel label={link.label} badge={link.badge} />
+                          );
+
                           return external ? (
                             <a
                               key={link.href}
@@ -423,12 +452,12 @@ export function SiteHeader({ crumbs = [], announcement }: SiteHeaderProps) {
                               rel="noopener noreferrer"
                               className={className}
                             >
-                              <strong>{link.label}</strong>
+                              {labelNode}
                               <span>{link.description}</span>
                             </a>
                           ) : (
                             <Link key={link.href} href={link.href} className={className}>
-                              <strong>{link.label}</strong>
+                              {labelNode}
                               <span>{link.description}</span>
                             </Link>
                           );

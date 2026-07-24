@@ -13,6 +13,8 @@ category: "Core Features"
 
 It works with PostgreSQL, MySQL, MariaDB, and SQLite, plus any plugin driver that declares EXPLAIN support. Each engine uses different EXPLAIN formats and capabilities, and Tabularis handles the differences automatically.
 
+> **Try it in your browser** — no install required. Paste any execution plan into [Visual Explain Online](https://explain.tabularis.dev) and explore the same graph and table views at [explain.tabularis.dev](https://explain.tabularis.dev).
+
 ![Visual EXPLAIN modal with graph view showing execution plan nodes, cost heatmap, and summary bar](/img/posts/tabularis-visual-explain-graph-view-execution-plan.png)
 
 ## Opening Visual EXPLAIN

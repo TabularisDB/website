@@ -345,6 +345,34 @@ pre {
   color: var(--text-muted);
 }
 
+.nav-badge-keep,
+.mega-menu-link strong .nav-badge-keep,
+.mobile-nav-sub-link strong .nav-badge-keep {
+  white-space: nowrap;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.nav-badge-new,
+.mega-menu-link strong .nav-badge-new,
+.mobile-nav-sub-link strong .nav-badge-new {
+  display: inline-block;
+  margin-left: 0.45rem;
+  padding: 0.08rem 0.35rem;
+  font-size: 0.6rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  border-radius: 999px;
+  vertical-align: text-bottom;
+}
+
 .header-announcement {
   display: flex;
   flex-direction: column;

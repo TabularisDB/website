@@ -17,6 +17,8 @@ If you have ever run `EXPLAIN` on a complex query, you know the frustration: a m
 
 **Tabularis** turns query tuning into a visual workflow. Select your query, click **EXPLAIN**, and Tabularis automatically runs the correct engine-specific syntax, parses the raw output, and renders it across four interactive views — graph, table, raw output, and AI analysis.
 
+> **Want to try it right now?** Paste an execution plan into [Visual Explain Online](https://explain.tabularis.dev) — the browser-based version of Visual EXPLAIN. No download, no signup.
+
 <video src="/videos/wiki/05-visual-explain.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
 ## Why traditional EXPLAIN is hard
@@ -77,5 +79,6 @@ Visual EXPLAIN adapts to the database you are connected to:
 
 ## Next steps
 
+- [Try Visual Explain Online in your browser](https://explain.tabularis.dev)
 - [Download Tabularis](/download)
 - [Read the Visual EXPLAIN guide](/wiki/visual-explain)
