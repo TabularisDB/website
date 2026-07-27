@@ -20,6 +20,7 @@ Tabularis ships with a set of keyboard shortcuts for common actions across navig
 | Quick Navigator (search tables, views, routines, triggers) | `⌘+P` | `Ctrl+P` |
 | Focus the sidebar table filter | `⌘+Shift+F` | `Ctrl+Shift+F` |
 | Toggle sidebar | `⌘+B` | `Ctrl+B` |
+| Toggle row editor sidebar (right) | `⌘+Shift+B` | `Ctrl+Shift+B` |
 | Open connections page | `⌘+Shift+C` | `Ctrl+Shift+C` |
 | New connection (opens modal) | `⌘+Shift+N` | `Ctrl+Shift+N` |
 | Switch to Nth open connection | `⌘+Shift+1–9` | `Ctrl+Shift+1–9` |
@@ -37,6 +38,7 @@ Tabularis ships with a set of keyboard shortcuts for common actions across navig
 | Close current tab | `⌘+W` | `Ctrl+W` |
 | Switch tab (circular) | `Ctrl+Tab` | `Ctrl+Tab` |
 | Copy selection | `⌘+C` | `Ctrl+C` |
+| Format SQL (buffer or selection) | `⇧+⌥+F` | `Shift+Alt+F` |
 | Multi-Cursor (click) | `⌘+Click` | `Ctrl+Click` |
 | Add next occurrence | `⌘+D` | `Ctrl+D` |
 | Select all occurrences | `⌘+Shift+L` | `Ctrl+Shift+L` |

@@ -18,7 +18,7 @@ Open the Settings panel from:
 
 ![General settings panel with startup, data editor, query execution, and connection health check options](/img/tabularis-settings-general.png)
 
-- **Language Support**: Native translations for **English**, **Italian**, **Spanish**, **Chinese (Simplified)**, **French**, **German**, **Japanese**, **Russian**, **Tagalog** (added in v0.15.0), and **Korean** (added in v0.16.0). The app defaults to your OS locale — Filipino (`fil`) systems map to Tagalog automatically — and changing the language applies immediately.
+- **Language Support**: Native translations for **English**, **Italian**, **Spanish**, **Chinese (Simplified)**, **French**, **German**, **Japanese**, **Russian**, **Tagalog** (added in v0.15.0), **Korean** (added in v0.16.0), and **Brazilian Portuguese** (added in v0.17.0). The app defaults to your OS locale — Filipino (`fil`) systems map to Tagalog automatically, and region-coded locales like `pt-BR` resolve correctly — and changing the language applies immediately. With eleven languages the picker is now a searchable select showing each language's native name.
 - **Display Timezone**: A searchable picker of IANA timezones (with current UTC-offset labels) under **Settings → Localization**, defaulting to **Auto** (your OS zone). The selected zone drives every UI timestamp — AI activity log, query history, favorites — plus CSV / JSON / notebook exports and their default filenames. Query-history date grouping (today / yesterday / older) is classified in the same zone, so headers and per-row times always agree.
 - **Update Checks**: Enable or disable automatic update checks on startup. Checks query the GitHub Releases API — no version data is sent, only a GET request is made.
 
