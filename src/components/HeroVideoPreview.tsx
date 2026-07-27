@@ -1,8 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
-import { VideoPlayer } from "@/components/VideoPlayer";
+import { VideoModal } from "@/components/VideoModal";
 import { trackEvent } from "@/lib/analytics";
 
 interface HeroVideoPreviewProps {
@@ -19,9 +18,6 @@ interface HeroVideoPreviewProps {
 
 const CHARGE_MS = 3000;
 
-const FOCUSABLE_SELECTOR =
-  'video, button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-
 export function HeroVideoPreview({
   poster,
   posterSmall,
@@ -32,16 +28,12 @@ export function HeroVideoPreview({
 }: HeroVideoPreviewProps) {
   const [open, setOpen] = useState(false);
   const [charging, setCharging] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const [previewReady, setPreviewReady] = useState(false);
   const [hovering, setHovering] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const dialogRef = useRef<HTMLDivElement>(null);
   const preloadRef = useRef<HTMLVideoElement | null>(null);
   const previewRef = useRef<HTMLVideoElement | null>(null);
   const chargeTimerRef = useRef<number | null>(null);
-
-  useEffect(() => setMounted(true), []);
 
   const preloadVideo = useCallback(() => {
     if (preloadRef.current) return;
@@ -122,81 +114,6 @@ export function HeroVideoPreview({
 
   useEffect(() => cancelCharge, [cancelCharge]);
 
-  useEffect(() => {
-    if (!open) return;
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    dialogRef.current?.focus();
-
-    function handleKey(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        close();
-        return;
-      }
-      if (event.key !== "Tab") return;
-
-      const dialog = dialogRef.current;
-      if (!dialog) return;
-      const focusables = Array.from(
-        dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
-      ).filter((el) => !el.hasAttribute("disabled"));
-      if (focusables.length === 0) {
-        event.preventDefault();
-        dialog.focus();
-        return;
-      }
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
-      const active = document.activeElement;
-      if (event.shiftKey) {
-        if (active === first || active === dialog) {
-          event.preventDefault();
-          last.focus();
-        }
-      } else if (active === last) {
-        event.preventDefault();
-        first.focus();
-      } else if (active && !dialog.contains(active)) {
-        event.preventDefault();
-        first.focus();
-      }
-    }
-
-    window.addEventListener("keydown", handleKey);
-    return () => {
-      window.removeEventListener("keydown", handleKey);
-      document.body.style.overflow = previousOverflow;
-      triggerRef.current?.focus();
-    };
-  }, [close, open]);
-
-  const modal = open && (
-    <div
-      className="hero-video-overlay"
-      onClick={(event) => {
-        if (event.target === event.currentTarget) close();
-      }}
-    >
-      <div
-        ref={dialogRef}
-        className="hero-video-dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Tabularis overview video"
-        tabIndex={-1}
-      >
-        <VideoPlayer
-          src={src}
-          poster={poster}
-          wrapperClassName="hero-video-player"
-          videoClassName="hero-video-player-video"
-          ariaLabel="Tabularis product overview"
-        />
-      </div>
-    </div>
-  );
-
   return (
     <>
       <button
@@ -256,7 +173,13 @@ export function HeroVideoPreview({
         </span>
       </button>
 
-      {mounted && modal ? createPortal(modal, document.body) : null}
+      <VideoModal
+        src={src}
+        poster={poster}
+        open={open}
+        onClose={close}
+        restoreFocusTo={triggerRef}
+      />
     </>
   );
 }

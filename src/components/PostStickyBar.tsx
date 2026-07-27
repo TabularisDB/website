@@ -9,6 +9,8 @@ import {
   XBrandIcon,
 } from "@/components/Icons";
 import { DownloadButtons } from "@/components/DownloadButtons";
+import { VideoModal } from "@/components/VideoModal";
+import { trackEvent } from "@/lib/analytics";
 import { formatStars } from "@/lib/github";
 import { SOCIAL_URLS, buildSocialShareUrls } from "@/lib/social";
 
@@ -28,6 +30,7 @@ interface PostStickyBarProps {
 export function PostStickyBar({ title, url, stars }: PostStickyBarProps) {
   const [visible, setVisible] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [videoOpen, setVideoOpen] = useState(false);
 
   useEffect(() => {
     const cta = document.querySelector(".closing-cta");
@@ -123,6 +126,37 @@ export function PostStickyBar({ title, url, stars }: PostStickyBarProps) {
         </svg>
         {stars !== null && formatStars(stars)}
       </a>
+      <button
+        className="post-sticky-bar__demo"
+        onClick={() => {
+          trackEvent("post-sticky-bar-video", "open", "click");
+          setVideoOpen(true);
+        }}
+        aria-haspopup="dialog"
+        aria-expanded={videoOpen}
+        aria-label="Watch the Tabularis overview video"
+        title="Watch the Tabularis overview video"
+        tabIndex={visible ? undefined : -1}
+      >
+        <svg
+          width="13"
+          height="13"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M8 5v14l11-7z" />
+        </svg>
+        <span className="post-sticky-bar__demo-label">
+          Demo<span className="post-sticky-bar__demo-duration"> · 53s</span>
+        </span>
+      </button>
+      <VideoModal
+        src="/videos/overview.mp4"
+        poster="/videos/overview-hero.webp"
+        open={videoOpen}
+        onClose={() => setVideoOpen(false)}
+      />
       <DownloadButtons showReleasesLink={false} />
     </div>
   );

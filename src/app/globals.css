@@ -6384,6 +6384,34 @@ a.badge.version:hover {
   border-color: var(--border-bright);
 }
 
+/* "▶ Demo · 53s" — opens the same fullscreen VideoModal as the hero/rail. */
+.post-sticky-bar__demo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(30, 32, 36, 0.6);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.post-sticky-bar__demo:hover {
+  border-color: var(--border-bright);
+  color: var(--text-bright);
+}
+
+.post-sticky-bar__demo-duration {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
 /* Same split download button (OS detection + dropdown + modal) as the home
    hero and the side rail, shrunk to fit the pill and opening upwards. */
 .post-sticky-bar .download-wrap {
@@ -6430,13 +6458,26 @@ a.badge.version:hover {
   .post-sticky-bar .download-split__chevron {
     display: none;
   }
-}
-
-@media (max-width: 400px) {
   /* The full "Download for <OS>" doesn't fit next to the share icons:
      keep just "Download" — the modal names the platform anyway. */
   .post-sticky-bar .download-split__main .download-split__for,
   .post-sticky-bar .download-split__main strong {
+    display: none;
+  }
+  .post-sticky-bar__demo-duration {
+    display: none;
+  }
+}
+
+@media (max-width: 400px) {
+  /* Icon-only play button. */
+  .post-sticky-bar__demo {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    justify-content: center;
+  }
+  .post-sticky-bar__demo-label {
     display: none;
   }
 }
