@@ -41,6 +41,9 @@ export function PostCard({ post, compact = false }: PostCardProps) {
         tabIndex={-1}
       >
         <img src={imageSrc} alt="" className="post-card-image" loading="lazy" />
+        {post.release && (
+          <span className="post-release post-cover-release">{post.release}</span>
+        )}
       </Link>
       <div className="post-card-content">
         <div className="post-card-byline">
@@ -49,8 +52,10 @@ export function PostCard({ post, compact = false }: PostCardProps) {
         <PostMetaBar
           date={post.date}
           readingTime={post.readingTime}
-          release={post.release}
         />
+        {post.release && (
+          <span className="post-release-a11y">Release {post.release}</span>
+        )}
         <Link href={`/blog/${post.slug}`} className="post-card-body">
           <h3 className="post-title">{post.title}</h3>
           <p className="post-excerpt">{post.excerpt}</p>

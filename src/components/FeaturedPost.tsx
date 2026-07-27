@@ -25,6 +25,9 @@ export function FeaturedPost({
         tabIndex={-1}
       >
         <img src={postOgImage(post.slug)} alt="" className="blog-hero-image" />
+        {post.release && (
+          <span className="post-release post-cover-release">{post.release}</span>
+        )}
       </Link>
 
       <div className="blog-hero-content">
@@ -38,10 +41,9 @@ export function FeaturedPost({
           <span className="post-byline-sep">&middot;</span>
           <span>{post.readingTime} min read</span>
           {post.release && (
-            <>
-              <span className="post-byline-sep">&middot;</span>
-              <span className="post-release">{post.release}</span>
-            </>
+            <span className="post-release-a11y">
+              Release {post.release}
+            </span>
           )}
           {showTagBadge && post.tags && post.tags.length > 0 && (
             <>

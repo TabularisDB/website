@@ -4317,6 +4317,31 @@ a.badge.version:hover {
   transition: transform 0.4s ease;
 }
 
+.post-release.post-cover-release {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 1;
+  color: #111827;
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(8px);
+  font-weight: 700;
+}
+
+.post-release-a11y {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .blog-hero-post:hover .blog-hero-image {
   transform: scale(1.02);
 }

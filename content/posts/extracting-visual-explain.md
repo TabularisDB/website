@@ -1,12 +1,12 @@
 ---
-title: "Visual EXPLAIN beyond Tabularis: one engine, multiple hosts"
+title: "Visual EXPLAIN beyond the app: one engine, multiple hosts"
 date: "2026-07-27T11:48:00"
 authors: ["debba"]
 tags: ["explain", "architecture", "typescript", "rust", "engineering", "deep-dive"]
 excerpt: "Visual EXPLAIN began inside the desktop app. Extracting it produced an npm package and an online visualiser, but also a public API, two release schedules, and a repository question I have not answered yet."
 og:
   template: "code-terminal"
-  title: "Visual EXPLAIN beyond Tabularis"
+  title: "Visual EXPLAIN beyond the app"
   accent: "One engine, multiple hosts."
   claim: "Drivers stop at raw EXPLAIN output. Everything after that, including parsers, exclusive metrics, diagnostics and views, is @tabularis/explain, running identically in the desktop app and at explain.tabularis.dev."
   image: "/img/posts/tabularis-visual-explain-graph-view-execution-plan.png"
@@ -19,7 +19,7 @@ og:
     - "05 add the browser as a second host"
 ---
 
-# Visual EXPLAIN beyond Tabularis: one engine, multiple hosts
+# Visual EXPLAIN beyond the app: one engine, multiple hosts
 
 [Visual EXPLAIN](/solutions/visual-explain) is the Tabularis feature people screenshot. You run a query and it turns the database's EXPLAIN output into a graph, a diagram, a table and a statistics view. It also reports findings for individual nodes, which is usually where the useful work begins: finding the bottleneck in a large plan.
 
