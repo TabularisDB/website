@@ -56,7 +56,7 @@ export default function PluginsPage() {
                 <div className="plugin-entry-info">
                   <div className="plugin-entry-header">
                     <a
-                      href={plugin.homepage}
+                      href={plugin.registry_url ?? plugin.homepage}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="plugin-name"
@@ -139,10 +139,18 @@ export default function PluginsPage() {
         <div className="plugin-cta">
           <h3>Build Your Own Plugin</h3>
           <p>
-            Got a database you&apos;d like to support? The plugin guide covers
-            the JSON-RPC protocol, manifest format, and includes a full Rust
+            Got a database you&apos;d like to support? The registry&apos;s
+            plugin development docs cover the manifest and how to publish your
+            driver; the plugin guide has the JSON-RPC protocol and a full Rust
             skeleton to get you started in minutes.
           </p>
+          <a
+            href="https://registry.tabularis.dev/docs/plugin-development"
+            className="btn-download"
+            style={{ display: "inline-flex", width: "auto" }}
+          >
+            Plugin Development Docs &rarr;
+          </a>{" "}
           <a
             href={`${SOCIAL_URLS.github}/blob/main/plugins/PLUGIN_GUIDE.md`}
             className="btn-download"

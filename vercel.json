@@ -16,6 +16,16 @@
       "source": "/blog/jetbrains-open-source-support",
       "destination": "/blog/jetbrains-open-source-program",
       "permanent": true
+    },
+    {
+      "source": "/wiki/plugins",
+      "destination": "https://registry.tabularis.dev/docs/plugin-development/schema",
+      "permanent": false
+    },
+    {
+      "source": "/wiki/building-plugins",
+      "destination": "https://registry.tabularis.dev/docs/plugin-development",
+      "permanent": false
     }
   ],
   "headers": [
