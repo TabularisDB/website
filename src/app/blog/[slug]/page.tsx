@@ -8,6 +8,7 @@ import { ClosingCta } from "@/components/ClosingCta";
 import { CtaSocialLinks } from "@/components/CtaSocialLinks";
 import { PostContentLightbox } from "@/components/PostContentLightbox";
 import { PostSideRail } from "@/components/PostSideRail";
+import { PostStickyBar } from "@/components/PostStickyBar";
 import {
   getAllPosts,
   getPostBySlug,
@@ -24,6 +25,7 @@ import { NewsletterForm } from "@/components/NewsletterForm";
 import { PostNewsletterSlots } from "@/components/PostNewsletterSlots";
 import { buildArticleJsonLd, buildBreadcrumbJsonLd } from "@/lib/seo";
 import { getRelatedLinksForPost } from "@/lib/seoRelated";
+import { getRepoStars } from "@/lib/github";
 import { RelatedLinks } from "@/components/RelatedLinks";
 
 interface PageProps {
@@ -157,6 +159,11 @@ export default async function BlogPostPage({ params }: PageProps) {
         )}
         <PostSideRail title={meta.title} url={`/blog/${slug}`} />
       </article>
+      <PostStickyBar
+        title={meta.title}
+        url={`/blog/${slug}`}
+        stars={await getRepoStars()}
+      />
       <PostNewsletterSlots />
       <PostContentLightbox />
 

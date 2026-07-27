@@ -6297,6 +6297,163 @@ a.badge.version:hover {
   }
 }
 
+/* POST STICKY BAR — the rail's counterpart below 1780px: a floating pill at
+   the bottom of the viewport with share buttons and a download CTA. It never
+   takes horizontal space from the article; it slides in after the reader
+   scrolls past the header and retracts once the closing CTA is in view. */
+.post-sticky-bar {
+  position: fixed;
+  left: 50%;
+  bottom: calc(0.9rem + env(safe-area-inset-bottom, 0px));
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  /* --card-surface is a gradient (not a color), so no color-mix here:
+     near-opaque solid + blur keeps the text behind from bleeding through. */
+  background: rgba(17, 18, 20, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+  transform: translate(-50%, calc(100% + 2rem));
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+  max-width: calc(100vw - 1.5rem);
+}
+
+.post-sticky-bar--visible {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.post-sticky-bar__share {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.post-sticky-bar__icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+.post-sticky-bar__icon-btn:hover {
+  color: var(--text);
+  border-color: var(--text-muted);
+}
+
+.post-sticky-bar__icon-btn.copied {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.post-sticky-bar__stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(30, 32, 36, 0.6);
+  color: #facc15;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color 0.15s ease;
+}
+
+.post-sticky-bar__stars:hover {
+  border-color: var(--border-bright);
+}
+
+/* Same split download button (OS detection + dropdown + modal) as the home
+   hero and the side rail, shrunk to fit the pill and opening upwards. */
+.post-sticky-bar .download-wrap {
+  margin: 0;
+}
+
+.post-sticky-bar .download-split__main {
+  padding: 0.42rem 0.9rem;
+  font-size: 0.8rem;
+  border-radius: 999px 0 0 999px;
+}
+
+.post-sticky-bar .download-split__chevron {
+  border-radius: 0 999px 999px 0;
+}
+
+.post-sticky-bar .download-dropdown {
+  top: auto;
+  bottom: calc(100% + 8px);
+}
+
+@media (max-width: 470px) {
+  .post-sticky-bar {
+    gap: 0.45rem;
+    padding: 0.4rem 0.5rem;
+  }
+  .post-sticky-bar__stars {
+    display: none;
+  }
+  .post-sticky-bar__share {
+    gap: 0.25rem;
+  }
+  .post-sticky-bar__icon-btn {
+    width: 28px;
+    height: 28px;
+  }
+  .post-sticky-bar .download-split__main {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.75rem;
+    border-radius: 999px;
+  }
+  /* No room for the platform dropdown: the main button already opens the
+     modal for the detected OS. */
+  .post-sticky-bar .download-split__chevron {
+    display: none;
+  }
+}
+
+@media (max-width: 400px) {
+  /* The full "Download for <OS>" doesn't fit next to the share icons:
+     keep just "Download" — the modal names the platform anyway. */
+  .post-sticky-bar .download-split__main .download-split__for,
+  .post-sticky-bar .download-split__main strong {
+    display: none;
+  }
+}
+
+/* The side rail takes over on wide screens. */
+@media (min-width: 1780px) {
+  .post-sticky-bar {
+    display: none;
+  }
+}
+
+@media print {
+  .post-sticky-bar {
+    display: none;
+  }
+}
+
 .post-rail-card {
   border: 1px solid var(--border);
   border-radius: var(--card-radius);

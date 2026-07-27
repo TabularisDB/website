@@ -84,7 +84,8 @@ export function DownloadButtons({
               onClick={() => { setModalPlatform(detected); setDropdownOpen(false); }}
             >
               <PlatformIcon platform={detected} />
-              Download for <strong>{PLATFORM_LABELS[detected]}</strong>
+              Download <span className="download-split__for">for</span>{" "}
+              <strong>{PLATFORM_LABELS[detected]}</strong>
             </button>
             <button
               className={`download-split__chevron${dropdownOpen ? " download-split__chevron--open" : ""}`}
