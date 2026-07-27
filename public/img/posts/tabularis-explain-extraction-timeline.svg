@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" font-family="system-ui,-apple-system,'Segoe UI',sans-serif">
+<rect width="760" height="380" rx="10" fill="#111214" stroke="rgba(255,255,255,0.10)"/>
+<text x="24" y="34" font-size="16.5" font-weight="650" fill="#ffffff">The extraction, step by step</text>
+<text x="24" y="53" font-size="12.5" fill="#898781">Each change made the next boundary easier to see</text>
+
+<!-- connectors -->
+<g stroke="#3987e5" stroke-width="1.5" fill="#3987e5">
+  <line x1="152" x2="166" y1="182" y2="182"/>
+  <path d="M170,182 l-7,-4 0,8 Z"/>
+  <line x1="298" x2="312" y1="182" y2="182"/>
+  <path d="M316,182 l-7,-4 0,8 Z"/>
+  <line x1="444" x2="458" y1="182" y2="182"/>
+  <path d="M462,182 l-7,-4 0,8 Z"/>
+  <line x1="590" x2="604" y1="182" y2="182"/>
+  <path d="M608,182 l-7,-4 0,8 Z"/>
+</g>
+
+<!-- step 1 -->
+<rect x="24" y="82" width="128" height="200" rx="8" fill="#16181c" stroke="rgba(255,255,255,0.14)"/>
+<circle cx="45" cy="104" r="11" fill="#24272d"/>
+<text x="45" y="108" text-anchor="middle" font-size="10.5" font-weight="700" fill="#c3c2b7">01</text>
+<text x="40" y="139" font-size="12.5" font-weight="650" fill="#ffffff">Untangle</text>
+<text x="40" y="160" font-size="11.5" fill="#c3c2b7">Separate plan</text>
+<text x="40" y="176" font-size="11.5" fill="#c3c2b7">analysis from</text>
+<text x="40" y="192" font-size="11.5" fill="#c3c2b7">rendering.</text>
+<text x="40" y="222" font-size="11" fill="#898781">Make all</text>
+<text x="40" y="237" font-size="11" fill="#898781">dependencies</text>
+<text x="40" y="252" font-size="11" fill="#898781">point one way.</text>
+
+<!-- step 2 -->
+<rect x="170" y="82" width="128" height="200" rx="8" fill="#16181c" stroke="rgba(255,255,255,0.14)"/>
+<circle cx="191" cy="104" r="11" fill="#173b31"/>
+<text x="191" y="108" text-anchor="middle" font-size="10.5" font-weight="700" fill="#199e70">02</text>
+<text x="186" y="139" font-size="12.5" font-weight="650" fill="#ffffff">Extract</text>
+<text x="186" y="160" font-size="11.5" fill="#c3c2b7">Move analysis,</text>
+<text x="186" y="176" font-size="11.5" fill="#c3c2b7">diagnostics and</text>
+<text x="186" y="192" font-size="11.5" fill="#c3c2b7">views into the</text>
+<text x="186" y="208" font-size="11.5" fill="#c3c2b7">new package.</text>
+
+<!-- step 3 -->
+<rect x="316" y="82" width="128" height="200" rx="8" fill="#16181c" stroke="#199e70"/>
+<circle cx="337" cy="104" r="11" fill="#173b31"/>
+<text x="337" y="108" text-anchor="middle" font-size="10.5" font-weight="700" fill="#199e70">03</text>
+<text x="332" y="139" font-size="12.5" font-weight="650" fill="#ffffff">Draw the line</text>
+<text x="332" y="160" font-size="11.5" fill="#c3c2b7">Drivers stop at</text>
+<text x="332" y="178" font-size="11.5" fill="#199e70">raw EXPLAIN</text>
+<text x="332" y="193" font-size="11.5" fill="#199e70">output.</text>
+<text x="332" y="222" font-size="11" fill="#898781">Parsers move to</text>
+<text x="332" y="237" font-size="11" fill="#898781">the side that owns</text>
+<text x="332" y="252" font-size="11" fill="#898781">the plan types.</text>
+
+<!-- step 4 -->
+<rect x="462" y="82" width="128" height="200" rx="8" fill="#16181c" stroke="rgba(255,255,255,0.14)"/>
+<circle cx="483" cy="104" r="11" fill="#17304f"/>
+<text x="483" y="108" text-anchor="middle" font-size="10.5" font-weight="700" fill="#3987e5">04</text>
+<text x="478" y="139" font-size="12.5" font-weight="650" fill="#ffffff">Package</text>
+<text x="478" y="160" font-size="11.5" fill="#c3c2b7">Split core, React</text>
+<text x="478" y="176" font-size="11.5" fill="#c3c2b7">and flow entry</text>
+<text x="478" y="192" font-size="11.5" fill="#c3c2b7">points.</text>
+<text x="478" y="222" font-size="11" fill="#898781">Publish the first</text>
+<text x="478" y="237" font-size="11" fill="#898781">npm release.</text>
+
+<!-- step 5 -->
+<rect x="608" y="82" width="128" height="200" rx="8" fill="#16181c" stroke="rgba(255,255,255,0.14)"/>
+<circle cx="629" cy="104" r="11" fill="#17304f"/>
+<text x="629" y="108" text-anchor="middle" font-size="10.5" font-weight="700" fill="#3987e5">05</text>
+<text x="624" y="139" font-size="12.5" font-weight="650" fill="#ffffff">Add a host</text>
+<text x="624" y="160" font-size="11.5" fill="#c3c2b7">Build the static</text>
+<text x="624" y="176" font-size="11.5" fill="#c3c2b7">web visualiser</text>
+<text x="624" y="192" font-size="11.5" fill="#c3c2b7">on the same</text>
+<text x="624" y="208" font-size="11.5" fill="#c3c2b7">engine.</text>
+
+<!-- result -->
+<rect x="24" y="310" width="712" height="46" rx="8" fill="#131c1a" stroke="#199e70"/>
+<text x="40" y="338" font-size="12" fill="#c3c2b7"><tspan font-weight="650" fill="#199e70">Result:</tspan> database access stays in each host; plan understanding becomes portable.</text>
+</svg>

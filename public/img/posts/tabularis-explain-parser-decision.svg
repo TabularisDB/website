@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="system-ui,-apple-system,'Segoe UI',sans-serif">
+<rect width="760" height="420" rx="10" fill="#111214" stroke="rgba(255,255,255,0.10)"/>
+<text x="24" y="34" font-size="16.5" font-weight="650" fill="#ffffff">Why the parsers moved to TypeScript</text>
+<text x="24" y="53" font-size="12.5" fill="#898781">Sharing an implementation was less useful than having one plan model</text>
+
+<!-- rejected design -->
+<rect x="24" y="78" width="344" height="310" rx="8" fill="#16181c" stroke="rgba(255,255,255,0.14)"/>
+<rect x="40" y="94" width="76" height="22" rx="11" fill="#322225"/>
+<text x="78" y="109" text-anchor="middle" font-size="10.5" font-weight="700" fill="#e06c75">REJECTED</text>
+<text x="128" y="109" font-size="12.5" font-weight="650" fill="#ffffff">Keep the parsers in Rust</text>
+
+<rect x="48" y="134" width="296" height="52" rx="6" fill="#111214" stroke="rgba(255,255,255,0.14)"/>
+<text x="64" y="156" font-size="11.5" font-weight="650" fill="#ffffff">Rust parser</text>
+<text x="64" y="173" font-size="11" fill="#898781">serde structs define the plan model</text>
+
+<line x1="196" x2="196" y1="186" y2="209" stroke="#898781" stroke-width="1.5"/>
+<path d="M196,214 l-4,-8 8,0 Z" fill="#898781"/>
+<rect x="104" y="214" width="184" height="38" rx="19" fill="#24272d"/>
+<text x="196" y="238" text-anchor="middle" font-size="11" fill="#c3c2b7">WASM and package boundary</text>
+
+<line x1="196" x2="196" y1="252" y2="271" stroke="#898781" stroke-width="1.5"/>
+<path d="M196,276 l-4,-8 8,0 Z" fill="#898781"/>
+<rect x="48" y="276" width="296" height="52" rx="6" fill="#111214" stroke="rgba(255,255,255,0.14)"/>
+<text x="64" y="298" font-size="11.5" font-weight="650" fill="#ffffff">TypeScript analysis and views</text>
+<text x="64" y="315" font-size="11" fill="#898781">a second ExplainPlan definition is still required</text>
+
+<text x="196" y="360" text-anchor="middle" font-size="11.5" font-weight="600" fill="#e06c75">Two models kept equivalent by hand</text>
+
+<!-- chosen design -->
+<rect x="392" y="78" width="344" height="310" rx="8" fill="#16181c" stroke="#199e70"/>
+<rect x="408" y="94" width="70" height="22" rx="11" fill="#173b31"/>
+<text x="443" y="109" text-anchor="middle" font-size="10.5" font-weight="700" fill="#199e70">CHOSEN</text>
+<text x="490" y="109" font-size="12.5" font-weight="650" fill="#ffffff">Move parsing beside the views</text>
+
+<rect x="416" y="134" width="296" height="52" rx="6" fill="#111214" stroke="rgba(255,255,255,0.14)"/>
+<text x="432" y="156" font-size="11.5" font-weight="650" fill="#ffffff">Raw EXPLAIN output</text>
+<text x="432" y="173" font-size="11" fill="#898781">the desktop app and browser provide the payload</text>
+
+<line x1="564" x2="564" y1="186" y2="209" stroke="#199e70" stroke-width="1.5"/>
+<path d="M564,214 l-4,-8 8,0 Z" fill="#199e70"/>
+<rect x="472" y="214" width="184" height="38" rx="19" fill="#173b31"/>
+<text x="564" y="238" text-anchor="middle" font-size="11" fill="#199e70">TypeScript parser</text>
+
+<line x1="564" x2="564" y1="252" y2="271" stroke="#199e70" stroke-width="1.5"/>
+<path d="M564,276 l-4,-8 8,0 Z" fill="#199e70"/>
+<rect x="416" y="276" width="296" height="52" rx="6" fill="#111214" stroke="#199e70"/>
+<text x="432" y="298" font-size="11.5" font-weight="650" fill="#ffffff">One ExplainPlan model</text>
+<text x="432" y="315" font-size="11" fill="#898781">metrics, diagnostics and views use it directly</text>
+
+<text x="564" y="360" text-anchor="middle" font-size="11.5" font-weight="600" fill="#199e70">One parser and one model for every host</text>
+</svg>

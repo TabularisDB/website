@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="system-ui,-apple-system,'Segoe UI',sans-serif">
+<rect width="760" height="420" rx="10" fill="#111214" stroke="rgba(255,255,255,0.10)"/>
+<text x="24" y="34" font-size="16.5" font-weight="650" fill="#ffffff">The repository question is still open</text>
+<text x="24" y="53" font-size="12.5" fill="#898781">The best development workflow and the clearest package lifecycle point in different directions</text>
+
+<!-- headers -->
+<rect x="188" y="78" width="264" height="44" rx="8" fill="#173b31" stroke="#199e70"/>
+<text x="320" y="98" text-anchor="middle" font-size="12.5" font-weight="650" fill="#ffffff">Keep the monorepo</text>
+<text x="320" y="114" text-anchor="middle" font-size="10.5" fill="#199e70">optimise for development today</text>
+
+<rect x="472" y="78" width="264" height="44" rx="8" fill="#17304f" stroke="#3987e5"/>
+<text x="604" y="98" text-anchor="middle" font-size="12.5" font-weight="650" fill="#ffffff">Use a dedicated repository</text>
+<text x="604" y="114" text-anchor="middle" font-size="10.5" fill="#3987e5">optimise for library independence</text>
+
+<!-- row labels -->
+<g font-size="11.5" font-weight="600" fill="#898781">
+  <text x="24" y="158">App + package change</text>
+  <text x="24" y="218">Local development</text>
+  <text x="24" y="278">Release history</text>
+  <text x="24" y="338">Public surface</text>
+</g>
+
+<!-- row 1 -->
+<rect x="188" y="134" width="264" height="44" rx="6" fill="#16181c" stroke="rgba(255,255,255,0.14)"/>
+<text x="204" y="160" font-size="11.5" fill="#c3c2b7">One atomic commit and one test run</text>
+<rect x="472" y="134" width="264" height="44" rx="6" fill="#16181c" stroke="rgba(255,255,255,0.14)"/>
+<text x="488" y="152" font-size="11.5" fill="#c3c2b7">Coordinated pull requests across</text>
+<text x="488" y="168" font-size="11.5" fill="#c3c2b7">the driver and parser boundary</text>
+
+<!-- row 2 -->
+<rect x="188" y="194" width="264" height="44" rx="6" fill="#16181c" stroke="rgba(255,255,255,0.14)"/>
+<text x="204" y="212" font-size="11.5" fill="#c3c2b7">Direct TypeScript source imports</text>
+<text x="204" y="228" font-size="11" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" fill="#199e70">workspace:*</text>
+<rect x="472" y="194" width="264" height="44" rx="6" fill="#16181c" stroke="rgba(255,255,255,0.14)"/>
+<text x="488" y="212" font-size="11.5" fill="#c3c2b7">Linking, prereleases or temporary</text>
+<text x="488" y="228" font-size="11.5" fill="#c3c2b7">package references</text>
+
+<!-- row 3 -->
+<rect x="188" y="254" width="264" height="44" rx="6" fill="#16181c" stroke="rgba(255,255,255,0.14)"/>
+<text x="204" y="272" font-size="11.5" fill="#c3c2b7">App and library changes share a repo,</text>
+<text x="204" y="288" font-size="11.5" fill="#c3c2b7">but not a release schedule</text>
+<rect x="472" y="254" width="264" height="44" rx="6" fill="#16181c" stroke="rgba(255,255,255,0.14)"/>
+<text x="488" y="272" font-size="11.5" fill="#c3c2b7">Independent versions, releases</text>
+<text x="488" y="288" font-size="11.5" fill="#c3c2b7">and changelog</text>
+
+<!-- row 4 -->
+<rect x="188" y="314" width="264" height="44" rx="6" fill="#16181c" stroke="rgba(255,255,255,0.14)"/>
+<text x="204" y="332" font-size="11.5" fill="#c3c2b7">Docs and issues remain part of the</text>
+<text x="204" y="348" font-size="11.5" fill="#c3c2b7">larger Tabularis project</text>
+<rect x="472" y="314" width="264" height="44" rx="6" fill="#16181c" stroke="rgba(255,255,255,0.14)"/>
+<text x="488" y="332" font-size="11.5" fill="#c3c2b7">Dedicated docs, issues and identity</text>
+<text x="488" y="348" font-size="11.5" fill="#c3c2b7">for package consumers</text>
+
+<text x="380" y="394" text-anchor="middle" font-size="11.5" fill="#898781">The package works in the monorepo today. The question is what it should become.</text>
+</svg>
