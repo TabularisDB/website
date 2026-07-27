@@ -56,7 +56,7 @@ When **interactive prompts** are enabled on a connection and the tunnel needs a 
 
 - Enable it with the **Allow interactive prompts** toggle in the connection modal.
 - Leave it off for fully non-interactive setups (agent or stored credentials) so a connection can never block waiting for input.
-- Prompt text is localized across all nine supported languages.
+- Prompt text is localized across all eleven supported languages.
 
 This is what makes a YubiKey-backed jump host usable: when the token needs its PIN, Tabularis surfaces the request rather than giving up.
 

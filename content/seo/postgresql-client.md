@@ -31,6 +31,7 @@ Tabularis is built for that exact workflow: a local, open-source desktop client 
 
 - **PostgreSQL-native daily workflow** with schema browsing, SQL editing, results, and saved queries in one app
 - **Multi-schema support** so you can work with larger PostgreSQL setups without flattening everything into one view
+- **pgvector support** — `vector`, `halfvec`, and `sparsevec` columns display, edit, and round-trip correctly, so embedding tables are first-class
 - **SSH tunneling** for remote environments
 - **Split view** when you need to compare databases or queries side by side
 - **SQL notebooks** when the work goes beyond one query and starts looking like analysis

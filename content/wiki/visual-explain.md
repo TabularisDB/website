@@ -7,7 +7,7 @@ category: "Core Features"
 
 # Visual EXPLAIN
 
-**Visual EXPLAIN** turns raw execution plans into something you can actually work with. Select a query, click the EXPLAIN button, and Tabularis runs the appropriate `EXPLAIN` syntax for your database, parses the output, and presents it across four views — all without leaving the application.
+**Visual EXPLAIN** turns raw execution plans into something you can actually work with. Select a query, click the EXPLAIN button, and Tabularis runs the appropriate `EXPLAIN` syntax for your database, parses the output, and presents it across six views — all without leaving the application.
 
 <video src="/videos/wiki/05-visual-explain.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
@@ -48,9 +48,37 @@ The default depends on the query type:
 
 For data-modifying queries, a warning icon appears next to the toggle. Since `EXPLAIN ANALYZE` executes the statement, you need to enable it explicitly.
 
-## The Four Views
+## Exclusive Metrics
 
-The summary bar at the top provides four tabs. You can switch views without re-running the query.
+Since v0.17.0, every node's figures are restated before any view renders. The database reports figures that are **inclusive of children** — and PostgreSQL's `Actual Total Time` is an average per loop — so ranking on the raw values always points at the plan root. Tabularis computes **exclusive (self) metrics** instead:
+
+| Metric | Formula |
+|--------|---------|
+| Inclusive time | `Actual Total Time × Actual Loops` — a total, not a per-loop average |
+| Exclusive time | inclusive time − Σ children's inclusive time |
+| Exclusive cost | `Total Cost` − Σ children's `Total Cost` |
+| Rows | `Actual Rows × Actual Loops` |
+| Buffers | shared hits + reads, inclusive and exclusive |
+| Time share | exclusive time ÷ plan total |
+
+Graph nodes, the table view, and the overview bar rank and colour on these values — by exclusive **time** when the plan ran with ANALYZE, by exclusive **cost** otherwise. A node executed 50,000 times at 0.2 ms each is finally ranked above a node that ran once for 20 ms.
+
+## Per-Node Findings
+
+Diagnostic checks run on every node and surface as labelled chips on the graph, icons in the table and diagram rows, and one-line explanations in the node details panel:
+
+- **Hotspot** — the node accounts for ≥ 25% of total plan time
+- **More/fewer rows than planned** — the optimizer's estimate is off by ≥ 4x (warning) or ≥ 10x (critical)
+- **Sorted on disk** — the sort spilled out of memory
+- **Filter discards most rows** — ≥ 90% of rows read are thrown away
+- **Large sequential scan** — a seq/full scan of ≥ 10,000 rows
+- **Many heap fetches**, **fewer workers than planned**, **executed many times** (≥ 1,000 loops), **read from disk** (≥ 50% of block accesses missed shared buffers), and **never executed**
+
+![Graph view with finding chips on the nodes and one-line explanations in the details panel](/img/tabularis-explain-findings.png)
+
+## The Six Views
+
+The summary bar at the top provides six tabs. You can switch views without re-running the query.
 
 ### Graph View
 
@@ -62,9 +90,9 @@ Each node shows:
 - **Estimated rows** and **cost** (startup + total)
 - **Actual rows, time, and loops** (when ANALYZE is on)
 - **Filter and index conditions**
-- **Estimate gap warning** when the ratio between actual and estimated rows exceeds 4x
+- **Finding chips** — hotspot, estimate gap, disk sort, and the other per-node findings render as labelled chips directly on the node
 
-Nodes are **color-coded by relative cost**: green for cheap operations, yellow for moderate, red for expensive. The scale is relative to the most expensive node in the plan, so bottlenecks stand out without comparing raw numbers.
+Nodes are **color-coded by exclusive work**: exclusive time when the plan ran with ANALYZE, exclusive cost otherwise — green for cheap operations, yellow for moderate, red for expensive. The scale is relative to the most expensive node in the plan, so bottlenecks stand out without comparing raw numbers.
 
 The graph supports zoom, pan, and fit-to-view. For plans with more than 10 nodes, a minimap appears in the corner.
 
@@ -84,6 +112,18 @@ When the plan comes from `EXPLAIN ANALYZE` (or MariaDB `ANALYZE`), an **Actual R
 
 ![Table view showing the Actual Rows column next to Est. Rows](/img/posts/tabularis-explain-actual-rows.png)
 
+### Diagram View
+
+One row per node in plan order: index number, indentation showing the tree structure, node type and relation, a bar proportional to the selected metric, and the formatted value. The metric switches between **time, rows, cost, and buffers** — only metrics the plan actually carries are offered, defaulting to time when ANALYZE data is present and cost otherwise. Selection is shared with the graph, so a node picked in one view stays picked in the other.
+
+![Diagram view with one bar per node, finding badges, and the shared node detail panel](/img/tabularis-explain-diagram-view.png)
+
+### Stats View
+
+Plan-wide aggregates: node counts and depth, total self time, **time by operation** with share bars, **relations accessed** (access count, operations used, rows, self time), and **indexes used** with scan counts. Useful for answering "where does this plan spend its time" without walking the tree node by node.
+
+![Stats view with time by operation, relations accessed, and indexes used](/img/tabularis-explain-stats-view.png)
+
 ### Raw Output
 
 The raw view shows the database response in a read-only Monaco editor with syntax highlighting, word wrap, and search. No transformation — exactly what the server returned. JSON output from PostgreSQL or MySQL is detected automatically and highlighted as JSON; text-based output (like MySQL ANALYZE trees) renders as plain text.
@@ -94,7 +134,7 @@ The raw view shows the database response in a read-only Monaco editor with synta
 
 The AI tab sends the query and the raw EXPLAIN output to the configured AI provider and returns a structured analysis: what the query is doing, where the bottlenecks are, which indexes might help, and which rewrites are worth testing.
 
-The analysis is generated in the language configured in Tabularis (any of the ten supported UI languages, from Italian to Japanese to Korean), so you do not need to reason about plans in English if that is not your working language.
+The analysis is generated in the language configured in Tabularis (any of the eleven supported UI languages, from Italian to Japanese to Korean), so you do not need to reason about plans in English if that is not your working language.
 
 This tab requires an AI provider to be configured in **Settings > AI**. If none is set up, a warning is shown. It works with all supported providers: OpenAI, Anthropic, Ollama, OpenRouter, MiniMax, and custom OpenAI-compatible endpoints.
 
@@ -108,8 +148,8 @@ Below the summary bar, a collapsible **Overview** panel highlights the most rele
 
 | Finding | What it shows |
 |---------|--------------|
-| **Highest Cost** | The node with the largest total cost in the plan |
-| **Slowest Step** | The node with the highest actual execution time (only with ANALYZE) |
+| **Highest Cost** | The node with the largest exclusive (self) cost in the plan |
+| **Slowest Step** | The node with the highest exclusive (self) execution time (only with ANALYZE) |
 | **Largest Estimate Gap** | The node where the optimizer's row estimate was furthest from reality |
 | **Sequential Scans** | Count of full table scans in the plan |
 | **Temp Operations** | Count of sort, filesort, or temporary table operations |
@@ -175,7 +215,7 @@ Click the **Re-run** button in the footer to execute the EXPLAIN again with the 
 
 ## Notes
 
-- The modal remembers your view mode selection while it's open. Switching between Graph, Table, Raw, and AI does not re-run the query.
+- The modal remembers your view mode selection while it's open. Switching between Graph, Table, Diagram, Stats, Raw, and AI does not re-run the query.
 - Plans from `EXPLAIN ANALYZE` on PostgreSQL include buffer statistics (shared hits and reads), which help distinguish between cached and disk I/O operations.
 - For large plans with many nodes, the graph view may need zooming. Use the fit-to-view control in the bottom-left corner to see the full tree.
 - The AI analysis is a second-pass interpretation of the plan. It is not a replacement for understanding the execution plan yourself, but it can point you toward issues that are not immediately obvious in a large or unfamiliar plan.

@@ -612,7 +612,7 @@ export default function HomePage() {
           </article>
           <article className="feature-card has-screenshot">
             <Link href="/wiki/updates" className="feature-card-screenshot">
-              <img loading="lazy" decoding="async" src="/img/tabularis-automatic-updates.png" alt="Seamless Updates" />
+              <img loading="lazy" decoding="async" src="/img/tabularis-release-channel.png" alt="Seamless Updates" />
             </Link>
             <div className="feature-card-body">
               <div className="feature-card-header">
