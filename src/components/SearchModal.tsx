@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { searchIndex, type SearchDoc } from "@/lib/search";
+import { trackSiteSearch } from "@/lib/analytics";
 
 type SearchResult = {
   type: "post" | "wiki" | "plugin" | "page";
@@ -75,10 +76,28 @@ export function SearchModal() {
   const router = useRouter();
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
 
+  // Site-search tracking: the modal searches as you type, so we only report
+  // the query once it has settled (or when the modal closes / a result is
+  // opened), never every intermediate keystroke.
+  const pendingSearchRef = useRef<{
+    keyword: string;
+    category: string | false;
+    count: number;
+  } | null>(null);
+  const lastTrackedSearchRef = useRef("");
+
+  const flushSearchTracking = useCallback(() => {
+    const pending = pendingSearchRef.current;
+    if (!pending || pending.keyword === lastTrackedSearchRef.current) return;
+    lastTrackedSearchRef.current = pending.keyword;
+    trackSiteSearch(pending.keyword, pending.category, pending.count);
+  }, []);
+
   const closeModal = useCallback(() => {
+    flushSearchTracking();
     setOpen(false);
     setActiveIndex(-1);
-  }, []);
+  }, [flushSearchTracking]);
 
   const navigateResult = useCallback(
     (result: SearchResult) => {
@@ -106,6 +125,7 @@ export function SearchModal() {
     if (!trimmed) {
       setResults([]);
       setSearching(false);
+      pendingSearchRef.current = null;
       return;
     }
 
@@ -130,8 +150,14 @@ export function SearchModal() {
           };
         });
         setResults(mapped);
+        pendingSearchRef.current = {
+          keyword: trimmed,
+          category: wikiOnly ? "wiki" : false,
+          count: mapped.length,
+        };
       } catch {
         setResults([]);
+        pendingSearchRef.current = null;
       } finally {
         setSearching(false);
       }
@@ -142,6 +168,13 @@ export function SearchModal() {
     };
   }, [query, wikiOnly]);
 
+  // Report the search to Matomo once the user stops refining the query.
+  useEffect(() => {
+    if (!query.trim() || searching) return;
+    const timer = setTimeout(flushSearchTracking, 1200);
+    return () => clearTimeout(timer);
+  }, [query, searching, results, flushSearchTracking]);
+
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === "k" && (e.ctrlKey || e.metaKey)) {
@@ -149,6 +182,7 @@ export function SearchModal() {
         setOpen(true);
         setQuery("");
         setActiveIndex(-1);
+        lastTrackedSearchRef.current = "";
       }
       if (e.key === "Escape") closeModal();
     }
@@ -161,6 +195,7 @@ export function SearchModal() {
       setOpen(true);
       setQuery("");
       setActiveIndex(-1);
+      lastTrackedSearchRef.current = "";
     }
     document.addEventListener("openSearch", handleOpen);
     return () => document.removeEventListener("openSearch", handleOpen);
