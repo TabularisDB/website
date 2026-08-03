@@ -376,7 +376,7 @@ Execute a SQL query and return results.
 
 ### Materialized Views *(optional)*
 
-Declare `materialized_views: true` in capabilities to enable the UI. If the plugin returns `-32601` (method not found), the host falls back to empty results for the two getters; `get_materialized_view_definition` and `refresh_materialized_view` surface a "not supported by this driver" error instead.
+Declare `materialized_views: true` in capabilities to enable the UI. If the plugin returns `-32601` (method not found), the host falls back to empty results for `get_materialized_views` and `get_materialized_view_columns`; `get_materialized_view_definition` and `refresh_materialized_view` surface a "not supported by this driver" error instead.
 
 | Method | Params | Result |
 |--------|--------|--------|
