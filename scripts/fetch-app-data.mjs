@@ -17,6 +17,10 @@ const targets = [
     },
   },
   { url: `${BASE}/CHANGELOG.md`, out: "CHANGELOG.md" },
+  // Served at the schemas' public $id URLs (tabularis.dev/schemas/...) so the
+  // $schema references in plugin manifests and the scaffolder resolve.
+  { url: `${BASE}/plugins/manifest.schema.json`, out: "public/schemas/plugin-manifest.json" },
+  { url: `${BASE}/plugins/tabularium-extensions.schema.json`, out: "public/schemas/tabularium-extensions.json" },
 ];
 
 async function fetchText(url) {
