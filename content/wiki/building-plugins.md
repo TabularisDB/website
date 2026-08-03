@@ -11,7 +11,7 @@ The [Plugin System](./plugins) tells you *what* a Tabularis plugin is. This page
 
 Two npm packages handle the boilerplate:
 
-- **[`@tabularis/create-plugin`](https://www.npmjs.com/package/@tabularis/create-plugin)** — a scaffolder CLI. Generates a runnable Rust project with all 33 JSON-RPC handlers pre-wired, a cross-platform GitHub Actions release workflow, and (optionally) a TypeScript/React UI extension bundle ready to build with Vite.
+- **[`@tabularis/create-plugin`](https://www.npmjs.com/package/@tabularis/create-plugin)** — a scaffolder CLI. Generates a runnable Rust project with every JSON-RPC handler the host can call pre-wired, a cross-platform GitHub Actions release workflow, and (optionally) a TypeScript/React UI extension bundle ready to build with Vite.
 - **[`@tabularis/plugin-api`](https://www.npmjs.com/package/@tabularis/plugin-api)** — TypeScript types and runtime hooks for UI extensions. Gives you `defineSlot(...)` with fully typed context per slot, plus typed wrappers for `usePluginSetting`, `usePluginQuery`, `usePluginToast`, `usePluginModal`, and a few others.
 
 ## From zero to driver
@@ -58,7 +58,7 @@ Every step is independently shippable. A plugin with only the first three is alr
 
 ## UI extensions
 
-The Tabularis host mounts **slot contributions** at ten predefined points (plugin row in Settings, new connection form, row editor fields, data grid toolbar, context menu, etc.). Plugins declare contributions in `manifest.json`:
+The Tabularis host mounts **slot contributions** at ten predefined points (plugin row in Settings, new connection form, row editor fields, data grid toolbar, context menu, etc.). Plugins declare contributions in the `.tabularium` manifest:
 
 ```json
 "ui_extensions": [
@@ -101,8 +101,10 @@ Every hook is a thin, typed wrapper over the runtime `window.__TABULARIS_API__`:
 | `usePluginSetting(pluginId)` | typed `getSetting<T>`, `setSetting`, `setSettings` |
 | `usePluginModal()` | `openModal({ title, content, size })`, `closeModal` |
 | `usePluginTheme()` | `themeId`, `isDark`, full `ThemeColors` token set |
-| `usePluginTranslation(pluginId)` | i18next-compatible translator |
+| `usePluginTranslation(pluginId)` | translator backed by the plugin's `locales/<lang>.json` files |
 | `openUrl(url)` | launches the **system** browser (not the Tauri webview) |
+
+Keep UI strings in `locales/<lang>.json` at the plugin root — the host loads them automatically (active language → English → the key itself). The host runtime is **[Lingui](https://lingui.dev/)**: author new keys ICU-style with single-brace `{var}` placeholders. Legacy i18next `{{var}}` placeholders still interpolate, so existing plugins keep working unchanged.
 
 ### Multiple slots in one plugin
 
@@ -128,4 +130,4 @@ The repo's [`plugins/PLUGIN_TUTORIAL.md`](https://github.com/TabularisDB/tabular
 - [`plugins/PLUGIN_GUIDE.md`](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md) — every RPC method, every manifest field, every capability flag.
 - [`@tabularis/plugin-api` on npm](https://www.npmjs.com/package/@tabularis/plugin-api) — slot context types, hook signatures.
 - [`@tabularis/create-plugin` on npm](https://www.npmjs.com/package/@tabularis/create-plugin) — CLI flags, generated project layout.
-- [Registry of community plugins](https://github.com/TabularisDB/tabularis/blob/main/plugins/registry.json) — eight drivers to copy patterns from.
+- [The Tabularium registry](https://registry.tabularis.dev) — browse published drivers to copy patterns from; [submit](https://registry.tabularis.dev/submit) yours when it's ready.

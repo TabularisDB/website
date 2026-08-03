@@ -33,7 +33,7 @@ A plugin is distributed as a `.zip` file. When extracted into the Tabularis plug
 ```text
 plugins/
 └── duckdb/
-    ├── manifest.json
+    ├── .tabularium          (or legacy manifest.json)
     └── duckdb-plugin        (or duckdb-plugin.exe on Windows)
 ```
 
@@ -45,14 +45,14 @@ plugins/
 | macOS | `~/Library/Application Support/tabularis/plugins/` |
 | Windows | `%APPDATA%\tabularis\plugins\` |
 
-## The `manifest.json`
+## The Manifest (`.tabularium`)
 
-Every plugin must include a `manifest.json` that tells Tabularis its capabilities and the data types it supports.
+Every plugin ships one manifest that tells Tabularis its capabilities and the data types it supports. Its canonical name is **`.tabularium`** — one file at the plugin root that serves both the host (loading the driver) and the [Tabularium registry](https://registry.tabularis.dev/docs/plugin-development) (listing it). The host still reads a legacy `manifest.json` as a fallback, where `id` and a display `name` remain valid; in a `.tabularium`, `name` is the lowercase slug and identifies the plugin.
 
 ```json
 {
-  "id": "duckdb",
-  "name": "DuckDB",
+  "$schema": "https://registry.tabularis.dev/manifest.schema.json?kind=driver",
+  "name": "duckdb",
   "version": "1.0.0",
   "description": "DuckDB file-based analytical database",
   "default_port": null,
@@ -80,7 +80,10 @@ Every plugin must include a `manifest.json` that tells Tabularis its capabilitie
 |------|------|-------------|
 | `schemas` | bool | `true` if the database supports named schemas (e.g. PostgreSQL). Shows the schema selector in the UI. |
 | `views` | bool | `true` to enable the Views section in the explorer. |
+| `materialized_views` | bool | `true` if the database supports materialized views. Enables the materialized views section in the explorer (see [Materialized Views](#materialized-views)). Defaults to `false`. |
 | `routines` | bool | `true` to enable stored procedures/functions in the explorer. |
+| `routine_management` | bool | `true` to enable routine management actions (run with parameters, create from template, edit, drop). The backing RPCs are optional — the host falls back to dialect-neutral SQL. Defaults to `false`. |
+| `triggers` | bool | `true` if the database supports triggers. Enables trigger listing and management for drivers that implement the trigger RPCs. Defaults to `false`. |
 | `file_based` | bool | `true` for local file databases (e.g. SQLite, DuckDB). Replaces host/port with a file path field. |
 | `identifier_quote` | string | Character used to quote SQL identifiers: `"\""` (ANSI) or `` "`" `` (MySQL). |
 | `alter_primary_key` | bool | `true` if the database supports altering primary keys after table creation. |
@@ -93,6 +96,9 @@ Every plugin must include a `manifest.json` that tells Tabularis its capabilitie
 | `manage_tables` | bool | `true` to enable table and column management UI (Create Table, Add/Modify/Drop Column, Drop Table). Does not control index or FK operations. Defaults to `true`. |
 | `readonly` | bool | When `true`, the driver is read-only: all data modification operations (INSERT, UPDATE, DELETE) are disabled in the UI. Table and column management is also hidden regardless of `manage_tables`. Defaults to `false`. |
 | `explain` | bool | `true` if the driver implements the `explain_query` method (EXPLAIN / query plan support). Enables the Visual EXPLAIN button in the SQL editor and notebook cells; when `false` or omitted, the Visual EXPLAIN UI is hidden for connections using this driver. Defaults to `false`. |
+| `sql_dialect` | string | Optional statement-splitting dialect: `postgres`, `mysql`, `mssql`, `sqlite`, `oracle`, or `generic`. Oracle-like plugins, including DM/Dameng, should use `"oracle"`. |
+| `supports_ssl` | bool | `true` to show the SSL/TLS configuration tab (mode + CA/client cert/key) in the connection modal. The values are forwarded to the plugin as `ssl_mode`, `ssl_ca`, `ssl_cert`, and `ssl_key` in `ConnectionParams`. Network drivers only. Defaults to `false`. |
+| `single_database` | bool | `true` for drivers exposing a single implicit database (e.g. a flat search/document store like Meilisearch). Skips the database tab and the database-name field in the connection modal. |
 
 ### Data Type Categories
 
@@ -106,13 +112,28 @@ Every plugin must include a `manifest.json` that tells Tabularis its capabilitie
 | `spatial` | GEOMETRY, POINT |
 | `other` | BOOLEAN, UUID |
 
+### Type Mappings
+
+The optional `type_mappings` manifest field declares how generic inferred type names map to driver-native types. It is used during paste/import, where Tabularis infers column types from the data (e.g. detects a date column as `DATETIME`) and needs the driver-native equivalent. The mapping is static in the manifest and resolved by the host — no RPC round-trip.
+
+```json
+{
+  "type_mappings": {
+    "DATETIME": "TIMESTAMP",
+    "JSON": "JSONB"
+  }
+}
+```
+
+Keys are uppercase generic type names; the lookup is case-insensitive. Types without a mapping (or an omitted `type_mappings`) pass through unchanged.
+
 ## Plugin Settings
 
-Plugins can declare custom configuration fields in their `manifest.json`. Tabularis renders these fields in **Settings → gear icon** next to the plugin. Users fill them in, the values are persisted in `config.json`, and Tabularis delivers them to the plugin at startup.
+Plugins can declare custom configuration fields in their manifest. Tabularis renders these fields in **Settings → gear icon** next to the plugin. Users fill them in, the values are persisted in `config.json`, and Tabularis delivers them to the plugin at startup.
 
 ![Plugin settings modal with configurable fields](/img/posts/plugin-settings-modal.png)
 
-### Declaring settings in `manifest.json`
+### Declaring settings in the manifest
 
 Add an optional `settings` array to your manifest:
 
@@ -352,7 +373,25 @@ Execute a SQL query and return results.
 }
 ```
 
-For the full list of methods (CRUD, DDL, views, routines, batch/ER diagram methods), see the [complete plugin guide](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md).
+### Materialized Views *(optional)*
+
+Declare `materialized_views: true` in capabilities to enable the UI. If the plugin returns `-32601` (method not found), the host falls back to empty results for `get_materialized_views` and `get_materialized_view_columns`; `get_materialized_view_definition` and `refresh_materialized_view` surface a "not supported by this driver" error instead.
+
+| Method | Params | Result |
+|--------|--------|--------|
+| `get_materialized_views` | `{ "params", "schema" }` | `[{ "name": string, "schema": string \| null }]` |
+| `get_materialized_view_columns` | `{ "params", "view_name", "schema" }` | `[TableColumn]` (same shape as `get_columns`) |
+| `get_materialized_view_definition` | `{ "params", "view_name", "schema" }` | `string` (the SQL definition) |
+| `refresh_materialized_view` | `{ "params", "view_name", "schema" }` | `null` on success |
+
+### BLOB Operations *(optional)*
+
+If the plugin returns `-32601`, the host shows "BLOB export/preview not supported".
+
+- **`save_blob_to_file`** — params `{ "params", "table", "col_name", "pk_map", "schema", "file_path" }`. The plugin queries the binary value via the PK map and writes the raw bytes to `file_path` itself (it runs on the same machine as the host). Returns `null` on success.
+- **`fetch_blob_as_data_url`** — params `{ "params", "table", "col_name", "pk_map", "schema" }`. Returns the value in the BLOB wire format `"BLOB:<size_bytes>:<mime_type>:<base64_data>"` for preview in the row editor.
+
+For the full list of methods (CRUD, DDL, views, routines, triggers, batch/ER diagram methods), see the [complete plugin guide](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md).
 
 ## Minimal Skeleton (Rust)
 
@@ -437,7 +476,7 @@ You should see a valid JSON-RPC response on `stdout`.
    ```
    ~/.local/share/tabularis/plugins/myplugin/   (Linux)
    ```
-2. Place your `manifest.json` and the compiled executable there.
+2. Place your `.tabularium` (or legacy `manifest.json`) and the compiled executable there.
 3. On Linux/macOS, make it executable: `chmod +x myplugin`
 4. Open Tabularis and refresh the plugins list if needed. A locally installed plugin can be loaded directly from the plugins directory.
 
@@ -452,19 +491,19 @@ Since v0.16.0, plugin discovery runs through the hosted **Tabularium** registry 
 - **Version picking and updates.** Catalogue cards let you install a specific released version, and the **Installed** tab shows an Update button when a newer compatible release exists for your platform and app version.
 - **Backwards compatibility.** The legacy static [`registry.json`](https://github.com/TabularisDB/tabularis/blob/main/plugins/registry.json) is still merged into the catalogue (the hosted API wins on conflicting ids), so plugins that haven't migrated remain visible and installable, and older app versions keep working unchanged.
 
-The manifest format also has a new canonical name: **`.tabularium`** — same JSON content as the legacy `manifest.json`, which is still read as a fallback. `@tabularis/create-plugin` 0.2.0 scaffolds `.tabularium` directly and ships a `migrate` command that converts an existing `manifest.json` plugin (and, with `--ci`, regenerates a registry-ready release workflow).
+`@tabularis/create-plugin` scaffolds the `.tabularium` manifest directly and ships a `migrate` command that converts an existing legacy `manifest.json` plugin (and, with `--ci`, regenerates a registry-ready release workflow).
 
 ## Using a Custom Plugin Registry
 
-By default, Tabularis fetches the plugin list from the official registry. You can point the app to a different registry (e.g., a self-hosted or company-internal one) by setting `customRegistryUrl` in your `config.json`:
+By default, Tabularis fetches the plugin list from the official Tabularium registry. You can point the app to a different registry (e.g., a self-hosted or company-internal Tabularium instance) by setting `customRegistryUrl` in your `config.json`:
 
 ```json
 {
-  "customRegistryUrl": "https://example.com/my-registry.json"
+  "customRegistryUrl": "https://registry.example.com/api/manifest"
 }
 ```
 
-The custom registry must expose a JSON file that follows the same schema as the [official registry](https://github.com/TabularisDB/tabularis/blob/main/plugins/registry.json). When this key is set, both the plugin browser and the install command will use your URL instead of the default one.
+When this key is set, both the in-app plugin browser and the install command use your registry instead of the default one. A plain static JSON file following the [legacy registry schema](https://github.com/TabularisDB/tabularis/blob/main/plugins/registry.json) also still works.
 
 ## UI Extensions (Phase 2)
 
@@ -497,7 +536,7 @@ Ten insertion points are available:
 
 ### Declaring UI Extensions in the Manifest
 
-Add an optional `ui_extensions` array to your `manifest.json`:
+Add an optional `ui_extensions` array to your manifest:
 
 ```json
 {
@@ -563,6 +602,8 @@ For the full specification, see the [Plugin UI Extensions Spec](/docs/plugin-ui-
 To make your plugin available in the official in-app plugin browser:
 
 1. Build release binaries for all target platforms.
-2. Package each binary with your manifest into a `.zip` file.
-3. Publish a GitHub Release with the ZIP assets — and, for the hosted registry, the `.tabularium` manifest as a standalone release asset (the registry resolves your plugin's metadata from it). The release workflow scaffolded by `@tabularis/create-plugin` 0.2.0 (or regenerated via `create-plugin migrate --ci`) does this for you.
-4. Open a pull request adding your entry to [`plugins/registry.json`](https://github.com/TabularisDB/tabularis/blob/main/plugins/registry.json). During the registry transition this remains the way to get listed; legacy entries are merged into the hosted catalogue automatically.
+2. Package each binary with your manifest into a `.zip` file, and keep a `.tabularium` registry manifest in your repo (the registry resolves your plugin's metadata from it). The release workflow scaffolded by `@tabularis/create-plugin` (or regenerated via `create-plugin migrate --ci`) does this for you.
+3. Publish a GitHub Release with the ZIP assets.
+4. Submit your plugin at [registry.tabularis.dev/submit](https://registry.tabularis.dev/submit) — ownership is verified via OAuth against your linked repository, and CI can pre-validate your manifest via `POST /api/manifest/validate`. The registry's [plugin development page](https://registry.tabularis.dev/docs/plugin-development) documents every `.tabularium` field, derived live from the registry's schema.
+
+The legacy path — a pull request against [`plugins/registry.json`](https://github.com/TabularisDB/tabularis/blob/main/plugins/registry.json) — still works during the transition; legacy entries are merged into the hosted catalogue automatically. New plugins should submit to the registry directly.

@@ -13,6 +13,8 @@ export interface Plugin {
   description: string;
   author: string;
   homepage: string;
+  /** Plugin page on the live registry; set for plugins served from Tabularium. */
+  registry_url?: string;
   latest_version: string;
   releases: PluginRelease[];
 }

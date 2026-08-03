@@ -5,7 +5,6 @@ import { PluginBountyTeaser } from "@/components/PluginBountyTeaser";
 import { ClosingCta } from "@/components/ClosingCta";
 import { CtaSocialLinks } from "@/components/CtaSocialLinks";
 import { getAllPlugins, getLatestRelease } from "@/lib/plugins";
-import { SOCIAL_URLS } from "@/lib/social";
 
 export const metadata: Metadata = {
   title: "Plugins | Tabularis",
@@ -56,7 +55,7 @@ export default function PluginsPage() {
                 <div className="plugin-entry-info">
                   <div className="plugin-entry-header">
                     <a
-                      href={plugin.homepage}
+                      href={plugin.registry_url ?? plugin.homepage}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="plugin-name"
@@ -139,16 +138,24 @@ export default function PluginsPage() {
         <div className="plugin-cta">
           <h3>Build Your Own Plugin</h3>
           <p>
-            Got a database you&apos;d like to support? The plugin guide covers
-            the JSON-RPC protocol, manifest format, and includes a full Rust
-            skeleton to get you started in minutes.
+            Got a database you&apos;d like to support? The wiki covers the
+            JSON-RPC protocol, the manifest and UI extensions — everything you
+            need to get a driver running in minutes. When it&apos;s ready,
+            publish it on the Tabularium registry.
           </p>
           <a
-            href={`${SOCIAL_URLS.github}/blob/main/plugins/PLUGIN_GUIDE.md`}
+            href="/wiki/building-plugins"
             className="btn-download"
             style={{ display: "inline-flex", width: "auto" }}
           >
-            Read the Plugin Guide &rarr;
+            Plugin Docs &rarr;
+          </a>{" "}
+          <a
+            href="https://registry.tabularis.dev/docs/plugin-development"
+            className="btn-download"
+            style={{ display: "inline-flex", width: "auto" }}
+          >
+            Publish on the Registry &rarr;
           </a>
         </div>
 
