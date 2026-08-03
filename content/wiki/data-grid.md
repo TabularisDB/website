@@ -65,9 +65,27 @@ A DDL preview showing the exact SQL that will be executed is available before yo
 
 Edits and deletes are matched on the table's **full primary key**. For a table with a composite primary key (e.g. `PRIMARY KEY (profile_id, phone_type, key)`), the generated `WHERE` clause includes every PK column — `WHERE col1 = ? AND col2 = ? AND …` — so a change targets exactly one row rather than every row that happens to share part of the key.
 
+## Keyboard Navigation
+
+Since v0.18.0 the focused cell moves from the keyboard, not only from a click:
+
+<video src="/videos/posts/tabularis-grid-selection.mp4" poster="/videos/posts/tabularis-grid-selection.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
+| Key | Action |
+| :--- | :--- |
+| `↑` `↓` `←` `→` | Move one cell, clamped at the edges. |
+| `Home` / `End` | First / last column of the current row. |
+| `PageUp` / `PageDown` | Move one viewport of rows. |
+| `Enter` / `F2` | Open the focused cell for editing — the same path as a double-click. |
+| `Cmd/Ctrl + A` | Select all loaded rows. |
+
+The first key press in a grid with no focused cell yet enters at the top-left cell. Keys are bound to the grid's scroll container rather than to the document, so in a notebook — which mounts one grid per SQL cell — only the grid you are working in responds. Keys are left alone for anything that handles them itself: text inputs, the foreign-key and BLOB buttons inside cells, and the sortable column headers. Closing an edit with `Enter` or `Escape` returns focus to the grid so navigation continues.
+
+`Cmd/Ctrl + A` is ignored inside text inputs, while a cell editor is open, and in any grid you have not interacted with.
+
 ## Copying Data
 
-Tabularis supports both **row-level** and **cell-level** copy from the data grid. The two modes don't fight each other: clicking a row checkbox clears the cell focus, clicking a cell clears the row selection. So `Ctrl/Cmd + C` with an active cell focus copies the cell, and `Ctrl/Cmd + C` with selected rows copies the rows.
+Tabularis supports **row-level**, **column-level**, **cell-range** and **cell-level** copy from the data grid. The modes are mutually exclusive rather than fighting each other: clicking a row checkbox clears the cell focus, clicking a cell clears the row selection, and starting a column or range selection clears the other two. So what `Ctrl/Cmd + C` copies is never ambiguous.
 
 ### Cell-level selection
 
@@ -75,7 +93,18 @@ Click any cell to give it a focused outline; the row checkbox stays untouched. P
 
 ### Row-level selection and copy formats
 
-Select one or more rows by clicking the row header checkbox (or shift-click / ctrl-click for ranges and multi-select), then use `Ctrl/Cmd + C` to copy. The default format is **CSV**; you can change it in **Settings → General → Default Copy Format** to one of:
+Select one or more rows by clicking the row header checkbox (or shift-click / ctrl-click for ranges and multi-select), or select every loaded row with `Cmd/Ctrl + A`, the **Select All / Deselect All** entry in the row context menu, or a click on the `#` header cell. Then use `Ctrl/Cmd + C` to copy — no modal, no interruption.
+
+Selecting and copying are separate actions: selecting rows never writes to the clipboard on its own. The row context menu offers the two copy scopes side by side so the difference is explicit:
+
+| Action | Scope |
+| :--- | :--- |
+| **Copy Selected (N)** | The rows currently selected, from the loaded page. |
+| **Copy All (M)** | Every row of the result. The query is re-run unpaginated with the tab's total-row limit stripped, preserving the on-screen sort order. When the total is unknown, the label omits the count and the toast reports the actual number of rows fetched. |
+
+Every copy path shows a toast with the row count. When a copy covers only the loaded page of a larger result, the toast says "Copied N of M rows" — a partial copy is never silent.
+
+The default format is **CSV**; you can change it in **Settings → General → Default Copy Format** to one of:
 
 | Format | Output |
 | :--- | :--- |
@@ -93,6 +122,12 @@ Since v0.17.0 you can copy all values of a single column — from the cell conte
 | :--- | :--- |
 | **Copy column values** | Newline-separated, one value per line, `null` for NULL cells. |
 | **Copy column values (IN clause)** | A ready-to-paste SQL list: numbers raw (`1, 2, 3`), strings quoted with `''` escaping (`'O''Brien'`), `NULL` for nulls. |
+
+Since v0.18.0 you can also select whole columns DBeaver-style: `Cmd/Ctrl + click` a column header toggles it, `Shift + click` range-selects headers, and a plain click still sorts. `Ctrl/Cmd + C` then copies the selected columns for the rows in scope.
+
+### Cell range selection
+
+`Shift + click` a second cell to select the rectangle between it and the currently focused cell. The range is highlighted, and the context menu offers **Copy Range (R×C)** to copy exactly those cells. A plain click moves the anchor and clears the range.
 
 ## Row Editor Sidebar
 

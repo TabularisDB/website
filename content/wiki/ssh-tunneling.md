@@ -92,6 +92,17 @@ Click **Test** before saving. Tabularis performs a real SSH handshake and report
 
 When you connect, the tunnel is established first, then the database driver connects through it. If the tunnel fails, the exact SSH error is surfaced — no generic "connection refused" messages.
 
+### Test SSH from the connection modal
+
+The **SSH** tab of the connection modal has its own **Test SSH** button — available for both inline SSH settings and a saved connection — which verifies the host, the credentials and the tunnel *without touching the database*. It is the fastest way to tell an SSH problem apart from a database problem.
+
+- The success state invalidates the moment you edit any SSH field, so a green result never describes stale settings.
+- A **Stop** button abandons a test that hangs.
+- Host, user and port are validated client-side on both Test and Save; a problem marks the SSH tab with a red dot and navigates to it.
+- For a saved connection whose inline SSH secrets live in the keychain under the database connection's id, the test resolves them automatically — unless you have edited the password field, in which case it tests exactly what you typed.
+
+A full connection test (the **Test** button) reports its steps as it runs — SSH tunnel, Kubernetes port-forward, database connect — and opens a diagnostics modal on failure with a classified error and a timestamped step log. With a tunnel active, a "connection refused" is attributed to the tunnel rather than to the database host. See [Testing before saving](/wiki/connections#testing-before-saving).
+
 ## Multi-Hop / ProxyJump
 
 For databases behind multiple bastion layers, define the chain in `~/.ssh/config` and use the System SSH backend (key-only auth, no password):

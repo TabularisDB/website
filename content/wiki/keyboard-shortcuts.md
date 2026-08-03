@@ -63,6 +63,14 @@ Tabularis ships with a set of keyboard shortcuts for common actions across navig
 | Next page | `⌘+→` | `Ctrl+→` |
 | Previous page | `⌘+←` | `Ctrl+←` |
 | Save grid changes | `⌘+S` | `Ctrl+S` |
+| Move the focused cell | `↑` `↓` `←` `→` | `↑` `↓` `←` `→` |
+| First / last column of the row | `Home` / `End` | `Home` / `End` |
+| Move one viewport of rows | `PageUp` / `PageDown` | `PageUp` / `PageDown` |
+| Edit the focused cell | `Enter` or `F2` | `Enter` or `F2` |
+| Select all loaded rows | `⌘+A` | `Ctrl+A` |
+| Copy the current selection | `⌘+C` | `Ctrl+C` |
+
+Cell navigation is bound to the grid you last interacted with, so a notebook with one grid per SQL cell does not move them all at once. Keys are left alone inside text inputs, open cell editors, the foreign-key and BLOB buttons, and the sortable column headers. See [Data Grid → Keyboard Navigation](/wiki/data-grid#keyboard-navigation).
 
 ---
 

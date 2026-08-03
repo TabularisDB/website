@@ -70,15 +70,21 @@ The ER Diagram reads the schema **at the time you open it**. If you modify table
 
 ## Export
 
-The ER Diagram window does not currently offer a dedicated export button. To save a snapshot:
-- **macOS**: Use `Cmd + Shift + 4` to take a screenshot of the window.
-- **Windows**: Use `Win + Shift + S` (Snipping Tool).
-- **Linux**: Use your desktop environment's screenshot tool.
+Since v0.18.0 the toolbar has an **Export** button offering two text formats, both generated from the schema data already in memory:
 
-Alternatively, use the **Fullscreen** mode before screenshotting for a larger, cleaner capture.
+![The ER diagram toolbar with the Export menu open on Export as Mermaid diagram and Export as DBML](/img/tabularis-er-export-menu.png)
+
+| Format | What it is good for |
+|--------|---------------------|
+| **Mermaid** (`erDiagram`) | Renders natively on GitHub, GitLab, Notion and most documentation tools, so the output can be pasted straight into a README. Relationships are entity-level, so the foreign-key column appears only as an edge label. |
+| **DBML** | Keeps relationships at **column level** (`Ref: orders.client_id > clients.id`) and round-trips through dbdiagram.io and `dbml-to-sql`. Composite primary keys are expressed with an `Indexes` block, since inline `[pk]` cannot represent them. |
+
+To save the diagram as an image instead, take a screenshot of the window — `Cmd + Shift + 4` on macOS, `Win + Shift + S` on Windows, or your desktop environment's tool on Linux. **Fullscreen** mode first gives a larger, cleaner capture.
 
 ## Notes
 
 - The ER Diagram opens in a **separate window**. You can keep it open alongside the main Tabularis window while working in the SQL editor.
 - For very large schemas (100+ tables), the initial layout may take a moment to compute. Dragging nodes manually after the initial render is a good way to organize dense clusters.
 - Node positions are **not persisted** — each time you open the diagram, Dagre recalculates the layout from scratch.
+- **Lock node positions** in the toolbar freezes the nodes where they are, so panning and zooming cannot nudge them out of an arrangement you set by hand. Toggle it off to move them again.
+- Since v0.18.0 the layout estimates each node's real rendered width and height from its content instead of assuming a fixed width, so wide tables — a column with a long `enum(...)` definition, for example — no longer overlap their neighbours.

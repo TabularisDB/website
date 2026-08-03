@@ -81,7 +81,7 @@ Any key omitted from the file falls back to its default value. You do not need a
 | `customRegistryUrl` | `string` | `null` | Custom URL for the plugin registry. Overrides the default official registry when fetching and installing plugins. |
 | `plugins` | `object` | `{}` | Per-plugin config, including optional interpreter overrides and plugin settings values. |
 | `editorTheme` | `string` | `null` | Monaco editor theme ID. |
-| `editorFontFamily` | `string` | `"JetBrains Mono"` | SQL editor font family. |
+| `editorFontFamily` | `string` | `"JetBrains Mono"` | SQL editor font family. The picker offers bundled families that need no system install — JetBrains Mono, plus the ExtraBold and ExtraBold Italic weights added in v0.18.0 — alongside system fonts. |
 | `editorFontSize` | `number` | `14` | SQL editor font size in pixels. |
 | `editorLineHeight` | `number` | `1.5` | SQL editor line height multiplier. |
 | `editorTabSize` | `number` | `2` | SQL editor tab width. |

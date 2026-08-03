@@ -99,9 +99,19 @@ applies to every subsequent query instead of randomly depending on which pooled 
 
 For SQLite, provide the absolute path to the `.db` or `.sqlite` file using the file picker. There is no host, port, or authentication.
 
+You can also create the file from inside Tabularis: **New SQLite Database…** in the Connections menu and empty state, or the **+ New** button in the SQLite file picker inside the connection modal. Existing files are never overwritten, and `create_if_missing` stays disabled — a typo in a path cannot silently produce an empty database. A database created from the quick-create flow is auto-named and opened; created from the modal, it only fills in the path and leaves the usual Test/Save flow alone.
+
 ### Testing before saving
 
 Click **Test** before saving. Tabularis makes a real connection attempt and returns the exact database error if it fails (e.g., `FATAL: password authentication failed for user "admin"`). The test goes through the SSH tunnel if one is configured.
+
+The test reports its progress step by step — SSH tunnel, Kubernetes port-forward, database connect — so a test that hangs tells you *where* it hangs. A **Stop** button abandons an in-flight test; late results from an abandoned run are discarded.
+
+When a test fails, the error is **classified** rather than dumped as one truncated line. Categories cover SSH authentication, an unreachable SSH host, generic SSH failures, database authentication, network problems, and a missing database, each with a translated summary and a recovery hint. Credentials embedded in raw error text are redacted. With a tunnel active, a "connection refused" is attributed to the tunnel rather than to the database host.
+
+A **diagnostics modal** opens on failure — or when you press Stop — showing the classified summary, the recovery hint, a timestamped log of each step, the sanitized raw error, and a copy-to-clipboard report suitable for pasting into an issue. The **Show log** link in the modal footer reopens it.
+
+<video src="/videos/posts/tabularis-connection-diagnostics.mp4" poster="/videos/posts/tabularis-connection-diagnostics.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
 ## SSH Tunnel System
 
@@ -243,7 +253,15 @@ The feature is marked **beta**: parser coverage across five apps and three platf
 
 ## Multi-Database Support (MySQL / MariaDB)
 
-MySQL and MariaDB allow a single connection to read and write across multiple databases on the same server. Tabularis exposes this natively: when creating or editing a MySQL connection, open the **Databases** tab and click **Load Databases** to fetch every database visible to your user. Check the ones you want and save.
+MySQL and MariaDB allow a single connection to read and write across multiple databases on the same server. Tabularis exposes this natively: when creating or editing a MySQL connection, open the **Databases** tab and pick a mode.
+
+![The Databases tab of the connection modal with the All databases / Choose databases mode switch, All databases selected, and the hint explaining that the server list is resolved at connect time](/img/tabularis-all-databases-mode.png)
+
+**All databases** is the default for new connections: save without selecting anything and Tabularis resolves the full server list at connect time. New databases show up on their own, dropped ones disappear, and you never have to edit the connection to see them. The sidebar's refresh button re-syncs the list on demand — nothing is persisted — and toasts what was added and removed. Pasting a connection URI with no database in it switches to this mode automatically. Connection cards label such a connection "All databases" instead of showing a database count.
+
+**Choose databases** is the explicit mode: click **Load Databases** to fetch every database visible to your user, check the ones you want, and save. The "select at least one database" save block only applies here. Narrowing an all-databases connection to a subset from the sidebar's manage popover persists that choice and exits all-databases mode.
+
+An all-databases connection has no default schema, so it always issues database-qualified queries — including when the server happens to hold a single database.
 
 Each selected database appears as its own collapsible node in the Explorer sidebar. Expand a node to see its tables and views. Double-click a table to open it in the editor.
 

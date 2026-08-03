@@ -241,6 +241,17 @@ const VIDEO_DEMOS: VideoDemo[] = [
     relatedHref: "/wiki/connections",
     relatedLabel: "Read the connections guide",
   },
+  {
+    slug: "users-and-privileges",
+    title: "Manage Users and Privileges",
+    description:
+      "Create a MySQL or MariaDB account and grant it privileges in the same step, then narrow an ALL PRIVILEGES account down to a subset — scope by scope, with the raw SHOW GRANTS output kept in view.",
+    src: "/videos/posts/tabularis-user-management-grant.mp4",
+    poster: "/videos/posts/tabularis-user-management-grant.jpg",
+    uploadDate: "2026-08-03",
+    relatedHref: "/wiki/user-management",
+    relatedLabel: "Read the Users & Privileges guide",
+  },
 ];
 
 export function getAllVideoDemos(): VideoDemo[] {

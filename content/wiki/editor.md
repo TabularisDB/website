@@ -66,6 +66,12 @@ The Monaco integration brings powerful developer features:
 | **Copy Line Down** | `Option + Shift + ↓` | `Ctrl + Shift + ↓` | Duplicate the current line below. |
 | **Command Palette**| `F1` | `F1` | Open the Monaco command palette. |
 
+### Reordering Tabs
+
+Since v0.18.0 tabs can be dragged along the tab bar to reorder them. Console, table, query-builder and notebook tabs share one tab bar, so any tab type can be moved — there is no console-only restriction. Reordering is scoped to the active connection: dragging reshuffles only that connection's tabs and leaves the others where they are. An insertion line shows where the tab will land, and dragging near an edge auto-scrolls the bar. The new order is persisted with the rest of your tabs in `preferences.json`.
+
+<video src="/videos/posts/tabularis-reorder-tabs.mp4" poster="/videos/posts/tabularis-reorder-tabs.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
 ## SQL Formatting
 
 <video src="/videos/posts/tabularis-sql-format.mp4" poster="/videos/posts/tabularis-sql-format.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
@@ -97,6 +103,20 @@ Press **Execute** (`Ctrl/Cmd + Enter` or `Ctrl/Cmd + F5`) with nothing selected 
 <video src="/videos/posts/tabularis-run-at-cursor.mp4" poster="/videos/posts/tabularis-run-at-cursor.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
 Prefer picking from a list? Turn off **Run statement under cursor** in **Settings → General → Query Execution** to restore the [Query Selection Modal](#the-query-selection-modal-optional) instead.
+
+### The Run Button Says What It Will Run
+
+Since v0.18.0 the Run button is labelled with its actual target, so a multi-statement script cannot quietly execute one statement while the button still reads "Run":
+
+| State | Label |
+| :--- | :--- |
+| A text selection is active | **Run Selection** |
+| Multiple statements, nothing selected | **Run Statement** |
+| A single statement, or a table tab | **Run** |
+
+Behaviour is unchanged — this only makes it visible *before* you commit to it. When the button would run one statement out of several, the tooltip also surfaces `Run All (Cmd/Ctrl+Shift+Enter)`, which is exactly the escape hatch you want at the moment the label warns you.
+
+<video src="/videos/posts/tabularis-run-target-label.mp4" poster="/videos/posts/tabularis-run-target-label.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
 ### Run All
 

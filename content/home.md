@@ -33,7 +33,7 @@ Turn execution plans into interactive graphs, exact node tables, diagram and sta
 Built-in shortcuts cover navigation, the SQL editor, and the data grid. Remap combinations from **Settings → Keyboard Shortcuts**, reset them in one click, or edit `keybindings.json` directly.
 
 ### 🔒 SSH & Kubernetes Tunneling
-Reach remote databases through SSH tunnels or managed `kubectl port-forward` tunnels directly from the connection manager. Passwords and API keys are stored securely in your system keychain.
+Reach remote databases through SSH tunnels or managed `kubectl port-forward` tunnels directly from the connection manager. Test the tunnel on its own, watch each step of a connection test as it runs, and get a classified error with a copyable diagnostics log when one fails. Passwords and API keys are stored securely in your system keychain.
 
 ### 📝 Modern SQL Editor
 Monaco-powered SQL editing with syntax highlighting, multiple tabs, and precise execution controls for selected text or full scripts.
@@ -49,6 +49,9 @@ Paste a spreadsheet range, CSV, JSON array, or Markdown table directly into a da
 
 ### 🗄️ Schema Management
 Edit table and column properties inline, then use guided dialogs to create tables, modify columns, and manage indexes or foreign keys.
+
+### 👥 Users & Privileges
+List server accounts, create and drop users, change passwords, and edit grants scope by scope — global, database, or table — on **MySQL/MariaDB**. Grants the editor cannot model are shown as raw `SHOW GRANTS` output rather than hidden.
 
 # Plugins
 
