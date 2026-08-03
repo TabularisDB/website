@@ -123,12 +123,33 @@ async function buildRegistry() {
   return { ...legacy, plugins: [...merged.values()] };
 }
 
+// Plugin developer / manifest reference — generated live by the registry
+// (core schema + configured kinds + examples), re-published as a wiki page so
+// tabularis.dev stays the single docs entry point. The registry ships its own
+// title/excerpt frontmatter; we add the wiki's order/category and absolutize
+// root-relative registry links that would otherwise resolve against
+// tabularis.dev.
+async function buildPluginDevDocs() {
+  const raw = await fetchText(`${TABULARIUM}/api/docs/plugin-development?format=md`);
+  const absolute = raw.replaceAll("](/", `](${TABULARIUM}/`);
+  return absolute.replace(/^---\n/, `---\norder: 8.6\ncategory: "Integration"\n`);
+}
+
 async function main() {
   for (const { url, out, transform } of targets) {
     const raw = await fetchText(url);
     const body = transform ? transform(raw) : raw;
     await writeTarget(out, body);
     console.log(`fetched ${url} -> ${out}`);
+  }
+
+  try {
+    await writeTarget("content/wiki/plugin-development.md", await buildPluginDevDocs());
+    console.log(`fetched ${TABULARIUM}/api/docs/plugin-development?format=md -> content/wiki/plugin-development.md`);
+  } catch (err) {
+    // Same policy as buildRegistry: the site must stay deployable when the
+    // registry is down — the committed copy from the last successful fetch ships.
+    console.warn(`plugin dev docs unavailable, keeping committed copy: ${err}`);
   }
 
   const registry = await buildRegistry();
