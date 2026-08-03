@@ -58,7 +58,7 @@ Every step is independently shippable. A plugin with only the first three is alr
 
 ## UI extensions
 
-The Tabularis host mounts **slot contributions** at ten predefined points (plugin row in Settings, new connection form, row editor fields, data grid toolbar, context menu, etc.). Plugins declare contributions in `manifest.json`:
+The Tabularis host mounts **slot contributions** at ten predefined points (plugin row in Settings, new connection form, row editor fields, data grid toolbar, context menu, etc.). Plugins declare contributions in the `.tabularium` manifest:
 
 ```json
 "ui_extensions": [

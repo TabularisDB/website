@@ -33,7 +33,7 @@ A plugin is distributed as a `.zip` file. When extracted into the Tabularis plug
 ```text
 plugins/
 └── duckdb/
-    ├── manifest.json
+    ├── .tabularium          (or legacy manifest.json)
     └── duckdb-plugin        (or duckdb-plugin.exe on Windows)
 ```
 
@@ -45,15 +45,14 @@ plugins/
 | macOS | `~/Library/Application Support/tabularis/plugins/` |
 | Windows | `%APPDATA%\tabularis\plugins\` |
 
-## The `manifest.json`
+## The Manifest (`.tabularium`)
 
-Every plugin must include a `manifest.json` that tells Tabularis its capabilities and the data types it supports.
+Every plugin ships one manifest that tells Tabularis its capabilities and the data types it supports. Its canonical name is **`.tabularium`** — one file at the plugin root that serves both the host (loading the driver) and the [Tabularium registry](https://registry.tabularis.dev/docs/plugin-development) (listing it). The host still reads a legacy `manifest.json` as a fallback, where `id` and a display `name` remain valid; in a `.tabularium`, `name` is the lowercase slug and identifies the plugin.
 
 ```json
 {
-  "$schema": "https://tabularis.dev/schemas/plugin-manifest.json",
-  "id": "duckdb",
-  "name": "DuckDB",
+  "$schema": "https://registry.tabularis.dev/manifest.schema.json?kind=driver",
+  "name": "duckdb",
   "version": "1.0.0",
   "description": "DuckDB file-based analytical database",
   "default_port": null,
@@ -130,11 +129,11 @@ Keys are uppercase generic type names; the lookup is case-insensitive. Types wit
 
 ## Plugin Settings
 
-Plugins can declare custom configuration fields in their `manifest.json`. Tabularis renders these fields in **Settings → gear icon** next to the plugin. Users fill them in, the values are persisted in `config.json`, and Tabularis delivers them to the plugin at startup.
+Plugins can declare custom configuration fields in their manifest. Tabularis renders these fields in **Settings → gear icon** next to the plugin. Users fill them in, the values are persisted in `config.json`, and Tabularis delivers them to the plugin at startup.
 
 ![Plugin settings modal with configurable fields](/img/posts/plugin-settings-modal.png)
 
-### Declaring settings in `manifest.json`
+### Declaring settings in the manifest
 
 Add an optional `settings` array to your manifest:
 
@@ -477,7 +476,7 @@ You should see a valid JSON-RPC response on `stdout`.
    ```
    ~/.local/share/tabularis/plugins/myplugin/   (Linux)
    ```
-2. Place your `manifest.json` and the compiled executable there.
+2. Place your `.tabularium` (or legacy `manifest.json`) and the compiled executable there.
 3. On Linux/macOS, make it executable: `chmod +x myplugin`
 4. Open Tabularis and refresh the plugins list if needed. A locally installed plugin can be loaded directly from the plugins directory.
 
@@ -492,7 +491,7 @@ Since v0.16.0, plugin discovery runs through the hosted **Tabularium** registry 
 - **Version picking and updates.** Catalogue cards let you install a specific released version, and the **Installed** tab shows an Update button when a newer compatible release exists for your platform and app version.
 - **Backwards compatibility.** The legacy static [`registry.json`](https://github.com/TabularisDB/tabularis/blob/main/plugins/registry.json) is still merged into the catalogue (the hosted API wins on conflicting ids), so plugins that haven't migrated remain visible and installable, and older app versions keep working unchanged.
 
-The manifest format also has a new canonical name: **`.tabularium`** — same JSON content as the legacy `manifest.json`, which is still read as a fallback. `@tabularis/create-plugin` 0.2.0 scaffolds `.tabularium` directly and ships a `migrate` command that converts an existing `manifest.json` plugin (and, with `--ci`, regenerates a registry-ready release workflow).
+`@tabularis/create-plugin` scaffolds the `.tabularium` manifest directly and ships a `migrate` command that converts an existing legacy `manifest.json` plugin (and, with `--ci`, regenerates a registry-ready release workflow).
 
 ## Using a Custom Plugin Registry
 
@@ -537,7 +536,7 @@ Ten insertion points are available:
 
 ### Declaring UI Extensions in the Manifest
 
-Add an optional `ui_extensions` array to your `manifest.json`:
+Add an optional `ui_extensions` array to your manifest:
 
 ```json
 {
