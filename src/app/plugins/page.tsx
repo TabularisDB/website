@@ -5,7 +5,6 @@ import { PluginBountyTeaser } from "@/components/PluginBountyTeaser";
 import { ClosingCta } from "@/components/ClosingCta";
 import { CtaSocialLinks } from "@/components/CtaSocialLinks";
 import { getAllPlugins, getLatestRelease } from "@/lib/plugins";
-import { SOCIAL_URLS } from "@/lib/social";
 
 export const metadata: Metadata = {
   title: "Plugins | Tabularis",
@@ -139,24 +138,24 @@ export default function PluginsPage() {
         <div className="plugin-cta">
           <h3>Build Your Own Plugin</h3>
           <p>
-            Got a database you&apos;d like to support? The registry&apos;s
-            plugin development docs cover the manifest and how to publish your
-            driver; the plugin guide has the JSON-RPC protocol and a full Rust
-            skeleton to get you started in minutes.
+            Got a database you&apos;d like to support? The wiki covers the
+            JSON-RPC protocol, the manifest and UI extensions — everything you
+            need to get a driver running in minutes. When it&apos;s ready,
+            publish it on the Tabularium registry.
           </p>
+          <a
+            href="/wiki/building-plugins"
+            className="btn-download"
+            style={{ display: "inline-flex", width: "auto" }}
+          >
+            Plugin Docs &rarr;
+          </a>{" "}
           <a
             href="https://registry.tabularis.dev/docs/plugin-development"
             className="btn-download"
             style={{ display: "inline-flex", width: "auto" }}
           >
-            Plugin Development Docs &rarr;
-          </a>{" "}
-          <a
-            href={`${SOCIAL_URLS.github}/blob/main/plugins/PLUGIN_GUIDE.md`}
-            className="btn-download"
-            style={{ display: "inline-flex", width: "auto" }}
-          >
-            Read the Plugin Guide &rarr;
+            Publish on the Registry &rarr;
           </a>
         </div>
 
