@@ -4,19 +4,19 @@
     "sql-server",
     "amazon-redshift",
     "snowflake",
-    "dynamodb",
+    "bigquery",
     "trino-presto"
   ],
   "bounties": [
     {
       "id": "sql-server",
       "name": "SQL Server",
-      "target": "Built-in driver",
+      "target": "Driver plugin",
       "status": "claimed",
-      "tagline": "Finish read/write support and production-grade SQL Server workflows.",
-      "description": "The driver is already in flight on a feature branch. Phase 2 needs help on TLS options, composite primary keys, FK aggregation and write support.",
-      "stage": "Phase 2",
-      "nextStep": "Claim one of the open Phase 2 issues and target the SQL Server feature branch.",
+      "tagline": "Production-grade SQL Server workflows through a dedicated driver plugin.",
+      "description": "SQL Server support moved from an in-app built-in driver to a dedicated plugin. Development happens in the tabularis-sqlserver-plugin repository — connection pooling, introspection, query execution, writes, DDL and execution plans — ahead of a first release.",
+      "stage": "In progress",
+      "nextStep": "Follow the tabularis-sqlserver-plugin repository, test the driver, and claim open issues.",
       "difficulty": "High",
       "accent": "#ff5a3d",
       "radar": {
@@ -26,8 +26,8 @@
       },
       "tags": [
         "enterprise",
-        "built-in",
-        "phase-2"
+        "plugin",
+        "work-in-progress"
       ],
       "capabilities": [
         {
@@ -43,11 +43,11 @@
           "state": "ready"
         },
         {
-          "label": "writes",
-          "state": "needed"
+          "label": "tls",
+          "state": "ready"
         },
         {
-          "label": "tls",
+          "label": "writes",
           "state": "needed"
         },
         {
@@ -55,8 +55,8 @@
           "state": "stretch"
         }
       ],
-      "signal": "Phase 1 done. Phase 2 is where contributors can move the release.",
-      "claimUrl": "https://github.com/TabularisDB/tabularis/issues/150",
+      "signal": "Direction changed: SQL Server now ships as a plugin instead of a built-in driver. In active development, not released yet.",
+      "claimUrl": "https://github.com/TabularisDB/tabularis-sqlserver-plugin",
       "sponsorUrl": "/sponsors"
     },
     {
@@ -680,11 +680,11 @@
       "id": "dynamodb",
       "name": "DynamoDB",
       "target": "AWS NoSQL plugin",
-      "status": "claimed",
-      "tagline": "Inspect tables, keys, indexes, and targeted reads without building an AWS console clone.",
-      "description": "A community DynamoDB plugin is in active development, focused on table discovery, key and index inspection, safe item reads, and AWS credential handling.",
-      "stage": "Work in progress",
-      "nextStep": "Follow the plugin repository for implementation progress, testing opportunities, and contribution details.",
+      "status": "shipped",
+      "tagline": "Browse tables, keys and indexes, run PartiQL queries and edit items from Tabularis.",
+      "description": "The community DynamoDB plugin ships table browsing, key and GSI/LSI index inspection, PartiQL query execution with scan/query/get modes, inline item editing, flexible AWS credential handling, and DynamoDB Local support.",
+      "stage": "Shipped",
+      "nextStep": "Install the DynamoDB plugin from the registry and file issues on its repository for anything missing.",
       "difficulty": "High",
       "accent": "#facc15",
       "radar": {
@@ -693,32 +693,32 @@
         "scale": 0.92
       },
       "tags": [
+        "shipped",
         "aws",
         "nosql",
-        "community",
-        "work-in-progress"
+        "community"
       ],
       "capabilities": [
         {
           "label": "auth",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "tables",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "indexes",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "items",
-          "state": "stretch"
+          "state": "ready"
         }
       ],
-      "signal": "Claimed by a community contributor and now moving through active plugin development.",
-      "claimUrl": "https://github.com/fuleinist/tabularis-dynamodb-plugin",
-      "sponsorUrl": "/sponsors"
+      "signal": "Shipped through the plugin registry by a community contributor, with PartiQL queries and DynamoDB Local support.",
+      "claimUrl": "/plugins",
+      "sponsorUrl": "/plugins"
     },
     {
       "id": "mongodb",

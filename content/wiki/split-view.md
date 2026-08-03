@@ -7,7 +7,7 @@ category: "Core Features"
 
 # Split View
 
-**Split View** lets you open two or more database connections side by side in the same window. Each pane has its own SQL editor and data grid. The left sidebar is shared — clicking inside a pane makes that connection the active one in the explorer. This is useful for comparing query results across environments, migrating data, or working on two databases at the same time.
+**Split View** lets you open up to four database connections side by side in the same window. Each pane has its own SQL editor and data grid. The left sidebar is shared — clicking inside a pane makes that connection the active one in the explorer. This is useful for comparing query results across environments, migrating data, or working on two databases at the same time.
 
 <video src="/videos/wiki/07-split-view.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
@@ -16,6 +16,10 @@ category: "Core Features"
 1. In the connection list, **select at least two connections** (hold `Ctrl`/`Cmd` and click each one).
 2. Right-click one of the selected connections and choose **Open in Split View**, or use the split view button that appears in the toolbar when multiple connections are selected.
 3. The workspace divides into panes, each showing one connection.
+
+A split group can hold **up to four connections** (since v0.17.0). Add another open connection to an existing group from its context menu (**Add to Split Group**) or by dragging it onto the group badge in the connection rail. The badge renders the driver icons of its members in pane order — drag one icon over another to swap the two panels, or right-click an icon to remove just that connection from the group.
+
+<video src="/videos/posts/tabularis-split-four-panes.mp4" poster="/videos/posts/tabularis-split-four-panes.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
 ## Layout Modes
 

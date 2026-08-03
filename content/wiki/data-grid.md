@@ -85,6 +85,25 @@ Select one or more rows by clicking the row header checkbox (or shift-click / ct
 
 The setting maps to the `copyFormat` key in `config.json` (see [Configuration](/wiki/configuration)).
 
+### Column-level copy
+
+Since v0.17.0 you can copy all values of a single column — from the cell context menu (applies to the clicked column, using the selected rows or all visible rows when nothing is selected) or from the column header context menu:
+
+| Action | Output |
+| :--- | :--- |
+| **Copy column values** | Newline-separated, one value per line, `null` for NULL cells. |
+| **Copy column values (IN clause)** | A ready-to-paste SQL list: numbers raw (`1, 2, 3`), strings quoted with `''` escaping (`'O''Brien'`), `NULL` for nulls. |
+
+## Row Editor Sidebar
+
+Since v0.17.0 the row editor is a **right sidebar** — a layout sibling of the Explorer on the left, not an overlay covering your results. Toggle it with `Cmd/Ctrl + Shift + B` or open it from a row's context menu.
+
+<video src="/videos/posts/tabularis-row-editor-sidebar.mp4" poster="/videos/posts/tabularis-row-editor-sidebar.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
+- **Follows your selection** by default: select a different row and the editor updates to it.
+- **Pin** it to a specific row with the pin button when you want to keep editing that row while browsing others.
+- **Resizable** with a drag handle; the width is persisted across sessions.
+
 ## Result Colors
 
 By default every cell value renders in the same text color. Enable **Result Colors** under **Settings → Appearance → General** to tint cell values by their data type — **numbers, text, dates/times, and booleans** each get their own color, so you can read a row's shape at a glance.
@@ -182,6 +201,8 @@ Right-click any column header to open the header context menu. Available actions
 | Action | Description |
 |--------|-------------|
 | **Copy column name** | Copies the column name as plain text to the clipboard. Useful when building queries or referencing column names in other tools. |
+| **Copy column values** | Copies the column's values, newline-separated (see [Column-level copy](#column-level-copy)). |
+| **Copy column values (IN clause)** | Copies the column's values as a ready-to-paste SQL `IN` list. |
 
 More actions may appear depending on context (e.g., sort direction, column visibility toggles).
 

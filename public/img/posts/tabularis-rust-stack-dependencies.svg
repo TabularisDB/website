@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 452" font-family="system-ui,-apple-system,'Segoe UI',sans-serif" role="img" aria-label="Horizontal bar chart of the 53 entries in Tabularis's main Rust dependencies table, grouped by job.">
+<rect width="760" height="452" rx="10" fill="#111214" stroke="rgba(255,255,255,0.10)"/>
+<text x="24" y="34" font-size="16.5" font-weight="650" fill="#ffffff">53 top-level dependencies, by the job they do</text>
+<text x="24" y="53" font-size="12.5" fill="#898781">The main [dependencies] table; build and platform-specific entries are excluded</text>
+<text x="24" y="90" font-size="12.5" font-weight="600" fill="#c3c2b7">Everything else</text>
+<text x="736" y="90" text-anchor="end" font-size="11.5" fill="#898781">chrono, reqwest, clap, sysinfo, notify, uuid…</text>
+<path d="M24,98 L684,98 Q688,98 688,102 L688,112 Q688,116 684,116 L24,116 Z" fill="#3987e5"/>
+<text x="696" y="111.5" font-size="12" font-weight="600" fill="#ffffff" style="font-variant-numeric:tabular-nums">14</text>
+<text x="24" y="133" font-size="12.5" font-weight="600" fill="#c3c2b7">Formats &amp; encoding</text>
+<text x="736" y="133" text-anchor="end" font-size="11.5" fill="#898781">serde, serde_json, csv, zip, plist, roxmltree…</text>
+<path d="M24,141 L541.7142857142857,141 Q545.7142857142857,141 545.7142857142857,145 L545.7142857142857,155 Q545.7142857142857,159 541.7142857142857,159 L24,159 Z" fill="#3987e5"/>
+<text x="553.7142857142857" y="154.5" font-size="12" font-weight="600" fill="#ffffff" style="font-variant-numeric:tabular-nums">11</text>
+<text x="24" y="176" font-size="12.5" font-weight="600" fill="#c3c2b7">Tauri &amp; its plugins</text>
+<text x="736" y="176" text-anchor="end" font-size="11.5" fill="#898781">tauri + 8 official plugins</text>
+<path d="M24,184 L446.85714285714283,184 Q450.85714285714283,184 450.85714285714283,188 L450.85714285714283,198 Q450.85714285714283,202 446.85714285714283,202 L24,202 Z" fill="#3987e5"/>
+<text x="458.85714285714283" y="197.5" font-size="12" font-weight="600" fill="#ffffff" style="font-variant-numeric:tabular-nums">9</text>
+<text x="24" y="219" font-size="12.5" font-weight="600" fill="#c3c2b7">TLS &amp; certificates</text>
+<text x="736" y="219" text-anchor="end" font-size="11.5" fill="#898781">tokio-postgres-rustls, rustls, pemfile, platform verifier</text>
+<path d="M24,227 L209.71428571428572,227 Q213.71428571428572,227 213.71428571428572,231 L213.71428571428572,241 Q213.71428571428572,245 209.71428571428572,245 L24,245 Z" fill="#3987e5"/>
+<text x="221.71428571428572" y="240.5" font-size="12" font-weight="600" fill="#ffffff" style="font-variant-numeric:tabular-nums">4</text>
+<text x="24" y="262" font-size="12.5" font-weight="600" fill="#c3c2b7">Secrets &amp; crypto</text>
+<text x="736" y="262" text-anchor="end" font-size="11.5" fill="#898781">keyring, argon2, aes-gcm, sha2, ed25519-dalek, OpenSSL</text>
+<path d="M24,270 L304.57142857142856,270 Q308.57142857142856,270 308.57142857142856,274 L308.57142857142856,284 Q308.57142857142856,288 304.57142857142856,288 L24,288 Z" fill="#3987e5"/>
+<text x="316.57142857142856" y="283.5" font-size="12" font-weight="600" fill="#ffffff" style="font-variant-numeric:tabular-nums">6</text>
+<text x="24" y="305" font-size="12.5" font-weight="600" fill="#c3c2b7">Database clients &amp; types</text>
+<text x="736" y="305" text-anchor="end" font-size="11.5" fill="#898781">sqlx, tokio-postgres, deadpool, rust_decimal</text>
+<path d="M24,313 L209.71428571428572,313 Q213.71428571428572,313 213.71428571428572,317 L213.71428571428572,327 Q213.71428571428572,331 209.71428571428572,331 L24,331 Z" fill="#3987e5"/>
+<text x="221.71428571428572" y="326.5" font-size="12" font-weight="600" fill="#ffffff" style="font-variant-numeric:tabular-nums">4</text>
+<text x="24" y="348" font-size="12.5" font-weight="600" fill="#c3c2b7">Async plumbing</text>
+<text x="736" y="348" text-anchor="end" font-size="11.5" fill="#898781">tokio, futures, async-trait</text>
+<path d="M24,356 L162.28571428571428,356 Q166.28571428571428,356 166.28571428571428,360 L166.28571428571428,370 Q166.28571428571428,374 162.28571428571428,374 L24,374 Z" fill="#3987e5"/>
+<text x="174.28571428571428" y="369.5" font-size="12" font-weight="600" fill="#ffffff" style="font-variant-numeric:tabular-nums">3</text>
+<text x="24" y="391" font-size="12.5" font-weight="600" fill="#c3c2b7">SSH</text>
+<text x="736" y="391" text-anchor="end" font-size="11.5" fill="#898781">russh, russh-keys</text>
+<path d="M24,399 L114.85714285714286,399 Q118.85714285714286,399 118.85714285714286,403 L118.85714285714286,413 Q118.85714285714286,417 114.85714285714286,417 L24,417 Z" fill="#3987e5"/>
+<text x="126.85714285714286" y="412.5" font-size="12" font-weight="600" fill="#ffffff" style="font-variant-numeric:tabular-nums">2</text>
+</svg>

@@ -3,6 +3,19 @@
 // push to — events queue and are sent honoring the current consent mode.
 type Paq = unknown[][];
 
+// Populates Matomo's "Site Search" reports (keywords, no-result keywords,
+// categories). Pass `false` as category when none applies, per Matomo's API.
+export function trackSiteSearch(
+  keyword: string,
+  category: string | false,
+  resultsCount: number,
+): void {
+  if (typeof window === "undefined") return;
+  const _paq = (window as unknown as { _paq?: Paq })._paq;
+  if (!_paq) return;
+  _paq.push(["trackSiteSearch", keyword, category, resultsCount]);
+}
+
 export function trackEvent(
   category: string,
   action: string,

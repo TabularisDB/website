@@ -7,7 +7,7 @@ category: "Reference"
 
 # Updates
 
-![Seamless Updates](/img/tabularis-automatic-updates.png)
+![The Updates panel in Settings → Info, with the release channel selector and update check](/img/tabularis-release-channel.png)
 
 Tabularis can notify you when a new version is available and, depending on how you installed it, update itself automatically or guide you to do it manually.
 
@@ -18,6 +18,17 @@ By default, Tabularis queries the GitHub Releases API every time it starts. If a
 To disable automatic checks, set `autoCheckUpdatesOnStartup` to `false` in your `config.json`. See [Configuration](/wiki/configuration) for the full reference.
 
 > Tabularis only **downloads** an update after you confirm the prompt — it never installs anything silently.
+
+## Release Channels
+
+Since v0.17.0 the updater supports two channels, selectable in **Settings → Info → Updates**:
+
+| Channel | What you get |
+|---------|--------------|
+| **Stable** (default) | Tagged releases only. |
+| **Nightly** | Signed builds cut from the newest commit that passed CI, typically daily. |
+
+Nightly versions are stamped as the next patch with a prerelease suffix, so a nightly always supersedes the current stable and any real release supersedes the nightly — switching back to stable simply means waiting for (or installing) the next tagged release. Nightlies are signed like releases but are not manually verified; expect rough edges.
 
 ## Manual Update Check
 

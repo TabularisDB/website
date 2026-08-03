@@ -21,6 +21,20 @@ Unlike basic editors that simply suggest a static list of SQL keywords and table
 3. **Alias Mapping**: It maps aliases to their source tables (e.g., `FROM customer_orders AS co`).
 4. **Targeted Suggestions**: When you type `co.`, the editor immediately suggests only the columns belonging to the `customer_orders` table, along with their data types.
 
+### Clause Awareness
+
+Since v0.17.0 the completion engine also understands *where* the cursor is. A context analyzer classifies the cursor into one of 29 clause contexts and filters suggestions accordingly:
+
+<video src="/videos/posts/tabularis-clause-autocomplete.mp4" poster="/videos/posts/tabularis-clause-autocomplete.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
+- After `FROM`, `JOIN`, `UPDATE`, or `INSERT INTO` — tables and keywords.
+- After `WHERE`, `ON`, `GROUP BY`, `SET`, inside function arguments or an `IN (...)` list — columns and keywords.
+- Inside an `INSERT INTO t (...)` column list — columns only.
+- Inside a string literal or a comment — no suggestions at all.
+- On an empty buffer, after `;`, or after `UNION` — keywords only.
+
+Subqueries are scoped per parenthesis frame (the outer clause is restored when the subquery closes), and CTEs, nested `CASE … END`, quoted identifiers, and escape sequences are all handled. Anything the analyzer doesn't recognize falls back to the previous suggest-everything behavior, so a miss can never hide valid suggestions.
+
 ### Accepting suggestions
 
 When the autocomplete dropdown is open, **Enter accepts the highlighted suggestion by default** (matching the behavior of every other Monaco-based editor). If you prefer Enter to insert a newline instead, toggle **Settings → Editor → Accept suggestion on Enter** off. The setting is honored across every editor surface — main SQL tabs, notebook cells, and the Raw SQL tab of the trigger editor.
@@ -42,7 +56,7 @@ The Monaco integration brings powerful developer features:
 | **Execute** | `Cmd + Enter` or `Cmd + F5` | `Ctrl + Enter` or `Ctrl + F5` | Runs the selected text; with nothing selected, runs the statement under the cursor. |
 | **Run All** | `Cmd + Shift + Enter` | `Ctrl + Shift + Enter` | Executes every statement in the editor (also `Ctrl/Cmd + Shift + F5`, or the entry at the top of the Run dropdown). |
 | **Execute Selection** | *(context menu only)* | *(context menu only)* | Right-click → "Execute Selection" to run highlighted text. |
-| **Format SQL** | `Shift + Option + F` | `Shift + Alt + F` | Prettifies the SQL syntax (built-in Monaco). |
+| **Format SQL** | `Shift + Option + F` | `Shift + Alt + F` | Formats the whole buffer — or just the selection — using the active connection's dialect (also in the toolbar and the context menu). Style is configurable, see below. |
 | **Toggle Comment** | `Cmd + /` | `Ctrl + /` | Comments/uncomments the current line or selection (built-in Monaco). |
 | **Multi-Cursor (click)** | `Cmd + Click` | `Ctrl + Click` | Place multiple cursors for simultaneous editing. |
 | **Add Next Occurrence** | `Cmd + D` | `Ctrl + D` | Select the next occurrence of the current selection and add a cursor. |
@@ -51,6 +65,26 @@ The Monaco integration brings powerful developer features:
 | **Copy Line Up** | `Option + Shift + ↑` | `Ctrl + Shift + ↑` | Duplicate the current line above. |
 | **Copy Line Down** | `Option + Shift + ↓` | `Ctrl + Shift + ↓` | Duplicate the current line below. |
 | **Command Palette**| `F1` | `F1` | Open the Monaco command palette. |
+
+## SQL Formatting
+
+<video src="/videos/posts/tabularis-sql-format.mp4" poster="/videos/posts/tabularis-sql-format.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
+**Format SQL** (since v0.17.0) is available as a keyboard shortcut (`Shift+Alt+F`, `Shift+Option+F` on macOS), a toolbar button, and a right-click context-menu entry. Select text first to format only the selection; with no selection the whole buffer is formatted and the cursor position preserved. The dialect follows the active connection (PostgreSQL, MySQL, SQLite, T-SQL, PL/SQL), and formatting pushes to the undo stack, so `Cmd/Ctrl+Z` reverses it.
+
+The style is configurable in **Settings → Appearance → SQL Editor → SQL Formatter**:
+
+| Setting | Options | Default |
+|---------|---------|---------|
+| Keyword Case | UPPER / lower / Preserve | UPPER |
+| Function Case | UPPER / lower / Preserve | Preserve |
+| Indent Style | Standard / Tabular Left / Tabular Right | Standard |
+| Indent Width | 2 / 4 | 2 |
+| Use Tabs | on / off | Off |
+| Lines Between Queries | 0–5 | 1 |
+| Dense Operators | on / off | Off |
+
+Settings persist in `config.json` and take effect on the next format action — no restart needed.
 
 ## Multi-Statement Execution
 
@@ -143,6 +177,8 @@ A statement that returns no result set — `INSERT`/`UPDATE`/`DELETE` or DDL suc
 ### Query Parameters
 
 When running multiple queries that contain `:param` placeholders, Tabularis collects parameters across all queries and prompts you **once** via the parameters modal before execution begins.
+
+Parameter detection skips **string literals and comments** (since v0.17.0): `WHERE value = 'x:y'` no longer prompts for `:y`, and URLs, timestamps, or JSON-in-text with colons pass through untouched. Detection reuses the same dialect-aware tokenizer as the query splitter below.
 
 ### Destructive Query Confirmation
 

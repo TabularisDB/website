@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 312" font-family="system-ui,-apple-system,'Segoe UI',sans-serif" role="img" aria-label="Diagram of PostgreSQL's maximum BIGINT crossing JSON.parse: it leaves Rust as 9223372036854775807; the nearest JavaScript Number is 2 to the 63rd power and is commonly displayed as 9223372036854776000; Tabularis sends the exact value as a JSON string.">
+<rect width="760" height="312" rx="10" fill="#111214" stroke="rgba(255,255,255,0.10)"/>
+<text x="24" y="34" font-size="16.5" font-weight="650" fill="#ffffff">One BIGINT, one round trip through JSON.parse</text>
+<text x="24" y="53" font-size="12.5" fill="#898781">PostgreSQL's maximum BIGINT (2⁶³ − 1) crossing the Rust → webview bridge</text>
+<text x="196" y="110" text-anchor="end" font-size="12.5" fill="#898781">leaves Rust as</text>
+<text x="216" y="111" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="17" style="font-variant-numeric:tabular-nums"><tspan fill="#ffffff">9223372036854775807</tspan></text>
+<text x="196" y="162" text-anchor="end" font-size="12.5" fill="#898781">JS commonly displays</text>
+<text x="216" y="163" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="17" style="font-variant-numeric:tabular-nums"><tspan fill="#ffffff">922337203685477</tspan><tspan fill="#ee6a5f" font-weight="700">6000</tspan></text>
+<text x="470" y="154" font-size="11.5" fill="#ee6a5f">← nearest Number is exactly 2⁶³</text>
+<text x="470" y="171" font-size="11.5" fill="#898781">displayed as a rounded decimal</text>
+<text x="196" y="214" text-anchor="end" font-size="12.5" fill="#898781">crosses in Tabularis as</text>
+<text x="216" y="215" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="17" style="font-variant-numeric:tabular-nums"><tspan fill="#199e70">"9223372036854775807"</tspan></text>
+<text x="470" y="214" font-size="11.5" fill="#898781">← a JSON string — exact, every digit.</text>
+<line x1="24" x2="736" y1="136" y2="136" stroke="#26282c"/>
+<line x1="24" x2="736" y1="188" y2="188" stroke="#26282c"/>
+<line x1="24" x2="736" y1="246" y2="246" stroke="#383835"/>
+<text x="24" y="272" font-size="11.5" fill="#898781">JavaScript numbers guarantee distinct exact integers only through Number.MAX_SAFE_INTEGER = 9,007,199,254,740,991.</text>
+<text x="24" y="290" font-size="11.5" fill="#898781">safe_int.rs draws the line: in-range integers cross as JSON numbers, out-of-range ones as strings.</text>
+</svg>

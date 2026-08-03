@@ -26,7 +26,7 @@ Built-in **Model Context Protocol** support lets compatible AI agents inspect yo
 Assemble joins, filters, and aggregations visually, then inspect the SQL that gets generated. Useful for exploration and for validating query structure before editing by hand.
 
 ### 🧠 Visual EXPLAIN
-Turn execution plans into interactive graphs, exact node tables, raw output, and optional AI analysis. Useful for spotting costly scans, estimate gaps, and optimizer choices faster.
+Turn execution plans into interactive graphs, exact node tables, diagram and stats views, raw output, and optional AI analysis. Exclusive (self) metrics and per-node findings point at the node that is actually the problem.
 
 ### ⌨️ Keyboard Shortcuts & Custom Bindings
 
