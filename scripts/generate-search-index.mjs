@@ -117,7 +117,7 @@ if (fs.existsSync(REGISTRY_PATH)) {
         excerpt: plugin.description,
         meta: "Plugin",
         badge: `v${plugin.latest_version}`,
-        url: plugin.homepage,
+        url: plugin.registry_url ?? plugin.homepage,
         category: "",
         tags: "",
       });

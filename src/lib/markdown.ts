@@ -34,7 +34,7 @@ function renderPluginCard(id: string): string {
   <div class="plugin-entry">
     <div class="plugin-entry-info">
       <div class="plugin-entry-header">
-        <a href="${plugin.homepage}" target="_blank" rel="noopener noreferrer" class="plugin-name">${plugin.name}</a>
+        <a href="${plugin.registry_url ?? plugin.homepage}" target="_blank" rel="noopener noreferrer" class="plugin-name">${plugin.name}</a>
         <span class="plugin-badge">v${plugin.latest_version}</span>
       </div>
       <p class="plugin-desc">${plugin.description}</p>
