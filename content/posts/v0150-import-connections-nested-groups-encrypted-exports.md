@@ -140,7 +140,7 @@ Fourteen external contributors land in v0.15.0 — the widest tag yet.
 
 **[@erneztox](https://github.com/erneztox)** fixed multi-database serialization in MCP and added `list_databases` ([#426](https://github.com/TabularisDB/tabularis/pull/426)). **[@Davydhh](https://github.com/Davydhh)** made the connection search fuzzy ([#444](https://github.com/TabularisDB/tabularis/pull/444)), **[@Necriso](https://github.com/Necriso)** killed autocorrect in the filters ([#432](https://github.com/TabularisDB/tabularis/pull/432), [#437](https://github.com/TabularisDB/tabularis/pull/437)), and **[@math-krish](https://github.com/math-krish)** cleaned up pagination colors, the dropdown font and the save menu ([#461](https://github.com/TabularisDB/tabularis/pull/461)). And thanks to **[@daniel-mertz](https://github.com/daniel-mertz)** for responsibly reporting the `EXPLAIN ANALYZE` safety bypass.
 
-If you've been meaning to switch from DBeaver but dreaded retyping thirty connections, if your team shares connection files, or if your database leans on ENUMs — this is the upgrade.
+If you've been meaning to [switch from DBeaver](/compare/dbeaver-alternative) but dreaded retyping thirty connections, if your team shares connection files, or if your database leans on ENUMs — this is the upgrade.
 
 :::contributors:::
 

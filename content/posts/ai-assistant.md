@@ -45,7 +45,7 @@ Enable the MCP server in Settings, connect your AI tool to the local endpoint, a
 
 ## Schema-Aware Completions
 
-The SQL editor autocomplete got a significant upgrade in this release. It now reads your live schema — tables, columns, foreign keys — and surfaces relevant suggestions as you type. DataGrip-style completions, without the DataGrip price tag.
+The SQL editor autocomplete got a significant upgrade in this release. It now reads your live schema — tables, columns, foreign keys — and surfaces relevant suggestions as you type. DataGrip-style completions, without the [DataGrip price tag](/compare/datagrip-alternative).
 
 ## Export While You're At It
 

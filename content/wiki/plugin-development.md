@@ -147,6 +147,7 @@ Database driver plugins that extend Tabularis to talk to new data stores via JSO
 | `data_types` | `array<object>` | — | List of data types this driver supports for column creation in the UI. |
 | `supports_ssl` | `boolean` | — | true to show the SSL/TLS configuration tab (mode + CA/client cert/key) in the connection modal for this network driver. Defaults to false. |
 | `ui_extensions` | `array<object>` | — | UI extension contributions rendered into named slots of the Tabularis interface. Only needed by plugins that ship a frontend module; driver-only plugins omit it. |
+| `type_mappings` | `object` | — | Optional map of generic inferred type names to driver-native types, resolved by the host during paste/import (map_inferred_type). Keys are uppercase generic names (e.g. DATETIME, JSON); values are the driver-native equivalents (e.g. TIMESTAMP, JSONB). Lookup is case-insensitive; unmapped types pass through unchanged. |
 
 **Example (YAML)**
 

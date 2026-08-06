@@ -23,7 +23,7 @@ If v0.10.x was about getting connections to behave, v0.11.0 is about what happen
 
 The most-requested data-grid issue since the project started ([#24](https://github.com/TabularisDB/tabularis/issues/24)) was simple to state and unpleasant to live without: "Let me look at this JSONB column." Up to v0.10.3 a `jsonb` cell rendered as one long string of escaped braces, and editing it meant typing valid JSON into a textarea that did nothing to help.
 
-[@NewtTheWolf](https://github.com/NewtTheWolf) shipped the fix in PR [#181](https://github.com/TabularisDB/tabularis/pull/181) — and it's the kind of feature you can tell was reverse-engineered from how DBeaver's Value Panel and DataGrip's Value Editor actually feel to use, not just what they look like.
+[@NewtTheWolf](https://github.com/NewtTheWolf) shipped the fix in PR [#181](https://github.com/TabularisDB/tabularis/pull/181) — and it's the kind of feature you can tell was reverse-engineered from how [DBeaver](/compare/dbeaver-alternative)'s Value Panel and [DataGrip](/compare/datagrip-alternative)'s Value Editor actually feel to use, not just what they look like.
 
 <video src="/videos/wiki/13-json-viewer.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 

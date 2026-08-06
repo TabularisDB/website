@@ -45,7 +45,7 @@ If you've been keeping a `kubectl port-forward` alive in tmux just to browse a s
 
 ## Quick Navigator: `Cmd+P` for Your Schema
 
-Every editor since Sublime has had a "jump to anything" key. Your database client now does too. PR [#252](https://github.com/TabularisDB/tabularis/pull/252) — co-authored with **lecndu**, taking inspiration from Beekeeper Studio's Quick Search — adds a **Quick Navigator** overlay on `Cmd+P` / `Ctrl+P`:
+Every editor since Sublime has had a "jump to anything" key. Your database client now does too. PR [#252](https://github.com/TabularisDB/tabularis/pull/252) — co-authored with **lecndu**, taking inspiration from [Beekeeper Studio](/compare/beekeeper-studio-alternative)'s Quick Search — adds a **Quick Navigator** overlay on `Cmd+P` / `Ctrl+P`:
 
 <video src="/videos/wiki/19-quick-navigator.mp4" poster="/videos/wiki/19-quick-navigator.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
