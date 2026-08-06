@@ -47,7 +47,7 @@ plugins/
 
 ## The Manifest (`.tabularium`)
 
-Every plugin ships one manifest that tells Tabularis its capabilities and the data types it supports. Its canonical name is **`.tabularium`** — one file at the plugin root that serves both the host (loading the driver) and the [Tabularium registry](https://registry.tabularis.dev/docs/plugin-development) (listing it). The host still reads a legacy `manifest.json` as a fallback, where `id` and a display `name` remain valid; in a `.tabularium`, `name` is the lowercase slug and identifies the plugin.
+Every plugin ships one manifest that tells Tabularis its capabilities and the data types it supports. Its canonical name is **`.tabularium`** — one file at the plugin root that serves both the host (loading the driver) and the [Tabularium registry](https://registry.tabularis.dev/docs/plugin-development) (listing it). The host still reads a legacy `manifest.json` as a fallback, where `id` and a display `name` remain valid; in a `.tabularium`, `name` is the lowercase slug and identifies the plugin. The full field reference with all constraints lives at [docs.tabularium.wiki/manifest](https://docs.tabularium.wiki/manifest/).
 
 ```json
 {
@@ -139,7 +139,7 @@ Add an optional `settings` array to your manifest:
 
 ```json
 {
-  "id": "my-plugin",
+  "name": "my-plugin",
   "settings": [
     {
       "key": "api_key",
@@ -540,8 +540,7 @@ Add an optional `ui_extensions` array to your manifest:
 
 ```json
 {
-  "id": "postgis-toolkit",
-  "name": "PostGIS Toolkit",
+  "name": "postgis-toolkit",
   "version": "1.0.0",
   "ui_extensions": [
     {
@@ -602,8 +601,14 @@ For the full specification, see the [Plugin UI Extensions Spec](/docs/plugin-ui-
 To make your plugin available in the official in-app plugin browser:
 
 1. Build release binaries for all target platforms.
-2. Package each binary with your manifest into a `.zip` file, and keep a `.tabularium` registry manifest in your repo (the registry resolves your plugin's metadata from it). The release workflow scaffolded by `@tabularis/create-plugin` (or regenerated via `create-plugin migrate --ci`) does this for you.
-3. Publish a GitHub Release with the ZIP assets.
+2. Package each binary with your manifest into a `.zip` file, and keep a `.tabularium` registry manifest in your repo. The release workflow scaffolded by `@tabularis/create-plugin` (or regenerated via `create-plugin migrate --ci`) does this for you.
+3. Publish a GitHub Release with the ZIP assets — **and attach `.tabularium` as a standalone asset**; the registry resolves your metadata from the release assets (GitHub renames the dotfile to `default.tabularium`, which the registry also accepts).
 4. Submit your plugin at [registry.tabularis.dev/submit](https://registry.tabularis.dev/submit) — ownership is verified via OAuth against your linked repository, and CI can pre-validate your manifest via `POST /api/manifest/validate`. The registry's [plugin development page](https://registry.tabularis.dev/docs/plugin-development) documents every `.tabularium` field, derived live from the registry's schema.
+
+What the registry validates (the top three submit failures):
+
+- `name` must match `^[a-z][a-z0-9-]*$` — it becomes your registry slug, pinned at first submit.
+- `version` is semver **without a leading `v`** and must equal the release tag stripped of any `v` prefix.
+- A manifest that fails schema validation (e.g. a `description` over 280 chars) is rejected with **HTTP 422** — no silent fallback.
 
 The legacy path — a pull request against [`plugins/registry.json`](https://github.com/TabularisDB/tabularis/blob/main/plugins/registry.json) — still works during the transition; legacy entries are merged into the hosted catalogue automatically. New plugins should submit to the registry directly.

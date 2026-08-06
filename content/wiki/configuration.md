@@ -78,7 +78,8 @@ Any key omitted from the file falls back to its default value. You do not need a
 | `csvDelimiter` | `string` | `","` | Default delimiter used when copying or exporting CSV. |
 | `pingInterval` | `number` | `30` | Connection health check interval in seconds. `0` disables pings. See [Connection Health Check](/wiki/connections#connection-health-check). |
 | `activeExternalDrivers` | `string[]` | `[]` | List of plugin driver IDs loaded at startup. |
-| `customRegistryUrl` | `string` | `null` | Custom URL for the plugin registry. Overrides the default official registry when fetching and installing plugins. |
+| `tabulariumRegistryUrl` | `string` | `null` | Base URL of the Tabularium plugin registry. Defaults to the official instance at `https://registry.tabularis.dev` when unset — point it at your own [self-hosted Tabularium](https://docs.tabularium.wiki/deploy/) to use a private registry. |
+| `customRegistryUrl` | `string` | `null` | Legacy pre-Tabularium registry override. Read once during config migration, then cleared — use `tabulariumRegistryUrl` instead. |
 | `plugins` | `object` | `{}` | Per-plugin config, including optional interpreter overrides and plugin settings values. |
 | `editorTheme` | `string` | `null` | Monaco editor theme ID. |
 | `editorFontFamily` | `string` | `"JetBrains Mono"` | SQL editor font family. |
