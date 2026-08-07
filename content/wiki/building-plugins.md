@@ -130,4 +130,4 @@ The repo's [`plugins/PLUGIN_TUTORIAL.md`](https://github.com/TabularisDB/tabular
 - [`plugins/PLUGIN_GUIDE.md`](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md) — every RPC method, every manifest field, every capability flag.
 - [`@tabularis/plugin-api` on npm](https://www.npmjs.com/package/@tabularis/plugin-api) — slot context types, hook signatures.
 - [`@tabularis/create-plugin` on npm](https://www.npmjs.com/package/@tabularis/create-plugin) — CLI flags, generated project layout.
-- [The Tabularium registry](https://registry.tabularis.dev) — browse published drivers to copy patterns from; [submit](https://registry.tabularis.dev/submit) yours when it's ready.
+- [The Tabularium registry](https://registry.tabularis.dev) — browse published drivers to copy patterns from; [submit](https://registry.tabularis.dev/submit) yours when it's ready. Before submitting: attach `.tabularium` as a release asset and make sure `version` equals the tag minus `v` — see [docs.tabularium.wiki/publishing](https://docs.tabularium.wiki/publishing/).

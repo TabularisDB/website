@@ -61,7 +61,7 @@ Tabularis is **hackable with an external plugin system**. Plugins are standalone
 Write a driver in Rust, Go, Python, Node.js, or any language that can speak JSON-RPC over stdin/stdout. No heavyweight SDK required.
 
 ### 🛰️ Hosted Registry
-Discover drivers in a searchable **connection catalogue** backed by the hosted Tabularium registry — install a missing driver inline while creating a connection, or in one click from a `tabularis://install` link.
+Discover drivers in a searchable **connection catalogue** backed by the hosted [Tabularium registry](https://registry.tabularis.dev) — install a missing driver inline while creating a connection, or in one click from a `tabularis://install` link.
 
 ### ⚡ Hot Install
 Install, update, and remove plugins from **Settings → Plugins** without restarting the app. New drivers appear immediately in the connection form.

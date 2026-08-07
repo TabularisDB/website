@@ -2,64 +2,48 @@
 title: "Plugin registry platform"
 slug: "plugin-registry"
 category: "Ecosystem"
-status: "in-progress"
+status: "done"
 order: 3
-lede: "The plugin registry is currently a single static `plugins/registry.json` file checked into the website repo. Every new plugin or version means a maintainer PR. This initiative replaces it with a dedicated platform on a subdomain of tabularis.dev: developers sign in with GitHub or Codeberg OAuth, claim a plugin namespace, link their repo, and new releases get picked up automatically. Plus per-plugin download analytics. The registry stays a catalog + trust layer — binaries keep living in the author's Releases. Picked up by Dominik Spitzli (@NewtTheWolf) on [#196](https://github.com/TabularisDB/tabularis/issues/196)."
+lede: "Shipped as **Tabularium**, a purpose-built plugin registry live at registry.tabularis.dev since Tabularis v0.16.0. Developers sign in via OAuth (GitHub, GitLab, Gitea/Forgejo — Codeberg included), claim a plugin slug, link their repo, and new releases are picked up automatically via webhooks. The registry stays a catalog + trust layer — binaries keep living in the author's Releases, with signature + SHA-256 verification on install. Built by Dominik Spitzli (@NewtTheWolf) on [#196](https://github.com/TabularisDB/tabularis/issues/196)."
 contributors:
   - username: debba
     role: Maintainer
   - username: NewtTheWolf
     role: Registry platform lead
 links:
+  - label: "Tabularium registry (live)"
+    href: "https://registry.tabularis.dev"
+    external: true
+  - label: "Tabularium docs"
+    href: "https://docs.tabularium.wiki"
+    external: true
+  - label: "Tabularium source"
+    href: "https://github.com/TabularisDB/tabularium"
+    external: true
   - label: "Issue #196"
     href: "https://github.com/TabularisDB/tabularis/issues/196"
     external: true
-  - label: "Current registry.json"
-    href: "https://github.com/TabularisDB/tabularis-website/blob/main/plugins/registry.json"
-    external: true
 ---
 
-## How the registry works today
+## What shipped
 
-The registry is one file: [`plugins/registry.json`](https://github.com/TabularisDB/tabularis-website/blob/main/plugins/registry.json) in the website repo. Each plugin is an entry, each version a block under `releases:`, each asset URL a direct link to a GitHub Releases download on the plugin author's repo. The app reads this JSON at install time.
+The registry used to be a single static [`plugins/registry.json`](https://github.com/TabularisDB/website/blob/main/plugins/registry.json) in the website repo — every new plugin or version meant a maintainer PR. Since Tabularis **v0.16.0**, plugin discovery runs through the hosted **[Tabularium](https://registry.tabularis.dev)** registry instead; the static file survives only as a legacy source merged into the catalogue automatically.
 
-What this means in practice:
+Instead of adapting an existing marketplace (Open VSX and a Gitea package-registry fork were the candidates), a purpose-built registry was written: **[TabularisDB/tabularium](https://github.com/TabularisDB/tabularium)** — self-hostable, with the official instance at `registry.tabularis.dev`.
 
-- Adding a new plugin means a PR on the website repo. Maintainer reviews and merges.
-- Shipping a new version means another PR. Same flow.
-- The plugin author has no way to publish on their own schedule. There's no "I own this plugin id" — it's whatever the JSON says.
-- No download numbers, anywhere.
-- No validation beyond "the JSON parsed and I trusted the PR."
+Delivered, matching the original goals:
 
-It worked while the registry had three plugins and one author. It doesn't scale to an ecosystem.
+- **OAuth-based ownership.** Authors sign in with GitHub, GitLab, or any Gitea/Forgejo instance (Codeberg included) and claim a plugin slug. Ownership is verified against the linked repository.
+- **Linked-repo publishing.** New releases on the linked repo are picked up automatically via webhooks — no website PR, no maintainer in the loop. The `.tabularium` manifest is resolved from the release assets.
+- **Hybrid storage.** The registry is a catalog + trust layer, not a CDN — binaries keep living in the author's Releases. On install, Tabularis verifies the registry's JWS signature and the download's SHA-256.
+- **Download analytics.** Per-plugin, per-version, per-platform counts.
+- **Manifest validation at publish time.** Schema-validated; invalid manifests are rejected (HTTP 422). CI can pre-validate via `POST /api/manifest/validate`.
+- **Client install unchanged.** The registry changed how plugins are discovered and resolved; the install path stayed put.
 
-## What we want
+Themes and other kinds slot into the same pipeline via `kind:` in the manifest — the kind system is admin-configurable per instance.
 
-A dedicated registry platform, hosted on a subdomain of `tabularis.dev`. Concretely:
+## Docs
 
-- **OAuth-based ownership.** Plugin authors sign in with **GitHub or Codeberg** and claim a namespace. Ownership is tied to the OAuth identity, not to a JSON entry that the maintainer merged.
-- **Linked-repo publishing.** An author links their plugin repo. New releases on the linked repo are picked up automatically (webhook or polling) and become installable from the app — no website PR, no maintainer in the loop.
-- **Hybrid storage.** The registry is a **catalog + trust layer**, not a CDN. Plugin binaries keep living in the author's GitHub / Codeberg Releases. The registry indexes them, validates the manifest, and serves the metadata.
-- **Download analytics.** Per-plugin, per-version, per-platform counts that authors can see on their own dashboard, plus enough aggregate data on the public listing for users to gauge what's actually used.
-- **Manifest validation at publish time** — schema, required platforms, version monotonicity.
-- **Client install unchanged.** The existing pipeline (`manifest.json` + `install.sh` + `~/.local/share/tabularis/plugins/<id>/`) stays exactly as it is. The registry only changes how plugins are *discovered and resolved* — install itself doesn't move.
-
-v1 ships plugins only. Themes, snippets and SQL templates slot into the same pipeline later with a different `kind:` in the manifest.
-
-## Direction
-
-Adapt an existing open-source plugin/extension marketplace rather than build one from scratch. Building a marketplace eats months and the work isn't where Tabularis adds value.
-
-Top candidate: **[Eclipse Open VSX](https://github.com/eclipse/openvsx)**. It already has namespaces, publisher claim via OAuth, search, a REST API and a published web UI. What needs to change: rebrand, add Codeberg next to GitHub as an OAuth provider, swap the manifest schema for ours.
-
-Other options still on the table: fork of [Gitea's package registry](https://docs.gitea.com/usage/packages/overview), or Backstage's plugin marketplace (likely overkill). Final platform choice is being scoped by Dominik on [#196](https://github.com/TabularisDB/tabularis/issues/196).
-
-## Out of scope
-
-- The client-side install path. Untouched.
-- Hosting the binaries ourselves. The whole point of the hybrid model is *not* to become a CDN.
-- A payment / paid-plugins layer. Not on the table for v1.
-
-## Status
-
-Dominik Spitzli ([@NewtTheWolf](https://github.com/NewtTheWolf)) is driving this initiative — assigned on [#196](https://github.com/TabularisDB/tabularis/issues/196). Platform selection and scoped sub-issues land there as the work progresses. Follow the issue for updates.
+- Publish a plugin: [docs.tabularium.wiki/publishing](https://docs.tabularium.wiki/publishing/)
+- Manifest reference: [docs.tabularium.wiki/manifest](https://docs.tabularium.wiki/manifest/)
+- Self-host your own instance: [docs.tabularium.wiki/deploy](https://docs.tabularium.wiki/deploy/) (point Tabularis at it via `tabulariumRegistryUrl`)
