@@ -31,6 +31,8 @@ Every connection list eventually turns into a minefield: the local scratch datab
 
 **The write guard.** Any statement that isn't provably read-only prompts for confirmation on a production connection, with a SQL preview and a per-connection "don't ask again" that lasts for the session. Detection is deliberately conservative — only `SELECT`, `SHOW`, `DESCRIBE`, `PRAGMA` and `EXPLAIN` of a `SELECT` count as read-only. Data-modifying CTEs, `EXPLAIN ANALYZE <write>` (which executes the write on PostgreSQL) and unknown statement types like `CALL` or `SET` all prompt. The guard covers editor runs, staged grid-edit commits, immediate cell edits, row insertion and notebook cells, and it stacks with the [destructive-query guard from v0.14.0](/blog/v0140-stored-routines-connection-windows-destructive-query-guard) rather than replacing it.
 
+<video src="/videos/posts/tabularis-production-guard.mp4" poster="/videos/posts/tabularis-production-guard.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+
 ---
 
 ## Sensitive Columns Come Up Masked
@@ -40,6 +42,8 @@ Screen-sharing a results grid used to mean hoping nobody could read fast. PR [#5
 - **Per-cell reveal.** A masked cell shows an eye button that reveals just that cell; revealed cells get an eye-off to re-mask. Column headers carry the same toggle for the whole column. Reveal state is grid-local and resets when the result data changes.
 - **The mask actually holds.** Masked cells can't be edited — double-click, Enter and F2 are guarded until you reveal — and the hover tooltip is suppressed so it can't leak the value.
 - **Display-only, by design.** Copy and export keep the real values, as the issue requested; write-path anonymization for exports is tracked separately in [#483](https://github.com/TabularisDB/tabularis/issues/483).
+
+<video src="/videos/posts/tabularis-column-masking.mp4" poster="/videos/posts/tabularis-column-masking.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
 
 Configuration lives in a new **Settings → Privacy** tab: an on/off toggle (default on), the column-name patterns as an editable list of case-insensitive substring matches, and per-connection overrides as `table.column` entries — **Always mask** and **Never mask** lists per connection, where never-mask wins over always-mask, which wins over the name patterns. A review round moved the per-connection overrides into the connection modal as well, so a saved connection can manage its own exceptions from a Privacy tab in edit mode. Strings are translated across all eleven locales.
 
