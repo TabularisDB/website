@@ -3,6 +3,19 @@ import { markedHighlight } from "marked-highlight";
 import hljs from "highlight.js";
 import { getAllPlugins, getLatestRelease } from "./plugins";
 import { SOCIAL_URLS } from "./social";
+import { APP_VERSION } from "./version";
+
+// {{APP_VERSION}} in any Markdown content (posts, wiki, seo) is replaced with
+// the current app version at build time — works inside code fences too, since
+// the substitution runs before parsing. Keeps install commands pointing at the
+// latest release without hand-editing content on every release.
+marked.use({
+  hooks: {
+    preprocess(markdown: string) {
+      return markdown.replaceAll("{{APP_VERSION}}", APP_VERSION);
+    },
+  },
+});
 
 marked.use(
   markedHighlight({

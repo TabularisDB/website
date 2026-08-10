@@ -1,3 +1,34 @@
+# [0.19.0](https://github.com/TabularisDB/tabularis/compare/v0.18.0...v0.19.0) (2026-08-10)
+
+
+### Bug Fixes
+
+* **connection-catalogue:** clean up engine card layout and naming ([f9df327](https://github.com/TabularisDB/tabularis/commit/f9df327b1876852d1129912e8306f03c4c1a7a98))
+* **create-plugin:** scaffolded .tabularium failed registry validation ([54874aa](https://github.com/TabularisDB/tabularis/commit/54874aa5d1b3cffbedb31253826809fda6abd3cf))
+* **datagrid:** enable editing tables without a primary key ([9e787b1](https://github.com/TabularisDB/tabularis/commit/9e787b155a63742bfd45340d88b1a890d536b983))
+* **datagrid:** harden keyless editing edge cases ([0a8c3bf](https://github.com/TabularisDB/tabularis/commit/0a8c3bfaa253aa79bc0d3ca3165bd1e117d84574))
+* expand SQLite home paths ([c03fc90](https://github.com/TabularisDB/tabularis/commit/c03fc908471346424ec5761fdc96b3febe48d375))
+* move session-field stripping to SettingsProvider ([02c21da](https://github.com/TabularisDB/tabularis/commit/02c21dab5f14cd7509a39e13e5f4f34c0103ebf3)), closes [#548](https://github.com/TabularisDB/tabularis/issues/548)
+* persist empty connection state after disconnect ([069de08](https://github.com/TabularisDB/tabularis/commit/069de08e290ca74eae41e2f2fa434d30911c583e)), closes [#548](https://github.com/TabularisDB/tabularis/issues/548)
+* **plugins:** validate archives before install and improve error recovery ([5532b72](https://github.com/TabularisDB/tabularis/commit/5532b72c1423a786eb16a19bf9d0b6ec9de6a4ff))
+* **registry:** use official MongoDB Atlas release ([#496](https://github.com/TabularisDB/tabularis/issues/496)) ([e1ef671](https://github.com/TabularisDB/tabularis/commit/e1ef6711224c2e80799716086c624b2cf165ea4a))
+* repair merge with main (build errors, failing tests, restore ProductionBanner) ([30817f4](https://github.com/TabularisDB/tabularis/commit/30817f4dfaef3fbfcc30fa4eb0bb8af3d774aec2))
+* support parameters in explain plan ([de7d0c2](https://github.com/TabularisDB/tabularis/commit/de7d0c21594640efb852f47a7b88f65af9521c06))
+* **tags:** address review feedback and lint errors ([c1f466e](https://github.com/TabularisDB/tabularis/commit/c1f466e102d784f3f5bda4f0d2e2883d2bcdccf6))
+* **tags:** tolerate orphaned tag ids, merge imported tags by name, cap name length ([d5072ec](https://github.com/TabularisDB/tabularis/commit/d5072ec187e362f01719b7f8a1f16cb21312eab9))
+* use existing i18n key for explain submit button ([1cc99b4](https://github.com/TabularisDB/tabularis/commit/1cc99b4de284b6a46e9c3ec5d2ed6229911ce561))
+
+
+### Features
+
+* **connections:** environment classification with production safety warning ([e0118e0](https://github.com/TabularisDB/tabularis/commit/e0118e09f5de1a397faf6a903ca7d160c4c7937d)), closes [#472](https://github.com/TabularisDB/tabularis/issues/472)
+* **connections:** free-form colored tags assignable to connections ([7848789](https://github.com/TabularisDB/tabularis/commit/78487892250be4f084a3fc8f7243edbec7bb1f82)), closes [#472](https://github.com/TabularisDB/tabularis/issues/472)
+* **connections:** opaque plugin-specific extra fields for ConnectionParams ([#596](https://github.com/TabularisDB/tabularis/issues/596)) ([27226c5](https://github.com/TabularisDB/tabularis/commit/27226c5c0f88acd023e89673f4ce63cdb27ee6dc))
+* **connections:** replace native dialogs with app-styled components in connection modal ([6d33bf7](https://github.com/TabularisDB/tabularis/commit/6d33bf721515c8b7fe0ddf0895f28f98e20476ab))
+* **datagrid:** mask sensitive columns in the results grid ([8d2362f](https://github.com/TabularisDB/tabularis/commit/8d2362fecb16622700bb438d4be7e59f9a1e32bf)), closes [#485](https://github.com/TabularisDB/tabularis/issues/485)
+* **plugins:** add locale-aware plugin README details modal ([bd9178e](https://github.com/TabularisDB/tabularis/commit/bd9178e7231740b6b8a75314290132f4a087232f))
+* **plugins:** extend RpcDriver for BLOB, materialized views, and type mappings ([#576](https://github.com/TabularisDB/tabularis/issues/576)) ([54d9eae](https://github.com/TabularisDB/tabularis/commit/54d9eae2122a197d76be79f337def3f2de52a5a2))
+
 # [0.18.0](https://github.com/TabularisDB/tabularis/compare/v0.17.0...v0.18.0) (2026-08-03)
 
 

@@ -12,11 +12,13 @@ export type FileOption = {
   ext: string;
   url: string;
 };
+export type OptionWarning = { text: string; linkText: string; href: string };
 export type CommandOption = {
   kind: "command";
   label: string;
   desc: string;
   command: string | string[];
+  warning?: OptionWarning;
 };
 export type DownloadOption = FileOption | CommandOption;
 export type DownloadNote = { text: string; command?: string };
@@ -117,6 +119,11 @@ export const PLATFORM_CONFIG: Record<Platform, PlatformConfig> = {
         label: "AUR",
         desc: "Arch Linux / Manjaro",
         command: "yay -S tabularis-bin",
+        warning: {
+          text: "After the recent AUR malware wave, read the PKGBUILD before installing — tabularis-bin is unaffected, but it's the safer habit.",
+          linkText: "How to verify and install without an AUR helper →",
+          href: "/blog/installing-tabularis-from-aur-without-a-helper",
+        },
       },
       {
         kind: "file",
