@@ -86,7 +86,7 @@ A self-describing envelope has a failure mode that took us longer to see than to
 
 The same shelf holds the strangest tools in the codebase. Tabularis [imports connections](https://github.com/TabularisDB/tabularis/pull/393) from TablePlus, Sequel Ace, DBeaver, Beekeeper Studio and DataGrip, which meant learning each client's storage format: [plist](https://crates.io/crates/plist) for the macOS clients, [roxmltree](https://crates.io/crates/roxmltree) for DataGrip's XML, and OpenSSL's AES-CBC for the two encrypted stores.
 
-DBeaver's credentials file uses a fixed key; Beekeeper uses Node's `simple-encryptor` format with a per-install key unwrapped by a fixed bootstrap key. These are local files on the user's own machine and the threat models differ. But it does mean the vendored OpenSSL's last remaining duty in a rustls application is reading other database clients' secrets. Some dependencies retire; this one became a locksmith.
+[DBeaver](/compare/dbeaver-alternative)'s credentials file uses a fixed key; [Beekeeper](/compare/beekeeper-studio-alternative) uses Node's `simple-encryptor` format with a per-install key unwrapped by a fixed bootstrap key. These are local files on the user's own machine and the threat models differ. But it does mean the vendored OpenSSL's last remaining duty in a rustls application is reading other database clients' secrets. Some dependencies retire; this one became a locksmith.
 
 ## russh and ssh. Both.
 

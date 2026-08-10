@@ -53,7 +53,7 @@ And then there is size.
 
 ![Grouped bar chart comparing installer sizes of Tabularis 0.16.0 (Tauri) and Beekeeper Studio 5.9.2 (Electron) across four package types. Linux .deb: 17 vs 207 MB. macOS .dmg: 18 vs 290 MB. Windows installer: 12 vs 201 MB. Linux AppImage: 94 vs 282 MB.](/img/posts/tabularis-tauri-installer-size.svg)
 
-These are decimal megabytes from the [Tabularis 0.16.0](https://github.com/TabularisDB/tabularis/releases/tag/v0.16.0) and [Beekeeper Studio 5.9.2](https://github.com/beekeeper-studio/beekeeper-studio/releases/tag/v5.9.2) release assets. Beekeeper is a good database client. Its package sizes are not a failure of Beekeeper; they are the price of shipping Chromium, and shipping Chromium also buys you consistency.
+These are decimal megabytes from the [Tabularis 0.16.0](https://github.com/TabularisDB/tabularis/releases/tag/v0.16.0) and [Beekeeper Studio 5.9.2](https://github.com/beekeeper-studio/beekeeper-studio/releases/tag/v5.9.2) release assets. [Beekeeper](/compare/beekeeper-studio-alternative) is a good database client. Its package sizes are not a failure of Beekeeper; they are the price of shipping Chromium, and shipping Chromium also buys you consistency.
 
 Still, a 12 MB Windows installer for a database IDE makes me smile.
 
@@ -67,7 +67,7 @@ Size is not even a native-versus-Tauri argument. Sequel Ace is small too. The sm
 
 So why not native? Because native to what?
 
-Sequel Ace gives the honest answer: macOS. It is a focused application and a very good one. TablePlus began on macOS; when its small team built the Windows version, it [rewrote the application in C# and C/C++](https://tableplus.com/blog/2018/04/tableplus-windows-version-when-is-it-coming-out.html). That is not a criticism. It is what “native on two platforms” actually means.
+Sequel Ace gives the honest answer: macOS. It is a focused application and a very good one. [TablePlus](/compare/tableplus-alternative) began on macOS; when its small team built the Windows version, it [rewrote the application in C# and C/C++](https://tableplus.com/blog/2018/04/tableplus-windows-version-when-is-it-coming-out.html). That is not a criticism. It is what “native on two platforms” actually means.
 
 For Tabularis, native meant three user interfaces: three grids, three editors, three settings screens, three sets of bugs. A cross-platform widget toolkit would move the compromise somewhere else, not remove it.
 

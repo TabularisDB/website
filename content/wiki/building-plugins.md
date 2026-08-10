@@ -58,7 +58,7 @@ Every step is independently shippable. A plugin with only the first three is alr
 
 ## UI extensions
 
-The Tabularis host mounts **slot contributions** at ten predefined points (plugin row in Settings, new connection form, row editor fields, data grid toolbar, context menu, etc.). Plugins declare contributions in the `.tabularium` manifest:
+The Tabularis host mounts **slot contributions** at eleven predefined points (plugin row in Settings, new connection form, row editor fields, data grid toolbar, context menu, etc.). Since v0.19.0, the `connection-modal.extra_fields` slot renders plugin UI below the host/port section of the connection form, backed by an opaque `extra` string map on `ConnectionParams` — persisted verbatim and forwarded to the driver, so a plugin can carry custom connection settings (an AWS region, say) without a core schema change. Plugins declare contributions in the `.tabularium` manifest:
 
 ```json
 "ui_extensions": [
@@ -130,4 +130,4 @@ The repo's [`plugins/PLUGIN_TUTORIAL.md`](https://github.com/TabularisDB/tabular
 - [`plugins/PLUGIN_GUIDE.md`](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md) — every RPC method, every manifest field, every capability flag.
 - [`@tabularis/plugin-api` on npm](https://www.npmjs.com/package/@tabularis/plugin-api) — slot context types, hook signatures.
 - [`@tabularis/create-plugin` on npm](https://www.npmjs.com/package/@tabularis/create-plugin) — CLI flags, generated project layout.
-- [The Tabularium registry](https://registry.tabularis.dev) — browse published drivers to copy patterns from; [submit](https://registry.tabularis.dev/submit) yours when it's ready.
+- [The Tabularium registry](https://registry.tabularis.dev) — browse published drivers to copy patterns from; [submit](https://registry.tabularis.dev/submit) yours when it's ready. Before submitting: attach `.tabularium` as a release asset and make sure `version` equals the tag minus `v` — see [docs.tabularium.wiki/publishing](https://docs.tabularium.wiki/publishing/).

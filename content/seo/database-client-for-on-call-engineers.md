@@ -66,6 +66,8 @@ After a fix ships, re-run the same parameterized notebook against production and
 
 For teams that allow read access to production replicas, connection profiles make the sanctioned path the easiest path — safer than ad-hoc tunnels every engineer builds differently.
 
+Since v0.19.0, a connection can be classified as **production** outright: it gets a badge, a permanent banner while active, and a confirmation — with SQL preview — before any statement that isn't provably read-only. The 3 AM mistake the guard exists for is exactly the one this page is about: running the fix meant for staging against the incident database. Sensitive columns (passwords, emails, tokens) also render [masked in the results grid](/wiki/data-grid) until deliberately revealed — useful when screen-sharing a war room.
+
 ## Requirements and limits
 
 - Kubernetes tunneling uses **your** `kubectl` (it must be in `$PATH`); Tabularis does not embed a Kubernetes client, so contexts, exec plugins, and SSO auth behave exactly as in your terminal.

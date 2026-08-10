@@ -53,6 +53,9 @@ Edit table and column properties inline, then use guided dialogs to create table
 ### 👥 Users & Privileges
 List server accounts, create and drop users, change passwords, and edit grants scope by scope — global, database, or table — on **MySQL/MariaDB**. Grants the editor cannot model are shown as raw `SHOW GRANTS` output rather than hidden.
 
+### 🛡️ Production Guardrails
+Classify connections as development, staging, or **production** — production gets a badge, a permanent banner, and a confirmation with SQL preview before any write. Sensitive columns (passwords, emails, tokens) render masked in the results grid until you reveal them.
+
 # Plugins
 
 Tabularis is **hackable with an external plugin system**. Plugins are standalone executables that communicate with the app over **JSON-RPC 2.0 via stdin/stdout**, so database support can evolve independently from the core release cycle.
@@ -61,7 +64,7 @@ Tabularis is **hackable with an external plugin system**. Plugins are standalone
 Write a driver in Rust, Go, Python, Node.js, or any language that can speak JSON-RPC over stdin/stdout. No heavyweight SDK required.
 
 ### 🛰️ Hosted Registry
-Discover drivers in a searchable **connection catalogue** backed by the hosted Tabularium registry — install a missing driver inline while creating a connection, or in one click from a `tabularis://install` link.
+Discover drivers in a searchable **connection catalogue** backed by the hosted [Tabularium registry](https://registry.tabularis.dev) — install a missing driver inline while creating a connection, or in one click from a `tabularis://install` link.
 
 ### ⚡ Hot Install
 Install, update, and remove plugins from **Settings → Plugins** without restarting the app. New drivers appear immediately in the connection form.

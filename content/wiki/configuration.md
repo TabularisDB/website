@@ -54,7 +54,7 @@ Any key omitted from the file falls back to its default value. You do not need a
 | Key | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
 | `theme` | `string` | `null` | Active UI theme ID. See [Themes](/wiki/themes). |
-| `language` | `string` | `"auto"` | Preferred locale: `en`, `it`, `es`, `zh`, `fr`, `de`, `ja`, `ru`, `tl`, or `auto` (follows OS; `fil` falls back to `tl`). |
+| `language` | `string` | `"auto"` | Preferred locale: `en`, `it`, `es`, `zh`, `fr`, `de`, `ja`, `ru`, `tl`, `ko`, `pt-BR`, or `auto` (follows OS; `fil` falls back to `tl`). |
 | `displayTimezone` | `string` | `"auto"` | IANA timezone (e.g. `"Asia/Tokyo"`) used for UI timestamps and exports, or `auto` (OS zone). Configurable from **Settings → Localization → Timezone**. |
 | `resultPageSize` | `number` | `500` | Rows fetched per pagination request in the Data Grid. |
 | `fontFamily` | `string` | `"System"` | Editor font. Must be installed on the system. |
@@ -78,7 +78,8 @@ Any key omitted from the file falls back to its default value. You do not need a
 | `csvDelimiter` | `string` | `","` | Default delimiter used when copying or exporting CSV. |
 | `pingInterval` | `number` | `30` | Connection health check interval in seconds. `0` disables pings. See [Connection Health Check](/wiki/connections#connection-health-check). |
 | `activeExternalDrivers` | `string[]` | `[]` | List of plugin driver IDs loaded at startup. |
-| `customRegistryUrl` | `string` | `null` | Custom URL for the plugin registry. Overrides the default official registry when fetching and installing plugins. |
+| `tabulariumRegistryUrl` | `string` | `null` | Base URL of the Tabularium plugin registry. Defaults to the official instance at `https://registry.tabularis.dev` when unset — point it at your own [self-hosted Tabularium](https://docs.tabularium.wiki/deploy/) to use a private registry. |
+| `customRegistryUrl` | `string` | `null` | Legacy pre-Tabularium registry override. Read once during config migration, then cleared — use `tabulariumRegistryUrl` instead. |
 | `plugins` | `object` | `{}` | Per-plugin config, including optional interpreter overrides and plugin settings values. |
 | `editorTheme` | `string` | `null` | Monaco editor theme ID. |
 | `editorFontFamily` | `string` | `"JetBrains Mono"` | SQL editor font family. The picker offers bundled families that need no system install — JetBrains Mono, plus the ExtraBold and ExtraBold Italic weights added in v0.18.0 — alongside system fonts. |
@@ -143,6 +144,18 @@ Tabularis is built with a strict zero-telemetry policy.
   - Any URLs referenced in plugins you have installed
 
 You can verify all outgoing network connections using `lsof -i` (macOS/Linux) or Resource Monitor (Windows) while the application runs.
+
+### Column Masking (Settings → Privacy)
+
+Since v0.19.0, a **Privacy** tab in Settings controls sensitive-column masking in the results grid:
+
+- an on/off toggle (masking is **on** by default),
+- the column-name patterns, one per line, matched as case-insensitive substrings (password, email, token, ssn, … out of the box),
+- per-connection overrides as `table.column` entries, one per line: an **Always mask** list (masked even when no pattern matches) and a **Never mask** list (never masked even when a pattern matches) — never-mask wins over always-mask, which wins over the name patterns.
+
+![The Settings Privacy tab: the Mask sensitive columns toggle, the sensitive column name patterns list, and per-connection Always mask / Never mask overrides with a connection picker](/img/tabularis-privacy-settings.png)
+
+Masking is display-only: copy and export keep the real values. See [Data Grid → Column Masking](/wiki/data-grid) for the grid-side behavior.
 
 ## Resetting to Defaults
 

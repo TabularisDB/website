@@ -208,7 +208,7 @@ Six external contributors land in v0.12.0. Three of them are new — Matheus, Ni
 
 **[@verbaux](https://github.com/verbaux) (Nikolay Zhuravlev)** is also new, and ships the Russian translation ([#229](https://github.com/TabularisDB/tabularis/pull/229)) — full parity with the English locale, a Russian README, and a properly thorough fix to the tab-counter pluralization that was rendering "1 tabs" in English. The same PR also notices the SettingToggle knob being off-center on macOS and fixes it in [#219](https://github.com/TabularisDB/tabularis/pull/219) — exactly the kind of cross-cutting "while I'm here" attention that turns a translation PR into something more.
 
-**[@VincentZhangy](https://github.com/VincentZhangy) (vlor)** rounds out the contributor list with PR [#211](https://github.com/TabularisDB/tabularis/pull/211), aligning the PostgreSQL SSL modes with the behavior `psql` and DBeaver users already expect.
+**[@VincentZhangy](https://github.com/VincentZhangy) (vlor)** rounds out the contributor list with PR [#211](https://github.com/TabularisDB/tabularis/pull/211), aligning the PostgreSQL SSL modes with the behavior `psql` and [DBeaver](/compare/dbeaver-alternative) users already expect.
 
 If you want to tell two MySQL connections apart at a glance, peek at the row behind a foreign key without leaving the one you're on, paste a `mysqldump` output and see one statement per `/*! ... */` block, run a query and see the grid the instant the data arrives, edit by a snowflake ID without losing the last three digits, connect to RDS with `sslmode=require` and have it work, hit `Delete` on a selected row, or read the UI in Русский — this is the upgrade.
 

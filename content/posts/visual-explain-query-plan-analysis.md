@@ -90,7 +90,7 @@ The graph is useful for structure. The table is better when you want exact metri
 
 On the left there is an expandable tree with columns for node type, relation, cost, estimated rows, time, and filter. Selecting a row opens a **detail panel** on the right with all metrics available for that node: cost breakdown, actual vs estimated rows, loops, buffer hits and reads, index conditions, hash conditions, and any engine-specific fields present in the source plan.
 
-If you have used EXPLAIN in pgAdmin or DBeaver, the layout will feel familiar. The main difference is consistency: the same view model is used across PostgreSQL, MySQL, MariaDB, and SQLite.
+If you have used EXPLAIN in [pgAdmin](/compare/pgadmin-alternative) or [DBeaver](/compare/dbeaver-alternative), the layout will feel familiar. The main difference is consistency: the same view model is used across PostgreSQL, MySQL, MariaDB, and SQLite.
 
 ![Table view with hierarchical tree, cost columns, and node detail panel](/img/posts/tabularis-visual-explain-table-view-detail-panel.png)
 

@@ -1757,6 +1757,10 @@ a.badge.version:hover {
   color: var(--warning);
 }
 
+.dl-modal-note--inline-warning {
+  margin-top: 0.5rem;
+}
+
 .dl-modal-note code {
   font-family: var(--font-mono);
   font-size: 0.75rem;
@@ -8610,6 +8614,17 @@ footer {
   background: rgba(255, 255, 255, 0.06);
   border-radius: 3px;
   padding: 0.1rem 0.3rem;
+}
+
+.dli-note--inline-warning {
+  margin-top: 0.5rem;
+}
+
+.dli-note a,
+.dl-modal-note a {
+  color: var(--warning);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .dl-page-footer-links {

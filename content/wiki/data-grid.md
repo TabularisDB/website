@@ -65,6 +65,17 @@ A DDL preview showing the exact SQL that will be executed is available before yo
 
 Edits and deletes are matched on the table's **full primary key**. For a table with a composite primary key (e.g. `PRIMARY KEY (profile_id, phone_type, key)`), the generated `WHERE` clause includes every PK column — `WHERE col1 = ? AND col2 = ? AND …` — so a change targets exactly one row rather than every row that happens to share part of the key.
 
+### Tables Without a Primary Key
+
+Since v0.19.0, tables with **no primary key** are editable too. Rows are identified by the values of all their comparable columns instead: binary, geometric, `json` and `hstore` columns are excluded (their grid representations wouldn't survive an equality comparison), and so are approximate numerics (`FLOAT`, `DOUBLE`, `REAL`). Excluded columns stay editable — they just don't take part in addressing the row.
+
+Two conditions apply:
+
+- The result set must expose **every physical column** of the table. A partial `SELECT a, b FROM t` on a keyless table stays non-editable — it couldn't distinguish rows that differ only in the omitted columns — and double-clicking a cell explains why instead of doing nothing.
+- Rows that are **entirely identical** collapse to the same identity. Deleting one deletes all of its copies: MySQL/MariaDB remove one copy per statement (`LIMIT 1`) and repeat until the count the grid showed is gone, PostgreSQL and SQLite sweep them in one statement — every driver ends up in the state the grid displayed.
+
+Updates to the same keyless row run sequentially, threading already-applied values into each step's `WHERE` clause. If a row no longer matches its original values — the data changed underneath you — the operation raises a clear error instead of silently affecting zero rows.
+
 ## Keyboard Navigation
 
 Since v0.18.0 the focused cell moves from the keyboard, not only from a click:
@@ -149,6 +160,16 @@ By default every cell value renders in the same text color. Enable **Result Colo
 - A per-type color picker with a live preview and a **Reset to theme** button lets you override any of them; overrides are saved in `config.json` and applied on top of the theme.
 - Colorization is **off by default** — values render as before until you opt in.
 - Colors apply only to plain data cells. Edited, inserted, and deleted rows, and `NULL` values, keep their existing styling. Per-column colors are precomputed once, so there is no scroll-time cost.
+
+## Column Masking
+
+Since v0.19.0, columns whose name matches a sensitive pattern — password, email, token, ssn, and friends — render as a `••••••` placeholder instead of the real value.
+
+- **Per-cell reveal** — masked cells show an eye button that reveals just that cell; a revealed cell gets an eye-off button to re-mask it. Column headers carry the same toggle for the whole column. Reveal state is grid-local and resets when the result data changes.
+- **Edit guard** — masked cells can't be edited (double-click, `Enter`, `F2`) until revealed, and the hover tooltip is suppressed so it can't leak the value.
+- **Display-only** — copy and export always carry the **real values**. Masking protects the screen, not the clipboard.
+
+Masking is **on by default** and configured under **Settings → Privacy**: an on/off toggle, the column-name patterns (case-insensitive substring matches, one per line), and per-connection **Always mask** / **Never mask** overrides as `table.column` entries — never-mask wins over always-mask, which wins over the name patterns. A saved connection can also manage its own overrides from the **Privacy** tab of the connection modal (edit mode).
 
 ## Exporting Results
 
