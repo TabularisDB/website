@@ -3,7 +3,16 @@ title: "Installing Tabularis from the AUR, the Careful Way"
 date: "2026-08-03T19:00:00"
 tags: ["security", "linux", "arch", "aur", "open-source", "community"]
 excerpt: "After the malware wave that hit 200+ AUR packages, the Arch team temporarily disabled package adoption. Our tabularis-bin package is unaffected and still on the AUR, but a few of you asked how to install without going through an AUR helper. Here's how to build straight from our GitHub repo — and what to check in any PKGBUILD before you run it."
+og:
+  template: "screenshot-split"
+  title: "Installing from the AUR,"
+  accent: "the Careful Way"
+  claim: "After the malware wave that hit 200+ AUR packages, here's how to install Tabularis without an AUR helper — build straight from our repo, check the sources, and read the PKGBUILD before it runs anything."
+  image: "/img/arch-linux-aur.png"
+  frameless: true
 ---
+
+# Installing Tabularis from the AUR, the Careful Way
 
 Heads up for Arch users: after the malware wave that hit 200+ AUR packages, the Arch team temporarily disabled package adoption. Our `tabularis-bin` package is unaffected and still on the [AUR](https://aur.archlinux.org/packages/tabularis-bin), but a few of you asked how to install without going through an AUR helper. Fair enough, and honestly it's the safer habit anyway since you get to read the PKGBUILD before it builds anything.
 
