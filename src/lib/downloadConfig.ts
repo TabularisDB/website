@@ -120,8 +120,8 @@ export const PLATFORM_CONFIG: Record<Platform, PlatformConfig> = {
         desc: "Arch Linux / Manjaro",
         command: "yay -S tabularis-bin",
         warning: {
-          text: "After the recent AUR malware wave, read the PKGBUILD before installing — tabularis-bin is unaffected, but it's the safer habit.",
-          linkText: "How to verify and install without an AUR helper →",
+          text: "tabularis-bin works as usual and was not affected by the recent AUR malware wave. Still, reading the PKGBUILD before installing is always a good habit.",
+          linkText: "How to verify the package or install without an AUR helper →",
           href: "/blog/installing-tabularis-from-aur-without-a-helper",
         },
       },

@@ -109,7 +109,7 @@ yay -S tabularis-bin
 
 [![AUR](https://img.shields.io/badge/AUR-tabularis--bin-1793D1?logo=archlinux&logoColor=white)](https://aur.archlinux.org/packages/tabularis-bin)
 
-> ⚠️ After the malware wave that hit 200+ AUR packages, take thirty seconds to read the PKGBUILD before installing — `tabularis-bin` is unaffected, but it's the safer habit. See [Installing Tabularis from the AUR, the Careful Way](/blog/installing-tabularis-from-aur-without-a-helper) for how to verify the package and install without an AUR helper.
+> ⚠️ `tabularis-bin` works as usual and was not affected by the malware wave that hit 200+ AUR packages. Still, taking thirty seconds to read the PKGBUILD before installing is always a good habit — see [Installing Tabularis from the AUR, the Careful Way](/blog/installing-tabularis-from-aur-without-a-helper) for how to verify the package and install without an AUR helper.
 
 ## Updates
 
