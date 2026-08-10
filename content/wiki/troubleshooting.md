@@ -89,6 +89,12 @@ Tabularis captures application logs internally. Access them from **Settings → 
 
 When reporting a bug, export the logs and attach them to your issue on [GitHub](https://github.com/TabularisDB/tabularis/issues).
 
+## Installation Problems
+
+### Linux AppImage opens a black window
+
+On distributions with a recent Mesa (Arch, Solus, …), AppImages of v0.13.3 through v0.18.0 could open a black window: the bundle shipped a stale `libwayland` that the host `libEGL` bound to, and WebKitWebProcess aborted with `EGL_BAD_PARAMETER`. Fixed in **v0.19.0** — the AppImage no longer bundles libwayland at all. If you're stuck on an affected version, download the v0.19.0 (or newer) AppImage from the [releases page](https://github.com/TabularisDB/tabularis/releases).
+
 ## FAQ
 
 ### Where are my connections stored?

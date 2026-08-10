@@ -58,7 +58,7 @@ Every step is independently shippable. A plugin with only the first three is alr
 
 ## UI extensions
 
-The Tabularis host mounts **slot contributions** at ten predefined points (plugin row in Settings, new connection form, row editor fields, data grid toolbar, context menu, etc.). Plugins declare contributions in the `.tabularium` manifest:
+The Tabularis host mounts **slot contributions** at eleven predefined points (plugin row in Settings, new connection form, row editor fields, data grid toolbar, context menu, etc.). Since v0.19.0, the `connection-modal.extra_fields` slot renders plugin UI below the host/port section of the connection form, backed by an opaque `extra` string map on `ConnectionParams` — persisted verbatim and forwarded to the driver, so a plugin can carry custom connection settings (an AWS region, say) without a core schema change. Plugins declare contributions in the `.tabularium` manifest:
 
 ```json
 "ui_extensions": [

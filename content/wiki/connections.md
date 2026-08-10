@@ -198,6 +198,30 @@ Every saved connection can override its driver's default icon and accent color. 
 
 The override is persisted alongside the rest of the connection profile in `connections.json` and round-trips through Export / Import like every other field. The classic use case is differentiating two same-driver connections that would otherwise look identical in the sidebar — for example, a `MySQL local` in green next to a `MySQL prod` in red, each with its own icon.
 
+## Tags and Environments
+
+Since v0.19.0, two complementary ways to keep a long connection list honest.
+
+### Colored Tags
+
+Free-form colored tags can be attached to any connection from the **Appearance** section of the connection modal: create tags inline on the shared accent palette, or switch to manage mode to rename, recolor or delete them. Tag names are unique (case-insensitive) and capped at 32 characters.
+
+Tags render as colored chips on connection cards and list rows, and tag names participate in the connection search filter. They are stored in `connections.json` alongside groups and ride along in Export / Import and automatic backups: selective exports include only the tags actually in use, and imports merge by id first, then by name — re-importing a profile that uses a "prod" tag on another machine reuses the existing tag instead of duplicating it.
+
+### Environment Classification
+
+Each connection can optionally declare itself **development**, **staging**, or **production**, picked in the connection modal's title bar and preserved across duplicate and import. Production identity is deliberately loud:
+
+- a **PROD** badge on connection cards and list rows,
+- a red ring on open sidebar entries,
+- a permanent red banner while the active connection is production.
+
+![The Connections page with colored tag chips and environment badges on the cards: a red "work" tag next to STAGING and DEV badges, PROD in red, and connections with no environment set](/img/tabularis-connection-tags-environments.png)
+
+### Production Write Guard
+
+On a production connection, any statement that isn't provably read-only asks for confirmation first, with a SQL preview and a per-connection "don't ask again" that lasts for the session. Detection is conservative: only `SELECT`, `SHOW`, `DESCRIBE`, `PRAGMA` and `EXPLAIN` of a `SELECT` count as read-only — data-modifying CTEs, `EXPLAIN ANALYZE` of a write (which executes the write on PostgreSQL) and unknown statement types (`CALL`, `SET`, …) all prompt. The guard covers editor runs, staged grid-edit commits, immediate cell edits, row insertion and notebook cells, and stacks with the destructive-query guard rather than replacing it.
+
 ## Connection Groups
 
 Connections can be organized into collapsible folder groups, and since v0.15.0 groups can be **nested** to arbitrary depth — folders inside folders. Right-click on the connection list background and select **New Group**, or hover a group header and click the **+** button to create a subfolder inline.

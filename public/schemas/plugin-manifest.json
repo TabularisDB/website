@@ -5,7 +5,6 @@
   "description": "Schema for the manifest.json file required by every Tabularis database driver plugin.",
   "type": "object",
   "required": [
-    "id",
     "name",
     "version",
     "executable",
@@ -17,7 +16,7 @@
     "id": {
       "type": "string",
       "pattern": "^[a-z0-9-]+$",
-      "description": "Unique driver identifier (lowercase letters, digits, hyphens). Must match the plugin folder name."
+      "description": "Legacy driver identifier (lowercase letters, digits, hyphens). Optional — when absent, identity falls back to name. Omit in new .tabularium manifests."
     },
     "name": {
       "type": "string",
