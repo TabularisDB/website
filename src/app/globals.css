@@ -1522,6 +1522,9 @@ a.badge.version:hover {
 .dl-modal {
   width: 100%;
   max-width: 480px;
+  max-height: calc(100dvh - 3rem);
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
   background: #0d0f11;
   border: 1px solid var(--border-bright);
   border-radius: 14px;
@@ -1575,10 +1578,53 @@ a.badge.version:hover {
 }
 
 .dl-modal-body {
-  padding: 1rem 1.25rem;
+  padding: 0.5rem 1.25rem 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(91, 142, 255, 0.65) rgba(255, 255, 255, 0.035);
+  /* Local gradients uncover the soft shadows only while there is more
+     content in that direction, giving the scroll area a natural edge. */
+  background:
+    linear-gradient(#0d0f11 30%, transparent) center top,
+    linear-gradient(transparent, #0d0f11 70%) center bottom,
+    radial-gradient(farthest-side at 50% 0, rgba(59, 130, 246, 0.2), transparent) center top,
+    radial-gradient(farthest-side at 50% 100%, rgba(59, 130, 246, 0.16), transparent) center bottom;
+  background-repeat: no-repeat;
+  background-size: 100% 28px, 100% 28px, 100% 12px, 100% 12px;
+  background-attachment: local, local, scroll, scroll;
+}
+
+.dl-modal-body::-webkit-scrollbar {
+  width: 9px;
+}
+
+.dl-modal-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.dl-modal-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(91, 142, 255, 0.72), rgba(59, 130, 246, 0.45));
+  border: 2px solid #0d0f11;
+  border-radius: 999px;
+}
+
+.dl-modal-body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(112, 158, 255, 0.9), rgba(59, 130, 246, 0.68));
+}
+
+.dl-modal-channel {
+  padding: 1rem 1.25rem 0.5rem;
+  background: #0d0f11;
+}
+
+.dl-modal-channel .dl-channel--compact {
+  margin-bottom: 0;
 }
 
 .dl-channel {

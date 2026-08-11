@@ -78,8 +78,11 @@ export function DownloadModal({ platform, onClose }: DownloadModalProps) {
             </button>
           </div>
 
-          <div className="dl-modal-body">
+          <div className="dl-modal-channel">
             <DownloadChannelPicker channel={channel} onChange={setChannel} compact />
+          </div>
+
+          <div className="dl-modal-body">
             {config.options.map((opt) =>
               opt.kind === "command" ? (
                 <div key={opt.label} className="dl-option dl-option--command">
