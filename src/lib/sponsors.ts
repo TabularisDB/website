@@ -24,6 +24,7 @@ export interface Sponsor {
   modalDescription?: string;
   features?: SponsorFeature[];
   offer?: SponsorOffer;
+  kind?: "sponsor" | "supporter";
 }
 
 export const SPONSORS: Sponsor[] = [
@@ -74,6 +75,26 @@ export const SPONSORS: Sponsor[] = [
       description:
         "Kilo Code is free to use for all Tabularis developers. Install it in your IDE, bring your own API keys at zero markup, and start shipping faster today.",
     },
+  },
+  {
+    id: "openai",
+    name: "OpenAI",
+    tagline: "Supporting Tabularis through the Codex for Open Source program.",
+    url: "https://openai.com/codex/",
+    accentColor: "#10A37F",
+    highlightColor: "#10A37F",
+    ctaTextColor: "#ffffff",
+    logoImg: "/img/sponsors/openai.svg",
+    logoImgCompact: "/img/sponsors/openai_compact.svg",
+    logoImgBg: "#ffffff",
+    kind: "supporter",
+    modalDescription:
+      "OpenAI supports Tabularis through Codex for Open Source, providing Codex access to help maintain and improve the project.",
+    features: [
+      { icon: "⌨️", text: "Codex access for open-source maintenance" },
+      { icon: "🔍", text: "Support for issue investigation, implementation, and review" },
+      { icon: "❤️", text: "Helping keep Tabularis free and open source" },
+    ],
   },
   {
     id: "digitalocean",

@@ -202,9 +202,9 @@ const navGroups: NavGroup[] = [
             description: "Talk to users, contributors, and maintainers.",
           },
           {
-            label: "Sponsors",
+            label: "Sponsors & supporters",
             href: "/sponsors",
-            description: "The companies that help keep Tabularis free and independent.",
+            description: "The organizations that help keep Tabularis free and independent.",
           },
         ],
       },

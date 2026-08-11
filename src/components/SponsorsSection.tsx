@@ -6,11 +6,11 @@ import { SPONSORS, type Sponsor } from "@/lib/sponsors";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-export function withUtm(url: string): string {
+export function withUtm(url: string, campaign = "sponsor"): string {
   const u = new URL(url);
   u.searchParams.set("utm_source", "tabularis");
   u.searchParams.set("utm_medium", "referral");
-  u.searchParams.set("utm_campaign", "sponsor");
+  u.searchParams.set("utm_campaign", campaign);
   return u.toString();
 }
 
@@ -174,7 +174,7 @@ export function SponsorModal({ sponsor, onClose }: { sponsor: Sponsor | null; on
               <SponsorLogo sponsor={sponsor} size={36} imgOverride={sponsor.logoImgCompact} />
               <div>
                 <div className="sponsor-modal-name">{sponsor.name}</div>
-                <a href={withUtm(sponsor.url)} target="_blank" rel="noopener noreferrer" className="sponsor-modal-url">
+                <a href={withUtm(sponsor.url, sponsor.kind)} target="_blank" rel="noopener noreferrer" className="sponsor-modal-url">
                   {sponsor.url.replace(/^https?:\/\//, "")}
                   <IconExternalLink size={10} />
                 </a>
@@ -191,7 +191,7 @@ export function SponsorModal({ sponsor, onClose }: { sponsor: Sponsor | null; on
 
           <div className="sponsor-modal-footer">
             <a
-              href={withUtm(sponsor.url)}
+              href={withUtm(sponsor.url, sponsor.kind)}
               target="_blank"
               rel="noopener noreferrer"
               className="sponsor-modal-cta"
@@ -222,7 +222,7 @@ export function SponsorCard({ sponsor, onLearnMore, priority }: { sponsor: Spons
           <SponsorLogo sponsor={sponsor} size={100} priority={priority} />
         </div>
         <a
-          href={withUtm(sponsor.url)}
+          href={withUtm(sponsor.url, sponsor.kind)}
           target="_blank"
           rel="noopener noreferrer"
           className="sponsor-external-link"
@@ -234,7 +234,7 @@ export function SponsorCard({ sponsor, onLearnMore, priority }: { sponsor: Spons
 
       <div className="sponsor-card-body">
         <h3 className="sponsor-name">
-          <a href={withUtm(sponsor.url)} target="_blank" rel="noopener noreferrer">
+          <a href={withUtm(sponsor.url, sponsor.kind)} target="_blank" rel="noopener noreferrer">
             {sponsor.name}
           </a>
         </h3>
@@ -442,10 +442,10 @@ export function SponsorsMarquee() {
 export function SponsorsSection() {
   return (
     <section className="section" id="sponsors">
-      <h2>Sponsors</h2>
+      <h2>Sponsors and supporters</h2>
       <p style={{ color: "var(--text-muted)", marginBottom: "2.5rem" }}>
-        These companies support Tabularis development. Thank you for keeping
-        the project alive and free.
+        These organizations support Tabularis development. Thank you for
+        keeping the project alive and free.
       </p>
 
       <SponsorsMarquee />

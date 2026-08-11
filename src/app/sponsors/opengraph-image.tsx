@@ -1,13 +1,13 @@
 import { OG_SIZE, OG_CONTENT_TYPE, renderSimpleOgImage } from "@/lib/ogImageSimple";
 
 export const dynamic = "force-static";
-export const alt = "Tabularis Sponsors";
+export const alt = "Tabularis sponsors and supporters";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
 export default async function Image() {
   return renderSimpleOgImage({
-    kicker: "Sponsors",
+    kicker: "Sponsors & supporters",
     title: "Support open-source database tooling",
   });
 }
