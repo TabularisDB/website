@@ -84,8 +84,8 @@ export const SPONSORS: Sponsor[] = [
     accentColor: "#10A37F",
     highlightColor: "#10A37F",
     ctaTextColor: "#ffffff",
-    logoImg: "/img/sponsors/openai.svg",
-    logoImgCompact: "/img/sponsors/openai_compact.svg",
+    logoImg: "/img/sponsors/openai.png",
+    logoImgCompact: "/img/sponsors/openai_compact.png",
     logoImgBg: "#ffffff",
     kind: "supporter",
     modalDescription:
