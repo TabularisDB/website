@@ -1,5 +1,5 @@
 ---
-title: "We Executed One SQL Script Across Multiple Database Connections"
+title: "We Accidentally Ran One SQL Script Across Multiple Database Connections"
 date: "2026-08-12T10:00:00"
 authors: ["debba"]
 tags: ["databases", "sql", "mysql", "postgresql", "connection-pooling", "engineering", "deep-dive"]
@@ -17,7 +17,7 @@ og:
     - '> COMMIT                    #42'
 ---
 
-# We Executed One SQL Script Across Multiple Database Connections
+# We Accidentally Ran One SQL Script Across Multiple Database Connections
 
 The import was supposed to create 144 child rows, eight for each of 18 parents. It created 83.
 
