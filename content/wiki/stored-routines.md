@@ -40,7 +40,7 @@ The definition is fetched directly from the database catalog, so it always refle
 
 ## Running a Routine
 
-Right-click a routine → **Run**, or trigger it from the [Quick Navigator](/wiki/quick-navigator). A **Run Routine** modal collects one input per `IN`/`INOUT` parameter:
+Right-click a routine → **Run**, or trigger it from the [Command Palette](/wiki/quick-navigator). A **Run Routine** modal collects one input per `IN`/`INOUT` parameter:
 
 - A **NULL** checkbox to pass `NULL` explicitly.
 - A **raw value** toggle — on by default for numeric types — that controls whether the value is inlined verbatim or quoted as a literal.

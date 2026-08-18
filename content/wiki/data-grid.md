@@ -140,6 +140,19 @@ Since v0.18.0 you can also select whole columns DBeaver-style: `Cmd/Ctrl + click
 
 `Shift + click` a second cell to select the rectangle between it and the currently focused cell. The range is highlighted, and the context menu offers **Copy Range (R×C)** to copy exactly those cells. A plain click moves the anchor and clears the range.
 
+## Pasting Data
+
+Since v0.20.0 the grid also supports spreadsheet-style paste with `Cmd/Ctrl + V` (or **Paste** in the cell context menu). Pasted values are staged as **pending changes** through the same flow as inline editing — they never go straight to the database, and you can review, apply, or roll them back before anything is written.
+
+- **Paste anchor** — in priority order: the top-left of a cell range selection, the right-clicked cell, the top of a row selection, or the focused cell.
+- **Parsing** — tab-separated cells win (the spreadsheet clipboard convention). Multi-line text without tabs is parsed as CSV with double-quote escaping, preferring your configured copy delimiter, so the grid's own copy formats round-trip. A single line without tabs is always one value — `hello, world` lands in one cell.
+- **Header detection** — a leading header row is dropped only when it matches the grid's column names positionally from the paste anchor, so the "export column names" option round-trips without swallowing external data that merely mentions a column name.
+- **Fill** — a single copied value fills the whole selected range or row selection.
+- **Bounds** — the pasted matrix clips at the grid edges (rows are not auto-created; add pending-insertion rows first). Alias and computed result columns are skipped under the same guard as inline editing, and existing rows must be identifiable — in a keyless grid only pending-insertion rows accept a paste.
+- Pasting a cell's original value back clears its pending change, just like typing it would.
+
+Known limitations: values containing the copy delimiter don't survive a copy→paste round-trip (the grid's CSV copy output doesn't quote them yet), Excel cells containing quoted newlines are split on the newline, and a copied `NULL` pastes as the literal string `null` rather than SQL NULL.
+
 ## Row Editor Sidebar
 
 Since v0.17.0 the row editor is a **right sidebar** — a layout sibling of the Explorer on the left, not an overlay covering your results. Toggle it with `Cmd/Ctrl + Shift + B` or open it from a row's context menu.
@@ -226,6 +239,12 @@ The same diff toggles are available in the **row-editor sidebar** for long field
 
 Large binary columns (BLOB, `bytea`, etc.) are truncated in the grid to avoid loading multi-megabyte values into memory. The maximum bytes loaded per cell is controlled by `maxBlobSize` in `config.json` (default: 1 MB). Values exceeding this limit are shown as a truncated hex preview with the full size in bytes.
 
+### Hex preview and editing
+
+Since v0.20.0, small generic binary values — fixed-width identifiers like `BINARY(16)`, short `bytea` payloads — render in the grid as a compact `0x…` hexadecimal string instead of opaque transport metadata. Up to 64 bytes are shown; longer values get an ellipsis. Recognized file MIME types keep showing type and size metadata.
+
+In the row-editor sidebar, any complete BLOB up to 10 KiB opens in a dedicated **hex editor**: bytes displayed as uppercase space-separated pairs, whitespace and an optional `0x` prefix accepted on input, odd-length or non-hex input rejected, and invalid edits reverted on blur. Valid edits commit on blur or `Cmd/Ctrl + Enter` and preserve the value's original MIME type. BLOBs above 10 KiB, truncated values, and file references keep the existing download/file editor.
+
 ## Foreign Key Navigation
 
 When the active result is a table with foreign keys, FK cells get a click-to-navigate affordance:
@@ -274,6 +293,7 @@ The grid displays `NULL` values with a distinct grey `NULL` badge to differentia
 | Confirm edit | `Enter` |
 | Cancel edit | `Escape` |
 | Copy selection (row or cell, depending on focus) | `Ctrl/Cmd + C` |
+| Paste at the selection (staged as pending changes) | `Ctrl/Cmd + V` |
 | Move between cells | Arrow keys |
 | Next page | `Ctrl/Cmd + Right` |
 | Previous page | `Ctrl/Cmd + Left` |

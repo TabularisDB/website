@@ -17,7 +17,8 @@ Tabularis ships with a set of keyboard shortcuts for common actions across navig
 
 | Action | macOS | Windows / Linux |
 | :--- | :--- | :--- |
-| Quick Navigator (search tables, views, routines, triggers) | `⌘+P` | `Ctrl+P` |
+| Command palette: object search (tables, views, routines, triggers) | `⌘+P` | `Ctrl+P` |
+| Command palette: actions | `⌘+Shift+A` | `Ctrl+Shift+A` |
 | Focus the sidebar table filter | `⌘+Shift+F` | `Ctrl+Shift+F` |
 | Toggle sidebar | `⌘+B` | `Ctrl+B` |
 | Toggle row editor sidebar (right) | `⌘+Shift+B` | `Ctrl+Shift+B` |
@@ -69,6 +70,7 @@ Tabularis ships with a set of keyboard shortcuts for common actions across navig
 | Edit the focused cell | `Enter` or `F2` | `Enter` or `F2` |
 | Select all loaded rows | `⌘+A` | `Ctrl+A` |
 | Copy the current selection | `⌘+C` | `Ctrl+C` |
+| Paste at the selection (staged as pending changes) | `⌘+V` | `Ctrl+V` |
 
 Cell navigation is bound to the grid you last interacted with, so a notebook with one grid per SQL cell does not move them all at once. Keys are left alone inside text inputs, open cell editors, the foreign-key and BLOB buttons, and the sortable column headers. See [Data Grid → Keyboard Navigation](/wiki/data-grid#keyboard-navigation).
 

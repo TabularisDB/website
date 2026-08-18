@@ -38,6 +38,8 @@ Open **Settings → Info** and look for the **Updates** section. Click **Check f
 
 When Tabularis detects it was installed via a system package manager, the built-in updater is disabled and the Updates panel shows a notice instead. Updates must be performed through the package manager itself.
 
+Since v0.20.0, distribution maintainers can declare this at build time: setting `PACKAGE_MANAGER_SRC` and `PACKAGE_MANAGER_NAME` when building marks the installation as package-managed — automatic update checks are skipped, the built-in installer is disabled, and the configured package manager name is shown in **Settings → Info**. This joins the existing Snap and Flatpak auto-detection.
+
 ### AUR (Arch Linux)
 
 ```bash

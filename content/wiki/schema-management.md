@@ -56,7 +56,7 @@ Right-click any table in the sidebar and choose **Generate SQL** to open a modal
 
 Each tab has a copy button, and the **Run in Console** button opens the generated statement in a new editor tab. The `UPDATE` template uses `:named` parameters instead of bare `?` placeholders, so it binds correctly the moment it lands in the query editor.
 
-The modal is also reachable from the [Quick Navigator](/wiki/quick-navigator)'s hover actions.
+The modal is also reachable from the [Command Palette](/wiki/quick-navigator)'s hover actions.
 
 ## ER Diagrams
 
