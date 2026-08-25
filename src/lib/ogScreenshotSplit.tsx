@@ -275,7 +275,7 @@ export async function renderScreenshotSplitOgImage({
             style={{
               display: "flex",
               width: "620px",
-              height: "520px",
+              maxHeight: "520px",
               overflow: "hidden",
               alignItems: "center",
               ...(frameless
