@@ -21,6 +21,10 @@ Double-click any table or view in the sidebar. The data grid opens in a new tab,
 
 Data is fetched in pages. The default page size is **500 rows**, configurable via `resultPageSize` in [Configuration](/wiki/configuration). Navigation controls at the bottom of the grid let you move forward and backward through pages.
 
+Since v0.21.0 the pagination bar also has a **rows-per-page selector** that overrides the global default for the current tab only: presets from 50 to 5000 (the global value is marked as *default*), a custom value, and **All**, which turns pagination off for that tab and fetches every row. The override is saved with the tab and survives a restart; other tabs and new tabs keep the global default. Changing the page size recomputes the page number so the first visible row stays in view.
+
+![The rows-per-page selector open in the results pagination bar, with presets from 50 to 5000, the global value marked as default, an All option and a Custom input](/img/tabularis-page-size-selector.png)
+
 The total row count is shown alongside the pagination controls, fetched via a `COUNT(*)` query when you open the table.
 
 ### Column Resizing
@@ -197,6 +201,8 @@ Click the **Export** button in the toolbar and choose **CSV**. Tabularis streams
 Choose **JSON** from the export menu. The full result set is written as a JSON array of objects, with column names as keys. Same streaming and cancellation support as CSV.
 
 > Exports are always performed on the **complete result set** — all rows that match the current filter, not just the visible page.
+>
+> The exception is a **multi-statement result** (Run All / Execute Selection): since v0.21.0 the active result tab exports the rows already loaded rather than re-running the script on a fresh connection, so scripts that build temp tables can be saved. When only part of the result was loaded, the progress modal says how many of the total rows were exported; page through the result or raise the tab's rows-per-page (or pick **All**) before exporting if you need more.
 
 ## JSON & Long Text Cells
 

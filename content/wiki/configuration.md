@@ -20,6 +20,7 @@ Open the Settings panel from:
 
 - **Language Support**: Native translations for **English**, **Italian**, **Spanish**, **Chinese (Simplified)**, **French**, **German**, **Japanese**, **Russian**, **Tagalog** (added in v0.15.0), **Korean** (added in v0.16.0), and **Brazilian Portuguese** (added in v0.17.0). The app defaults to your OS locale — Filipino (`fil`) systems map to Tagalog automatically, and region-coded locales like `pt-BR` resolve correctly — and changing the language applies immediately. With eleven languages the picker is now a searchable select showing each language's native name.
 - **Display Timezone**: A searchable picker of IANA timezones (with current UTC-offset labels) under **Settings → Localization**, defaulting to **Auto** (your OS zone). The selected zone drives every UI timestamp — AI activity log, query history, favorites — plus CSV / JSON / notebook exports and their default filenames. Query-history date grouping (today / yesterday / older) is classified in the same zone, so headers and per-row times always agree.
+- **Delay safety confirmations** (since v0.21.0): off by default. When enabled, the confirm button of the destructive-query and production-write dialogs stays disabled for five seconds so the warning is actually read. Stored as `safetyConfirmationDelayEnabled` in `config.json`.
 - **Update Checks**: Enable or disable automatic update checks on startup. Checks query the GitHub Releases API — no version data is sent, only a GET request is made.
 
 ## Storage Paths & config.json
@@ -56,7 +57,8 @@ Any key omitted from the file falls back to its default value. You do not need a
 | `theme` | `string` | `null` | Active UI theme ID. See [Themes](/wiki/themes). |
 | `language` | `string` | `"auto"` | Preferred locale: `en`, `it`, `es`, `zh`, `fr`, `de`, `ja`, `ru`, `tl`, `ko`, `pt-BR`, or `auto` (follows OS; `fil` falls back to `tl`). |
 | `displayTimezone` | `string` | `"auto"` | IANA timezone (e.g. `"Asia/Tokyo"`) used for UI timestamps and exports, or `auto` (OS zone). Configurable from **Settings → Localization → Timezone**. |
-| `resultPageSize` | `number` | `500` | Rows fetched per pagination request in the Data Grid. |
+| `resultPageSize` | `number` | `500` | Default rows fetched per pagination request in the Data Grid. Since v0.21.0 the pagination bar's rows-per-page selector can override this for a single tab. |
+| `safetyConfirmationDelayEnabled` | `boolean` | `false` | Adds a five-second countdown to destructive-query and production-write confirmations (Settings → General → Delay safety confirmations). |
 | `fontFamily` | `string` | `"System"` | Editor font. Must be installed on the system. |
 | `fontSize` | `number` | `14` | Editor font size in pixels. |
 | `aiEnabled` | `boolean` | `false` | Master toggle for all AI features. |

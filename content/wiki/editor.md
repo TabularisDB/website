@@ -72,6 +72,12 @@ Since v0.18.0 tabs can be dragged along the tab bar to reorder them. Console, ta
 
 <video src="/videos/posts/tabularis-reorder-tabs.mp4" poster="/videos/posts/tabularis-reorder-tabs.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
+## Statement Folding
+
+Since v0.21.0 every multiline statement in the main query editor gets its own fold range in the Monaco gutter, computed with the same dialect-aware splitter that powers run-at-cursor, so dollar-quoted bodies and custom-`DELIMITER` blocks fold as one unit. Fold controls stay visible instead of appearing only on hover. Hovering a collapsed statement shows a syntax-highlighted preview of its content; you can move into the preview and scroll it without expanding the fold.
+
+<video src="/videos/posts/tabularis-sql-folding.mp4" poster="/videos/posts/tabularis-sql-folding.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
 ## SQL Formatting
 
 <video src="/videos/posts/tabularis-sql-format.mp4" poster="/videos/posts/tabularis-sql-format.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
@@ -138,7 +144,7 @@ If you highlight a text selection in the editor and run it, Tabularis splits the
 
 ## Multi-Result Panel
 
-When multiple queries are executed (via Run All or Execute Selection), results are displayed in a **results panel** at the bottom of the editor. Each query gets its own result with independent pagination, error handling, and loading state.
+When multiple queries are executed (via Run All or Execute Selection), results are displayed in a **results panel** at the bottom of the editor. Each query gets its own result with independent pagination, error handling, and loading state. The rows-per-page selector in the pagination bar applies to the whole tab (see [Data Grid → Pagination](/wiki/data-grid#pagination)), and query errors are selectable with a **Copy** button.
 
 The panel supports two view modes — **Tab view** (default) and **Stacked view** — switchable via the toggle button in the top-right corner of the results bar.
 
@@ -202,7 +208,7 @@ Parameter detection skips **string literals and comments** (since v0.17.0): `WHE
 
 ### Destructive Query Confirmation
 
-Both the SQL editor and notebook cells guard against the queries that are easiest to regret. Before it runs a `DELETE` or `UPDATE` with **no `WHERE` clause**, or a `DROP` or `TRUNCATE`, Tabularis pops a confirmation dialog with kind-specific copy and a read-only preview of the exact statement it flagged. The confirm button stays disabled for a **five-second countdown** so the warning is actually read.
+Both the SQL editor and notebook cells guard against the queries that are easiest to regret. Before it runs a `DELETE` or `UPDATE` with **no `WHERE` clause**, or a `DROP` or `TRUNCATE`, Tabularis pops a confirmation dialog with kind-specific copy and a read-only preview of the exact statement it flagged. Since v0.21.0 the five-second countdown on the confirm button is **opt-in**: enable **Delay safety confirmations** in **Settings → General** to bring it back, and it then applies to production-write confirmations too. On a [production connection](/wiki/connections#production-write-guard) only the production warning is shown; the standard destructive-query dialog is suppressed because the production one already covers it.
 
 The detection is not a naïve substring match — it ignores comments and string literals (including backslash-escaped quotes), understands data-modifying CTEs, and handles multi-statement batches.
 

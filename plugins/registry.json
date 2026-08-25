@@ -115,21 +115,33 @@
     },
     {
       "id": "dynamodb",
-      "name": "DynamoDB",
+      "name": "dynamodb",
       "description": "Tabularis driver plugin for AWS DynamoDB",
-      "author": "fuleinist <https://github.com/fuleinist>",
+      "author": "fuleinist <https://github.com/TabularisDB/tabularis-dynamodb-plugin>",
       "homepage": "https://github.com/TabularisDB/tabularis-dynamodb-plugin",
-      "latest_version": "0.1.5",
+      "registry_url": "https://registry.tabularis.dev/plugins/dynamodb",
+      "latest_version": "0.1.6",
       "releases": [
         {
-          "version": "0.1.5",
-          "min_tabularis_version": "0.15.0",
+          "version": "0.1.6",
+          "min_tabularis_version": null,
           "assets": {
-            "linux-x64": "https://github.com/TabularisDB/tabularis-dynamodb-plugin/releases/download/v0.1.5/dynamodb-plugin-linux-x64.zip",
-            "linux-arm64": "https://github.com/TabularisDB/tabularis-dynamodb-plugin/releases/download/v0.1.5/dynamodb-plugin-linux-arm64.zip",
-            "darwin-x64": "https://github.com/TabularisDB/tabularis-dynamodb-plugin/releases/download/v0.1.5/dynamodb-plugin-darwin-x64.zip",
-            "darwin-arm64": "https://github.com/TabularisDB/tabularis-dynamodb-plugin/releases/download/v0.1.5/dynamodb-plugin-darwin-arm64.zip",
-            "win-x64": "https://github.com/TabularisDB/tabularis-dynamodb-plugin/releases/download/v0.1.5/dynamodb-plugin-win-x64.zip"
+            "darwin-arm64": "https://registry.tabularis.dev/api/plugins/dynamodb/releases/0.1.6?os=darwin&arch=arm64&redirect=1",
+            "darwin-x64": "https://registry.tabularis.dev/api/plugins/dynamodb/releases/0.1.6?os=darwin&arch=x64&redirect=1",
+            "linux-arm64": "https://registry.tabularis.dev/api/plugins/dynamodb/releases/0.1.6?os=linux&arch=arm64&redirect=1",
+            "linux-x64": "https://registry.tabularis.dev/api/plugins/dynamodb/releases/0.1.6?os=linux&arch=x64&redirect=1",
+            "win-x64": "https://registry.tabularis.dev/api/plugins/dynamodb/releases/0.1.6?os=win&arch=x64&redirect=1"
+          }
+        },
+        {
+          "version": "0.1.5",
+          "min_tabularis_version": null,
+          "assets": {
+            "darwin-arm64": "https://registry.tabularis.dev/api/plugins/dynamodb/releases/0.1.5?os=darwin&arch=arm64&redirect=1",
+            "darwin-x64": "https://registry.tabularis.dev/api/plugins/dynamodb/releases/0.1.5?os=darwin&arch=x64&redirect=1",
+            "linux-arm64": "https://registry.tabularis.dev/api/plugins/dynamodb/releases/0.1.5?os=linux&arch=arm64&redirect=1",
+            "linux-x64": "https://registry.tabularis.dev/api/plugins/dynamodb/releases/0.1.5?os=linux&arch=x64&redirect=1",
+            "win-x64": "https://registry.tabularis.dev/api/plugins/dynamodb/releases/0.1.5?os=win&arch=x64&redirect=1"
           }
         }
       ]
@@ -163,6 +175,38 @@
             "linux-arm64": "https://registry.tabularis.dev/api/plugins/mongodb-atlas/releases/0.1.0?os=linux&arch=arm64&redirect=1",
             "linux-x64": "https://registry.tabularis.dev/api/plugins/mongodb-atlas/releases/0.1.0?os=linux&arch=x64&redirect=1",
             "win-x64": "https://registry.tabularis.dev/api/plugins/mongodb-atlas/releases/0.1.0?os=win&arch=x64&redirect=1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "mongodb",
+      "name": "mongodb",
+      "description": "MongoDB (6.0+) driver for Tabularis. Browse databases and collections, infer schemas by sampling documents, run native queries (find/aggregate/CRUD via db.coll.op(...)), manage indexes, and edit documents.",
+      "author": "danielnuld <https://github.com/danielnuld/tabularis-mongodb-plugin>",
+      "homepage": "https://github.com/danielnuld/tabularis-mongodb-plugin",
+      "registry_url": "https://registry.tabularis.dev/plugins/mongodb",
+      "latest_version": "0.1.1",
+      "releases": [
+        {
+          "version": "0.1.1",
+          "min_tabularis_version": "0.9.13",
+          "assets": {
+            "darwin-arm64": "https://registry.tabularis.dev/api/plugins/mongodb/releases/0.1.1?os=darwin&arch=arm64&redirect=1",
+            "darwin-x64": "https://registry.tabularis.dev/api/plugins/mongodb/releases/0.1.1?os=darwin&arch=x64&redirect=1",
+            "linux-arm64": "https://registry.tabularis.dev/api/plugins/mongodb/releases/0.1.1?os=linux&arch=arm64&redirect=1",
+            "linux-x64": "https://registry.tabularis.dev/api/plugins/mongodb/releases/0.1.1?os=linux&arch=x64&redirect=1",
+            "win-x64": "https://registry.tabularis.dev/api/plugins/mongodb/releases/0.1.1?os=win&arch=x64&redirect=1"
+          }
+        },
+        {
+          "version": "0.1.0",
+          "min_tabularis_version": null,
+          "assets": {
+            "darwin-arm64": "https://registry.tabularis.dev/api/plugins/mongodb/releases/0.1.0?os=darwin&arch=arm64&redirect=1",
+            "linux-arm64": "https://registry.tabularis.dev/api/plugins/mongodb/releases/0.1.0?os=linux&arch=arm64&redirect=1",
+            "linux-x64": "https://registry.tabularis.dev/api/plugins/mongodb/releases/0.1.0?os=linux&arch=x64&redirect=1",
+            "win-x64": "https://registry.tabularis.dev/api/plugins/mongodb/releases/0.1.0?os=win&arch=x64&redirect=1"
           }
         }
       ]
@@ -220,46 +264,36 @@
       ]
     },
     {
-      "id": "mongodb",
-      "name": "mongodb",
-      "description": "MongoDB (6.0+) driver for Tabularis. Browse databases and collections, infer schemas by sampling documents, run native queries (find/aggregate/CRUD via db.coll.op(...)), manage indexes, and edit documents.",
-      "author": "danielnuld <https://github.com/danielnuld/tabularis-mongodb-plugin>",
-      "homepage": "https://github.com/danielnuld/tabularis-mongodb-plugin",
-      "registry_url": "https://registry.tabularis.dev/plugins/mongodb",
-      "latest_version": "0.1.1",
-      "releases": [
-        {
-          "version": "0.1.1",
-          "min_tabularis_version": null,
-          "assets": {
-            "darwin-arm64": "https://registry.tabularis.dev/api/plugins/mongodb/releases/0.1.1?os=darwin&arch=arm64&redirect=1",
-            "darwin-x64": "https://registry.tabularis.dev/api/plugins/mongodb/releases/0.1.1?os=darwin&arch=x64&redirect=1",
-            "linux-arm64": "https://registry.tabularis.dev/api/plugins/mongodb/releases/0.1.1?os=linux&arch=arm64&redirect=1",
-            "linux-x64": "https://registry.tabularis.dev/api/plugins/mongodb/releases/0.1.1?os=linux&arch=x64&redirect=1",
-            "win-x64": "https://registry.tabularis.dev/api/plugins/mongodb/releases/0.1.1?os=win&arch=x64&redirect=1"
-          }
-        },
-        {
-          "version": "0.1.0",
-          "min_tabularis_version": null,
-          "assets": {
-            "darwin-arm64": "https://registry.tabularis.dev/api/plugins/mongodb/releases/0.1.0?os=darwin&arch=arm64&redirect=1",
-            "linux-arm64": "https://registry.tabularis.dev/api/plugins/mongodb/releases/0.1.0?os=linux&arch=arm64&redirect=1",
-            "linux-x64": "https://registry.tabularis.dev/api/plugins/mongodb/releases/0.1.0?os=linux&arch=x64&redirect=1",
-            "win-x64": "https://registry.tabularis.dev/api/plugins/mongodb/releases/0.1.0?os=win&arch=x64&redirect=1"
-          }
-        }
-      ]
-    },
-    {
       "id": "postgresql",
       "name": "postgresql",
-      "description": "PostgreSQL plugin driver for Tabularis (parity implementation)",
+      "description": "Full-featured PostgreSQL driver for Tabularis: browse schemas, tables, views, routines, and triggers; run queries with EXPLAIN plans; edit rows with type-aware binding for enums, JSON, arrays, UUIDs; generate DDL for tables, columns, indexes, and foreign keys.",
       "author": "aesslinger <https://github.com/TabularisDB/tabularis-postgresql-plugin>",
       "homepage": "https://github.com/TabularisDB/tabularis-postgresql-plugin",
       "registry_url": "https://registry.tabularis.dev/plugins/postgresql",
-      "latest_version": "1.0.0-beta.5",
+      "latest_version": "1.0.0-beta.8",
       "releases": [
+        {
+          "version": "1.0.0-beta.8",
+          "min_tabularis_version": null,
+          "assets": {
+            "darwin-arm64": "https://registry.tabularis.dev/api/plugins/postgresql/releases/1.0.0-beta.8?os=darwin&arch=arm64&redirect=1",
+            "darwin-x64": "https://registry.tabularis.dev/api/plugins/postgresql/releases/1.0.0-beta.8?os=darwin&arch=x64&redirect=1",
+            "linux-arm64": "https://registry.tabularis.dev/api/plugins/postgresql/releases/1.0.0-beta.8?os=linux&arch=arm64&redirect=1",
+            "linux-x64": "https://registry.tabularis.dev/api/plugins/postgresql/releases/1.0.0-beta.8?os=linux&arch=x64&redirect=1",
+            "win-x64": "https://registry.tabularis.dev/api/plugins/postgresql/releases/1.0.0-beta.8?os=win&arch=x64&redirect=1"
+          }
+        },
+        {
+          "version": "1.0.0-beta.7",
+          "min_tabularis_version": "0.20.0",
+          "assets": {
+            "darwin-arm64": "https://registry.tabularis.dev/api/plugins/postgresql/releases/1.0.0-beta.7?os=darwin&arch=arm64&redirect=1",
+            "darwin-x64": "https://registry.tabularis.dev/api/plugins/postgresql/releases/1.0.0-beta.7?os=darwin&arch=x64&redirect=1",
+            "linux-arm64": "https://registry.tabularis.dev/api/plugins/postgresql/releases/1.0.0-beta.7?os=linux&arch=arm64&redirect=1",
+            "linux-x64": "https://registry.tabularis.dev/api/plugins/postgresql/releases/1.0.0-beta.7?os=linux&arch=x64&redirect=1",
+            "win-x64": "https://registry.tabularis.dev/api/plugins/postgresql/releases/1.0.0-beta.7?os=win&arch=x64&redirect=1"
+          }
+        },
         {
           "version": "1.0.0-beta.6",
           "min_tabularis_version": null,
@@ -307,28 +341,6 @@
       ]
     },
     {
-      "id": "duckdb",
-      "name": "duckdb",
-      "description": "DuckDB local database",
-      "author": "debba <https://github.com/TabularisDB/tabularis-duckdb-plugin>",
-      "homepage": "https://github.com/TabularisDB/tabularis-duckdb-plugin",
-      "registry_url": "https://registry.tabularis.dev/plugins/duckdb",
-      "latest_version": "0.2.1",
-      "releases": [
-        {
-          "version": "0.2.1",
-          "min_tabularis_version": null,
-          "assets": {
-            "darwin-arm64": "https://registry.tabularis.dev/api/plugins/duckdb/releases/0.2.1?os=darwin&arch=arm64&redirect=1",
-            "darwin-x64": "https://registry.tabularis.dev/api/plugins/duckdb/releases/0.2.1?os=darwin&arch=x64&redirect=1",
-            "linux-arm64": "https://registry.tabularis.dev/api/plugins/duckdb/releases/0.2.1?os=linux&arch=arm64&redirect=1",
-            "linux-x64": "https://registry.tabularis.dev/api/plugins/duckdb/releases/0.2.1?os=linux&arch=x64&redirect=1",
-            "win-x64": "https://registry.tabularis.dev/api/plugins/duckdb/releases/0.2.1?os=win&arch=x64&redirect=1"
-          }
-        }
-      ]
-    },
-    {
       "id": "google-sheets",
       "name": "google-sheets",
       "description": "Query Google Sheets spreadsheets as SQL tables. Each tab becomes a table, the first row defines column headers.",
@@ -351,23 +363,23 @@
       ]
     },
     {
-      "id": "clickhouse",
-      "name": "clickhouse",
-      "description": "ClickHouse columnar OLAP database driver",
-      "author": "debba <https://github.com/TabularisDB/tabularis-clickhouse-plugin>",
-      "homepage": "https://github.com/TabularisDB/tabularis-clickhouse-plugin",
-      "registry_url": "https://registry.tabularis.dev/plugins/clickhouse",
-      "latest_version": "0.2.0",
+      "id": "duckdb",
+      "name": "duckdb",
+      "description": "DuckDB local database",
+      "author": "debba <https://github.com/TabularisDB/tabularis-duckdb-plugin>",
+      "homepage": "https://github.com/TabularisDB/tabularis-duckdb-plugin",
+      "registry_url": "https://registry.tabularis.dev/plugins/duckdb",
+      "latest_version": "0.2.1",
       "releases": [
         {
-          "version": "0.2.0",
+          "version": "0.2.1",
           "min_tabularis_version": null,
           "assets": {
-            "darwin-arm64": "https://registry.tabularis.dev/api/plugins/clickhouse/releases/0.2.0?os=darwin&arch=arm64&redirect=1",
-            "darwin-x64": "https://registry.tabularis.dev/api/plugins/clickhouse/releases/0.2.0?os=darwin&arch=x64&redirect=1",
-            "linux-arm64": "https://registry.tabularis.dev/api/plugins/clickhouse/releases/0.2.0?os=linux&arch=arm64&redirect=1",
-            "linux-x64": "https://registry.tabularis.dev/api/plugins/clickhouse/releases/0.2.0?os=linux&arch=x64&redirect=1",
-            "win-x64": "https://registry.tabularis.dev/api/plugins/clickhouse/releases/0.2.0?os=win&arch=x64&redirect=1"
+            "darwin-arm64": "https://registry.tabularis.dev/api/plugins/duckdb/releases/0.2.1?os=darwin&arch=arm64&redirect=1",
+            "darwin-x64": "https://registry.tabularis.dev/api/plugins/duckdb/releases/0.2.1?os=darwin&arch=x64&redirect=1",
+            "linux-arm64": "https://registry.tabularis.dev/api/plugins/duckdb/releases/0.2.1?os=linux&arch=arm64&redirect=1",
+            "linux-x64": "https://registry.tabularis.dev/api/plugins/duckdb/releases/0.2.1?os=linux&arch=x64&redirect=1",
+            "win-x64": "https://registry.tabularis.dev/api/plugins/duckdb/releases/0.2.1?os=win&arch=x64&redirect=1"
           }
         }
       ]
@@ -401,6 +413,28 @@
             "linux-arm64": "https://registry.tabularis.dev/api/plugins/db2/releases/0.0.2?os=linux&arch=arm64&redirect=1",
             "linux-x64": "https://registry.tabularis.dev/api/plugins/db2/releases/0.0.2?os=linux&arch=x64&redirect=1",
             "win-x64": "https://registry.tabularis.dev/api/plugins/db2/releases/0.0.2?os=win&arch=x64&redirect=1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "clickhouse",
+      "name": "clickhouse",
+      "description": "ClickHouse columnar OLAP database driver",
+      "author": "debba <https://github.com/TabularisDB/tabularis-clickhouse-plugin>",
+      "homepage": "https://github.com/TabularisDB/tabularis-clickhouse-plugin",
+      "registry_url": "https://registry.tabularis.dev/plugins/clickhouse",
+      "latest_version": "0.2.0",
+      "releases": [
+        {
+          "version": "0.2.0",
+          "min_tabularis_version": null,
+          "assets": {
+            "darwin-arm64": "https://registry.tabularis.dev/api/plugins/clickhouse/releases/0.2.0?os=darwin&arch=arm64&redirect=1",
+            "darwin-x64": "https://registry.tabularis.dev/api/plugins/clickhouse/releases/0.2.0?os=darwin&arch=x64&redirect=1",
+            "linux-arm64": "https://registry.tabularis.dev/api/plugins/clickhouse/releases/0.2.0?os=linux&arch=arm64&redirect=1",
+            "linux-x64": "https://registry.tabularis.dev/api/plugins/clickhouse/releases/0.2.0?os=linux&arch=x64&redirect=1",
+            "win-x64": "https://registry.tabularis.dev/api/plugins/clickhouse/releases/0.2.0?os=win&arch=x64&redirect=1"
           }
         }
       ]

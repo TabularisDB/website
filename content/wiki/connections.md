@@ -56,6 +56,7 @@ When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`)
 | **Startup script** | No | SQL run on every new pooled connection (see [Startup Script](#startup-script) below). |
 | **Kubernetes** | No | Tunnels the connection through a managed `kubectl port-forward`. Mutually exclusive with SSH. See [Kubernetes Tunneling](/wiki/kubernetes-tunneling). |
 | **CA Certificate** | No | Path to a PEM bundle to trust for TLS (PostgreSQL only). See [TLS & CA Certificates](#tls--ca-certificates) below. |
+| **Client Certificate** / **Client Key** | No | PEM paths for mutual TLS (PostgreSQL only). Since v0.21.0 they are presented to servers that require client authentication. See [Client Certificates](#client-certificates-mtls) below. |
 | **Detect JSON in text columns** | No | Per-connection toggle: when enabled, plain `TEXT` / `VARCHAR` values that parse as JSON are routed through the JSON cell renderer in the data grid (chevron, viewer window, diff). The same flag also enables native array detection for `text[]` / `int[]` (PostgreSQL) and Firestore arrays. See [Data Grid → JSON & long text cells](/wiki/data-grid#json--long-text-cells). |
 
 *Not required for SQLite, which takes a file path instead.
@@ -80,6 +81,12 @@ The **SSL Mode** selector aligns with libpq semantics:
 | `require` | Force encryption, but **do not** require certificate validation. Use this with self-signed certificates (e.g., default AWS RDS without an explicit CA). |
 | `verify-ca` | Force encryption **and** validate that the server certificate is signed by a trusted CA (paste the CA bundle into the **CA Certificate** field). |
 | `verify-full` | Same as `verify-ca`, plus verify that the server hostname matches the certificate CN or SAN. Strictest mode; recommended for production. |
+
+### Client Certificates (mTLS)
+
+Servers that require client-side certificate authentication (Google Cloud SQL with mTLS enabled, or a private PKI) reject connections with `connection requires a valid client certificate`. Since v0.21.0, filling both **Client Certificate** and **Client Key** with PEM paths makes Tabularis present them during the TLS handshake in every SSL mode other than `disabled`. Connection pools are keyed by these paths as well, so editing the certificate never reuses a pool built without it.
+
+![PostgreSQL connection editor, SSL tab: SSL mode Verify Full with CA Certificate, Client Certificate and Client Key path fields](/img/tabularis-postgres-client-cert.png)
 
 ### Startup Script
 
@@ -220,7 +227,7 @@ Each connection can optionally declare itself **development**, **staging**, or *
 
 ### Production Write Guard
 
-On a production connection, any statement that isn't provably read-only asks for confirmation first, with a SQL preview and a per-connection "don't ask again" that lasts for the session. Detection is conservative: only `SELECT`, `SHOW`, `DESCRIBE`, `PRAGMA` and `EXPLAIN` of a `SELECT` count as read-only — data-modifying CTEs, `EXPLAIN ANALYZE` of a write (which executes the write on PostgreSQL) and unknown statement types (`CALL`, `SET`, …) all prompt. The guard covers editor runs, staged grid-edit commits, immediate cell edits, row insertion and notebook cells, and stacks with the destructive-query guard rather than replacing it.
+On a production connection, any statement that isn't provably read-only asks for confirmation first, with a SQL preview and a per-connection "don't ask again" that lasts for the session. Detection is conservative: only `SELECT`, `SHOW`, `DESCRIBE`, `PRAGMA` and `EXPLAIN` of a `SELECT` count as read-only — data-modifying CTEs, `EXPLAIN ANALYZE` of a write (which executes the write on PostgreSQL) and unknown statement types (`CALL`, `SET`, …) all prompt. The guard covers editor runs, staged grid-edit commits, immediate cell edits, row insertion, notebook cells and AI-generated queries. Since v0.21.0 it runs *before* the destructive-query guard and replaces it on production connections, so a `DELETE` without a `WHERE` shows one production warning instead of two dialogs. The optional five-second countdown (**Settings → General → Delay safety confirmations**, off by default) applies here too. The red production banner is shown on the connection editor only, not in Settings.
 
 ## Connection Groups
 
@@ -272,6 +279,8 @@ Since v0.15.0, the **Import** dropup next to *Add Connection* can also read save
 ![Import from App modal reviewing connections found in DBeaver, with per-connection action and target-group selectors](/img/tabularis-import-from-app.png)
 
 Nothing is merged blindly: a preview lists every connection found, flags duplicates against your existing set (keep, replace, or skip), and lets each new connection pick a target group — or create one on the fly — with defaults seeded from the source app's own folder structure.
+
+If TablePlus stores its data outside the default Application Support location, auto-discovery reports the source as unavailable; since v0.21.0 you can point the importer at the TablePlus `Data` directory (or a plist inside it) instead.
 
 The feature is marked **beta**: parser coverage across five apps and three platforms will keep improving, and the modal links directly to the [issue tracker](https://github.com/TabularisDB/tabularis/issues) for files that don't parse cleanly.
 
