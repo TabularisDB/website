@@ -427,11 +427,11 @@
       "id": "libsql",
       "name": "LibSQL / Turso",
       "target": "SQLite-family plugin",
-      "status": "claimed",
+      "status": "shipped",
       "tagline": "Extend SQLite workflows toward LibSQL and remote Turso-style databases.",
-      "description": "LibSQL sits close to SQLite but adds remote workflows and sync-oriented assumptions. Work is in progress in the tabularis-libsql-plugin repository — tests and additional maintainers are wanted.",
-      "stage": "In progress",
-      "nextStep": "Help out in the tabularis-libsql-plugin repo: contribute tests or step up as a maintainer.",
+      "description": "LibSQL sits close to SQLite but adds remote workflows and sync-oriented assumptions. The driver ships as a standalone plugin from the tabularis-libsql-plugin repository, covering local files and remote Turso-style databases.",
+      "stage": "Shipped",
+      "nextStep": "Install the LibSQL plugin and report issues or contribute improvements in the tabularis-libsql-plugin repository.",
       "difficulty": "Medium",
       "accent": "#14b8a6",
       "radar": {
@@ -440,32 +440,32 @@
         "scale": 0.82
       },
       "tags": [
+        "shipped",
         "sqlite-family",
         "turso",
-        "remote",
-        "features"
+        "remote"
       ],
       "capabilities": [
         {
           "label": "local",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "remote",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "auth",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "schema",
-          "state": "stretch"
+          "state": "ready"
         }
       ],
-      "signal": "Useful for developers who already use SQLite locally but deploy on LibSQL/Turso-like infrastructure. In active development — looking for tests and maintainers.",
+      "signal": "Shipped as a standalone driver plugin for SQLite-local and Turso-remote workflows.",
       "claimUrl": "https://github.com/TabularisDB/tabularis-libsql-plugin",
-      "sponsorUrl": "/sponsors"
+      "sponsorUrl": "/plugins"
     },
     {
       "id": "sql-anywhere",
