@@ -176,7 +176,7 @@ export const NIGHTLY_PLATFORM_CONFIG: Record<Platform, PlatformConfig> = {
   macos: {
     label: "macOS",
     options: available([
-      nightlyFile("Apple Silicon", "M1 / M2 / M3 / M4 / M5 (aarch64)", ".dmg", (name) =>
+      nightlyFile("Apple Silicon", "M1 / M2 / M3 / M4 / M5 / M6 (aarch64)", ".dmg", (name) =>
         name.endsWith("_aarch64.dmg"),
       ),
       nightlyFile("Intel", "x86_64", ".dmg", (name) => name.endsWith("_x64.dmg")),
