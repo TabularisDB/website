@@ -72,7 +72,6 @@ export const PLATFORM_CONFIG: Record<Platform, PlatformConfig> = {
         label: "Homebrew",
         desc: "Recommended — installs and auto-updates",
         command: [
-          "brew tap TabularisDB/tabularis",
           "brew install --cask tabularis",
         ],
       },
