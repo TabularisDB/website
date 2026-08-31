@@ -78,7 +78,7 @@ export const PLATFORM_CONFIG: Record<Platform, PlatformConfig> = {
       {
         kind: "file",
         label: "Apple Silicon",
-        desc: "M1 / M2 / M3 / M4 / M5 (aarch64)",
+        desc: "M1 / M2 / M3 / M4 / M5 / M6 (aarch64)",
         ext: ".dmg",
         url: `${BASE}/tabularis_${APP_VERSION}_aarch64.dmg`,
       },
