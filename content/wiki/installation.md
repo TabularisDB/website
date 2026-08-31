@@ -35,7 +35,6 @@ sudo dnf install webkit2gtk4.1-devel libsecret-devel
 ### Homebrew (recommended)
 
 ```bash
-brew tap TabularisDB/tabularis
 brew install --cask tabularis
 ```
 

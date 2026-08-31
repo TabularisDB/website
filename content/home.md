@@ -89,7 +89,6 @@ winget install Debba.Tabularis
 ### macOS — Homebrew
 
 ```bash
-brew tap TabularisDB/tabularis
 brew install --cask tabularis
 ```
 
