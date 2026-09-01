@@ -17,6 +17,19 @@ Switch themes instantly in **Settings → Appearance**. Changes apply immediatel
 - **Dark Themes**: Tabularis Dark, Monokai, One Dark Pro, Nord, Dracula, GitHub Dark, Solarized Dark, Gruvbox Material Dark, High Contrast.
 - **Light Themes**: Tabularis Light, Solarized Light, Gruvbox Material Light.
 
+## Theme Mode: Static or Follow System
+
+Since v0.22.0 the **Theme Mode** switch in **Settings → Appearance** decides whether the theme is fixed or tracks the operating system:
+
+![Settings → Appearance in Follow System mode with separate Light Theme and Dark Theme pickers](/img/tabularis-theme-mode-follow-system.png)
+
+- **Static** (default): one theme, chosen from the picker, applied regardless of the OS appearance.
+- **Follow System**: two pickers, **Light Theme** and **Dark Theme**, each listing only themes of that classification (custom themes are classified by their Monaco base theme). Tabularis watches the system's `prefers-color-scheme` and applies the matching pick as soon as the OS switches, and also asks the native window to switch its titlebar chrome.
+
+Toggling Follow System applies the current-mode theme immediately. If a picked theme no longer exists (a deleted custom theme, for example), the built-in preset for the current OS mode is used instead, and deleting a custom theme clears any per-mode pick that referenced it. The SQL editor theme is unaffected: **Same as App** follows the switch, an explicit editor theme stays fixed.
+
+The mode is stored in `config.json` as `followSystemTheme`, `lightThemeId` and `darkThemeId`. When the fields are absent the app is in Static mode, so existing installs are unchanged. See [Configuration](/wiki/configuration).
+
 ## Typography Configuration
 
 Readability is critical when parsing logs or complex queries.

@@ -20,6 +20,7 @@ Open the Settings panel from:
 
 - **Language Support**: Native translations for **English**, **Italian**, **Spanish**, **Chinese (Simplified)**, **French**, **German**, **Japanese**, **Russian**, **Tagalog** (added in v0.15.0), **Korean** (added in v0.16.0), and **Brazilian Portuguese** (added in v0.17.0). The app defaults to your OS locale — Filipino (`fil`) systems map to Tagalog automatically, and region-coded locales like `pt-BR` resolve correctly — and changing the language applies immediately. With eleven languages the picker is now a searchable select showing each language's native name.
 - **Display Timezone**: A searchable picker of IANA timezones (with current UTC-offset labels) under **Settings → Localization**, defaulting to **Auto** (your OS zone). The selected zone drives every UI timestamp — AI activity log, query history, favorites — plus CSV / JSON / notebook exports and their default filenames. Query-history date grouping (today / yesterday / older) is classified in the same zone, so headers and per-row times always agree.
+- **Window Decorations** (since v0.22.0): **Automatic** (default), **Always show** or **Always hide** for the native titlebar. In Automatic mode Tabularis hides native decorations on Linux when it detects a tiling window manager (Hyprland, Sway, i3, Niri, River, bspwm, awesome, dwm, leftwm, qtile, xmonad) through the session's environment variables, and keeps them on everywhere else. The choice applies to open windows immediately and to secondary windows when they are created. Stored as `windowDecorations` in `config.json`.
 - **Delay safety confirmations** (since v0.21.0): off by default. When enabled, the confirm button of the destructive-query and production-write dialogs stays disabled for five seconds so the warning is actually read. Stored as `safetyConfirmationDelayEnabled` in `config.json`.
 - **Update Checks**: Enable or disable automatic update checks on startup. Checks query the GitHub Releases API — no version data is sent, only a GET request is made.
 
@@ -54,7 +55,11 @@ Any key omitted from the file falls back to its default value. You do not need a
 
 | Key | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `theme` | `string` | `null` | Active UI theme ID. See [Themes](/wiki/themes). |
+| `theme` | `string` | `null` | Active UI theme ID (used in Static theme mode). See [Themes](/wiki/themes). |
+| `followSystemTheme` | `boolean` | `null` | Since v0.22.0. When `true`, the app follows the OS light/dark appearance and picks `lightThemeId` / `darkThemeId` accordingly. Absent or `false` means Static mode. |
+| `lightThemeId` | `string` | `null` | Since v0.22.0. Theme applied when the OS is in light mode and `followSystemTheme` is on. |
+| `darkThemeId` | `string` | `null` | Since v0.22.0. Theme applied when the OS is in dark mode and `followSystemTheme` is on. |
+| `windowDecorations` | `string` | `"automatic"` | Since v0.22.0. `automatic`, `alwaysShow` or `alwaysHide`. Automatic hides native window decorations on Linux tiling window managers. Configurable from **Settings → General → Window Decorations**. |
 | `language` | `string` | `"auto"` | Preferred locale: `en`, `it`, `es`, `zh`, `fr`, `de`, `ja`, `ru`, `tl`, `ko`, `pt-BR`, or `auto` (follows OS; `fil` falls back to `tl`). |
 | `displayTimezone` | `string` | `"auto"` | IANA timezone (e.g. `"Asia/Tokyo"`) used for UI timestamps and exports, or `auto` (OS zone). Configurable from **Settings → Localization → Timezone**. |
 | `resultPageSize` | `number` | `500` | Default rows fetched per pagination request in the Data Grid. Since v0.21.0 the pagination bar's rows-per-page selector can override this for a single tab. |

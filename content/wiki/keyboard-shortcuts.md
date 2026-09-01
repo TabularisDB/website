@@ -65,14 +65,22 @@ Tabularis ships with a set of keyboard shortcuts for common actions across navig
 | Previous page | `⌘+←` | `Ctrl+←` |
 | Save grid changes | `⌘+S` | `Ctrl+S` |
 | Move the focused cell | `↑` `↓` `←` `→` | `↑` `↓` `←` `→` |
+| Extend the cell range by one step | `Shift+↑` `Shift+↓` `Shift+←` `Shift+→` | `Shift+↑` `Shift+↓` `Shift+←` `Shift+→` |
+| Jump the focused cell to the grid edge | `⌘+↑` `⌘+↓` `⌘+←` `⌘+→` | `Ctrl+↑` `Ctrl+↓` `Ctrl+←` `Ctrl+→` |
+| Extend the cell range to the grid edge | `⌘+Shift+Arrow` | `Ctrl+Shift+Arrow` |
 | First / last column of the row | `Home` / `End` | `Home` / `End` |
+| First / last cell of the grid | `⌘+Home` / `⌘+End` | `Ctrl+Home` / `Ctrl+End` |
 | Move one viewport of rows | `PageUp` / `PageDown` | `PageUp` / `PageDown` |
+| Select the row(s) of the focused cell or range | `Shift+Space` | `Shift+Space` |
+| Select the column(s) of the focused cell or range | `⌘+Space` or `⌘+Shift+Space` | `Ctrl+Space` or `Ctrl+Shift+Space` |
 | Edit the focused cell | `Enter` or `F2` | `Enter` or `F2` |
 | Select all loaded rows | `⌘+A` | `Ctrl+A` |
 | Copy the current selection | `⌘+C` | `Ctrl+C` |
 | Paste at the selection (staged as pending changes) | `⌘+V` | `Ctrl+V` |
 
-Cell navigation is bound to the grid you last interacted with, so a notebook with one grid per SQL cell does not move them all at once. Keys are left alone inside text inputs, open cell editors, the foreign-key and BLOB buttons, and the sortable column headers. See [Data Grid → Keyboard Navigation](/wiki/data-grid#keyboard-navigation).
+Cell navigation is bound to the grid you last interacted with, so a notebook with one grid per SQL cell does not move them all at once. Keys are left alone inside text inputs, open cell editors, the foreign-key and BLOB buttons, and the sort buttons in column headers. See [Data Grid → Keyboard Navigation](/wiki/data-grid#keyboard-navigation).
+
+Since v0.22.0 the selection shortcuts (`Shift+Arrow`, `Ctrl/Cmd+Arrow`, `Shift+Space`, `Ctrl/Cmd+Space`) are relative to the focused cell and are not overridable. `Ctrl/Cmd+Shift+Space` is offered as an alternative for column selection because plain `Ctrl+Space` is often captured by an input method (ibus, fcitx) on Linux or by Spotlight on macOS. Note that with a focused cell, `Ctrl/Cmd+←` / `→` jumps to the grid edge; the **Next page** / **Previous page** shortcuts still apply when no cell is focused and from the pagination buttons.
 
 ---
 

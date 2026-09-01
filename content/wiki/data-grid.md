@@ -33,9 +33,9 @@ Drag a column header border left or right to resize columns. Double-click the bo
 
 ### Sorting
 
-Click a column header to sort by that column (ascending). Click again to sort descending. A third click removes the sort. Sorting is applied server-side — a new query is issued with an `ORDER BY` clause so the sort is consistent across all pages.
+Click the sort icon in a column header (revealed on hover) to sort by that column (ascending). Click again to sort descending. A third click removes the sort. Since v0.22.0 a plain click on the header itself selects the column instead of sorting; see [Column-level copy](#column-level-copy). Sorting is applied server-side — a new query is issued with an `ORDER BY` clause so the sort is consistent across all pages.
 
-> **LIMIT / OFFSET preservation** — if your query includes a `LIMIT` or `OFFSET` clause, clicking a column header to sort will preserve it. Only the `ORDER BY` portion is replaced.
+> **LIMIT / OFFSET preservation** — if your query includes a `LIMIT` or `OFFSET` clause, sorting from a column header will preserve it. Only the `ORDER BY` portion is replaced.
 
 ### Filtering
 
@@ -93,8 +93,18 @@ Since v0.18.0 the focused cell moves from the keyboard, not only from a click:
 | `PageUp` / `PageDown` | Move one viewport of rows. |
 | `Enter` / `F2` | Open the focused cell for editing — the same path as a double-click. |
 | `Cmd/Ctrl + A` | Select all loaded rows. |
+| `Shift + Arrow` | Extend a rectangular cell range by one step (since v0.22.0). The anchor stays fixed, the opposite corner moves. |
+| `Cmd/Ctrl + Arrow` | Jump the focused cell to the grid edge (since v0.22.0). |
+| `Cmd/Ctrl + Shift + Arrow` | Extend the cell range to the grid edge (since v0.22.0). |
+| `Cmd/Ctrl + Home` / `End` | First / last cell of the grid (since v0.22.0). |
+| `Shift + Space` | Select the row(s) of the focused cell or of the current range (since v0.22.0). |
+| `Cmd/Ctrl + Space` or `Cmd/Ctrl + Shift + Space` | Select the column(s) of the focused cell or of the current range (since v0.22.0). |
 
-The first key press in a grid with no focused cell yet enters at the top-left cell. Keys are bound to the grid's scroll container rather than to the document, so in a notebook — which mounts one grid per SQL cell — only the grid you are working in responds. Keys are left alone for anything that handles them itself: text inputs, the foreign-key and BLOB buttons inside cells, and the sortable column headers. Closing an edit with `Enter` or `Escape` returns focus to the grid so navigation continues.
+The first key press in a grid with no focused cell yet enters at the top-left cell. Keys are bound to the grid's scroll container rather than to the document, so in a notebook — which mounts one grid per SQL cell — only the grid you are working in responds. Keys are left alone for anything that handles them itself: text inputs, the foreign-key and BLOB buttons inside cells, and the sort buttons in column headers. Closing an edit with `Enter` or `Escape` returns focus to the grid so navigation continues.
+
+![A cell range grown with Shift+Arrow, then turned into a four-row selection with Shift+Space while the focused cell stays outlined](/img/tabularis-grid-keyboard-row-select.png)
+
+The selection shortcuts mirror Google Sheets and keep the focused cell after `Shift + Space` / `Cmd/Ctrl + Space`, so they chain: `Shift + ↓` three times followed by `Shift + Space` selects four rows. `Cmd/Ctrl + Shift + Space` is an alternative for column selection on systems where plain `Ctrl + Space` is taken by the input method (ibus, fcitx) or by Spotlight. With a focused cell, `Cmd/Ctrl + ←` / `→` jumps to the edge rather than paginating; the page shortcuts still work with no cell focused and from the pagination buttons.
 
 `Cmd/Ctrl + A` is ignored inside text inputs, while a cell editor is open, and in any grid you have not interacted with.
 
@@ -138,11 +148,11 @@ Since v0.17.0 you can copy all values of a single column — from the cell conte
 | **Copy column values** | Newline-separated, one value per line, `null` for NULL cells. |
 | **Copy column values (IN clause)** | A ready-to-paste SQL list: numbers raw (`1, 2, 3`), strings quoted with `''` escaping (`'O''Brien'`), `NULL` for nulls. |
 
-Since v0.18.0 you can also select whole columns DBeaver-style: `Cmd/Ctrl + click` a column header toggles it, `Shift + click` range-selects headers, and a plain click still sorts. `Ctrl/Cmd + C` then copies the selected columns for the rows in scope.
+Since v0.18.0 you can also select whole columns DBeaver-style: `Cmd/Ctrl + click` a column header toggles it and `Shift + click` range-selects headers. Since v0.22.0 a plain click on a header selects that column (replacing the current selection), and sorting moves to the sort icon next to the column name. From the keyboard, `Cmd/Ctrl + Space` (or `Cmd/Ctrl + Shift + Space`) selects the column(s) of the focused cell or range. `Ctrl/Cmd + C` then copies the selected columns for the rows in scope.
 
 ### Cell range selection
 
-`Shift + click` a second cell to select the rectangle between it and the currently focused cell. The range is highlighted, and the context menu offers **Copy Range (R×C)** to copy exactly those cells. A plain click moves the anchor and clears the range.
+`Shift + click` a second cell to select the rectangle between it and the currently focused cell, or since v0.22.0 grow it from the keyboard with `Shift + Arrow` (one step) and `Cmd/Ctrl + Shift + Arrow` (to the grid edge). The range is highlighted, and the context menu offers **Copy Range (R×C)** to copy exactly those cells. A plain click moves the anchor and clears the range.
 
 ## Pasting Data
 
