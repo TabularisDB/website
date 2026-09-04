@@ -1,0 +1,94 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    top: var(--header-height);
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+
+    &.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
+.mobileMenu {
+    display: none;
+    position: fixed;
+    background-color: var(--color-bg);
+    top: var(--header-height);
+    right: 0;
+    width: min(100%, 540px);
+    height: 100%;
+    z-index: 99999;
+
+    &.active {
+        display: block;
+    }
+
+    @media (min-width: 541px) {
+        border-left: 0.1rem solid var(--color-border);
+    }
+}
+
+.mobileNav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    height: calc(100% - var(--header-height) - 10rem);
+    overflow: auto;
+}
+
+.mobileMenuFooter {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    height: 10rem;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 0 1rem;
+    background-color: var(--color-surface);
+    border-top: 0.1rem solid var(--color-border);
+    width: min(100%, 540px);
+}
+
+.mobileSocials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    gap: 1rem;
+}
+
+.divider {
+    height: 1.375rem;
+    width: 0.1rem;
+    background-color: var(--color-text-muted);
+}
+
+.githubStars,
+.discord {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text-primary);
+    font-weight: 550;
+    opacity: 0.8;
+    font-size: 1rem;
+
+    svg {
+        --size: 1.375rem;
+        min-width: var(--size);
+        width: var(--size);
+        height: var(--size);
+    }
+}
+
+.download {
+    width: 100%;
+}

@@ -40,12 +40,12 @@ The main app lives at [`TabularisDB/tabularis`](https://github.com/TabularisDB/t
 
 It is now a **standalone repo**. Four pieces of data still come from the app repo and its GitHub releases before each build:
 
-| Upstream file | Where it lands | Consumed by |
-| --- | --- | --- |
-| `src/version.ts` | `src/lib/version.ts` | `APP_VERSION` used in download links, SEO metadata, JSON-LD |
-| `CHANGELOG.md` | `CHANGELOG.md` | `/changelog` page (`src/lib/changelog.ts`) |
-| `plugins/registry.json` | `plugins/registry.json` | `/plugins` page (`src/lib/plugins.ts`) |
-| Latest `nightly-*` GitHub release | `src/lib/nightly.ts` | Stable/nightly selector and direct asset links on `/download` |
+| Upstream file                     | Where it lands          | Consumed by                                                   |
+| --------------------------------- | ----------------------- | ------------------------------------------------------------- |
+| `src/version.ts`                  | `src/lib/version.ts`    | `APP_VERSION` used in download links, SEO metadata, JSON-LD   |
+| `CHANGELOG.md`                    | `CHANGELOG.md`          | `/changelog` page (`src/lib/changelog.ts`)                    |
+| `plugins/registry.json`           | `plugins/registry.json` | `/plugins` page (`src/lib/plugins.ts`)                        |
+| Latest `nightly-*` GitHub release | `src/lib/nightly.ts`    | Stable/nightly selector and direct asset links on `/download` |
 
 The fetcher is `scripts/fetch-app-data.mjs`. It reads repository files from `raw.githubusercontent.com` and the latest nightly metadata from the GitHub Releases API, then writes the local files into place. Defaults: `TABULARIS_APP_REPO=TabularisDB/tabularis`, `TABULARIS_APP_REF=main`.
 
@@ -66,10 +66,10 @@ The deploy workflow accepts a `repository_dispatch` event of type `app-data-upda
 ```yaml
 - name: Trigger website rebuild
   run: |
-    gh api repos/TabularisDB/website/dispatches \
-      -f event_type=app-data-updated
+      gh api repos/TabularisDB/website/dispatches \
+        -f event_type=app-data-updated
   env:
-    GH_TOKEN: ${{ secrets.WEBSITE_DISPATCH_PAT }}
+      GH_TOKEN: ${{ secrets.WEBSITE_DISPATCH_PAT }}
 ```
 
 (`WEBSITE_DISPATCH_PAT` must be a PAT with `repo` scope on this repo.)
@@ -148,7 +148,6 @@ Typos, broken links, new wiki articles and new blog posts are all welcome.
 - **Feature or bug reports about the app itself**: please open them on [`TabularisDB/tabularis`](https://github.com/TabularisDB/tabularis/issues) instead.
 
 Join the conversation on [Discord](https://discord.com/invite/K2hmhfHRSt).
-
 
 ## Acknowledgements
 

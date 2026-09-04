@@ -1,0 +1,28 @@
+.github {
+    padding-inline: 1.25rem;
+
+    & svg {
+        --size: 1.25rem;
+        min-width: var(--size);
+        width: var(--size);
+        height: var(--size);
+    }
+
+    .divider {
+        margin-inline: 0.25rem;
+    }
+}
+
+.stars {
+    color: #fde047;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    & svg {
+        --size: 1rem;
+        min-width: var(--size);
+        width: var(--size);
+        height: var(--size);
+    }
+}
