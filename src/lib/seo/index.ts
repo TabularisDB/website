@@ -1,0 +1,127 @@
+import {APP_VERSION} from '../download/version';
+import {SOCIAL_URLS} from '../social';
+
+const BASE_URL = 'https://tabularis.dev';
+
+export interface BreadcrumbItem {
+    name: string;
+    path: string;
+}
+
+export function toAbsoluteUrl(path: string): string {
+    if (path.startsWith('http://') || path.startsWith('https://')) return path;
+    return `${BASE_URL}${path}`;
+}
+
+export function buildBreadcrumbJsonLd(items: BreadcrumbItem[]) {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: items.map((item, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name: item.name,
+            item: toAbsoluteUrl(item.path),
+        })),
+    };
+}
+
+export function buildOrganizationJsonLd() {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'Tabularis',
+        url: BASE_URL,
+        logo: toAbsoluteUrl('/img/logo.png'),
+        sameAs: [SOCIAL_URLS.github, SOCIAL_URLS.discord, SOCIAL_URLS.bluesky, SOCIAL_URLS.x, SOCIAL_URLS.mastodon],
+    };
+}
+
+export function buildSoftwareApplicationJsonLd() {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'Tabularis',
+        applicationCategory: 'DeveloperApplication',
+        applicationSubCategory: 'Database client',
+        operatingSystem: 'Windows, macOS, Linux',
+        softwareVersion: APP_VERSION,
+        downloadUrl: toAbsoluteUrl('/download'),
+        url: BASE_URL,
+        image: toAbsoluteUrl('/img/og.png'),
+        offers: {
+            '@type': 'Offer',
+            price: '0',
+            priceCurrency: 'USD',
+        },
+        description:
+            'Open-source desktop database client with support for PostgreSQL, MySQL/MariaDB, and SQLite. Hackable with plugins, with notebooks, AI, and MCP built in.',
+    };
+}
+
+export function buildArticleJsonLd(input: {
+    title: string;
+    description: string;
+    path: string;
+    publishedTime?: string;
+    image?: string;
+    authors?: {name: string; url: string}[];
+}) {
+    const authors =
+        input.authors && input.authors.length
+            ? input.authors
+            : [{name: 'Andrea Debernardi', url: 'https://github.com/debba'}];
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: input.title,
+        description: input.description,
+        url: toAbsoluteUrl(input.path),
+        datePublished: input.publishedTime,
+        author: authors.map((a) => ({
+            '@type': 'Person',
+            name: a.name,
+            url: a.url,
+        })),
+        publisher: {
+            '@type': 'Organization',
+            name: 'Tabularis',
+            logo: {
+                '@type': 'ImageObject',
+                url: toAbsoluteUrl('/img/logo.png'),
+            },
+        },
+        image: input.image ? [toAbsoluteUrl(input.image)] : [toAbsoluteUrl('/img/og.png')],
+        mainEntityOfPage: toAbsoluteUrl(input.path),
+    };
+}
+
+export function buildVideoObjectJsonLd(input: {
+    title: string;
+    description: string;
+    src: string;
+    poster: string;
+    uploadDate: string;
+    slug?: string;
+    duration?: string;
+}) {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'VideoObject',
+        name: input.title,
+        description: input.description,
+        thumbnailUrl: [toAbsoluteUrl(input.poster)],
+        uploadDate: input.uploadDate,
+        ...(input.duration ? {duration: input.duration} : {}),
+        contentUrl: toAbsoluteUrl(input.src),
+        ...(input.slug ? {embedUrl: toAbsoluteUrl(`/videos/${input.slug}`)} : {}),
+        publisher: {
+            '@type': 'Organization',
+            name: 'Tabularis',
+            logo: {
+                '@type': 'ImageObject',
+                url: toAbsoluteUrl('/img/logo.png'),
+            },
+        },
+    };
+}
