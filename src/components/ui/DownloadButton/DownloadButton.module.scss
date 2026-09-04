@@ -1,0 +1,29 @@
+.button svg {
+    --size: 1.25rem;
+    min-width: var(--size);
+    width: var(--size);
+    height: var(--size);
+}
+
+.icon {
+    display: flex;
+    align-items: center;
+
+    @media (max-width: 480px) {
+        display: none;
+    }
+}
+
+.fullLabel {
+    @media (max-width: 480px) {
+        display: none;
+    }
+}
+
+.shortLabel {
+    display: none;
+
+    @media (max-width: 480px) {
+        display: inline;
+    }
+}
