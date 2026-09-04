@@ -12,12 +12,12 @@ Hard constraint: no runtime-only Next.js features (`getServerSideProps`, API rou
 
 Package manager is pinned: **pnpm 10.33.0** (see `packageManager` in `package.json`). Node 20+.
 
-| Task | Command |
-| --- | --- |
-| Install | `pnpm install` |
-| Dev server (http://localhost:3000) | `pnpm dev` |
-| Full static build into `out/` | `pnpm build` |
-| Refresh upstream app data | `pnpm fetch-app-data` |
+| Task                               | Command               |
+| ---------------------------------- | --------------------- |
+| Install                            | `pnpm install`        |
+| Dev server (http://localhost:3000) | `pnpm dev`            |
+| Full static build into `out/`      | `pnpm build`          |
+| Refresh upstream app data          | `pnpm fetch-app-data` |
 
 There is **no lint or test command**. `eslint.config.mjs` explicitly ignores `**/*`; do not try to add lint runs to "verify" a change.
 
@@ -34,12 +34,12 @@ Redirects (e.g. after renaming a slug) are configured in `vercel.json` under the
 
 Four pieces of data are fetched from `TabularisDB/tabularis` at build time by `scripts/fetch-app-data.mjs` (defaults: `TABULARIS_APP_REPO=TabularisDB/tabularis`, `TABULARIS_APP_REF=main`):
 
-| Upstream | Local file | Consumer |
-| --- | --- | --- |
-| `src/version.ts` | `src/lib/version.ts` (re-emitted as a single `APP_VERSION` export) | download links, SEO metadata, JSON-LD |
-| `CHANGELOG.md` | `CHANGELOG.md` | `/changelog` page via `src/lib/changelog.ts` |
-| `plugins/registry.json` | `plugins/registry.json` | `/plugins` page via `src/lib/plugins.ts`, and the `:::plugin <id>:::` markdown extension |
-| Latest GitHub release tagged `nightly-*` | `src/lib/nightly.ts` | stable/nightly download channel selector and exact nightly asset URLs |
+| Upstream                                 | Local file                                                         | Consumer                                                                                 |
+| ---------------------------------------- | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| `src/version.ts`                         | `src/lib/version.ts` (re-emitted as a single `APP_VERSION` export) | download links, SEO metadata, JSON-LD                                                    |
+| `CHANGELOG.md`                           | `CHANGELOG.md`                                                     | `/changelog` page via `src/lib/changelog.ts`                                             |
+| `plugins/registry.json`                  | `plugins/registry.json`                                            | `/plugins` page via `src/lib/plugins.ts`, and the `:::plugin <id>:::` markdown extension |
+| Latest GitHub release tagged `nightly-*` | `src/lib/nightly.ts`                                               | stable/nightly download channel selector and exact nightly asset URLs                    |
 
 These four files are **committed** to the repo so local dev works without network access. The Vercel build overwrites them before `next build` (via the `fetch-app-data` step in the build command). When editing them locally, be aware the deploy will blow your changes away — fix upstream instead.
 
@@ -51,14 +51,14 @@ Rebuilds can be triggered from the app repo via a `repository_dispatch` event of
 
 Almost every page is driven by Markdown in `content/`, loaded by a matching `src/lib/<type>.ts` module:
 
-| Content dir | Loader | Routes |
-| --- | --- | --- |
-| `content/posts/` | `src/lib/posts.ts` | `/blog`, `/blog/[slug]`, `/blog/page/[page]`, `/blog/tag/[tag]` |
-| `content/wiki/` | `src/lib/wiki.tsx` | `/wiki`, `/wiki/[slug]` |
-| `content/seo/` | `src/lib/seoPages.ts` | `/solutions`, `/solutions/[slug]`, `/compare`, `/compare/[slug]` (section is chosen via frontmatter `section: solutions \| compare`) |
-| `content/roadmap/` | `src/lib/roadmap.ts` | `/roadmap`, `/roadmap/[slug]` |
-| `CHANGELOG.md` (fetched) | `src/lib/changelog.ts` | `/changelog` |
-| `plugins/registry.json` (fetched) | `src/lib/plugins.ts` | `/plugins` |
+| Content dir                       | Loader                 | Routes                                                                                                                               |
+| --------------------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `content/posts/`                  | `src/lib/posts.ts`     | `/blog`, `/blog/[slug]`, `/blog/page/[page]`, `/blog/tag/[tag]`                                                                      |
+| `content/wiki/`                   | `src/lib/wiki.tsx`     | `/wiki`, `/wiki/[slug]`                                                                                                              |
+| `content/seo/`                    | `src/lib/seoPages.ts`  | `/solutions`, `/solutions/[slug]`, `/compare`, `/compare/[slug]` (section is chosen via frontmatter `section: solutions \| compare`) |
+| `content/roadmap/`                | `src/lib/roadmap.ts`   | `/roadmap`, `/roadmap/[slug]`                                                                                                        |
+| `CHANGELOG.md` (fetched)          | `src/lib/changelog.ts` | `/changelog`                                                                                                                         |
+| `plugins/registry.json` (fetched) | `src/lib/plugins.ts`   | `/plugins`                                                                                                                           |
 
 Loaders all follow the same pattern: read files with `fs` at module scope, parse frontmatter with `gray-matter`, render body with the shared `marked` instance from `src/lib/markdown.ts`. This only works because `next build` runs Node — do not import these loaders into a client component.
 

@@ -1,0 +1,32 @@
+.siteHeader {
+    z-index: 99;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0 1rem;
+    height: var(--header-height);
+    border-bottom: 0.1rem solid var(--color-border);
+    backdrop-filter: blur(24px);
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+
+    &.menuOpen {
+        background-color: var(--color-bg);
+        backdrop-filter: none;
+    }
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    width: var(--max-width);
+    margin: 0 auto;
+    gap: 2rem;
+    z-index: 2;
+
+    &.containerWide {
+        width: var(--max-width-lg);
+    }
+}
