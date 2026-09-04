@@ -1,32 +1,32 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "pnpm build",
-  "redirects": [
-    {
-      "source": "/blog/v0100-ai-safety-audit-approvals",
-      "destination": "/blog/v0100-ai-safety-audit-approval",
-      "permanent": true
-    },
-    {
-      "source": "/blog/digitalocean-open-source-credits",
-      "destination": "/blog/digitalocean-opensource-sponsorship",
-      "permanent": true
-    },
-    {
-      "source": "/blog/jetbrains-open-source-support",
-      "destination": "/blog/jetbrains-open-source-program",
-      "permanent": true
-    }
-  ],
-  "headers": [
-    {
-      "source": "/:path*/opengraph-image",
-      "headers": [
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "buildCommand": "pnpm build",
+    "redirects": [
         {
-          "key": "Content-Type",
-          "value": "image/png"
+            "source": "/blog/v0100-ai-safety-audit-approvals",
+            "destination": "/blog/v0100-ai-safety-audit-approval",
+            "permanent": true
+        },
+        {
+            "source": "/blog/digitalocean-open-source-credits",
+            "destination": "/blog/digitalocean-opensource-sponsorship",
+            "permanent": true
+        },
+        {
+            "source": "/blog/jetbrains-open-source-support",
+            "destination": "/blog/jetbrains-open-source-program",
+            "permanent": true
         }
-      ]
-    }
-  ]
+    ],
+    "headers": [
+        {
+            "source": "/:path*/opengraph-image",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "image/png"
+                }
+            ]
+        }
+    ]
 }
