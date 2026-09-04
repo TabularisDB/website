@@ -1,0 +1,82 @@
+.diagram {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 18px minmax(40px, 0.8fr) auto minmax(40px, 0.8fr) 18px minmax(0, 1fr);
+    align-items: center;
+    max-width: 1024px;
+}
+
+.sources {
+    padding-right: 1rem;
+    margin-left: auto;
+}
+
+.destination {
+    padding-left: 1rem;
+    margin-right: auto;
+}
+
+.sourcesList,
+.destinationsList {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: fit-content;
+}
+
+.source,
+.stackList,
+.destination {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.blockTitle {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    font-style: normal;
+    font-weight: 500;
+    margin-bottom: 0.125rem;
+}
+
+.stackItem {
+    background-color: var(--color-surface);
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.25rem;
+    color: var(--color-text-primary);
+    font-size: 1rem;
+    font-weight: 500;
+
+    & svg {
+        width: 1.25rem;
+        min-width: 1.25rem;
+    }
+}
+
+.hub {
+    margin-inline: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    & svg {
+        height: 6rem;
+    }
+
+    & span {
+        color: var(--color-text-secondary);
+        font-size: 1rem;
+        font-weight: 500;
+    }
+}
+
+.line {
+    color: var(--color-text-muted);
+}

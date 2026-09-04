@@ -1,0 +1,87 @@
+▲ Next.js 16.2.4 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.17:3000
+✓ Ready in 303ms
+
+ GET /wiki/connections 200 in 1551ms (next.js: 1012ms, generate-params: 754ms, application-code: 539ms)
+⚠ Blocked cross-origin request to Next.js dev resource /_next/webpack-hmr from "192.168.1.17".
+Cross-origin access to Next.js dev resources is blocked by default for safety.
+
+To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+
+// next.config.js
+module.exports = {
+  allowedDevOrigins: ['192.168.1.17'],
+}
+
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+ GET / 200 in 190ms (next.js: 20ms, application-code: 170ms)
+[browser] Uncaught TypeError: undefined is not an object (evaluating 'r["@context"].toLowerCase')
+    at <unknown> (http://localhost:3000/wiki/connections:3:185)
+    at global code (http://localhost:3000/wiki/connections:3:362)
+ GET / 200 in 144ms (next.js: 4ms, application-code: 140ms)
+[browser] Uncaught TypeError: undefined is not an object (evaluating 'r["@context"].toLowerCase')
+    at <unknown> (http://localhost:3000/:3:185)
+    at global code (http://localhost:3000/:3:362)
+ GET / 200 in 72ms (next.js: 3ms, application-code: 69ms)
+ HEAD / 200 in 91ms (next.js: 10ms, application-code: 80ms)
+ GET /__next._tree.txt 404 in 66ms (next.js: 47ms, application-code: 20ms)
+ GET /index.txt 404 in 79ms (next.js: 5ms, application-code: 74ms)
+ GET / 200 in 87ms (next.js: 4ms, application-code: 83ms)
+ GET /apple-touch-icon-precomposed.png 404 in 126ms (next.js: 7ms, application-code: 118ms)
+ GET /apple-touch-icon.png 404 in 67ms (next.js: 5ms, application-code: 62ms)
+ GET / 200 in 122ms (next.js: 6ms, application-code: 116ms)
+ GET / 200 in 73ms (next.js: 8ms, application-code: 65ms)
+ GET / 200 in 268ms (next.js: 81ms, application-code: 187ms)
+ GET / 200 in 270ms (next.js: 231ms, application-code: 39ms)
+ GET / 200 in 312ms (next.js: 72ms, application-code: 241ms)
+ GET / 200 in 315ms (next.js: 31ms, application-code: 284ms)
+ GET / 200 in 153ms (next.js: 20ms, application-code: 133ms)
+ GET / 200 in 137ms (next.js: 42ms, application-code: 95ms)
+ GET / 200 in 97ms (next.js: 37ms, application-code: 61ms)
+ GET / 200 in 64ms (next.js: 31ms, application-code: 32ms)
+ GET / 200 in 280ms (next.js: 112ms, application-code: 168ms)
+ GET / 200 in 283ms (next.js: 34ms, application-code: 249ms)
+ GET / 200 in 299ms (next.js: 137ms, application-code: 161ms)
+ GET / 200 in 303ms (next.js: 84ms, application-code: 219ms)
+ GET / 200 in 302ms (next.js: 179ms, application-code: 123ms)
+ GET / 200 in 94ms (next.js: 6ms, application-code: 88ms)
+ GET / 200 in 187ms (next.js: 14ms, application-code: 173ms)
+ GET / 200 in 81ms (next.js: 3ms, application-code: 78ms)
+ GET / 200 in 82ms (next.js: 4ms, application-code: 78ms)
+[browser] Uncaught TypeError: undefined is not an object (evaluating 'r["@context"].toLowerCase')
+    at <unknown> (http://localhost:3000/:3:185)
+    at global code (http://localhost:3000/:3:362)
+ GET /wiki/connections 200 in 281ms (next.js: 56ms, generate-params: 4ms, application-code: 225ms)
+ GET / 200 in 34ms (next.js: 5ms, application-code: 30ms)
+ GET /docs 404 in 149ms (next.js: 23ms, application-code: 126ms)
+ GET /docs 404 in 101ms (next.js: 6ms, application-code: 95ms)
+ GET /docs 404 in 85ms (next.js: 7ms, application-code: 78ms)
+ GET /docs 404 in 112ms (next.js: 11ms, application-code: 101ms)
+ GET /docs 404 in 52ms (next.js: 4ms, application-code: 48ms)
+ GET /docs 404 in 75ms (next.js: 3ms, application-code: 72ms)
+ GET /docs 404 in 68ms (next.js: 4ms, application-code: 64ms)
+ GET /wiki 200 in 268ms (next.js: 67ms, application-code: 202ms)
+ GET / 200 in 48ms (next.js: 10ms, application-code: 38ms)
+ GET /wiki/connections 200 in 163ms (next.js: 16ms, generate-params: 5ms, application-code: 147ms)
+ GET /wiki/notebooks 200 in 98ms (next.js: 7ms, generate-params: 4ms, application-code: 91ms)
+ GET /wiki/visual-explain 200 in 231ms (next.js: 7ms, generate-params: 3ms, application-code: 224ms)
+ GET / 200 in 43ms (next.js: 5ms, application-code: 38ms)
+ GET /wiki/connections 200 in 189ms (next.js: 8ms, generate-params: 4ms, application-code: 180ms)
+ GET / 200 in 37ms (next.js: 3ms, application-code: 34ms)
+ GET /wiki/connections 200 in 119ms (next.js: 10ms, generate-params: 5ms, application-code: 109ms)
+ GET / 200 in 35ms (next.js: 4ms, application-code: 31ms)
+ GET /wiki/connections 200 in 151ms (next.js: 7ms, generate-params: 3ms, application-code: 144ms)
+ GET /wiki/connections 200 in 313ms (next.js: 9ms, generate-params: 4ms, application-code: 304ms)
+ GET /wiki/notebooks 200 in 90ms (next.js: 7ms, generate-params: 4ms, application-code: 83ms)
+ GET /solutions/mcp-database-client 404 in 136ms (next.js: 9ms, application-code: 127ms)
+ GET /solutions/mcp-database-client 404 in 172ms (next.js: 8ms, application-code: 164ms)
+ GET /wiki/connections 200 in 197ms (next.js: 16ms, generate-params: 13ms, application-code: 180ms)
+ GET /blog/code-generation-was-only-the-beginning-software-development-is-becoming-a-loop 404 in 67ms (next.js: 6ms, application-code: 62ms)
+ GET / 200 in 78ms (next.js: 5ms, application-code: 73ms)
+ GET / 200 in 91ms (next.js: 6ms, application-code: 85ms)
+⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+▲ Next.js 16.2.4 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.17:3000
+✓ Ready in 349ms

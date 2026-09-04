@@ -1,162 +1,95 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { JsonLd } from "@/components/JsonLd";
-import { SiteHeader } from "@/components/SiteHeader";
-import { GitHubIcon } from "@/components/Icons";
-import { CtaSocialLinks } from "@/components/CtaSocialLinks";
-import { ShareButton } from "@/components/ShareButton";
-import { WikiLayout } from "@/components/WikiLayout";
-import { WikiTableOfContents } from "@/components/WikiTableOfContents";
-import { WikiContent } from "@/components/WikiContent";
-import { ClosingCta } from "@/components/ClosingCta";
-import { Footer } from "@/components/Footer";
+import type {Metadata} from 'next';
+import {notFound} from 'next/navigation';
+import {JsonLd} from '@/components/layout/JsonLd';
+import {SiteHeader} from '@/components/layout/SiteHeader/SiteHeader';
+import {WikiLayout} from '@/components/pages/wiki/WikiLayout/WikiLayout';
+import {WikiTableOfContents} from '@/components/pages/wiki/WikiTableOfContents/WikiTableOfContents';
+import {WikiContent} from '@/components/pages/wiki/WikiContent/WikiContent';
+import {CategoryLabel} from '@/components/pages/wiki/CategoryLabel/CategoryLabel';
+import {PostNav} from '@/components/pages/wiki/PostNav/PostNav';
 import {
-  getAllWikiPages,
-  getWikiPageBySlug,
-  getAdjacentWikiPages,
-  getWikiPagesByCategory,
-  WIKI_CATEGORIES,
-} from "@/lib/wiki";
-import { buildArticleJsonLd, buildBreadcrumbJsonLd } from "@/lib/seo";
-import { getRelatedLinksForWiki } from "@/lib/seoRelated";
-import { RelatedLinks } from "@/components/RelatedLinks";
+    getAllWikiPages,
+    getWikiPageBySlug,
+    getAdjacentWikiPages,
+    getWikiPagesByCategory,
+    WIKI_CATEGORIES,
+} from '@/lib/wiki';
+import {buildArticleJsonLd, buildBreadcrumbJsonLd} from '@/lib/seo';
+import {getRelatedLinksForWiki} from '@/lib/seo/seoRelated';
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+    params: Promise<{slug: string}>;
 }
 
 export function generateStaticParams() {
-  return getAllWikiPages().map((p) => ({ slug: p.slug }));
+    return getAllWikiPages().map((p) => ({slug: p.slug}));
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const page = getWikiPageBySlug(slug);
-  if (!page) return {};
+export async function generateMetadata({params}: PageProps): Promise<Metadata> {
+    const {slug} = await params;
+    const page = getWikiPageBySlug(slug);
+    if (!page) return {};
 
-  const { meta } = page;
-  const title = `${meta.title} | Tabularis Wiki`;
-  const description = meta.excerpt;
+    const {meta} = page;
+    const title = `${meta.title} | Tabularis Wiki`;
 
-  return {
-    title,
-    description,
-    alternates: {
-      canonical: `/wiki/${slug}`,
-    },
-    openGraph: {
-      type: "article",
-      url: `/wiki/${slug}`,
-      title,
-      description,
-      siteName: "Tabularis",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-    },
-  };
+    return {
+        title,
+        description: meta.excerpt,
+        alternates: {canonical: `/wiki/${slug}`},
+        openGraph: {
+            type: 'article',
+            url: `/wiki/${slug}`,
+            title,
+            description: meta.excerpt,
+            siteName: 'Tabularis',
+        },
+        twitter: {card: 'summary_large_image', title, description: meta.excerpt},
+    };
 }
 
 function buildCategories() {
-  const map = getWikiPagesByCategory();
-  return WIKI_CATEGORIES.filter((c) => map.has(c)).map((c) => ({
-    name: c,
-    pages: map.get(c)!,
-  }));
+    const map = getWikiPagesByCategory();
+    return WIKI_CATEGORIES.filter((c) => map.has(c)).map((c) => ({name: c, pages: map.get(c)!}));
 }
 
-export default async function WikiPageDetail({ params }: PageProps) {
-  const { slug } = await params;
-  const page = getWikiPageBySlug(slug);
-  if (!page) notFound();
+export default async function WikiPageDetail({params}: PageProps) {
+    const {slug} = await params;
+    const page = getWikiPageBySlug(slug);
+    if (!page) notFound();
 
-  const { meta, html } = page;
-  const { prev, next } = getAdjacentWikiPages(slug);
-  const categories = buildCategories();
-  const relatedLinks = getRelatedLinksForWiki(slug);
+    const {meta, html} = page;
+    const {prev, next} = getAdjacentWikiPages(slug);
+    const categories = buildCategories();
+    const relatedLinks = getRelatedLinksForWiki(slug);
 
-  const crumbTitle =
-    meta.title.length > 40 ? meta.title.slice(0, 40) + "\u2026" : meta.title;
+    const crumbTitle = meta.title.length > 40 ? meta.title.slice(0, 40) + '\u2026' : meta.title;
 
-  return (
-    <div className="container wiki-container">
-      <JsonLd
-        data={[
-          buildBreadcrumbJsonLd([
-            { name: "Home", path: "/" },
-            { name: "Wiki", path: "/wiki" },
-            { name: meta.title, path: `/wiki/${slug}` },
-          ]),
-          buildArticleJsonLd({
-            title: meta.title,
-            description: meta.excerpt,
-            path: `/wiki/${slug}`,
-            image: "/img/og.png",
-          }),
-        ]}
-      />
-      <SiteHeader
-        crumbs={[{ label: "wiki", href: "/wiki" }, { label: crumbTitle }]}
-      />
+    return (
+        <div className="wiki-container">
+            <JsonLd
+                data={[
+                    buildBreadcrumbJsonLd([
+                        {name: 'Home', path: '/'},
+                        {name: 'Wiki', path: '/wiki'},
+                        {name: meta.title, path: `/wiki/${slug}`},
+                    ]),
+                    buildArticleJsonLd({
+                        title: meta.title,
+                        description: meta.excerpt,
+                        path: `/wiki/${slug}`,
+                        image: '/img/og.png',
+                    }),
+                ]}
+            />
 
-      <WikiLayout
-        categories={categories}
-        rightSidebar={<WikiTableOfContents />}
-      >
-        <WikiContent html={html} />
+            <WikiLayout categories={categories} rightSidebar={<WikiTableOfContents />}>
+                <CategoryLabel category={meta.category} />
 
-        <RelatedLinks title="Related Guides" links={relatedLinks} />
+                <WikiContent html={html} />
 
-        <div className="wiki-edit-link-container">
-          <a
-            href={`https://github.com/TabularisDB/website/edit/main/content/wiki/${slug}.md`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="wiki-edit-link"
-          >
-            <GitHubIcon size={14} />
-            Edit this page on GitHub
-          </a>
+                <PostNav prev={prev} next={next} basePath="/wiki" />
+            </WikiLayout>
         </div>
-
-        <ClosingCta
-          title="Reading the docs without the app?"
-          lede="Tabularis is free and open source (Apache 2.0). Download it and try this workflow against a real database — and if the docs helped, a star on GitHub goes a long way."
-        >
-          <CtaSocialLinks />
-          <ShareButton />
-        </ClosingCta>
-
-        <nav className="post-nav">
-          <div className="post-nav-item post-nav-prev">
-            {prev ? (
-              <Link href={`/wiki/${prev.slug}`}>
-                <span className="post-nav-label">&larr; Previous</span>
-                <span className="post-nav-title">{prev.title}</span>
-              </Link>
-            ) : (
-              <span className="post-nav-empty" />
-            )}
-          </div>
-          <div className="post-nav-item post-nav-next">
-            {next ? (
-              <Link href={`/wiki/${next.slug}`}>
-                <span className="post-nav-label">Next &rarr;</span>
-                <span className="post-nav-title">{next.title}</span>
-              </Link>
-            ) : (
-              <span className="post-nav-empty" />
-            )}
-          </div>
-        </nav>
-
-        <Footer />
-      </WikiLayout>
-    </div>
-  );
+    );
 }
