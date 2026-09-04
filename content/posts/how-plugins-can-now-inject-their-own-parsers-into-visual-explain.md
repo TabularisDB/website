@@ -24,7 +24,7 @@ og:
 
 This week <a href="https://explain.tabularis.dev" target="_blank" rel="noopener noreferrer">explain.tabularis.dev</a> understands SQL Server. You run your query with `SET STATISTICS XML ON`, or `SET SHOWPLAN_XML ON` if you only want the estimated plan, copy the XML that comes back and paste it into the page. The plan opens as the same interactive graph, diagram, table and stats views that PostgreSQL, MySQL and SQLite plans have had since July. Everything runs in the browser and nothing is uploaded.
 
-<video src="/videos/posts/explain-sqlserver.mp4" poster="/videos/posts/explain-sqlserver.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video class="video-borderless" src="/videos/posts/explain-sqlserver.mp4" poster="/videos/posts/explain-sqlserver.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
 
 The operator tree is what you would expect from a SHOWPLAN: Table Scan, Index Seek, Clustered Index Seek, Nested Loops, Hash Match, Sort, Top, Compute Scalar, Parallelism. For actual plans you also get estimated versus actual rows per operator, the number of executions on the inner side of a join, and the self time and cumulative cost that make the hot branch stand out. Pasted XML is pretty-printed and highlighted, since SQL Server hands it to you as a single very long line.
 

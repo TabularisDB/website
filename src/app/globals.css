@@ -2200,6 +2200,13 @@ a.badge.version:hover {
   max-width: 520px;
 }
 
+/* Opt-in frameless player: <video class="video-borderless" ...> in markdown content */
+.video-wrapper:has(video.video-borderless) {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+
 .video-demo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
