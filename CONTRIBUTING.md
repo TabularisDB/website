@@ -19,13 +19,13 @@ All types of contributions are encouraged and valued. See the [Table of Contents
 
 - [Code of Conduct](#code-of-conduct)
 - [I Have a Question](#i-have-a-question)
-  - [I Want To Contribute](#i-want-to-contribute)
-  - [Reporting Bugs](#reporting-bugs)
-  - [Suggesting Enhancements](#suggesting-enhancements)
-  - [Your First Code Contribution](#your-first-code-contribution)
-  - [Improving The Documentation](#improving-the-documentation)
+    - [I Want To Contribute](#i-want-to-contribute)
+    - [Reporting Bugs](#reporting-bugs)
+    - [Suggesting Enhancements](#suggesting-enhancements)
+    - [Your First Code Contribution](#your-first-code-contribution)
+    - [Improving The Documentation](#improving-the-documentation)
 - [Styleguides](#styleguides)
-  - [Commit Messages](#commit-messages)
+    - [Commit Messages](#commit-messages)
 - [Join The Project Team](#join-the-project-team)
 
 ## Code of Conduct
@@ -84,11 +84,11 @@ A good bug report shouldn't leave others needing to chase you up for more inform
 - To see if other users have experienced (and potentially already solved) the same issue you are having, check if there is not already a bug report existing for your bug or error in the [bug tracker](https://github.com/TabularisDB/tabularis/issues?q=label%3Abug).
 - Also make sure to search the internet (including Stack Overflow) to see if users outside of the GitHub community have discussed the issue.
 - Collect information about the bug:
-  - Stack trace (Traceback)
-  - OS, Platform and Version (Windows, Linux, macOS, x86, ARM)
-  - Version of the interpreter, compiler, SDK, runtime environment, package manager, depending on what seems relevant.
-  - Possibly your input and the output
-  - Can you reliably reproduce the issue? And can you also reproduce it with older versions?
+    - Stack trace (Traceback)
+    - OS, Platform and Version (Windows, Linux, macOS, x86, ARM)
+    - Version of the interpreter, compiler, SDK, runtime environment, package manager, depending on what seems relevant.
+    - Possibly your input and the output
+    - Can you reliably reproduce the issue? And can you also reproduce it with older versions?
 
 <!-- omit in toc -->
 

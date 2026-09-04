@@ -1,8 +1,8 @@
 ---
-category: "Getting Started"
-title: "Introduction"
+category: 'Getting Started'
+title: 'Introduction'
 order: 1
-excerpt: "Welcome to the Tabularis Wiki. Learn how to get started with the most modern database management tool."
+excerpt: 'Welcome to the Tabularis Wiki. Learn how to get started with the most modern database management tool.'
 ---
 
 # Introduction
@@ -27,22 +27,29 @@ excerpt: "Welcome to the Tabularis Wiki. Learn how to get started with the most 
 
 ## System Requirements
 
-| Platform | Minimum | Notes |
-| :--- | :--- | :--- |
-| **macOS** | 10.15+ | Universal Binary (Intel + Apple Silicon) |
-| **Windows** | 10/11 | WebView2 required (pre-installed with Edge) |
-| **Linux** | Ubuntu 20.04+ | Requires `webkit2gtk-4.1` and `libsecret-1` |
+| Platform    | Minimum       | Notes                                       |
+| :---------- | :------------ | :------------------------------------------ |
+| **macOS**   | 10.15+        | Universal Binary (Intel + Apple Silicon)    |
+| **Windows** | 10/11         | WebView2 required (pre-installed with Edge) |
+| **Linux**   | Ubuntu 20.04+ | Requires `webkit2gtk-4.1` and `libsecret-1` |
 
 ### Linux dependency install
 
+#### Debian / Ubuntu
+
 ```bash
-# Debian/Ubuntu
 sudo apt install libwebkit2gtk-4.1-dev libsecret-1-dev
+```
 
-# Arch
+#### Arch Linux
+
+```bash
 sudo pacman -S webkit2gtk libsecret
+```
 
-# Fedora
+#### Fedora
+
+```bash
 sudo dnf install webkit2gtk4.1-devel libsecret-devel
 ```
 
@@ -51,6 +58,7 @@ sudo dnf install webkit2gtk4.1-devel libsecret-devel
 ### 1. Install
 
 Download the right package from [GitHub Releases](https://github.com/TabularisDB/tabularis/releases):
+
 - macOS → `.dmg`
 - Windows → `.msi` or `.exe`
 - Linux → `.AppImage`, `.deb`, or `.rpm`
@@ -73,28 +81,29 @@ The UI has three fixed regions:
 
 ## Global Keyboard Shortcuts
 
-| Action | macOS | Windows / Linux |
-| :--- | :--- | :--- |
-| Execute query | `Cmd + F5` | `Ctrl + F5` |
-| Execute query (in editor) | `Cmd + Enter` | `Ctrl + Enter` |
-| Tab switcher | `Ctrl + Tab` | `Ctrl + Tab` |
-| Monaco command palette | `F1` | `F1` |
+| Action                    | macOS         | Windows / Linux |
+| :------------------------ | :------------ | :-------------- |
+| Execute query             | `Cmd + F5`    | `Ctrl + F5`     |
+| Execute query (in editor) | `Cmd + Enter` | `Ctrl + Enter`  |
+| Tab switcher              | `Ctrl + Tab`  | `Ctrl + Tab`    |
+| Monaco command palette    | `F1`          | `F1`            |
 
 ## Local Data Storage
 
 Tabularis stores all data locally. Nothing is sent to external servers except:
+
 - Your chosen database host (the actual connections you make).
 - GitHub API (`api.github.com`) for update checks, if enabled.
 - Your configured AI provider endpoint, only when you explicitly trigger an AI feature.
 
-| Data type | Location |
-| :--- | :--- |
-| App config (`config.json`) | `~/Library/Application Support/tabularis/` (macOS) |
-| Connection metadata | Same directory, `connections.json` |
-| Query history | Same directory, `query_history/<connection-id>.json` |
-| SSH profiles | Same directory, `ssh_connections.json` |
-| Saved queries | Same directory, per-connection `.sql` files |
-| Passwords / API keys | OS keychain only |
-| Logs | `~/Library/Logs/tabularis/` (macOS) |
+| Data type                  | Location                                             |
+| :------------------------- | :--------------------------------------------------- |
+| App config (`config.json`) | `~/Library/Application Support/tabularis/` (macOS)   |
+| Connection metadata        | Same directory, `connections.json`                   |
+| Query history              | Same directory, `query_history/<connection-id>.json` |
+| SSH profiles               | Same directory, `ssh_connections.json`               |
+| Saved queries              | Same directory, per-connection `.sql` files          |
+| Passwords / API keys       | OS keychain only                                     |
+| Logs                       | `~/Library/Logs/tabularis/` (macOS)                  |
 
 See [Configuration](/wiki/configuration) for platform-specific paths.

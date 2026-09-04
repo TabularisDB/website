@@ -1,0 +1,10 @@
+.desktopNav {
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+    gap: 0.25rem;
+
+    @media (max-width: 800px) {
+        display: none;
+    }
+}
