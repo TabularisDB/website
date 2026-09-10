@@ -36,6 +36,15 @@ Tabularis stores non-sensitive configuration, UI preferences, and connection met
 | **macOS** | `~/Library/Application Support/tabularis/config.json` |
 | **Linux** | `~/.config/tabularis/config.json` |
 
+### Custom Storage Location
+
+Since v0.23.0 the whole data folder can be moved from **Settings → Storage**. Connections, `config.json`, saved queries, themes, notebooks, query history and custom connection icons all live under the chosen root; installed plugins are the one exception and always stay in the platform data directory, because they are per-platform binaries. Pointing the folder at a synced location (iCloud Drive, Dropbox, …) is the intended way to share connections across machines.
+
+- **Change folder…** opens a folder picker. If the target already contains Tabularis data (for example synced from another machine) the default is to use it as is; otherwise you can copy your current data into it (existing files are never overwritten) or start with an empty folder. The current folder, anything nested inside it or containing it, relative paths and plain files are rejected.
+- The choice is stored in `storage-location.json` inside the default config directory listed above, so the app finds it before loading anything else. It is resolved once per process, so a change requires a restart; the tab shows a **Restart now** banner until then. The GUI and the `tabularis --mcp` subprocess read the same pointer file.
+- The **`TABULARIS_DATA_DIR`** environment variable overrides the pointer file for a launch or an installation (`TABULARIS_DATA_DIR=/path/to/folder tabularis`). When it is set the tab shows the folder as read-only. It applies to the MCP server too and is the right tool for portable installs, scripts and development.
+- Tabularis reads the folder at startup. Avoid running two instances on the same folder at the same time, for example on two machines while it is still syncing.
+
 ### Manually Editing config.json
 
 You can edit the file manually while **the application is closed**. Editing while Tabularis is running will likely result in your changes being overwritten when the app writes its state on exit.

@@ -126,7 +126,7 @@ Plan-wide aggregates: node counts and depth, total self time, **time by operatio
 
 ### Raw Output
 
-The raw view shows the database response in a read-only Monaco editor with syntax highlighting, word wrap, and search. No transformation — exactly what the server returned. JSON output from PostgreSQL or MySQL is detected automatically and highlighted as JSON; text-based output (like MySQL ANALYZE trees) renders as plain text.
+The raw view shows the database response in a read-only Monaco editor with syntax highlighting, word wrap, and search. No transformation — exactly what the server returned. JSON output from PostgreSQL or MySQL is detected automatically and highlighted as JSON; text-based output (like MySQL ANALYZE trees) renders as plain text. Since v0.23.0 XML plans are detected from the leading tag and highlighted as XML, and a single-line XML document (SQL Server SHOWPLAN output arrives this way) is indented one node per line for reading; already formatted XML passes through unchanged.
 
 ![Raw EXPLAIN JSON output in Monaco editor with syntax highlighting](/img/posts/tabularis-visual-explain-raw-json-output-monaco.png)
 
@@ -208,6 +208,8 @@ SQLite does not expose execution metrics — there is no ANALYZE equivalent for 
 Plugin drivers opt in to Visual EXPLAIN through the `explain` capability flag in their `manifest.json`. When a plugin declares `"explain": true` and implements the `explain_query` method, the EXPLAIN button and the editor context-menu entry work exactly as they do for the built-in drivers.
 
 For drivers that do not declare the capability — or omit it entirely — the Visual EXPLAIN button is hidden in the SQL editor and in notebook cells, so you will only see it on connections that can actually produce a plan. See the [Plugins](/wiki/plugins) page for the full capability reference.
+
+Since v0.23.0 a plugin no longer has to pre-parse its plan into the host's node shape. `explain_query` may return a **raw** result (`engine`, `format` and `payload` strings), and the plugin declares a matching TypeScript parser bundle in the `explain_parsers` array of its `.tabularium` manifest. Tabularis loads the bundle at runtime and registers it in the `@tabularis/explain` parser registry alongside the built-in PostgreSQL, MySQL and SQLite parsers, so the Graph, Table, Diagram, Stats, Raw and AI views work unchanged. Disabling and re-enabling the plugin unregisters and reloads its formats. Plugins that keep returning the parsed plan shape are unaffected. A plugin using the raw shape must declare `min_runtime_version` `0.23.0` or later; older hosts refuse it at install and load time instead of failing inside Visual EXPLAIN. The [SQL Server plugin](https://github.com/TabularisDB/tabularis-sqlserver-plugin) is the first to use this, with a `sqlserver-showplan-xml` parser; the design is described in [How plugins can now inject their own parsers into Visual EXPLAIN](/blog/how-plugins-can-now-inject-their-own-parsers-into-visual-explain) and the manifest contract in the [plugin guide](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md).
 
 ## Re-running a Plan
 

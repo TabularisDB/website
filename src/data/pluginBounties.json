@@ -12,11 +12,11 @@
       "id": "sql-server",
       "name": "SQL Server",
       "target": "Driver plugin",
-      "status": "claimed",
+      "status": "shipped",
       "tagline": "Production-grade SQL Server workflows through a dedicated driver plugin.",
-      "description": "SQL Server support moved from an in-app built-in driver to a dedicated plugin. Development happens in the tabularis-sqlserver-plugin repository — connection pooling, introspection, query execution, writes, DDL and execution plans — ahead of a first release.",
-      "stage": "In progress",
-      "nextStep": "Follow the tabularis-sqlserver-plugin repository, test the driver, and claim open issues.",
+      "description": "SQL Server ships as a dedicated plugin (1.0.0-beta.1, requires Tabularis 0.23.0 or later): schema browsing, query execution, type-aware row editing, DDL, routines, triggers, user management, TLS and Visual EXPLAIN through a plugin-provided SHOWPLAN XML parser.",
+      "stage": "Shipped",
+      "nextStep": "Install the SQL Server plugin from the registry, test it against your servers, and report gaps in the tabularis-sqlserver-plugin repository.",
       "difficulty": "High",
       "accent": "#ff5a3d",
       "radar": {
@@ -25,9 +25,9 @@
         "scale": 1.05
       },
       "tags": [
+        "shipped",
         "enterprise",
-        "plugin",
-        "work-in-progress"
+        "plugin"
       ],
       "capabilities": [
         {
@@ -48,16 +48,16 @@
         },
         {
           "label": "writes",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "explain",
-          "state": "stretch"
+          "state": "ready"
         }
       ],
-      "signal": "Direction changed: SQL Server now ships as a plugin instead of a built-in driver. In active development, not released yet.",
-      "claimUrl": "https://github.com/TabularisDB/tabularis-sqlserver-plugin",
-      "sponsorUrl": "/sponsors"
+      "signal": "Shipped as a plugin in beta: the first driver to bring its own Visual EXPLAIN parser, enabled by Tabularis 0.23.0.",
+      "claimUrl": "/plugins",
+      "sponsorUrl": "/plugins"
     },
     {
       "id": "amazon-redshift",

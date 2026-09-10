@@ -37,6 +37,7 @@ Tabularis ships with a set of keyboard shortcuts for common actions across navig
 | Run query (from Monaco editor) | `⌘+Enter` | `Ctrl+Enter` |
 | New console tab | `⌘+T` | `Ctrl+T` |
 | Close current tab | `⌘+W` | `Ctrl+W` |
+| Save SQL file (file-backed console tab, since v0.23.0) | `⌘+S` | `Ctrl+S` |
 | Switch tab (circular) | `Ctrl+Tab` | `Ctrl+Tab` |
 | Copy selection | `⌘+C` | `Ctrl+C` |
 | Format SQL (buffer or selection) | `⇧+⌥+F` | `Shift+Alt+F` |

@@ -72,6 +72,18 @@ Since v0.18.0 tabs can be dragged along the tab bar to reorder them. Console, ta
 
 <video src="/videos/posts/tabularis-reorder-tabs.mp4" poster="/videos/posts/tabularis-reorder-tabs.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
+## SQL Files
+
+Since v0.23.0 the editor can work on files on disk. A folder icon in the tab strip opens a native file picker filtered on `.sql`, `.psql` and `.pgsql`; the file content becomes a new console tab titled with the file name and bound to that path, and nothing is executed on open. On a multi-database connection the tab inherits the currently selected database.
+
+- **Save** writes the editor text back to the bound path. **Save As** asks for a new path, rebinds the tab and renames it. Both live in the toolbar's save split button (the main action saves, or opens Save As when the console is not bound to a file yet, and is disabled when there is nothing to save; the chevron menu also offers **Add to Saved Queries**) and at the top of the tab's right-click menu.
+- `Ctrl/Cmd+S` on a file-backed console tab saves the file. On every other tab it keeps its previous meaning and submits pending grid changes.
+- An amber dot next to the save icon and a bullet in the tab title mark unsaved changes. The dirty state is a comparison between the editor text and the content last read from or written to disk, so typing a character and deleting it again leaves the file clean. The tab tooltip shows the full path.
+- File bindings and the last saved content are persisted with the tab, so a restored tab can still be saved to the same path after a restart.
+- **Close**, **Close Others**, **Close to the Right / Left** and **Close All** ask for confirmation when any tab being closed has unsaved file changes.
+
+Reads are capped at 50 MB and go through the Rust backend, so files anywhere on disk can be opened and saved, not only those under the app data directory.
+
 ## Statement Folding
 
 Since v0.21.0 every multiline statement in the main query editor gets its own fold range in the Monaco gutter, computed with the same dialect-aware splitter that powers run-at-cursor, so dollar-quoted bodies and custom-`DELIMITER` blocks fold as one unit. Fold controls stay visible instead of appearing only on hover. Hovering a collapsed statement shows a syntax-highlighted preview of its content; you can move into the preview and scroll it without expanding the fold.

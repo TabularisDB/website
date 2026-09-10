@@ -25,6 +25,18 @@ Each built-in driver renders with its own branded icon in the Connections page �
 
 Additional drivers can be added via the [Plugin System](/wiki/plugins).
 
+### Deprecated Built-in PostgreSQL Driver and Plugin Migration
+
+Since v0.23.0 the built-in `postgres` driver is **deprecated** in favour of the [PostgreSQL plugin](https://github.com/TabularisDB/tabularis-postgresql-plugin) (`postgresql`), with a tentative removal date of 2026-10-05. The migration is opt-in in this release: nothing changes unless you click.
+
+- **Automatic plugin install.** At launch, if at least one saved connection uses the built-in `postgres` driver and a compatible plugin release is available, Tabularis installs and activates the `postgresql` plugin in the background. This re-triggers on every launch while such a connection exists, so uninstalling the plugin reinstalls it next time.
+- **Deprecated badge.** The built-in entry carries a **Deprecated** badge (tooltip: replacement and removal date) in the connection catalogue, on its card in **Settings → Plugins**, and on every connection row still using it. The plugin's catalogue entry sorts ahead of the built-in one.
+- **Banner.** The Connections page shows a dismissible *Try the new PostgreSQL plugin* banner once the plugin is ready (or a *couldn't be downloaded, we'll retry on the next launch* variant when the registry was unreachable). Dismissing hides it for the connections that existed at that moment; a new built-in connection brings it back.
+- **Switch to plugin.** Each built-in PostgreSQL connection has a migrate button on its card and a **Switch to plugin** entry in its context menu. After confirmation the driver flips to `postgresql`, the connection is reconnected if it was open, and a connection test runs. The resulting toast always offers **Undo** (which flips back and reconnects) and, on failure, **Report an issue**, which opens a pre-filled GitHub Issue Form in the plugin repository. A connection whose connection string is stored in the keychain gets a different confirmation: the secret does not carry over to the plugin and must be re-entered afterwards. Already migrated connections offer **Switch back to built-in**.
+- **Review connections.** The banner link opens a bulk checklist of every connection still on the built-in driver. Connections that use a capability the installed plugin does not declare (SSL or connection strings) are listed unchecked with the gap named inline and a **Report this gap** action; keychain-stored connection strings are unchecked with the re-entry warning; everything else is checked. **Migrate N selected** works through the rows sequentially with per-row status, one failure does not stop the rest, and migration continues if you close the modal.
+- Migrations are recorded in a persisted history. MySQL and SQLite are not deprecated yet and show no badge or migration action.
+
+
 ## Connections Page
 
 The Connections page (`Cmd/Ctrl + Shift + C`) lists all saved profiles and supports two display modes, switchable from the toolbar:
@@ -185,6 +197,7 @@ Right-click any connection — in the sidebar or on the Connections page — for
 - **Delete** — removes the profile from `connections.json` and the associated keychain entry
 - **Disconnect** — closes the active connection pool and SSH tunnel without deleting the profile
 - **Open in New Window** — opens the connection in its own standalone window (see below)
+- **Switch to plugin** / **Switch back to built-in** — on built-in PostgreSQL connections only, since v0.23.0 (see [Deprecated Built-in PostgreSQL Driver and Plugin Migration](#deprecated-built-in-postgresql-driver-and-plugin-migration))
 
 ### Open in New Window
 

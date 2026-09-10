@@ -99,7 +99,7 @@ On distributions with a recent Mesa (Arch, Solus, …), AppImages of v0.13.3 thr
 
 ### Where are my connections stored?
 
-Connection profiles (non-sensitive fields) are in `connections.json` inside the app config directory. Passwords and secrets are in your OS keychain. See [Security & Credentials](/wiki/security-credentials) for details.
+Connection profiles (non-sensitive fields) are in `connections.json` inside the app config directory. Passwords and secrets are in your OS keychain. Since v0.23.0 the folder can be relocated from **Settings → Storage** or with the `TABULARIS_DATA_DIR` environment variable; see [Configuration](/wiki/configuration#custom-storage-location). See [Security & Credentials](/wiki/security-credentials) for details.
 
 ### Can I use Tabularis with a read-only database user?
 

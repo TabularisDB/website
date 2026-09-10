@@ -23,7 +23,7 @@ Commands are **scope-aware**: each editor pane registers the connection and tabl
 
 ## What Object Search Finds
 
-The object palette filters **tables, views, routines, and triggers** as you type, using **typo-tolerant fuzzy matching** — a misspelling like `ordrs` still finds `orders`, and the closest names rank first. When the overlay opens, Tabularis resolves and indexes *all* databases and schemas configured for the active connection in the background:
+The object palette filters **tables, views, routines, and triggers** as you type, using **typo-tolerant fuzzy matching** — a misspelling like `ordrs` still finds `orders`, and the closest names rank first. Since v0.23.0 object types carry a relevance weight (tables above views, both above routines and triggers): with an empty query tables come first, and a table whose name contains the text ranks above the functions that also match it, while typing the exact name of a function still puts that function first. The fuzzy threshold was tightened at the same time (one typo every four characters), which matters on PostgreSQL schemas where extensions such as PostGIS add over a thousand functions to `public`. When the overlay opens, Tabularis resolves and indexes *all* databases and schemas configured for the active connection in the background:
 
 - A [multi-database MySQL/MariaDB connection](/wiki/connections#multi-database-support-mysql--mariadb) is searched across every selected database.
 - A [multi-schema PostgreSQL connection](/wiki/connections#multi-schema-support-postgresql) is searched across every visible schema.
@@ -47,4 +47,4 @@ Selecting a result (Enter or click) opens it — tables and views run a `SELECT 
 
 ## Performance Notes
 
-The navigator was built to stay responsive on connections with hundreds of tables: sidebar table items are memoized so only the previously- and newly-active items re-render, and the scroll-reveal retries until asynchronously loaded items actually exist in the DOM.
+The navigator was built to stay responsive on connections with hundreds of tables: sidebar table items are memoized so only the previously- and newly-active items re-render, and the scroll-reveal retries until asynchronously loaded items actually exist in the DOM. The result list renders at most 100 rows; the footer still shows the total number of matches, so narrowing the query is the way to reach anything below the cut.

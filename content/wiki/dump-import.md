@@ -23,6 +23,8 @@ Right-click a database in the sidebar and choose **Dump Database**. A modal open
 
 At least one of _Include Structure_ or _Include Data_ must be selected, and at least one table must be chosen before starting.
 
+Since v0.23.0 string literals are escaped per dialect (MySQL doubles backslashes and writes NUL as `\0`; PostgreSQL and SQLite only escape quotes) and `JSON` / `JSONB` columns are written as JSON literals with UTF-8 emitted as-is, so dumps round-trip on re-import. Before that, PostgreSQL and SQLite text columns came back with doubled backslashes and MySQL JSON columns could fail to import or lose non-ASCII text.
+
 Click **Export** to open the OS file save dialog. The default filename is `<database>_dump_<date>.sql`. Tabularis streams the dump to disk as it runs — you can see the elapsed time in real time. Click **Cancel** at any time to abort the operation.
 
 ## Import a Database

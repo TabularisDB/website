@@ -43,7 +43,7 @@ The keychain service name is `tabularis` for all entries.
 | `config.json` | App preferences, theme, editor settings |
 | `saved_queries/meta.json` | Saved query metadata |
 
-These files live in the app config directory:
+These files live in the app config directory (or in the custom data folder chosen under **Settings → Storage** since v0.23.0, see [Configuration](/wiki/configuration#custom-storage-location)):
 
 - **Linux**: `~/.config/dev.tabularis.app`
 - **macOS**: `~/Library/Application Support/dev.tabularis.app`
