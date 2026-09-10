@@ -154,8 +154,8 @@ function nightlyFile(
   return asset ? { kind: "file", label, desc, ext, url: asset.url } : null;
 }
 
-function available(options: Array<FileOption | null>): DownloadOption[] {
-  return options.filter((option): option is FileOption => option !== null);
+function available(options: Array<DownloadOption | null>): DownloadOption[] {
+  return options.filter((option): option is DownloadOption => option !== null);
 }
 
 export const NIGHTLY_PLATFORM_CONFIG: Record<Platform, PlatformConfig> = {
@@ -176,6 +176,12 @@ export const NIGHTLY_PLATFORM_CONFIG: Record<Platform, PlatformConfig> = {
   macos: {
     label: "macOS",
     options: available([
+      {
+        kind: "command",
+        label: "Homebrew",
+        desc: "Recommended — installs and auto-updates the nightly cask",
+        command: ["brew install --cask tabularis@nightly"],
+      },
       nightlyFile("Apple Silicon", "M1 / M2 / M3 / M4 / M5 / M6 (aarch64)", ".dmg", (name) =>
         name.endsWith("_aarch64.dmg"),
       ),

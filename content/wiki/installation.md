@@ -38,6 +38,12 @@ sudo dnf install webkit2gtk4.1-devel libsecret-devel
 brew install --cask tabularis
 ```
 
+To follow the [nightly channel](/wiki/updates#release-channels) instead, install the `tabularis@nightly` cask:
+
+```bash
+brew install --cask tabularis@nightly
+```
+
 [![Homebrew](https://img.shields.io/badge/Homebrew-Repository-orange?logo=homebrew)](https://github.com/debba/homebrew-tabularis)
 
 ### Direct download
