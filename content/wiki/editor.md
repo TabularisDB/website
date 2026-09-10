@@ -82,6 +82,8 @@ Since v0.23.0 the editor can work on files on disk. A folder icon in the tab str
 - File bindings and the last saved content are persisted with the tab, so a restored tab can still be saved to the same path after a restart.
 - **Close**, **Close Others**, **Close to the Right / Left** and **Close All** ask for confirmation when any tab being closed has unsaved file changes.
 
+![The editor toolbar's save split button expanded over a console tab: Save (greyed out, Not saved to a file yet), Save As… with the .sql hint, and Add to Saved Queries…, next to the folder icon in the tab strip that opens a .sql file](/img/tabularis-sql-file-save-split.png)
+
 Reads are capped at 50 MB and go through the Rust backend, so files anywhere on disk can be opened and saved, not only those under the app data directory.
 
 ## Statement Folding

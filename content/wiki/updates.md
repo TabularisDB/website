@@ -62,6 +62,12 @@ sudo snap refresh tabularis
 brew upgrade --cask tabularis
 ```
 
+If you installed the nightly cask, upgrade that one instead:
+
+```bash
+brew upgrade --cask tabularis@nightly
+```
+
 ### winget (Windows)
 
 ```bash
