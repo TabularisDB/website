@@ -36,6 +36,10 @@ Since v0.23.0 the built-in `postgres` driver is **deprecated** in favour of the 
 - **Review connections.** The banner link opens a bulk checklist of every connection still on the built-in driver. Connections that use a capability the installed plugin does not declare (SSL or connection strings) are listed unchecked with the gap named inline and a **Report this gap** action; keychain-stored connection strings are unchecked with the re-entry warning; everything else is checked. **Migrate N selected** works through the rows sequentially with per-row status, one failure does not stop the rest, and migration continues if you close the modal.
 - Migrations are recorded in a persisted history. MySQL and SQLite are not deprecated yet and show no badge or migration action.
 
+![Connections page with the dismissible Try the new PostgreSQL plugin banner announcing the built-in driver retirement (tentatively 2026-10-05) and its Review connections link, above the connection cards, one of which carries the Deprecated badge next to its driver chip](/img/tabularis-postgres-deprecation-banner.png)
+
+![The Review connections modal opened from the banner: it lists the one connection still on the built-in driver as a checked row, with Close and Migrate 1 selected buttons](/img/tabularis-migration-checklist.png)
+
 
 ## Connections Page
 

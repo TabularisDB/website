@@ -130,6 +130,8 @@ The raw view shows the database response in a read-only Monaco editor with synta
 
 ![Raw EXPLAIN JSON output in Monaco editor with syntax highlighting](/img/posts/tabularis-visual-explain-raw-json-output-monaco.png)
 
+![Visual EXPLAIN on a SQL Server connection through the plugin, Raw Output tab: the SHOWPLAN XML returned as a single line is indented one node per line with XML highlighting in Monaco, below the overview bar with the two top issues](/img/tabularis-explain-raw-xml.png)
+
 ### AI Analysis
 
 The AI tab sends the query and the raw EXPLAIN output to the configured AI provider and returns a structured analysis: what the query is doing, where the bottlenecks are, which indexes might help, and which rewrites are worth testing.
