@@ -13049,3 +13049,28 @@ footer {
     animation: none;
   }
 }
+
+/* Newsletter anti-spam: honeypot field (never visible), disabled state, error. */
+.newsletter-hp {
+  position: absolute !important;
+  left: -10000px !important;
+  top: auto !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.newsletter-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  filter: none;
+}
+
+.newsletter-error {
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+  color: #e5484d;
+  font-family: var(--font-mono);
+}
