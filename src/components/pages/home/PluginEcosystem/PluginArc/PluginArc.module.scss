@@ -1,0 +1,144 @@
+@property --spin {
+    syntax: '<angle>';
+    inherits: true;
+    initial-value: 0deg;
+}
+
+.arcWrapper {
+    position: relative;
+    width: 100%;
+    height: 22rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    --size-x: min(1200px, 90vw);
+    --ratio: 1.6667;
+
+    @media (max-width: 900px) {
+        --ratio: 1.4;
+    }
+
+    @media (max-width: 767px) {
+        height: fit-content;
+    }
+}
+
+.maskLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    padding-top: 3rem;
+    mask-image: linear-gradient(to bottom, black 55%, transparent 98%);
+    -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 98%);
+}
+
+.circle {
+    position: relative;
+    box-sizing: border-box;
+    width: var(--size-x);
+    height: calc(var(--size-x) / var(--ratio));
+    border-radius: 50%;
+    border: 0.1rem solid var(--color-border);
+
+    --spin: 0deg;
+    --duration: 90s;
+    animation: pluginArcSpin var(--duration) linear infinite;
+
+    &:hover {
+        animation-play-state: paused;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        animation: none;
+    }
+}
+
+@keyframes pluginArcSpin {
+    from {
+        --spin: 0deg;
+    }
+    to {
+        --spin: 360deg;
+    }
+}
+
+.arcIcon {
+    position: absolute;
+    box-sizing: border-box;
+    top: 50%;
+    left: 50%;
+    width: clamp(1rem, 6vw, 3.5rem);
+    height: clamp(1rem, 6vw, 3.5rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+
+    --total: calc(var(--angle) + var(--spin));
+
+    transform: translate(
+            calc(cos(var(--total)) * calc((var(--size-x) - 2px) / 2) - 50%),
+            calc(-1 * sin(var(--total)) * calc((calc(var(--size-x) / var(--ratio)) - 2px) / 2) - 50%)
+        )
+        scale(calc(0.75 + 0.5 * max(cos(calc(var(--total) - 90deg)), 0)));
+
+    transition: border-color 0.25s ease;
+
+    &:hover {
+        border-color: var(--color-accent-teal);
+        z-index: 2;
+    }
+}
+
+.icon {
+    width: 60%;
+    aspect-ratio: 1;
+    object-fit: contain;
+}
+
+.compactGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-inline: auto;
+    padding-top: 1rem;
+}
+
+.gridTile {
+    height: 4rem;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.gridIcon {
+    width: 55%;
+    aspect-ratio: 1;
+    object-fit: contain;
+}
+
+.actions {
+    position: relative;
+    margin-top: 2rem;
+    z-index: 10;
+
+    @media (max-width: 767px) {
+        margin-top: 4rem;
+    }
+}

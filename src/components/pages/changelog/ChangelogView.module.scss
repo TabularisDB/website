@@ -1,0 +1,22 @@
+.pageSubtitle {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+
+    a {
+        color: var(--color-text-primary);
+        font-weight: 500;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.timeline {
+    position: relative;
+    margin-top: 4rem;
+
+    @media (max-width: 767px) {
+        margin-top: 3rem;
+    }
+}

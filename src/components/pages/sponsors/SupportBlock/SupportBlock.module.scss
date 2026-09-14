@@ -1,0 +1,68 @@
+.block {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-block: 4rem;
+    margin-top: 5rem;
+    border-top: 0.1rem solid var(--color-border);
+}
+
+.title {
+    font-size: clamp(2rem, 9.23vw, 2.5rem);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    max-width: 700px;
+    margin-inline: auto;
+    width: 100%;
+}
+
+.subTitle {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 0.375rem;
+}
+
+.text {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.button {
+    width: fit-content;
+
+    svg {
+        width: 1.1rem;
+        height: 1.1rem;
+    }
+}
+
+.perks {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-block: 0.5rem 2rem;
+
+    li {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 0.9rem;
+        color: var(--color-text-secondary);
+        line-height: 1.4;
+    }
+}
+
+.perkIcon {
+    flex-shrink: 0;
+    color: var(--color-text-primary);
+}

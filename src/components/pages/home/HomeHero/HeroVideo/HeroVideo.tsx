@@ -2,7 +2,10 @@
 
 import {useCallback, useEffect, useRef, useState} from 'react';
 import clsx from 'clsx';
+import {Maximize, PlayIcon} from 'lucide-react';
+import {VideoModal} from '@/components/ui/VideoModal/VideoModal';
 import styles from './HeroVideo.module.scss';
+import {Button} from '@/components/ui/Button/Button';
 
 interface HeroVideoPreviewProps {
     poster: string;
@@ -21,7 +24,9 @@ export function HeroVideo({
 }: HeroVideoPreviewProps) {
     const [videoReady, setVideoReady] = useState(false);
     const [hovering, setHovering] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
+    const triggerRef = useRef<HTMLButtonElement>(null);
 
     const preloadVideo = useCallback(() => {
         const video = videoRef.current;
@@ -58,6 +63,13 @@ export function HeroVideo({
         return () => window.clearTimeout(timer);
     }, [previewing]);
 
+    const handleOpenModal = useCallback((event: React.MouseEvent) => {
+        event.stopPropagation();
+        setModalOpen(true);
+    }, []);
+
+    const handleCloseModal = useCallback(() => setModalOpen(false), []);
+
     return (
         <div
             className={styles.heroDemo}
@@ -89,6 +101,17 @@ export function HeroVideo({
                 aria-hidden="true"
                 tabIndex={-1}
             />
+
+            <Button
+                className={styles.fullscreenButton}
+                onClick={handleOpenModal}
+                aria-label="Watch the Tabularis overview video"
+            >
+                <PlayIcon size={20} />
+                Watch full demo
+            </Button>
+
+            <VideoModal src={src} poster={poster} open={modalOpen} onClose={handleCloseModal} />
         </div>
     );
 }

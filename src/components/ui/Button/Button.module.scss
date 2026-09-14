@@ -33,6 +33,18 @@
     }
 }
 
+.secondary {
+    background: var(--color-surface);
+    color: white;
+    border-color: var(--color-border);
+    color: var(--color-text-primary);
+
+    &:hover:not(:disabled) {
+        filter: brightness(1.1);
+        border-color: var(--color-border-hover);
+    }
+}
+
 .outline {
     background: transparent;
     border-color: var(--color-border);
@@ -77,8 +89,8 @@
 
 .lg {
     font-size: 1.05rem;
-    padding-block: 0.875rem;
-    padding-inline: 1.75rem;
+    padding-block: 0.8rem;
+    padding-inline: 1.5rem;
 
     &.ghost {
         padding-inline: 0;

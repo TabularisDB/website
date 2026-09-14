@@ -1,0 +1,57 @@
+.productDescription {
+    width: 100%;
+    display: flex;
+    gap: 4rem;
+    width: 85vw;
+    max-width: 900px;
+    margin-block: 1rem;
+    margin-inline: auto;
+
+    @media (max-width: 900px) {
+        flex-direction: column;
+        gap: 3rem;
+    }
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.titleRow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.25rem;
+}
+
+.iconWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-md);
+    background: rgba(53, 208, 192, 0.1);
+    color: var(--color-accent-teal);
+    flex-shrink: 0;
+
+    & svg {
+        height: 80%;
+    }
+}
+
+.title {
+    color: var(--color-text-primary);
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 120%;
+}
+
+.text {
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 140%;
+}
