@@ -1,0 +1,144 @@
+.categoriesWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    margin-top: 5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.category {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.categoryTitle {
+    font-size: 1.375rem;
+    font-weight: 400;
+    color: var(--color-text-primary);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-block: 1rem;
+    margin-inline: auto;
+    width: 100%;
+
+    @media (max-width: 1120px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 767px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+
+    &:hover .cardCover {
+        border-color: rgba(53, 208, 192, 0.5);
+    }
+}
+
+.cardCover {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 8;
+    color: var(--color-text-primary);
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: all 0.4s ease-in-out;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
+        background-size: 16px 16px;
+        mask-image: radial-gradient(ellipse at center, black 50%, transparent 85%);
+        -webkit-mask-image: radial-gradient(ellipse at center, black 50%, transparent 85%);
+        pointer-events: none;
+    }
+}
+
+.cardIcon {
+    --size: 2.75rem;
+    width: var(--size);
+    height: var(--size);
+    position: relative;
+    z-index: 1;
+}
+
+.cardDetails {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 100%;
+}
+
+.cardTitle {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+.cardExcerpt {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+}
+
+.cardTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.65rem;
+    border-radius: var(--radius-full);
+    background: rgba(53, 208, 192, 0.1);
+    border: 1px solid rgba(53, 208, 192, 0.25);
+    color: var(--color-accent-teal);
+    font-size: 0.78rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.transitionBlock {
+    padding-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border-top: 0.1rem solid var(--color-border);
+}
+
+.transitionTitle {
+    font-size: 1.75rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 0.65rem;
+}
+
+.transitionText {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+}

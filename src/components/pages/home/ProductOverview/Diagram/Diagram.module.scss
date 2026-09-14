@@ -3,16 +3,58 @@
     grid-template-columns: minmax(0, 1fr) 18px minmax(40px, 0.8fr) auto minmax(40px, 0.8fr) 18px minmax(0, 1fr);
     align-items: center;
     max-width: 1024px;
+    margin-block: 2rem;
+
+    @media (max-width: 900px) {
+        display: flex;
+        flex-direction: column;
+        justify-items: center;
+    }
+}
+
+.desktopOnly {
+    @media (max-width: 900px) {
+        display: none;
+    }
+}
+
+.mobileOnly {
+    display: none;
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+
+    @media (max-width: 900px) {
+        display: block;
+    }
 }
 
 .sources {
     padding-right: 1rem;
     margin-left: auto;
+
+    @media (max-width: 900px) {
+        padding-right: 0;
+        margin-left: 0;
+        padding-bottom: 1rem;
+        width: 100%;
+
+        .stackItem {
+            width: 10rem;
+        }
+    }
 }
 
 .destination {
     padding-left: 1rem;
     margin-right: auto;
+
+    @media (max-width: 900px) {
+        padding-left: 0;
+        margin-right: 0;
+        padding-top: 1rem;
+        width: 100%;
+    }
 }
 
 .sourcesList,
@@ -21,6 +63,14 @@
     flex-direction: column;
     gap: 2rem;
     width: fit-content;
+
+    @media (max-width: 900px) {
+        width: 100%;
+        flex-direction: row;
+        align-items: end;
+        justify-content: center;
+        gap: 1rem;
+    }
 }
 
 .source,
@@ -30,6 +80,10 @@
     flex-direction: column;
     gap: 0.5rem;
     width: 100%;
+
+    @media (max-width: 900px) {
+        width: fit-content;
+    }
 }
 
 .blockTitle {
@@ -41,8 +95,8 @@
 }
 
 .stackItem {
-    background-color: var(--color-surface);
     border: 0.1rem solid var(--color-border);
+    background-color: var(--color-surface);
     border-radius: var(--radius-md);
     display: flex;
     gap: 0.5rem;
@@ -52,11 +106,21 @@
     color: var(--color-text-primary);
     font-size: 1rem;
     font-weight: 500;
+    white-space: nowrap;
 
     & svg {
-        width: 1.25rem;
+        height: 1.25rem;
+        min-height: 1.25rem;
         min-width: 1.25rem;
     }
+}
+
+.stackItem.pluginItem {
+    background-color: transparent;
+    border-style: dashed;
+    border-color: var(--color-text-muted);
+    color: var(--color-text-secondary);
+    font-weight: 400;
 }
 
 .hub {
@@ -66,8 +130,13 @@
     align-items: center;
     gap: 1rem;
 
-    & svg {
-        height: 6rem;
+    @media (max-width: 768px) {
+        margin-inline: 0;
+        margin-block: 1.5rem;
+    }
+
+    & img {
+        height: 8rem;
     }
 
     & span {
@@ -78,5 +147,6 @@
 }
 
 .line {
-    color: var(--color-text-muted);
+    color: var(--color-accent-teal);
+    opacity: 0.75;
 }

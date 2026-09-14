@@ -1,0 +1,95 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-block: 1rem;
+    max-width: 900px;
+    margin-inline: auto;
+    width: 100%;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+
+    &:hover .cardCover {
+        border-color: rgba(53, 208, 192, 0.5);
+    }
+}
+
+.cardCover {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 8;
+    color: var(--color-text-primary);
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: all 0.4s ease-in-out;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
+        background-size: 16px 16px;
+        mask-image: radial-gradient(ellipse at center, black 50%, transparent 85%);
+        -webkit-mask-image: radial-gradient(ellipse at center, black 50%, transparent 85%);
+        pointer-events: none;
+    }
+}
+
+.cardIcon {
+    --size: 2.75rem;
+    width: var(--size);
+    height: var(--size);
+}
+
+.cardDetails {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.cardTitle {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    padding-right: 1.5rem;
+}
+
+.cardExcerpt {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+}
+
+.cardArrow {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent-teal);
+    opacity: 0;
+    transform: translateX(-4px);
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.footerLink {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-inline: auto;
+    width: fit-content;
+}

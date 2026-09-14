@@ -3,8 +3,13 @@
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import styles from './Brand.module.scss';
+import clsx from 'clsx';
 
-export function Brand() {
+interface BrandProps {
+    className?: string;
+}
+
+export function Brand({className}: BrandProps) {
     const pathname = usePathname();
 
     function handleClick(e: React.MouseEvent) {
@@ -16,7 +21,7 @@ export function Brand() {
 
     return (
         <Link href="/" onClick={handleClick} className={styles.brand}>
-            <img src="/img/logo.png" alt="Tabularis" className={styles.logo} />
+            <img src="/img/logo.png" alt="Tabularis" className={clsx(styles.logo, className)} />
         </Link>
     );
 }
