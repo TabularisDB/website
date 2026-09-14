@@ -1,9 +1,9 @@
 import {DownloadButton} from '@/components/ui/DownloadButton/DownloadButton';
 import {GitHubButton} from '@/components/ui/GithubButton/GithubButton';
-import {HeroTrust} from './HeroTrust/HeroTrust';
 import {HeroVideo} from './HeroVideo/HeroVideo';
 import styles from './HomeHero.module.scss';
 import {ReleasePill} from './ReleasePill/ReleasePill';
+import {TrustRow} from '@/components/ui/TrustRow/TrustRow';
 
 export function HomeHero() {
     return (
@@ -18,7 +18,7 @@ export function HomeHero() {
                 <DownloadButton className={styles.downloadButton} />
                 <GitHubButton />
             </div>
-            <HeroTrust />
+            <TrustRow />
             <HeroVideo
                 src="/videos/overview.mp4"
                 poster="/videos/overview-hero.webp"

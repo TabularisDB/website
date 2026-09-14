@@ -1,0 +1,78 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 4rem;
+    margin-inline: auto;
+    width: 100%;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+
+    &:hover .cardCover {
+        border-color: rgba(53, 208, 192, 0.5);
+    }
+}
+
+.cardCover {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 8;
+    color: var(--color-text-primary);
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: all 0.4s ease-in-out;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
+        background-size: 16px 16px;
+        mask-image: radial-gradient(ellipse at center, black 50%, transparent 85%);
+        -webkit-mask-image: radial-gradient(ellipse at center, black 50%, transparent 85%);
+        pointer-events: none;
+    }
+}
+
+.cardIcon {
+    max-width: 60%;
+    max-height: 4rem;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    position: relative;
+    z-index: 1;
+}
+
+.cardDetails {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 100%;
+    text-align: start;
+}
+
+.cardTitle {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+.cardTagline {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+}

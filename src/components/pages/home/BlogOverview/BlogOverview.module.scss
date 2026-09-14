@@ -1,0 +1,50 @@
+.section {
+    position: relative;
+}
+
+.backgroundWrapper {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.aurora {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60vw;
+    height: 60vw;
+    border-radius: 50%;
+    filter: blur(130px);
+    mix-blend-mode: screen;
+    opacity: 0.24;
+    background: radial-gradient(circle, rgba(96, 165, 250, 0.55), transparent 50%);
+    transform: translate(-50%, -50%);
+    animation: drift 24s ease-in-out infinite;
+}
+
+@keyframes drift {
+    0%,
+    100% {
+        transform: translate(-50%, -50%) translate(0, 0);
+    }
+    50% {
+        transform: translate(-50%, -50%) translate(3%, 4%);
+    }
+}
+
+.latestPosts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+    width: 100%;
+    margin-block: 1rem;
+    max-width: 1024px;
+
+    @media (max-width: 767px) {
+        grid-template-columns: 1fr;
+    }
+}

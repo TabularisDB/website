@@ -1,14 +1,14 @@
 ---
-section: "solutions"
-title: "MySQL Workbench Replacement"
-metaTitle: "MySQL Workbench Replacement for Modern Developers | Tabularis"
+section: 'solutions'
+title: 'MySQL Workbench Replacement'
+metaTitle: 'MySQL Workbench Replacement for Modern Developers | Tabularis'
 order: 13
-excerpt: "A modern replacement for MySQL Workbench with a real SQL editor, notebooks, SSH tunneling, plugin extensibility, and MCP-ready AI workflows."
-description: "Replace MySQL Workbench with Tabularis: native macOS, Linux, and Windows builds, Monaco-based SQL editor, SQL notebooks, SSH tunneling, and MCP for AI workflows."
-image: "/img/overview.png"
-audience: "MySQL and MariaDB developers"
-useCase: "MySQL Workbench replacement"
-format: "Guide"
+excerpt: 'A modern replacement for MySQL Workbench with a real SQL editor, notebooks, SSH tunneling, plugin extensibility, and MCP-ready AI workflows.'
+description: 'Replace MySQL Workbench with Tabularis: native macOS, Linux, and Windows builds, Monaco-based SQL editor, SQL notebooks, SSH tunneling, and MCP for AI workflows.'
+image: '/img/overview.png'
+audience: 'MySQL and MariaDB developers'
+useCase: 'MySQL Workbench replacement'
+format: 'Guide'
 ---
 
 # MySQL Workbench Replacement
@@ -25,7 +25,7 @@ If your daily work is closer to "open, connect, query, iterate" — and sometime
 
 ## What you get with Tabularis
 
-- a **Monaco-based SQL editor** that feels like VS Code
+- **Monaco-based SQL editor** that feels like VS Code
 - **SQL notebooks** for reusable analysis
 - **SSH tunneling** with OS-keychain-backed secrets
 - **Multi-database support**: MySQL/MariaDB, PostgreSQL, SQLite

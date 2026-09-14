@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import type {ReactNode, ButtonHTMLAttributes, AnchorHTMLAttributes} from 'react';
 import styles from './Button.module.scss';
 
-type Variant = 'primary' | 'outline' | 'ghost';
+type Variant = 'primary' | 'secondary' | 'outline' | 'ghost';
 type Size = 'sm' | 'md' | 'lg';
 
 type CommonProps = {

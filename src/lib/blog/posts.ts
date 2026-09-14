@@ -50,8 +50,9 @@ export interface PostMeta {
  * `.png` in development.
  */
 export function postOgImage(slug: string): string {
-    const ext = process.env.NODE_ENV === 'production' ? '.png' : '';
-    return `/blog/${slug}/opengraph-image${ext}`;
+    const ext = process.env.NODE_ENV === 'production' ? '.png' : '.png';
+    // TODO : rollback url
+    return `https://tabularis.dev/blog/${slug}/opengraph-image${ext}`;
 }
 
 function parseAuthors(data: Record<string, unknown>): string[] {
@@ -293,8 +294,10 @@ export function formatDate(iso: string): string {
     return dateStr;
 }
 
-export function getLatestReleaseTitle(): string {
-    const posts = getAllPosts();
-    const latestRealease = posts.filter((post) => post.tags.includes('release'))[0];
-    return latestRealease.title.split(': ')[1];
+export function formatBlogTitle(blogDetails: PostMeta): string {
+    if (blogDetails.tags.includes('release')) {
+        return blogDetails.title.split(': ')[1];
+    }
+
+    return blogDetails.title;
 }

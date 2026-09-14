@@ -1,0 +1,13 @@
+.blocks {
+    display: flex;
+    flex-direction: column;
+    gap: 8rem;
+    margin-top: 4rem;
+    width: 90vw;
+    max-width: 1150px;
+
+    @media (max-width: 900px) {
+        gap: 5rem;
+        margin-top: 0;
+    }
+}

@@ -7,10 +7,6 @@ import styles from './DownloadButton.module.scss';
 import {ArrowRight} from 'lucide-react';
 import clsx from 'clsx';
 
-interface DownloadButtonProps {
-    className?: string;
-}
-
 function detectPlatform(): Platform {
     if (typeof navigator === 'undefined') return 'windows';
     const ua = navigator.userAgent.toLowerCase();
@@ -59,6 +55,10 @@ function PlatformIcon({platform}: {platform: Platform}) {
     }
 
     return '';
+}
+
+interface DownloadButtonProps {
+    className?: string;
 }
 
 export function DownloadButton({className}: DownloadButtonProps) {

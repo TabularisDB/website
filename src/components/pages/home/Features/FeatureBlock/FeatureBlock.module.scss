@@ -1,0 +1,91 @@
+.block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+
+    &.reversed {
+        .textCol {
+            order: 1;
+        }
+        .visualCol {
+            order: 2;
+        }
+    }
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding-block: 1rem;
+        max-width: 700px;
+        margin-inline: auto;
+
+        .textCol,
+        .visualCol {
+            order: unset !important;
+        }
+    }
+}
+
+.textCol {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: -50%;
+        z-index: -1;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0V0z' fill='none'/%3E%3Cpath d='M0 40V0h40' stroke='%23ffffff' stroke-width='1' stroke-opacity='0.08' fill='none'/%3E%3C/svg%3E");
+        background-size: 40px 40px;
+        -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+        mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+    }
+}
+
+.visualCol {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-accent-teal);
+    letter-spacing: 0.05em;
+
+    & svg {
+        width: 1rem;
+        min-width: 1rem;
+    }
+}
+
+.title {
+    font-family: var(--font-display);
+    font-size: 1.85rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+.description {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.learnMore svg {
+    width: 1.25rem;
+    min-width: 1.25rem;
+}

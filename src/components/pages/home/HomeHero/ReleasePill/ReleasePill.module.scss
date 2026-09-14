@@ -7,11 +7,16 @@
     gap: 0.5rem;
     max-width: min(400px, 80vw);
     font-size: 0.9rem;
+    transition: transform 1s ease;
 
     & svg {
         min-width: 1rem;
         width: 1rem;
         height: 1rem;
+    }
+
+    &:hover {
+        transform: scale(1.02);
     }
 }
 

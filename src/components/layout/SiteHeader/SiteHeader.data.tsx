@@ -126,7 +126,7 @@ export const navGroups: NavGroup[] = [
                     },
                     {
                         label: 'Database Client for On-Call Engineers',
-                        href: '/solutions/database-client-on-call-engineers',
+                        href: '/solutions/database-client-for-on-call-engineers',
                         description: 'Reach production through SSH or Kubernetes tunnels.',
                     },
                 ],
@@ -135,7 +135,7 @@ export const navGroups: NavGroup[] = [
     },
     {
         label: 'Resources',
-        matchPrefixes: ['/blog', '/changelog', '/videos', '/sponsors'],
+        matchPrefixes: ['/blog', '/changelog', '/demos', '/sponsors'],
         columns: [
             {
                 title: 'Learn',
@@ -152,7 +152,7 @@ export const navGroups: NavGroup[] = [
                     },
                     {
                         label: 'Product Demos',
-                        href: '/videos',
+                        href: '/demos',
                         description: 'Short videos for the workflows developers evaluate first.',
                     },
                     {

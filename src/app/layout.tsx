@@ -8,6 +8,9 @@ import {jetbrainsMono, outfit, urbanist} from './font';
 import './globals.scss';
 import {SearchModal} from '@/components/layout/SearchModal/SearchModal';
 import {SiteHeader} from '@/components/layout/SiteHeader/SiteHeader';
+import {Footer} from '@/components/layout/Footer/Footer';
+import {CookieConsent} from '@/components/layout/CookieConsent/CookieConsent';
+import {EngagementPrompt} from '@/components/layout/EngagementPrompt/EngagementPrompt';
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://tabularis.dev'),
@@ -47,6 +50,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                 <SiteHeader />
                 <JsonLd data={[buildOrganizationJsonLd(), buildSoftwareApplicationJsonLd()]} />
                 {children}
+                <Footer />
+                <CookieConsent />
+                <EngagementPrompt />
                 <SearchModal />
             </body>
         </html>

@@ -1,2 +1,1 @@
-export * from './GithubIcon';
-export * from './DiscordIcon';
+export * from './SocialIcons';

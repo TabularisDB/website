@@ -7,7 +7,7 @@ import {Brand} from '../Brand/Brand';
 import {DesktopNav} from './components/DesktopNav/DesktopNav';
 import {HeaderActions} from './components/HeaderActions/HeaderActions';
 import styles from './SiteHeader.module.scss';
-import {HeaderMenuContext} from './HeaderMenuContext';
+import {HeaderMenuContext, useHeaderMenu} from './HeaderMenuContext';
 import {MobileMenu} from './components/MobileMenu/MobileMenu';
 import {getRepoStars} from '@/lib/github';
 
@@ -36,7 +36,10 @@ export function SiteHeader() {
                 )}
             >
                 <div className={clsx(styles.container, wide && styles.containerWide)}>
-                    <Brand />
+                    <div onClick={() => setOpenGroupLabel(null)}>
+                        <Brand />
+                    </div>
+
                     <DesktopNav />
 
                     <HeaderActions

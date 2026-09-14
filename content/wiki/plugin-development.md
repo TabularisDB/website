@@ -1,8 +1,8 @@
 ---
 order: 8.6
-category: "Integration"
-title: "Plugin Development"
-excerpt: "Build database driver plugins for Tabularis and publish them to this Tabularium registry — protocol, manifest, scaffold, release workflow."
+category: 'Integration'
+title: 'Plugin Development'
+excerpt: 'Build database driver plugins for Tabularis and publish them to this Tabularium registry — protocol, manifest, scaffold, release workflow.'
 ---
 
 Tabularis is the desktop app that connects to your databases. **Tabularium** is the registry it pulls plugins from — this instance, or [registry.tabularis.dev](https://registry.tabularis.dev), or any other self-hosted Tabularium your users point their `tabulariumRegistryUrl` at. This page covers both halves of the developer story:
@@ -26,12 +26,12 @@ just dev-install
 
 The generated project compiles on first `cargo check`, contains stubs for every required method, has a working `test_connection`, and ships a 5-platform release workflow. Pick the template that fits your data source:
 
-| `--db-type` | Shape | Examples |
-|---|---|---|
-| `network` | host + port + user + pass | PostgreSQL, MySQL clones |
-| `file` | single file path | SQLite, DuckDB, Parquet |
-| `folder` | directory of files | CSV folder, Parquet lake |
-| `api` | no connection form | REST APIs, Google Sheets |
+| `--db-type` | Shape                     | Examples                 |
+| ----------- | ------------------------- | ------------------------ |
+| `network`   | host + port + user + pass | PostgreSQL, MySQL clones |
+| `file`      | single file path          | SQLite, DuckDB, Parquet  |
+| `folder`    | directory of files        | CSV folder, Parquet lake |
+| `api`       | no connection form        | REST APIs, Google Sheets |
 
 ## Architecture: JSON-RPC over STDIO
 
@@ -54,13 +54,13 @@ It lives at the plugin's repo root **and must be uploaded as a standalone releas
 
 Your plugin must implement at least these. Optional methods can return `[]` or a `-32601` error.
 
-| Method | Result shape |
-|---|---|
-| `test_connection` | `{ "success": true }` |
-| `get_databases` | `["db1", "db2"]` |
-| `get_tables` | `[{ "name": "users", "schema": "main", "comment": null }]` |
-| `get_columns` | `[{ "name": "id", "data_type": "INTEGER", "is_nullable": false, ... }]` |
-| `execute_query` | `{ "columns": [...], "rows": [...], "total_count": N, "execution_time_ms": M }` |
+| Method            | Result shape                                                                    |
+| ----------------- | ------------------------------------------------------------------------------- |
+| `test_connection` | `{ "success": true }`                                                           |
+| `get_databases`   | `["db1", "db2"]`                                                                |
+| `get_tables`      | `[{ "name": "users", "schema": "main", "comment": null }]`                      |
+| `get_columns`     | `[{ "name": "id", "data_type": "INTEGER", "is_nullable": false, ... }]`         |
+| `execute_query`   | `{ "columns": [...], "rows": [...], "total_count": N, "execution_time_ms": M }` |
 
 `ping` is optional but recommended — lightweight health check, falls back to `test_connection` when absent.
 
@@ -72,8 +72,8 @@ Keep UI strings in `locales/<lang>.json` at the plugin root and read them with `
 
 ```tsx
 const t = usePluginTranslation(pluginId);
-t("toolbar.label");
-t("toolbar.greeting", { table });
+t('toolbar.label');
+t('toolbar.greeting', {table});
 ```
 
 The host runtime is **[Lingui](https://lingui.dev/)** — author new keys ICU-style with single-brace `{var}` placeholders. Legacy i18next `{{var}}` placeholders still interpolate, so existing plugins keep working unchanged.
@@ -94,31 +94,31 @@ The admin may require manual approval — check `/requests` after submitting.
 End users point their Tabularis at any Tabularium by setting `tabulariumRegistryUrl` in their `config.json`:
 
 ```json
-{ "tabulariumRegistryUrl": "https://registry.tabularis.dev" }
+{"tabulariumRegistryUrl": "https://registry.tabularis.dev"}
 ```
 
 Both the in-app plugin browser and the install command will use that URL.
 
 ## Core manifest fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `id` | `string` | — | Stable plugin identifier and URL slug. Pinned at first submit. For legacy manifests without id, name supplies the identifier. |
-| `name` | `string` | ✅ | Human-readable display name (e.g. "SQLite JDBC"). Without id, this must remain a lowercase slug (1–64 characters) for backwards compatibility. |
-| `version` | `string` | ✅ | Semantic version of this plugin release (no leading "v"). REQUIRED — must match the release tag stripped of any "v" prefix. The registry rejects ingests whose tag and manifest version disagree, so a manifest version bump is the single source of truth for "this is a new release". |
-| `description` | `string` | — | One-line summary shown on the plugin card and search results. Keep it under 280 characters and write it like a tagline, not a paragraph. |
-| `category` | `string` | — | Free-form category label. Used for grouping plugins on the registry home page. |
-| `kind` | `string` | — | Plugin kind slug (must match one of the registry's configured kinds — see the per-kind sections below). Drives which extension fields apply and whether your plugin appears on the catalogue page for that kind. |
-| `tags` | `array<string>` | — | Searchable tags. Used by the registry's search index; max 16 tags, 30 chars each. |
-| `license` | `string` | — | SPDX identifier (e.g. "MIT", "Apache-2.0", "GPL-3.0-only"). Plain text accepted; SPDX is strongly recommended. |
-| `icon` | `string` | — | URL to the plugin icon. Renders next to the plugin name on cards and detail pages. PNG/SVG recommended, 256×256 or vector. |
-| `screenshots` | `array<object>` | — | Up to 12 screenshots shown in the plugin detail gallery. |
-| `readme` | `string` | — | Repo-relative path or URL to the README markdown file. Rendered on the plugin detail page. |
-| `readmes` | `object` | — | Per-locale README overrides. Map keys are BCP-47 locale codes (e.g. "en", "de", "zh-CN"); values are the same shape as `readme`. |
-| `documentation_url` | `string` | — | Link to standalone documentation site (Vitepress, MkDocs, GitHub Pages, etc.). Surfaces as an "Open docs" CTA. |
-| `homepage` | `string` | — | Marketing homepage if separate from the documentation site or the repository. |
-| `support` | `object` | — | Where end users go when they have a problem with the plugin. |
-| `min_runtime_version` | `string` | — | Minimum host runtime version (semver range or single version). The host refuses to load the plugin on older runtimes. |
+| Field                 | Type            | Required | Description                                                                                                                                                                                                                                                                             |
+| --------------------- | --------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                  | `string`        | —        | Stable plugin identifier and URL slug. Pinned at first submit. For legacy manifests without id, name supplies the identifier.                                                                                                                                                           |
+| `name`                | `string`        | ✅       | Human-readable display name (e.g. "SQLite JDBC"). Without id, this must remain a lowercase slug (1–64 characters) for backwards compatibility.                                                                                                                                          |
+| `version`             | `string`        | ✅       | Semantic version of this plugin release (no leading "v"). REQUIRED — must match the release tag stripped of any "v" prefix. The registry rejects ingests whose tag and manifest version disagree, so a manifest version bump is the single source of truth for "this is a new release". |
+| `description`         | `string`        | —        | One-line summary shown on the plugin card and search results. Keep it under 280 characters and write it like a tagline, not a paragraph.                                                                                                                                                |
+| `category`            | `string`        | —        | Free-form category label. Used for grouping plugins on the registry home page.                                                                                                                                                                                                          |
+| `kind`                | `string`        | —        | Plugin kind slug (must match one of the registry's configured kinds — see the per-kind sections below). Drives which extension fields apply and whether your plugin appears on the catalogue page for that kind.                                                                        |
+| `tags`                | `array<string>` | —        | Searchable tags. Used by the registry's search index; max 16 tags, 30 chars each.                                                                                                                                                                                                       |
+| `license`             | `string`        | —        | SPDX identifier (e.g. "MIT", "Apache-2.0", "GPL-3.0-only"). Plain text accepted; SPDX is strongly recommended.                                                                                                                                                                          |
+| `icon`                | `string`        | —        | URL to the plugin icon. Renders next to the plugin name on cards and detail pages. PNG/SVG recommended, 256×256 or vector.                                                                                                                                                              |
+| `screenshots`         | `array<object>` | —        | Up to 12 screenshots shown in the plugin detail gallery.                                                                                                                                                                                                                                |
+| `readme`              | `string`        | —        | Repo-relative path or URL to the README markdown file. Rendered on the plugin detail page.                                                                                                                                                                                              |
+| `readmes`             | `object`        | —        | Per-locale README overrides. Map keys are BCP-47 locale codes (e.g. "en", "de", "zh-CN"); values are the same shape as `readme`.                                                                                                                                                        |
+| `documentation_url`   | `string`        | —        | Link to standalone documentation site (Vitepress, MkDocs, GitHub Pages, etc.). Surfaces as an "Open docs" CTA.                                                                                                                                                                          |
+| `homepage`            | `string`        | —        | Marketing homepage if separate from the documentation site or the repository.                                                                                                                                                                                                           |
+| `support`             | `object`        | —        | Where end users go when they have a problem with the plugin.                                                                                                                                                                                                                            |
+| `min_runtime_version` | `string`        | —        | Minimum host runtime version (semver range or single version). The host refuses to load the plugin on older runtimes.                                                                                                                                                                   |
 
 ## Plugin kinds
 
@@ -128,24 +128,24 @@ Database driver plugins that extend Tabularis to talk to new data stores via JSO
 
 **Extensions**
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `engine` | `string` | ✅ | Concrete database this driver connects to (e.g. "firestore", "postgres", "qdrant"). Tabularis groups the connection catalogue by engine: every driver targeting the same database shares one engine value, so two "firestore" drivers collapse into a single Firestore entry and the user picks which driver. |
-| `paradigms` | `array<string>` | ✅ | Data-model families the engine supports, most representative first. Single-model drivers declare one (e.g. ["sql"]); multi-model declare several (SurrealDB: ["document","graph","relational","key-value","vector"]). The first entry is the primary model used to place the engine in the catalogue; every entry feeds the filter chips, so a multi-model engine appears when ANY of its models is selected. Allowed values come from the registry's admin-managed paradigm list (facets), not a fixed enum, so new models never need a schema release. |
-| `color` | `string` | — | Hex accent colour shown on the catalogue card and sidebar (e.g. "#f97316"). |
-| `default_port` | `integer` | — | Default TCP port pre-filled in the connection modal. Omit for file-, folder-, and API-based drivers. |
-| `default_username` | `string` | — | Default username pre-filled in the connection modal (e.g. "postgres", "root"). |
-| `is_builtin` | `boolean` | — | True for drivers shipped with Tabularis. External plugins should omit this or leave it false. |
-| `executable` | `string` | ✅ | Relative path to the plugin executable inside the plugin folder. No extension on Linux/macOS; Tabularis appends .exe on Windows automatically. |
-| `interpreter` | `string` | — | Optional interpreter for script-based plugins (e.g. "python3", "node"). Omit for native binaries. |
-| `capabilities` | `object` | ✅ | Feature flags that control which UI elements Tabularis renders for this driver. |
-| `settings` | `array<object>` | — | Optional list of configuration fields the plugin exposes to the user via the Tabularis settings modal. |
-| `data_types` | `array<object>` | — | List of data types this driver supports for column creation in the UI. |
-| `supports_ssl` | `boolean` | — | true to show the SSL/TLS configuration tab (mode + CA/client cert/key) in the connection modal for this network driver. Defaults to false. |
-| `ui_extensions` | `array<object>` | — | UI extension contributions rendered into named slots of the Tabularis interface. Only needed by plugins that ship a frontend module; driver-only plugins omit it. |
-| `type_mappings` | `object` | — | Optional map of generic inferred type names to driver-native types, resolved by the host during paste/import (map_inferred_type). Keys are uppercase generic names (e.g. DATETIME, JSON); values are the driver-native equivalents (e.g. TIMESTAMP, JSONB). Lookup is case-insensitive; unmapped types pass through unchanged. |
-| `explain_parsers` | `array<object>` | — | Plugin-owned raw EXPLAIN parser IIFE bundles loaded by Tabularis when the plugin is enabled. |
-| `connection_metadata` | `boolean` | — | Opt in to get_connection_metadata, which returns connection-specific capabilities, data_types and type_mappings. Static manifest values remain the fallback. |
+| Field                 | Type            | Required | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| --------------------- | --------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `engine`              | `string`        | ✅       | Concrete database this driver connects to (e.g. "firestore", "postgres", "qdrant"). Tabularis groups the connection catalogue by engine: every driver targeting the same database shares one engine value, so two "firestore" drivers collapse into a single Firestore entry and the user picks which driver.                                                                                                                                                                                                                                            |
+| `paradigms`           | `array<string>` | ✅       | Data-model families the engine supports, most representative first. Single-model drivers declare one (e.g. ["sql"]); multi-model declare several (SurrealDB: ["document","graph","relational","key-value","vector"]). The first entry is the primary model used to place the engine in the catalogue; every entry feeds the filter chips, so a multi-model engine appears when ANY of its models is selected. Allowed values come from the registry's admin-managed paradigm list (facets), not a fixed enum, so new models never need a schema release. |
+| `color`               | `string`        | —        | Hex accent colour shown on the catalogue card and sidebar (e.g. "#f97316").                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `default_port`        | `integer`       | —        | Default TCP port pre-filled in the connection modal. Omit for file-, folder-, and API-based drivers.                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| `default_username`    | `string`        | —        | Default username pre-filled in the connection modal (e.g. "postgres", "root").                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `is_builtin`          | `boolean`       | —        | True for drivers shipped with Tabularis. External plugins should omit this or leave it false.                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `executable`          | `string`        | ✅       | Relative path to the plugin executable inside the plugin folder. No extension on Linux/macOS; Tabularis appends .exe on Windows automatically.                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `interpreter`         | `string`        | —        | Optional interpreter for script-based plugins (e.g. "python3", "node"). Omit for native binaries.                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `capabilities`        | `object`        | ✅       | Feature flags that control which UI elements Tabularis renders for this driver.                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `settings`            | `array<object>` | —        | Optional list of configuration fields the plugin exposes to the user via the Tabularis settings modal.                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `data_types`          | `array<object>` | —        | List of data types this driver supports for column creation in the UI.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `supports_ssl`        | `boolean`       | —        | true to show the SSL/TLS configuration tab (mode + CA/client cert/key) in the connection modal for this network driver. Defaults to false.                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `ui_extensions`       | `array<object>` | —        | UI extension contributions rendered into named slots of the Tabularis interface. Only needed by plugins that ship a frontend module; driver-only plugins omit it.                                                                                                                                                                                                                                                                                                                                                                                        |
+| `type_mappings`       | `object`        | —        | Optional map of generic inferred type names to driver-native types, resolved by the host during paste/import (map_inferred_type). Keys are uppercase generic names (e.g. DATETIME, JSON); values are the driver-native equivalents (e.g. TIMESTAMP, JSONB). Lookup is case-insensitive; unmapped types pass through unchanged.                                                                                                                                                                                                                           |
+| `explain_parsers`     | `array<object>` | —        | Plugin-owned raw EXPLAIN parser IIFE bundles loaded by Tabularis when the plugin is enabled.                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `connection_metadata` | `boolean`       | —        | Opt in to get_connection_metadata, which returns connection-specific capabilities, data_types and type_mappings. Static manifest values remain the fallback.                                                                                                                                                                                                                                                                                                                                                                                             |
 
 **Example (YAML)**
 
@@ -155,65 +155,61 @@ description: Connect Tabularis to ClickHouse over JSON-RPC with full DDL, query,
 category: integration
 kind: driver
 tags:
-  - clickhouse
-  - analytics
-  - olap
+    - clickhouse
+    - analytics
+    - olap
 license: MIT
 icon: https://raw.githubusercontent.com/example/tabularis-clickhouse/main/assets/icon.svg
 homepage: https://github.com/example/tabularis-clickhouse
 documentation_url: https://github.com/example/tabularis-clickhouse#readme
 support:
-  email: maintainers@example.com
-  issues_url: https://github.com/example/tabularis-clickhouse/issues
+    email: maintainers@example.com
+    issues_url: https://github.com/example/tabularis-clickhouse/issues
 screenshots:
-  - url: https://raw.githubusercontent.com/example/tabularis-clickhouse/main/assets/screen-connect.png
-    caption: Connection form with native ClickHouse fields
-    alt: Tabularis connection dialog showing host, port, user, and database fields
-  - url: https://raw.githubusercontent.com/example/tabularis-clickhouse/main/assets/screen-query.png
-    caption: Running a SELECT against the ontime table
-    alt: Tabularis data grid showing ClickHouse query results
+    - url: https://raw.githubusercontent.com/example/tabularis-clickhouse/main/assets/screen-connect.png
+      caption: Connection form with native ClickHouse fields
+      alt: Tabularis connection dialog showing host, port, user, and database fields
+    - url: https://raw.githubusercontent.com/example/tabularis-clickhouse/main/assets/screen-query.png
+      caption: Running a SELECT against the ontime table
+      alt: Tabularis data grid showing ClickHouse query results
 min_runtime_version: 0.9.13
 readme: |
-  # ClickHouse driver for Tabularis
+    # ClickHouse driver for Tabularis
 
-  Adds a native ClickHouse connection to Tabularis. Supports SELECT/INSERT/UPDATE/DELETE through execute_query, schema introspection for the explorer, DDL generation (CREATE TABLE, ALTER TABLE, DROP), and ER-diagram rendering via get_relationships.
+    Adds a native ClickHouse connection to Tabularis. Supports SELECT/INSERT/UPDATE/DELETE through execute_query, schema introspection for the explorer, DDL generation (CREATE TABLE, ALTER TABLE, DROP), and ER-diagram rendering via get_relationships.
 ```
 
 **Example (JSON)**
 
 ```json
 {
-  "name": "tabularis-clickhouse-driver",
-  "description": "Connect Tabularis to ClickHouse over JSON-RPC with full DDL, query, and ER-diagram support.",
-  "category": "integration",
-  "kind": "driver",
-  "tags": [
-    "clickhouse",
-    "analytics",
-    "olap"
-  ],
-  "license": "MIT",
-  "icon": "https://raw.githubusercontent.com/example/tabularis-clickhouse/main/assets/icon.svg",
-  "homepage": "https://github.com/example/tabularis-clickhouse",
-  "documentation_url": "https://github.com/example/tabularis-clickhouse#readme",
-  "support": {
-    "email": "maintainers@example.com",
-    "issues_url": "https://github.com/example/tabularis-clickhouse/issues"
-  },
-  "screenshots": [
-    {
-      "url": "https://raw.githubusercontent.com/example/tabularis-clickhouse/main/assets/screen-connect.png",
-      "caption": "Connection form with native ClickHouse fields",
-      "alt": "Tabularis connection dialog showing host, port, user, and database fields"
+    "name": "tabularis-clickhouse-driver",
+    "description": "Connect Tabularis to ClickHouse over JSON-RPC with full DDL, query, and ER-diagram support.",
+    "category": "integration",
+    "kind": "driver",
+    "tags": ["clickhouse", "analytics", "olap"],
+    "license": "MIT",
+    "icon": "https://raw.githubusercontent.com/example/tabularis-clickhouse/main/assets/icon.svg",
+    "homepage": "https://github.com/example/tabularis-clickhouse",
+    "documentation_url": "https://github.com/example/tabularis-clickhouse#readme",
+    "support": {
+        "email": "maintainers@example.com",
+        "issues_url": "https://github.com/example/tabularis-clickhouse/issues"
     },
-    {
-      "url": "https://raw.githubusercontent.com/example/tabularis-clickhouse/main/assets/screen-query.png",
-      "caption": "Running a SELECT against the ontime table",
-      "alt": "Tabularis data grid showing ClickHouse query results"
-    }
-  ],
-  "min_runtime_version": "0.9.13",
-  "readme": "# ClickHouse driver for Tabularis\n\nAdds a native ClickHouse connection to Tabularis. Supports SELECT/INSERT/UPDATE/DELETE through execute_query, schema introspection for the explorer, DDL generation (CREATE TABLE, ALTER TABLE, DROP), and ER-diagram rendering via get_relationships.\n"
+    "screenshots": [
+        {
+            "url": "https://raw.githubusercontent.com/example/tabularis-clickhouse/main/assets/screen-connect.png",
+            "caption": "Connection form with native ClickHouse fields",
+            "alt": "Tabularis connection dialog showing host, port, user, and database fields"
+        },
+        {
+            "url": "https://raw.githubusercontent.com/example/tabularis-clickhouse/main/assets/screen-query.png",
+            "caption": "Running a SELECT against the ontime table",
+            "alt": "Tabularis data grid showing ClickHouse query results"
+        }
+    ],
+    "min_runtime_version": "0.9.13",
+    "readme": "# ClickHouse driver for Tabularis\n\nAdds a native ClickHouse connection to Tabularis. Supports SELECT/INSERT/UPDATE/DELETE through execute_query, schema introspection for the explorer, DDL generation (CREATE TABLE, ALTER TABLE, DROP), and ER-diagram rendering via get_relationships.\n"
 }
 ```
 
@@ -223,10 +219,10 @@ Declarative Tabularis theme packages. Registry schema preparation only; host rel
 
 **Extensions**
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `theme_schema_version` | `integer` | ✅ |  |
-| `theme_variants` | `array<object>` | ✅ |  |
+| Field                  | Type            | Required | Description |
+| ---------------------- | --------------- | -------- | ----------- |
+| `theme_schema_version` | `integer`       | ✅       |             |
+| `theme_variants`       | `array<object>` | ✅       |             |
 
 **Example (YAML)**
 
@@ -237,27 +233,27 @@ kind: theme
 min_runtime_version: <first-supporting-version>
 theme_schema_version: 1
 theme_variants:
-  - id: dark
-    name: Dark
-    file: themes/dark.json
+    - id: dark
+      name: Dark
+      file: themes/dark.json
 ```
 
 **Example (JSON)**
 
 ```json
 {
-  "name": "example-theme",
-  "version": "0.1.0",
-  "kind": "theme",
-  "min_runtime_version": "<first-supporting-version>",
-  "theme_schema_version": 1,
-  "theme_variants": [
-    {
-      "id": "dark",
-      "name": "Dark",
-      "file": "themes/dark.json"
-    }
-  ]
+    "name": "example-theme",
+    "version": "0.1.0",
+    "kind": "theme",
+    "min_runtime_version": "<first-supporting-version>",
+    "theme_schema_version": 1,
+    "theme_variants": [
+        {
+            "id": "dark",
+            "name": "Dark",
+            "file": "themes/dark.json"
+        }
+    ]
 }
 ```
 
@@ -272,4 +268,5 @@ theme_variants:
 Happy hacking — and when you ship something, [submit it](https://registry.tabularis.dev/submit) so the rest of Tabularis can use it.
 
 ---
+
 _Generated by Tabularium for https://registry.tabularis.dev._
