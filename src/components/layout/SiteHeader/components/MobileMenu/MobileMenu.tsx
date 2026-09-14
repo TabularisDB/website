@@ -1,16 +1,14 @@
 'use client';
 
-import Link from 'next/link';
-import {usePathname} from 'next/navigation';
+import {Button} from '@/components/ui/Button/Button';
+import {DiscordIcon, GitHubIcon} from '@/components/ui/Icons/Icons';
+import {SOCIAL_URLS} from '@/lib/social';
 import clsx from 'clsx';
+import {DownloadIcon} from 'lucide-react';
+import {usePathname} from 'next/navigation';
 import {navGroups} from '../../SiteHeader.data';
 import {MobileNavGroup} from '../MobileNavGroup/MobileNavGroup';
-import {GitHubIcon, DiscordIcon} from '@/components/ui/Icons/Icons';
-import {formatStars} from '@/lib/github';
-import {SOCIAL_URLS} from '@/lib/social';
 import styles from './MobileMenu.module.scss';
-import {Button} from '@/components/ui/Button/Button';
-import {DownloadIcon} from 'lucide-react';
 
 interface MobileMenuProps {
     isOpen: boolean;

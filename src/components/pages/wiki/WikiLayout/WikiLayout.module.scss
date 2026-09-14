@@ -69,7 +69,7 @@
 }
 
 .mobileToggle {
-    display: none;
+    display: none !important;
     align-items: center;
     gap: 0.5rem;
     color: var(--color-text-primary);
@@ -79,7 +79,7 @@
     width: fit-content;
 
     @media (max-width: 1024px) {
-        display: flex;
+        display: flex !important;
     }
 }
 
