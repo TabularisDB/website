@@ -7,6 +7,12 @@ export function SponsorsMarquee() {
 
     return (
         <div className={styles.marquee}>
+            <div className={styles.marqueeDescription}>
+                These companies keep supporting Tabularis.{' '}
+                <Link href="/sponsors" className={styles.marqueeLink}>
+                    See how →
+                </Link>
+            </div>
             <div className={styles.trackWrapper}>
                 <div className={styles.track} aria-hidden="false">
                     {track.map((sponsor, i) => (
@@ -24,12 +30,6 @@ export function SponsorsMarquee() {
                         </a>
                     ))}
                 </div>
-            </div>
-            <div className={styles.marqueeDescription}>
-                These companies keep supporting Tabularis.{' '}
-                <Link href="/sponsors" className={styles.marqueeLink}>
-                    See how →
-                </Link>
             </div>
         </div>
     );
