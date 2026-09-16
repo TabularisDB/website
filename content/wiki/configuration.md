@@ -24,6 +24,27 @@ Open the Settings panel from:
 - **Delay safety confirmations** (since v0.21.0): off by default. When enabled, the confirm button of the destructive-query and production-write dialogs stays disabled for five seconds so the warning is actually read. Stored as `safetyConfirmationDelayEnabled` in `config.json`.
 - **Update Checks**: Enable or disable automatic update checks on startup. Checks query the GitHub Releases API — no version data is sent, only a GET request is made.
 
+## Network & Proxies
+
+Since v0.24.0, **Settings → Network** configures a shared **HTTP CONNECT** or **SOCKS5** proxy. Supply its host, port and optional username/password, then opt in the traffic scopes you need:
+
+- **App network requests**: update checks, plugin downloads, registry requests and WebDAV backups.
+- **Database connections**: direct database TCP traffic.
+- **AI / LLM endpoints**: provider requests.
+- **SSH tunnels**: the outbound bastion connection.
+
+The global proxy is disabled by default and scopes are opt-in. Database connections (**Advanced**) and individual AI providers (**Settings → AI**) can inherit the global setting, use a custom proxy or explicitly disable proxying. Target overrides take precedence. Passwords are stored in the OS keychain, not in configuration files.
+
+SSH and Kubernetes tunnel endpoints are not proxied a second time on their local database leg. SSH profiles do not have their own proxy picker: use the global SSH scope or the database connection's override. Saving global proxy settings stops existing SSH tunnels and cached forwards; reconnect afterward. This does not configure arbitrary networking implemented inside third-party plugins, and proxy routing does not replace endpoint TLS.
+
+![Settings → Network with a SOCKS5 endpoint, empty authentication fields and the AI traffic scope selected](/img/tabularis-network-proxy.png)
+
+## Result Font
+
+Since v0.24.0, **Settings → Appearance → Data Grid → Result font** controls result cells, inline edit inputs and multiline textareas independently of SQL editor typography. Choose **Same as interface**, a bundled font or a custom family. The default remains JetBrains Mono. See [Themes](/wiki/themes#typography-configuration).
+
+![Appearance → Data Grid with Result font set to Same as interface](/img/tabularis-result-font.png)
+
 ## Storage Paths & config.json
 
 Tabularis stores non-sensitive configuration, UI preferences, and connection metadata in a central `config.json`. **Passwords and SSH passphrases are NEVER stored here** — they live exclusively in your OS keychain.
@@ -101,6 +122,9 @@ Any key omitted from the file falls back to its default value. You do not need a
 | `plugins` | `object` | `{}` | Per-plugin config, including optional interpreter overrides and plugin settings values. |
 | `editorTheme` | `string` | `null` | Monaco editor theme ID. |
 | `editorFontFamily` | `string` | `"JetBrains Mono"` | SQL editor font family. The picker offers bundled families that need no system install — JetBrains Mono, plus the ExtraBold and ExtraBold Italic weights added in v0.18.0 — alongside system fonts. |
+| `resultFontFamily` | `string` | `"JetBrains Mono"` | Since v0.24.0. Font for result cells and inline editors. `"inherit"` follows the interface font; other values select a bundled or custom family. |
+| `proxy` | `object` | disabled | Since v0.24.0. Global proxy with `enabled`, `endpoint` (`protocol`, `host`, `port`, optional `username`) and opt-in `scopes` (`app_http`, `database`, `ai`, `ssh_tunnel`). Passwords stay in the keychain. |
+| `aiProviderProxies` | `object` | `{}` | Since v0.24.0. Per-provider proxy settings with `mode`: `inherit`, `custom` or `disabled`, and an `endpoint` for custom mode. |
 | `editorFontSize` | `number` | `14` | SQL editor font size in pixels. |
 | `editorLineHeight` | `number` | `1.5` | SQL editor line height multiplier. |
 | `editorTabSize` | `number` | `2` | SQL editor tab width. |

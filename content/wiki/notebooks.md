@@ -32,6 +32,17 @@ Each SQL cell is a self-contained query environment:
 
 ![Per-cell database selector dropdown](/img/posts/tabularis-notebook-multi-database-selector-dropdown.png)
 
+### Inline Query Plans
+
+Since v0.24.0, SQL cells on connections with EXPLAIN support have a **Show query plan** button in the cell header. It opens a resizable **Query Plan** section with the same views as [Visual EXPLAIN](/wiki/visual-explain), a Re-run button and a popout to the full viewer. The popout reuses the fetched plan without another database request. Plan visibility is saved per cell and included in notebook exports.
+
+- Opening the section requests plain **EXPLAIN** once. **Analyze** is off initially; selecting it does not execute a query until you click **Re-run**. ANALYZE really executes SQL, including writes for data-modifying statements.
+- The plan uses resolved `@param` values and `{{cell_N}}` references. Missing cell results are listed as unresolved references, and no request is sent until they are available.
+- Changing the query, connection or schema invalidates the displayed plan and resets the source-specific Analyze choice. Click Re-run for a fresh plan; running the cell does not automatically refresh EXPLAIN.
+- The section can be resized independently. Moving a cell preserves its editor and plan state.
+
+<video src="/videos/posts/tabularis-notebook-query-plan.mp4" poster="/videos/posts/tabularis-notebook-query-plan.jpg" controls autoplay loop muted playsinline></video>
+
 ### Charts
 
 After running a SQL cell, click the **Chart** toggle in the result toolbar to visualize the data.
@@ -104,7 +115,7 @@ Click the collapse arrow in the cell header to minimize a cell — useful for hi
 
 ![Collapsed and expanded cells](/img/posts/tabularis-notebook-collapsed-expanded-cells-organization.png)
 
-Inside an SQL cell you can also collapse its three areas **independently** — the **Query** editor, the **Results** grid, and the **Chart** — each via a thin labelled header with its own chevron, on top of the master cell collapse. The chart header appears only when the result is chartable. The collapsed state of every section is saved with the notebook, so it persists across reloads, and chart visibility is persisted too (it defaults to whether a chart config already exists, so notebooks created before this change keep showing their charts).
+Inside an SQL cell you can also collapse its areas **independently** — the **Query** editor, the **Results** grid, the **Chart**, and the optional **Query Plan** — each via a thin labelled header with its own chevron, on top of the master cell collapse. The chart header appears only when the result is chartable. The collapsed state of every section is saved with the notebook, so it persists across reloads, and chart visibility is persisted too (it defaults to whether a chart config already exists, so notebooks created before this change keep showing their charts).
 
 <video src="/videos/posts/tabularis-notebooks-collapse.mp4" poster="/videos/posts/tabularis-notebooks-collapse.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
@@ -173,7 +184,7 @@ Click **Export as HTML** to generate a standalone HTML document containing all c
 
 ### CSV / JSON
 
-Individual cell results can be exported to CSV or JSON using the result toolbar, same as in the regular data grid.
+Individual cell results can be exported to CSV or JSON using the result toolbar, same as in the regular data grid. Since v0.24.0, exports report success or a write error; cancelling the file picker produces neither.
 
 ## Keyboard Shortcuts
 

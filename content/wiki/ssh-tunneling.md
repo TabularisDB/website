@@ -103,6 +103,12 @@ The **SSH** tab of the connection modal has its own **Test SSH** button — avai
 
 A full connection test (the **Test** button) reports its steps as it runs — SSH tunnel, Kubernetes port-forward, database connect — and opens a diagnostics modal on failure with a classified error and a timestamped step log. With a tunnel active, a "connection refused" is attributed to the tunnel rather than to the database host. See [Testing before saving](/wiki/connections#testing-before-saving).
 
+## HTTP / SOCKS5 Proxies
+
+Since v0.24.0, the global **Settings → Network → SSH tunnels** scope can route the outbound bastion connection through an HTTP CONNECT or SOCKS5 proxy. A database connection's **Advanced** proxy override can inherit that choice, provide a custom endpoint or disable proxying. Reusable SSH profiles do not have a separate proxy picker. The local tunnel-to-database leg is not proxied again.
+
+Saving global proxy settings stops existing SSH tunnels and cached forwards, so reconnect afterward. See [Network settings](/wiki/configuration#network--proxies) for scopes and keychain storage.
+
 ## Multi-Hop / ProxyJump
 
 For databases behind multiple bastion layers, define the chain in `~/.ssh/config` and use the System SSH backend (key-only auth, no password):

@@ -55,6 +55,10 @@ For enterprise databases with strict compliance requirements, you cannot send sc
 3. In Tabularis Settings, set the provider to **Ollama**. The default port is `11434`; change it via `aiOllamaPort` if needed.
 **Result**: Powerful AI assistance with a guarantee that zero bytes of data ever leave your network.
 
+### Provider Proxy Overrides
+
+Since v0.24.0, the selected provider in **Settings → AI** can inherit the global [Network proxy](/wiki/configuration#network--proxies), use a custom HTTP CONNECT/SOCKS5 proxy or disable proxying for that provider. An explicit provider choice wins over the global AI scope. Proxy passwords are kept in the OS keychain. A proxy changes the route, not which provider receives the prompt; choose your endpoint and TLS configuration accordingly.
+
 ## Explain & Optimize Queries
 
 The AI is not limited to generating SQL. From the editor you can ask it to explain the current query, and the explanation prompt is configurable in Settings. The assistant breaks down joins, subqueries, and filters in plain language and can suggest likely optimization directions.

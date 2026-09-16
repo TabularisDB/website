@@ -19,6 +19,12 @@ To disable automatic checks, set `autoCheckUpdatesOnStartup` to `false` in your 
 
 > Tabularis only **downloads** an update after you confirm the prompt — it never installs anything silently.
 
+Since v0.24.0, the update notification renders release notes as Markdown, including headings, lists, code and links; links open externally.
+
+## What's New
+
+The **What's New** modal includes a compact author introduction with GitHub Sponsors and repository-star actions. **Never show this again** dismisses only this support invitation, not future release notes. The preference persists, and the bundled avatar does not require a GitHub image request.
+
 ## Release Channels
 
 Since v0.17.0 the updater supports two channels, selectable in **Settings → Info → Updates**:

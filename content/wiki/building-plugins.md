@@ -56,6 +56,14 @@ Once `get_tables` and `get_columns` work, the driver also supplies schema contex
 
 Every step is independently shippable. A plugin with only the first three is already useful as a read-only viewer.
 
+## Connection-specific metadata (v0.24.0)
+
+A driver serving multiple engines can opt in with `"connection_metadata": true` at the manifest root and implement `get_connection_metadata`. After a successful connection test, the host requests effective `capabilities`, `data_types` and `type_mappings` for that connection before loading objects. Backend operations, including MCP, use the same metadata; the registered manifest is not mutated.
+
+Omitted fields keep static defaults, while explicit `false` or empty collections replace them. A connection cannot lift a manifest-level read-only restriction. Only a remote JSON-RPC `-32601` falls back to the manifest; authentication, transport and validation failures surface as errors. Static plugins receive no discovery calls. Discovery is cached per process and connection, with invalidation on tests and disconnects.
+
+A bridge must still implement and route its database operations, and the registry's driver schema must accept this opt-in before publication. Declare a suitable `min_runtime_version` if your plugin cannot work without discovery. See the complete [connection metadata protocol](https://github.com/TabularisDB/tabularis/blob/main/plugins/CONNECTION_METADATA.md) for allowed overrides, request shapes and cache behaviour.
+
 ## UI extensions
 
 The Tabularis host mounts **slot contributions** at eleven predefined points (plugin row in Settings, new connection form, row editor fields, data grid toolbar, context menu, etc.). Since v0.19.0, the `connection-modal.extra_fields` slot renders plugin UI below the host/port section of the connection form, backed by an opaque `extra` string map on `ConnectionParams` — persisted verbatim and forwarded to the driver, so a plugin can carry custom connection settings (an AWS region, say) without a core schema change. Plugins declare contributions in the `.tabularium` manifest:

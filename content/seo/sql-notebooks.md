@@ -37,6 +37,12 @@ Each notebook can mix SQL cells with markdown cells, so the analysis is not just
 
 Results render directly below the cell. For quick exploratory work, that is usually enough. When you need a lightweight visual, charts can be embedded in the notebook without exporting to another app.
 
+### Query plans beside the SQL
+
+Since v0.24.0, each SQL cell can show an inline, resizable Visual EXPLAIN plan when its connection supports it. The plan uses resolved parameters and cell references, and opens in the full viewer without another database request. Plain EXPLAIN runs on first opening; ANALYZE requires an explicit choice and Re-run, because it executes the query. See [notebook query plans](/wiki/notebooks#inline-query-plans).
+
+![Query and execution plan together in a notebook cell](/img/tabularis-notebook-query-plan.png)
+
 ### Parameters and reusable inputs
 
 If the same notebook runs for different time windows, environments, or thresholds, parameters keep the structure stable while the inputs change.

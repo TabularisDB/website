@@ -24,7 +24,7 @@ Since v0.22.0 the **Theme Mode** switch in **Settings → Appearance** decides w
 ![Settings → Appearance in Follow System mode with separate Light Theme and Dark Theme pickers](/img/tabularis-theme-mode-follow-system.png)
 
 - **Static** (default): one theme, chosen from the picker, applied regardless of the OS appearance.
-- **Follow System**: two pickers, **Light Theme** and **Dark Theme**, each listing only themes of that classification (custom themes are classified by their Monaco base theme). Tabularis watches the system's `prefers-color-scheme` and applies the matching pick as soon as the OS switches, and also asks the native window to switch its titlebar chrome.
+- **Follow System**: two pickers, **Light Theme** and **Dark Theme**, each listing only themes of that classification (custom themes are classified by their Monaco base theme). Since v0.24.0, Tabularis uses native appearance signals and Linux desktop-portal preferences to apply the matching pick as the OS switches; the native window chrome follows the system too. `prefers-color-scheme` is retained as the browser-preview fallback, rather than overriding a native dark preference with WebKit's light result.
 
 Toggling Follow System applies the current-mode theme immediately. If a picked theme no longer exists (a deleted custom theme, for example), the built-in preset for the current OS mode is used instead, and deleting a custom theme clears any per-mode pick that referenced it. The SQL editor theme is unaffected: **Same as App** follows the switch, an explicit editor theme stays fixed.
 
@@ -34,8 +34,11 @@ The mode is stored in `config.json` as `followSystemTheme`, `lightThemeId` and `
 
 Readability is critical when parsing logs or complex queries.
 - **Font Family**: You can use any monospace font installed on your system. We highly recommend coding-specific fonts like *JetBrains Mono*, *Fira Code*, or *Cascadia Code*.
+- **Result Font** (since v0.24.0): **Settings → Appearance → Data Grid → Result font** offers **Same as interface**, bundled families and a custom family. It applies to result cells, inline edit inputs and multiline textareas. The default stays JetBrains Mono. The `resultFontFamily` value `inherit` follows subsequent interface-font changes; editor, log and hex fonts remain independent.
 - **Ligatures**: If your chosen font supports programming ligatures (e.g., combining `<=` into `≤`), Tabularis and the Monaco editor will render them natively.
 - **Font Size & Weight**: Fully adjustable via the UI.
+
+![Independent result-font picker with Same as interface selected](/img/tabularis-result-font.png)
 
 ## CSS Variables
 
@@ -66,7 +69,7 @@ Tabularis applies themes by setting CSS custom properties on the `<html>` elemen
 --semantic-modified, --semantic-deleted, --semantic-new
 
 /* Typography */
---font-base, --font-mono
+--font-base, --font-mono, --font-result
 
 /* Layout */
 --radius-sm, --radius-base, --radius-lg, --radius-xl

@@ -104,6 +104,12 @@ Servers that require client-side certificate authentication (Google Cloud SQL wi
 
 ![PostgreSQL connection editor, SSL tab: SSL mode Verify Full with CA Certificate, Client Certificate and Client Key path fields](/img/tabularis-postgres-client-cert.png)
 
+### HTTP / SOCKS5 Proxy Override
+
+Since v0.24.0, the connection's **Advanced** section has a proxy override: **Inherit** the global [Network settings](/wiki/configuration#network--proxies), use a **Custom** HTTP CONNECT or SOCKS5 endpoint, or **Disable** proxying for this connection. Custom and disabled modes override the global scope selection. Optional proxy passwords are stored in the OS keychain.
+
+For a direct database connection the proxy carries database TCP traffic. With SSH it applies to the bastion hop instead; the local SSH/Kubernetes tunnel leg is not proxied again. Reconnect after changing global proxy settings, which stop existing SSH tunnels and forwards.
+
 ### Startup Script
 
 A connection can carry an optional **startup script** — SQL that Tabularis runs on every new physical connection in the pool. Because it executes per pooled connection (MySQL/SQLite via `after_connect`, PostgreSQL via the pool's `post_create` hook), session-level settings stick across the whole pool regardless of which connection serves a given query.

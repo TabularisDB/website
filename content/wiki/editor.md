@@ -35,6 +35,10 @@ Since v0.17.0 the completion engine also understands *where* the cursor is. A co
 
 Subqueries are scoped per parenthesis frame (the outer clause is restored when the subquery closes), and CTEs, nested `CASE … END`, quoted identifiers, and escape sequences are all handled. Anything the analyzer doesn't recognize falls back to the previous suggest-everything behavior, so a miss can never hide valid suggestions.
 
+### Nearest-Table Ranking
+
+Since v0.24.0, when multiple tables are in scope, autocomplete ranks columns from the nearest relevant table first. In an `ON` or `USING` clause this is the table currently being joined; in SELECT, WHERE and SET contexts it is the primary table. Aliases and nested subquery scopes are respected. Other in-scope columns remain available below them, and single-table queries are unchanged.
+
 ### Accepting suggestions
 
 When the autocomplete dropdown is open, **Enter accepts the highlighted suggestion by default** (matching the behavior of every other Monaco-based editor). If you prefer Enter to insert a newline instead, toggle **Settings → Editor → Accept suggestion on Enter** off. The setting is honored across every editor surface — main SQL tabs, notebook cells, and the Raw SQL tab of the trigger editor.
@@ -65,6 +69,12 @@ The Monaco integration brings powerful developer features:
 | **Copy Line Up** | `Option + Shift + ↑` | `Ctrl + Shift + ↑` | Duplicate the current line above. |
 | **Copy Line Down** | `Option + Shift + ↓` | `Ctrl + Shift + ↓` | Duplicate the current line below. |
 | **Command Palette**| `F1` | `F1` | Open the Monaco command palette. |
+
+### Running-Tab Indicators
+
+Since v0.24.0, a tab with a query in flight replaces its type icon with a spinner in the connection's accent colour, with an **Executing query** tooltip. It remains visible while another tab is active, alongside the existing pulsing underline. Notebook tabs show it while at least one cell is executing, including Run All. Loading state is not restored across app sessions.
+
+<video src="/videos/posts/tabularis-running-tab.mp4" poster="/videos/posts/tabularis-running-tab.jpg" controls autoplay loop muted playsinline></video>
 
 ### Reordering Tabs
 

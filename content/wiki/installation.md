@@ -72,7 +72,10 @@ WebView2 is required — it ships pre-installed with Microsoft Edge and is prese
 
 ```bash
 sudo snap install tabularis
+sudo snap connect tabularis:password-manager-service
 ```
+
+The second command grants access to the system keychain and is not automatically connected. Restart Tabularis after granting it. Since v0.24.0, the package also declares the `network-status` plug needed by WebKit's portal requests and uses the GNOME platform's matching WebKit library and helper processes, fixing editors stuck at “Loading…”.
 
 [![Snap Store](https://img.shields.io/badge/snap-tabularis-blue?logo=snapcraft)](https://snapcraft.io/tabularis)
 

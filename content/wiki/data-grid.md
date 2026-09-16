@@ -177,6 +177,12 @@ Since v0.17.0 the row editor is a **right sidebar** — a layout sibling of the 
 - **Pin** it to a specific row with the pin button when you want to keep editing that row while browsing others.
 - **Resizable** with a drag handle; the width is persisted across sessions.
 
+## Result Font
+
+Since v0.24.0, **Settings → Appearance → Data Grid → Result font** controls the typography of result cells, inline edit inputs and multiline textareas. Select **Same as interface**, a bundled font or a custom family. The default stays **JetBrains Mono**; choosing the interface font keeps cells in sync with later interface-font changes. Multiline editor width measurement follows the selected font, including proportional families. SQL editor, log, JSON and hex fonts remain independent.
+
+![Result font set to Same as interface under Appearance → Data Grid](/img/tabularis-result-font.png)
+
 ## Result Colors
 
 By default every cell value renders in the same text color. Enable **Result Colors** under **Settings → Appearance → General** to tint cell values by their data type — **numbers, text, dates/times, and booleans** each get their own color, so you can read a row's shape at a glance.

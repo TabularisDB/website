@@ -19,9 +19,13 @@ It works with PostgreSQL, MySQL, MariaDB, and SQLite, plus any plugin driver tha
 
 ## Opening Visual EXPLAIN
 
-From the **SQL Editor**, select a query and click the **EXPLAIN** button in the toolbar. From a **Notebook** cell, use the EXPLAIN option in the cell action buttons. The Visual EXPLAIN modal opens full-screen with the plan already loaded.
+From the **SQL Editor**, select a query and click the **EXPLAIN** button in the toolbar to open the modal with the plan loaded.
+
+Since v0.24.0, a **Notebook** SQL cell instead has a **Show query plan** button that opens an inline, resizable section. It first requests plain EXPLAIN, uses resolved notebook parameters and cell references, and can pop out into the full viewer without another request. Missing references prevent a request; changing the query, schema or connection marks the plan outdated until Re-run. See [Notebook query plans](/wiki/notebooks#inline-query-plans).
 
 The header shows the connection name, driver icon, database, and schema so you always know which server produced the plan.
+
+![Notebook SQL cell with its inline Query Plan section in Table view, estimated costs and Analyze disabled](/img/tabularis-notebook-query-plan.png)
 
 ## Which Queries Can Be Explained
 
@@ -39,14 +43,16 @@ A toggle in the modal footer switches between the two modes.
 
 **EXPLAIN ANALYZE** actually **runs the query** and reports what happened: actual row counts, actual execution time, loop counts, and (on PostgreSQL) buffer statistics. The difference can be significant — a plan might estimate 100 rows but actually scan 100,000.
 
-The default depends on the query type:
+In the standalone modal, the default depends on the query type:
 
 | Query type | Default |
 |-----------|---------|
 | SELECT, WITH, TABLE | ANALYZE on |
 | INSERT, UPDATE, DELETE | ANALYZE off, with a warning |
 
-For data-modifying queries, a warning icon appears next to the toggle. Since `EXPLAIN ANALYZE` executes the statement, you need to enable it explicitly.
+For data-modifying queries, a warning icon appears next to the toggle. Since `EXPLAIN ANALYZE` executes the statement, you need to enable it explicitly. The choice is bound to the query, schema and connection rather than carried over to a new source.
+
+**Notebook exception:** the inline Query Plan section starts with plain EXPLAIN even for SELECT. Selecting Analyze does not run anything until you click Re-run. Its popout displays the already-fetched plan and has no separate execution controls.
 
 ## Exclusive Metrics
 

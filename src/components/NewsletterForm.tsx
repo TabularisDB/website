@@ -127,6 +127,8 @@ export function NewsletterForm({
 
   const { formRef, ready, error, clearError } = useSpamGuard();
 
+  // Firefox restores dynamic button states on reload, before hydration.
+  // Disable form-state restoration, but opt the email inputs back into autofill.
   if (compact) {
     return (
       <div className="newsletter-box newsletter-compact">
@@ -140,6 +142,7 @@ export function NewsletterForm({
             method="POST"
             action={EMAILCHEF_ACTION}
             className="newsletter-form newsletter-form-inline"
+            autoComplete="off"
           >
             <input type="hidden" name="form_id" value="7533" />
             <input type="hidden" name="lang" value="" />
@@ -154,6 +157,7 @@ export function NewsletterForm({
                 required
                 className="newsletter-input"
                 aria-label="Email address"
+                autoComplete="email"
                 onChange={clearError}
               />
               <button type="submit" className="newsletter-btn" disabled={!ready}>
@@ -183,6 +187,7 @@ export function NewsletterForm({
         method="POST"
         action={EMAILCHEF_ACTION}
         className="newsletter-form"
+        autoComplete="off"
       >
         <input type="hidden" name="form_id" value="7533" />
         <input type="hidden" name="lang" value="" />
@@ -199,6 +204,7 @@ export function NewsletterForm({
               name="field[-1]"
               className="newsletter-input"
               placeholder="you@example.com"
+              autoComplete="email"
               required
               onChange={clearError}
             />
