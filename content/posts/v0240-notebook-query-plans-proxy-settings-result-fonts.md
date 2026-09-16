@@ -9,7 +9,7 @@ og:
   title: "v0.24.0:"
   accent: "Explain. Route. Read."
   claim: "Inspect plans beside your notebook SQL, choose which traffic uses a proxy, and give query results their own font."
-  image: "/img/tabularis-notebook-query-plan.png"
+  image: "/img/posts/v0240-og-shot.png"
   appLabel: "tabularis"
 ---
 
