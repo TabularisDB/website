@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc" font-family="DejaVu Sans, sans-serif">
+<title id="title">Merged pull requests by author group</title><desc id="desc">382 human-authored merged pull requests: 125 by debba and 257 by 80 other authors. Monthly counts from January through September 18, 2026. Bots excluded; September is partial. Direct commits are not counted.</desc>
+<rect x="0.0" y="0.0" width="1200.0" height="680.0" rx="18" fill="#111214"/>
+<text x="40.0" y="43.0" font-size="15" fill="#b6bdc9" font-weight="600" text-anchor="start">TABULARIS  /  APPROACHING 5,000 STARS</text>
+<text x="40.0" y="91.0" font-size="31" fill="#f5f5f7" font-weight="650" text-anchor="start">The community is building it too</text>
+<text x="40.0" y="126.0" font-size="21" fill="#b6bdc9" font-weight="400" text-anchor="start">257 merged PRs from 80 authors other than debba</text>
+<rect x="40.0" y="151.0" width="16.0" height="16.0" rx="0" fill="#619cff"/>
+<text x="65.0" y="165.0" font-size="18" fill="#f5f5f7" font-weight="400" text-anchor="start">PRs by debba</text>
+<rect x="268.0" y="151.0" width="16.0" height="16.0" rx="0" fill="#61d6b0"/>
+<text x="293.0" y="165.0" font-size="18" fill="#f5f5f7" font-weight="400" text-anchor="start">PRs by other contributors</text>
+<line x1="98.0" y1="492.0" x2="1142.0" y2="492.0" stroke="#30343c" stroke-width="1.5" stroke-dasharray=""/>
+<text x="82.0" y="498.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="end">0</text>
+<line x1="98.0" y1="420.8" x2="1142.0" y2="420.8" stroke="#30343c" stroke-width="1.5" stroke-dasharray=""/>
+<text x="82.0" y="426.8" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="end">30</text>
+<line x1="98.0" y1="349.5" x2="1142.0" y2="349.5" stroke="#30343c" stroke-width="1.5" stroke-dasharray=""/>
+<text x="82.0" y="355.5" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="end">60</text>
+<line x1="98.0" y1="278.2" x2="1142.0" y2="278.2" stroke="#30343c" stroke-width="1.5" stroke-dasharray=""/>
+<text x="82.0" y="284.2" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="end">90</text>
+<line x1="98.0" y1="207.0" x2="1142.0" y2="207.0" stroke="#30343c" stroke-width="1.5" stroke-dasharray=""/>
+<text x="82.0" y="213.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="end">120</text>
+<rect x="124.0" y="492.0" width="64.0" height="0.0" rx="0" fill="#619cff"/>
+<rect x="124.0" y="492.0" width="64.0" height="0.0" rx="0" fill="#61d6b0"/>
+<text x="156.0" y="481.0" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="middle">0</text>
+<text x="156.0" y="525.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="middle">Jan</text>
+<rect x="240.0" y="480.1" width="64.0" height="11.9" rx="0" fill="#619cff"/>
+<rect x="240.0" y="468.2" width="64.0" height="11.9" rx="0" fill="#61d6b0"/>
+<text x="272.0" y="457.2" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="middle">10</text>
+<text x="272.0" y="525.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="middle">Feb</text>
+<rect x="356.0" y="480.1" width="64.0" height="11.9" rx="0" fill="#619cff"/>
+<rect x="356.0" y="451.6" width="64.0" height="28.5" rx="0" fill="#61d6b0"/>
+<text x="388.0" y="440.6" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="middle">17</text>
+<text x="388.0" y="525.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="middle">Mar</text>
+<rect x="472.0" y="475.4" width="64.0" height="16.6" rx="0" fill="#619cff"/>
+<rect x="472.0" y="444.5" width="64.0" height="30.9" rx="0" fill="#61d6b0"/>
+<text x="504.0" y="433.5" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="middle">20</text>
+<text x="504.0" y="525.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="middle">Apr</text>
+<rect x="588.0" y="454.0" width="64.0" height="38.0" rx="0" fill="#619cff"/>
+<rect x="588.0" y="335.2" width="64.0" height="118.8" rx="0" fill="#61d6b0"/>
+<text x="620.0" y="324.2" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="middle">66</text>
+<text x="620.0" y="525.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="middle">May</text>
+<rect x="704.0" y="444.5" width="64.0" height="47.5" rx="0" fill="#619cff"/>
+<rect x="704.0" y="344.8" width="64.0" height="99.8" rx="0" fill="#61d6b0"/>
+<text x="736.0" y="333.8" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="middle">62</text>
+<text x="736.0" y="525.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="middle">Jun</text>
+<rect x="820.0" y="418.4" width="64.0" height="73.6" rx="0" fill="#619cff"/>
+<rect x="820.0" y="237.9" width="64.0" height="180.5" rx="0" fill="#61d6b0"/>
+<text x="852.0" y="226.9" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="middle">107</text>
+<text x="852.0" y="525.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="middle">Jul</text>
+<rect x="936.0" y="435.0" width="64.0" height="57.0" rx="0" fill="#619cff"/>
+<rect x="936.0" y="332.9" width="64.0" height="102.1" rx="0" fill="#61d6b0"/>
+<text x="968.0" y="321.9" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="middle">67</text>
+<text x="968.0" y="525.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="middle">Aug</text>
+<rect x="1029.0" y="192.0" width="110.0" height="345.0" rx="8" fill="#1c232b"/>
+<rect x="1052.0" y="451.6" width="64.0" height="40.4" rx="0" fill="#619cff"/>
+<rect x="1052.0" y="413.6" width="64.0" height="38.0" rx="0" fill="#61d6b0"/>
+<text x="1084.0" y="402.6" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="middle">33</text>
+<text x="1084.0" y="525.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="middle">Sep*</text>
+<line x1="40.0" y1="561.0" x2="1160.0" y2="561.0" stroke="#30343c" stroke-width="1.5" stroke-dasharray=""/>
+<text x="40.0" y="598.0" font-size="17" fill="#b6bdc9" font-weight="400" text-anchor="start">Source: GitHub REST API · TabularisDB/tabularis · Grouped by merge date (UTC)</text>
+<text x="40.0" y="627.0" font-size="17" fill="#b6bdc9" font-weight="400" text-anchor="start">* September includes activity through September 18 only. Bot accounts excluded.</text>
+<text x="40.0" y="652.0" font-size="17" fill="#b6bdc9" font-weight="400" text-anchor="start">PR counts do not measure effort; direct commits and work in other repositories are excluded.</text>
+</svg>
