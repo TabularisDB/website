@@ -8,7 +8,7 @@ import {buildArticleJsonLd, buildBreadcrumbJsonLd} from '@/lib/seo';
 import {getRelatedLinksForPost} from '@/lib/seo/seoRelated';
 import {Metadata} from 'next';
 import {notFound} from 'next/navigation';
-import {PostNav} from '../../../components/pages/wiki/PostNav/PostNav';
+import {PostNav} from '../../../components/ui/PostNav/PostNav';
 import {WikiContent} from '../../../components/pages/wiki/WikiContent/WikiContent';
 import styles from './page.module.scss';
 import {PostAuthor} from '@/components/pages/blog/PostAuthor/PostAuthor';
