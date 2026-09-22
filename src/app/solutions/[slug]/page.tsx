@@ -1,8 +1,7 @@
 import {JsonLd} from '@/components/layout/JsonLd';
 import {SolutionDetailLayout} from '@/components/pages/solutions/SolutionDetailLayout/SolutionDetailLayout';
-import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
 import {buildArticleJsonLd, buildBreadcrumbJsonLd} from '@/lib/seo';
-import {getAdjacentSeoPages, getSeoPageBySlug, getSeoPagePath, getSeoPagesBySection} from '@/lib/seo/seoPages';
+import {getSeoPageBySlug, getSeoPagePath, getSeoPagesBySection} from '@/lib/seo/seoPages';
 import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 
@@ -43,8 +42,6 @@ export default async function SolutionDetailPage({params}: PageProps) {
     const {slug} = await params;
     const page = getSeoPageBySlug('solutions', slug);
     if (!page) notFound();
-
-    const {prev, next} = getAdjacentSeoPages('solutions', slug);
 
     return (
         <div className="container">

@@ -1,3 +1,4 @@
+import {MySQLIcon, PostgreSQLIcon, SQLiteIcon} from '@/components/ui/Icons/PluginIcons';
 import {
     Bot,
     Database,
@@ -16,6 +17,8 @@ import {
     MonitorSmartphone,
 } from 'lucide-react';
 import type {LucideIcon} from 'lucide-react';
+import {McpIcon} from '../../home/ProductOverview/Diagram/icons/AgentIcons';
+import {LinuxIcon, MacOsIcon, WindowsIcon} from '@/components/ui/Icons/PlatformIcons';
 
 export const CATEGORY_ORDER = [
     'By database engine',
@@ -35,7 +38,7 @@ const CATEGORY_BY_SLUG: Record<string, string> = {
     'visual-explain': 'By workflow',
     'visual-query-builder': 'By workflow',
 
-    'postgres-gui-for-mac': 'By platform',
+    'postgres-gui-mac': 'By platform',
     'open-source-database-client-linux': 'By platform',
     'free-database-client-windows': 'By platform',
 
@@ -49,30 +52,30 @@ const CATEGORY_BY_SLUG: Record<string, string> = {
     'duckdb-redis-database-workflows': 'Alternatives & extensibility',
 };
 
-const ICON_BY_SLUG: Record<string, LucideIcon> = {
-    'postgresql-client': Database,
-    'mysql-client-for-developers': Table,
-    'sqlite-client-for-developers': HardDrive,
-    'mcp-database-client': Bot,
-    'sql-notebooks': NotebookPen,
-    'visual-explain': LineChart,
-    'visual-query-builder': MousePointerClick,
-    'postgres-gui-for-mac': Apple,
-    'open-source-database-client-linux': Terminal,
-    'free-database-client-windows': MonitorSmartphone,
-    'secure-database-client': ShieldCheck,
-    'database-client-for-on-call-engineers': Siren,
-    'ssh-database-client': Network,
-    'sqlite-browser-linux': HardDrive,
-    'mysql-workbench-replacement': Table,
-    'plugin-based-database-client': Puzzle,
-    'duckdb-redis-database-workflows': Layers,
+const ICON_BY_SLUG: Record<string, React.ReactNode> = {
+    'postgresql-client': <PostgreSQLIcon />,
+    'mysql-client-for-developers': <MySQLIcon />,
+    'sqlite-client-for-developers': <SQLiteIcon />,
+    'mcp-database-client': <McpIcon />,
+    'sql-notebooks': <NotebookPen />,
+    'visual-explain': <LineChart />,
+    'visual-query-builder': <MousePointerClick />,
+    'postgres-gui-mac': <MacOsIcon />,
+    'open-source-database-client-linux': <LinuxIcon />,
+    'free-database-client-windows': <WindowsIcon />,
+    'secure-database-client': <ShieldCheck />,
+    'database-client-for-on-call-engineers': <Siren />,
+    'ssh-database-client': <Network />,
+    'sqlite-browser-linux': <HardDrive />,
+    'mysql-workbench-replacement': <Table />,
+    'plugin-based-database-client': <Puzzle />,
+    'duckdb-redis-database-workflows': <Layers />,
 };
 
 export function getCategoryForSlug(slug: string): string {
     return CATEGORY_BY_SLUG[slug] ?? 'Other';
 }
 
-export function getIconForSlug(slug: string): LucideIcon {
-    return ICON_BY_SLUG[slug] ?? Database;
+export function getIconForSlug(slug: string): React.ReactNode {
+    return ICON_BY_SLUG[slug] ?? <Database />;
 }

@@ -1,16 +1,16 @@
 ---
-title: "v0.23.0: The PostgreSQL Plugin Takes Over From the Built-in Driver, SQL Files Open in Editor Tabs, and a Data Folder You Can Sync"
-date: "2026-09-10T10:30:00"
-release: "v0.23.0"
-tags: ["release", "feature", "bugfix", "postgres", "mysql", "sqlite", "plugin", "ui", "ux", "community"]
-excerpt: "v0.23.0 lets plugins ship their own Visual EXPLAIN parsers, which is what the new SQL Server plugin (1.0.0-beta.1) needs, opens, edits and saves .sql files in editor tabs without executing them, moves the whole data folder to any location such as an iCloud Drive or Dropbox folder, deprecates the built-in PostgreSQL driver in favour of the PostgreSQL plugin with a reversible, per-connection or bulk migration flow, fixes two bugs that swallowed keystrokes in the SQL editor, and carries community fixes for dump escaping, connections.json field loss, the PostgreSQL pool size and shortcuts firing during IME composition."
+title: 'v0.23.0: The PostgreSQL Plugin Takes Over From the Built-in Driver, SQL Files Open in Editor Tabs, and a Data Folder You Can Sync'
+date: '2026-09-10T10:30:00'
+release: 'v0.23.0'
+tags: ['release', 'feature', 'bugfix', 'postgres', 'mysql', 'sqlite', 'plugin', 'ui', 'ux', 'community']
+excerpt: 'v0.23.0 lets plugins ship their own Visual EXPLAIN parsers, which is what the new SQL Server plugin (1.0.0-beta.1) needs, opens, edits and saves .sql files in editor tabs without executing them, moves the whole data folder to any location such as an iCloud Drive or Dropbox folder, deprecates the built-in PostgreSQL driver in favour of the PostgreSQL plugin with a reversible, per-connection or bulk migration flow, fixes two bugs that swallowed keystrokes in the SQL editor, and carries community fixes for dump escaping, connections.json field loss, the PostgreSQL pool size and shortcuts firing during IME composition.'
 og:
-  template: "screenshot-split"
-  title: "v0.23.0:"
-  accent: "Migrate. Save. Sync."
-  claim: "Move your PostgreSQL connections to the plugin with one click and an Undo, open and save .sql files in editor tabs, point the data folder at a synced drive, and install the SQL Server plugin with its own EXPLAIN parser."
-  image: "/img/tabularis-deprecated-badge-catalogue.png"
-  appLabel: "tabularis"
+    template: 'screenshot-split'
+    title: 'v0.23.0:'
+    accent: 'Migrate. Save. Sync.'
+    claim: 'Move your PostgreSQL connections to the plugin with one click and an Undo, open and save .sql files in editor tabs, point the data folder at a synced drive, and install the SQL Server plugin with its own EXPLAIN parser.'
+    image: '/img/tabularis-deprecated-badge-catalogue.png'
+    appLabel: 'tabularis'
 ---
 
 # v0.23.0: The PostgreSQL Plugin Takes Over From the Built-in Driver, SQL Files Open in Editor Tabs, and a Data Folder You Can Sync
@@ -23,7 +23,7 @@ og:
 
 [Last week's post](/blog/how-plugins-can-now-inject-their-own-parsers-into-visual-explain) told the story of this change in full; this is the release it ships in. PR [#688](https://github.com/TabularisDB/tabularis/pull/688) takes `@tabularis/explain` from 0.1.0 to 0.2.0 with a parser registry: `registerExplainParser`, `unregisterExplainParser`, `getExplainParser` and `listExplainParsers`, with the built-in PostgreSQL, MySQL and SQLite parsers registered through the same path, so detection and parsing dispatch by format instead of a hard-coded switch. Registering an existing format replaces it, which is what a plugin upgrade needs; unregistering restores detection order deterministically.
 
-<video src="/videos/posts/explain-sqlserver.mp4" poster="/videos/posts/explain-sqlserver.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video class="video-borderless" src="/videos/posts/explain-sqlserver.mp4" poster="/videos/posts/explain-sqlserver.jpg" autoplay loop muted playsinline></video>
 
 On the plugin side, a driver can now answer `explain_query` with a raw payload tagged with an `engine` and a `format`, and declare an `explain_parsers` array in its `.tabularium` manifest pointing at a TypeScript bundle for that format. The desktop reads each declared module once, evaluates it the way UI extension bundles are evaluated, matches the export by exact engine and format and registers it. Bundles that fail to read or evaluate are logged and skipped per plugin; a parser that throws during actual parsing surfaces through Visual EXPLAIN's normal error handling. Disabling and re-enabling a plugin unregisters and reloads its formats, so the cycle is deterministic. Plugins that keep returning the parsed plan shape are unaffected.
 
@@ -45,7 +45,7 @@ Saving writes the editor text back to that path; **Save As** asks for a new one,
 
 Dirty tracking is a real comparison rather than a flag. The tab stores the content last read from or written to disk and compares the editor text against it, so typing a character and deleting it again leaves the file clean, and an edit made while a write is in flight keeps the tab dirty. That stored content is persisted with the tab, so a file tab restored after a restart can still be saved to the same path and still knows whether it changed. **Close**, **Close Others**, **Close to the Right**, **Close to the Left** and **Close All** all check whether any tab about to go has unsaved file changes and ask before discarding them.
 
-The file IO goes through two small Tauri commands in Rust instead of the JS filesystem plugin. The earlier attempt failed with a *forbidden path* error for anything outside the app data directory, and the runtime scope the dialog plugin grants for a picked path does not survive a restart, so saving a restored tab could never have worked that way. The commands validate the path, cap reads at 50 MB and run the blocking IO off the main thread, the same approach result exports already use.
+The file IO goes through two small Tauri commands in Rust instead of the JS filesystem plugin. The earlier attempt failed with a _forbidden path_ error for anything outside the app data directory, and the runtime scope the dialog plugin grants for a picked path does not survive a restart, so saving a restored tab could never have worked that way. The commands validate the path, cap reads at 50 MB and run the blocking IO off the main thread, the same approach result exports already use.
 
 ---
 
@@ -74,14 +74,14 @@ It starts before you do anything. At launch, if at least one saved connection us
 ![The Choose a database catalogue with paradigm facets and Installed badges: the built-in PostgreSQL tile in the SQL group carries a Deprecated badge, while the PostgreSQL plugin tile sits in the Relational group next to the newly installed SQL Server plugin](/img/tabularis-deprecated-badge-catalogue.png)
 
 - A **Deprecated** badge, with a tooltip naming the replacement and the removal date, on the built-in entry in the connection catalogue, on its card under **Settings → Plugins**, and on every connection row that still uses it. The plugin's own catalogue entry sorts ahead of the built-in one.
-- A dismissible banner on the Connections page. It reads *Try the new PostgreSQL plugin* when the plugin is installed, and *couldn't be downloaded, we'll retry on the next launch* when the registry was unreachable. Dismissing it hides it for the connections that existed at that moment; a new built-in connection brings it back.
+- A dismissible banner on the Connections page. It reads _Try the new PostgreSQL plugin_ when the plugin is installed, and _couldn't be downloaded, we'll retry on the next launch_ when the registry was unreachable. Dismissing it hides it for the connections that existed at that moment; a new built-in connection brings it back.
 - A **Switch to plugin** action on each built-in PostgreSQL connection, as a button on the card and in the context menu, plus a **Review connections** link on the banner that opens a bulk checklist.
 
 ![Connections page with the dismissible Try the new PostgreSQL plugin banner announcing the built-in driver retirement (tentatively 2026-10-05) and its Review connections link, above the connection cards, one of which carries the Deprecated badge next to its driver chip](/img/tabularis-postgres-deprecation-banner.png)
 
 Switching a single connection asks for confirmation, flips the driver to `postgresql`, reconnects it if it was open, and runs a connection test. The toast that follows reports success or the exact failure, and always carries **Undo**, which flips the driver back and reconnects again. A failure that is not the plugin's fault is labelled as such: if the connection also fails on the built-in driver, the toast says so and keeps the switch. If the plugin process itself did not start, the toast says no connection was attempted. Undo can fail too, for instance when the connection was deleted underneath it, and that surfaces as its own error toast instead of an unhandled rejection. Every one of these outcomes also has a **Report an issue** action that opens a pre-filled GitHub Issue Form in the plugin repository with the plugin and app versions, OS and error already in place, and it works even when the registry API is unreachable thanks to a static fallback URL for the first-party plugin.
 
-The bulk checklist is where the capability check lives. Each connection is compared against the capabilities the installed plugin declares in its manifest. A connection that uses something the plugin does not declare, SSL or connection strings are the two the code knows about, is listed **unchecked** with the specific gap named inline and a **Report this gap** action; once you have filed it, the row shows *Reported* instead. A connection whose connection string is stored in the keychain is unchecked as well, with a note that the secret will not carry over and needs to be re-entered after migrating, because the plugin cannot read the built-in driver's keychain entry. Everything else defaults to checked. **Migrate N selected** then works through the rows sequentially with per-row status, one failure does not abort the rest, and migration continues if you close the modal. Every migration is recorded in a persisted history so the state survives a restart.
+The bulk checklist is where the capability check lives. Each connection is compared against the capabilities the installed plugin declares in its manifest. A connection that uses something the plugin does not declare, SSL or connection strings are the two the code knows about, is listed **unchecked** with the specific gap named inline and a **Report this gap** action; once you have filed it, the row shows _Reported_ instead. A connection whose connection string is stored in the keychain is unchecked as well, with a note that the secret will not carry over and needs to be re-entered after migrating, because the plugin cannot read the built-in driver's keychain entry. Everything else defaults to checked. **Migrate N selected** then works through the rows sequentially with per-row status, one failure does not abort the rest, and migration continues if you close the modal. Every migration is recorded in a persisted history so the state survives a restart.
 
 ![The Review connections modal opened from the banner: it lists the one connection still on the built-in driver as a checked row, with Close and Migrate 1 selected buttons](/img/tabularis-migration-checklist.png)
 

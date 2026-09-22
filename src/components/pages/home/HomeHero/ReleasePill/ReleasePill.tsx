@@ -7,7 +7,7 @@ export function ReleasePill() {
     const latestBlog = getAllPosts()[0];
 
     return (
-        <Link href={latestBlog.slug} className={styles.pill}>
+        <Link href={`/blog/${latestBlog.slug}`} className={styles.pill}>
             <div className={styles.tag}>NEW</div>
             <span className={styles.title}>{formatBlogTitle(latestBlog)}</span>
             <ArrowRight />

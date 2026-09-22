@@ -16,6 +16,8 @@ import {
 } from '@/lib/wiki';
 import {buildArticleJsonLd, buildBreadcrumbJsonLd} from '@/lib/seo';
 import {getRelatedLinksForWiki} from '@/lib/seo/seoRelated';
+import {RelatedLinks} from '@/components/ui/RelatedLinks/RelatedLinks';
+import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
 
 interface PageProps {
     params: Promise<{slug: string}>;
@@ -63,8 +65,6 @@ export default async function WikiPageDetail({params}: PageProps) {
     const categories = buildCategories();
     const relatedLinks = getRelatedLinksForWiki(slug);
 
-    const crumbTitle = meta.title.length > 40 ? meta.title.slice(0, 40) + '\u2026' : meta.title;
-
     return (
         <div className="wiki-container">
             <JsonLd
@@ -82,11 +82,13 @@ export default async function WikiPageDetail({params}: PageProps) {
                     }),
                 ]}
             />
+            <Breadcrumbs crumbs={[{label: 'wiki', href: '/wiki/'}, {label: meta.title}]} />
 
             <WikiLayout categories={categories} rightSidebar={<WikiTableOfContents />}>
                 <CategoryLabel category={meta.category} />
 
                 <WikiContent html={html} />
+                <RelatedLinks links={relatedLinks} />
 
                 <PostNav prev={prev} next={next} basePath="/wiki" />
             </WikiLayout>

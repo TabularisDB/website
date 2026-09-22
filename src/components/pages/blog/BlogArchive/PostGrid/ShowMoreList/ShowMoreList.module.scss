@@ -1,0 +1,24 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.showMore {
+    align-self: center;
+    padding: 0.625rem 1.5rem;
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--radius-full, 999px);
+    background: var(--color-accent-blue);
+    color: var(--color-text-primary);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        border-color 0.15s ease,
+        color 0.15s ease;
+
+    &:hover:not(:disabled) {
+        filter: brightness(1.1);
+    }
+}

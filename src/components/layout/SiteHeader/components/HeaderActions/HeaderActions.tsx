@@ -7,7 +7,7 @@ import {Button} from '@/components/ui/Button/Button';
 import {getRepoStars, formatStars} from '@/lib/github';
 import styles from './HeaderActions.module.scss';
 import {SearchIcon, XIcon, MenuIcon, DownloadIcon} from 'lucide-react';
-import {GitHubIcon} from '@/components/ui/Icons/Icons';
+import {GitHubIcon} from '@/components/ui/Icons/SocialIcons';
 
 interface HeaderActionsProps {
     stars: number | null;

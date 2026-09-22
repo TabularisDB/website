@@ -72,7 +72,8 @@
     }
 }
 
-.cardIcon {
+.cardIcon,
+.cardIcon svg {
     --size: 2.75rem;
     width: var(--size);
     height: var(--size);
