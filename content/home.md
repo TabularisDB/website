@@ -32,8 +32,8 @@ Turn execution plans into interactive graphs, exact node tables, diagram and sta
 
 Built-in shortcuts cover navigation, the SQL editor, and the data grid. Remap combinations from **Settings → Keyboard Shortcuts**, reset them in one click, or edit `keybindings.json` directly.
 
-### 🔒 SSH & Kubernetes Tunneling
-Reach remote databases through SSH tunnels or managed `kubectl port-forward` tunnels directly from the connection manager. Test the tunnel on its own, watch each step of a connection test as it runs, and get a classified error with a copyable diagnostics log when one fails. Passwords and API keys are stored securely in your system keychain.
+### 🔒 SSH, Kubernetes & AWS SSM Tunneling
+Reach remote databases through SSH tunnels, managed `kubectl port-forward` tunnels or AWS Systems Manager Session Manager port forwarding directly from the connection manager. Test the tunnel on its own, watch each step of a connection test as it runs, and get a classified error with a copyable diagnostics log when one fails. Passwords and API keys are stored securely in your system keychain.
 
 ### 📝 Modern SQL Editor
 Monaco-powered SQL editing with syntax highlighting, multiple tabs, and precise execution controls for selected text or full scripts.
@@ -74,7 +74,7 @@ Each plugin runs in its own process. If a plugin crashes, the failure is isolate
 
 # Themes
 
-Themes are part of the product experience, not an afterthought. Switch instantly between **10+ presets** without restarting, with syntax highlighting generated to stay coherent with the active UI theme.
+Themes are part of the product experience, not an afterthought. Switch instantly between **12 built-in presets** without restarting, with syntax highlighting generated to stay coherent with the active UI theme. Install more as **declarative theme packages** from the registry or a local ZIP, import a VS Code theme, and publish your own with the `tabularis-theme` authoring tool.
 
 # Installation
 

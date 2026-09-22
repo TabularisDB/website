@@ -108,6 +108,7 @@ Any key omitted from the file falls back to its default value. You do not need a
 | `checkForUpdates` | `boolean` | `true` | Enable or disable update checks entirely. |
 | `autoCheckUpdatesOnStartup` | `boolean` | `true` | Checks GitHub Releases API on boot. |
 | `lastDismissedVersion` | `string` | `null` | Version string of the last dismissed update notification. |
+| `mcpOutputFormat` | `string` | `"json"` | Since v0.25.0. Default text encoding for MCP tool results, `json` or `toon`, used when a call does not pass `output_format`. Configurable from **Settings → MCP → Tool output**. See [MCP Server](/wiki/mcp-server#output-format). |
 | `erDiagramDefaultLayout` | `string` | `"LR"` | `TB` (Top-Bottom) or `LR` (Left-Right) for Dagre layout. |
 | `schemaPreferences` | `object` | `{}` | Per-connection active schema for DDL operations (map of connection ID → schema name). |
 | `selectedSchemas` | `object` | `{}` | Per-connection visible schemas in the sidebar (map of connection ID → string[]). |

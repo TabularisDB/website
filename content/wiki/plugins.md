@@ -47,7 +47,7 @@ plugins/
 
 ## The Manifest (`.tabularium`)
 
-Every plugin ships one manifest that tells Tabularis its capabilities and the data types it supports. Its canonical name is **`.tabularium`** — one file at the plugin root that serves both the host (loading the driver) and the [Tabularium registry](https://registry.tabularis.dev/docs/plugin-development) (listing it). The host still reads a legacy `manifest.json` as a fallback, where `id` and a display `name` remain valid; in a `.tabularium`, `name` is the lowercase slug and identifies the plugin. The full field reference with all constraints lives at [docs.tabularium.wiki/manifest](https://docs.tabularium.wiki/manifest/).
+Every plugin ships one manifest that tells Tabularis its capabilities and the data types it supports. Its canonical name is **`.tabularium`** — one file at the plugin root that serves both the host (loading the driver) and the [Tabularium registry](https://registry.tabularis.dev/docs/plugin-development) (listing it). The host still reads a legacy `manifest.json` as a fallback. With Tabularium 0.14.0 and Tabularis v0.25.0, a `.tabularium` may carry `id` as the stable lowercase identifier and `name` as the human-readable display name, which the connection catalogue shows for standalone plugins instead of title-casing the slug; manifests without `id` remain valid, and their `name` keeps acting as the identifier. When adopting the split, set `id` equal to the existing registry slug first, then change `name`. The full field reference with all constraints lives at [docs.tabularium.wiki/manifest](https://docs.tabularium.wiki/manifest/).
 
 ```json
 {
@@ -484,13 +484,16 @@ You should see a valid JSON-RPC response on `stdout`.
 
 ## The Hosted Registry and the Connection Catalogue
 
+![Plugin Center with update metrics and its version selector](/img/tabularis-plugin-center-redesign.png)
+
 Since v0.16.0, plugin discovery runs through the hosted **Tabularium** registry at `registry.tabularis.dev` instead of a static JSON file:
 
 ![The connection catalogue merging built-in drivers and registry plugins, with paradigm facets, Installed badges, per-plugin download counts, and the Deprecated badge on the built-in PostgreSQL tile](/img/tabularis-deprecated-badge-catalogue.png)
 
 - **The connection catalogue.** Creating a new connection starts from a searchable catalogue that merges built-in drivers with registry plugins into one grid, with paradigm facets for filtering. Drivers your platform can't run are badged and dimmed. Picking an uninstalled driver install-gates it — you can install the plugin inline and continue straight to the connection form.
 - **Deep-link installs.** Links of the form `tabularis://install/<slug>` open the app with a version-aware confirmation: **Install** for a new plugin, **Update** when a newer version exists, or an already-installed notice. An optional `?version=` pins a specific release.
-- **Version picking and updates.** Catalogue cards let you install a specific released version, and the **Installed** tab shows an Update button when a newer compatible release exists for your platform and app version.
+- **Version picking and updates.** Catalogue cards let you install a specific released version, and the **Installed** tab shows an Update button when a newer compatible release exists for your platform and app version. Since v0.25.0 the sidebar and the Plugins entry in Settings carry a count of pending updates, and a startup toast opens the **Updates** filter directly. See [Updates](/wiki/updates#update-badges-and-startup-toast).
+- **Theme packages.** Since v0.25.0 the registry also lists declarative theme packages. A **Filter by type** control switches between **Drivers** and **Themes**; themes are installed, updated, enabled, disabled and removed with the same lifecycle as drivers, and never execute code. See [Themes → Theme Packages](/wiki/themes#theme-packages-since-v0250).
 - **Plugin details with README.** Since v0.19.0, the install gate and every Plugin Center card known to the registry open a details modal showing the plugin's README, served locale-aware by the registry. Relative image and link paths are resolved against the plugin's repository, the HTML is sanitized, and links open in your OS browser.
 
 ![The plugin README modal open over the install gate, showing the ClickHouse plugin's README with badges, description and table of contents](/img/tabularis-plugin-readme-modal.png)
@@ -526,7 +529,7 @@ The system has three layers:
 
 ### Available Slots
 
-Ten insertion points are available:
+Eleven insertion points are available:
 
 | Slot Name | Location | Renders Per |
 |-----------|----------|-------------|
@@ -540,6 +543,7 @@ Ten insertion points are available:
 | `settings.plugin.actions` | Per-plugin actions in Settings | Each installed plugin |
 | `settings.plugin.before_settings` | Above plugin settings form | Each installed plugin |
 | `connection-modal.connection_content` | Inside the connection form | Each connection dialog |
+| `connection-modal.extra_fields` | Below host/port in the connection form | Each connection dialog |
 
 ### Declaring UI Extensions in the Manifest
 

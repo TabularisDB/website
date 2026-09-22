@@ -66,7 +66,7 @@ A bridge must still implement and route its database operations, and the registr
 
 ## UI extensions
 
-The Tabularis host mounts **slot contributions** at eleven predefined points (plugin row in Settings, new connection form, row editor fields, data grid toolbar, context menu, etc.). Since v0.19.0, the `connection-modal.extra_fields` slot renders plugin UI below the host/port section of the connection form, backed by an opaque `extra` string map on `ConnectionParams` — persisted verbatim and forwarded to the driver, so a plugin can carry custom connection settings (an AWS region, say) without a core schema change. Plugins declare contributions in the `.tabularium` manifest:
+The Tabularis host mounts **slot contributions** at eleven predefined points (plugin row in Settings, new connection form, row editor fields, data grid toolbar, context menu, etc.). Since v0.19.0, the `connection-modal.extra_fields` slot renders plugin UI below the host/port section of the connection form, backed by an opaque `extra` string map on `ConnectionParams` — persisted verbatim and forwarded to the driver, so a plugin can carry custom connection settings (an AWS region, say) without a core schema change. Since v0.25.0 the same slot context also exposes `credentialFieldsHidden` and `setCredentialFieldsHidden(hidden)`: a driver that authenticates without a database login (integrated authentication, IAM tokens, Kerberos) can hide the host username and password inputs, which clears both values, ignores the login part of an imported connection string and removes a previously stored password on save. The flag resets whenever the driver changes. Plugins declare contributions in the `.tabularium` manifest:
 
 ```json
 "ui_extensions": [

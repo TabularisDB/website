@@ -115,6 +115,14 @@ tabularis://abc123/schema
 
 Tools are actions the AI can call to retrieve or manipulate data.
 
+### Output format
+
+Since v0.25.0 every tool accepts an optional `output_format` argument with the values `json` (the default) and `toon`. TOON, [Token-Oriented Object Notation](https://github.com/toon-format/toon), encodes repeated records compactly and reduces the tokens an agent spends reading tabular results. The MCP transport stays JSON-RPC; only the text payload inside `content[0].text` changes. Calls that omit the argument receive the same pretty-printed JSON as before, and an unsupported value returns a `-32602` error before any connection is resolved or query executed.
+
+**MCP Server → Safety → Tool output → Default output format** selects the encoding used when a call does not pass `output_format`. It is stored as `mcpOutputFormat` in `config.json`; a per-call argument always wins.
+
+![MCP tool output settings with JSON and TOON choices](/img/tabularis-mcp-tool-output.png)
+
 ### `list_connections`
 
 Returns the same safe connection list exposed by `tabularis://connections`. For multi-database connections (MySQL / MariaDB), every selected database is serialized — not just the first.
@@ -162,8 +170,9 @@ Executes a SQL query on a specific connection and returns the results.
 |-----------|------|-------------|
 | `connection_id` | `string` | Connection UUID or exact name |
 | `query` | `string` | The SQL query to execute |
+| `output_format` | `string` | Optional. `json` (default) or `toon`. Available on every tool since v0.25.0. |
 
-**Returns:** query results as JSON. The MCP server currently caps query results to 100 rows per call.
+**Returns:** query results as JSON, or as TOON when requested. The MCP server currently caps query results to 100 rows per call.
 
 **Example prompts:**
 
@@ -197,6 +206,9 @@ Claude (or any connected AI) will call the appropriate tool with the resolved `c
 
 **A schema resource works but shows only the `public` schema on PostgreSQL**
 - That is expected for the `tabularis://{connection_id}/schema` resource. Use `list_tables` or `describe_table` with an explicit `schema` argument when you need a different PostgreSQL schema.
+
+**A plugin-driven connection returns `Unsupported driver: <id>`**
+- Before v0.25.0 the standalone `--mcp` process built its driver registry once at startup, so a plugin installed or enabled in the GUI was invisible until the AI client restarted Tabularis. Since v0.25.0 the process rescans installed plugins on a registry miss (rate-limited to once every two seconds) and unregisters drivers that were disabled or uninstalled. If the error persists, check that the plugin is installed and enabled in **Settings → Plugins** and that the connection's driver id matches it.
 
 **No resources appear in the AI client**
 - Tabularis reads connections from `connections.json` at the standard app data path. If you haven't saved any connections yet, the resource list will be empty.
