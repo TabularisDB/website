@@ -71,7 +71,7 @@ Since v0.19.0, a connection can be classified as **production** outright: it get
 ## Requirements and limits
 
 - Kubernetes tunneling uses **your** `kubectl` (it must be in `$PATH`); Tabularis does not embed a Kubernetes client, so contexts, exec plugins, and SSO auth behave exactly as in your terminal.
-- SSH and Kubernetes tunnels are mutually exclusive on a single connection.
+- SSH, Kubernetes and AWS SSM tunnels are mutually exclusive on a single connection. Since v0.25.0 a connection can also forward through an [AWS Systems Manager Session Manager](/wiki/aws-ssm-tunneling) session using your AWS CLI credentials.
 - Available since **v0.13.0** — see the [Kubernetes tunneling docs](/wiki/kubernetes-tunneling) for setup and troubleshooting.
 
 ## Not the best fit

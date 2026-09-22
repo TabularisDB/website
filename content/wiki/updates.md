@@ -21,6 +21,18 @@ To disable automatic checks, set `autoCheckUpdatesOnStartup` to `false` in your 
 
 Since v0.24.0, the update notification renders release notes as Markdown, including headings, lists, code and links; links open externally.
 
+## Update Badges and Startup Toast
+
+Since v0.25.0 available updates are visible without opening Settings. The sidebar rail shows one counter for pending core and plugin updates; inside Settings, **Plugins** and **Info** each show their own count, with a tooltip naming the plugins or the version involved. The plugin count includes only installed plugins with a release compatible with your app version and platform, and refreshes after a plugin is installed, updated or removed.
+
+When plugin updates are found at startup, one dismissible toast appears. Clicking it or **Open Plugins** opens **Settings → Plugins** with the **Updates** filter applied. No toast is shown when the initial check finds nothing or fails, so an offline registry stays quiet.
+
+Choosing **Remind Me Later** on a core update keeps suppressing the modal on background checks, but the sidebar badge and the details in **Settings → Info** remain, where an update status card offers a manual check, the release notes and the install action.
+
+![One core update and three plugin updates counted in the rail and Settings navigation](/img/tabularis-update-badges.png)
+
+<video class="video-borderless" src="/videos/posts/tabularis-update-toast.mp4" poster="/videos/posts/tabularis-update-toast.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+
 ## What's New
 
 The **What's New** modal includes a compact author introduction with GitHub Sponsors and repository-star actions. **Never show this again** dismisses only this support invitation, not future release notes. The preference persists, and the bundled avatar does not require a GitHub image request.

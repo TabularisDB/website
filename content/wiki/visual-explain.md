@@ -134,9 +134,13 @@ Plan-wide aggregates: node counts and depth, total self time, **time by operatio
 
 The raw view shows the database response in a read-only Monaco editor with syntax highlighting, word wrap, and search. No transformation — exactly what the server returned. JSON output from PostgreSQL or MySQL is detected automatically and highlighted as JSON; text-based output (like MySQL ANALYZE trees) renders as plain text. Since v0.23.0 XML plans are detected from the leading tag and highlighted as XML, and a single-line XML document (SQL Server SHOWPLAN output arrives this way) is indented one node per line for reading; already formatted XML passes through unchanged.
 
+<div class="post-gallery">
+
 ![Raw EXPLAIN JSON output in Monaco editor with syntax highlighting](/img/posts/tabularis-visual-explain-raw-json-output-monaco.png)
 
 ![Visual EXPLAIN on a SQL Server connection through the plugin, Raw Output tab: the SHOWPLAN XML returned as a single line is indented one node per line with XML highlighting in Monaco, below the overview bar with the two top issues](/img/tabularis-explain-raw-xml.png)
+
+</div>
 
 ### AI Analysis
 

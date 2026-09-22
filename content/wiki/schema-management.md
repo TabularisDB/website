@@ -21,6 +21,12 @@ The left sidebar is a fully interactive management suite. Right-click any table 
 - **Indexes**: Manage b-tree, hash, or spatial indexes to optimize query performance.
 - **Foreign Keys**: Define relationships. Select the target table and column, and specify cascading rules (`ON DELETE CASCADE`, `ON UPDATE RESTRICT`).
 
+### Table and Column Comments
+
+Since v0.25.0 Tabularis reads table and column comments from PostgreSQL and MySQL/MariaDB. They appear as the table description and a comment column in **View Schema**, as tooltips on tables and columns in the sidebar, and in the data grid's column header tooltip next to the type. Generated DDL preserves them: inline `COMMENT` clauses for MySQL, `COMMENT ON` statements for PostgreSQL and Oracle, with apostrophes escaped. SQLite has no comment syntax. Plugins opt in by returning an optional `comment` from `get_tables` and `get_columns`; the ClickHouse plugin already does.
+
+![Table and column descriptions in the PostgreSQL schema inspector](/img/tabularis-schema-comments.png)
+
 ### Auto-Increment Handling (PostgreSQL)
 
 When creating or modifying a column with auto-increment enabled, Tabularis automatically selects the correct serial type based on the column's integer type:

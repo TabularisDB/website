@@ -36,10 +36,13 @@ Since v0.23.0 the built-in `postgres` driver is **deprecated** in favour of the 
 - **Review connections.** The banner link opens a bulk checklist of every connection still on the built-in driver. Connections that use a capability the installed plugin does not declare (SSL or connection strings) are listed unchecked with the gap named inline and a **Report this gap** action; keychain-stored connection strings are unchecked with the re-entry warning; everything else is checked. **Migrate N selected** works through the rows sequentially with per-row status, one failure does not stop the rest, and migration continues if you close the modal.
 - Migrations are recorded in a persisted history. MySQL and SQLite are not deprecated yet and show no badge or migration action.
 
+<div class="post-gallery">
+
 ![Connections page with the dismissible Try the new PostgreSQL plugin banner announcing the built-in driver retirement (tentatively 2026-10-05) and its Review connections link, above the connection cards, one of which carries the Deprecated badge next to its driver chip](/img/tabularis-postgres-deprecation-banner.png)
 
 ![The Review connections modal opened from the banner: it lists the one connection still on the built-in driver as a checked row, with Close and Migrate 1 selected buttons](/img/tabularis-migration-checklist.png)
 
+</div>
 
 ## Connections Page
 
@@ -70,7 +73,8 @@ When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`)
 | **SSH profile** | — | Which saved SSH profile to use for the tunnel |
 | **Allow interactive prompts** | No | Lets the SSH tunnel prompt in-app for a key passphrase, security-key PIN, or password when it can't authenticate silently. See [SSH Tunneling → Interactive Authentication](/wiki/ssh-tunneling#interactive-authentication-passphrases--security-keys). |
 | **Startup script** | No | SQL run on every new pooled connection (see [Startup Script](#startup-script) below). |
-| **Kubernetes** | No | Tunnels the connection through a managed `kubectl port-forward`. Mutually exclusive with SSH. See [Kubernetes Tunneling](/wiki/kubernetes-tunneling). |
+| **Kubernetes** | No | Tunnels the connection through a managed `kubectl port-forward`. Mutually exclusive with SSH and AWS SSM. See [Kubernetes Tunneling](/wiki/kubernetes-tunneling). |
+| **AWS SSM** | No | Since v0.25.0. Forwards the connection through an AWS Systems Manager Session Manager port-forwarding session opened with the AWS CLI. Takes a managed node id plus optional profile and region. Mutually exclusive with SSH and Kubernetes. See [AWS SSM Tunneling](/wiki/aws-ssm-tunneling). |
 | **CA Certificate** | No | Path to a PEM bundle to trust for TLS (PostgreSQL only). See [TLS & CA Certificates](#tls--ca-certificates) below. |
 | **Client Certificate** / **Client Key** | No | PEM paths for mutual TLS (PostgreSQL only). Since v0.21.0 they are presented to servers that require client authentication. See [Client Certificates](#client-certificates-mtls) below. |
 | **Detect JSON in text columns** | No | Per-connection toggle: when enabled, plain `TEXT` / `VARCHAR` values that parse as JSON are routed through the JSON cell renderer in the data grid (chevron, viewer window, diff). The same flag also enables native array detection for `text[]` / `int[]` (PostgreSQL) and Firestore arrays. See [Data Grid → JSON & long text cells](/wiki/data-grid#json--long-text-cells). |
@@ -197,6 +201,14 @@ Set the SSH profile host to `db-host`, auth type to `ssh_key`, and leave the pas
 For databases running inside a Kubernetes cluster, the connection modal's **Kubernetes** tab runs a managed `kubectl port-forward` as the transport — pick a context, namespace, resource, and container port via cascading dropdowns discovered from your kubeconfig. Saved K8s profiles live in `k8s_connections.json` and are reusable across connections, mirroring the SSH profile pattern. Connections with a tunnel show a blue **K8s badge** in the sidebar and on the Connections page.
 
 Full reference: [Kubernetes Tunneling](/wiki/kubernetes-tunneling).
+
+## AWS SSM Port Forwarding
+
+Since v0.25.0 the connection modal has an **AWS SSM** tab. Enable **Use AWS SSM Port Forwarding**, enter the **Managed Node** id and, optionally, an **AWS Profile** and **AWS Region**. On connect Tabularis runs `aws ssm start-session` as a port-forwarding session and points the driver at the local port it reports. The forward target is the connection's own host and port from the General tab: a loopback target uses `AWS-StartPortForwardingSession`, any other host uses `AWS-StartPortForwardingSessionToRemoteHost`, and the tab shows which one applies. **Test SSM** opens a real session and closes it again without connecting to the database. Credentials are handled entirely by the AWS CLI; nothing SSM-specific is stored in the keychain. Connections using SSM show an **SSM** chip on the Connections page and in the sidebar. SSH, Kubernetes and AWS SSM are mutually exclusive on a connection.
+
+Full reference: [AWS SSM Tunneling](/wiki/aws-ssm-tunneling).
+
+![Connection editor with the AWS SSM port forwarding settings](/img/tabularis-aws-ssm-tab.png)
 
 ## Connection Actions
 

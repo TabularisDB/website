@@ -5298,20 +5298,33 @@ a.badge.version:hover {
 
 .post-content .post-gallery {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
   gap: 1rem;
   margin: 1.5rem 0 0.4rem;
 }
 
+.post-content .post-gallery > * {
+  min-width: 0;
+  margin: 0;
+}
+
 .post-content .post-gallery img {
   margin: 0;
-  height: 100%;
-  object-fit: cover;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (min-width: 769px) {
+  .post-content .post-gallery:has(> :nth-child(3)) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 768px) {
   .post-content .post-gallery {
-    grid-template-columns: 1fr;
+    gap: 0.5rem;
   }
 }
 

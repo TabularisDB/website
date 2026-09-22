@@ -42,7 +42,7 @@ Tunnels are **reused**: two connections targeting the same context/namespace/res
 4. Set the database credentials on the General tab as usual — host/port are replaced by the tunnel automatically.
 5. **Test** and save.
 
-Kubernetes and SSH are **mutually exclusive** on a connection: enabling one disables the other.
+Kubernetes, SSH and AWS SSM are **mutually exclusive** on a connection: enabling one disables the others. For databases reachable through an AWS Systems Manager managed node rather than a cluster, see [AWS SSM Tunneling](/wiki/aws-ssm-tunneling).
 
 ## Saved K8s Profiles
 

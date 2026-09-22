@@ -1,7 +1,7 @@
 ---
 title: "Themes & Customization"
 order: 9
-excerpt: "Personalize your workspace with 12 built-in themes and full typography control."
+excerpt: "Personalize your workspace with 12 built-in themes, installable theme packages and full typography control."
 category: "Customization"
 ---
 
@@ -9,7 +9,7 @@ category: "Customization"
 
 A developer tool should adapt to your preferences. Tabularis ships with a robust, CSS-variable-based theming engine that ensures every pixel—from the sidebar to the SQL editor—feels cohesive.
 
-![Theme management screen with preset appearance options](/img/tabularis-theme-management.png)
+![Appearance settings with built-in and installed theme variants](/img/tabularis-appearance-section.png)
 
 ## Built-In Themes
 
@@ -29,6 +29,43 @@ Since v0.22.0 the **Theme Mode** switch in **Settings → Appearance** decides w
 Toggling Follow System applies the current-mode theme immediately. If a picked theme no longer exists (a deleted custom theme, for example), the built-in preset for the current OS mode is used instead, and deleting a custom theme clears any per-mode pick that referenced it. The SQL editor theme is unaffected: **Same as App** follows the switch, an explicit editor theme stays fixed.
 
 The mode is stored in `config.json` as `followSystemTheme`, `lightThemeId` and `darkThemeId`. When the fields are absent the app is in Static mode, so existing installs are unchanged. See [Configuration](/wiki/configuration).
+
+## Theme Packages (since v0.25.0)
+
+Themes are no longer limited to the built-in presets and single-file personal themes. Since v0.25.0 a theme can be distributed as a **declarative package**: a ZIP with a `.tabularium` manifest of `kind: "theme"` and one JSON definition per variant (typically a light and a dark one). A package contains data only. No code is executed, and theme packages never take part in driver activation.
+
+### Managing themes
+
+**Settings → Appearance → Manage themes** lists built-in, personal and installed themes together.
+
+- **Preview** applies a theme temporarily and shows a read-only SQL sample rendered with the shared Monaco renderer. **Cancel** or Escape restores the saved selection, taking the current system mode into account; **Apply** saves it.
+- Installed packages are read-only. **Duplicate as personal** creates an independent copy that **Edit personal theme** can change.
+- The application theme and the SQL editor theme are selected independently. The Follow System light and dark picks work with installed variants.
+- **Import Tabularis JSON** and **Export standalone JSON** keep the single-file format. **Import from VS Code** converts a VS Code JSON or JSONC theme, lists what could not be mapped, and asks for the light or dark base when it cannot detect it. **Export author package** writes the package layout for a theme you intend to publish.
+- **Local package** previews and installs a ZIP from disk. Installation is bound to the validated archive digest: rebuild the ZIP and you preview again before installing.
+
+Installing a package never selects a variant on its own. Close the dialog and pick the variant explicitly.
+
+<div class="post-gallery">
+  <img src="/img/tabularis-theme-manager-preview.png" alt="Previewing an installed Ember theme with a read-only SQL sample" loading="lazy">
+  <img src="/img/tabularis-theme-vscode-import.png" alt="Importing a VS Code theme with mode selection and conversion diagnostics" loading="lazy">
+</div>
+
+<video class="video-borderless" src="/videos/posts/tabularis-theme-package-install.mp4" poster="/videos/posts/tabularis-theme-package-install.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+
+### Installing from the registry
+
+**Settings → Plugins** has a **Filter by type** control with **Drivers** and **Themes**. Theme packages published to the [Tabularium registry](https://registry.tabularis.dev) are installed, updated, enabled, disabled and uninstalled there, next to drivers, and `tabularis://install/<slug>` deep links work for them too. Uninstalling a theme package reuses the plugin removal dialog and affects every variant of the package. A package must declare `min_runtime_version: "0.25.0"` or later; older clients refuse it.
+
+The install lifecycle validates the archive with size bounds, checks every path and payload, stages the package privately under a lock, and commits it by atomic replacement with rollback on failure. Interrupted operations are repaired only through the explicit **Recover interrupted installs** action. A saved selection that points at a package that is currently unavailable falls back to a built-in theme without overwriting your preference; when the package is enabled or reinstalled, the selection is restored.
+
+Packages are stored by kind under the app data directory, in `plugins/themes/<package>/` beside `plugins/drivers/<package>/`. Personal themes exported before v0.25.0 remain where they were and keep working.
+
+![Plugin Center filtered to Themes, showing the locally installed Ember package](/img/tabularis-plugin-themes.png)
+
+### Authoring a theme
+
+`@tabularis/create-plugin` 0.3.0 ships a second binary, `tabularis-theme`, which scaffolds a two-variant repository, validates both variants offline with the same schemas the app uses, and builds a deterministic ZIP. The generated repository includes a read-only validation workflow for branches and pull requests and a separate draft-release workflow for tags. Theme definitions and manifests may carry optional `$schema` hints for editor completion; the runtime ignores them for validation and never fetches a remote schema. The full guide is [THEMES.md](https://github.com/TabularisDB/tabularis/blob/main/packages/create-plugin/THEMES.md); [Ember](https://github.com/TabularisDB/tabularis-ember-theme) is the reference two-variant theme.
 
 ## Typography Configuration
 

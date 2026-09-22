@@ -112,14 +112,7 @@ async function fetchTabulariumPlugins() {
 // plugin lives in Tabularium, drop the legacy fetch and keep only the API.
 async function buildRegistry() {
   const legacy = JSON.parse(await fetchText(`${BASE}/plugins/registry.json`));
-  let fromTabularium = [];
-  try {
-    fromTabularium = await fetchTabulariumPlugins();
-  } catch (err) {
-    // The site must stay deployable when the registry API is down; the next
-    // 6-hour rebuild picks the data up again.
-    console.warn(`tabularium registry unavailable, keeping legacy data only: ${err}`);
-  }
+  const fromTabularium = await fetchTabulariumPlugins();
   const merged = new Map(legacy.plugins.map((plugin) => [plugin.id, plugin]));
   for (const plugin of fromTabularium) {
     merged.set(plugin.id, plugin);
@@ -147,14 +140,8 @@ async function main() {
     console.log(`fetched ${url} -> ${out}`);
   }
 
-  try {
-    await writeTarget("content/wiki/plugin-development.md", await buildPluginDevDocs());
-    console.log(`fetched ${TABULARIUM}/api/docs/plugin-development?format=md -> content/wiki/plugin-development.md`);
-  } catch (err) {
-    // Same policy as buildRegistry: the site must stay deployable when the
-    // registry is down — the committed copy from the last successful fetch ships.
-    console.warn(`plugin dev docs unavailable, keeping committed copy: ${err}`);
-  }
+  await writeTarget("content/wiki/plugin-development.md", await buildPluginDevDocs());
+  console.log(`fetched ${TABULARIUM}/api/docs/plugin-development?format=md -> content/wiki/plugin-development.md`);
 
   const registry = await buildRegistry();
   await writeTarget("plugins/registry.json", JSON.stringify(registry, null, 2) + "\n");

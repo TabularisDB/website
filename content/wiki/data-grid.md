@@ -27,6 +27,12 @@ Since v0.21.0 the pagination bar also has a **rows-per-page selector** that over
 
 The total row count is shown alongside the pagination controls, fetched via a `COUNT(*)` query when you open the table.
 
+### Column Comments
+
+Since v0.25.0, hovering a column header shows the column's database comment next to its type when the driver provides one (PostgreSQL and MySQL/MariaDB built in; plugins that return `comment` metadata). See [Schema Management → Table and Column Comments](/wiki/schema-management#table-and-column-comments).
+
+![Column header tooltip showing the type and comment for price](/img/tabularis-grid-header-comment-tooltip.png)
+
 ### Column Resizing
 
 Drag a column header border left or right to resize columns. Double-click the border to auto-fit the column to its content width.
@@ -239,7 +245,7 @@ The expansion editor supports a **Diff toggle** (off by default) that compares t
 
 JSON cells additionally show a **braces icon**. Clicking it opens the cell in a **standalone Tauri window** dedicated to the value, with the same JSON editor and Diff / Side-by-side toggles plus a Save button. Multiple cells can have their viewers open at the same time — each window keeps its own session and remembers its bounds. Saving flows back to the grid as a pending change; close the window without saving to discard the edit.
 
-Double-clicking a JSON cell opens the viewer directly in edit mode (skipping the chevron).
+Double-clicking a JSON cell opens the viewer directly in edit mode (skipping the chevron). Since v0.25.0 the viewer also opens from read-only query and notebook result grids, by double-click or Enter, including on generated columns; the blob editor and the row editor sidebar stay behind the read-only guard.
 
 There is no separate viewer window for plain text cells — text values aren't compared across windows as often as JSON, and the inline chevron is the entry point that mattered.
 

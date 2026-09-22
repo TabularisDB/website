@@ -24,6 +24,8 @@ When a database connection has SSH enabled, Tabularis:
 
 You never need to choose a local port — Tabularis handles it automatically.
 
+SSH is one of three tunnel methods. [Kubernetes Tunneling](/wiki/kubernetes-tunneling) runs a managed `kubectl port-forward`, and since v0.25.0 [AWS SSM Tunneling](/wiki/aws-ssm-tunneling) opens a Session Manager port-forwarding session through the AWS CLI. A connection uses at most one of them.
+
 ## Two Backends
 
 Tabularis selects the SSH backend automatically based on your authentication method.

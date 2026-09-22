@@ -103,7 +103,8 @@ Both the in-app plugin browser and the install command will use that URL.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `name` | `string` | ✅ | URL slug, canonical package name, and default display title. Must start with a letter; lowercase alphanumerics + hyphens only. REQUIRED — pinned at first submit; changing it later does not rename the existing slug. Use the README for prose / branding; no separate display-name field. |
+| `id` | `string` | — | Stable plugin identifier and URL slug. Pinned at first submit. For legacy manifests without id, name supplies the identifier. |
+| `name` | `string` | ✅ | Human-readable display name (e.g. "SQLite JDBC"). Without id, this must remain a lowercase slug (1–64 characters) for backwards compatibility. |
 | `version` | `string` | ✅ | Semantic version of this plugin release (no leading "v"). REQUIRED — must match the release tag stripped of any "v" prefix. The registry rejects ingests whose tag and manifest version disagree, so a manifest version bump is the single source of truth for "this is a new release". |
 | `description` | `string` | — | One-line summary shown on the plugin card and search results. Keep it under 280 characters and write it like a tagline, not a paragraph. |
 | `category` | `string` | — | Free-form category label. Used for grouping plugins on the registry home page. |
@@ -143,6 +144,8 @@ Database driver plugins that extend Tabularis to talk to new data stores via JSO
 | `supports_ssl` | `boolean` | — | true to show the SSL/TLS configuration tab (mode + CA/client cert/key) in the connection modal for this network driver. Defaults to false. |
 | `ui_extensions` | `array<object>` | — | UI extension contributions rendered into named slots of the Tabularis interface. Only needed by plugins that ship a frontend module; driver-only plugins omit it. |
 | `type_mappings` | `object` | — | Optional map of generic inferred type names to driver-native types, resolved by the host during paste/import (map_inferred_type). Keys are uppercase generic names (e.g. DATETIME, JSON); values are the driver-native equivalents (e.g. TIMESTAMP, JSONB). Lookup is case-insensitive; unmapped types pass through unchanged. |
+| `explain_parsers` | `array<object>` | — | Plugin-owned raw EXPLAIN parser IIFE bundles loaded by Tabularis when the plugin is enabled. |
+| `connection_metadata` | `boolean` | — | Opt in to get_connection_metadata, which returns connection-specific capabilities, data_types and type_mappings. Static manifest values remain the fallback. |
 
 **Example (YAML)**
 
@@ -211,6 +214,50 @@ readme: |
   ],
   "min_runtime_version": "0.9.13",
   "readme": "# ClickHouse driver for Tabularis\n\nAdds a native ClickHouse connection to Tabularis. Supports SELECT/INSERT/UPDATE/DELETE through execute_query, schema introspection for the explorer, DDL generation (CREATE TABLE, ALTER TABLE, DROP), and ER-diagram rendering via get_relationships.\n"
+}
+```
+
+### Themes (`theme`)
+
+Declarative Tabularis theme packages. Registry schema preparation only; host release and package acceptance gates remain outstanding.
+
+**Extensions**
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `theme_schema_version` | `integer` | ✅ |  |
+| `theme_variants` | `array<object>` | ✅ |  |
+
+**Example (YAML)**
+
+```yaml
+name: example-theme
+version: 0.1.0
+kind: theme
+min_runtime_version: <first-supporting-version>
+theme_schema_version: 1
+theme_variants:
+  - id: dark
+    name: Dark
+    file: themes/dark.json
+```
+
+**Example (JSON)**
+
+```json
+{
+  "name": "example-theme",
+  "version": "0.1.0",
+  "kind": "theme",
+  "min_runtime_version": "<first-supporting-version>",
+  "theme_schema_version": 1,
+  "theme_variants": [
+    {
+      "id": "dark",
+      "name": "Dark",
+      "file": "themes/dark.json"
+    }
+  ]
 }
 ```
 
