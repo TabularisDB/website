@@ -220,11 +220,14 @@ ol {
 }
 
 .page-header {
-    margin-top: 2rem;
+    margin-top: 1rem;
 
     .eyebrow {
         color: var(--color-accent-teal);
-        background-color: rgba(53, 208, 192, 0.12);
-        border: 0.1rem solid var(--color-accent-teal);
+        background-color: transparent;
+        border: none;
+        font-size: 0.9rem;
+        padding: 0;
+        letter-spacing: 0.05em;
     }
 }

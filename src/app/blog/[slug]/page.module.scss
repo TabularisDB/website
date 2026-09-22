@@ -5,8 +5,8 @@
 
 .body {
     display: grid;
-    grid-template-columns: 1fr 200px;
-    gap: 3rem;
+    grid-template-columns: 1fr auto;
+    gap: 4rem;
     align-items: start;
 
     @media (max-width: 960px) {

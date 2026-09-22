@@ -1,0 +1,70 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.iconTile {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    --size: 6rem;
+    width: var(--size);
+    height: var(--size);
+    border: 0.1rem solid var(--color-border);
+    border-radius: 22%;
+    background-color: var(--color-bg-primary);
+    background-image:
+        radial-gradient(rgb(255 255 255 / 5%) 1px, transparent 1.5px),
+        radial-gradient(rgb(255 255 255 / 3%) 1px, transparent 1px);
+    background-size:
+        7px 7px,
+        11px 11px;
+    background-position:
+        0 0,
+        3px 5px;
+    box-shadow:
+        0 0.6rem 1.5rem rgb(0 0 0 / 45%),
+        inset 0 0.1rem 0 rgb(255 255 255 / 6%),
+        inset 0 -0.1rem 0 rgb(0 0 0 / 40%);
+    overflow: hidden;
+}
+
+.icon {
+    height: 55%;
+    object-fit: contain;
+}
+
+.meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.version {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.sub {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+}
+
+.href {
+    color: var(--color-accent-teal);
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}

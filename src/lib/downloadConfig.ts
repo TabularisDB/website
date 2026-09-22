@@ -60,12 +60,12 @@ export const PLATFORM_CONFIG: Record<Platform, PlatformConfig> = {
                 label: 'Portable',
                 desc: 'No installation required — run anywhere',
                 ext: '.zip',
-                url: `${BASE}/tabularis_${APP_VERSION}_x64-portable.exe`,
+                url: `${BASE}/tabularis_${APP_VERSION}_x64-portable.zip`,
             },
         ],
     },
     macos: {
-        label: 'macOS',
+        label: 'MacOS',
         options: [
             {
                 kind: 'command',
@@ -165,7 +165,7 @@ export const NIGHTLY_PLATFORM_CONFIG: Record<Platform, PlatformConfig> = {
         ]),
     },
     macos: {
-        label: 'macOS',
+        label: 'MacOS',
         options: available([
             {
                 kind: 'command',

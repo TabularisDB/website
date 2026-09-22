@@ -6,7 +6,7 @@ import {WikiLayout} from '@/components/pages/wiki/WikiLayout/WikiLayout';
 import {WikiTableOfContents} from '@/components/pages/wiki/WikiTableOfContents/WikiTableOfContents';
 import {WikiContent} from '@/components/pages/wiki/WikiContent/WikiContent';
 import {CategoryLabel} from '@/components/pages/wiki/CategoryLabel/CategoryLabel';
-import {PostNav} from '@/components/pages/wiki/PostNav/PostNav';
+import {PostNav} from '@/components/ui/PostNav/PostNav';
 import {
     getAllWikiPages,
     getWikiPageBySlug,
