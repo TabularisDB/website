@@ -23,11 +23,11 @@ export function SolutionsCatalog() {
 
                     <div className={styles.grid}>
                         {category.items.map((item) => {
-                            const Icon = getIconForSlug(item.slug);
+                            const icon = getIconForSlug(item.slug);
                             return (
                                 <Link key={item.slug} href={`/solutions/${item.slug}`} className={styles.card}>
                                     <div className={styles.cardCover}>
-                                        <Icon className={styles.cardIcon} />
+                                        <span className={styles.cardIcon}>{icon}</span>
                                     </div>
 
                                     <div className={styles.cardDetails}>

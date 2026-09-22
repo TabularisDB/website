@@ -1,0 +1,21 @@
+.layout {
+    max-width: 1152px;
+}
+
+.archive {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 3rem;
+}
+
+.archiveTitle {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.newsletter {
+    margin-top: 4rem;
+}

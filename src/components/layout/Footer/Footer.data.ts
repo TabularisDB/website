@@ -8,6 +8,7 @@ export interface ClosingCtaContent {
 interface ClosingCtaRule {
     path: string;
     matchSubpagesOnly?: boolean;
+    excludePrefixes?: string[];
     content: ClosingCtaContent;
 }
 
@@ -30,10 +31,30 @@ const CLOSING_CTA_RULES: ClosingCtaRule[] = [
     },
     {
         path: '/blog',
+        matchSubpagesOnly: true,
+        excludePrefixes: ['/blog/category', '/blog/author'],
         content: {
-            title: 'See it for yourself.',
+            title: 'Enjoyed this post? Try Tabularis.',
             description:
-                'Every release is shipped, documented, and free to try. Download Tabularis and see the latest changes in action.',
+                'Free and open source (Apache 2.0). Download it for Windows, macOS, or Linux, or Docker. If you like what you read, a star on GitHub helps more developers discover it.',
+        },
+    },
+    {
+        path: '/demos',
+        matchSubpagesOnly: true,
+        content: {
+            title: 'Like what you just saw?',
+            description:
+                'This demo is a quick way to evaluate the workflow before installing Tabularis locally. If it matches your use case, download the desktop app and test it against a real development database.',
+        },
+    },
+    {
+        path: '/wiki',
+        matchSubpagesOnly: true,
+        content: {
+            title: 'Reading the docs without the app?',
+            description:
+                'Tabularis is free and open source (Apache 2.0). Download it and try this workflow against a real database. If the docs helped, a star on GitHub goes a long way.',
         },
     },
     {
@@ -67,13 +88,15 @@ export function getClosingCtaContent(pathname: string): ClosingCtaContent | null
     const matches = CLOSING_CTA_RULES.filter((rule) => {
         const isExact = pathname === rule.path;
         const isSubpage = pathname.startsWith(`${rule.path}/`);
+        const isExcluded =
+            rule.excludePrefixes?.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)) ?? false;
 
+        if (isExcluded) return false;
         if (rule.matchSubpagesOnly) return isSubpage;
         return isExact || isSubpage;
     });
 
     const best = matches.sort((a, b) => b.path.length - a.path.length)[0];
-
     return best ? best.content : null;
 }
 

@@ -1,4 +1,4 @@
-import {GitHubIcon} from '@/components/ui/Icons/Icons';
+import {GitHubIcon} from '@/components/ui/Icons/SocialIcons';
 import {CheckCircle} from 'lucide-react';
 import type {ChangelogVersion, SectionType} from '@/lib/changelog';
 import styles from './VersionCard.module.scss';

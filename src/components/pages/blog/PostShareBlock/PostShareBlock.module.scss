@@ -1,0 +1,51 @@
+.block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-secondary);
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 0.1rem solid var(--color-border);
+    border-radius: 50%;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    & svg {
+        --size: 1rem;
+        width: var(--size);
+        height: var(--size);
+    }
+
+    &:hover {
+        background-color: var(--color-surface-hover);
+        color: var(--color-text-primary);
+        border-color: var(--color-text-primary);
+    }
+}
+
+.compact {
+    .actions {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}
