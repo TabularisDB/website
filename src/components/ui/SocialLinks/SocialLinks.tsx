@@ -1,5 +1,5 @@
 import type {ComponentType} from 'react';
-import {GitHubIcon, DiscordIcon, BlueskyIcon, XBrandIcon, MastodonIcon} from '@/components/ui/Icons/Icons';
+import {GitHubIcon, DiscordIcon, BlueskyIcon, XBrandIcon, MastodonIcon} from '@/components/ui/Icons/SocialIcons';
 import {SOCIAL_URLS} from '@/lib/social';
 
 interface IconProps {

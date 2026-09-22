@@ -5,7 +5,7 @@ import {formatStars} from '@/lib/github';
 import clsx from 'clsx';
 import {StarIcon} from 'lucide-react';
 import {Button} from '../Button/Button';
-import {GitHubIcon} from '../Icons/Icons';
+import {GitHubIcon} from '../Icons/SocialIcons';
 import styles from './GithubButton.module.scss';
 import {SOCIAL_URLS} from '@/lib/social';
 

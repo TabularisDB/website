@@ -28,4 +28,8 @@
 
 .text {
     color: var(--color-text-primary);
+    white-space: nowrap;
+    max-width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

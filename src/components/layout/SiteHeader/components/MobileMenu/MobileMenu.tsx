@@ -1,7 +1,7 @@
 'use client';
 
 import {Button} from '@/components/ui/Button/Button';
-import {DiscordIcon, GitHubIcon} from '@/components/ui/Icons/Icons';
+import {DiscordIcon, GitHubIcon} from '@/components/ui/Icons/SocialIcons';
 import {SOCIAL_URLS} from '@/lib/social';
 import clsx from 'clsx';
 import {DownloadIcon} from 'lucide-react';
