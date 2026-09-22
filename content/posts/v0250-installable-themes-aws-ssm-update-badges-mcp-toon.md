@@ -1,5 +1,5 @@
 ---
-title: "v0.25.0: Theme Packages, AWS SSM Tunnels, and Update Notifications"
+title: "v0.25.0: A New Theme System, AWS SSM Tunnels, and Startup Improvements"
 date: "2026-09-22T10:00:00"
 release: "v0.25.0"
 tags: ["release", "feature", "bugfix", "ui", "ux", "plugin", "mcp", "postgres", "mysql", "community"]
@@ -13,7 +13,7 @@ og:
   appLabel: "tabularis"
 ---
 
-# v0.25.0: Theme Packages, AWS SSM Tunnels, and Update Notifications
+# v0.25.0: A New Theme System, AWS SSM Tunnels, and Startup Improvements
 
 **v0.25.0** follows [v0.24.0](/blog/v0240-notebook-query-plans-proxy-settings-result-fonts) with a release about the things around your queries rather than the queries themselves. Themes stop being a fixed list of twelve presets and become packages you install, preview, update and remove the way you already handle driver plugins, with a command-line tool for authors. Connections gain a third tunnel method, AWS Systems Manager Session Manager port forwarding, next to SSH and Kubernetes. Available updates for the app and for installed plugins are counted in the sidebar and announced once at startup instead of waiting in Settings. Startup itself loads far less JavaScript. On the MCP side, every tool can return TOON instead of JSON, and the standalone MCP process now notices plugins that were installed, disabled or removed while it was running. Table and column comments from PostgreSQL and MySQL reach the schema inspector, the sidebar and the grid. The community fixes cover read-only JSON viewers, plugin display names, schema text selection and MongoDB replica set URIs.
 
