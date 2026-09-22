@@ -33,7 +33,7 @@ For authors, `@tabularis/create-plugin` 0.3.0 ships a second binary, `tabularis-
 
 One caveat, stated plainly: v0.25.0 is the first release that can install theme packages, so a package must declare `min_runtime_version: "0.25.0"` and older clients will refuse it. At the time of writing no theme package has been published to the registry yet, Ember included. The **Themes** filter in Plugins will fill up as authors publish; until then, local ZIP installs and VS Code imports are the way to try it.
 
-<video class="video-borderless" src="/videos/posts/tabularis-theme-package-install.mp4" poster="/videos/posts/tabularis-theme-package-install.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-theme-package-install.mp4" poster="/videos/posts/tabularis-theme-package-install.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
 
 ---
 
@@ -71,7 +71,7 @@ The same PR reworks how status is drawn. A semantic tone system with shared **Ch
 
 :::newsletter:::
 
-<video class="video-borderless" src="/videos/posts/tabularis-update-toast.mp4" poster="/videos/posts/tabularis-update-toast.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-update-toast.mp4" poster="/videos/posts/tabularis-update-toast.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
 
 ---
 

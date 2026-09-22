@@ -23,7 +23,7 @@ og:
 
 [@harshavardhankonisa](https://github.com/harshavardhankonisa) brings Visual EXPLAIN into the cell itself in PR [#718](https://github.com/TabularisDB/tabularis/pull/718). SQL cells on a connection that supports EXPLAIN gain a **Query Plan** toggle in their header. Turn it on and a resizable plan section appears alongside Query, Results and Chart, using the same Visual EXPLAIN views as the standalone viewer. Visibility is saved with the cell and survives notebook export and import.
 
-<video class="video-borderless" src="/videos/posts/tabularis-notebook-query-plan.mp4" poster="/videos/posts/tabularis-notebook-query-plan.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-notebook-query-plan.mp4" poster="/videos/posts/tabularis-notebook-query-plan.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
 
 The first opening requests a plain **EXPLAIN**, not ANALYZE. The panel has an **EXPLAIN ANALYZE** checkbox, a **Re-run** button and a popout that opens the already-fetched plan in the full modal without another database request. Selecting ANALYZE does not execute anything until you press Re-run. That distinction matters: ANALYZE runs the statement, including writes for data-modifying queries.
 
@@ -70,7 +70,7 @@ Choose **Same as interface**, a bundled font or a custom family. The default rem
 
 PR [#767](https://github.com/TabularisDB/tabularis/pull/767) replaces a tab's type icon with a spinner in the connection's accent colour while a query is executing. It carries an **Executing query** tooltip and an accessible status role, and remains visible when another tab is active. The thin pulsing line beneath the tab stays too.
 
-<video class="video-borderless" src="/videos/posts/tabularis-running-tab.mp4" poster="/videos/posts/tabularis-running-tab.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-running-tab.mp4" poster="/videos/posts/tabularis-running-tab.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
 
 Notebook tabs participate: one running cell or Run All keeps the indicator active until all currently executing cells finish. Errors and cancelled execution guards clear it correctly, and loading state is not persisted into a restored session. A small change, but it answers “which query is still running?” without opening each tab.
 
