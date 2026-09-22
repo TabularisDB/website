@@ -1,4 +1,4 @@
-import {GitHubIcon} from '@/components/ui/Icons/Icons';
+import {GitHubIcon} from '@/components/ui/Icons/SocialIcons';
 import {Button} from '@/components/ui/Button/Button';
 import {Globe, FileText, MessageCircle, Link2} from 'lucide-react';
 import {SponsorContactForm} from './SponsorContactForm/SponsorContactForm';

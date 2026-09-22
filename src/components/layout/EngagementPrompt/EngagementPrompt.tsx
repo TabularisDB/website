@@ -5,7 +5,7 @@ import {usePathname} from 'next/navigation';
 import {trackEvent} from '@/lib/analytics';
 import {SURVEY_CONFIGURED} from '@/lib/siteConfig';
 import {getRepoStars, formatStars} from '@/lib/github';
-import {GitHubIcon} from '@/components/ui/Icons/Icons';
+import {GitHubIcon} from '@/components/ui/Icons/SocialIcons';
 import {SOCIAL_URLS} from '@/lib/social';
 import {SurveyForm, SURVEY_STORAGE_KEY} from '@/components/ui/SurveyForm/SurveyForm';
 import styles from './EngagementPrompt.module.scss';

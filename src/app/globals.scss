@@ -55,6 +55,11 @@
     letter-spacing: 0.05px;
 }
 
+html,
+body {
+    overflow-x: clip;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -64,7 +69,6 @@ body {
     color: var(--color-text-primary);
     font-family: var(--font-sans);
     padding: 2rem 1rem;
-    overflow-x: hidden;
 
     @media (max-width: 768px) {
         padding: 1rem 1.5rem;

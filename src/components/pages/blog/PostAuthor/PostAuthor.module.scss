@@ -1,0 +1,71 @@
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 2.5rem 0;
+    padding-top: 2rem;
+    border-top: 0.1rem solid var(--color-border);
+}
+
+.heading {
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-secondary);
+}
+
+.author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    overflow: hidden;
+    border-radius: var(--radius-full);
+    outline: 0.1rem solid var(--color-border);
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.nameRow {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    text-decoration: none;
+
+    &:hover {
+        color: var(--color-accent-teal);
+    }
+}
+
+.github {
+    font-size: 0.9rem;
+    color: var(--color-accent-teal);
+    text-decoration: none;
+
+    &:hover {
+        color: var(--color-accent-teal);
+    }
+}
+
+.bio {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+}
