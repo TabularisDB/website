@@ -195,6 +195,12 @@ export const NIGHTLY_PLATFORM_CONFIG: Record<Platform, PlatformConfig> = {
   linux: {
     label: "Linux",
     options: available([
+      {
+        kind: "command",
+        label: "AUR",
+        desc: "Arch Linux / Manjaro",
+        command: "yay -S tabularis-nightly-bin",
+      },
       nightlyFile("AppImage", "Universal — no installation needed", ".AppImage", (name) =>
         name.endsWith("_amd64.AppImage"),
       ),
