@@ -250,11 +250,11 @@
       "id": "oracle",
       "name": "Oracle",
       "target": "Driver plugin",
-      "status": "claimed",
+      "status": "shipped",
       "tagline": "A serious Oracle workflow without forcing users into heavyweight tooling.",
-      "description": "Connection profiles, schema browsing, query execution, routines and export support for teams that still live around Oracle databases. Work is underway in the dedicated plugin repository.",
-      "stage": "In progress",
-      "nextStep": "Follow development in the tabularis-oracle-plugin repository and claim open issues on wallet support, schema, and routines.",
+      "description": "Oracle ships as a dedicated plugin (0.1.0, requires Tabularis 0.25.0 or later) for 12c+, Free/XE, Autonomous Database and RDS: multi-schema browsing, query execution, Visual EXPLAIN with runtime statistics, row editing, DDL, views, routines and table/column comments. Requires the Oracle Instant Client.",
+      "stage": "Shipped",
+      "nextStep": "Install the Oracle plugin from the registry, test it against your databases, and report gaps in the tabularis-oracle-plugin repository.",
       "difficulty": "Extreme",
       "accent": "#f43f5e",
       "radar": {
@@ -263,34 +263,38 @@
         "scale": 1.08
       },
       "tags": [
+        "shipped",
         "enterprise",
-        "legacy",
-        "high-impact"
+        "plugin"
       ],
       "capabilities": [
         {
           "label": "driver",
-          "state": "needed"
-        },
-        {
-          "label": "wallet",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "schema",
-          "state": "needed"
+          "state": "ready"
+        },
+        {
+          "label": "select",
+          "state": "ready"
+        },
+        {
+          "label": "writes",
+          "state": "ready"
         },
         {
           "label": "routines",
-          "state": "stretch"
+          "state": "ready"
         },
         {
           "label": "explain",
-          "state": "stretch"
+          "state": "ready"
         }
       ],
-      "signal": "Highest impact after SQL Server for enterprise users evaluating Tabularis. Now assigned and in active development.",
-      "claimUrl": "https://github.com/TabularisDB/tabularis-oracle-plugin",
+      "signal": "Shipped as a plugin: the highest-impact enterprise driver after SQL Server, now installable from the registry.",
+      "claimUrl": "/plugins",
       "sponsorUrl": "/sponsors"
     },
     {
@@ -726,9 +730,9 @@
       "target": "Document plugin",
       "status": "shipped",
       "tagline": "Browse MongoDB databases, collections and documents from Tabularis.",
-      "description": "The community MongoDB plugin ships multi-database browsing, schema inference, native find, aggregate and CRUD queries, index management, exports, and ObjectId-aware editing.",
+      "description": "MongoDB ships through two plugins: the community MongoDB plugin (6.0+) with multi-database browsing, schema inference, native find, aggregate and CRUD queries, index management, exports and ObjectId-aware editing, and the official MongoDB Atlas plugin with mongodb+srv connection support.",
       "stage": "Shipped",
-      "nextStep": "Install the MongoDB plugin from the registry and file issues on its repository for anything missing.",
+      "nextStep": "Install either MongoDB plugin from the registry and file issues on its repository for anything missing.",
       "difficulty": "High",
       "accent": "#22c55e",
       "radar": {
@@ -760,7 +764,7 @@
           "state": "ready"
         }
       ],
-      "signal": "Shipped through the plugin registry with support for both document browsing and native MongoDB workflows.",
+      "signal": "Shipped through the plugin registry as a community driver plus an official Atlas-ready (mongodb+srv) driver.",
       "claimUrl": "/plugins",
       "sponsorUrl": "/plugins"
     },
@@ -987,9 +991,9 @@
       "target": "Driver plugin",
       "status": "shipped",
       "tagline": "Virtual table views for strings, hashes, lists, sets and sorted sets.",
-      "description": "Redis support proves the plugin architecture can handle non-relational systems while still exposing a native Tabularis workflow.",
+      "description": "Redis ships through two community plugins, one written in Go with virtual table views for Strings, Hashes, Lists, Sets and Sorted Sets, and one written in Rust with Hash and RedisJSON row storage, proving the plugin architecture handles non-relational systems with a native Tabularis workflow.",
       "stage": "Shipped",
-      "nextStep": "Use the shipped Redis plugin as a reference for future non-relational integrations.",
+      "nextStep": "Install the Go or Rust Redis plugin from the registry and use either as a reference for future non-relational integrations.",
       "difficulty": "Medium",
       "accent": "#ef4444",
       "radar": {
@@ -1020,7 +1024,7 @@
           "state": "ready"
         }
       ],
-      "signal": "Shipped through the external plugin path.",
+      "signal": "Shipped through the plugin registry in two independent implementations, Go and Rust.",
       "claimUrl": "/plugins",
       "sponsorUrl": "/plugins"
     },
@@ -1311,9 +1315,9 @@
       "target": "Edge SQL plugin",
       "status": "shipped",
       "tagline": "Query Cloudflare's SQLite-based edge database from the desktop.",
-      "description": "Cloudflare D1 is a SQLite-family serverless database at the edge. Tabularis can connect to it for schema browsing and query execution alongside local and app databases.",
+      "description": "Cloudflare D1 is a SQLite-family serverless database at the edge. Two community plugins connect to it for schema browsing and query execution alongside local and app databases, one of them through the D1 HTTP API with per-connection credentials and views.",
       "stage": "Shipped",
-      "nextStep": "Use the shipped Cloudflare D1 support as a reference for HTTP-based edge SQL databases.",
+      "nextStep": "Install a Cloudflare D1 plugin from the registry and use it as a reference for HTTP-based edge SQL databases.",
       "difficulty": "Medium",
       "accent": "#f38020",
       "radar": {
@@ -1340,7 +1344,7 @@
           "state": "ready"
         }
       ],
-      "signal": "Shipped support for Cloudflare's edge SQL database.",
+      "signal": "Shipped through the plugin registry in two community implementations.",
       "claimUrl": "/plugins",
       "sponsorUrl": "/plugins"
     }
