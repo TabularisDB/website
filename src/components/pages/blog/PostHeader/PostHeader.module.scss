@@ -1,0 +1,81 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-accent-teal);
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.title {
+    min-width: 0;
+    :global(h1) {
+        font-size: clamp(1.75rem, 6vw, 2.5rem);
+        line-height: 1.15;
+        font-weight: 600;
+        margin: 0;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+}
+
+.byline {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.authors {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.authorLink {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    text-decoration: none;
+    color: var(--color-text-primary);
+
+    &:hover {
+        color: var(--color-accent-teal);
+    }
+}
+
+.avatar {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.authorName {
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.separator {
+    opacity: 0.5;
+}

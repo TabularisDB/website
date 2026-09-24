@@ -1,0 +1,110 @@
+.group {
+    color: var(--color-text-primary);
+}
+
+.summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    list-style: none;
+    cursor: pointer;
+    padding: 0.95rem 0.5rem;
+    color: var(--color-text-primary);
+    font-size: 1.05rem;
+    font-weight: 500;
+
+    &::-webkit-details-marker {
+        display: none;
+    }
+}
+
+.chevron {
+    opacity: 0.7;
+    transition: transform 0.18s ease;
+    height: 1rem;
+
+    .group[open] & {
+        transform: rotate(180deg);
+    }
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0 0.5rem;
+    border-top: 0.1rem solid var(--color-border);
+}
+
+.row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding-top: 1rem;
+}
+
+.rowTitle {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.subLink {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    color: var(--color-text-primary);
+}
+
+.subLinkIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-md, 0.5rem);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--color-accent-teal);
+
+    svg {
+        height: 45%;
+    }
+
+    img {
+        height: 55%;
+    }
+}
+
+.subLinkText {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+
+    strong {
+        font-size: 0.95rem;
+        font-weight: 600;
+    }
+
+    span {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: var(--color-text-secondary);
+    }
+}
+
+.link {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    padding-top: 1rem;
+    border-top: 0.1rem solid var(--color-border);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--color-accent-teal);
+}

@@ -1,0 +1,139 @@
+.card {
+    position: relative;
+    padding: 3rem 2rem;
+    margin: 6rem auto 3rem auto;
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    text-align: center;
+    max-width: 1000px;
+    width: 100%;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            radial-gradient(ellipse at 20% 20%, rgb(53 208 192 / 10%), transparent 60%),
+            radial-gradient(ellipse at 85% 80%, rgb(124 108 255 / 9%), transparent 60%);
+        mask-image: radial-gradient(ellipse at center, black 55%, transparent 100%);
+    }
+}
+.content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent-teal);
+}
+
+.title {
+    font-size: 1.85rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+.description {
+    max-width: 36rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+}
+
+.stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    border-bottom: 0.1rem solid var(--color-border);
+    padding-bottom: 1.25rem;
+}
+
+.stat {
+    padding: 0.5rem 0.75rem;
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+}
+
+.comingNextList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem 2rem;
+}
+
+.comingNextItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: color 0.1s ease-in;
+
+    &:hover {
+        color: var(--dot-color);
+    }
+}
+
+.itemStatus {
+    font-weight: 500;
+    color: var(--color-text-secondary);
+}
+
+.pulseDot {
+    position: relative;
+    flex-shrink: 0;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background-color: var(--dot-color);
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background-color: var(--dot-color);
+        animation: bountyPulse 1s ease-out infinite;
+    }
+}
+
+@keyframes bountyPulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}

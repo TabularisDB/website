@@ -1,0 +1,73 @@
+.trustWrapper {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+
+    @media (max-width: 767px) {
+        flex-direction: column;
+    }
+}
+
+.divider {
+    @media (max-width: 767px) {
+        display: none;
+    }
+}
+
+.downloadsCaption {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+    color: var(--color-text-secondary);
+}
+
+.featuredOn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text-secondary);
+}
+
+.featuredLabel {
+    white-space: nowrap;
+}
+
+.featuredList {
+    display: inline-flex;
+    align-items: center;
+}
+
+.featuredAvatar {
+    --size-icons: 1.75rem;
+    width: var(--size-icons);
+    height: var(--size-icons);
+    border-radius: var(--radius-full);
+    background: var(--color-text-primary);
+    border: 2px solid var(--color-bg);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: -0.5rem;
+    text-decoration: none;
+    transition:
+        margin 0.18s ease,
+        transform 0.15s ease;
+
+    img {
+        object-fit: contain;
+    }
+
+    &:first-child {
+        margin-left: 0;
+    }
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+}

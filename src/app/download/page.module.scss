@@ -1,0 +1,53 @@
+.layout {
+    max-width: 900px;
+    width: 100%;
+    margin-inline: auto;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.secondaryGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(400px, 100%), 1fr));
+    gap: 4rem;
+    width: 100%;
+    padding: 1rem 0;
+    margin-bottom: 4rem;
+}
+
+.mirrors,
+.workflow {
+    border-radius: 0.75rem;
+    background-color: var(--color-bg-secondary);
+}
+
+.mirrorsTitle,
+.workflowTitle {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.mirrorsDesc,
+.workflowDesc {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: var(--color-text-secondary);
+    margin-bottom: 1rem;
+    min-width: 0;
+}
+
+.mirrorsLink,
+.workflowLink {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-accent-teal);
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

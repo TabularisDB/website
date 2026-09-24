@@ -1,0 +1,92 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(18rem, 100%), 1fr));
+    gap: 1.5rem;
+    margin: 4rem 0;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-decoration: none;
+
+    &:hover .cardCover {
+        border-color: rgb(53 208 192 / 50%);
+    }
+}
+
+.cardCover {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 8;
+    color: var(--color-text-primary);
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: all 0.4s ease-in-out;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
+        background-size: 16px 16px;
+        mask-image: radial-gradient(ellipse at center, black 50%, transparent 85%);
+        -webkit-mask-image: radial-gradient(ellipse at center, black 50%, transparent 85%);
+        pointer-events: none;
+    }
+}
+
+.cardIcon,
+.cardIcon svg {
+    --size: 3rem;
+    width: var(--size);
+    height: var(--size);
+    position: relative;
+    z-index: 1;
+    color: var(--color-text-primary);
+}
+
+.version {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 1;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+    background-color: var(--color-text-primary);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--color-bg);
+}
+
+.cardDetails {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 100%;
+}
+
+.cardTitle {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+.cardExcerpt {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+}
+
+.meta {
+    margin-top: 0.25rem;
+    font-size: 0.9rem;
+    color: #4f8dea;
+}

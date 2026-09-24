@@ -1,0 +1,78 @@
+.surveyPrompt {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 9998;
+    width: min(20rem, calc(100% - 2rem));
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    border: 0.1rem solid var(--color-border);
+    background: var(--color-surface);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+.surveyClose {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: var(--color-text-muted);
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+
+    &:hover {
+        color: var(--color-text-primary);
+        background: var(--color-surface-raised);
+    }
+}
+
+.promoCta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+}
+
+.promoCtaIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: var(--color-surface-raised);
+    color: var(--color-text-primary);
+}
+
+.promoCtaText {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+}
+
+.promoCtaBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border-radius: var(--radius-md);
+    background: var(--color-accent-blue);
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}

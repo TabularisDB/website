@@ -1,0 +1,35 @@
+.crumbs {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    margin-bottom: 3rem;
+    width: 100%;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.separator {
+    color: var(--color-text-muted);
+}
+
+.link {
+    color: var(--color-text-secondary);
+
+    &:hover {
+        color: var(--color-text-primary);
+    }
+}
+
+.text {
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    max-width: min(400px, 60vw);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

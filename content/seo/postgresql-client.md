@@ -1,14 +1,14 @@
 ---
-section: "solutions"
-title: "PostgreSQL Client for Developers"
-metaTitle: "PostgreSQL Client for Developers | Tabularis"
+section: 'solutions'
+title: 'PostgreSQL Client for Developers'
+metaTitle: 'PostgreSQL Client for Developers | Tabularis'
 order: 1
-excerpt: "A developer-focused PostgreSQL desktop client with SQL editing, notebooks, schema tools, SSH, and local AI workflows."
-description: "Explore Tabularis as a PostgreSQL client for developers who want a local desktop workflow with SQL editing, schema inspection, notebooks, SSH tunneling, and MCP support."
-image: "/img/tabularis-connection-manager.png"
-audience: "Developers"
-useCase: "PostgreSQL workflow"
-format: "Guide"
+excerpt: 'A developer-focused PostgreSQL desktop client with SQL editing, notebooks, schema tools, SSH, and local AI workflows.'
+description: 'Explore Tabularis as a PostgreSQL client for developers who want a local desktop workflow with SQL editing, schema inspection, notebooks, SSH tunneling, and MCP support.'
+image: '/img/tabularis-connection-manager.png'
+audience: 'Developers'
+useCase: 'PostgreSQL workflow'
+format: 'Guide'
 ---
 
 # PostgreSQL Client for Developers
@@ -63,23 +63,23 @@ With Tabularis, you can keep SQL cells, markdown context, inline charts, and par
 
 ## Core PostgreSQL Workflow Features
 
-## SQL editor
+### SQL editor
 
 The editor is Monaco-based, which makes it feel closer to a developer tool than an old-school admin GUI. You can run single queries, selected SQL, or multi-statement scripts and keep separate result tabs without losing context.
 
-## Schema browsing and editing
+### Schema browsing and editing
 
 Browse tables, columns, keys, indexes, views, and routines from the sidebar. For schema work, Tabularis also exposes inline editing and guided dialogs for structural changes.
 
 ![Tabularis schema management and ER diagram view](/img/tabularis-schema-management-er-diagram.png)
 
-## SSH and credential handling
+### SSH and credential handling
 
 For remote PostgreSQL databases, SSH tunneling is built in. Secrets stay in the local keychain instead of plain-text config files.
 
 ![Tabularis SSH tunneling flow](/img/tabularis-ssh-tunneling.png)
 
-## AI and MCP
+### AI and MCP
 
 If your workflow already includes Claude, Cursor, or other AI tools, Tabularis gives you a cleaner path than one-off scripts. The app can expose schema and query execution through MCP so the AI can operate against the actual desktop-managed connections.
 
