@@ -1,8 +1,9 @@
 import clsx from 'clsx';
 import {BlueskyIcon, LinkedInIcon, RedditIcon, XBrandIcon} from '@/components/ui/Icons/SocialIcons';
 import {buildSocialShareUrls} from '@/lib/social';
-import {CopyLinkButton} from '@/components/ui/CopyLinkButton/CopyLinkButton';
 import styles from './PostShareBlock.module.scss';
+import {CopyButton} from '@/components/ui/CopyButton/CopyButton';
+import {LinkIcon} from 'lucide-react';
 
 interface PostShareBlockProps {
     title: string;
@@ -39,7 +40,7 @@ export function PostShareBlock({title, url, compact = false}: PostShareBlockProp
                         {icon}
                     </a>
                 ))}
-                <CopyLinkButton className={styles.button} url={absoluteUrl} />
+                <CopyButton className={styles.button} text={absoluteUrl} icon={<LinkIcon />} />
             </div>
         </section>
     );

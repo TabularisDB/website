@@ -5,6 +5,8 @@ import {TagFilter} from './TagFilter/TagFilter';
 import {PostCard} from '@/components/ui/PostCard/PostCard';
 import {PostGrid} from './PostGrid/PostGrid';
 import clsx from 'clsx';
+import {Suspense} from 'react';
+import {NewspaperIcon} from 'lucide-react';
 
 const POSTS_PER_PAGE = 12;
 
@@ -20,7 +22,10 @@ export function BlogArchive({posts, activeTag}: BlogArchiveProps) {
     return (
         <div className={clsx('container', styles.layout)}>
             <header className="page-header">
-                <span className="eyebrow">Blog</span>
+                <span className="eyebrow">
+                    <NewspaperIcon />
+                    Blog
+                </span>
                 <h2 className="title">Latest from the blog</h2>
                 <p className="description">
                     Release notes, product updates, and the occasional deep dive into how Tabularis is built.
@@ -34,7 +39,9 @@ export function BlogArchive({posts, activeTag}: BlogArchiveProps) {
             {gridPosts.length > 0 ? (
                 <section className={styles.archive}>
                     <h2 className={styles.archiveTitle}>Discover more posts</h2>
-                    <PostGrid posts={gridPosts} pageSize={POSTS_PER_PAGE} />
+                    <Suspense fallback={null}>
+                        <PostGrid posts={gridPosts} pageSize={POSTS_PER_PAGE} />
+                    </Suspense>
                 </section>
             ) : (
                 <p className={styles.empty}>No posts yet for this tag.</p>

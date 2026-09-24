@@ -2,7 +2,7 @@
 
 import {useEffect} from 'react';
 import {useSearchParams} from 'next/navigation';
-import {BookOpenIcon, StarIcon} from 'lucide-react';
+import {BookOpenIcon, PartyPopperIcon, StarIcon} from 'lucide-react';
 import {DiscordIcon, GitHubIcon} from '@/components/ui/Icons/SocialIcons';
 import {SOCIAL_URLS} from '@/lib/social';
 import styles from './DownloadThankYou.module.scss';
@@ -59,7 +59,10 @@ export function DownloadThankYou() {
     return (
         <>
             <header className="page-header">
-                <span className="eyebrow">Welcome to Tabularis</span>
+                <span className="eyebrow">
+                    <PartyPopperIcon />
+                    Welcome to Tabularis
+                </span>
                 <h1 className="title">Your download has started!</h1>
                 <p className="description">
                     While Tabularis is downloading, here are some great ways to get started with our community and

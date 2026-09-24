@@ -1,4 +1,5 @@
 import {VideosGrid} from '@/components/pages/demos/VideosGrid/VideosGrid';
+import {PlayIcon} from 'lucide-react';
 import {Metadata} from 'next';
 
 export const metadata: Metadata = {
@@ -36,7 +37,10 @@ export default function DemosPage() {
     return (
         <section className="container">
             <header className="page-header">
-                <span className="eyebrow">Workflow demos</span>
+                <span className="eyebrow">
+                    <PlayIcon />
+                    Workflow demos
+                </span>
                 <h2 className="title">See Tabularis in Action</h2>
                 <p className="description">
                     Short, indexable walkthroughs for the Tabularis workflows people evaluate most: SQL editing,

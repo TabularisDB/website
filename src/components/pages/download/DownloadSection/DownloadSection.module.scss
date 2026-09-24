@@ -4,6 +4,8 @@
     align-items: center;
     gap: 1.5rem;
     width: 100%;
+    border-bottom: 0.1rem solid var(--color-border);
+    padding-bottom: 5rem;
 }
 
 .releaseInfos {
@@ -43,4 +45,42 @@
 
 .content > * {
     min-width: 0;
+}
+
+.platformList {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.platformSection {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.platformHeading {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    padding: 0 0 1rem 0.5rem;
+    border-bottom: 0.1rem solid var(--color-border);
+
+    svg {
+        width: 1.375rem;
+        height: 1.375rem;
+    }
+}
+
+.detectedBadge {
+    padding: 0.25rem;
+    color: var(--color-accent-teal);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-left: auto;
 }

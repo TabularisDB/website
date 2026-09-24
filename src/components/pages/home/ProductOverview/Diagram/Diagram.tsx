@@ -27,7 +27,6 @@ export function Diagram() {
                 </div>
             </div>
 
-            {/* Connecteurs desktop, cachés en dessous de 768px */}
             <svg
                 className={clsx(styles.line, styles.desktopOnly)}
                 width="19"
@@ -54,7 +53,6 @@ export function Diagram() {
                 <path d="M0 0.5H256" stroke="currentColor" pathLength="1"></path>
             </svg>
 
-            {/* Connecteur mobile : sources (2 branches) → hub */}
             <svg
                 className={clsx(styles.line, styles.mobileOnly)}
                 width="151"
@@ -78,7 +76,7 @@ export function Diagram() {
             </svg>
 
             <div className={styles.hub}>
-                <img src={'/img/logo-compact.svg'} alt="" />
+                <img src={'/img/brand/tabularis-compact.svg'} alt="" />
                 <span>Built-in MCP Server</span>
             </div>
 

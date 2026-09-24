@@ -42,7 +42,7 @@ export default async function Image({params}: {params: Promise<{slug: string}>})
     const og = post?.meta.og;
     const release = post?.meta.release;
 
-    const logoSrc = readPublicImage('/img/logo.png');
+    const logoSrc = readPublicImage('/img/brand/tabularis.png');
     const screenshotSrc = og?.image ? readPublicImage(og.image) : null;
 
     // Forced cover: a post can supply a ready-made 1200×630 image via `og.cover`,
