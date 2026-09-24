@@ -28,6 +28,10 @@ export function MobileMenu({isOpen, onClose}: MobileMenuProps) {
                     ))}
                 </nav>
                 <footer className={styles.mobileMenuFooter}>
+                    <Button href="/download" className={styles.download}>
+                        <DownloadIcon />
+                        <span>Download</span>
+                    </Button>
                     <div className={styles.mobileSocials}>
                         <a
                             href="https://github.com/TabularisDB/tabularis"
@@ -50,10 +54,6 @@ export function MobileMenu({isOpen, onClose}: MobileMenuProps) {
                             Join us on Discord
                         </a>
                     </div>
-                    <Button href="/download" className={styles.download}>
-                        <DownloadIcon />
-                        <span>Download</span>
-                    </Button>
                 </footer>
             </div>
         </>

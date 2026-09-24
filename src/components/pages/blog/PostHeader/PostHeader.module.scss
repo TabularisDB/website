@@ -25,18 +25,21 @@
 }
 
 .title {
+    min-width: 0;
     :global(h1) {
-        font-size: 2.5rem;
+        font-size: clamp(1.75rem, 6vw, 2.5rem);
         line-height: 1.15;
         font-weight: 600;
         margin: 0;
+        overflow-wrap: break-word;
+        word-break: break-word;
     }
 }
 
 .byline {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
     flex-wrap: wrap;
     font-size: 0.875rem;
     color: var(--color-text-secondary);
@@ -61,8 +64,8 @@
 }
 
 .avatar {
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
     border-radius: 50%;
     object-fit: cover;
     flex-shrink: 0;

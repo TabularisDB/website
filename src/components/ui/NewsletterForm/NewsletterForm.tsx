@@ -1,4 +1,4 @@
-import {Mail} from 'lucide-react';
+import {Mail, SendIcon} from 'lucide-react';
 import Script from 'next/script';
 import styles from './NewsletterForm.module.scss';
 
@@ -35,7 +35,8 @@ export function NewsletterForm({title, description, buttonLabel}: NewsletterForm
                     />
                 </div>
                 <button type="submit" className={styles.button}>
-                    {buttonLabel}
+                    <span className={styles.buttonLabel}> {buttonLabel}</span>
+                    <SendIcon className={styles.sendIcon} />
                 </button>
 
                 <Script src={EMAILCHEF_SCRIPT} strategy="lazyOnload" />

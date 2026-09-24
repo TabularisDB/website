@@ -1,0 +1,65 @@
+.wrapper {
+    width: 100%;
+}
+
+.diagram {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 640 / 140;
+    margin-inline: auto;
+}
+
+.lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+.line {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 1.5;
+    stroke-dasharray: 4;
+    vector-effect: non-scaling-stroke;
+}
+
+.hub {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    --size: 8rem;
+    width: var(--size);
+    height: var(--size);
+    background-color: var(--color-bg);
+
+    & img {
+        height: 70%;
+    }
+}
+
+.node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    --size: clamp(2.25rem, 7vw, 4rem);
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    background: var(--color-bg);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.nodeIcon {
+    width: 55%;
+    height: 55%;
+    object-fit: contain;
+}

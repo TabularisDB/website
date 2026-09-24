@@ -1,5 +1,6 @@
 import {SponsorsGrid} from '@/components/pages/sponsors/SponsorsGrid/SponsorsGrid';
 import {SupportBlock} from '@/components/pages/sponsors/SupportBlock/SupportBlock';
+import {StarIcon} from 'lucide-react';
 import type {Metadata} from 'next';
 
 export const metadata: Metadata = {
@@ -21,7 +22,10 @@ export default function SponsorsPage() {
     return (
         <div className="container">
             <header className="page-header">
-                <span className="eyebrow">Sponsors</span>
+                <span className="eyebrow">
+                    <StarIcon />
+                    Sponsors
+                </span>
                 <h1 className="title">Our sponsors and supporters</h1>
                 <p className="description">
                     These organizations support Tabularis development and help keep it free and open source for

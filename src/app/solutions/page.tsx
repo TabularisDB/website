@@ -1,4 +1,5 @@
 import {SolutionsCatalog} from '@/components/pages/solutions/SolutionsCatalog/SolutionsCatalog';
+import {LayersIcon} from 'lucide-react';
 import {Metadata} from 'next';
 
 export const metadata: Metadata = {
@@ -12,7 +13,10 @@ export default function SolutionsPage() {
     return (
         <section className="container">
             <header className="page-header">
-                <span className="eyebrow">Solutions</span>
+                <span className="eyebrow">
+                    <LayersIcon />
+                    Solutions
+                </span>
                 <h2 className="title">One client, many ways in.</h2>
                 <p className="description">
                     PostgreSQL, MySQL, SQLite, secure access, AI agents, plugin extensibility. Pick the entry point

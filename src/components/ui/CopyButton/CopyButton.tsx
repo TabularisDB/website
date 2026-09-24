@@ -1,14 +1,17 @@
 'use client';
 
+import clsx from 'clsx';
+import {CheckIcon} from 'lucide-react';
 import {useState} from 'react';
-import {CheckIcon, CopyIcon} from 'lucide-react';
 import styles from './CopyButton.module.scss';
 
 interface CopyButtonProps {
     text: string;
+    icon: React.ReactNode;
+    className?: string;
 }
 
-export function CopyButton({text}: CopyButtonProps) {
+export function CopyButton({text, icon, className}: CopyButtonProps) {
     const [copied, setCopied] = useState(false);
 
     async function handleCopy() {
@@ -18,8 +21,8 @@ export function CopyButton({text}: CopyButtonProps) {
     }
 
     return (
-        <button type="button" className={styles.button} onClick={handleCopy} aria-label="Copy to clipboard">
-            {copied ? <CheckIcon /> : <CopyIcon />}
+        <button type="button" className={clsx(styles.button, className)} onClick={handleCopy} aria-label="Copy ">
+            {copied ? <CheckIcon /> : icon}
         </button>
     );
 }

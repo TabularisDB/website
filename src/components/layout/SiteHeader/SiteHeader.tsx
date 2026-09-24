@@ -17,6 +17,17 @@ export function SiteHeader() {
     const pathname = usePathname();
     const wide = pathname.startsWith('/wiki');
     const [stars, setStars] = useState<number | null>(null);
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        function onScroll() {
+            setScrolled(window.scrollY > 50);
+            console.log(window.scrollY);
+        }
+        onScroll();
+        window.addEventListener('scroll', onScroll, {passive: true});
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
 
     useEffect(() => {
         getRepoStars().then(setStars);
@@ -31,6 +42,7 @@ export function SiteHeader() {
             <header
                 className={clsx(
                     styles.siteHeader,
+                    scrolled && styles.scrolled,
                     isMobileMenuOpen && styles.mobileOpen,
                     (openGroupLabel || isMobileMenuOpen) && styles.menuOpen,
                 )}
