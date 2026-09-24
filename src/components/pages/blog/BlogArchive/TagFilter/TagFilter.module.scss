@@ -25,14 +25,6 @@
     font-weight: 500;
     color: var(--color-text-secondary);
     white-space: nowrap;
-    transition:
-        border-color 0.15s ease,
-        color 0.15s ease;
-
-    &:hover {
-        border-color: var(--color-accent-teal);
-        color: var(--color-accent-teal);
-    }
 }
 
 .active {

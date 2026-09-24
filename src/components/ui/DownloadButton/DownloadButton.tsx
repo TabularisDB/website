@@ -1,12 +1,13 @@
 'use client';
 
-import {Platform} from '@/lib/download/downloadConfig';
 import {useEffect, useState} from 'react';
-import {Button} from '../Button/Button';
-import styles from './DownloadButton.module.scss';
-import {ArrowRight} from 'lucide-react';
 import clsx from 'clsx';
+import {ArrowRight} from 'lucide-react';
+import {Platform} from '@/lib/download/downloadConfig';
+import {Button} from '../Button/Button';
 import {LinuxIcon, MacOsIcon, WindowsIcon} from '../Icons/PlatformIcons';
+import styles from './DownloadButton.module.scss';
+import {DownloadModal} from '@/components/layout/DownloadModal/DownloadModal';
 
 function detectPlatform(): Platform {
     if (typeof navigator === 'undefined') return 'windows';
@@ -25,11 +26,7 @@ const PLATFORM_LABELS: Record<Platform, string> = {
 function PlatformIcon({platform}: {platform: Platform}) {
     if (platform === 'windows') return <WindowsIcon />;
     if (platform === 'macos') return <MacOsIcon />;
-    if (platform === 'linux') {
-        return <LinuxIcon />;
-    }
-
-    return '';
+    return <LinuxIcon />;
 }
 
 interface DownloadButtonProps {
@@ -38,19 +35,28 @@ interface DownloadButtonProps {
 
 export function DownloadButton({className}: DownloadButtonProps) {
     const [userPlatform, setUserPlatform] = useState<Platform>('windows');
+    const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
         setUserPlatform(detectPlatform());
     }, []);
 
     return (
-        <Button href="/download" className={clsx(styles.button, className)} size="lg">
-            <span className={styles.icon}>
-                <PlatformIcon platform={userPlatform} />
-            </span>
-            <span className={styles.fullLabel}>Download for {PLATFORM_LABELS[userPlatform]}</span>
-            <span className={styles.shortLabel}>Download</span>
-            <ArrowRight />
-        </Button>
+        <>
+            <Button
+                type="button"
+                onClick={() => setModalOpen(true)}
+                className={clsx(styles.button, className)}
+                size="lg"
+            >
+                <span className={styles.icon}>
+                    <PlatformIcon platform={userPlatform} />
+                </span>
+                <span className={styles.fullLabel}>Download for {PLATFORM_LABELS[userPlatform]}</span>
+                <span className={styles.shortLabel}>Download</span>
+            </Button>
+
+            <DownloadModal platform={modalOpen ? userPlatform : null} onClose={() => setModalOpen(false)} />
+        </>
     );
 }

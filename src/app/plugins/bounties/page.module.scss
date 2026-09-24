@@ -1,0 +1,86 @@
+.layout {
+    gap: 4rem;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.button {
+    padding: 0.625rem 1rem;
+}
+.button svg {
+    height: 1rem;
+    width: 1rem;
+}
+
+.bountySchema {
+    width: 100%;
+    align-self: stretch;
+
+    @media (max-width: 767px) {
+        display: none;
+    }
+}
+
+.stats {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 3rem;
+
+    @media (min-width: 768px) {
+        display: none;
+    }
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.titleRow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.25rem;
+}
+
+.iconWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--radius-md);
+    background: rgba(53, 208, 192, 0.1);
+    color: var(--color-accent-teal);
+    flex-shrink: 0;
+
+    & svg {
+        height: 55%;
+    }
+}
+
+.title {
+    color: var(--color-text-primary);
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 120%;
+}
+
+.text {
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 140%;
+    max-width: 300px;
+    text-align: center;
+}

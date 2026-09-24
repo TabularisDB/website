@@ -60,9 +60,9 @@ const CLOSING_CTA_RULES: ClosingCtaRule[] = [
     {
         path: '/plugins',
         content: {
-            title: 'Extend it, or just use what ships.',
+            title: 'Plugins need the app first.',
             description:
-                'Every plugin here runs in the same free, open-source app. Download Tabularis and browse the registry from inside.',
+                'Every driver above installs in one click from Settings → Plugins. Tabularis is free and open source (Apache 2.0). Download it and extend it with the engines you actually use.',
         },
     },
     {

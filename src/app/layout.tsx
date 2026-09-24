@@ -13,10 +13,10 @@ import {CookieConsent} from '@/components/layout/CookieConsent/CookieConsent';
 import {EngagementPrompt} from '@/components/layout/EngagementPrompt/EngagementPrompt';
 
 export const metadata: Metadata = {
-    metadataBase: new URL('https://tabularis.dev'),
+    metadataBase: new URL('https://tabularis.wajrock.me'),
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    icons: {icon: '/img/logo-compact.svg'},
+    icons: {icon: '/img/brand/tabularis-compact.svg'},
     alternates: {
         types: {
             'application/rss+xml': [{url: '/feed.xml', title: 'Tabularis Blog'}],
@@ -46,7 +46,6 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             className={`${urbanist.variable} ${outfit.variable} ${jetbrainsMono.variable}`}
         >
             <body>
-                <GradientBackground />
                 <SiteHeader />
                 <JsonLd data={[buildOrganizationJsonLd(), buildSoftwareApplicationJsonLd()]} />
                 {children}

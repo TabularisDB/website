@@ -1,6 +1,10 @@
 .footerWrapper {
     width: 100%;
     padding: 3rem 1rem;
+
+    @media (max-width: 767px) {
+        padding: 3rem 0;
+    }
 }
 
 .footerContent {
