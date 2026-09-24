@@ -57,14 +57,14 @@ interface PluginBountyData {
 
 const data = bountyData as PluginBountyData;
 
-export enum BOUNTY_STATUS_LABEL {
-    MOST_WANTED = 'Most Wanted',
-    OPEN = 'Open',
-    SCOPED = 'Scoped',
-    CLAIMED = 'Claimed',
-    COMING_SOON = 'Coming Soon',
-    SHIPPED = 'Shipped',
-}
+export const BOUNTY_STATUS_LABEL: Record<BOUNTY_STATUS, string> = {
+    [BOUNTY_STATUS.MOST_WANTED]: 'Most Wanted',
+    [BOUNTY_STATUS.OPEN]: 'Open',
+    [BOUNTY_STATUS.SCOPED]: 'Scoped',
+    [BOUNTY_STATUS.CLAIMED]: 'Claimed',
+    [BOUNTY_STATUS.COMING_SOON]: 'Coming Soon',
+    [BOUNTY_STATUS.SHIPPED]: 'Shipped',
+};
 
 export const PLUGIN_BOUNTIES = data.bounties;
 export const PLUGIN_BOUNTY_CONSTELLATION_IDS = data.constellationIds;
@@ -78,6 +78,8 @@ export function getActiveBounties() {
 }
 
 export function getShippedBounties() {
+    console.log(PLUGIN_BOUNTIES.filter((bounty) => bounty.status === BOUNTY_STATUS.SHIPPED));
+
     return PLUGIN_BOUNTIES.filter((bounty) => bounty.status === BOUNTY_STATUS.SHIPPED);
 }
 

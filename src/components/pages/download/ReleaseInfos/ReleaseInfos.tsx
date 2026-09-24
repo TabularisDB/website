@@ -15,7 +15,7 @@ export function ReleaseInfo({version, date, hash, hrefLabel, hrefLink, external 
     return (
         <div className={styles.wrapper}>
             <div className={styles.iconTile}>
-                <img src="/img/logo-compact.svg" alt="Tabularis Icon" className={styles.icon} />
+                <img src="/img/brand/tabularis-compact.svg" alt="Tabularis Icon" className={styles.icon} />
             </div>
             <div className={styles.meta}>
                 <span className={styles.version}>v{version}</span>

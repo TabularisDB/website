@@ -88,9 +88,9 @@ export function SQLiteIcon() {
                     y2="507.631"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stop-color="#97D9F6" />
-                    <stop offset="0.92" stop-color="#0F80CC" />
-                    <stop offset="1" stop-color="#0F80CC" />
+                    <stop stopColor="#97D9F6" />
+                    <stop offset="0.92" stopColor="#0F80CC" />
+                    <stop offset="1" stopColor="#0F80CC" />
                 </linearGradient>
             </defs>
         </svg>
@@ -431,8 +431,8 @@ export function SqlServerIcon() {
                     y2="378.646"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stop-color="#909CA9" />
-                    <stop offset="1" stop-color="#EDEDEE" />
+                    <stop stopColor="#909CA9" />
+                    <stop offset="1" stopColor="#EDEDEE" />
                 </linearGradient>
                 <linearGradient
                     id="paint1_linear_520_76"
@@ -442,8 +442,8 @@ export function SqlServerIcon() {
                     y2="41.6433"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stop-color="#939FAB" />
-                    <stop offset="1" stop-color="#DCDEE1" />
+                    <stop stopColor="#939FAB" />
+                    <stop offset="1" stopColor="#DCDEE1" />
                 </linearGradient>
                 <radialGradient
                     id="paint2_radial_520_76"
@@ -453,8 +453,8 @@ export function SqlServerIcon() {
                     gradientTransform="matrix(-32.7734 -4.92292 -9.95648 65.5468 196.908 159.535)"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stop-color="#EE352C" />
-                    <stop offset="1" stop-color="#A91D22" />
+                    <stop stopColor="#EE352C" />
+                    <stop offset="1" stopColor="#A91D22" />
                 </radialGradient>
             </defs>
         </svg>

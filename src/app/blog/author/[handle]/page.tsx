@@ -5,6 +5,7 @@ import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import styles from './page.module.scss';
 import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
+import {Suspense} from 'react';
 
 const POSTS_PER_PAGE = 12;
 
@@ -94,7 +95,9 @@ export default async function AuthorArchivePage({params}: PageProps) {
                     </div>
                 </header>
 
-                <PostGrid posts={posts} pageSize={POSTS_PER_PAGE} />
+                <Suspense fallback={null}>
+                    <PostGrid posts={posts} pageSize={POSTS_PER_PAGE} />
+                </Suspense>
             </div>
         </div>
     );

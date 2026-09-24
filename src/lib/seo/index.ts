@@ -32,7 +32,7 @@ export function buildOrganizationJsonLd() {
         '@type': 'Organization',
         name: 'Tabularis',
         url: BASE_URL,
-        logo: toAbsoluteUrl('/img/logo.png'),
+        logo: toAbsoluteUrl('/img/brand/tabularis.png'),
         sameAs: [SOCIAL_URLS.github, SOCIAL_URLS.discord, SOCIAL_URLS.bluesky, SOCIAL_URLS.x, SOCIAL_URLS.mastodon],
     };
 }
@@ -88,7 +88,7 @@ export function buildArticleJsonLd(input: {
             name: 'Tabularis',
             logo: {
                 '@type': 'ImageObject',
-                url: toAbsoluteUrl('/img/logo.png'),
+                url: toAbsoluteUrl('/img/brand/tabularis.png'),
             },
         },
         image: input.image ? [toAbsoluteUrl(input.image)] : [toAbsoluteUrl('/img/og.png')],
@@ -120,7 +120,7 @@ export function buildVideoObjectJsonLd(input: {
             name: 'Tabularis',
             logo: {
                 '@type': 'ImageObject',
-                url: toAbsoluteUrl('/img/logo.png'),
+                url: toAbsoluteUrl('/img/brand/tabularis.png'),
             },
         },
     };

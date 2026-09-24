@@ -10,6 +10,8 @@
     cursor: pointer;
     padding: 0.95rem 0.5rem;
     color: var(--color-text-primary);
+    font-size: 1.05rem;
+    font-weight: 500;
 
     &::-webkit-details-marker {
         display: none;
@@ -30,36 +32,62 @@
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    padding: 0 0 1rem 1rem;
+    padding: 0 0.5rem;
     border-top: 0.1rem solid var(--color-border);
 }
 
 .row {
     display: flex;
     flex-direction: column;
-    gap: 0.45rem;
+    gap: 0.6rem;
     padding-top: 1rem;
 }
 
 .rowTitle {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     font-weight: 500;
-    color: var(--color-accent-teal);
+    color: var(--color-text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.08em;
 }
 
 .subLink {
     display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
+    align-items: flex-start;
+    gap: 0.75rem;
     padding: 0.5rem 0;
     color: var(--color-text-primary);
+}
+
+.subLinkIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-md, 0.5rem);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--color-accent-teal);
+
+    svg {
+        height: 45%;
+    }
+
+    img {
+        height: 55%;
+    }
+}
+
+.subLinkText {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
 
     strong {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         font-weight: 600;
-        opacity: 0.8;
     }
 
     span {
@@ -73,14 +101,10 @@
     font-size: 1rem;
     color: var(--color-text-secondary);
     font-weight: 500;
-    padding: 0.9rem 1rem;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: rgba(255, 255, 255, 0.02);
-
-    &.active {
-        color: var(--color-text-primary);
-        border-color: rgba(91, 141, 239, 0.35);
-        background: rgba(91, 141, 239, 0.08);
-    }
+    padding-top: 1rem;
+    border-top: 0.1rem solid var(--color-border);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--color-accent-teal);
 }

@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import {usePathname} from 'next/navigation';
 import {NavLinkLabel, isActive, type NavGroup} from '../../SiteHeader.data';
 import styles from './MobileNavGroup.module.scss';
-import {ChevronDown} from 'lucide-react';
+import {ArrowRight, ChevronDown} from 'lucide-react';
 interface MobileNavGroupProps {
     group: NavGroup;
     onNavigate: () => void;
@@ -38,8 +38,18 @@ export function MobileNavGroup({group, onNavigate}: MobileNavGroupProps) {
                             const className = clsx(
                                 styles.subLink,
                                 !external && pathname.startsWith(link.href) && styles.active,
+                                link.isLink && styles.link,
                             );
                             const label = <NavLinkLabel label={link.label} badge={link.badge} />;
+                            const content = (
+                                <>
+                                    {link.icon && <span className={styles.subLinkIcon}>{link.icon}</span>}
+                                    <span className={styles.subLinkText}>
+                                        {label}
+                                        {link.description && <span>{link.description}</span>}
+                                    </span>
+                                </>
+                            );
 
                             return external ? (
                                 <a
@@ -50,13 +60,12 @@ export function MobileNavGroup({group, onNavigate}: MobileNavGroupProps) {
                                     className={className}
                                     onClick={onNavigate}
                                 >
-                                    {label}
-                                    {link.description && <span>{link.description}</span>}
+                                    {content}
                                 </a>
                             ) : (
                                 <Link key={link.href} href={link.href} className={className} onClick={onNavigate}>
-                                    {label}
-                                    {link.description && <span>{link.description}</span>}
+                                    {content}
+                                    {link.isLink && <ArrowRight size={16} />}
                                 </Link>
                             );
                         })}

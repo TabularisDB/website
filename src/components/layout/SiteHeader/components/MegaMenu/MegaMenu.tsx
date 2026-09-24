@@ -4,6 +4,7 @@ import {usePathname} from 'next/navigation';
 import {NavLinkLabel, type NavColumn} from '../../SiteHeader.data';
 import styles from './MegaMenu.module.scss';
 import {useHeaderMenu} from '../../HeaderMenuContext';
+import {ArrowRight} from 'lucide-react';
 
 interface MegaMenuProps {
     columns: NavColumn[];
@@ -25,10 +26,18 @@ export function MegaMenu({columns, open}: MegaMenuProps) {
                                 const external = link.href.startsWith('http');
                                 const className = clsx(
                                     styles.megaMenuLink,
-                                    pathname.startsWith(link.href) && styles.active,
+                                    pathname === link.href && styles.active,
                                     link.isLink && styles.link,
                                 );
-                                const label = <NavLinkLabel label={link.label} badge={link.badge} />;
+                                const content = (
+                                    <>
+                                        {link.icon && <span className={styles.megaMenuLinkIcon}>{link.icon}</span>}
+                                        <span className={styles.megaMenuLinkText}>
+                                            <NavLinkLabel label={link.label} badge={link.badge} />
+                                            {link.description && <span>{link.description}</span>}
+                                        </span>
+                                    </>
+                                );
 
                                 return external ? (
                                     <a
@@ -38,8 +47,7 @@ export function MegaMenu({columns, open}: MegaMenuProps) {
                                         rel="noopener noreferrer"
                                         className={className}
                                     >
-                                        {label}
-                                        {link.description && <span>{link.description}</span>}
+                                        {content}
                                     </a>
                                 ) : (
                                     <Link
@@ -48,8 +56,8 @@ export function MegaMenu({columns, open}: MegaMenuProps) {
                                         className={className}
                                         onClick={() => setOpenGroupLabel(null)}
                                     >
-                                        {label}
-                                        {link.description && <span>{link.description}</span>}
+                                        {content}
+                                        {link.isLink && <ArrowRight size={16} />}
                                     </Link>
                                 );
                             })}

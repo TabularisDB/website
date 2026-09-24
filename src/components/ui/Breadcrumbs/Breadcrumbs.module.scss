@@ -29,7 +29,7 @@
 .text {
     color: var(--color-text-primary);
     white-space: nowrap;
-    max-width: 400px;
+    max-width: min(400px, 60vw);
     overflow: hidden;
     text-overflow: ellipsis;
 }
