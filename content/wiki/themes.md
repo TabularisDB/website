@@ -1,8 +1,8 @@
 ---
-title: "Themes & Customization"
+title: 'Themes & Customization'
 order: 9
-excerpt: "Personalize your workspace with 12 built-in themes, installable theme packages and full typography control."
-category: "Customization"
+excerpt: 'Personalize your workspace with 12 built-in themes, installable theme packages and full typography control.'
+category: 'Customization'
 ---
 
 # Themes & Customization
@@ -14,6 +14,7 @@ A developer tool should adapt to your preferences. Tabularis ships with a robust
 ## Built-In Themes
 
 Switch themes instantly in **Settings → Appearance**. Changes apply immediately without requiring a restart or refreshing the DOM.
+
 - **Dark Themes**: Tabularis Dark, Monokai, One Dark Pro, Nord, Dracula, GitHub Dark, Solarized Dark, Gruvbox Material Dark, High Contrast.
 - **Light Themes**: Tabularis Light, Solarized Light, Gruvbox Material Light.
 
@@ -51,7 +52,7 @@ Installing a package never selects a variant on its own. Close the dialog and pi
   <img src="/img/tabularis-theme-vscode-import.png" alt="Importing a VS Code theme with mode selection and conversion diagnostics" loading="lazy">
 </div>
 
-<video class="video-borderless" src="/videos/posts/tabularis-theme-package-install.mp4" poster="/videos/posts/tabularis-theme-package-install.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video class="video-borderless" src="/videos/posts/tabularis-theme-package-install.mp4" poster="/videos/posts/tabularis-theme-package-install.jpg" autoplay loop muted playsinline ></video>
 
 ### Installing from the registry
 
@@ -70,7 +71,8 @@ Packages are stored by kind under the app data directory, in `plugins/themes/<pa
 ## Typography Configuration
 
 Readability is critical when parsing logs or complex queries.
-- **Font Family**: You can use any monospace font installed on your system. We highly recommend coding-specific fonts like *JetBrains Mono*, *Fira Code*, or *Cascadia Code*.
+
+- **Font Family**: You can use any monospace font installed on your system. We highly recommend coding-specific fonts like _JetBrains Mono_, _Fira Code_, or _Cascadia Code_.
 - **Result Font** (since v0.24.0): **Settings → Appearance → Data Grid → Result font** offers **Same as interface**, bundled families and a custom family. It applies to result cells, inline edit inputs and multiline textareas. The default stays JetBrains Mono. The `resultFontFamily` value `inherit` follows subsequent interface-font changes; editor, log and hex fonts remain independent.
 - **Ligatures**: If your chosen font supports programming ligatures (e.g., combining `<=` into `≤`), Tabularis and the Monaco editor will render them natively.
 - **Font Size & Weight**: Fully adjustable via the UI.

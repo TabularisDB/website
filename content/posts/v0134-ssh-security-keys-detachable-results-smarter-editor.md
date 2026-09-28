@@ -1,33 +1,33 @@
 ---
-title: "v0.13.4: Unlock Everything — Hardware Keys, Free-Floating Results, and a Sharper Editor"
-date: "2026-06-30T11:00:00"
-release: "v0.13.4"
-tags: ["release", "feature", "bugfix", "ssh", "editor", "notebook", "postgres", "mysql", "plugin", "community"]
-excerpt: "v0.13.4 teaches SSH to prompt — unlock a hardware security key or a passphrase from an in-app dialog — pops query results out into their own window, overhauls SQL autocomplete, and lands three new community drivers (MongoDB, Cloudflare D1, Dameng) alongside a wave of correctness fixes."
+title: 'v0.13.4: Unlock Everything — Hardware Keys, Free-Floating Results, and a Sharper Editor'
+date: '2026-06-30T11:00:00'
+release: 'v0.13.4'
+tags: ['release', 'feature', 'bugfix', 'ssh', 'editor', 'notebook', 'postgres', 'mysql', 'plugin', 'community']
+excerpt: 'v0.13.4 teaches SSH to prompt — unlock a hardware security key or a passphrase from an in-app dialog — pops query results out into their own window, overhauls SQL autocomplete, and lands three new community drivers (MongoDB, Cloudflare D1, Dameng) alongside a wave of correctness fixes.'
 og:
-  template: "screenshot-split"
-  title: "Security keys. Detachable results."
-  accent: "A sharper SQL editor."
-  claim: "Interactive SSH auth with hardware security keys, a detachable results window, a rebuilt autocomplete engine, three new community drivers, and a stack of Postgres/MySQL fixes."
-  image: "/img/tabularis-sql-editor-data-grid.png"
-  appLabel: "tabularis"
+    template: 'screenshot-split'
+    title: 'Security keys. Detachable results.'
+    accent: 'A sharper SQL editor.'
+    claim: 'Interactive SSH auth with hardware security keys, a detachable results window, a rebuilt autocomplete engine, three new community drivers, and a stack of Postgres/MySQL fixes.'
+    image: '/img/tabularis-sql-editor-data-grid.png'
+    appLabel: 'tabularis'
 ---
 
 # v0.13.4: Unlock Everything — Hardware Keys, Free-Floating Results, and a Sharper Editor
 
-**v0.13.4** follows [v0.13.3](/blog/v0133-result-colors-gruvbox-themed-tabs-session-restore), which was about making the app feel like yours. This one is about the moments where the app has to *get out of your way*: an SSH tunnel that can finally ask you for a PIN instead of failing silently, query results that pop into their own window when one screen isn't enough, and an editor that completes, formats, and confirms what you typed. It's another release carried by the community — nine external contributors land in this tag, including a wave of new database drivers.
+**v0.13.4** follows [v0.13.3](/blog/v0133-result-colors-gruvbox-themed-tabs-session-restore), which was about making the app feel like yours. This one is about the moments where the app has to _get out of your way_: an SSH tunnel that can finally ask you for a PIN instead of failing silently, query results that pop into their own window when one screen isn't enough, and an editor that completes, formats, and confirms what you typed. It's another release carried by the community — nine external contributors land in this tag, including a wave of new database drivers.
 
 ---
 
 ## SSH That Knows How to Ask
 
-Until now an SSH tunnel could only authenticate non-interactively — a key on disk, an agent, a password you'd stored. If your key lived on a **hardware security token** (a YubiKey or any FIDO/PKCS#11 device) that wants a PIN or a touch, or your private key was passphrase-protected and not in an agent, the connection just couldn't get off the ground. v0.13.4 fixes that by letting SSH *prompt*.
+Until now an SSH tunnel could only authenticate non-interactively — a key on disk, an agent, a password you'd stored. If your key lived on a **hardware security token** (a YubiKey or any FIDO/PKCS#11 device) that wants a PIN or a touch, or your private key was passphrase-protected and not in an agent, the connection just couldn't get off the ground. v0.13.4 fixes that by letting SSH _prompt_.
 
 [@robertpenz](https://github.com/robertpenz) contributed the core support for security-key authentication in PR [#262](https://github.com/TabularisDB/tabularis/pull/262): when the token needs a PIN to unlock, Tabularis now surfaces that request instead of giving up (tested against a hardware key on Fedora 43). To make the prompt safe and native rather than a terminal popup, the maintainer built a small **in-app askpass service** around it — an isolated askpass server and protocol that intercepts SSH's credential requests and serves them through a proper in-app modal, with forced interactive auth so passphrase- and PIN-protected keys are actually usable.
 
 The result: when a tunnel needs a passphrase, a security-key PIN, or a password mid-connect, you get a clean modal asking for exactly that, and the secret goes straight to SSH without touching disk. A per-connection **"allow interactive prompts"** toggle in the connection modals keeps the behavior opt-in, and the prompt strings are localized across all eight languages. If you've been stuck unable to use a YubiKey-backed jump host, this is the release that unblocks you.
 
-<video src="/videos/posts/tabularis-ssh-askpass.mp4" poster="/videos/posts/tabularis-ssh-askpass.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-ssh-askpass.mp4" poster="/videos/posts/tabularis-ssh-askpass.jpg" autoplay loop muted playsinline ></video>
 
 ---
 
@@ -37,7 +37,7 @@ The query results panel had a single chevron to collapse it and not much else. P
 
 The right side of the results bar now carries **Minimize**, **Maximize**, **Detach**, and **Close**. Minimize and Close collapse the panel without losing data — the existing "Show Results" button brings it back. Maximize hides the editor so results take the full height, and clicking it again restores the split. Manual drag-to-resize is untouched. The new one is **Detach**: it pops the active tab's results into a separate OS window, so you can keep the grid on a second monitor while you keep editing SQL on the first. The detached window stays in sync with the tab it came from, and closing it folds the results back into the main layout.
 
-<video src="/videos/posts/tabularis-detach-results.mp4" poster="/videos/posts/tabularis-detach-results.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-detach-results.mp4" poster="/videos/posts/tabularis-detach-results.jpg" autoplay loop muted playsinline ></video>
 
 ---
 
@@ -51,7 +51,7 @@ Three changes converge to make the editor read your intent better.
 
 **Success feedback for non-SELECT statements.** Also from [@danielnuld](https://github.com/danielnuld), PR [#391](https://github.com/TabularisDB/tabularis/pull/391) replaces the misleading "0 rows retrieved" empty grid you'd get after an `INSERT`/`UPDATE`/`DELETE` or a DDL statement with an explicit success panel — a check icon, "Query executed successfully", the affected-row count when there is one, and the execution time. It works for both single statements and multi-statement batches.
 
-<video src="/videos/posts/tabularis-editor-feedback.mp4" poster="/videos/posts/tabularis-editor-feedback.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-editor-feedback.mp4" poster="/videos/posts/tabularis-editor-feedback.jpg" autoplay loop muted playsinline ></video>
 
 :::newsletter:::
 
@@ -59,7 +59,7 @@ Three changes converge to make the editor read your intent better.
 
 ## Collapse Notebook Sections Individually
 
-<video src="/videos/posts/tabularis-notebooks-collapse.mp4" poster="/videos/posts/tabularis-notebooks-collapse.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-notebooks-collapse.mp4" poster="/videos/posts/tabularis-notebooks-collapse.jpg" autoplay loop muted playsinline ></video>
 
 Notebook cells could only be collapsed as a whole. PR [#399](https://github.com/TabularisDB/tabularis/pull/399) adds independent collapse for the three areas inside an SQL cell — the **query** editor, the **results** grid, and the **chart** — on top of the existing master cell collapse. Each area gets a thin labelled header with a chevron, the chart section appears only when the result is chartable, and the collapsed state of every section is saved with the notebook so it sticks across reloads. Chart visibility is persisted too now — it used to reset on every reload — defaulting to whether a chart config already exists, so older notebooks keep showing their charts exactly as before.
 
@@ -97,11 +97,11 @@ That brings the community driver roster — alongside the built-in MySQL, Postgr
 
 A run of fixes that quietly make queries do the right thing:
 
-- **Composite primary keys in edits** ([@thomaswasle](https://github.com/TabularisDB/tabularis/pull/324), PR [#324](https://github.com/TabularisDB/tabularis/pull/324)) — editing or deleting a row in a table with a composite primary key used to send only the *first* PK column, so the `UPDATE`/`DELETE` could hit **every** row sharing that partial key. The frontend now carries the full PK as a map and every command and driver (MySQL, SQLite, Postgres) builds a compound `WHERE col1 = ? AND col2 = ? AND …` clause.
+- **Composite primary keys in edits** ([@thomaswasle](https://github.com/TabularisDB/tabularis/pull/324), PR [#324](https://github.com/TabularisDB/tabularis/pull/324)) — editing or deleting a row in a table with a composite primary key used to send only the _first_ PK column, so the `UPDATE`/`DELETE` could hit **every** row sharing that partial key. The frontend now carries the full PK as a map and every command and driver (MySQL, SQLite, Postgres) builds a compound `WHERE col1 = ? AND col2 = ? AND …` clause.
 - **Vitess / PlanetScale connections** ([@debba](https://github.com/debba), PR [#387](https://github.com/TabularisDB/tabularis/pull/387), closes [#383](https://github.com/TabularisDB/tabularis/issues/383)) — connecting failed immediately with `setting the PIPES_AS_CONCAT sql_mode is unsupported` because sqlx sets that mode on every connection and Vitess rejects it. Tabularis now auto-skips `PIPES_AS_CONCAT` and `NO_ENGINE_SUBSTITUTION` so Vitess-backed databases connect.
 - **MySQL pagination after semicolons** ([@Stiwar0098](https://github.com/Stiwar0098), PR [#389](https://github.com/TabularisDB/tabularis/pull/389), closes [#388](https://github.com/TabularisDB/tabularis/issues/388)) — paginated SELECTs no longer leave `LIMIT`/`OFFSET` stranded after a trailing semicolon or comment, with hardened scanning for MySQL/MariaDB comment and quoting syntax.
 - **PostgreSQL < 11 routine introspection** ([@earmellin](https://github.com/earmellin), PR [#377](https://github.com/TabularisDB/tabularis/pull/377), fixes [#375](https://github.com/TabularisDB/tabularis/issues/375)) — `pg_proc.prokind` only exists from PG 11, so routine browsing threw `42703` on 9.x/10. Introspection now picks a version-appropriate query; tested against PostgreSQL 9.6.
-- **UUID-shaped keys in varchar columns** ([@NewtTheWolf](https://github.com/NewtTheWolf), PR [#394](https://github.com/TabularisDB/tabularis/pull/394)) — a primary key that *looks* like a UUID but lives in a `varchar` column is now bound as text, so editing those rows no longer fails a type check.
+- **UUID-shaped keys in varchar columns** ([@NewtTheWolf](https://github.com/NewtTheWolf), PR [#394](https://github.com/TabularisDB/tabularis/pull/394)) — a primary key that _looks_ like a UUID but lives in a `varchar` column is now bound as text, so editing those rows no longer fails a type check.
 
 ---
 

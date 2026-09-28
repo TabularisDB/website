@@ -1,14 +1,14 @@
 ---
-title: "MCP Multi-Client Support and Connection Improvements: v0.9.9"
-date: "2026-03-14T10:39:00"
-release: "v0.9.9"
-tags: ["release", "mcp", "connections", "ux"]
-excerpt: "v0.9.9 brings a major MCP upgrade: one-click install for Claude Desktop, Claude Code, Cursor, Windsurf, and Antigravity — plus connection UI polish and input validation."
+title: 'MCP Multi-Client Support and Connection Improvements: v0.9.9'
+date: '2026-03-14T10:39:00'
+release: 'v0.9.9'
+tags: ['release', 'mcp', 'connections', 'ux']
+excerpt: 'v0.9.9 brings a major MCP upgrade: one-click install for Claude Desktop, Claude Code, Cursor, Windsurf, and Antigravity — plus connection UI polish and input validation.'
 og:
-  title: "MCP Multi-Client Support,"
-  accent: "v0.9.9."
-  claim: "One-click MCP setup for Claude Desktop, Claude Code, Cursor, Windsurf, and Antigravity. Plus connection UI improvements and input validation."
-  image: "/img/tabularis-mcp-server.png"
+    title: 'MCP Multi-Client Support,'
+    accent: 'v0.9.9.'
+    claim: 'One-click MCP setup for Claude Desktop, Claude Code, Cursor, Windsurf, and Antigravity. Plus connection UI improvements and input validation.'
+    image: '/img/tabularis-mcp-server.png'
 ---
 
 # MCP Multi-Client Support and Connection Improvements: v0.9.9
@@ -19,7 +19,7 @@ og:
 
 ## MCP Server Integration: One-Click Setup for Every AI Client
 
-<img src="/img/tabularis-mcp-server.png" alt="MCP Server Integration modal showing one-click install for Claude Desktop, Claude Code, Cursor, Windsurf, and Antigravity" style="width:100%;border-radius:8px;margin:1rem 0" />
+<img src="/img/tabularis-mcp-server.png" alt="MCP Server Integration modal showing one-click install for Claude Desktop, Claude Code, Cursor, Windsurf, and Antigravity"  />
 
 The Model Context Protocol (MCP) allows AI assistants to connect directly to your local tools. Tabularis exposes an MCP server that lets any compatible AI client read your database schema and execute queries safely — entirely on your machine, with no data leaving your environment.
 
@@ -36,13 +36,13 @@ All communication happens over `stdin`/`stdout` — no network port is opened, n
 
 Previously, the one-click install only targeted Claude Desktop. Starting with v0.9.9, the **MCP Server Integration** panel in Tabularis detects and supports **five AI clients** out of the box:
 
-| Client | Config file auto-detected |
-|--------|--------------------------|
+| Client             | Config file auto-detected                                                                                                               |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
 | **Claude Desktop** | `~/.config/Claude/claude_desktop_config.json` (Linux), `~/Library/Application Support/Claude/…` (macOS), `%APPDATA%\Claude\…` (Windows) |
-| **Claude Code** | `~/.claude.json` |
-| **Cursor** | `~/.cursor/mcp.json` |
-| **Windsurf** | `~/.codeium/windsurf/mcp_config.json` |
-| **Antigravity** | `~/.gemini/antigravity/mcp_config.json` |
+| **Claude Code**    | `~/.claude.json`                                                                                                                        |
+| **Cursor**         | `~/.cursor/mcp.json`                                                                                                                    |
+| **Windsurf**       | `~/.codeium/windsurf/mcp_config.json`                                                                                                   |
+| **Antigravity**    | `~/.gemini/antigravity/mcp_config.json`                                                                                                 |
 
 Tabularis reads your OS and resolves each path automatically — you never need to hunt for config files.
 
@@ -71,7 +71,6 @@ The AI calls `run_query` under the hood, receives structured JSON results, and f
 
 ---
 
-
 :::star:::
 
 ## Connection UI Improvements
@@ -92,14 +91,14 @@ Several layout and spacing details on connection cards were refined for better r
 
 ## Summary
 
-| Area | What's new |
-|------|-----------|
-| MCP | One-click install for Claude Desktop, Claude Code, Cursor, Windsurf, Antigravity |
-| MCP | Automatic config path detection per OS and client |
-| MCP | Manual configuration snippet with pre-filled binary path |
-| Connections | Inline validation for connection name and database selection |
-| Connections | Context menu hidden when no groups exist |
-| Connections | Card styling improvements |
+| Area        | What's new                                                                       |
+| ----------- | -------------------------------------------------------------------------------- |
+| MCP         | One-click install for Claude Desktop, Claude Code, Cursor, Windsurf, Antigravity |
+| MCP         | Automatic config path detection per OS and client                                |
+| MCP         | Manual configuration snippet with pre-filled binary path                         |
+| Connections | Inline validation for connection name and database selection                     |
+| Connections | Context menu hidden when no groups exist                                         |
+| Connections | Card styling improvements                                                        |
 
 ---
 
