@@ -128,8 +128,9 @@ export default async function InitiativePage({params}: PageProps) {
                                 <div className={styles.contributors}>
                                     <span className={styles.contributorsLabel}>Working on this</span>
                                     <div className={styles.contributorsList}>
-                                        {meta.contributors.map((c) => (
+                                        {meta.contributors.map((c, index) => (
                                             <a
+                                                key={index}
                                                 href={`https://github.com/${c.username}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"

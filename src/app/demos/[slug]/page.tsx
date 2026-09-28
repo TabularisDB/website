@@ -57,8 +57,8 @@ export default async function DemoDetail({params}: PageProps) {
                 data={[
                     buildBreadcrumbJsonLd([
                         {name: 'Home', path: '/'},
-                        {name: 'Product Demos', path: '/videos'},
-                        {name: video.title, path: `/videos/${video.slug}`},
+                        {name: 'Product Demos', path: '/demos'},
+                        {name: video.title, path: `/demos/${video.slug}`},
                     ]),
                     buildVideoObjectJsonLd(video),
                 ]}

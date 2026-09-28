@@ -12,6 +12,7 @@ import {ArrowRight, X} from 'lucide-react';
 import {useEffect, useState} from 'react';
 import {createPortal} from 'react-dom';
 import styles from './DownloadModal.module.scss';
+import Link from 'next/link';
 
 export type {Platform} from '@/lib/downloadConfig';
 
@@ -38,12 +39,15 @@ export function DownloadModal({platform, onClose}: DownloadModalProps) {
     }, [open, platform]);
 
     useEffect(() => {
+        if (!open) return;
+
         function handleKeyDown(e: KeyboardEvent) {
             if (e.key === 'Escape') onClose();
         }
+
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [onClose]);
+    }, [open, onClose]);
 
     function handleOverlayClick(e: React.MouseEvent<HTMLDivElement>) {
         if (e.target === e.currentTarget) onClose();
@@ -71,15 +75,21 @@ export function DownloadModal({platform, onClose}: DownloadModalProps) {
                     <div className={styles.meta}>
                         <VersionPicker channel={channel} onChannelChange={setChannel} />
                         <span className={styles.versionTag}>v{version}</span>
-                        <a
-                            className={styles.releasesLink}
-                            href={`${SOCIAL_URLS.github}/releases`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            {isNightly ? 'View build on GitHub' : 'View changelog'}
-                            <ArrowRight size={15} />
-                        </a>
+                        {isNightly ? (
+                            <a
+                                className={styles.releasesLink}
+                                href={`${SOCIAL_URLS.github}/releases`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                View build on GitHub
+                                <ArrowRight size={15} />
+                            </a>
+                        ) : (
+                            <Link href="/changelog" className={styles.releasesLink}>
+                                View changelog <ArrowRight size={15} />
+                            </Link>
+                        )}
                     </div>
 
                     <div className={styles.body}>
