@@ -40,7 +40,7 @@ export interface SimpleOgOptions {
 }
 
 export async function renderSimpleOgImage({title, kicker}: SimpleOgOptions): Promise<ImageResponse> {
-    const logoSrc = readPublicImage('/img/tabularis.svg');
+    const logoSrc = readPublicImage('/img/brand/tabularis.svg');
     const [font400, font800] = await Promise.all([loadFont(400), loadFont(800)]);
 
     const fonts: NonNullable<ConstructorParameters<typeof ImageResponse>[1]>['fonts'] = [];
