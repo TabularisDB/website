@@ -283,6 +283,6 @@ export async function renderScreenshotSplitOgImage({
                 )}
             </div>
         </div>,
-        {...OG_SIZE, fonts},
+        {...OG_SIZE, fonts: fonts.length ? fonts : undefined},
     );
 }

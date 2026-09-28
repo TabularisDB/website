@@ -294,7 +294,7 @@ export default async function Image({params}: {params: Promise<{slug: string}>})
                     tabularis.dev
                 </div>
             </div>,
-            {...size, fonts},
+            {...size, fonts: fonts.length ? fonts : undefined},
         );
     }
 
@@ -316,7 +316,7 @@ export default async function Image({params}: {params: Promise<{slug: string}>})
             >
                 {post?.meta.title ?? 'Tabularis Blog'}
             </div>,
-            {...size, fonts},
+            {...size, fonts: fonts.length ? fonts : undefined},
         );
     }
 
@@ -530,6 +530,6 @@ export default async function Image({params}: {params: Promise<{slug: string}>})
                 )}
             </div>
         </div>,
-        {...size, fonts},
+        {...size, fonts: fonts.length ? fonts : undefined},
     );
 }

@@ -50,8 +50,7 @@ export interface PostMeta {
  * `.png` in development.
  */
 export function postOgImage(slug: string): string {
-    const ext = process.env.NODE_ENV === 'production' ? '.png' : '.png';
-    // TODO : rollback url
+    const ext = process.env.NODE_ENV === 'production' ? '.png' : '';
     return `/blog/${slug}/opengraph-image${ext}`;
 }
 
