@@ -27,8 +27,10 @@ function readPublicImage(filePath: string): string | null {
 }
 
 async function loadFont(weight: number) {
-    const res = await fetch(`https://cdn.jsdelivr.net/fontsource/fonts/urbanist@latest/latin-${weight}-normal.woff`);
-    if (!res.ok) return null;
+    const res = await fetch(
+        `https://cdn.jsdelivr.net/fontsource/fonts/urbanist@4.5.15/latin-${weight}-normal.woff`,
+    ).catch(() => null);
+    if (!res?.ok) return null;
     return res.arrayBuffer();
 }
 
@@ -38,7 +40,7 @@ export interface SimpleOgOptions {
 }
 
 export async function renderSimpleOgImage({title, kicker}: SimpleOgOptions): Promise<ImageResponse> {
-    const logoSrc = readPublicImage('/img/logo.svg');
+    const logoSrc = readPublicImage('/img/tabularis.svg');
     const [font400, font800] = await Promise.all([loadFont(400), loadFont(800)]);
 
     const fonts: NonNullable<ConstructorParameters<typeof ImageResponse>[1]>['fonts'] = [];
@@ -55,7 +57,7 @@ export async function renderSimpleOgImage({title, kicker}: SimpleOgOptions): Pro
                 flexDirection: 'column',
                 position: 'relative',
                 overflow: 'hidden',
-                fontFamily: 'Inter, system-ui, sans-serif',
+                fontFamily: 'Urbanist, system-ui, sans-serif',
             }}
         >
             {/* Grid — horizontal lines */}
