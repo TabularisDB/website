@@ -114,7 +114,7 @@ export function buildVideoObjectJsonLd(input: {
         uploadDate: input.uploadDate,
         ...(input.duration ? {duration: input.duration} : {}),
         contentUrl: toAbsoluteUrl(input.src),
-        ...(input.slug ? {embedUrl: toAbsoluteUrl(`/videos/${input.slug}`)} : {}),
+        ...(input.slug ? {embedUrl: toAbsoluteUrl(`/demos/${input.slug}`)} : {}),
         publisher: {
             '@type': 'Organization',
             name: 'Tabularis',

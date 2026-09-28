@@ -26,10 +26,10 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
     return {
         title: `${video.title} | Tabularis Demo`,
         description: video.description,
-        alternates: {canonical: `/videos/${video.slug}`},
+        alternates: {canonical: `/demos/${video.slug}`},
         openGraph: {
             type: 'video.other',
-            url: `/videos/${video.slug}`,
+            url: `/demos/${video.slug}`,
             title: `${video.title} | Tabularis Demo`,
             description: video.description,
             images: [video.poster],
