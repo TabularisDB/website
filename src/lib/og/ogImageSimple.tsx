@@ -27,11 +27,13 @@ function readPublicImage(filePath: string): string | null {
 }
 
 async function loadFont(weight: number) {
-    const res = await fetch(
-        `https://cdn.jsdelivr.net/fontsource/fonts/urbanist@4.5.15/latin-${weight}-normal.woff`,
-    ).catch(() => null);
-    if (!res?.ok) return null;
-    return res.arrayBuffer();
+    try {
+        return fs.readFileSync(
+            path.join(process.cwd(), 'src/lib/og/fonts', `urbanist-latin-${weight}-normal.woff`),
+        );
+    } catch {
+        return null;
+    }
 }
 
 export interface SimpleOgOptions {
@@ -199,6 +201,6 @@ export async function renderSimpleOgImage({title, kicker}: SimpleOgOptions): Pro
                 tabularis.dev
             </div>
         </div>,
-        {...OG_SIZE, fonts},
+        {...OG_SIZE, fonts: fonts.length ? fonts : undefined},
     );
 }

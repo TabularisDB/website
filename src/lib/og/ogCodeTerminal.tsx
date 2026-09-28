@@ -364,6 +364,6 @@ export async function renderCodeTerminalOgImage({
                 </div>
             </div>
         </div>,
-        {...OG_SIZE, fonts},
+        {...OG_SIZE, fonts: fonts.length ? fonts : undefined},
     );
 }
