@@ -1,11 +1,10 @@
+import {WikiLayout} from '@/components/pages/wiki/WikiLayout/WikiLayout';
+import type {WikiCategory} from '@/lib/wiki';
+import {getWikiPagesByCategory, WIKI_CATEGORIES} from '@/lib/wiki';
+import {BookOpen, Bot, Database, LayoutGrid, Plug, Rocket, Settings2, Shield} from 'lucide-react';
 import type {Metadata} from 'next';
 import Link from 'next/link';
-import {BookOpen, Bot, Database, LayoutGrid, Plug, Rocket, Settings2, Shield} from 'lucide-react';
-import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
-import {WikiLayout} from '@/components/pages/wiki/WikiLayout/WikiLayout';
-import {getWikiPagesByCategory, WIKI_CATEGORIES} from '@/lib/wiki';
-import type {WikiCategory} from '@/lib/wiki';
-import styles from './page.module.scss';
+import styles from './WikiIndexPage.module.scss';
 
 export const metadata: Metadata = {
     title: 'Wiki | Tabularis',

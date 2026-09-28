@@ -3,7 +3,7 @@ import {AUTHORS, authorAvatarUrl, authorGitHubUrl, getAuthor} from '@/lib/blog/a
 import {getAllAuthorHandles, getPostsByAuthor} from '@/lib/blog/posts';
 import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
-import styles from './page.module.scss';
+import styles from './BlogAuthorPage.module.scss';
 import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
 import {Suspense} from 'react';
 
@@ -82,7 +82,7 @@ export default async function AuthorArchivePage({params}: PageProps) {
                             <span className={styles.count}>
                                 {posts.length} {posts.length === 1 ? 'post' : 'posts'}
                             </span>
-                            <span className={styles.separator}>·</span>
+                            <span>·</span>
                             <a
                                 href={authorGitHubUrl(author.github)}
                                 target="_blank"

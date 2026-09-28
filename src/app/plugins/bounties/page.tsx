@@ -1,5 +1,8 @@
 import {JsonLd} from '@/components/layout/JsonLd';
+import {BountyGrid} from '@/components/pages/plugins/bounties/BountyGrid/BountyGrid';
+import {BountyRequestCta} from '@/components/pages/plugins/bounties/BountyRequestCta/BountyRequestCta';
 import {BountySchema} from '@/components/pages/plugins/bounties/BountySchema/BountySchema';
+import {ShippedBounties} from '@/components/pages/plugins/bounties/ShippedBounties/ShippedBounties';
 import {Button} from '@/components/ui/Button/Button';
 import {DiscordIcon} from '@/components/ui/Icons/SocialIcons';
 import {getBountyStats} from '@/lib/pluginBounties';
@@ -8,7 +11,7 @@ import {SOCIAL_URLS} from '@/lib/social';
 import clsx from 'clsx';
 import {GitBranchIcon, HandCoinsIcon, PackageCheckIcon, TargetIcon} from 'lucide-react';
 import type {Metadata} from 'next';
-import styles from './page.module.scss';
+import styles from './PluginBountyBoardPage.module.scss';
 
 export const metadata: Metadata = {
     title: 'Plugin Bounty Board | Tabularis',
@@ -42,7 +45,7 @@ export default function PluginBountyBoardPage() {
                     ]),
                 ]}
             />
-            <header className={clsx('page-header', styles.header)}>
+            <header className="page-header">
                 <span className="eyebrow">
                     <HandCoinsIcon />
                     Plugin Bounty Board
@@ -106,14 +109,30 @@ export default function PluginBountyBoardPage() {
             </header>
 
             <section className={styles.market}>
-                <div className="section-header">
+                <header className="section-header">
+                    <span className="eyebrow">Active work</span>
                     <h3 className="title">Find the right target.</h3>
                     <p className="description">
                         Search by database or narrow the board by status, focus, and difficulty. Each card points to the
                         discussion, issue, or repository where work happens.
                     </p>
-                </div>
+                </header>
+                <BountyGrid />
             </section>
+
+            <section className={styles.market}>
+                <header className="section-header">
+                    <span className="eyebrow">Shipped</span>
+                    <h3 className="title">Proof that the market can close.</h3>
+                    <p className="description">
+                        Every plugin below started as an open bounty. They prove the board isn&apos;t just a wishlist.
+                    </p>
+                </header>
+
+                <ShippedBounties />
+            </section>
+
+            <BountyRequestCta />
         </div>
     );
 }

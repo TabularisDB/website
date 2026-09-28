@@ -253,15 +253,12 @@ export function SurveyForm({source, onSubmitted}: SurveyFormProps) {
                             Next
                         </Button>
                     ) : (
-                        <Button type="submit" className={`${styles.btn} ${styles.btnPrimary}`}>
-                            Send feedback
-                        </Button>
+                        <Button type="submit">Send feedback</Button>
                     )}
                 </div>
 
                 <a className={styles.credit} href="https://www.emailchef.com" target="_blank" rel="noopener noreferrer">
                     Made with
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src="/img/emailchef-logo.svg" alt="emailchef" />
                 </a>
 

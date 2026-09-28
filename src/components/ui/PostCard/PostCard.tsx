@@ -16,16 +16,26 @@ export function PostCard({post, isFeaturedPost = false}: PostCardProps) {
 
     return (
         <Link href={`/blog/${post.slug}`} className={clsx(styles.card, isFeaturedPost && styles.featured)}>
-            <div className={styles.cover}>
-                <img src={imageSrc} alt={post.title} className={styles.imageCover} />
+            <div className={styles.coverWrapper}>
+                <img src={imageSrc} alt={post.title} className={styles.cover} />
             </div>
             <div className={styles.infos}>
-                <span className={styles.details}>
-                    {formatDate(post.date.split('T')[0])} · {post.readingTime} min read
-                </span>
-
+                {isFeaturedPost && (
+                    <ul className={styles.meta}>
+                        <li>{formatDate(post.date.split('T')[0])}</li>
+                        <li>{post.readingTime} min read </li>
+                    </ul>
+                )}
                 <h3 className={styles.title}>{post.title}</h3>
-                <p className={styles.description}>{post.excerpt}</p>
+
+                {isFeaturedPost && <p className={styles.description}>{post.excerpt}</p>}
+
+                {!isFeaturedPost && (
+                    <ul className={styles.meta}>
+                        <li>{formatDate(post.date.split('T')[0])}</li>
+                        <li>{post.readingTime} min read </li>
+                    </ul>
+                )}
 
                 {primaryAuthor && (
                     <span className={styles.author}>

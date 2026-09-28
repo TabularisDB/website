@@ -24,9 +24,9 @@ export const products: Product[] = [
     {
         id: 'tabularis',
         name: 'Tabularis',
-        logo: '/img/brand/tabularis.png',
-        width: 120,
-        height: 120,
+        logo: '/img/brand/tabularis-compact.svg',
+        width: 140,
+        height: 140,
         tagline: 'Open-source SQL workspace with notebooks, plugins, and MCP.',
         features: {
             license: 'Open-source',

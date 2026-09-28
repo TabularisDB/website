@@ -1,7 +1,8 @@
 .card {
     position: relative;
     padding: 3rem 2rem;
-    margin: 6rem auto 3rem auto;
+    margin-inline: auto;
+    margin-top: 4rem;
     border: 0.1rem solid var(--color-border);
     border-radius: var(--radius-md);
     overflow: hidden;

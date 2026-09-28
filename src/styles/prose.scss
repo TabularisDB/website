@@ -246,9 +246,10 @@
         text-align: left;
         font-weight: 500;
         color: var(--color-text-primary);
-        padding: 0 5rem 1rem;
+        padding: 1rem 4rem;
         border-bottom: 0.075rem solid var(--color-border);
         white-space: nowrap;
+        line-height: 1;
 
         &:last-child {
             width: 100%;
@@ -511,6 +512,7 @@
         border: none;
         border-radius: 0;
         max-width: none;
+        margin: 0;
     }
 
     // Opt-in smaller player: <video class="video-compact" ...> in markdown

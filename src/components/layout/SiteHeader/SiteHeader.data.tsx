@@ -288,13 +288,11 @@ export const navGroups: NavGroup[] = [
 export function NavLinkLabel({label, badge}: {label: string; badge?: string}) {
     if (!badge) return <strong>{label}</strong>;
     const words = label.split(' ');
-    const last = words.pop();
     return (
         <strong>
             {words.length > 0 && <>{words.join(' ')} </>}
-            <span className="nav-badge-keep">
-                {last}
-                <span className="nav-badge-new">{badge}</span>
+            <span>
+                <div className="badge">{badge}</div>
             </span>
         </strong>
     );

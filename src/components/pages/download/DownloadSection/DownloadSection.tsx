@@ -37,7 +37,7 @@ export function DownloadSection({stableVersion, stableDate}: DownloadSectionProp
     const [channel, setChannel] = useState<Channel>('stable');
     const [detected, setDetected] = useState<Platform | null>(null);
     const isNightly = channel === 'nightly';
-    const nightlyHash = NIGHTLY_RELEASE.tag.split('-').at(-1)!;
+    const nightlyHash = NIGHTLY_RELEASE.tag.split('-').at(-1) ?? '';
 
     useEffect(() => {
         setDetected(detectPlatform());

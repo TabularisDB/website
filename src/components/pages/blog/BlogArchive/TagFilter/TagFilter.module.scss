@@ -1,11 +1,6 @@
 .tags {
-    width: 100%;
-    overflow: hidden;
     display: flex;
-    justify-content: center;
-    margin-block: 2rem 3rem;
-    overflow-x: auto;
-    scrollbar-width: none;
+    flex-wrap: wrap;
     gap: 0.375rem;
 
     &::-webkit-scrollbar {

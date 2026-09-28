@@ -1,9 +1,7 @@
 import {getSeoPagesBySection} from '@/lib/seo/seoPages';
-import {CATEGORY_ORDER, getCategoryForSlug, getIconForSlug} from './SolutionsCatalog.config';
+import {CATEGORY_ORDER, getCategoryForSlug, getIconForSlug} from '../Solutions.data';
+import {SolutionsGrid} from '../SolutionsGrid/SolutionsGrid';
 import styles from './SolutionsCatalog.module.scss';
-import Link from 'next/link';
-import {ArrowRight} from 'lucide-react';
-import {Button} from '@/components/ui/Button/Button';
 
 export function SolutionsCatalog() {
     const pages = getSeoPagesBySection('solutions');
@@ -21,43 +19,17 @@ export function SolutionsCatalog() {
                 <div key={category.title} className={styles.category}>
                     <h3 className={styles.categoryTitle}>{category.title}</h3>
 
-                    <div className={styles.grid}>
-                        {category.items.map((item) => {
-                            const icon = getIconForSlug(item.slug);
-                            return (
-                                <Link key={item.slug} href={`/solutions/${item.slug}`} className={styles.card}>
-                                    <div className={styles.cardCover}>
-                                        <span className={styles.cardIcon}>{icon}</span>
-                                    </div>
-
-                                    <div className={styles.cardDetails}>
-                                        <h4 className={styles.cardTitle}>{item.title}</h4>
-                                        <p className={styles.cardExcerpt}>{item.excerpt}</p>
-
-                                        {(item.audience || item.useCase) && (
-                                            <div className={styles.cardTags}>
-                                                {item.audience && <span className={styles.tag}>{item.audience}</span>}
-                                                {item.useCase && <span className={styles.tag}>{item.useCase}</span>}
-                                            </div>
-                                        )}
-                                    </div>
-                                </Link>
-                            );
-                        })}
-                    </div>
+                    <SolutionsGrid
+                        items={category.items.map((item) => ({
+                            slug: item.slug,
+                            href: `/solutions/${item.slug}`,
+                            title: item.title,
+                            excerpt: item.excerpt,
+                            icon: getIconForSlug(item.slug),
+                        }))}
+                    />
                 </div>
             ))}
-
-            <div className={styles.transitionBlock}>
-                <h3 className={styles.transitionTitle}>Need a different workflow?</h3>
-                <p className={styles.transitionText}>
-                    These pages are organized by real use case. If you're evaluating tools instead of workflows, go to
-                    the comparison pages next.
-                </p>
-                <Button href="/compare">
-                    Browse comparisons <ArrowRight size={16} />
-                </Button>
-            </div>
         </div>
     );
 }

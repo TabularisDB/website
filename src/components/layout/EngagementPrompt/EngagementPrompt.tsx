@@ -51,7 +51,7 @@ export function EngagementPrompt() {
     const surveyOnly = pathname?.startsWith('/blog') ?? false;
 
     useEffect(() => {
-        getRepoStars().then(setStars);
+        void getRepoStars().then(setStars);
     }, []);
 
     useEffect(() => {

@@ -21,7 +21,7 @@ export function ReleaseInfo({version, date, hash, hrefLabel, hrefLink, external 
                 <span className={styles.version}>v{version}</span>
                 <span className={styles.sub}>
                     {date}
-                    {hash && <span className={styles.hash}>{hash}</span>}
+                    {hash && <span>{hash}</span>}
                 </span>
                 {external ? (
                     <a className={styles.href} href={hrefLink} target="_blank" rel="noopener noreferrer">

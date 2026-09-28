@@ -8,7 +8,7 @@ export function useDownloads() {
 
     useEffect(() => {
         let cancelled = false;
-        getTotalDownloads().then((result) => {
+        void getTotalDownloads().then((result) => {
             if (!cancelled) setDownloads(result);
         });
         return () => {

@@ -6,7 +6,7 @@ import {formatDownloads, getTotalDownloads} from '@/lib/github';
 import {buildBreadcrumbJsonLd, buildSoftwareApplicationJsonLd} from '@/lib/seo';
 import {APP_VERSION} from '@/lib/version';
 import type {Metadata} from 'next';
-import styles from './page.module.scss';
+import styles from './DownloadPage.module.scss';
 import Link from 'next/link';
 import {DownloadIcon} from 'lucide-react';
 

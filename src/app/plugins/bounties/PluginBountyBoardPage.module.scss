@@ -84,3 +84,10 @@
     max-width: 300px;
     text-align: center;
 }
+
+.market {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 4rem;
+}

@@ -15,13 +15,22 @@ export function CopyButton({text, icon, className}: CopyButtonProps) {
     const [copied, setCopied] = useState(false);
 
     async function handleCopy() {
-        await navigator.clipboard.writeText(text);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 1500);
+        try {
+            await navigator.clipboard.writeText(text);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1500);
+        } catch (error) {
+            console.error('Failed to copy to clipboard', error);
+        }
     }
 
     return (
-        <button type="button" className={clsx(styles.button, className)} onClick={handleCopy} aria-label="Copy ">
+        <button
+            type="button"
+            className={clsx(styles.button, className)}
+            onClick={() => void handleCopy()}
+            aria-label="Copy"
+        >
             {copied ? <CheckIcon /> : icon}
         </button>
     );

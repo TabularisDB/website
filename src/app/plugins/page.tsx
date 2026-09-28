@@ -3,7 +3,7 @@ import {PluginGrid} from '@/components/pages/plugins/PluginGrid/PluginGrid';
 import {Button} from '@/components/ui/Button/Button';
 import {ArrowRight, PlugIcon} from 'lucide-react';
 import type {Metadata} from 'next';
-import styles from './page.module.scss';
+import styles from './PluginsPage.module.scss';
 
 export const metadata: Metadata = {
     title: 'Plugins | Tabularis',
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function PluginsPage() {
     return (
-        <div className="container">
+        <div className="container with-gap">
             <header className="page-header">
                 <span className="eyebrow">
                     <PlugIcon />
@@ -25,25 +25,28 @@ export default function PluginsPage() {
                 </p>
             </header>
             <PluginGrid />
-            <PluginBountyTeaser />
 
-            <section className={styles.buildOwn}>
-                <h2 className={styles.buildOwnTitle}>Build your own plugin</h2>
-                <p className={styles.buildOwnDesc}>
-                    Got a database you&apos;d like to support? The wiki covers the JSON-RPC protocol, the manifest and
-                    UI extensions, everything you need to get a driver running in minutes. When it&apos;s ready, publish
-                    it on the Tabularium registry.
-                </p>
-                <div className={styles.buildOwnActions}>
-                    <Button href="/wiki/building-plugins">
-                        Plugin Docs <ArrowRight size={14} />
-                    </Button>
-                    <Button href="https://registry.tabularis.dev/docs/plugin-development" variant="secondary">
-                        Publish on the Registry
-                        <ArrowRight size={14} />
-                    </Button>
-                </div>
-            </section>
+            <div className={styles.pluginPromo}>
+                <PluginBountyTeaser />
+
+                <section className={styles.buildOwn}>
+                    <h2 className={styles.buildOwnTitle}>Build your own plugin</h2>
+                    <p className={styles.buildOwnDesc}>
+                        Got a database you&apos;d like to support? The wiki covers the JSON-RPC protocol, the manifest
+                        and UI extensions, everything you need to get a driver running in minutes. When it&apos;s ready,
+                        publish it on the Tabularium registry.
+                    </p>
+                    <div className={styles.buildOwnActions}>
+                        <Button href="/wiki/building-plugins">
+                            Plugin Docs <ArrowRight size={14} />
+                        </Button>
+                        <Button href="https://registry.tabularis.dev/docs/plugin-development" variant="secondary">
+                            Publish on the Registry
+                            <ArrowRight size={14} />
+                        </Button>
+                    </div>
+                </section>
+            </div>
         </div>
     );
 }

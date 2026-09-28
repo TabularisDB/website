@@ -1,11 +1,11 @@
 'use client';
 
-import {useCallback, useEffect, useRef, useState} from 'react';
-import clsx from 'clsx';
-import {Maximize, PlayIcon} from 'lucide-react';
-import {VideoModal} from '@/components/ui/VideoModal/VideoModal';
-import styles from './HeroVideo.module.scss';
 import {Button} from '@/components/ui/Button/Button';
+import {VideoModal} from '@/components/ui/VideoModal/VideoModal';
+import clsx from 'clsx';
+import {PlayIcon} from 'lucide-react';
+import {useCallback, useEffect, useRef, useState} from 'react';
+import styles from './HeroVideo.module.scss';
 
 interface HeroVideoPreviewProps {
     poster: string;
@@ -26,7 +26,6 @@ export function HeroVideo({
     const [hovering, setHovering] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
-    const triggerRef = useRef<HTMLButtonElement>(null);
 
     const preloadVideo = useCallback(() => {
         const video = videoRef.current;

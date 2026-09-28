@@ -1,8 +1,15 @@
+.pluginPromo {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
 .buildOwn {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    margin: 1rem auto 4rem auto;
+    margin-inline: auto;
+    margin-bottom: 3rem;
     max-width: 1000px;
 }
 

@@ -1,23 +1,22 @@
-import type {Metadata} from 'next';
-import {notFound} from 'next/navigation';
 import {JsonLd} from '@/components/layout/JsonLd';
-import {SiteHeader} from '@/components/layout/SiteHeader/SiteHeader';
+import {CategoryLabel} from '@/components/pages/wiki/CategoryLabel/CategoryLabel';
+import {WikiContent} from '@/components/pages/wiki/WikiContent/WikiContent';
 import {WikiLayout} from '@/components/pages/wiki/WikiLayout/WikiLayout';
 import {WikiTableOfContents} from '@/components/pages/wiki/WikiTableOfContents/WikiTableOfContents';
-import {WikiContent} from '@/components/pages/wiki/WikiContent/WikiContent';
-import {CategoryLabel} from '@/components/pages/wiki/CategoryLabel/CategoryLabel';
+import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
 import {PostNav} from '@/components/ui/PostNav/PostNav';
+import {RelatedLinks} from '@/components/ui/RelatedLinks/RelatedLinks';
+import {buildArticleJsonLd, buildBreadcrumbJsonLd} from '@/lib/seo';
+import {getRelatedLinksForWiki} from '@/lib/seo/seoRelated';
 import {
+    getAdjacentWikiPages,
     getAllWikiPages,
     getWikiPageBySlug,
-    getAdjacentWikiPages,
     getWikiPagesByCategory,
     WIKI_CATEGORIES,
 } from '@/lib/wiki';
-import {buildArticleJsonLd, buildBreadcrumbJsonLd} from '@/lib/seo';
-import {getRelatedLinksForWiki} from '@/lib/seo/seoRelated';
-import {RelatedLinks} from '@/components/ui/RelatedLinks/RelatedLinks';
-import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
+import type {Metadata} from 'next';
+import {notFound} from 'next/navigation';
 
 interface PageProps {
     params: Promise<{slug: string}>;

@@ -15,7 +15,7 @@ export function HomeHero() {
                 built-in MCP server lets Claude, Cursor and Devin read your schema and run queries.
             </p>
             <div className={styles.actions}>
-                <DownloadButton className={styles.downloadButton} />
+                <DownloadButton />
                 <GitHubButton />
             </div>
             <TrustRow />

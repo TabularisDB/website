@@ -1,14 +1,14 @@
 ---
-title: "UI design system & visual identity"
-slug: "ui-design-system"
-category: "Design"
-status: "planned"
+title: 'UI design system & visual identity'
+slug: 'ui-design-system'
+category: 'Design'
+status: 'planned'
 order: 2
-lede: "Tabularis was built by a backend developer, one modal at a time, with colors and spacing picked on the spot. It works, but it lacks a system. This initiative replaces the vibe-coded UI with a documented design system: real logo, semantic palette, one type and spacing scale, shared primitives. Not a UX rework — pure visual coherence, plus the docs needed so the next contributor doesn't have to reverse-engineer my taste."
+lede: "Tabularis was built by a backend developer, one modal at a time, with colors and spacing picked on the spot. It works, but it lacks a system. This initiative replaces the vibe-coded UI with a documented design system: real logo, semantic palette, one type and spacing scale, shared primitives. Not a UX rework, just pure visual coherence, plus the docs needed so the next contributor doesn't have to reverse-engineer my taste."
 links:
-  - label: "Issue #195"
-    href: "https://github.com/TabularisDB/tabularis/issues/195"
-    external: true
+    - label: 'Issue #195'
+      href: 'https://github.com/TabularisDB/tabularis/issues/195'
+      external: true
 ---
 
 ## What the UI looks like today

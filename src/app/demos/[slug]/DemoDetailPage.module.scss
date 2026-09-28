@@ -2,26 +2,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    // gap: 4rem;
 }
 
 .pageHeader {
     margin-top: 1rem;
-}
-
-.goBack {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    opacity: 0.9;
-    font-weight: 500;
-    margin-right: auto;
-    margin-bottom: -2rem;
-    color: var(--color-text-primary);
-
-    &:hover {
-        color: var(--color-accent-teal);
-    }
 }
 
 .videoDemoPlayer {

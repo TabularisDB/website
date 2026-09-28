@@ -1,0 +1,102 @@
+.wrapper {
+    max-width: 1000px;
+    width: 100%;
+    margin-inline: auto;
+    margin-block: 5rem;
+
+    @media (max-width: 767px) {
+        overflow-x: auto;
+        margin-block: 2.5rem;
+    }
+}
+
+.table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-top: 0.1rem solid var(--color-border);
+    border-left: 0.1rem solid var(--color-border);
+
+    th,
+    td {
+        border-right: 0.1rem solid var(--color-border);
+        border-bottom: 0.1rem solid var(--color-border);
+        padding: 1.5rem;
+        text-align: center;
+        vertical-align: middle;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    th {
+        font-weight: 600;
+        color: var(--color-text-primary);
+        background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    td {
+        font-size: 0.95rem;
+        color: var(--color-text-secondary);
+    }
+
+    @media (max-width: 767px) {
+        min-width: 480px;
+
+        th,
+        td {
+            padding: 1rem;
+        }
+    }
+}
+.featureHeader,
+.featureCell {
+    color: var(--color-text-primary) !important;
+}
+
+.featureCell {
+    text-align: left;
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+.headerCell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.logo {
+    min-width: 2rem;
+    min-height: 2rem;
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+}
+
+.toolName {
+    font-size: 1rem;
+    font-weight: 500;
+
+    @media (max-width: 767px) {
+        display: none;
+    }
+}
+
+.cellValue {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.iconYes {
+    color: #14b8a6;
+    flex-shrink: 0;
+}
+
+.iconNo {
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+}

@@ -42,11 +42,9 @@ export function PostHeader({tags, titleHtml, authors, date, readingTime}: PostHe
                     ))}
                 </div>
 
-                <time className={styles.date} dateTime={date}>
-                    {formattedDate}
-                </time>
+                <time dateTime={date}>{formattedDate}</time>
 
-                {readingTime && <span className={styles.readingTime}>{readingTime} min read</span>}
+                {readingTime && <span>{readingTime} min read</span>}
             </div>
         </header>
     );

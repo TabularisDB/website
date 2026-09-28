@@ -1,5 +1,4 @@
 import {GitHubIcon} from '@/components/ui/Icons/SocialIcons';
-import {CheckCircle} from 'lucide-react';
 import type {ChangelogVersion, SectionType} from '@/lib/changelog';
 import styles from './VersionCard.module.scss';
 
@@ -13,10 +12,9 @@ const SECTION_LABELS: Record<SectionType, string> = {
 
 interface VersionCardProps {
     version: ChangelogVersion;
-    isLast?: boolean;
 }
 
-export function VersionCard({version: v, isLast = false}: VersionCardProps) {
+export function VersionCard({version: v}: VersionCardProps) {
     const totalEntries = v.sections.reduce((s, sec) => s + sec.entries.length, 0);
     if (totalEntries === 0) return null;
 
@@ -28,7 +26,7 @@ export function VersionCard({version: v, isLast = false}: VersionCardProps) {
     });
 
     return (
-        <div className={`${styles.row} ${isLast ? styles.rowLast : ''}`}>
+        <div className={styles.row}>
             <div className={styles.meta}>
                 <time className={styles.date} dateTime={v.date}>
                     {formattedDate}
@@ -57,7 +55,6 @@ export function VersionCard({version: v, isLast = false}: VersionCardProps) {
                             <ul className={styles.entryList}>
                                 {section.entries.map((entry, i) => (
                                     <li key={i} className={styles.entry}>
-                                        <CheckCircle size={14} className={styles.checkIcon} />
                                         <span className={styles.entryContent}>
                                             {entry.scope && <span className={styles.scope}>{entry.scope}</span>}
                                             <span

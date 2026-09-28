@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 export default function SponsorsPage() {
     return (
-        <div className="container">
+        <div className="container with-gap">
             <header className="page-header">
                 <span className="eyebrow">
                     <StarIcon />

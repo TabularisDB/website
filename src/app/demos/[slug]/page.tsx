@@ -1,10 +1,14 @@
 import {JsonLd} from '@/components/layout/JsonLd';
-import {VideoDetail} from '@/components/pages/demos/VideoDetail/VideoDetail';
-import {VideosGrid} from '@/components/pages/demos/VideosGrid/VideosGrid';
 import {buildBreadcrumbJsonLd, buildVideoObjectJsonLd} from '@/lib/seo';
 import {getAllVideoDemos, getVideoDemoBySlug} from '@/lib/videos';
 import {Metadata} from 'next';
 import {notFound} from 'next/navigation';
+import styles from './DemoDetailPage.module.scss';
+import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
+import clsx from 'clsx';
+import {Button} from '@/components/ui/Button/Button';
+import {ArrowRight, PlayIcon} from 'lucide-react';
+import {VideoPlayer} from '@/components/ui/VideoPlayer/VideoPlayer';
 
 interface PageProps {
     params: Promise<{slug: string}>;
@@ -45,5 +49,42 @@ export default async function DemoDetail({params}: PageProps) {
     const video = getVideoDemoBySlug(slug);
     if (!video) notFound();
 
-    return <VideoDetail video={video} />;
+    const formattedEyebrow = video.slug.replace(/-/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase());
+
+    return (
+        <section className={clsx('container', styles.page)}>
+            <JsonLd
+                data={[
+                    buildBreadcrumbJsonLd([
+                        {name: 'Home', path: '/'},
+                        {name: 'Product Demos', path: '/videos'},
+                        {name: video.title, path: `/videos/${video.slug}`},
+                    ]),
+                    buildVideoObjectJsonLd(video),
+                ]}
+            />
+
+            <Breadcrumbs crumbs={[{label: 'Demos', href: '/demos'}, {label: video.title}]} />
+
+            <header className={clsx('page-header', styles.pageHeader)}>
+                <span className="eyebrow">
+                    <PlayIcon />
+                    {formattedEyebrow}
+                </span>
+                <h2 className="title">{video.title}</h2>
+                <p className="description">{video.description}</p>
+            </header>
+
+            <VideoPlayer
+                src={video.src}
+                poster={video.poster}
+                wrapperClassName={styles.videoDemoPlayer}
+                ariaLabel={video.title}
+            />
+
+            <Button href={video.relatedHref}>
+                {video.relatedLabel} <ArrowRight size={16} />
+            </Button>
+        </section>
+    );
 }

@@ -1,4 +1,5 @@
 import {SolutionsCatalog} from '@/components/pages/solutions/SolutionsCatalog/SolutionsCatalog';
+import {TransitionBlock} from '@/components/ui/TransitionBlock/TransitionBlock';
 import {LayersIcon} from 'lucide-react';
 import {Metadata} from 'next';
 
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function SolutionsPage() {
     return (
-        <section className="container">
+        <section className="container with-gap">
             <header className="page-header">
                 <span className="eyebrow">
                     <LayersIcon />
@@ -25,6 +26,13 @@ export default function SolutionsPage() {
             </header>
 
             <SolutionsCatalog />
+
+            <TransitionBlock
+                title="Need a different workflow?"
+                text="These pages are organized by real use case. If you're evaluating tools instead of workflows, go to the comparison pages next."
+                buttonHref="/compare"
+                buttonText="Browse comparisons"
+            />
         </section>
     );
 }

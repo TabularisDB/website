@@ -4,9 +4,9 @@ import {SearchIcon} from 'lucide-react';
 import {BOUNTY_DIFFICULTY} from '@/lib/pluginBounties';
 import styles from './BountyFilters.module.scss';
 
-export type StatusFilter = 'all' | 'priority' | 'motion' | 'coming-soon' | 'open';
+export type StatusFilter = 'all' | 'motion' | 'coming-soon' | 'open';
 export type FocusFilter = 'all' | 'compatibility' | 'warehouse' | 'nosql' | 'sql' | 'docs';
-export type DifficultyFilter = 'all' | BOUNTY_DIFFICULTY;
+export type DifficultyFilter = 'all' | BOUNTY_DIFFICULTY.MEDIUM | BOUNTY_DIFFICULTY.HIGH | BOUNTY_DIFFICULTY.EXTREME;
 
 export const FOCUS_FILTERS: Array<{id: FocusFilter; label: string; tags: string[]}> = [
     {id: 'all', label: 'All focus', tags: []},
@@ -21,19 +21,18 @@ export const FOCUS_FILTERS: Array<{id: FocusFilter; label: string; tags: string[
     {id: 'docs', label: 'Docs', tags: ['docs']},
 ];
 
-const STATUS_FILTERS: Array<{id: StatusFilter; label: string}> = [
+export const STATUS_FILTERS: Array<{id: StatusFilter; label: string}> = [
     {id: 'all', label: 'All statuses'},
-    {id: 'priority', label: 'Most wanted'},
     {id: 'motion', label: 'In motion'},
     {id: 'coming-soon', label: 'Coming soon'},
     {id: 'open', label: 'Open brief'},
 ];
 
-const DIFFICULTY_FILTERS: Array<{id: DifficultyFilter; label: string}> = [
+export const DIFFICULTY_FILTERS: Array<{id: DifficultyFilter; label: string}> = [
     {id: 'all', label: 'Any difficulty'},
     {id: BOUNTY_DIFFICULTY.MEDIUM, label: 'Medium'},
     {id: BOUNTY_DIFFICULTY.HIGH, label: 'High'},
-    {id: BOUNTY_DIFFICULTY.LOW, label: 'Extreme'},
+    {id: BOUNTY_DIFFICULTY.EXTREME, label: 'Extreme'},
 ];
 
 interface BountyFiltersProps {

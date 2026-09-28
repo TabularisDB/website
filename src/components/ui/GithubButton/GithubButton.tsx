@@ -27,7 +27,7 @@ export function GitHubButton({withBackground = false}: GithubButtonProps) {
             <div className={clsx(styles.divider, 'divider')}></div>
             <span className={styles.stars}>
                 <StarIcon />
-                <div>{formatStars(stars!)}</div>
+                <div>{stars != null ? formatStars(stars) : '—'}</div>
             </span>
         </Button>
     );

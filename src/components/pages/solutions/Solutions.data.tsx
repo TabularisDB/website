@@ -1,24 +1,7 @@
-import {MySQLIcon, PostgreSQLIcon, SQLiteIcon} from '@/components/ui/Icons/PluginIcons';
-import {
-    Bot,
-    Database,
-    NotebookPen,
-    LineChart,
-    MousePointerClick,
-    Terminal,
-    HardDrive,
-    ShieldCheck,
-    Siren,
-    Network,
-    Table,
-    Puzzle,
-    Layers,
-    Apple,
-    MonitorSmartphone,
-} from 'lucide-react';
-import type {LucideIcon} from 'lucide-react';
-import {McpIcon} from '../../home/ProductOverview/Diagram/icons/AgentIcons';
 import {LinuxIcon, MacOsIcon, WindowsIcon} from '@/components/ui/Icons/PlatformIcons';
+import {DuckDBIcon, MySQLIcon, PostgreSQLIcon, SQLiteIcon} from '@/components/ui/Icons/PluginIcons';
+import {Database, LineChart, MousePointerClick, Network, NotebookPen, Puzzle, ShieldCheck, Siren} from 'lucide-react';
+import {McpIcon} from '../home/ProductOverview/Diagram/icons/AgentIcons';
 
 export const CATEGORY_ORDER = [
     'By database engine',
@@ -66,10 +49,10 @@ const ICON_BY_SLUG: Record<string, React.ReactNode> = {
     'secure-database-client': <ShieldCheck />,
     'database-client-for-on-call-engineers': <Siren />,
     'ssh-database-client': <Network />,
-    'sqlite-browser-linux': <HardDrive />,
-    'mysql-workbench-replacement': <Table />,
+    'sqlite-browser-linux': <SQLiteIcon />,
+    'mysql-workbench-replacement': <MySQLIcon />,
     'plugin-based-database-client': <Puzzle />,
-    'duckdb-redis-database-workflows': <Layers />,
+    'duckdb-redis-database-workflows': <DuckDBIcon />,
 };
 
 export function getCategoryForSlug(slug: string): string {

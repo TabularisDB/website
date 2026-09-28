@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import styles from './BlogOverview.module.scss';
 import {Button} from '@/components/ui/Button/Button';
-import {ArrowRight} from 'lucide-react';
+import {ArrowRight, NewspaperIcon} from 'lucide-react';
 import {getAllPosts} from '@/lib/blog/posts';
 import {PostCard} from '@/components/ui/PostCard/PostCard';
 
@@ -10,12 +10,11 @@ export function BlogOverview() {
 
     return (
         <section className={clsx(styles.section, 'section')}>
-            <div className={styles.backgroundWrapper}>
-                <div className={styles.aurora}></div>
-            </div>
-
             <header className="section-header">
-                <span className="eyebrow">Blog</span>
+                <span className="eyebrow">
+                    <NewspaperIcon />
+                    Blog
+                </span>
                 <h2 className="title">Latest from the blog.</h2>
                 <p className="description">
                     Release notes, engineering deep dives, and behind-the-scenes looks at how Tabularis gets built.
@@ -28,11 +27,9 @@ export function BlogOverview() {
                 ))}
             </div>
 
-            <footer className={styles.footer}>
-                <Button href="/blog" className={styles.footerLink}>
-                    View all posts <ArrowRight size={16} />
-                </Button>
-            </footer>
+            <Button href="/blog">
+                View all posts <ArrowRight size={16} />
+            </Button>
         </section>
     );
 }

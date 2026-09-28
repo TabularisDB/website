@@ -78,8 +78,6 @@ export function getActiveBounties() {
 }
 
 export function getShippedBounties() {
-    console.log(PLUGIN_BOUNTIES.filter((bounty) => bounty.status === BOUNTY_STATUS.SHIPPED));
-
     return PLUGIN_BOUNTIES.filter((bounty) => bounty.status === BOUNTY_STATUS.SHIPPED);
 }
 

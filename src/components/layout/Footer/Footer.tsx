@@ -44,15 +44,18 @@ export function Footer() {
             </div>
 
             <div className={styles.footerBottom}>
-                <p className={styles.footerCopy}>
-                    &copy; {currentYear} Tabularis | Designed by{' '}
+                <p className={styles.footerCopyrights}>
+                    &copy; {currentYear} Tabularis Project. Crafted by{' '}
+                    <a href="https://github.com/debba" target="_blank" rel="noopener noreferrer">
+                        Debba
+                    </a>
+                    . Site built by{' '}
                     <a href="https://github.com/wajrock" target="_blank" rel="noopener noreferrer">
                         Thibaud Wajrock
                     </a>
                     .
                 </p>
                 <p className={styles.footerLinksBottom}>
-                    <Link href="/subscribe">Subscribe</Link>
                     <Link href="/cookie-policy">Cookie Policy</Link>
                     <span
                         className={styles.manageCookiesButton}

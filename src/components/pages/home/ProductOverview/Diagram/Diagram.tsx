@@ -132,7 +132,7 @@ export function Diagram() {
                 <path d="M79.5 32L79.5 0" stroke="currentColor" pathLength="1"></path>
             </svg>
 
-            <div className={styles.destinations}>
+            <div>
                 <div className={styles.destinationsList}>
                     <div className={styles.destination}>
                         <span className={styles.blockTitle}>Native</span>
