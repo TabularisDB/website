@@ -16,7 +16,7 @@ export function ClosingCta({title, description}: ClosingCtaProps) {
             <h1 className={styles.title}>{title}</h1>
             <p className={styles.description}>{description}</p>
             <div className={styles.actions}>
-                <DownloadButton className={styles.downloadButton} />
+                <DownloadButton />
                 <GitHubButton withBackground />
             </div>
             <TrustRow />

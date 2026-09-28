@@ -5,7 +5,6 @@ import {DiscordIcon, GitHubIcon} from '@/components/ui/Icons/SocialIcons';
 import {SOCIAL_URLS} from '@/lib/social';
 import clsx from 'clsx';
 import {DownloadIcon} from 'lucide-react';
-import {usePathname} from 'next/navigation';
 import {navGroups} from '../../SiteHeader.data';
 import {MobileNavGroup} from '../MobileNavGroup/MobileNavGroup';
 import styles from './MobileMenu.module.scss';
@@ -16,8 +15,6 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({isOpen, onClose}: MobileMenuProps) {
-    const pathname = usePathname();
-
     return (
         <>
             <div className={clsx(styles.backdrop, isOpen && styles.active)} onClick={onClose} />

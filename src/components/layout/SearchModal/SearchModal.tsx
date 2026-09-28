@@ -95,7 +95,7 @@ export function SearchModal() {
         (result: SearchResult) => {
             closeModal();
             if (result.type === 'plugin' && result.url) {
-                window.open(result.url, '_blank');
+                window.open(result.url, '_blank', 'noopener,noreferrer');
                 return;
             }
             const path =
@@ -122,6 +122,7 @@ export function SearchModal() {
         }
 
         setSearching(true);
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         debounceRef.current = setTimeout(async () => {
             try {
                 const oramaResults = await searchIndex(trimmed, wikiOnly ? 'wiki' : undefined);

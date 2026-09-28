@@ -24,7 +24,7 @@ const CLOSING_CTA_RULES: ClosingCtaRule[] = [
     {
         path: '/changelog',
         content: {
-            title: 'Get the latest version',
+            title: 'Get the latest version.',
             description:
                 'Every release above ships to Windows, macOS, and Linux. Tabularis is free and open source (Apache 2.0), and a star on GitHub helps more developers discover it.',
         },
@@ -59,6 +59,7 @@ const CLOSING_CTA_RULES: ClosingCtaRule[] = [
     },
     {
         path: '/plugins',
+        excludePrefixes: ['/plugins/bounties'],
         content: {
             title: 'Plugins need the app first.',
             description:
@@ -67,19 +68,29 @@ const CLOSING_CTA_RULES: ClosingCtaRule[] = [
     },
     {
         path: '/compare',
+        matchSubpagesOnly: true,
         content: {
-            title: 'See the difference yourself.',
+            title: 'Run the comparison on your own workflow.',
             description:
-                'No trial, no account. Download Tabularis and compare it against your current tool in a few minutes.',
+                'The honest benchmark is your own database. Tabularis is free and open source under Apache 2.0, so you can download it, connect it to a real project, and see how it compares.',
         },
     },
     {
         path: '/solutions',
         matchSubpagesOnly: true,
         content: {
-            title: 'Try this workflow locally',
+            title: 'Try this workflow locally.',
             description:
                 'Tabularis is free and open source (Apache 2.0). Download it for your platform and test it against a real development database. A star on GitHub helps more developers find it.',
+        },
+    },
+    {
+        path: '/roadmap',
+        matchSubpagesOnly: true,
+        content: {
+            title: 'Help shape this roadmap.',
+            description:
+                'The best feedback comes from real usage. Tabularis is free and open source (Apache 2.0). Download it, try it on your databases, and tell us what should come next. A star on GitHub supports the project too.',
         },
     },
 ];

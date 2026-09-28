@@ -1,0 +1,111 @@
+import {JsonLd} from '@/components/layout/JsonLd';
+import {getAllInitiativeMetas, type InitiativeMeta, type InitiativeStatus} from '@/lib/roadmap';
+import {buildBreadcrumbJsonLd} from '@/lib/seo';
+import {ArrowRight, Hammer, MapIcon, Milestone, Rocket} from 'lucide-react';
+import type {Metadata} from 'next';
+import Link from 'next/link';
+import styles from './RoadmapPage.module.scss';
+import clsx from 'clsx';
+import {ComponentType} from 'react';
+
+export const metadata: Metadata = {
+    title: 'Roadmap | Tabularis',
+    description: 'Tabularis roadmap. Active initiatives, open tasks, planned work.',
+    alternates: {canonical: '/roadmap'},
+    openGraph: {
+        type: 'website',
+        url: 'https://tabularis.dev/roadmap/',
+        title: 'Roadmap | Tabularis',
+        description: 'Tabularis roadmap. Active initiatives, open tasks, planned work.',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Roadmap | Tabularis',
+        description: 'Tabularis roadmap. Active initiatives, open tasks, planned work.',
+    },
+};
+
+const STATUS_ORDER: InitiativeStatus[] = ['in-progress', 'planned', 'done'];
+
+export const STATUS_LABEL: Record<InitiativeStatus, string> = {
+    'in-progress': 'Being built right now',
+    planned: "What's next",
+    done: 'Already shipped',
+};
+
+const STATUS_ICON: Record<InitiativeStatus, ComponentType<{className?: string}>> = {
+    'in-progress': Hammer,
+    planned: Milestone,
+    done: Rocket,
+};
+
+function InitiativeCard({meta}: {meta: InitiativeMeta}) {
+    return (
+        <Link href={`/roadmap/${meta.slug}`} className={styles.card}>
+            <div className={styles.cardDetails}>
+                {meta.category && <span className={styles.cardScope}>{meta.category}</span>}
+                <h3 className={styles.cardTitle}>{meta.title}</h3>
+                {meta.lede && <p className={styles.cardExcerpt}>{meta.lede}</p>}
+            </div>
+
+            <span className={styles.cardLink}>
+                Read details <ArrowRight size={16} />
+            </span>
+        </Link>
+    );
+}
+
+export default function RoadmapPage() {
+    const metas = getAllInitiativeMetas();
+
+    const groups = STATUS_ORDER.map((status) => ({
+        status,
+        items: metas.filter((meta) => meta.status === status),
+    })).filter((group) => group.items.length > 0);
+
+    return (
+        <div className="container with-gap">
+            <JsonLd
+                data={[
+                    buildBreadcrumbJsonLd([
+                        {name: 'Home', path: '/'},
+                        {name: 'Roadmap', path: '/roadmap'},
+                    ]),
+                ]}
+            />
+
+            <header className="page-header">
+                <span className="eyebrow">
+                    <MapIcon />
+                    Roadmap
+                </span>
+                <h1 className="title">What we're building next.</h1>
+                <p className="description">
+                    Active initiatives and the work queued behind them. Each card links to a GitHub epic, its open
+                    tasks, and how to claim one.
+                </p>
+            </header>
+
+            <div className={styles.categoriesWrapper}>
+                {groups.map((group) => {
+                    const StatusIcon = STATUS_ICON[group.status];
+
+                    return (
+                        <section key={group.status} className={clsx(styles.category, group.status)}>
+                            <h2 className={styles.categoryTitle}>
+                                <StatusIcon className={styles.categoryIcon} />
+                                {STATUS_LABEL[group.status]}
+                            </h2>
+
+                            <div className={styles.grid}>
+                                {group.items.map((meta) => (
+                                    <InitiativeCard key={meta.slug} meta={meta} />
+                                ))}
+                            </div>
+                        </section>
+                    );
+                })}
+            </div>
+        </div>
+    );
+}

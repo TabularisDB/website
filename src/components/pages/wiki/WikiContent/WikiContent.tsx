@@ -76,7 +76,13 @@ export function WikiContent({html}: {html: string}) {
         (e: React.TouchEvent) => {
             if (touchStartX.current === null) return;
             const diff = e.changedTouches[0].clientX - touchStartX.current;
-            if (Math.abs(diff) > 50) diff < 0 ? next() : prev();
+            if (Math.abs(diff) > 50) {
+                if (diff < 0) {
+                    next();
+                } else {
+                    prev();
+                }
+            }
             touchStartX.current = null;
         },
         [next, prev],

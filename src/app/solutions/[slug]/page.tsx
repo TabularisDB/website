@@ -1,9 +1,11 @@
 import {JsonLd} from '@/components/layout/JsonLd';
-import {SolutionDetailLayout} from '@/components/pages/solutions/SolutionDetailLayout/SolutionDetailLayout';
+import {WikiContent} from '@/components/pages/wiki/WikiContent/WikiContent';
+import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
 import {buildArticleJsonLd, buildBreadcrumbJsonLd} from '@/lib/seo';
 import {getSeoPageBySlug, getSeoPagePath, getSeoPagesBySection} from '@/lib/seo/seoPages';
 import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
+import styles from './SolutionDetailPage.module.scss';
 
 interface PageProps {
     params: Promise<{slug: string}>;
@@ -61,7 +63,10 @@ export default async function SolutionDetailPage({params}: PageProps) {
                 ]}
             />
 
-            <SolutionDetailLayout pageInfos={page} />
+            <article className={styles.wrapper}>
+                <Breadcrumbs crumbs={[{label: 'Solutions', href: '/solutions'}, {label: page.meta.title}]} />
+                <WikiContent html={page.html} />
+            </article>
         </div>
     );
 }

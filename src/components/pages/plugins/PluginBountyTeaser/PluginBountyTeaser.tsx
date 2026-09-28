@@ -1,9 +1,9 @@
+import {Button} from '@/components/ui/Button/Button';
+import {BOUNTY_STATUS_LABEL, getActiveBounties, getBountyStats} from '@/lib/pluginBounties';
 import Link from 'next/link';
 import type {CSSProperties} from 'react';
-import {BOUNTY_STATUS, BOUNTY_STATUS_LABEL, getActiveBounties, getBountyStats} from '@/lib/pluginBounties';
-import styles from './PluginBountyTeaser.module.scss';
-import {Button} from '@/components/ui/Button/Button';
 import {STATUS_WEIGHT} from '../Plugin.data';
+import styles from './PluginBountyTeaser.module.scss';
 
 type DotStyle = CSSProperties & {'--dot-color': string};
 
@@ -55,9 +55,7 @@ export function PluginBountyTeaser() {
                     </div>
                 </div>
 
-                <Button href="/plugins/bounties" className={styles.cta}>
-                    Enter the Bounty Board
-                </Button>
+                <Button href="/plugins/bounties">Enter the Bounty Board</Button>
             </div>
         </section>
     );

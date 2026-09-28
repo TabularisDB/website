@@ -1,5 +1,6 @@
 import {JsonLd} from '@/components/layout/JsonLd';
 import {BlogOverview} from '@/components/pages/home/BlogOverview/BlogOverview';
+import {CompareOverview} from '@/components/pages/home/CompareOverview/CompareOverview';
 import {Features} from '@/components/pages/home/Features/Features';
 import {HomeHero} from '@/components/pages/home/HomeHero/HomeHero';
 import {PluginEcosystem} from '@/components/pages/home/PluginEcosystem/PluginEcosystem';
@@ -31,6 +32,7 @@ export default function HomePage() {
             <ProductOverview />
             <Features />
             <SolutionsOverview />
+            <CompareOverview />
             <PluginEcosystem />
             <BlogOverview />
         </div>

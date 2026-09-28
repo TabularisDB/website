@@ -1,3 +1,4 @@
+/* eslint-disable css-modules/no-unused-class */
 import Link from 'next/link';
 import clsx from 'clsx';
 import type {ReactNode, ButtonHTMLAttributes, AnchorHTMLAttributes} from 'react';
@@ -52,7 +53,7 @@ export function Button({variant = 'primary', size = 'md', children, className, e
     }
 
     return (
-        <button className={classes} {...(rest as ButtonHTMLAttributes<HTMLButtonElement>)}>
+        <button type="button" className={classes} {...(rest as ButtonHTMLAttributes<HTMLButtonElement>)}>
             {children}
         </button>
     );

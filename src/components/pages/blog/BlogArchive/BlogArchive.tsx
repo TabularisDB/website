@@ -1,12 +1,11 @@
 import {NewsletterForm} from '@/components/ui/NewsletterForm/NewsletterForm';
-import {PostMeta} from '@/lib/blog/posts';
-import styles from './BlogArchive.module.scss';
-import {TagFilter} from './TagFilter/TagFilter';
 import {PostCard} from '@/components/ui/PostCard/PostCard';
-import {PostGrid} from './PostGrid/PostGrid';
-import clsx from 'clsx';
-import {Suspense} from 'react';
+import {PostMeta} from '@/lib/blog/posts';
 import {NewspaperIcon} from 'lucide-react';
+import {Suspense} from 'react';
+import styles from './BlogArchive.module.scss';
+import {PostGrid} from './PostGrid/PostGrid';
+import {TagFilter} from './TagFilter/TagFilter';
 
 const POSTS_PER_PAGE = 12;
 
@@ -20,7 +19,7 @@ export function BlogArchive({posts, activeTag}: BlogArchiveProps) {
     const gridPosts = featuredPost ? posts.slice(1) : posts;
 
     return (
-        <div className={clsx('container', styles.layout)}>
+        <div className="container">
             <header className="page-header">
                 <span className="eyebrow">
                     <NewspaperIcon />
@@ -32,19 +31,22 @@ export function BlogArchive({posts, activeTag}: BlogArchiveProps) {
                 </p>
             </header>
 
-            <TagFilter activeTag={activeTag} />
+            <div className={styles.filterBar}>
+                <TagFilter activeTag={activeTag} />
+                <span className={styles.count}>
+                    {posts.length} {posts.length === 1 ? 'Post' : 'Posts'}
+                </span>
+            </div>
 
             {featuredPost && <PostCard post={featuredPost} isFeaturedPost />}
 
-            {gridPosts.length > 0 ? (
+            {gridPosts.length > 0 && (
                 <section className={styles.archive}>
                     <h2 className={styles.archiveTitle}>Discover more posts</h2>
                     <Suspense fallback={null}>
                         <PostGrid posts={gridPosts} pageSize={POSTS_PER_PAGE} />
                     </Suspense>
                 </section>
-            ) : (
-                <p className={styles.empty}>No posts yet for this tag.</p>
             )}
 
             <div className={styles.newsletter}>

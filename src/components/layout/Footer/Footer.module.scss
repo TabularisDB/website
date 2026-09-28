@@ -33,6 +33,7 @@
 .footerBrandTagline {
     font-size: 1rem;
     color: var(--color-text-secondary);
+    max-width: 80%;
 }
 
 .footerSocial {
@@ -126,15 +127,20 @@
     }
 }
 
-.footerCopy {
-    a {
+.footerCopyrights a {
+    text-decoration: underline;
+    color: var(--color-text-primary);
+    opacity: 0.85;
+
+    &:hover {
         color: var(--color-text-primary);
+        opacity: 1;
     }
 }
 
 .footerLinksBottom {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
     flex-wrap: wrap;
 
     a {

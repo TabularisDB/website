@@ -1,13 +1,12 @@
 'use client';
 
-import {useEffect, useState} from 'react';
-import {usePathname} from 'next/navigation';
-import clsx from 'clsx';
 import {Button} from '@/components/ui/Button/Button';
-import {getRepoStars, formatStars} from '@/lib/github';
-import styles from './HeaderActions.module.scss';
-import {SearchIcon, XIcon, MenuIcon, DownloadIcon} from 'lucide-react';
 import {GitHubIcon} from '@/components/ui/Icons/SocialIcons';
+import {formatStars} from '@/lib/github';
+import clsx from 'clsx';
+import {DownloadIcon, MenuIcon, SearchIcon, XIcon} from 'lucide-react';
+import {useEffect, useState} from 'react';
+import styles from './HeaderActions.module.scss';
 
 interface HeaderActionsProps {
     stars: number | null;
@@ -16,7 +15,6 @@ interface HeaderActionsProps {
 }
 
 export function HeaderActions({stars, mobileMenuOpen, onToggleMobileMenu}: HeaderActionsProps) {
-    const pathname = usePathname();
     const [isMac, setIsMac] = useState(false);
 
     useEffect(() => {

@@ -5,6 +5,7 @@ import {SOCIAL_URLS} from '@/lib/social';
 interface IconProps {
     size?: number;
     className?: string;
+    colored?: boolean;
 }
 
 interface Social {

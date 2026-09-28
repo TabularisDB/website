@@ -1,22 +1,25 @@
-import Link from 'next/link';
 import clsx from 'clsx';
+import {ChevronDown} from 'lucide-react';
+import Link from 'next/link';
 import {usePathname} from 'next/navigation';
-import {isActive, type NavGroup as NavGroupType} from '../../SiteHeader.data';
+import {useEffect} from 'react';
+import {useHeaderMenu} from '../../HeaderMenuContext';
+import {type NavGroup as NavGroupType} from '../../SiteHeader.data';
 import {MegaMenu} from '../MegaMenu/MegaMenu';
 import styles from './NavGroup.module.scss';
-import {useState} from 'react';
-import {useHeaderMenu} from '../../HeaderMenuContext';
-import {ChevronDown} from 'lucide-react';
 
 export function NavGroup({group}: {group: NavGroupType}) {
     const pathname = usePathname();
-    const active = isActive(pathname, group);
     const {openGroupLabel, setOpenGroupLabel} = useHeaderMenu();
     const isOpen = openGroupLabel === group.label;
 
+    useEffect(() => {
+        setOpenGroupLabel(null);
+    }, [pathname]);
+
     if (!group.columns) {
         return (
-            <Link href={group.href!} className={clsx(styles.navLink, active && styles.active)}>
+            <Link href={group.href!} className={styles.navLink}>
                 {group.label}
             </Link>
         );
@@ -31,7 +34,7 @@ export function NavGroup({group}: {group: NavGroupType}) {
     };
 
     return (
-        <div className={clsx(styles.navGroup, active && styles.active, isOpen && styles.open)} onClick={openMenu}>
+        <div className={clsx(styles.navGroup, isOpen && styles.open)} onClick={openMenu}>
             <button type="button" className={clsx(styles.navLink)}>
                 <span>{group.label}</span>
                 <ChevronDown className={styles.chevron} />

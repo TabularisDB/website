@@ -13,14 +13,14 @@ export function SponsorsGrid() {
             <div className={styles.grid}>
                 {SPONSORS.map((sponsor) => (
                     <button key={sponsor.id} className={styles.card} onClick={() => setActiveSponsor(sponsor)}>
-                        <div className={styles.cardCover}>
-                            <img src={sponsor.logoImgCompact} alt={sponsor.name} className={styles.cardIcon} />
-                        </div>
+                        <img src={sponsor.logoImgCompact} alt={sponsor.name} className={styles.cardLogo} />
 
                         <div className={styles.cardDetails}>
                             <span className={styles.cardTitle}>{sponsor.name}</span>
                             <p className={styles.cardTagline}>{sponsor.tagline}</p>
                         </div>
+
+                        <span className={styles.cardLink}>Learn more</span>
                     </button>
                 ))}
             </div>

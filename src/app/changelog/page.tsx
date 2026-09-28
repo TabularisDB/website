@@ -1,5 +1,11 @@
-import {ChangelogView} from '@/components/pages/changelog/ChangelogView';
+import {VersionCard} from '@/components/pages/changelog/VersionCard/VersionCard';
+import {Button} from '@/components/ui/Button/Button';
+import {GitHubIcon} from '@/components/ui/Icons/SocialIcons';
+import {getChangelog} from '@/lib/changelog';
+import {SOCIAL_URLS} from '@/lib/social';
+import {HistoryIcon} from 'lucide-react';
 import type {Metadata} from 'next';
+import styles from './ChangelogPage.module.scss';
 
 export const metadata: Metadata = {
     title: 'Changelog | Tabularis',
@@ -19,5 +25,31 @@ export const metadata: Metadata = {
 };
 
 export default function ChangelogPage() {
-    return <ChangelogView />;
+    const versions = getChangelog();
+
+    return (
+        <section className="container">
+            <header className="page-header">
+                <span className="eyebrow">
+                    <HistoryIcon />
+                    Changelog
+                </span>
+                <h2 className="title">Every release, documented.</h2>
+                <Button
+                    className={styles.githubButton}
+                    href={`${SOCIAL_URLS.github}/blob/main/CHANGELOG.md`}
+                    variant="secondary"
+                >
+                    <GitHubIcon />
+                    View on Github
+                </Button>
+            </header>
+
+            <div className={styles.timeline}>
+                {versions.map((v) => (
+                    <VersionCard key={v.version} version={v} />
+                ))}
+            </div>
+        </section>
+    );
 }

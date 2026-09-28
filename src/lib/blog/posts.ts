@@ -52,7 +52,7 @@ export interface PostMeta {
 export function postOgImage(slug: string): string {
     const ext = process.env.NODE_ENV === 'production' ? '.png' : '.png';
     // TODO : rollback url
-    return `https://tabularis.dev/blog/${slug}/opengraph-image${ext}`;
+    return `/blog/${slug}/opengraph-image${ext}`;
 }
 
 function parseAuthors(data: Record<string, unknown>): string[] {

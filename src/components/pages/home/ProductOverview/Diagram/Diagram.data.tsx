@@ -1,6 +1,7 @@
 import type {ReactNode} from 'react';
 import {ClaudeIcon, CursorIcon, DevinIcon, McpIcon} from './icons/AgentIcons';
 import {PostgreSQLIcon, MySQLIcon, SQLiteIcon, MongoDBIcon, RedisIcon} from '@/components/ui/Icons/PluginIcons';
+import {getShippedBounties} from '@/lib/pluginBounties';
 
 export interface DiagramItem {
     label: string;
@@ -24,5 +25,7 @@ export const NATIVE_DATABASES: DiagramItem[] = [
 export const PLUGIN_DATABASES: DiagramItem[] = [
     {label: 'MongoDB', icon: <MongoDBIcon />, variant: 'plugin'},
     {label: 'Redis', icon: <RedisIcon />, variant: 'plugin'},
-    {label: '+10 more', variant: 'plugin'},
+    {label: `${getShippedBounties().length - 2} More`, variant: 'plugin'},
 ];
+
+getShippedBounties();

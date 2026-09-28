@@ -1,13 +1,12 @@
 'use client';
 
-import {useEffect, useState} from 'react';
-import clsx from 'clsx';
-import {ArrowRight} from 'lucide-react';
+import {DownloadModal} from '@/components/layout/DownloadModal/DownloadModal';
 import {Platform} from '@/lib/download/downloadConfig';
+import clsx from 'clsx';
+import {useEffect, useState} from 'react';
 import {Button} from '../Button/Button';
 import {LinuxIcon, MacOsIcon, WindowsIcon} from '../Icons/PlatformIcons';
 import styles from './DownloadButton.module.scss';
-import {DownloadModal} from '@/components/layout/DownloadModal/DownloadModal';
 
 function detectPlatform(): Platform {
     if (typeof navigator === 'undefined') return 'windows';

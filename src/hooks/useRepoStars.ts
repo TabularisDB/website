@@ -8,7 +8,7 @@ export function useRepoStars() {
 
     useEffect(() => {
         let cancelled = false;
-        getRepoStars().then((result) => {
+        void getRepoStars().then((result) => {
             if (!cancelled) setStars(result);
         });
         return () => {

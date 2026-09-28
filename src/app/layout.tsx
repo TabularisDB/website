@@ -1,16 +1,15 @@
-import {GradientBackground} from '@/components/layout/GradientBackground/GradientBackground';
+import {CookieConsent} from '@/components/layout/CookieConsent/CookieConsent';
+import {EngagementPrompt} from '@/components/layout/EngagementPrompt/EngagementPrompt';
+import {Footer} from '@/components/layout/Footer/Footer';
 import {JsonLd} from '@/components/layout/JsonLd';
+import {SearchModal} from '@/components/layout/SearchModal/SearchModal';
+import {SiteHeader} from '@/components/layout/SiteHeader/SiteHeader';
 import {buildOrganizationJsonLd, buildSoftwareApplicationJsonLd} from '@/lib/seo';
 import {OG_IMAGE_URL, SITE_DESCRIPTION, SITE_TITLE} from '@/lib/siteConfig';
 import 'highlight.js/styles/atom-one-dark.css';
 import type {Metadata} from 'next';
 import {jetbrainsMono, outfit, urbanist} from './font';
 import './globals.scss';
-import {SearchModal} from '@/components/layout/SearchModal/SearchModal';
-import {SiteHeader} from '@/components/layout/SiteHeader/SiteHeader';
-import {Footer} from '@/components/layout/Footer/Footer';
-import {CookieConsent} from '@/components/layout/CookieConsent/CookieConsent';
-import {EngagementPrompt} from '@/components/layout/EngagementPrompt/EngagementPrompt';
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://tabularis.wajrock.me'),

@@ -1,30 +1,26 @@
 'use client';
 
-import Link from 'next/link';
 import clsx from 'clsx';
-import {usePathname} from 'next/navigation';
-import {NavLinkLabel, isActive, type NavGroup} from '../../SiteHeader.data';
-import styles from './MobileNavGroup.module.scss';
 import {ArrowRight, ChevronDown} from 'lucide-react';
+import Link from 'next/link';
+import {NavLinkLabel, type NavGroup} from '../../SiteHeader.data';
+import styles from './MobileNavGroup.module.scss';
 interface MobileNavGroupProps {
     group: NavGroup;
     onNavigate: () => void;
 }
 
 export function MobileNavGroup({group, onNavigate}: MobileNavGroupProps) {
-    const pathname = usePathname();
-    const active = isActive(pathname, group);
-
     if (!group.columns) {
         return (
-            <Link href={group.href!} className={clsx(styles.link, active && styles.active)} onClick={onNavigate}>
+            <Link href={group.href!} className={styles.link} onClick={onNavigate}>
                 {group.label}
             </Link>
         );
     }
 
     return (
-        <details className={clsx(styles.group, active && styles.active)}>
+        <details className={styles.group}>
             <summary className={styles.summary}>
                 <span>{group.label}</span>
                 <ChevronDown className={styles.chevron} />
@@ -35,11 +31,7 @@ export function MobileNavGroup({group, onNavigate}: MobileNavGroupProps) {
                         {row.title && <span className={styles.rowTitle}>{row.title}</span>}
                         {row.links.map((link) => {
                             const external = link.href.startsWith('http');
-                            const className = clsx(
-                                styles.subLink,
-                                !external && pathname.startsWith(link.href) && styles.active,
-                                link.isLink && styles.link,
-                            );
+                            const className = clsx(styles.subLink, link.isLink && styles.link);
                             const label = <NavLinkLabel label={link.label} badge={link.badge} />;
                             const content = (
                                 <>

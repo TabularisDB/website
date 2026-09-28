@@ -1,9 +1,8 @@
-import clsx from 'clsx';
-import {AlertCircleIcon, CopyIcon} from 'lucide-react';
 import {Button} from '@/components/ui/Button/Button';
 import type {DownloadOption, PlatformConfig} from '@/lib/downloadConfig';
-import styles from './DownloadOptions.module.scss';
+import {AlertCircleIcon, CopyIcon} from 'lucide-react';
 import {CopyButton} from '../../../ui/CopyButton/CopyButton';
+import styles from './DownloadOptions.module.scss';
 
 interface DownloadOptionsProps {
     options: DownloadOption[];
@@ -14,7 +13,7 @@ function Option({option}: {option: DownloadOption}) {
     if (option.kind === 'command') {
         const commands = Array.isArray(option.command) ? option.command : [option.command];
         return (
-            <div className={clsx(styles.option, styles.optionCommand)}>
+            <div className={styles.optionCommand}>
                 <span className={styles.optionLabel}>{option.label}</span>
                 <div className={styles.commandList}>
                     {commands.map((cmd) => (
@@ -34,7 +33,7 @@ function Option({option}: {option: DownloadOption}) {
     }
 
     return (
-        <div className={clsx(styles.option, styles.optionFile)}>
+        <div className={styles.optionFile}>
             <span className={styles.optionLabel}>{option.label}</span>
             <Button size="sm" href={`/download/thank-you?url=${encodeURIComponent(option.url)}`}>
                 {option.ext}

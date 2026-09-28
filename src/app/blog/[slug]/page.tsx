@@ -10,7 +10,7 @@ import {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import {PostNav} from '../../../components/ui/PostNav/PostNav';
 import {WikiContent} from '../../../components/pages/wiki/WikiContent/WikiContent';
-import styles from './page.module.scss';
+import styles from './BlogPostPage.module.scss';
 import {PostAuthor} from '@/components/pages/blog/PostAuthor/PostAuthor';
 import {PostHeader} from '@/components/pages/blog/PostHeader/PostHeader';
 import {PostShareBlock} from '@/components/pages/blog/PostShareBlock/PostShareBlock';

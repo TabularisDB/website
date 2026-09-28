@@ -1,15 +1,15 @@
 'use client';
 
+import {getRepoStars} from '@/lib/github';
 import clsx from 'clsx';
 import {usePathname} from 'next/navigation';
 import {useEffect, useState} from 'react';
 import {Brand} from '../Brand/Brand';
 import {DesktopNav} from './components/DesktopNav/DesktopNav';
 import {HeaderActions} from './components/HeaderActions/HeaderActions';
-import styles from './SiteHeader.module.scss';
-import {HeaderMenuContext, useHeaderMenu} from './HeaderMenuContext';
 import {MobileMenu} from './components/MobileMenu/MobileMenu';
-import {getRepoStars} from '@/lib/github';
+import {HeaderMenuContext} from './HeaderMenuContext';
+import styles from './SiteHeader.module.scss';
 
 export function SiteHeader() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -22,7 +22,6 @@ export function SiteHeader() {
     useEffect(() => {
         function onScroll() {
             setScrolled(window.scrollY > 50);
-            console.log(window.scrollY);
         }
         onScroll();
         window.addEventListener('scroll', onScroll, {passive: true});
@@ -30,7 +29,7 @@ export function SiteHeader() {
     }, []);
 
     useEffect(() => {
-        getRepoStars().then(setStars);
+        void getRepoStars().then(setStars);
     }, []);
 
     useEffect(() => {
@@ -43,7 +42,6 @@ export function SiteHeader() {
                 className={clsx(
                     styles.siteHeader,
                     scrolled && styles.scrolled,
-                    isMobileMenuOpen && styles.mobileOpen,
                     (openGroupLabel || isMobileMenuOpen) && styles.menuOpen,
                 )}
             >

@@ -1,13 +1,13 @@
 'use client';
 
+import {Brand} from '@/components/layout/Brand/Brand';
+import type {WikiCategory, WikiMeta} from '@/lib/wiki';
+import clsx from 'clsx';
+import {XIcon} from 'lucide-react';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
-import {useEffect, useState} from 'react';
-import clsx from 'clsx';
-import type {WikiCategory, WikiMeta} from '@/lib/wiki';
+import {useEffect} from 'react';
 import styles from './WikiSidebar.module.scss';
-import {Brand} from '@/components/layout/Brand/Brand';
-import {XIcon} from 'lucide-react';
 
 interface WikiSidebarProps {
     categories: Array<{name: WikiCategory; pages: WikiMeta[]}>;
@@ -35,12 +35,12 @@ export function WikiSidebar({categories, onClose}: WikiSidebarProps) {
             </header>
             <nav className={styles.sidebar} aria-label="Wiki navigation">
                 {categories.map(({name, pages}) => (
-                    <div key={name} className={styles.group}>
+                    <div key={name}>
                         <span className={styles.categoryTitle}>{name}</span>
 
                         <ul className={styles.links}>
                             {pages.map((p) => {
-                                const href = `/wiki/${p.slug}/`;
+                                const href = `/wiki/${p.slug}`;
                                 return (
                                     <li key={p.slug}>
                                         <Link

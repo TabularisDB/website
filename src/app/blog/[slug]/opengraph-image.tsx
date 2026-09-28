@@ -51,7 +51,6 @@ export default async function Image({params}: {params: Promise<{slug: string}>})
     if (coverSrc) {
         return new ImageResponse(
             <div style={{display: 'flex', width: '1200px', height: '630px'}}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={coverSrc} alt="" width={1200} height={630} style={{objectFit: 'cover'}} />
             </div>,
             {...size},
@@ -177,7 +176,6 @@ export default async function Image({params}: {params: Promise<{slug: string}>})
                                 border: '1px solid rgba(255,255,255,0.1)',
                             }}
                         >
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img src={logoSrc} width={14} height={14} alt="" style={{objectFit: 'contain'}} />
                         </div>
                     )}
@@ -236,7 +234,6 @@ export default async function Image({params}: {params: Promise<{slug: string}>})
                         }}
                     >
                         {logoSrc && (
-                            // eslint-disable-next-line @next/next/no-img-element
                             <img src={logoSrc} width={100} height={100} alt="" style={{objectFit: 'contain'}} />
                         )}
                     </div>
@@ -438,7 +435,6 @@ export default async function Image({params}: {params: Promise<{slug: string}>})
                                     border: '1px solid rgba(255,255,255,0.1)',
                                 }}
                             >
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img src={logoSrc} width={14} height={14} alt="" style={{objectFit: 'contain'}} />
                             </div>
                         )}
@@ -529,7 +525,6 @@ export default async function Image({params}: {params: Promise<{slug: string}>})
                             alignItems: 'flex-start',
                         }}
                     >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={screenshotSrc} alt="" style={{width: '100%'}} />
                     </div>
                 )}

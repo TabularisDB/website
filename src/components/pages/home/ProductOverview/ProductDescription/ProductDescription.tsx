@@ -2,7 +2,6 @@
 
 import {Lock, PanelsTopLeft} from 'lucide-react';
 import styles from './ProductDescription.module.scss';
-import clsx from 'clsx';
 
 export function ProductDescription() {
     return (

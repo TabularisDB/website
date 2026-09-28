@@ -48,6 +48,7 @@
     gap: 4rem;
     overflow: hidden;
     width: var(--max-width);
+    max-width: 100%;
     margin-inline: auto;
 }
 
@@ -55,6 +56,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+    min-width: 0;
 }
 
 .megaMenuTitle {
@@ -71,6 +73,7 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    min-width: 0;
 
     &:hover strong,
     &.active strong,
@@ -109,11 +112,15 @@
     display: flex;
     flex-direction: column;
     gap: 0.125rem;
+    min-width: 0;
 
     strong {
         font-size: 0.875rem;
         font-weight: 500;
         color: var(--color-text-primary);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
     }
 
     span {
@@ -121,6 +128,14 @@
         line-height: 1.4;
         font-weight: 400;
         color: var(--color-text-secondary);
+    }
+
+    div {
+        width: fit-content;
+        font-size: 0.85rem;
+        font-weight: 500;
+        line-height: 0.9;
+        color: var(--color-accent-teal);
     }
 }
 
