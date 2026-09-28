@@ -12,7 +12,7 @@ import {jetbrainsMono, outfit, urbanist} from './font';
 import './globals.scss';
 
 export const metadata: Metadata = {
-    metadataBase: new URL('https://tabularis.wajrock.me'),
+    metadataBase: new URL('https://tabularis.dev'),
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     icons: {icon: '/img/brand/tabularis-compact.svg'},
