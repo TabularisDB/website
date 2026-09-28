@@ -1,20 +1,20 @@
 ---
-title: "v0.13.2: Notebooks You Can Manage, Query Progress in Real Time, and a Grid That Scrolls"
-date: "2026-06-16T13:01:00"
-release: "v0.13.2"
-tags: ["release", "feature", "notebook", "data-grid", "editor", "mysql", "postgres", "plugin", "community"]
-excerpt: "v0.13.2 turns notebooks into a managed, per-connection workspace with undo and a visual history, streams query progress live while a batch runs, makes wide-table scrolling fluid again, teaches autocomplete to read your clauses across databases, and corrects the numbers in Visual EXPLAIN."
+title: 'v0.13.2: Notebooks You Can Manage, Query Progress in Real Time, and a Grid That Scrolls'
+date: '2026-06-16T13:01:00'
+release: 'v0.13.2'
+tags: ['release', 'feature', 'notebook', 'data-grid', 'editor', 'mysql', 'postgres', 'plugin', 'community']
+excerpt: 'v0.13.2 turns notebooks into a managed, per-connection workspace with undo and a visual history, streams query progress live while a batch runs, makes wide-table scrolling fluid again, teaches autocomplete to read your clauses across databases, and corrects the numbers in Visual EXPLAIN.'
 og:
-  title: "v0.13.2:"
-  accent: "Managed, and live."
-  claim: "Per-connection notebooks with undo and a visual history, a results panel that streams progress while statements run, fluid scrolling on wide tables, clause-aware cross-database autocomplete, and honest Visual EXPLAIN numbers."
-  image: "/img/og/v0132-managed-notebooks.png"
-  cover: "/img/og/v0132-managed-notebooks.png"
+    title: 'v0.13.2:'
+    accent: 'Managed, and live.'
+    claim: 'Per-connection notebooks with undo and a visual history, a results panel that streams progress while statements run, fluid scrolling on wide tables, clause-aware cross-database autocomplete, and honest Visual EXPLAIN numbers.'
+    image: '/img/og/v0132-managed-notebooks.png'
+    cover: '/img/og/v0132-managed-notebooks.png'
 ---
 
 # v0.13.2: Notebooks You Can Manage, Query Progress in Real Time, and a Grid That Scrolls
 
-**v0.13.2** follows [v0.13.1](/blog/v0131-signed-macos-postgres-explain-offset-pagination), which was a correctness pass. This one is about the surfaces you actually live in — the notebook, the results panel, the grid, the editor — and making them feel responsive and *managed* rather than write-once. Notebooks stop being files you save into the dark and become a browsable, undoable workspace; the results panel stops waiting for a whole batch to finish before telling you anything; and the grid stops stuttering when the table is wide.
+**v0.13.2** follows [v0.13.1](/blog/v0131-signed-macos-postgres-explain-offset-pagination), which was a correctness pass. This one is about the surfaces you actually live in — the notebook, the results panel, the grid, the editor — and making them feel responsive and _managed_ rather than write-once. Notebooks stop being files you save into the dark and become a browsable, undoable workspace; the results panel stops waiting for a whole batch to finish before telling you anything; and the grid stops stuttering when the table is wide.
 
 Five external contributors land in this tag.
 
@@ -28,7 +28,7 @@ Notebooks are now stored per connection at `notebooks/<connectionId>/<id>`, with
 
 Editing a notebook is now undoable. Each structural change — adding, removing, reordering, or editing cells — is captured into a timeline, and a **history panel** lets you scrub back through every state and jump to any point, with each entry labeled by what changed. It's the same instinct as undo in the SQL editor, applied to the whole document.
 
-<video src="/videos/posts/tabularis-notebooks-manage.mp4" poster="/videos/posts/tabularis-notebooks-manage.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-notebooks-manage.mp4" poster="/videos/posts/tabularis-notebooks-manage.jpg" autoplay loop muted playsinline ></video>
 
 If you've been treating notebooks as throwaway scratchpads because there was no way to find them again, this is the release that makes them worth keeping.
 
@@ -36,13 +36,13 @@ If you've been treating notebooks as throwaway scratchpads because there was no 
 
 ## Query Progress, In Real Time
 
-Run a multi-statement batch and, until now, the results panel sat blank until the *entire* batch finished — then every result tab and the timing badge appeared at once. For a script where statement 3 of 12 is slow, that's a long stretch of staring at nothing.
+Run a multi-statement batch and, until now, the results panel sat blank until the _entire_ batch finished — then every result tab and the timing badge appeared at once. For a script where statement 3 of 12 is slow, that's a long stretch of staring at nothing.
 
-[@fzlee](https://github.com/fzlee) rebuilt this in PR [#296](https://github.com/TabularisDB/tabularis/pull/296). Each result tab now resolves *progressively* as its statement completes, matched by entry id so rapid back-to-back completions never overwrite each other. The summary badge updates live — succeeded and failed counts accumulate while a spinning count shows how many statements are still running — and the elapsed time ticks up on a live wall-clock timer instead of only appearing at the end. When the batch finishes, the ticking estimate snaps to the precise server-measured total. Under the hood, all three SQL drivers gained progressive result reporting and the editor context grew an `updateResultEntry` that reads the latest state rather than a stale snapshot.
+[@fzlee](https://github.com/fzlee) rebuilt this in PR [#296](https://github.com/TabularisDB/tabularis/pull/296). Each result tab now resolves _progressively_ as its statement completes, matched by entry id so rapid back-to-back completions never overwrite each other. The summary badge updates live — succeeded and failed counts accumulate while a spinning count shows how many statements are still running — and the elapsed time ticks up on a live wall-clock timer instead of only appearing at the end. When the batch finishes, the ticking estimate snaps to the precise server-measured total. Under the hood, all three SQL drivers gained progressive result reporting and the editor context grew an `updateResultEntry` that reads the latest state rather than a stale snapshot.
 
 You now watch a long script work through itself, statement by statement, instead of waiting blind for the whole thing.
 
-<video src="/videos/posts/tabularis-sql-progress.mp4" poster="/videos/posts/tabularis-sql-progress.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-sql-progress.mp4" poster="/videos/posts/tabularis-sql-progress.jpg" autoplay loop muted playsinline ></video>
 
 ---
 
@@ -74,7 +74,7 @@ Two fixes make the Visual EXPLAIN table view tell the truth about row counts and
 
 PR [#302](https://github.com/TabularisDB/tabularis/pull/302) (closes [#298](https://github.com/TabularisDB/tabularis/issues/298)) adds an **Actual Rows** column next to Est. Rows. The MariaDB `ANALYZE FORMAT=JSON` parser already captured actual rows from `r_rows`, but the table view only ever exposed the estimate; the column now renders whenever analyze data is present, on both MariaDB `ANALYZE` and Postgres `EXPLAIN ANALYZE`.
 
-PR [#303](https://github.com/TabularisDB/tabularis/pull/303) (fixes [#300](https://github.com/TabularisDB/tabularis/issues/300)) corrects MySQL `EXPLAIN ANALYZE` timing. MySQL's tree-format output reports `time=first..last` as the *per-loop* timing averaged across all iterations, and the table view displayed that per-loop figure directly — so a node executed many times (an index lookup driven by a join, say) reported a tiny per-iteration cost instead of its real total. The parser now scales the per-loop end time by the loop count, so the displayed time is the node's total wall-clock cost, matching how PostgreSQL's Actual Total Time relates to Actual Loops.
+PR [#303](https://github.com/TabularisDB/tabularis/pull/303) (fixes [#300](https://github.com/TabularisDB/tabularis/issues/300)) corrects MySQL `EXPLAIN ANALYZE` timing. MySQL's tree-format output reports `time=first..last` as the _per-loop_ timing averaged across all iterations, and the table view displayed that per-loop figure directly — so a node executed many times (an index lookup driven by a join, say) reported a tiny per-iteration cost instead of its real total. The parser now scales the per-loop end time by the loop count, so the displayed time is the node's total wall-clock cost, matching how PostgreSQL's Actual Total Time relates to Actual Loops.
 
 ---
 

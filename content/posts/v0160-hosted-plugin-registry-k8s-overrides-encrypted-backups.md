@@ -1,21 +1,21 @@
 ---
-title: "v0.16.0: A Hosted Plugin Registry, Kubernetes Your Way, and Backups That Encrypt Themselves"
-date: "2026-07-21T11:00:00"
-release: "v0.16.0"
-tags: ["release", "feature", "bugfix", "plugin", "community", "connections", "mysql", "security", "ui", "ux"]
-excerpt: "v0.16.0 gives the plugin ecosystem real infrastructure: a hosted registry at registry.tabularis.dev, a searchable driver catalogue inside New Connection, and one-click deep-link installs — plus kubectl/kubeconfig overrides for Kubernetes tunnels, automatic encrypted connection backups to a folder or WebDAV, run-statement-at-cursor in the editor, AWS RDS IAM authentication for MySQL, and Elasticsearch and Cloudflare D1 drivers."
+title: 'v0.16.0: A Hosted Plugin Registry, Kubernetes Your Way, and Backups That Encrypt Themselves'
+date: '2026-07-21T11:00:00'
+release: 'v0.16.0'
+tags: ['release', 'feature', 'bugfix', 'plugin', 'community', 'connections', 'mysql', 'security', 'ui', 'ux']
+excerpt: 'v0.16.0 gives the plugin ecosystem real infrastructure: a hosted registry at registry.tabularis.dev, a searchable driver catalogue inside New Connection, and one-click deep-link installs — plus kubectl/kubeconfig overrides for Kubernetes tunnels, automatic encrypted connection backups to a folder or WebDAV, run-statement-at-cursor in the editor, AWS RDS IAM authentication for MySQL, and Elasticsearch and Cloudflare D1 drivers.'
 og:
-  template: "screenshot-split"
-  title: "Plugins, hosted."
-  accent: "Catalogue. Deep links. Registry."
-  claim: "A hosted plugin registry with a searchable driver catalogue and one-click installs, kubectl and kubeconfig overrides for Kubernetes, automatic encrypted backups, run-at-cursor, and AWS RDS IAM auth for MySQL."
-  image: "/img/tabularis-connection-catalogue.png"
-  appLabel: "tabularis"
+    template: 'screenshot-split'
+    title: 'Plugins, hosted.'
+    accent: 'Catalogue. Deep links. Registry.'
+    claim: 'A hosted plugin registry with a searchable driver catalogue and one-click installs, kubectl and kubeconfig overrides for Kubernetes, automatic encrypted backups, run-at-cursor, and AWS RDS IAM auth for MySQL.'
+    image: '/img/tabularis-connection-catalogue.png'
+    appLabel: 'tabularis'
 ---
 
 # v0.16.0: A Hosted Plugin Registry, Kubernetes Your Way, and Backups That Encrypt Themselves
 
-**v0.16.0** follows [v0.15.0](/blog/v0150-import-connections-nested-groups-encrypted-exports) and is the release where the plugin ecosystem stops being a JSON file in a git repo and becomes infrastructure: a hosted registry, a searchable driver catalogue built into the New Connection flow, one-click installs from a browser link, and two new community drivers — Elasticsearch and Cloudflare D1 — to install through it. Around that core: Kubernetes tunnels learn to use *your* kubectl and *your* kubeconfig, connections back themselves up encrypted to a folder or a WebDAV server, the SQL editor runs the statement under your cursor, and MySQL connections can authenticate against AWS RDS with IAM.
+**v0.16.0** follows [v0.15.0](/blog/v0150-import-connections-nested-groups-encrypted-exports) and is the release where the plugin ecosystem stops being a JSON file in a git repo and becomes infrastructure: a hosted registry, a searchable driver catalogue built into the New Connection flow, one-click installs from a browser link, and two new community drivers — Elasticsearch and Cloudflare D1 — to install through it. Around that core: Kubernetes tunnels learn to use _your_ kubectl and _your_ kubeconfig, connections back themselves up encrypted to a folder or a WebDAV server, the SQL editor runs the statement under your cursor, and MySQL connections can authenticate against AWS RDS with IAM.
 
 ---
 
@@ -30,7 +30,7 @@ Until now, discovering a Tabularis plugin meant knowing it existed: the registry
 
 The weeks after the merge hardened the transition paths: installed plugins that drop out of the hosted listing stay updatable instead of silently losing their update button, legacy `manifest.json` bundles install and list again, legacy-only plugins no longer link to a 404 on the API, and the Installed tab finally has an **Update** button next to the plugin it's telling you to update.
 
-<video src="/videos/posts/tabularis-connection-catalogue.mp4" poster="/videos/posts/tabularis-connection-catalogue.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-connection-catalogue.mp4" poster="/videos/posts/tabularis-connection-catalogue.jpg" autoplay loop muted playsinline ></video>
 
 ---
 
@@ -52,19 +52,19 @@ Tabularis's Kubernetes port-forwarding always used whatever `kubectl` was first 
 
 ![The Advanced kubectl settings section of a saved Kubernetes tunnel, with kubectl and kubeconfig path overrides validated inline](/img/tabularis-k8s-advanced-settings.png)
 
-The override paths are validated *before* they're used: an on-blur preflight checks that the pair actually works, incomplete pairs are refused before apply, and cancelling the modal cancels the validation instead of letting it land on a closed form. Tunnel cache keys now include the overrides, so two connections pointing at the same host through different kubeconfigs no longer collide on the same cached tunnel. The new settings are translated across all supported locales.
+The override paths are validated _before_ they're used: an on-blur preflight checks that the pair actually works, incomplete pairs are refused before apply, and cancelling the modal cancels the validation instead of letting it land on a closed form. Tunnel cache keys now include the overrides, so two connections pointing at the same host through different kubeconfigs no longer collide on the same cached tunnel. The new settings are translated across all supported locales.
 
 ---
 
 ## Backups That Take Themselves
 
-v0.15.0 gave connection exports proper encryption. v0.16.0 makes them automatic. PR [#470](https://github.com/TabularisDB/tabularis/pull/470), from [@pokertour](https://github.com/pokertour), adds a dedicated **Backup** tab in Settings that periodically writes an encrypted export of your connections — same **AES-256-GCM** / **Argon2id** envelope as the manual export, and deliberately *only* that: plaintext automatic backups are not an option.
+v0.15.0 gave connection exports proper encryption. v0.16.0 makes them automatic. PR [#470](https://github.com/TabularisDB/tabularis/pull/470), from [@pokertour](https://github.com/pokertour), adds a dedicated **Backup** tab in Settings that periodically writes an encrypted export of your connections — same **AES-256-GCM** / **Argon2id** envelope as the manual export, and deliberately _only_ that: plaintext automatic backups are not an option.
 
 - **Triggers**: manual, on an interval (6h/12h/daily/weekly presets or a custom value, with the next run time shown), on app launch, or on app close — the exit backup is bounded by a timeout so the app can always quit.
 - **Destinations**: a local folder, or a **WebDAV** collection (Nextcloud and friends). Rotation honors your retention count and only ever touches `tabularis-backup-*.json` files, so it can't eat anything else living in the same directory.
 - **Secrets stay in the keychain.** The encryption password and the WebDAV credentials live in the OS keychain, never in `config.json`, and the scheduler re-reads its config every minute so settings changes apply without a restart.
 
-<video src="/videos/posts/tabularis-backup-settings.mp4" poster="/videos/posts/tabularis-backup-settings.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-backup-settings.mp4" poster="/videos/posts/tabularis-backup-settings.jpg" autoplay loop muted playsinline ></video>
 
 :::newsletter:::
 
@@ -72,13 +72,13 @@ v0.15.0 gave connection exports proper encryption. v0.16.0 makes them automatic.
 
 ## Run the Statement Under Your Cursor
 
-The single most-used editor action got the [TablePlus](/compare/tableplus-alternative) treatment. PR [#464](https://github.com/TabularisDB/tabularis/pull/464), from [@maximumbreak](https://github.com/maximumbreak), makes **Cmd/Ctrl+Enter** run the SQL statement the cursor is *inside* when nothing is selected — no more whole-file execution or a "pick a statement" popup. A subtle highlight shows which statement is armed, Explain follows the same rule, and **Run All** moves to Cmd/Ctrl+Shift+Enter with a dedicated entry at the top of the Run dropdown. Selecting text still runs exactly the selection.
+The single most-used editor action got the [TablePlus](/compare/tableplus-alternative) treatment. PR [#464](https://github.com/TabularisDB/tabularis/pull/464), from [@maximumbreak](https://github.com/maximumbreak), makes **Cmd/Ctrl+Enter** run the SQL statement the cursor is _inside_ when nothing is selected — no more whole-file execution or a "pick a statement" popup. A subtle highlight shows which statement is armed, Explain follows the same rule, and **Run All** moves to Cmd/Ctrl+Shift+Enter with a dedicated entry at the top of the Run dropdown. Selecting text still runs exactly the selection.
 
 Making back-to-back statement runs easy exposed two long-standing result bugs, fixed in the same PR: an in-flight column-metadata fetch could resolve late and stamp the wrong table's primary key onto the current result, and pagination or post-edit refresh re-sent the whole editor buffer — which PostgreSQL rejects as "multiple commands in a prepared statement" once the buffer holds more than one. Both paths now track the exact last-run statement per tab, and stale async responses detect themselves and drop out.
 
-And if you *liked* the old picker: [@GabrielMalava](https://github.com/GabrielMalava) added a **Query Execution** toggle in Settings → General in PR [#487](https://github.com/TabularisDB/tabularis/pull/487) — running the statement under the cursor stays the default, but switching it off brings back the query-selection dialog for multi-statement scripts.
+And if you _liked_ the old picker: [@GabrielMalava](https://github.com/GabrielMalava) added a **Query Execution** toggle in Settings → General in PR [#487](https://github.com/TabularisDB/tabularis/pull/487) — running the statement under the cursor stays the default, but switching it off brings back the query-selection dialog for multi-statement scripts.
 
-<video src="/videos/posts/tabularis-run-at-cursor.mp4" poster="/videos/posts/tabularis-run-at-cursor.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-run-at-cursor.mp4" poster="/videos/posts/tabularis-run-at-cursor.jpg" autoplay loop muted playsinline ></video>
 
 ---
 

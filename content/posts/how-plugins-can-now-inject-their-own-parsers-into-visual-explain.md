@@ -1,30 +1,30 @@
 ---
-title: "How plugins can now inject their own parsers into Visual EXPLAIN"
-date: "2026-09-04T18:30:00"
-authors: ["debba"]
-tags: ["explain", "sql-server", "plugins", "architecture", "typescript", "rust", "extensibility"]
-excerpt: "explain.tabularis.dev now reads SQL Server plans, and the parser does not live in the core. This is how @tabularis/explain got a parser registry, how a driver plugin ships its own parser as a bundle the app loads at runtime, and why the SQL Server plugin finally lands next week."
+title: 'How plugins can now inject their own parsers into Visual EXPLAIN'
+date: '2026-09-04T18:30:00'
+authors: ['debba']
+tags: ['explain', 'sql-server', 'plugins', 'architecture', 'typescript', 'rust', 'extensibility']
+excerpt: 'explain.tabularis.dev now reads SQL Server plans, and the parser does not live in the core. This is how @tabularis/explain got a parser registry, how a driver plugin ships its own parser as a bundle the app loads at runtime, and why the SQL Server plugin finally lands next week.'
 og:
-  template: "code-terminal"
-  title: "How plugins can now inject"
-  accent: "their own parsers into Visual EXPLAIN."
-  claim: "A driver plugin returns raw plan output and ships its own TypeScript parser. The desktop app and explain.tabularis.dev load the same bundle. Visual EXPLAIN gained a registry and nothing else."
-  image: "/videos/posts/explain-sqlserver.jpg"
-  codeTitle: "explain.tabularis.dev · sqlserver"
-  codeLines:
-    - "SET STATISTICS XML ON;"
-    - "SELECT c.name, SUM(o.total) FROM dbo.orders o"
-    - "  JOIN dbo.customers c ON c.id = o.customer_id"
-    - "  GROUP BY c.name;"
-    - '<ShowPlanXML Version="1.564" Build="16.0.4">'
-    - "engine: sqlserver · format: sqlserver-showplan-xml"
+    template: 'code-terminal'
+    title: 'How plugins can now inject'
+    accent: 'their own parsers into Visual EXPLAIN.'
+    claim: 'A driver plugin returns raw plan output and ships its own TypeScript parser. The desktop app and explain.tabularis.dev load the same bundle. Visual EXPLAIN gained a registry and nothing else.'
+    image: '/videos/posts/explain-sqlserver.jpg'
+    codeTitle: 'explain.tabularis.dev · sqlserver'
+    codeLines:
+        - 'SET STATISTICS XML ON;'
+        - 'SELECT c.name, SUM(o.total) FROM dbo.orders o'
+        - '  JOIN dbo.customers c ON c.id = o.customer_id'
+        - '  GROUP BY c.name;'
+        - '<ShowPlanXML Version="1.564" Build="16.0.4">'
+        - 'engine: sqlserver · format: sqlserver-showplan-xml'
 ---
 
 # How plugins can now inject their own parsers into Visual EXPLAIN
 
 This week <a href="https://explain.tabularis.dev" target="_blank" rel="noopener noreferrer">explain.tabularis.dev</a> understands SQL Server. You run your query with `SET STATISTICS XML ON`, or `SET SHOWPLAN_XML ON` if you only want the estimated plan, copy the XML that comes back and paste it into the page. The plan opens as the same interactive graph, diagram, table and stats views that PostgreSQL, MySQL and SQLite plans have had since July. Everything runs in the browser and nothing is uploaded.
 
-<video class="video-borderless" src="/videos/posts/explain-sqlserver.mp4" poster="/videos/posts/explain-sqlserver.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video class="video-borderless" src="/videos/posts/explain-sqlserver.mp4" poster="/videos/posts/explain-sqlserver.jpg" autoplay loop muted playsinline ></video>
 
 The operator tree is what you would expect from a SHOWPLAN: Table Scan, Index Seek, Clustered Index Seek, Nested Loops, Hash Match, Sort, Top, Compute Scalar, Parallelism. For actual plans you also get estimated versus actual rows per operator, the number of executions on the inner side of a join, and the self time and cumulative cost that make the hot branch stand out. Pasted XML is pretty-printed and highlighted, since SQL Server hands it to you as a single very long line.
 
@@ -48,11 +48,11 @@ The first is <a href="https://github.com/TabularisDB/tabularis/commit/f64db40e" 
 
 ```ts
 export interface RegisteredExplainParser {
-  readonly engine: string;
-  readonly format: string;
-  readonly label?: string;
-  parse(payload: string): ExplainPlan;
-  sniff?(payload: string): boolean;
+    readonly engine: string;
+    readonly format: string;
+    readonly label?: string;
+    parse(payload: string): ExplainPlan;
+    sniff?(payload: string): boolean;
 }
 
 export function registerExplainParser(parser: RegisteredExplainParser): void;

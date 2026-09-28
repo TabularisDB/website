@@ -1,21 +1,21 @@
 ---
-title: "v0.18.0: Users and Privileges, a Connection Test That Tells You Where It Failed, and a Data Grid You Can Actually Select"
-date: "2026-08-03T18:00:00"
-release: "v0.18.0"
-tags: ["release", "feature", "bugfix", "mysql", "postgres", "sqlite", "ui", "ux", "data-grid", "plugin", "community"]
-excerpt: "v0.18.0 adds MySQL/MariaDB user and privilege management, rebuilds the connection modal around a real SSH test with classified errors and a step-by-step diagnostics log, lets a connection browse every database without picking any, gives the data grid keyboard navigation and honest copy scopes, exports the ER diagram as Mermaid or DBML, and teaches PostgreSQL to edit hstore and render expression indexes."
+title: 'v0.18.0: Users and Privileges, a Connection Test That Tells You Where It Failed, and a Data Grid You Can Actually Select'
+date: '2026-08-03T18:00:00'
+release: 'v0.18.0'
+tags: ['release', 'feature', 'bugfix', 'mysql', 'postgres', 'sqlite', 'ui', 'ux', 'data-grid', 'plugin', 'community']
+excerpt: 'v0.18.0 adds MySQL/MariaDB user and privilege management, rebuilds the connection modal around a real SSH test with classified errors and a step-by-step diagnostics log, lets a connection browse every database without picking any, gives the data grid keyboard navigation and honest copy scopes, exports the ER diagram as Mermaid or DBML, and teaches PostgreSQL to edit hstore and render expression indexes.'
 og:
-  template: "screenshot-split"
-  title: "v0.18.0:"
-  accent: "Grant. Diagnose. Select."
-  claim: "MySQL/MariaDB user and privilege management, an SSH-aware connection test with a diagnostics log, all-databases mode, grid keyboard navigation with honest copy scopes, and ER diagram export to Mermaid and DBML."
-  image: "/img/tabularis-user-management.png"
-  appLabel: "tabularis"
+    template: 'screenshot-split'
+    title: 'v0.18.0:'
+    accent: 'Grant. Diagnose. Select.'
+    claim: 'MySQL/MariaDB user and privilege management, an SSH-aware connection test with a diagnostics log, all-databases mode, grid keyboard navigation with honest copy scopes, and ER diagram export to Mermaid and DBML.'
+    image: '/img/tabularis-user-management.png'
+    appLabel: 'tabularis'
 ---
 
 # v0.18.0: Users and Privileges, a Connection Test That Tells You Where It Failed, and a Data Grid You Can Actually Select
 
-**v0.18.0** follows [v0.17.0](/blog/v0170-visual-explain-diagnostics-row-editor-sidebar-sql-formatting) and moves the attention from *reading* a database to *administering* and *reaching* one. The headline is a full Users & Privileges view for MySQL and MariaDB — list accounts, create them, edit grants scope by scope — contributed from outside the core team. Around it, the connection modal stops failing with one truncated red line: it tests the SSH tunnel on its own, classifies what went wrong, streams the steps as they run, and hands you a copyable diagnostics report. A connection can now be saved with no database selected at all and browse whatever the server has. The data grid gains arrow-key navigation, discoverable select-all, and copy actions that are explicit about whether they cover the page or the whole result. The ER diagram exports to Mermaid and DBML and stops stacking wide tables on top of each other. And PostgreSQL learns to write `hstore` back.
+**v0.18.0** follows [v0.17.0](/blog/v0170-visual-explain-diagnostics-row-editor-sidebar-sql-formatting) and moves the attention from _reading_ a database to _administering_ and _reaching_ one. The headline is a full Users & Privileges view for MySQL and MariaDB — list accounts, create them, edit grants scope by scope — contributed from outside the core team. Around it, the connection modal stops failing with one truncated red line: it tests the SSH tunnel on its own, classifies what went wrong, streams the steps as they run, and hands you a copyable diagnostics report. A connection can now be saved with no database selected at all and browse whatever the server has. The data grid gains arrow-key navigation, discoverable select-all, and copy actions that are explicit about whether they cover the page or the whole result. The ER diagram exports to Mermaid and DBML and stops stacking wide tables on top of each other. And PostgreSQL learns to write `hstore` back.
 
 ---
 
@@ -28,7 +28,7 @@ Tabularis could read your schema in detail and tell you nothing about who was al
 - **The privilege editor** renders one card per scope — global, database, table — with checkboxes reflecting the parsed output of `SHOW GRANTS`. Checking grants, unchecking revokes, and the editor revokes before granting so narrowing `ALL PRIVILEGES` down to a subset actually works.
 - **Nothing is hidden.** Grants the editor can't model — roles, column-level privileges, proxy grants — are kept and shown as the raw `SHOW GRANTS` output, so the UI never implies a privilege set it isn't representing.
 
-<video src="/videos/posts/tabularis-user-management-grant.mp4" poster="/videos/posts/tabularis-user-management-grant.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-user-management-grant.mp4" poster="/videos/posts/tabularis-user-management-grant.jpg" autoplay loop muted playsinline ></video>
 
 The SQL builders validate every privilege against a per-scope allow-list and escape literals according to the server's `sql_mode`; builders and the grant parser are unit-tested. Just as importantly, the design is extensible rather than MySQL-shaped: the privilege catalog comes from the driver, and all seven trait methods are forwarded over JSON-RPC, so an external plugin can opt in via `capabilities.userManagement`. PostgreSQL support is the planned follow-up.
 
@@ -38,12 +38,12 @@ The SQL builders validate every privilege against a per-scope allow-list and esc
 
 Connecting through a tunnel used to fail in the least useful way possible: one truncated red line in the modal footer, no indication whether the SSH hop, the port-forward or the database handshake was the thing that broke, and a 3-second auto-reset that raced you while you were still reading it. PR [#570](https://github.com/TabularisDB/tabularis/pull/570) rebuilds that whole path.
 
-- **Test SSH, on its own.** A dedicated button in the SSH tab verifies host, credentials and tunnel without touching the database. The success state invalidates the moment you edit any SSH field, and a **Stop** button abandons a test that hangs. For a saved connection whose SSH secrets live in the keychain under the *database* connection id, the test resolves them correctly — unless you've edited the password field, in which case it tests exactly what you typed.
+- **Test SSH, on its own.** A dedicated button in the SSH tab verifies host, credentials and tunnel without touching the database. The success state invalidates the moment you edit any SSH field, and a **Stop** button abandons a test that hangs. For a saved connection whose SSH secrets live in the keychain under the _database_ connection id, the test resolves them correctly — unless you've edited the password field, in which case it tests exactly what you typed.
 - **Errors get a category.** A new classifier maps raw backend strings onto `ssh-auth`, `ssh-unreachable`, `ssh`, `db-auth`, `network` and `db-not-found`, each with a translated summary and an actionable recovery hint. Credentials embedded in raw error text are redacted. With a tunnel active, "connection refused" is attributed to the tunnel rather than blamed on the database host — which is the single most common misdiagnosis in this whole flow.
-- **The steps stream live.** `test_connection` now emits progress events — `sshTunnel` → `k8sForward` → `dbConnect`, with start/ok/error per step and a per-run id so a superseded run's late events are discarded. The footer shows the current step, so a hanging test tells you *where* it hangs instead of just spinning.
+- **The steps stream live.** `test_connection` now emits progress events — `sshTunnel` → `k8sForward` → `dbConnect`, with start/ok/error per step and a per-run id so a superseded run's late events are discarded. The footer shows the current step, so a hanging test tells you _where_ it hangs instead of just spinning.
 - **A diagnostics modal** opens on failure or on Stop: classified summary, recovery hint, timestamped step log, sanitized raw error, and a copy-to-clipboard report worth pasting into an issue. A "Show log" link reopens it.
 
-<video src="/videos/posts/tabularis-connection-diagnostics.mp4" poster="/videos/posts/tabularis-connection-diagnostics.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-connection-diagnostics.mp4" poster="/videos/posts/tabularis-connection-diagnostics.jpg" autoplay loop muted playsinline ></video>
 
 All new strings are translated across the eleven supported locales.
 
@@ -57,7 +57,7 @@ Until now a multi-database connection had to name its databases up front, and ev
 
 An all-databases connection persists an empty `database` param and resolves the real list at connect time through `get_available_databases`. New databases appear on their own, dropped ones disappear, and the sidebar refresh button re-syncs without persisting anything, toasting what was added and removed. Narrowing to a subset from the sidebar's manage popover persists that choice and exits the mode. Pasting a connection URI with no database in it switches to all-databases mode automatically.
 
-Two smaller consequences worth naming. Editing an all-databases connection no longer auto-fetches the database list when the dialog opens — which could silently spawn an SSH or Kubernetes tunnel just because you clicked *Edit*. And the seven scattered `selectedDatabases.length > 1` checks that decided whether to show the multi-database layout are replaced by one shared helper keyed on "is there a runtime selection at all", so a connection with a single database still issues database-qualified queries — it has no default schema — and a multi-database connection narrowed to one database keeps its tree and manage button instead of losing them.
+Two smaller consequences worth naming. Editing an all-databases connection no longer auto-fetches the database list when the dialog opens — which could silently spawn an SSH or Kubernetes tunnel just because you clicked _Edit_. And the seven scattered `selectedDatabases.length > 1` checks that decided whether to show the multi-database layout are replaced by one shared helper keyed on "is there a runtime selection at all", so a connection with a single database still issues database-qualified queries — it has no default schema — and a multi-database connection narrowed to one database keeps its tree and manage button instead of losing them.
 
 :::newsletter:::
 
@@ -71,7 +71,7 @@ Three pieces landed here, and together they change how the grid feels under the 
 
 **Selection extends past whole rows.** The same PR adds [DBeaver-style](/compare/dbeaver-alternative) **multi-column selection** — Cmd/Ctrl+click a header to toggle, Shift+click to range-select, plain click still sorts — and **cell range selection** via Shift+click, which highlights a rectangle and offers a **Copy Range (R×C)** entry. Row, column and cell-range selections are mutually exclusive, so what Cmd/Ctrl+C copies is never ambiguous.
 
-<video src="/videos/posts/tabularis-grid-selection.mp4" poster="/videos/posts/tabularis-grid-selection.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-grid-selection.mp4" poster="/videos/posts/tabularis-grid-selection.jpg" autoplay loop muted playsinline ></video>
 
 **Arrow keys move the focused cell** ([@ymadd](https://github.com/ymadd), PR [#552](https://github.com/TabularisDB/tabularis/pull/552), closes [#551](https://github.com/TabularisDB/tabularis/issues/551)). The grid has tracked a focused cell for a while, but only a click could ever move it. Now the arrow keys move one cell clamped at the edges, `Home`/`End` jump to the first and last column of the row, `PageUp`/`PageDown` move a viewport of rows, and `Enter`/`F2` open the focused cell for editing through the same path as a double-click. The first keypress in a grid with no focused cell enters at the top-left. The handler is bound to the scroll container rather than to `document` — otherwise every mounted grid in a notebook would move at once — and keys are left alone for anything that handles them itself: text inputs, the FK and BLOB buttons inside cells, and the sortable column headers.
 
@@ -83,7 +83,7 @@ With no selection, Run and Cmd/Ctrl+Enter execute only the statement under the c
 
 PR [#532](https://github.com/TabularisDB/tabularis/pull/532) labels the button with its actual target: **Run Selection** when text is selected, **Run Statement** when the buffer holds several statements and nothing is selected, plain **Run** otherwise. Behaviour is untouched — this only makes it visible before you commit to it. And when the button would run one statement out of several, the tooltip surfaces `Run All (Cmd/Ctrl+Shift+Enter)`, a shortcut that was already bound and mentioned nowhere. The decision lives in one pure function, `resolveRunTarget`, so the label can't drift from the behaviour it describes.
 
-<video src="/videos/posts/tabularis-run-target-label.mp4" poster="/videos/posts/tabularis-run-target-label.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-run-target-label.mp4" poster="/videos/posts/tabularis-run-target-label.jpg" autoplay loop muted playsinline ></video>
 
 ---
 
@@ -93,17 +93,17 @@ PR [#517](https://github.com/TabularisDB/tabularis/pull/517), from [@maximumbrea
 
 A follow-up fix renders editor panes in a stable order, so a reorder can't shuffle which pane is which.
 
-<video src="/videos/posts/tabularis-reorder-tabs.mp4" poster="/videos/posts/tabularis-reorder-tabs.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-reorder-tabs.mp4" poster="/videos/posts/tabularis-reorder-tabs.jpg" autoplay loop muted playsinline ></video>
 
 ---
 
 ## The ER Diagram Exports, and Stops Overlapping
 
-**Export to Mermaid or DBML** ([@gcapellib](https://github.com/gcapellib), PR [#521](https://github.com/TabularisDB/tabularis/pull/521)) — the ER diagram had no export at all. An **Export** button now generates two text formats from the schema data already in memory, no new dependency. Mermaid (`erDiagram`) renders natively on GitHub, GitLab and most docs tools, so the output pastes straight into a README, at the cost of entity-level relationships where the FK column is only a label. DBML keeps relationships at column level (`Ref: orders.client_id > clients.id`) and round-trips through dbdiagram.io and `dbml-to-sql`, with composite primary keys expressed via an `Indexes` block. The same PR fixes a permissions bug that made *every* permission-gated call fail in the ER diagram window: the capability allow-list named the literal window `er-diagram`, while the window is actually created as `er-diagram:{connectionId}:{database}:{schema}`.
+**Export to Mermaid or DBML** ([@gcapellib](https://github.com/gcapellib), PR [#521](https://github.com/TabularisDB/tabularis/pull/521)) — the ER diagram had no export at all. An **Export** button now generates two text formats from the schema data already in memory, no new dependency. Mermaid (`erDiagram`) renders natively on GitHub, GitLab and most docs tools, so the output pastes straight into a README, at the cost of entity-level relationships where the FK column is only a label. DBML keeps relationships at column level (`Ref: orders.client_id > clients.id`) and round-trips through dbdiagram.io and `dbml-to-sql`, with composite primary keys expressed via an `Indexes` block. The same PR fixes a permissions bug that made _every_ permission-gated call fail in the ER diagram window: the capability allow-list named the literal window `er-diagram`, while the window is actually created as `er-diagram:{connectionId}:{database}:{schema}`.
 
 ![The ER diagram with the Export menu open on Mermaid and DBML, over a laid-out schema where the orders table's wide enum column no longer overlaps its neighbours](/img/tabularis-er-export-menu.png)
 
-**Nodes stop landing on top of each other** (PR [#558](https://github.com/TabularisDB/tabularis/pull/558)) — the dagre layout was fed a fixed 240px width for every node, but the table node only has a *minimum* width and grows with its content, so a table with a wide `enum(...)` column overlapped its neighbours. Node width and height are now estimated from the actual content, the real width is used when centering, and node separation gets a little more room. The same PR adds a lock toggle for pinning a node where you dragged it.
+**Nodes stop landing on top of each other** (PR [#558](https://github.com/TabularisDB/tabularis/pull/558)) — the dagre layout was fed a fixed 240px width for every node, but the table node only has a _minimum_ width and grows with its content, so a table with a wide `enum(...)` column overlapped its neighbours. Node width and height are now estimated from the actual content, the real width is used when centering, and node separation gets a little more room. The same PR adds a lock toggle for pinning a node where you dragged it.
 
 ---
 
@@ -111,7 +111,7 @@ A follow-up fix renders editor panes in a stable order, so a reorder can't shuff
 
 Four PostgreSQL fixes land this cycle, three of them from outside the core team.
 
-**`hstore` columns are editable** ([@arturbent0](https://github.com/arturbent0), PR [#427](https://github.com/TabularisDB/tabularis/pull/427), closes [#395](https://github.com/TabularisDB/tabularis/issues/395)) — reading worked, writing failed with *"Cannot bind a JSON object to a non-JSON column"*, because `hstore` has no fixed OID and `information_schema` reports it as a generic `USER-DEFINED`. The driver now resolves the real per-column `hstore` OID through `pg_type` before binding and binds JSON objects as a string map, which the client encodes natively. `udt_name` is exposed on the column metadata so the frontend can identify `hstore` precisely — `data_type` can't, since every extension type shares it — and `hstore` columns route through the JSON editor in the row-editor sidebar. As a bonus, the inline cell editor stops showing `[object Object]` for any object-valued cell.
+**`hstore` columns are editable** ([@arturbent0](https://github.com/arturbent0), PR [#427](https://github.com/TabularisDB/tabularis/pull/427), closes [#395](https://github.com/TabularisDB/tabularis/issues/395)) — reading worked, writing failed with _"Cannot bind a JSON object to a non-JSON column"_, because `hstore` has no fixed OID and `information_schema` reports it as a generic `USER-DEFINED`. The driver now resolves the real per-column `hstore` OID through `pg_type` before binding and binds JSON objects as a string map, which the client encodes natively. `udt_name` is exposed on the column metadata so the frontend can identify `hstore` precisely — `data_type` can't, since every extension type shares it — and `hstore` columns route through the JSON editor in the row-editor sidebar. As a bonus, the inline cell editor stops showing `[object Object]` for any object-valued cell.
 
 ![An hstore column open in the row-editor sidebar's JSON editor, labelled hstore, with its key/value pairs formatted and validated](/img/tabularis-hstore-editor.png)
 
@@ -159,7 +159,7 @@ Install it from the connection catalogue when creating a new connection; it requ
 
 - **MariaDB temporal tables appear in the tree** ([@gustavomelo-dotgroup](https://github.com/gustavomelo-dotgroup), PR [#568](https://github.com/TabularisDB/tabularis/pull/568)) — the MySQL driver filtered `information_schema.tables` on `table_type = 'BASE TABLE'`, but MariaDB reports tables created `WITH SYSTEM VERSIONING` as `SYSTEM VERSIONED`. They were silently excluded from the explorer with no error anywhere, making it look like the tables didn't exist. Both types are now accepted.
 - **Raw connection URIs reach plugin drivers** ([@Robbyfuu](https://github.com/Robbyfuu), PR [#495](https://github.com/TabularisDB/tabularis/pull/495), closes [#494](https://github.com/TabularisDB/tabularis/issues/494)) — pasting a real MongoDB Atlas connection string failed on the import path, starting with the protocol being rejected outright because the protocol registry only derived protocols from two per-driver sources. Plugin drivers now receive the URI as given, `mongodb+srv://` included.
-- **Array cells open the JSON editor** ([@Davydhh](https://github.com/Davydhh), PR [#489](https://github.com/TabularisDB/tabularis/pull/489)) — double-clicking a `text[]` or `uuid[]` cell opened the inline textarea, which renders `String(array)` and crams the values into a comma-joined string in a 120px box. Array cells already *rendered* as JSON; now they edit that way too, in the same dedicated viewer window `json`/`jsonb` columns use.
+- **Array cells open the JSON editor** ([@Davydhh](https://github.com/Davydhh), PR [#489](https://github.com/TabularisDB/tabularis/pull/489)) — double-clicking a `text[]` or `uuid[]` cell opened the inline textarea, which renders `String(array)` and crams the values into a comma-joined string in a 120px box. Array cells already _rendered_ as JSON; now they edit that way too, in the same dedicated viewer window `json`/`jsonb` columns use.
 - **DML submits against the right schema** ([@DhruvShah-Dev](https://github.com/DhruvShah-Dev), PR [#542](https://github.com/TabularisDB/tabularis/pull/542)) — inserts, updates and deletes now use the table tab's schema on schema-capable drivers, while multi-database drivers keep receiving the tab value as the database.
 - **The connection modal keeps a stable height** ([@DhruvShah-Dev](https://github.com/DhruvShah-Dev), PR [#538](https://github.com/TabularisDB/tabularis/pull/538), fixes [#462](https://github.com/TabularisDB/tabularis/issues/462)) — the dialog is bounded to the viewport and driver-specific form content scrolls inside it, so switching between MySQL, PostgreSQL and SQLite no longer resizes the whole modal under your cursor.
 - **Sidebar accordion actions stop crowding the scrollbar** ([@DhruvShah-Dev](https://github.com/DhruvShah-Dev), PR [#539](https://github.com/TabularisDB/tabularis/pull/539), fixes [#310](https://github.com/TabularisDB/tabularis/issues/310)) — section headers reserve a padded action lane, so long titles truncate instead of squeezing the refresh and add buttons.

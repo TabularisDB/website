@@ -1,33 +1,33 @@
 ---
-title: "v0.15.0: Bring Your Connections With You — Imports, Nested Groups, and Encrypted Exports"
-date: "2026-07-14T11:00:00"
-release: "v0.15.0"
-tags: ["release", "feature", "bugfix", "connections", "security", "postgres", "mysql", "ui", "ux", "community"]
-excerpt: "v0.15.0 is the connections release: import saved connections from DBeaver, Beekeeper Studio, TablePlus, DataGrip and Sequel Ace, organize them in nested folders, act on many at once, and export them encrypted — plus ENUM dropdown editing on MySQL and PostgreSQL, an MCP safety fix for EXPLAIN ANALYZE, and Windows that finally stops flashing console windows."
+title: 'v0.15.0: Bring Your Connections With You — Imports, Nested Groups, and Encrypted Exports'
+date: '2026-07-14T11:00:00'
+release: 'v0.15.0'
+tags: ['release', 'feature', 'bugfix', 'connections', 'security', 'postgres', 'mysql', 'ui', 'ux', 'community']
+excerpt: 'v0.15.0 is the connections release: import saved connections from DBeaver, Beekeeper Studio, TablePlus, DataGrip and Sequel Ace, organize them in nested folders, act on many at once, and export them encrypted — plus ENUM dropdown editing on MySQL and PostgreSQL, an MCP safety fix for EXPLAIN ANALYZE, and Windows that finally stops flashing console windows.'
 og:
-  template: "screenshot-split"
-  title: "Import from anywhere."
-  accent: "Nested folders. Encrypted exports."
-  claim: "Import connections from DBeaver, Beekeeper, TablePlus, DataGrip and Sequel Ace; organize them in nested groups; select many at once; export them AES-encrypted — plus ENUM dropdowns and a Tagalog UI."
-  image: "/img/tabularis-connection-manager.png"
-  appLabel: "tabularis"
+    template: 'screenshot-split'
+    title: 'Import from anywhere.'
+    accent: 'Nested folders. Encrypted exports.'
+    claim: 'Import connections from DBeaver, Beekeeper, TablePlus, DataGrip and Sequel Ace; organize them in nested groups; select many at once; export them AES-encrypted — plus ENUM dropdowns and a Tagalog UI.'
+    image: '/img/tabularis-connection-manager.png'
+    appLabel: 'tabularis'
 ---
 
 # v0.15.0: Bring Your Connections With You — Imports, Nested Groups, and Encrypted Exports
 
-**v0.15.0** follows [v0.14.0](/blog/v0140-stored-routines-connection-windows-destructive-query-guard) and has one clear theme: the Connections page stops being a flat list you retype things into and becomes something you can actually *manage*. You can now import your saved connections from five other SQL clients, file them into folders inside folders, select twenty of them and act on all twenty, and hand a teammate an export that is actually encrypted instead of a JSON full of plaintext passwords. Around that core: ENUM columns become dropdowns on both MySQL and PostgreSQL, the MCP safety layer closes an `EXPLAIN ANALYZE` loophole, and Windows users stop seeing phantom console windows. Fourteen external contributors land in this tag.
+**v0.15.0** follows [v0.14.0](/blog/v0140-stored-routines-connection-windows-destructive-query-guard) and has one clear theme: the Connections page stops being a flat list you retype things into and becomes something you can actually _manage_. You can now import your saved connections from five other SQL clients, file them into folders inside folders, select twenty of them and act on all twenty, and hand a teammate an export that is actually encrypted instead of a JSON full of plaintext passwords. Around that core: ENUM columns become dropdowns on both MySQL and PostgreSQL, the MCP safety layer closes an `EXPLAIN ANALYZE` loophole, and Windows users stop seeing phantom console windows. Fourteen external contributors land in this tag.
 
 ---
 
 ## Import Connections From the Client You're Leaving
 
-The biggest friction in trying a new database client is retyping every connection you've accumulated over the years. PR [#393](https://github.com/TabularisDB/tabularis/pull/393) removes it: a new **Import** dropup next to *Add Connection* reads saved connections from **DBeaver**, **Beekeeper Studio**, **TablePlus**, **DataGrip** and **Sequel Ace** — plus Tabularis's own JSON exports.
+The biggest friction in trying a new database client is retyping every connection you've accumulated over the years. PR [#393](https://github.com/TabularisDB/tabularis/pull/393) removes it: a new **Import** dropup next to _Add Connection_ reads saved connections from **DBeaver**, **Beekeeper Studio**, **TablePlus**, **DataGrip** and **Sequel Ace** — plus Tabularis's own JSON exports.
 
 Each source is parsed into a neutral envelope, and credentials are decrypted or read from the source client's keychain when you ask for them. Nothing is merged blindly: a **preview** lists every connection found, flags duplicates against what you already have (keep, replace, or skip — the duplicate's existing name shown so you know what you're replacing), and lets each new connection pick a target group — or create one on the fly, with defaults seeded from the source app's own folder structure.
 
 The feature ships marked **beta**, with a visible badge and a direct link to [file an issue](https://github.com/TabularisDB/tabularis/issues) — parsing five other apps' formats across three platforms is exactly the kind of surface where real-world files will find edge cases. One already got fixed before release: Beekeeper payloads containing non-ASCII characters used to abort the whole import on a byte-boundary panic; they now parse or skip gracefully.
 
-<video src="/videos/posts/tabularis-import-connections.mp4" poster="/videos/posts/tabularis-import-connections.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-import-connections.mp4" poster="/videos/posts/tabularis-import-connections.jpg" autoplay loop muted playsinline ></video>
 
 ---
 
@@ -40,19 +40,19 @@ The workflow got the attention the data model change deserved:
 - **Create paths, not just names.** Typing `clients/acme/staging` in the New Group input creates the whole chain, reusing existing segments case-insensitively — the same `/` syntax works in the inline subfolder input on each group header.
 - **Drag to re-parent.** Dropping a group onto another group's header past one indent step moves it inside; dropping near the left edge keeps the plain reorder. A cycle guard refuses to move a folder into its own descendant, with a clear error rather than silent corruption.
 - **Cascade delete.** Deleting a group now removes its entire subtree — nested groups and their connections included — instead of quietly orphaning children to the root.
-- **Counts that add up.** A folder's badge sums direct *and* descendant connections, so a collapsed tree still tells you what's inside.
+- **Counts that add up.** A folder's badge sums direct _and_ descendant connections, so a collapsed tree still tells you what's inside.
 
 Existing `connections.json` files keep working unchanged — `parent_id` is optional and defaults to root — and the export/import path preserves the hierarchy, demoting any dangling parent reference to root instead of rendering ghost trees.
 
-<video src="/videos/posts/tabularis-nested-groups.mp4" poster="/videos/posts/tabularis-nested-groups.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-nested-groups.mp4" poster="/videos/posts/tabularis-nested-groups.jpg" autoplay loop muted playsinline ></video>
 
 ---
 
 ## Select Many, Act Once
 
-With imports and folders in place, you need a way to move things around in bulk. PR [#468](https://github.com/TabularisDB/tabularis/pull/468) adds **multi-select** to the connections list: a checkbox appears on hover, selected cards get a ring, and a pinned action bar shows the count with three actions — **Move to group** (a submenu built from the nested tree, plus *Ungrouped*), **Delete selected** behind a confirmation with the count, and clear.
+With imports and folders in place, you need a way to move things around in bulk. PR [#468](https://github.com/TabularisDB/tabularis/pull/468) adds **multi-select** to the connections list: a checkbox appears on hover, selected cards get a ring, and a pinned action bar shows the count with three actions — **Move to group** (a submenu built from the nested tree, plus _Ungrouped_), **Delete selected** behind a confirmation with the count, and clear.
 
-[@pokertour](https://github.com/pokertour) immediately wired the selection into the export flow in PR [#469](https://github.com/TabularisDB/tabularis/pull/469): the action bar gains an **Export** button that writes only the selected connections. The filtering happens *before* secrets are resolved, so credentials for unselected connections never leave the keychain, and the exported group list is pruned to just the ancestor chains the retained connections actually need.
+[@pokertour](https://github.com/pokertour) immediately wired the selection into the export flow in PR [#469](https://github.com/TabularisDB/tabularis/pull/469): the action bar gains an **Export** button that writes only the selected connections. The filtering happens _before_ secrets are resolved, so credentials for unselected connections never leave the keychain, and the exported group list is pruned to just the ancestor chains the retained connections actually need.
 
 ![Three connections selected in the grid, with the pinned action bar showing Export selected, the Move to group submenu open on the nested group tree, and Delete selected](/img/tabularis-connections-multiselect.png)
 
@@ -78,9 +78,9 @@ Import detects the encrypted envelope and prompts for the password before mergin
 
 Editing an ENUM cell used to mean remembering the allowed values and typing one exactly. Two PRs fix that end to end.
 
-On MySQL, [@fhriz](https://github.com/fhriz) introspected the full `column_type` from `information_schema` in PR [#455](https://github.com/TabularisDB/tabularis/pull/455) (closes [#452](https://github.com/TabularisDB/tabularis/issues/452)), so a column shows as `enum('pending','approved','rejected')` instead of a stripped `enum` — and both the inline grid editor and the row sidebar render a **dropdown** of the allowed values, with a NULL option on nullable columns. SET types get the same treatment, ENUM joins the column-type picker for new tables, and the sidebar now matches column metadata by *name* rather than position, fixing type mismatches when a query's SELECT order differs from the table's.
+On MySQL, [@fhriz](https://github.com/fhriz) introspected the full `column_type` from `information_schema` in PR [#455](https://github.com/TabularisDB/tabularis/pull/455) (closes [#452](https://github.com/TabularisDB/tabularis/issues/452)), so a column shows as `enum('pending','approved','rejected')` instead of a stripped `enum` — and both the inline grid editor and the row sidebar render a **dropdown** of the allowed values, with a NULL option on nullable columns. SET types get the same treatment, ENUM joins the column-type picker for new tables, and the sidebar now matches column metadata by _name_ rather than position, fixing type mismatches when a query's SELECT order differs from the table's.
 
-PostgreSQL followed in PR [#471](https://github.com/TabularisDB/tabularis/pull/471) (fixes [#465](https://github.com/TabularisDB/tabularis/issues/465)), where the problem ran deeper: editing an enum cell failed outright with SQLSTATE 42804 — *column is of type X but expression is of type text* — because the bound value was never cast to the enum type. The binding layer now wraps enum parameters in a `CAST($N AS "schema"."type")` with the qualified type name resolved from `pg_catalog`, mirroring the existing temporal/UUID coercions. And since column introspection now aggregates labels from `pg_enum` into the same `enum('a','b',...)` shape MySQL uses, the dropdown editor kicks in for PostgreSQL automatically — grid and sidebar both.
+PostgreSQL followed in PR [#471](https://github.com/TabularisDB/tabularis/pull/471) (fixes [#465](https://github.com/TabularisDB/tabularis/issues/465)), where the problem ran deeper: editing an enum cell failed outright with SQLSTATE 42804 — _column is of type X but expression is of type text_ — because the bound value was never cast to the enum type. The binding layer now wraps enum parameters in a `CAST($N AS "schema"."type")` with the qualified type name resolved from `pg_catalog`, mirroring the existing temporal/UUID coercions. And since column introspection now aggregates labels from `pg_enum` into the same `enum('a','b',...)` shape MySQL uses, the dropdown editor kicks in for PostgreSQL automatically — grid and sidebar both.
 
 ![Editing a MySQL SET cell inline: the grid shows a dropdown of the allowed values with checkboxes and a NULL option](/img/tabularis-enum-dropdown.png)
 
@@ -88,9 +88,9 @@ PostgreSQL followed in PR [#471](https://github.com/TabularisDB/tabularis/pull/4
 
 ## MCP Safety: EXPLAIN ANALYZE Is Not a Read
 
-The MCP safety layer classifies queries so read-only mode and the write-approval prompt can gate them. Its classifier mapped anything starting with `EXPLAIN` to the read-only path — but `EXPLAIN ANALYZE DELETE ...` actually *executes* the DELETE. An AI agent could therefore slip a write past both gates by wrapping it. Thanks to [@daniel-mertz](https://github.com/daniel-mertz) for reporting it; PR [#456](https://github.com/TabularisDB/tabularis/pull/456) makes classification option-aware: a plain `EXPLAIN` stays a read (it only plans), while the presence of the `ANALYZE` option classifies the wrapped statement as if it had been submitted directly. Matching is word-boundary aware — a table named `analyze_runs` doesn't trip it — and unbalanced option lists fail closed.
+The MCP safety layer classifies queries so read-only mode and the write-approval prompt can gate them. Its classifier mapped anything starting with `EXPLAIN` to the read-only path — but `EXPLAIN ANALYZE DELETE ...` actually _executes_ the DELETE. An AI agent could therefore slip a write past both gates by wrapping it. Thanks to [@daniel-mertz](https://github.com/daniel-mertz) for reporting it; PR [#456](https://github.com/TabularisDB/tabularis/pull/456) makes classification option-aware: a plain `EXPLAIN` stays a read (it only plans), while the presence of the `ANALYZE` option classifies the wrapped statement as if it had been submitted directly. Matching is word-boundary aware — a table named `analyze_runs` doesn't trip it — and unbalanced option lists fail closed.
 
-Two more MCP improvements landed alongside it. [@erneztox](https://github.com/erneztox) fixed `list_connections` to serialize *all* of a connection's databases instead of collapsing them, and added a dedicated **`list_databases`** tool in PR [#426](https://github.com/TabularisDB/tabularis/pull/426), complete with AI Activity filtering and documentation across all translated READMEs. And the repo now has a [security policy](https://github.com/TabularisDB/tabularis/blob/main/SECURITY.md) documenting how to report vulnerabilities privately — with MCP safety-layer bypasses under an untrusted-input threat model explicitly called in scope.
+Two more MCP improvements landed alongside it. [@erneztox](https://github.com/erneztox) fixed `list_connections` to serialize _all_ of a connection's databases instead of collapsing them, and added a dedicated **`list_databases`** tool in PR [#426](https://github.com/TabularisDB/tabularis/pull/426), complete with AI Activity filtering and documentation across all translated READMEs. And the repo now has a [security policy](https://github.com/TabularisDB/tabularis/blob/main/SECURITY.md) documenting how to report vulnerabilities privately — with MCP safety-layer bypasses under an untrusted-input threat model explicitly called in scope.
 
 ---
 
@@ -104,11 +104,11 @@ Two independent contributors fixed the same class of Windows papercut in the sam
 
 ## Grid and Editor Refinements
 
-- **Column headers actually stay pinned.** [@thomaswasle](https://github.com/thomaswasle) fixed the result grid's sticky header in PR [#433](https://github.com/TabularisDB/tabularis/pull/433) — the old implementation fought the virtualizer with a counter-transform that desynced after ~40 rows of scrolling. The grid now uses spacer rows so `position: sticky` works unconditionally, and a *Sticky column headers* toggle in Settings → Appearance keeps the old behavior available.
+- **Column headers actually stay pinned.** [@thomaswasle](https://github.com/thomaswasle) fixed the result grid's sticky header in PR [#433](https://github.com/TabularisDB/tabularis/pull/433) — the old implementation fought the virtualizer with a counter-transform that desynced after ~40 rows of scrolling. The grid now uses spacer rows so `position: sticky` works unconditionally, and a _Sticky column headers_ toggle in Settings → Appearance keeps the old behavior available.
 - **Hover a header, see the type.** [@benedettoraviotta](https://github.com/benedettoraviotta) added a DataGrip-style tooltip in PR [#436](https://github.com/TabularisDB/tabularis/pull/436) (closes [#435](https://github.com/TabularisDB/tabularis/issues/435)) showing `name: type` — e.g. `id: uuid` — on column header hover, read from metadata already in hand, so it costs no backend round-trip.
-- **Set Empty knows its limits.** The quick action used to write a single space to *any* non-BLOB column, which strongly-typed columns rejected (`column is of type uuid but expression is of type text`). PR [#442](https://github.com/TabularisDB/tabularis/pull/442) gates it to textual columns, writes a real empty string, and swaps its icon for an eraser.
+- **Set Empty knows its limits.** The quick action used to write a single space to _any_ non-BLOB column, which strongly-typed columns rejected (`column is of type uuid but expression is of type text`). PR [#442](https://github.com/TabularisDB/tabularis/pull/442) gates it to textual columns, writes a real empty string, and swaps its icon for an eraser.
 - **Summon IntelliSense on demand.** [@GabrielMalava](https://github.com/GabrielMalava) added a configurable shortcut in PR [#371](https://github.com/TabularisDB/tabularis/pull/371) to force the SQL editor's suggestion widget open (⌘I on macOS, Ctrl+I on Windows, Ctrl+Space on Linux) — remappable in Settings → Keyboard Shortcuts, working in both the editor and notebook cells — plus a new rebindable **refresh table** keybinding.
-- **Disconnected means disconnected.** Disconnecting your last open connection didn't persist the change, so the next launch auto-reconnected and restored its tabs anyway. PR [#467](https://github.com/TabularisDB/tabularis/pull/467) persists the session at disconnect time; the saved tab file stays on disk, so *manually* reconnecting later still restores your queries.
+- **Disconnected means disconnected.** Disconnecting your last open connection didn't persist the change, so the next launch auto-reconnected and restored its tabs anyway. PR [#467](https://github.com/TabularisDB/tabularis/pull/467) persists the session at disconnect time; the saved tab file stays on disk, so _manually_ reconnecting later still restores your queries.
 
 ---
 

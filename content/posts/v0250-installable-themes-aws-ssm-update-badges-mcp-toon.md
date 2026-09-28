@@ -1,16 +1,16 @@
 ---
-title: "v0.25.0: A New Theme System, AWS SSM Tunnels and Startup Improvements"
-date: "2026-09-22T10:00:00"
-release: "v0.25.0"
-tags: ["release", "feature", "bugfix", "ui", "ux", "plugin", "mcp", "postgres", "mysql", "community"]
-excerpt: "v0.25.0 turns themes into installable, declarative packages with author tooling, adds AWS SSM Session Manager port forwarding as a third tunnel method, surfaces core and plugin updates in the sidebar and on a startup toast, cuts the JavaScript loaded at startup by 84%, lets MCP tools return TOON, shows table and column comments, and carries community fixes for the MCP driver registry, read-only JSON viewers and plugin display names."
+title: 'v0.25.0: A New Theme System, AWS SSM Tunnels and Startup Improvements'
+date: '2026-09-22T10:00:00'
+release: 'v0.25.0'
+tags: ['release', 'feature', 'bugfix', 'ui', 'ux', 'plugin', 'mcp', 'postgres', 'mysql', 'community']
+excerpt: 'v0.25.0 turns themes into installable, declarative packages with author tooling, adds AWS SSM Session Manager port forwarding as a third tunnel method, surfaces core and plugin updates in the sidebar and on a startup toast, cuts the JavaScript loaded at startup by 84%, lets MCP tools return TOON, shows table and column comments, and carries community fixes for the MCP driver registry, read-only JSON viewers and plugin display names.'
 og:
-  template: "screenshot-split"
-  title: "v0.25.0:"
-  accent: "Themes, SSM, and Updates"
-  claim: "Install themes as packages, reach databases through AWS SSM Session Manager, and see pending updates without opening Settings."
-  image: "/img/posts/v0250-og-shot.png"
-  appLabel: "tabularis"
+    template: 'screenshot-split'
+    title: 'v0.25.0:'
+    accent: 'Themes, SSM, and Updates'
+    claim: 'Install themes as packages, reach databases through AWS SSM Session Manager, and see pending updates without opening Settings.'
+    image: '/img/posts/v0250-og-shot.png'
+    appLabel: 'tabularis'
 ---
 
 # v0.25.0: A New Theme System, AWS SSM Tunnels and Startup Improvements
@@ -33,7 +33,7 @@ For authors, `@tabularis/create-plugin` 0.3.0 ships a second binary, `tabularis-
 
 One caveat, stated plainly: v0.25.0 is the first release that can install theme packages, so a package must declare `min_runtime_version: "0.25.0"` and older clients will refuse it. At the time of writing no theme package has been published to the registry yet, Ember included. The **Themes** filter in Plugins will fill up as authors publish; until then, local ZIP installs and VS Code imports are the way to try it.
 
-<video src="/videos/posts/tabularis-theme-package-install.mp4" poster="/videos/posts/tabularis-theme-package-install.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-theme-package-install.mp4" poster="/videos/posts/tabularis-theme-package-install.jpg" autoplay loop muted playsinline ></video>
 
 ---
 
@@ -48,10 +48,10 @@ One caveat, stated plainly: v0.25.0 is the first release that can install theme 
 
 The SSM document is derived from that target instead of asked for:
 
-| Target host | Document |
-| :--- | :--- |
-| Loopback (`localhost`, `127.0.0.1`, `::1`, blank) | `AWS-StartPortForwardingSession` |
-| Anything else | `AWS-StartPortForwardingSessionToRemoteHost` |
+| Target host                                       | Document                                     |
+| :------------------------------------------------ | :------------------------------------------- |
+| Loopback (`localhost`, `127.0.0.1`, `::1`, blank) | `AWS-StartPortForwardingSession`             |
+| Anything else                                     | `AWS-StartPortForwardingSessionToRemoteHost` |
 
 Both are supported on purpose. Some IAM policies grant only the plain document, and a remote-host-only implementation would lock those users out. The tab shows which document will be used and reminds you that `ssm:StartSession` is needed on the target and on that document. A **Test SSM** button opens a real session and closes it again without touching the database.
 
@@ -71,7 +71,7 @@ The same PR reworks how status is drawn. A semantic tone system with shared **Ch
 
 :::newsletter:::
 
-<video src="/videos/posts/tabularis-update-toast.mp4" poster="/videos/posts/tabularis-update-toast.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-update-toast.mp4" poster="/videos/posts/tabularis-update-toast.jpg" autoplay loop muted playsinline ></video>
 
 ---
 
@@ -79,13 +79,13 @@ The same PR reworks how status is drawn. A semantic tone system with shared **Ch
 
 Opening the Connections screen used to load 8.79 MB of JavaScript, repeat several bootstrap IPC requests, and do work for dialogs that were closed and features that were off. PR [#790](https://github.com/TabularisDB/tabularis/pull/790) loads the editor, secondary screens, dialogs and locales on demand, shares bootstrap reads with explicit invalidation, publishes persisted settings before the optional AI discovery runs, and skips the initial theme rewrite. Session restore opens the last active connection and its editor first, then restores the remaining connections in the background without stealing focus. Native plugin registration no longer waits for each enabled plugin's initialization handshake; a plugin is initialized once, before its first RPC.
 
-| Metric | Before | After |
-| :--- | ---: | ---: |
-| Initial JavaScript | 8.79 MB | 1.43 MB |
-| Initial JavaScript requests | 9 | 2 |
-| Initial CSS | 344 KB | 181 KB |
-| Initial IPC calls | 49 | 29 |
-| Remote changelog requests at startup | 1 | 0 |
+| Metric                               |  Before |   After |
+| :----------------------------------- | ------: | ------: |
+| Initial JavaScript                   | 8.79 MB | 1.43 MB |
+| Initial JavaScript requests          |       9 |       2 |
+| Initial CSS                          |  344 KB |  181 KB |
+| Initial IPC calls                    |      49 |      29 |
+| Remote changelog requests at startup |       1 |       0 |
 
 The timing figures in the PR (Connections ready in 85 ms instead of 190 ms, first paint in 68 ms instead of 176 ms) come from a Chromium benchmark with simulated Tauri IPC, not from a measured native launch, and were taken before the update-notification work above landed. The size and request counts are what you get. The trade is that Monaco, non-English translations and plugin initialization now pay their cost on first use. The [audit](https://github.com/TabularisDB/tabularis/blob/d16d5bb2ea789b6d929c22e5c64ce5fe8890e9cf/.github/planning/startup-performance-2026-09-18.md) lists what remains.
 
