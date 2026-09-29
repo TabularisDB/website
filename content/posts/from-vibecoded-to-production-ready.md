@@ -1,17 +1,17 @@
 ---
-title: 'Turning a Vibecoded Site Into Something Worth Scaling'
+title: 'When the Project Outgrows the Site: The tabularis.dev Rebuild Story'
 date: '2026-09-28T14:00:00'
 authors: ['wajrock']
 tags: ['ux', 'ui', 'design', 'ai', 'open-source', 'website']
 excerpt: 'Lessons from rebuilding tabularis.dev: what a vibecoded site gets you fast, what it quietly breaks, and how to close the gap before a project grows past you.'
 og:
-    title: 'From vibecoded to production-ready.'
-    accent: 'Rebuilding tabularis.dev for scale.'
+    template: 'screenshot-split'
+    title: 'The tabularis.dev Rebuild Story'
     claim: 'How I approached the redesign of tabularis.dev, from auditing what existed to shipping a clearer structure.'
-    image: '/img/posts/vibecoded-site-redesign-hero.png'
+    image: '/img/posts/tabularis-site-redesign-hero.png'
 ---
 
-# Turning a Vibecoded Site Into Something Worth Scaling
+# When the Project Outgrows the Site: The tabularis.dev Rebuild Story
 
 Tabularis.dev worked. It shipped fast, it did its job, and nobody had complained. That's usually the moment a website stops getting attention, right up until the project behind it starts growing faster than the site can represent it.
 
