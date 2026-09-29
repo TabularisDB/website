@@ -1,3 +1,45 @@
+# [0.25.0](https://github.com/TabularisDB/tabularis/compare/v0.24.0...v0.25.0) (2026-09-22)
+
+
+### Bug Fixes
+
+* address review nits from [#784](https://github.com/TabularisDB/tabularis/issues/784) on the driver-registry rescan ([0ac2625](https://github.com/TabularisDB/tabularis/commit/0ac262527d36d6bc4d501f063d81ea13c36ecf3a))
+* address startup resource review findings ([378d8f3](https://github.com/TabularisDB/tabularis/commit/378d8f342e1aa72fca07e0cc95d0ad989d98cb3f))
+* allow selecting and copying table schema text ([ecdf876](https://github.com/TabularisDB/tabularis/commit/ecdf876ea18fc1fa41e9a0a0d88e14a4c833906a))
+* allow viewing generated JSON columns ([1cf126f](https://github.com/TabularisDB/tabularis/commit/1cf126fdff8d362f98978968179a99e8fe5a7b5b))
+* canonicalize connection metadata cache keys ([b2317f8](https://github.com/TabularisDB/tabularis/commit/b2317f8e20649c7da68e5f1eea4a3e3c75124703))
+* **ci:** build nightlies from the newest green commit and show their real version ([ffa8e7b](https://github.com/TabularisDB/tabularis/commit/ffa8e7b6e5254a424775966a612826c1d3fdfea6))
+* **connections:** accept MongoDB replica set URIs ([f0a4bc4](https://github.com/TabularisDB/tabularis/commit/f0a4bc40c2979ef3f8a4c44b0b169e2613a78868))
+* **connections:** drop the stored password when a plugin hides the login inputs ([ea3b0af](https://github.com/TabularisDB/tabularis/commit/ea3b0aff53e5f275e681a6fa15b653f44832c43f))
+* **connections:** stop AWS SSM failures being reported as database errors ([d8d6029](https://github.com/TabularisDB/tabularis/commit/d8d6029813cbd07e9a0988bd3fcaec561b9a5c7b))
+* keep blob editor behind readonly guard ([e85a526](https://github.com/TabularisDB/tabularis/commit/e85a526f658f137566492b133aad49d56d8adc1a))
+* keep schema selection readable across themes ([16d757b](https://github.com/TabularisDB/tabularis/commit/16d757ba3e7b84fe58e3ab3c484ac91e3cf4670f))
+* open JSON viewers for read-only results ([6321545](https://github.com/TabularisDB/tabularis/commit/6321545f7a82ad2c6886767e2a00bef6498cf29f))
+* **plugins:** respect standalone driver display names ([e80f5e6](https://github.com/TabularisDB/tabularis/commit/e80f5e6ae83f606a874dfe07a1b9133c1c70a9c2))
+* preserve built-in-collision refusal and bound rescan frequency ([4524666](https://github.com/TabularisDB/tabularis/commit/452466642a69b78c74367780cb8b3c7b3d982adc)), closes [#783](https://github.com/TabularisDB/tabularis/issues/783)
+* reconcile MCP driver registry against disabled/uninstalled plugins ([#787](https://github.com/TabularisDB/tabularis/issues/787)) ([44e1d8d](https://github.com/TabularisDB/tabularis/commit/44e1d8d5239569223c688ac1d6c38721dd9d8c38))
+* self-heal MCP driver registry on unsupported-driver misses ([#783](https://github.com/TabularisDB/tabularis/issues/783)) ([89afca5](https://github.com/TabularisDB/tabularis/commit/89afca5018c1ac036f4b74cadd5902bed8d2ec8c))
+* **themes:** reuse plugin removal dialog for theme packages ([268e0b2](https://github.com/TabularisDB/tabularis/commit/268e0b2544bac9c10a68f1a57aa33cbd2193a3bb))
+
+
+### Features
+
+* **connections:** add AWS SSM Session Manager port forwarding ([109f18c](https://github.com/TabularisDB/tabularis/commit/109f18c8aed64a711f1cc4561c04d98bd29144a9))
+* expose table and column comments ([c62a328](https://github.com/TabularisDB/tabularis/commit/c62a328421bcc656b7a54ae4a26de70df22c4b0e))
+* **mcp:** add default output format setting ([9bda9bb](https://github.com/TabularisDB/tabularis/commit/9bda9bbc8b1e6d2c43ef75be7dd174200a8e87e8))
+* **mcp:** add optional TOON tool output ([0c52f89](https://github.com/TabularisDB/tabularis/commit/0c52f89911f2c49612e3f12976aac2ef08e85af3))
+* **plugins:** let the extra_fields slot hide host credential inputs ([d1d26ac](https://github.com/TabularisDB/tabularis/commit/d1d26ace3507f08a9323df92ed99d3f4e868817d))
+* **themes:** add registry schema hints and authoring CI ([ce59500](https://github.com/TabularisDB/tabularis/commit/ce59500087382f6fadf33f66d27c43586f9e0eab))
+* **themes:** add secure installable declarative themes ([331a94a](https://github.com/TabularisDB/tabularis/commit/331a94a6bd47b0d505544cb613d6c051f0a93416))
+* **themes:** unify theme management and theme-aware controls ([253a101](https://github.com/TabularisDB/tabularis/commit/253a101db7948cf6fac138106d4061340cf5dcfb))
+* **ui:** unify update cues across connections, plugins and sidebar ([4567a9a](https://github.com/TabularisDB/tabularis/commit/4567a9a9816559a5bf9a407825c480d44a011202))
+* **updates:** surface core and plugin updates ([cbbe704](https://github.com/TabularisDB/tabularis/commit/cbbe704bf725ae56e86edff3560a5d4edab0e303))
+
+
+### Performance Improvements
+
+* reduce startup loading and defer plugin initialization ([d16d5bb](https://github.com/TabularisDB/tabularis/commit/d16d5bb2ea789b6d929c22e5c64ce5fe8890e9cf))
+
 # [0.24.0](https://github.com/TabularisDB/tabularis/compare/v0.23.0...v0.24.0) (2026-09-16)
 
 

@@ -1,19 +1,19 @@
 ---
-title: "v0.13.1: Signed macOS Builds, a Postgres Explain That Finally Runs, and Pagination That Honors Your OFFSET"
-date: "2026-06-05T11:00:00"
-release: "v0.13.1"
-tags: ["release", "bugfix", "macos", "postgres", "mcp", "data-grid", "editor", "ai", "community"]
-excerpt: "v0.13.1 is a correctness pass on v0.13.0: macOS builds are now code-signed and notarized, the Postgres Explain Plan that never worked now runs, paginated queries stop dropping your OFFSET, postgresql:// and mariadb:// connection strings are accepted, the MCP read-only gate stops misreading a parenthesized SELECT as a write, the grid no longer freezes on giant JSON cells, and the macOS Keychain stops prompting on every AI-tab open."
+title: 'v0.13.1: Signed macOS Builds, a Postgres Explain That Finally Runs, and Pagination That Honors Your OFFSET'
+date: '2026-06-05T11:00:00'
+release: 'v0.13.1'
+tags: ['release', 'bugfix', 'macos', 'postgres', 'mcp', 'data-grid', 'editor', 'ai', 'community']
+excerpt: 'v0.13.1 is a correctness pass on v0.13.0: macOS builds are now code-signed and notarized, the Postgres Explain Plan that never worked now runs, paginated queries stop dropping your OFFSET, postgresql:// and mariadb:// connection strings are accepted, the MCP read-only gate stops misreading a parenthesized SELECT as a write, the grid no longer freezes on giant JSON cells, and the macOS Keychain stops prompting on every AI-tab open.'
 og:
-  title: "v0.13.1:"
-  accent: "Signed, and corrected."
-  claim: "Code-signed and notarized macOS builds, a Postgres Explain Plan that finally runs, pagination that honors your OFFSET, connection-string scheme aliases, a tightened MCP read-only gate, and a grid that no longer freezes on giant JSON."
-  image: "/img/tabularis-macos-dock-icon.png"
+    title: 'v0.13.1:'
+    accent: 'Signed, and corrected.'
+    claim: 'Code-signed and notarized macOS builds, a Postgres Explain Plan that finally runs, pagination that honors your OFFSET, connection-string scheme aliases, a tightened MCP read-only gate, and a grid that no longer freezes on giant JSON.'
+    image: '/img/tabularis-macos-dock-icon.png'
 ---
 
 # v0.13.1: Signed macOS Builds, a Postgres Explain That Finally Runs, and Pagination That Honors Your OFFSET
 
-**v0.13.1** is a short follow-up to [v0.13.0](/blog/v0130-kubernetes-tunnels-quick-navigator-dml-tabs). Where the last release was about *reach* — Kubernetes tunnels, a Quick Navigator, MCP into plugin drivers — this one is about *correctness*: a sweep of features that shipped but quietly didn't work, plus the distribution-level fix Mac users have been asking for since the first DMG.
+**v0.13.1** is a short follow-up to [v0.13.0](/blog/v0130-kubernetes-tunnels-quick-navigator-dml-tabs). Where the last release was about _reach_ — Kubernetes tunnels, a Quick Navigator, MCP into plugin drivers — this one is about _correctness_: a sweep of features that shipped but quietly didn't work, plus the distribution-level fix Mac users have been asking for since the first DMG.
 
 No new surface area. Several things that were broken, fixed. Four external contributors land in this tag.
 
@@ -37,7 +37,7 @@ The [Visual Explain](/wiki/visual-explain) feature has worked on MySQL, MariaDB,
 
 The fix reads the column as a `serde_json::Value` and re-serializes it for the existing parser, with a `String` fallback for Postgres-compatible engines that hand the plan back as plain text. If you've ever clicked "Explain Plan" on a Postgres connection and gotten an error, that was this.
 
-<video src="/videos/posts/tabularis-explain-postgres.mp4" poster="/videos/posts/tabularis-explain-postgres.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-explain-postgres.mp4" poster="/videos/posts/tabularis-explain-postgres.jpg" autoplay loop muted playsinline ></video>
 
 ---
 
@@ -75,7 +75,7 @@ v0.13.0 [rebuilt the MCP safety gates](/blog/v0130-kubernetes-tunnels-quick-navi
 
 Open a table with a fat `JSON` column — say a MySQL `JSON` field holding a megabyte of nested data — and the grid would lock up. Each visible cell tokenized and rendered its **full** stringified value into thousands of DOM nodes, even though the cell is clipped to about 300px on screen and the full value is already one click away.
 
-[@NewtTheWolf](https://github.com/NewtTheWolf) (Dominik Spitzli) fixes it in PR [#285](https://github.com/TabularisDB/tabularis/pull/285) (closes [#283](https://github.com/TabularisDB/tabularis/issues/283)): a new `truncateCellPreview` caps the inline preview at 300 characters *before* tokenization and render in both `JsonCell` and `TextCell`, and the native `<td>` tooltip is capped too. The cap is lossless — the inline expander and the JSON viewer both read the raw row value, not the truncated `displayText`, so the full content is always reachable. The MySQL and Postgres JSON demos gained a ~1 MB big-JSON row to reproduce the freeze and keep it fixed.
+[@NewtTheWolf](https://github.com/NewtTheWolf) (Dominik Spitzli) fixes it in PR [#285](https://github.com/TabularisDB/tabularis/pull/285) (closes [#283](https://github.com/TabularisDB/tabularis/issues/283)): a new `truncateCellPreview` caps the inline preview at 300 characters _before_ tokenization and render in both `JsonCell` and `TextCell`, and the native `<td>` tooltip is capped too. The cap is lossless — the inline expander and the JSON viewer both read the raw row value, not the truncated `displayText`, so the full content is always reachable. The MySQL and Postgres JSON demos gained a ~1 MB big-JSON row to reproduce the freeze and keep it fixed.
 
 ---
 
@@ -87,7 +87,7 @@ PR [#282](https://github.com/TabularisDB/tabularis/pull/282) (closes [#281](http
 
 PR [#280](https://github.com/TabularisDB/tabularis/pull/280) (closes [#274](https://github.com/TabularisDB/tabularis/issues/274)) focuses the editor when you open a new console tab — via `Ctrl`/`Cmd+T`, the `+` button, or a Quick Navigator action — so you can start typing immediately. Each tab mounts its own editor instance once, keyed by tab id, so a single `editor.focus()` covers every creation path. The type check on `console` tabs avoids stealing focus when a table or query-builder tab opens.
 
-<video src="/videos/posts/tabularis-ctrl-t.mp4" poster="/videos/posts/tabularis-ctrl-t.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-ctrl-t.mp4" poster="/videos/posts/tabularis-ctrl-t.jpg" autoplay loop muted playsinline ></video>
 
 ---
 

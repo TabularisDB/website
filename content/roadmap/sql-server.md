@@ -1,32 +1,32 @@
 ---
-title: "SQL Server driver"
-slug: "sql-server"
-category: "Driver"
-status: "done"
+title: 'SQL Server driver'
+slug: 'sql-server'
+category: 'Driver'
+status: 'done'
 order: 1
 progressDone: 3
 progressTotal: 3
-progressLabel: "First release (1.0.0-beta.1) published to the plugin registry"
-lede: "Microsoft SQL Server support ships as a **driver plugin** from its own repository, [tabularis-sqlserver-plugin](https://github.com/TabularisDB/tabularis-sqlserver-plugin), instead of a built-in driver inside the app binary. The first release, **1.0.0-beta.1**, is in the plugin registry with builds for macOS, Linux and Windows and requires Tabularis **0.23.0 or later**. It covers connection pooling, schema introspection, query execution, CRUD, DDL, triggers, stored routines and Visual EXPLAIN through its own SHOWPLAN XML parser."
+progressLabel: 'First release (1.0.0-beta.1) published to the plugin registry'
+lede: 'Microsoft SQL Server support ships as a driver plugin from its own repository, tabularis-sqlserver-plugin, instead of a built-in driver inside the app binary. The first release, 1.0.0-beta.1, is in the plugin registry with builds for macOS, Linux and Windows and requires Tabularis 0.23.0 or later. It covers connection pooling, schema introspection, query execution, CRUD, DDL, triggers, stored routines and Visual EXPLAIN through its own SHOWPLAN XML parser.'
 contributors:
-  - username: debba
-    role: Maintainer
-  - username: FabioMalpezzi
-    role: Contributor
+    - username: debba
+      role: Maintainer
+    - username: FabioMalpezzi
+      role: Contributor
 links:
-  - label: "tabularis-sqlserver-plugin"
-    href: "https://github.com/TabularisDB/tabularis-sqlserver-plugin"
-    external: true
-  - label: "Release 1.0.0-beta.1"
-    href: "https://github.com/TabularisDB/tabularis-sqlserver-plugin/releases/tag/v1.0.0-beta.1"
-    external: true
-  - label: "v0.23.0 release post"
-    href: "/blog/v0230-postgres-plugin-migration-sql-files-storage-location"
-  - label: "Original built-in epic #150"
-    href: "https://github.com/TabularisDB/tabularis/issues/150"
-    external: true
-  - label: "Phase 1 post"
-    href: "/blog/sql-server-looking-for-contributors"
+    - label: 'tabularis-sqlserver-plugin'
+      href: 'https://github.com/TabularisDB/tabularis-sqlserver-plugin'
+      external: true
+    - label: 'Release 1.0.0-beta.1'
+      href: 'https://github.com/TabularisDB/tabularis-sqlserver-plugin/releases/tag/v1.0.0-beta.1'
+      external: true
+    - label: 'v0.23.0 release post'
+      href: '/blog/v0230-postgres-plugin-migration-sql-files-storage-location'
+    - label: 'Original built-in epic #150'
+      href: 'https://github.com/TabularisDB/tabularis/issues/150'
+      external: true
+    - label: 'Phase 1 post'
+      href: '/blog/sql-server-looking-for-contributors'
 ---
 
 ## From built-in to plugin

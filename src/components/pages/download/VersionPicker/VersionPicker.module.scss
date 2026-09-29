@@ -1,0 +1,33 @@
+.toggle {
+    display: flex;
+    width: fit-content;
+    gap: 0.25rem;
+    padding: 0.3rem;
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--radius-full);
+}
+
+.segment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0;
+    border-radius: var(--radius-full);
+    transition: all 0.2s ease;
+    width: 5rem;
+}
+
+.active {
+    background-color: var(--color-text-primary);
+    color: var(--color-bg);
+
+    &:hover:not(:disabled) {
+        filter: brightness(1.1);
+    }
+}
+
+.label {
+    font-size: 0.825rem;
+    font-weight: 600;
+}

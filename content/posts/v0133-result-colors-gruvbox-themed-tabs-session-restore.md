@@ -1,20 +1,20 @@
 ---
-title: "v0.13.3: Color Your Results, Theme Your Tabs, and Pick Up Where You Left Off"
-date: "2026-06-24T10:00:00"
-release: "v0.13.3"
-tags: ["release", "feature", "ui", "ux", "data-grid", "editor", "theme", "kubernetes", "mcp", "plugin", "community"]
+title: 'v0.13.3: Color Your Results, Theme Your Tabs, and Pick Up Where You Left Off'
+date: '2026-06-24T10:00:00'
+release: 'v0.13.3'
+tags: ['release', 'feature', 'ui', 'ux', 'data-grid', 'editor', 'theme', 'kubernetes', 'mcp', 'plugin', 'community']
 excerpt: "v0.13.3 is a personalization release: color query results by data type, dress the editor in a new Gruvbox theme, tint the tab bar with each connection's color, reopen the connections you had last session, and toggle CSV headers when you copy — plus a community Informix driver, driver-aware Kubernetes ports, and louder MCP approval alerts."
 og:
-  title: "v0.13.3:"
-  accent: "Make it yours."
-  claim: "Result cells colored by data type, a new Gruvbox theme, connection-tinted editor tabs, session restore on launch, CSV-header copy, a community Informix driver, and driver-aware Kubernetes ports."
-  image: "/img/og/v0133-personalization.png"
-  cover: "/img/og/v0133-personalization.png"
+    title: 'v0.13.3:'
+    accent: 'Make it yours.'
+    claim: 'Result cells colored by data type, a new Gruvbox theme, connection-tinted editor tabs, session restore on launch, CSV-header copy, a community Informix driver, and driver-aware Kubernetes ports.'
+    image: '/img/og/v0133-personalization.png'
+    cover: '/img/og/v0133-personalization.png'
 ---
 
 # v0.13.3: Color Your Results, Theme Your Tabs, and Pick Up Where You Left Off
 
-**v0.13.3** follows [v0.13.2](/blog/v0132-managed-notebooks-live-query-progress-faster-grid), which made the notebook, results panel, and grid feel responsive and managed. This one is about making the app feel like *yours*: results that read at a glance because they're colored by type, an editor that shows you which connection you're in by its color, a new theme, and a workspace that reopens where you left it. It's a release driven almost entirely by the community — ten external contributors land in this tag.
+**v0.13.3** follows [v0.13.2](/blog/v0132-managed-notebooks-live-query-progress-faster-grid), which made the notebook, results panel, and grid feel responsive and managed. This one is about making the app feel like _yours_: results that read at a glance because they're colored by type, an editor that shows you which connection you're in by its color, a new theme, and a workspace that reopens where you left it. It's a release driven almost entirely by the community — ten external contributors land in this tag.
 
 ---
 
@@ -26,7 +26,7 @@ Turn on **Result Colors** under **Settings → Appearance → General** and quer
 
 The same PR sharpened in-place editing: pending grid edits now commit with a rebindable **`save_grid_changes`** shortcut (Cmd/Ctrl+S, [TablePlus-style](/compare/tableplus-alternative)), and editing single-table `SELECT` results is validated against the table's real columns first — so an aliased or computed column gives you a clear message instead of a cryptic `1054 Unknown column`, and a result missing its primary key is blocked with guidance to include it rather than building an unsafe `UPDATE`.
 
-<video src="/videos/posts/tabularis-result-colors.mp4" poster="/videos/posts/tabularis-result-colors.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-result-colors.mp4" poster="/videos/posts/tabularis-result-colors.jpg" autoplay loop muted playsinline ></video>
 
 ---
 
@@ -36,7 +36,7 @@ If you keep several connections open, the editor tabs all looked the same — ea
 
 The active-tab indicator line now uses the connection color with a soft glow, the active tab carries an accent-tinted body gradient, and inactive tabs pick up an accent wash on hover instead of a flat grey. The loading bar and the rename input border follow the same color, and the tab bar itself uses a vertical accent gradient with an accent-tinted bottom border so the strip reads as part of the connection. The treatment extends into [split view](/wiki/split-view): split-pane panel headers and the connection switcher use each pane's accent instead of a fixed blue. When no connection is active it all falls back to the default blue, and the scroll arrows and new-tab buttons stay theme-safe.
 
-<video src="/videos/posts/tabularis-connection-tabs.mp4" poster="/videos/posts/tabularis-connection-tabs.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-connection-tabs.mp4" poster="/videos/posts/tabularis-connection-tabs.jpg" autoplay loop muted playsinline ></video>
 
 ---
 
@@ -44,7 +44,7 @@ The active-tab indicator line now uses the connection color with a soft glow, th
 
 [@Wilovy09](https://github.com/Wilovy09) added **Gruvbox Material**, in both Dark and Light, in PR [#357](https://github.com/TabularisDB/tabularis/pull/357) — bringing the built-in count to twelve. Each ships with a matching dedicated Monaco editor theme, so the SQL editor's syntax colors line up with the rest of the UI, and both are wired into the theme registry with sidebar and registry test coverage. Switch to it in **Settings → Appearance**; like every theme, it applies instantly with no restart.
 
-<video src="/videos/posts/tabularis-gruvbox.mp4" poster="/videos/posts/tabularis-gruvbox.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-gruvbox.mp4" poster="/videos/posts/tabularis-gruvbox.jpg" autoplay loop muted playsinline ></video>
 
 :::newsletter:::
 

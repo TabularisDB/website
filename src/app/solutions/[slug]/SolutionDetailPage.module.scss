@@ -1,0 +1,11 @@
+.wrapper {
+    max-width: 760px;
+    margin-inline: auto;
+
+    & h1 {
+        font-size: clamp(1.5rem, 9.23vw, 2.5rem);
+        padding-bottom: 1.5rem;
+        border-bottom: 0.1rem solid var(--color-border);
+        margin-bottom: 1rem;
+    }
+}

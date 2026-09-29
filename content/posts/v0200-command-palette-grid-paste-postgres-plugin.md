@@ -1,16 +1,16 @@
 ---
 title: "v0.20.0: A Command Palette That Knows Which Pane You're In, Paste That Works Like a Spreadsheet, and PostgreSQL Moves Out of the Core"
-date: "2026-08-17T18:00:00"
-release: "v0.20.0"
-tags: ["release", "feature", "bugfix", "postgres", "mysql", "sqlite", "ui", "ux", "data-grid", "plugin", "community"]
-excerpt: "v0.20.0 replaces the quick navigator with a scope-aware command palette, teaches the data grid to paste spreadsheet ranges as staged edits, moves PostgreSQL out of the core and into a standalone plugin at full parity with the built-in driver (the first step in migrating every built-in driver to the plugin pipeline), adds inline hex preview and editing for BLOBs, and makes rows with binary primary keys deletable on MySQL."
+date: '2026-08-17T18:00:00'
+release: 'v0.20.0'
+tags: ['release', 'feature', 'bugfix', 'postgres', 'mysql', 'sqlite', 'ui', 'ux', 'data-grid', 'plugin', 'community']
+excerpt: 'v0.20.0 replaces the quick navigator with a scope-aware command palette, teaches the data grid to paste spreadsheet ranges as staged edits, moves PostgreSQL out of the core and into a standalone plugin at full parity with the built-in driver (the first step in migrating every built-in driver to the plugin pipeline), adds inline hex preview and editing for BLOBs, and makes rows with binary primary keys deletable on MySQL.'
 og:
-  template: "screenshot-split"
-  title: "v0.20.0:"
-  accent: "Palette. Paste. Plugin."
-  claim: "A Spotlight-style command palette scoped to the pane you're in, spreadsheet paste as staged edits, PostgreSQL reborn as an independent plugin at full parity with the built-in driver, and hex editing for BLOBs."
-  image: "/img/tabularis-command-palette.png"
-  appLabel: "tabularis"
+    template: 'screenshot-split'
+    title: 'v0.20.0:'
+    accent: 'Palette. Paste. Plugin.'
+    claim: "A Spotlight-style command palette scoped to the pane you're in, spreadsheet paste as staged edits, PostgreSQL reborn as an independent plugin at full parity with the built-in driver, and hex editing for BLOBs."
+    image: '/img/tabularis-command-palette.png'
+    appLabel: 'tabularis'
 ---
 
 # v0.20.0: A Command Palette That Knows Which Pane You're In, Paste That Works Like a Spreadsheet, and PostgreSQL Moves Out of the Core
@@ -21,11 +21,11 @@ og:
 
 ## The Quick Navigator Grows Into a Command Palette
 
-The quick navigator could find a table. It could not run a command, and in split view it quietly searched whichever connection happened to be *active* rather than the pane you were actually looking at. PR [#545](https://github.com/TabularisDB/tabularis/pull/545), from [@verbaux](https://github.com/verbaux), replaces it with a Spotlight-style palette with two modes: the familiar object search (tables, views, routines, triggers), and a new **action palette** on **Cmd/Ctrl+Shift+A**, with a visible mode label in the header so you always know which one you're in.
+The quick navigator could find a table. It could not run a command, and in split view it quietly searched whichever connection happened to be _active_ rather than the pane you were actually looking at. PR [#545](https://github.com/TabularisDB/tabularis/pull/545), from [@verbaux](https://github.com/verbaux), replaces it with a Spotlight-style palette with two modes: the familiar object search (tables, views, routines, triggers), and a new **action palette** on **Cmd/Ctrl+Shift+A**, with a visible mode label in the header so you always know which one you're in.
 
-<video src="/videos/posts/tabularis-command-palette.mp4" poster="/videos/posts/tabularis-command-palette.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-command-palette.mp4" poster="/videos/posts/tabularis-command-palette.jpg" autoplay loop muted playsinline ></video>
 
-The interesting work is under the surface. Both palettes and the explorer sidebar each used to build their own "open this in the editor" logic: assembling SQL, guessing the tab type, reading the active connection regardless of where you clicked. They now share one navigation contract, a single definition of what "open", "count rows" and "show definition" mean per object type, used by the sidebar's sixteen call sites and both palette modes alike. Each editor pane registers a **command scope**, and the palette resolves against the scope that owns the focus. In split view with two connections, the action palette from each pane targets *that pane's* connection and table. The same discipline reached the schema and generate-SQL modals, which used to inspect the active connection even when opened from a non-active pane; they now receive an explicit target. Palette strings shipped translated, including a contributed Brazilian Portuguese pass.
+The interesting work is under the surface. Both palettes and the explorer sidebar each used to build their own "open this in the editor" logic: assembling SQL, guessing the tab type, reading the active connection regardless of where you clicked. They now share one navigation contract, a single definition of what "open", "count rows" and "show definition" mean per object type, used by the sidebar's sixteen call sites and both palette modes alike. Each editor pane registers a **command scope**, and the palette resolves against the scope that owns the focus. In split view with two connections, the action palette from each pane targets _that pane's_ connection and table. The same discipline reached the schema and generate-SQL modals, which used to inspect the active connection even when opened from a non-active pane; they now receive an explicit target. Palette strings shipped translated, including a contributed Brazilian Portuguese pass.
 
 The action palette deliberately starts small (open settings, open the current table in the SQL console), because the point of this release is the registry, the scoping and the navigation contract; commands are now one item plus an i18n key to add. And the palette's one known data-freshness gap didn't survive the cycle: [@DhruvShah-Dev](https://github.com/DhruvShah-Dev) fixed the multi-database object list to read the provider's live database selection instead of the stale saved params, so a database dropped on the server stops haunting the palette (PR [#597](https://github.com/TabularisDB/tabularis/pull/597), fixes [#591](https://github.com/TabularisDB/tabularis/issues/591)).
 
@@ -35,7 +35,7 @@ The action palette deliberately starts small (open settings, open the current ta
 
 Copy has been getting steadily smarter for two releases; paste didn't exist. PR [#612](https://github.com/TabularisDB/tabularis/pull/612), from [@ymadd](https://github.com/ymadd) (closes [#611](https://github.com/TabularisDB/tabularis/issues/611)), adds spreadsheet-style **Cmd/Ctrl+V**, and every pasted value goes through the existing pending-changes flow as a staged edit, never straight to the database. You still review, apply or roll back.
 
-<video src="/videos/posts/tabularis-grid-paste.mp4" poster="/videos/posts/tabularis-grid-paste.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-grid-paste.mp4" poster="/videos/posts/tabularis-grid-paste.jpg" autoplay loop muted playsinline ></video>
 
 The parsing rules are chosen to round-trip real workflows. Tab-separated cells win, because that's what every spreadsheet puts on the clipboard. Multi-line text without tabs is parsed as CSV with double-quote escaping, preferring your configured CSV delimiter, so the grid's own copy formats round-trip cleanly. A single line without tabs is always one value, so `hello, world` lands in one cell instead of two. A leading header row is dropped only when it matches the grid's column names positionally from the paste anchor: the "export column names" option round-trips without swallowing external data that merely mentions a column name. A single copied value fills the whole selected range or row selection, the pasted matrix clips at the grid edges, and alias and computed columns are skipped under the same guard as inline editing. Pasting a cell's original value back clears its pending change, exactly like typing it would.
 

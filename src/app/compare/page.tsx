@@ -1,117 +1,54 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { JsonLd } from "@/components/JsonLd";
-import { SiteHeader } from "@/components/SiteHeader";
-import { Footer } from "@/components/Footer";
-import { getSeoPagesBySection, getSeoPagePath } from "@/lib/seoPages";
-import { SeoPageThumb } from "@/components/SeoPagePreview";
-import { ComparisonBuilder } from "@/components/ComparisonBuilder";
-import { GitHubIcon, DiscordIcon } from "@/components/Icons";
-import { buildBreadcrumbJsonLd } from "@/lib/seo";
-import { SOCIAL_URLS } from "@/lib/social";
+import {JsonLd} from '@/components/layout/JsonLd';
+import {CompareGrid} from '@/components/pages/compare/CompareGrid/CompareGrid';
+import {TransitionBlock} from '@/components/ui/TransitionBlock/TransitionBlock';
+import {buildBreadcrumbJsonLd} from '@/lib/seo';
+import {getSeoPagesBySection} from '@/lib/seo/seoPages';
+import {ArrowLeftRight} from 'lucide-react';
+import type {Metadata} from 'next';
 
 export const metadata: Metadata = {
-  title: "Compare | Tabularis",
-  description:
-    "Comparison pages for teams evaluating Tabularis against other database clients and SQL tools.",
-  alternates: { canonical: "/compare" },
+    title: 'Compare | Tabularis',
+    description: 'Comparison pages for teams evaluating Tabularis against other database clients and SQL tools.',
+    alternates: {canonical: '/compare'},
 };
 
 export default function ComparePage() {
-  const pages = getSeoPagesBySection("compare");
+    const comparePages = getSeoPagesBySection('compare');
 
-  return (
-    <div className="container">
-      <JsonLd
-        data={buildBreadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Compare", path: "/compare" },
-        ])}
-      />
-      <SiteHeader crumbs={[{ label: "compare" }]} />
+    return (
+        <div className="container with-gap">
+            <JsonLd
+                data={buildBreadcrumbJsonLd([
+                    {name: 'Home', path: '/'},
+                    {name: 'Compare', path: '/compare'},
+                ])}
+            />
+            <header className="page-header">
+                <span className="eyebrow">
+                    <ArrowLeftRight />
+                    Compare
+                </span>
+                <h1 className="title">See how Tabularis stacks up</h1>
+                <p className="description">
+                    Straight comparisons against the tools developers move away from, covering features, pricing, and
+                    workflow differences side by side.
+                </p>
+            </header>
 
-      <section>
-        <div className="blog-intro">
-          <div className="blog-intro-body">
-            <h3>Compare</h3>
-            <p>
-            Comparison pages for developer teams evaluating Tabularis against
-            other database tools and SQL workflows.
-            </p>
-          </div>
+            <CompareGrid
+                items={comparePages.map((page) => ({
+                    slug: page.slug,
+                    href: `/compare/${page.slug}`,
+                    title: page.title,
+                }))}
+            />
+
+            <TransitionBlock
+                title="Prefer to explore by use case?"
+                text="If you are earlier in the decision process, start from the workflow itself instead of the tool comparison."
+                buttonHref="/solutions"
+                buttonText="Browse solutions"
+            />
         </div>
-
-        <ComparisonBuilder />
-
-        <div className="plugin-list">
-          {pages.map((page) => (
-            <div key={page.slug} className="plugin-entry seo-entry">
-              <SeoPageThumb meta={page} className="seo-entry-thumb" />
-              <div className="plugin-entry-info">
-                <div className="plugin-entry-header">
-                  <Link
-                    href={getSeoPagePath("compare", page.slug)}
-                    className="plugin-name"
-                  >
-                    {page.title}
-                  </Link>
-                  <span className="plugin-badge">{page.format || "Guide"}</span>
-                </div>
-                <p className="plugin-desc">{page.excerpt}</p>
-                <div className="plugin-meta">
-                  {page.audience && <span>{page.audience}</span>}
-                  {page.audience && page.useCase && <span>&nbsp;&middot;&nbsp;</span>}
-                  {page.useCase && <span>{page.useCase}</span>}
-                </div>
-              </div>
-              <Link
-                href={getSeoPagePath("compare", page.slug)}
-                className="btn-plugin"
-              >
-                Open &rarr;
-              </Link>
-            </div>
-          ))}
-        </div>
-
-        <div className="plugin-cta">
-          <h3>Prefer to explore by use case?</h3>
-          <p>
-            If you are earlier in the decision process, start from the workflow
-            itself instead of the tool comparison.
-          </p>
-          <Link
-            href="/solutions"
-            className="btn-download"
-            style={{ display: "inline-flex", width: "auto" }}
-          >
-            Browse solutions &rarr;
-          </Link>
-        </div>
-
-        <div className="cta-strip">
-          <a
-            className="btn-cta"
-            href={SOCIAL_URLS.github}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <GitHubIcon size={16} />
-            Star on GitHub
-          </a>
-          <a
-            className="btn-cta discord"
-            href={SOCIAL_URLS.discord}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <DiscordIcon size={16} />
-            Join Discord
-          </a>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
-  );
+    );
 }

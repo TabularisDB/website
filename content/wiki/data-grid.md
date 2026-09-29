@@ -1,8 +1,8 @@
 ---
-title: "Data Grid"
+title: 'Data Grid'
 order: 13
-excerpt: "Browse, edit, filter, and export table data with a high-performance virtualized grid."
-category: "Core Features"
+excerpt: 'Browse, edit, filter, and export table data with a high-performance virtualized grid.'
+category: 'Core Features'
 ---
 
 # Data Grid
@@ -21,7 +21,7 @@ Double-click any table or view in the sidebar. The data grid opens in a new tab,
 
 Data is fetched in pages. The default page size is **500 rows**, configurable via `resultPageSize` in [Configuration](/wiki/configuration). Navigation controls at the bottom of the grid let you move forward and backward through pages.
 
-Since v0.21.0 the pagination bar also has a **rows-per-page selector** that overrides the global default for the current tab only: presets from 50 to 5000 (the global value is marked as *default*), a custom value, and **All**, which turns pagination off for that tab and fetches every row. The override is saved with the tab and survives a restart; other tabs and new tabs keep the global default. Changing the page size recomputes the page number so the first visible row stays in view.
+Since v0.21.0 the pagination bar also has a **rows-per-page selector** that overrides the global default for the current tab only: presets from 50 to 5000 (the global value is marked as _default_), a custom value, and **All**, which turns pagination off for that tab and fetches every row. The override is saved with the tab and survives a restart; other tabs and new tabs keep the global default. Changing the page size recomputes the page number so the first visible row stays in view.
 
 ![The rows-per-page selector open in the results pagination bar, with presets from 50 to 5000, the global value marked as default, an All option and a Custom input](/img/tabularis-page-size-selector.png)
 
@@ -92,19 +92,19 @@ Since v0.18.0 the focused cell moves from the keyboard, not only from a click:
 
 <video src="/videos/posts/tabularis-grid-selection.mp4" poster="/videos/posts/tabularis-grid-selection.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
-| Key | Action |
-| :--- | :--- |
-| `↑` `↓` `←` `→` | Move one cell, clamped at the edges. |
-| `Home` / `End` | First / last column of the current row. |
-| `PageUp` / `PageDown` | Move one viewport of rows. |
-| `Enter` / `F2` | Open the focused cell for editing — the same path as a double-click. |
-| `Cmd/Ctrl + A` | Select all loaded rows. |
-| `Shift + Arrow` | Extend a rectangular cell range by one step (since v0.22.0). The anchor stays fixed, the opposite corner moves. |
-| `Cmd/Ctrl + Arrow` | Jump the focused cell to the grid edge (since v0.22.0). |
-| `Cmd/Ctrl + Shift + Arrow` | Extend the cell range to the grid edge (since v0.22.0). |
-| `Cmd/Ctrl + Home` / `End` | First / last cell of the grid (since v0.22.0). |
-| `Shift + Space` | Select the row(s) of the focused cell or of the current range (since v0.22.0). |
-| `Cmd/Ctrl + Space` or `Cmd/Ctrl + Shift + Space` | Select the column(s) of the focused cell or of the current range (since v0.22.0). |
+| Key                                              | Action                                                                                                          |
+| :----------------------------------------------- | :-------------------------------------------------------------------------------------------------------------- |
+| `↑` `↓` `←` `→`                                  | Move one cell, clamped at the edges.                                                                            |
+| `Home` / `End`                                   | First / last column of the current row.                                                                         |
+| `PageUp` / `PageDown`                            | Move one viewport of rows.                                                                                      |
+| `Enter` / `F2`                                   | Open the focused cell for editing — the same path as a double-click.                                            |
+| `Cmd/Ctrl + A`                                   | Select all loaded rows.                                                                                         |
+| `Shift + Arrow`                                  | Extend a rectangular cell range by one step (since v0.22.0). The anchor stays fixed, the opposite corner moves. |
+| `Cmd/Ctrl + Arrow`                               | Jump the focused cell to the grid edge (since v0.22.0).                                                         |
+| `Cmd/Ctrl + Shift + Arrow`                       | Extend the cell range to the grid edge (since v0.22.0).                                                         |
+| `Cmd/Ctrl + Home` / `End`                        | First / last cell of the grid (since v0.22.0).                                                                  |
+| `Shift + Space`                                  | Select the row(s) of the focused cell or of the current range (since v0.22.0).                                  |
+| `Cmd/Ctrl + Space` or `Cmd/Ctrl + Shift + Space` | Select the column(s) of the focused cell or of the current range (since v0.22.0).                               |
 
 The first key press in a grid with no focused cell yet enters at the top-left cell. Keys are bound to the grid's scroll container rather than to the document, so in a notebook — which mounts one grid per SQL cell — only the grid you are working in responds. Keys are left alone for anything that handles them itself: text inputs, the foreign-key and BLOB buttons inside cells, and the sort buttons in column headers. Closing an edit with `Enter` or `Escape` returns focus to the grid so navigation continues.
 
@@ -128,20 +128,20 @@ Select one or more rows by clicking the row header checkbox (or shift-click / ct
 
 Selecting and copying are separate actions: selecting rows never writes to the clipboard on its own. The row context menu offers the two copy scopes side by side so the difference is explicit:
 
-| Action | Scope |
-| :--- | :--- |
-| **Copy Selected (N)** | The rows currently selected, from the loaded page. |
-| **Copy All (M)** | Every row of the result. The query is re-run unpaginated with the tab's total-row limit stripped, preserving the on-screen sort order. When the total is unknown, the label omits the count and the toast reports the actual number of rows fetched. |
+| Action                | Scope                                                                                                                                                                                                                                                |
+| :-------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Copy Selected (N)** | The rows currently selected, from the loaded page.                                                                                                                                                                                                   |
+| **Copy All (M)**      | Every row of the result. The query is re-run unpaginated with the tab's total-row limit stripped, preserving the on-screen sort order. When the total is unknown, the label omits the count and the toast reports the actual number of rows fetched. |
 
 Every copy path shows a toast with the row count. When a copy covers only the loaded page of a larger result, the toast says "Copied N of M rows" — a partial copy is never silent.
 
 The default format is **CSV**; you can change it in **Settings → General → Default Copy Format** to one of:
 
-| Format | Output |
-| :--- | :--- |
-| **CSV** | Tab- or comma-separated values (delimiter follows `csvDelimiter`), spreadsheet-friendly. A toolbar toggle controls whether the column-header row is included (`csvIncludeHeaders`, on by default). |
-| **JSON** | A JSON array of objects with column names as keys. |
-| **SQL INSERT** | A sequence of `INSERT INTO \`table\` (col1, col2, …) VALUES (…);` statements, one per row. NULLs render as `NULL`, booleans as `TRUE`/`FALSE`, numbers unquoted, strings single-quoted with single quotes doubled-up. |
+| Format         | Output                                                                                                                                                                                                              |
+| :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **CSV**        | Tab- or comma-separated values (delimiter follows `csvDelimiter`), spreadsheet-friendly. A toolbar toggle controls whether the column-header row is included (`csvIncludeHeaders`, on by default).                  |
+| **JSON**       | A JSON array of objects with column names as keys.                                                                                                                                                                  |
+| **SQL INSERT** | A sequence of `INSERT INTO \`table\` (col1, col2, …) VALUES (…);`statements, one per row. NULLs render as`NULL`, booleans as `TRUE`/`FALSE`, numbers unquoted, strings single-quoted with single quotes doubled-up. |
 
 The setting maps to the `copyFormat` key in `config.json` (see [Configuration](/wiki/configuration)).
 
@@ -149,9 +149,9 @@ The setting maps to the `copyFormat` key in `config.json` (see [Configuration](/
 
 Since v0.17.0 you can copy all values of a single column — from the cell context menu (applies to the clicked column, using the selected rows or all visible rows when nothing is selected) or from the column header context menu:
 
-| Action | Output |
-| :--- | :--- |
-| **Copy column values** | Newline-separated, one value per line, `null` for NULL cells. |
+| Action                             | Output                                                                                                                  |
+| :--------------------------------- | :---------------------------------------------------------------------------------------------------------------------- |
+| **Copy column values**             | Newline-separated, one value per line, `null` for NULL cells.                                                           |
 | **Copy column values (IN clause)** | A ready-to-paste SQL list: numbers raw (`1, 2, 3`), strings quoted with `''` escaping (`'O''Brien'`), `NULL` for nulls. |
 
 Since v0.18.0 you can also select whole columns DBeaver-style: `Cmd/Ctrl + click` a column header toggles it and `Shift + click` range-selects headers. Since v0.22.0 a plain click on a header selects that column (replacing the current selection), and sorting moves to the sort icon next to the column name. From the keyboard, `Cmd/Ctrl + Space` (or `Cmd/Ctrl + Shift + Space`) selects the column(s) of the focused cell or range. `Ctrl/Cmd + C` then copies the selected columns for the rows in scope.
@@ -277,7 +277,7 @@ In the row-editor sidebar, any complete BLOB up to 10 KiB opens in a dedicated *
 
 When the active result is a table with foreign keys, FK cells get a click-to-navigate affordance:
 
-<img src="/img/tabularis-foreignkey.gif" alt="Hovering a foreign key cell in the Tabularis data grid and clicking the arrow to open the referenced row in the parent table" loading="lazy" decoding="async" style="width:100%;border-radius:8px;margin:1rem 0" />
+<img src="/img/tabularis-foreignkey.gif" alt="Hovering a foreign key cell in the Tabularis data grid and clicking the arrow to open the referenced row in the parent table" loading="lazy" decoding="async"  />
 
 - **Hover** an FK cell → a small ↗ icon appears on the right of the cell. Clicking it opens (or reuses) a tab against the referenced table with `WHERE "ref_col" = value` pre-applied and runs the query.
 - **Right-click** an FK cell → the context menu's first entry is **Open referenced row in `<table>`**.
@@ -290,7 +290,7 @@ If the referenced table is already open as a tab, that tab is reused — the WHE
 
 ### Related Records Panel
 
-When you want to *check* what a foreign key points at without losing the row you're already on, click the FK value (or pick **Show related record** from the cell context menu) and a **Related Records Panel** slides up from the bottom of the data grid. The parent table stays visible and interactive above it.
+When you want to _check_ what a foreign key points at without losing the row you're already on, click the FK value (or pick **Show related record** from the cell context menu) and a **Related Records Panel** slides up from the bottom of the data grid. The parent table stays visible and interactive above it.
 
 - The panel renders a mini result grid of `SELECT * FROM <ref_table> WHERE <ref_col> = <value> LIMIT 100`, using the same identifier-quoting rules as FK navigation.
 - Clicking a different FK in the parent grid **swaps the panel content in place** — no close-then-reopen.
@@ -301,11 +301,11 @@ When you want to *check* what a foreign key points at without losing the row you
 
 Right-click any column header to open the header context menu. Available actions:
 
-| Action | Description |
-|--------|-------------|
-| **Copy column name** | Copies the column name as plain text to the clipboard. Useful when building queries or referencing column names in other tools. |
-| **Copy column values** | Copies the column's values, newline-separated (see [Column-level copy](#column-level-copy)). |
-| **Copy column values (IN clause)** | Copies the column's values as a ready-to-paste SQL `IN` list. |
+| Action                             | Description                                                                                                                     |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **Copy column name**               | Copies the column name as plain text to the clipboard. Useful when building queries or referencing column names in other tools. |
+| **Copy column values**             | Copies the column's values, newline-separated (see [Column-level copy](#column-level-copy)).                                    |
+| **Copy column values (IN clause)** | Copies the column's values as a ready-to-paste SQL `IN` list.                                                                   |
 
 More actions may appear depending on context (e.g., sort direction, column visibility toggles).
 
@@ -315,14 +315,14 @@ The grid displays `NULL` values with a distinct grey `NULL` badge to differentia
 
 ## Keyboard Shortcuts
 
-| Action | Shortcut |
-|--------|----------|
-| Edit selected cell | `Enter` / `F2` |
-| Confirm edit | `Enter` |
-| Cancel edit | `Escape` |
-| Copy selection (row or cell, depending on focus) | `Ctrl/Cmd + C` |
-| Paste at the selection (staged as pending changes) | `Ctrl/Cmd + V` |
-| Move between cells | Arrow keys |
-| Next page | `Ctrl/Cmd + Right` |
-| Previous page | `Ctrl/Cmd + Left` |
-| Mark selected rows for deletion | `Delete` / `Backspace` |
+| Action                                             | Shortcut               |
+| -------------------------------------------------- | ---------------------- |
+| Edit selected cell                                 | `Enter` / `F2`         |
+| Confirm edit                                       | `Enter`                |
+| Cancel edit                                        | `Escape`               |
+| Copy selection (row or cell, depending on focus)   | `Ctrl/Cmd + C`         |
+| Paste at the selection (staged as pending changes) | `Ctrl/Cmd + V`         |
+| Move between cells                                 | Arrow keys             |
+| Next page                                          | `Ctrl/Cmd + Right`     |
+| Previous page                                      | `Ctrl/Cmd + Left`      |
+| Mark selected rows for deletion                    | `Delete` / `Backspace` |

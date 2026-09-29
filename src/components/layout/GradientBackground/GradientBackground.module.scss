@@ -1,0 +1,56 @@
+.backgroundWrapper {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.aurora {
+    position: absolute;
+    top: 30%;
+    border-radius: 50%;
+    filter: blur(130px);
+    mix-blend-mode: screen;
+    transform: translateY(-50%);
+}
+
+.auroraOne {
+    left: 10%;
+    width: 48vw;
+    height: 48vw;
+    opacity: 0.26;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.6), transparent 70%);
+    animation: driftOne 22s ease-in-out infinite;
+}
+
+.auroraTwo {
+    right: 10%;
+    width: 68vw;
+    height: 68vw;
+    opacity: 0.24;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.55), transparent 70%);
+    animation: driftTwo 26s ease-in-out infinite;
+}
+
+@keyframes driftOne {
+    0%,
+    100% {
+        transform: translateY(-50%) translate(0, 0);
+    }
+    50% {
+        transform: translateY(-50%) translate(4%, 6%);
+    }
+}
+
+@keyframes driftTwo {
+    0%,
+    100% {
+        transform: translateY(-50%) translate(0, 0);
+    }
+    50% {
+        transform: translateY(-50%) translate(-4%, -5%);
+    }
+}

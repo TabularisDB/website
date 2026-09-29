@@ -1,0 +1,16 @@
+.githubButton {
+    margin-top: 1rem;
+
+    & svg {
+        width: 1rem;
+        height: 1rem;
+    }
+}
+
+.timeline {
+    margin-top: 4rem;
+
+    @media (max-width: 767px) {
+        margin-top: 3rem;
+    }
+}
