@@ -1,5 +1,6 @@
 import {getSeoPageBySlug, getSeoPagesBySection} from '@/lib/seo/seoPages';
-import {OG_SIZE, OG_CONTENT_TYPE, renderSimpleOgImage} from '@/lib/og/ogImageSimple';
+import {OG_CONTENT_TYPE, OG_SIZE} from '@/lib/og/og.utils';
+import {renderSimpleOgImage} from '@/lib/og/ogImageSimple';
 
 export const alt = 'Compare Tabularis';
 export const size = OG_SIZE;
