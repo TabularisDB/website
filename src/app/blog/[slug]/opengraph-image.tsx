@@ -64,7 +64,6 @@ export default async function Image({params}: {params: Promise<{slug: string}>})
         return renderCodeTerminalOgImage({
             title: og.title,
             accent: og.accent,
-            claim: og.claim,
             codeTitle: og.codeTitle,
             codeLines: og.codeLines,
         });
@@ -75,7 +74,6 @@ export default async function Image({params}: {params: Promise<{slug: string}>})
         return renderScreenshotSplitOgImage({
             title: og.title,
             accent: og.accent,
-            claim: og.claim,
             image: og.image,
             appLabel: og.appLabel,
             frameless: og.frameless,
