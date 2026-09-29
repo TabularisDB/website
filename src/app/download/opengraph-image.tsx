@@ -1,4 +1,5 @@
-import {OG_SIZE, OG_CONTENT_TYPE, renderSimpleOgImage} from '@/lib/og/ogImageSimple';
+import {OG_CONTENT_TYPE, OG_SIZE} from '@/lib/og/og.utils';
+import {renderSimpleOgImage} from '@/lib/og/ogImageSimple';
 import {APP_VERSION} from '@/lib/version';
 
 export const dynamic = 'force-static';

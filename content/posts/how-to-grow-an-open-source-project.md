@@ -1,14 +1,15 @@
 ---
-title: "How to Grow an Open-Source Project: Lessons on the Road to 5,000 Stars"
-date: "2026-09-18T12:00:00"
-authors: ["debba"]
-tags: ["community", "milestone", "open-source", "engineering"]
-excerpt: "Lessons from growing Tabularis toward 5,000 GitHub stars: make room for contributors, protect everyday workflows, and plan for the maintenance that comes with new features."
+title: 'How to Grow an Open-Source Project: Lessons on the Road to 5,000 Stars'
+date: '2026-09-18T12:00:00'
+authors: ['debba']
+tags: ['community', 'milestone', 'open-source', 'engineering']
+excerpt: 'Lessons from growing Tabularis toward 5,000 GitHub stars: make room for contributors, protect everyday workflows, and plan for the maintenance that comes with new features.'
 og:
-  title: "Grow an open-source project."
-  accent: "On the road to 5,000 stars."
-  claim: "Practical lessons from Tabularis: contributors, reliability, and building something people can keep using."
-  image: "/img/tabularis-sql-editor-data-grid.png"
+    template: 'screenshot-split'
+    title: 'Grow an open-source project.'
+    accent: 'On the road to 5,000 stars.'
+    claim: 'Practical lessons from Tabularis: contributors, reliability, and building something people can keep using.'
+    image: '/img/tabularis-sql-editor-data-grid.png'
 ---
 
 # How to Grow an Open-Source Project: Lessons on the Road to 5,000 Stars
@@ -111,7 +112,6 @@ If you have used Tabularis, including if you tried it and went back to something
 
 Tell us in [GitHub Discussions](https://github.com/TabularisDB/tabularis/discussions) or [Discord](https://discord.com/invite/K2hmhfHRSt). That feedback will help shape what comes next.
 
-
 ---
 
-*About the charts: GitHub API snapshot taken on September 18, 2026. The star curve is reconstructed from the timestamps of current stargazers, so it excludes stars subsequently removed. Pull requests are grouped by merge month in UTC, with bot accounts excluded; September is incomplete. The PR chart covers the main repository only, excludes direct commits, and does not measure the size or effort of contributions.*
+_About the charts: GitHub API snapshot taken on September 18, 2026. The star curve is reconstructed from the timestamps of current stargazers, so it excludes stars subsequently removed. Pull requests are grouped by merge month in UTC, with bot accounts excluded; September is incomplete. The PR chart covers the main repository only, excludes direct commits, and does not measure the size or effort of contributions._
