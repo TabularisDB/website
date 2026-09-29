@@ -58,8 +58,6 @@ export interface CodeTerminalOgOptions {
     title?: string;
     /** Cyan-gradient second headline line. */
     accent?: string;
-    /** Subtitle under the headline. */
-    claim?: string;
     /** Terminal title-bar label. */
     codeTitle?: string;
     /** Terminal body lines (tokenised for colour). */
@@ -99,7 +97,7 @@ export async function renderCodeTerminalOgImage({
                     style={{
                         display: 'flex',
                         flexDirection: 'column',
-                        width: 540,
+                        width: 532,
                         fontFamily: 'JetBrains Mono',
                         background: '#11121c',
                         border: '.1rem solid rgba(148, 163, 184, 0.16)',

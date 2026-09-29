@@ -6,8 +6,6 @@ export interface ScreenshotSplitOgOptions {
     title?: string;
     /** Cyan-gradient second headline line. */
     accent?: string;
-    /** Subtitle under the headline. */
-    claim?: string;
     /** Path under /public to the product screenshot shown on the right. */
     image?: string;
     /** Accepted for frontmatter compatibility; not rendered (no window chrome). */

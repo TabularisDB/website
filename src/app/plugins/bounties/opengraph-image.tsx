@@ -1,5 +1,6 @@
 // app/plugins/bounties/opengraph-image.tsx
-import {OG_SIZE, OG_CONTENT_TYPE, renderSimpleOgImage} from '@/lib/og/ogImageSimple';
+import {OG_CONTENT_TYPE, OG_SIZE} from '@/lib/og/og.utils';
+import {renderSimpleOgImage} from '@/lib/og/ogImageSimple';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-static';
