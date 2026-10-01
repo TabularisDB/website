@@ -1,23 +1,35 @@
 ---
 title: "Command Palette"
 order: 4.2
-excerpt: "Jump to any table, view, routine, or trigger with Cmd+P / Ctrl+P, or run app actions from the action palette on Cmd+Shift+A / Ctrl+Shift+A."
+excerpt: "Search actions and database objects together with Cmd+K / Ctrl+K, jump to any table, view, routine, or trigger with Cmd+P / Ctrl+P, or run editor, result and connection actions from the action palette on Cmd+Shift+A / Ctrl+Shift+A."
 category: "Core Features"
 ---
 
 # Command Palette
 
-Starting with v0.13.0, Tabularis includes a "go to anything" search overlay in the spirit of the palette every code editor has. In v0.20.0 it grew into a full **command palette** with two modes: **object search** (the original Quick Navigator) and an **action palette** for running app commands. A label in the palette header always shows which mode you're in.
+Starting with v0.13.0, Tabularis includes a "go to anything" search overlay in the spirit of the palette every code editor has. In v0.20.0 it grew into a full **command palette** with two modes: **object search** (the original Quick Navigator) and an **action palette** for running app commands. A label in the palette header always shows which mode you're in. Since v0.26.0 the two are also searchable together, and the action palette covers the editor, the result grid and saved connections.
 
 <video src="/videos/wiki/19-quick-navigator.mp4" poster="/videos/wiki/19-quick-navigator.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
 ## Opening It
 
-Press `⌘+P` (macOS) or `Ctrl+P` (Windows/Linux) while a connection is open to search objects, or `⌘+Shift+A` / `Ctrl+Shift+A` for the action palette. Both shortcuts are customizable from **Settings → Keyboard Shortcuts** under the **Navigation** category — see [Keyboard Shortcuts](/wiki/keyboard-shortcuts).
+Press `⌘+K` (macOS) or `Ctrl+K` (Windows/Linux) to search actions and objects in one list (since v0.26.0). `⌘+P` / `Ctrl+P` opens it scoped to object search while a connection is open, and `⌘+Shift+A` / `Ctrl+Shift+A` scoped to actions. All three shortcuts are customizable from **Settings → Keyboard Shortcuts** under the **Navigation** category — see [Keyboard Shortcuts](/wiki/keyboard-shortcuts).
 
 ## The Action Palette
 
-The action palette runs app commands — for example opening settings or opening the current table in a SQL console — filtered as you type, with the same keyboard handling as object search.
+The action palette runs app commands, filtered as you type, with the same keyboard handling as object search. Since v0.26.0 what it offers follows what you are doing:
+
+| Category | Actions |
+| :--- | :--- |
+| **Navigation** | Open settings, open the connection manager |
+| **Connection** | Every saved connection: connect to it, or switch to it if it is already open; open a new console |
+| **Editor** | Run query, run all statements, save the SQL file (file-backed tabs), close the active tab |
+| **Results** | Copy the selected cells, rows or columns, copy a column's values as a SQL `IN (...)` list, copy all rows |
+| **Table** | Open the current table in a SQL console, inspect it, generate SQL, count rows |
+
+Result actions work in both tabbed and stacked [multi-result](/wiki/editor) views and include pending inserted rows; each copy label states the number of rows the command will copy. The navigation commands stay available while the editor is loading or showing an error, so the palette is always a way back to Settings or the connection manager.
+
+<video src="/videos/posts/tabularis-command-palette-actions.mp4" poster="/videos/posts/tabularis-command-palette-actions.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
 Commands are **scope-aware**: each editor pane registers the connection and table it owns, and the palette resolves commands against the pane you're actually working in. In [split view](/wiki/split-view) with two connections, the action palette invoked from each pane targets that pane's connection and table — not whichever connection happens to be globally active.
 

@@ -37,7 +37,7 @@ Subqueries are scoped per parenthesis frame (the outer clause is restored when t
 
 ### Nearest-Table Ranking
 
-Since v0.24.0, when multiple tables are in scope, autocomplete ranks columns from the nearest relevant table first. In an `ON` or `USING` clause this is the table currently being joined; in SELECT, WHERE and SET contexts it is the primary table. Aliases and nested subquery scopes are respected. Other in-scope columns remain available below them, and single-table queries are unchanged.
+Since v0.24.0, when multiple tables are in scope, autocomplete ranks columns from the nearest relevant table first. In an `ON` or `USING` clause this is the table currently being joined; in SELECT, WHERE and SET contexts it is the primary table. Aliases and nested subquery scopes are respected. Other in-scope columns remain available below them, and single-table queries are unchanged. Since v0.26.0 quoted identifiers and keyword-like table names no longer break the detection, and the nearest table is always fetched first, so it is not cut off when more than five tables are in scope and its columns win for shared names such as `id`.
 
 ### Accepting suggestions
 
@@ -203,6 +203,10 @@ Inspired by SQL Server Management Studio, the stacked view displays **all query 
 
 Each result section shows the query label, a collapsible SQL preview, row count, execution time, and pagination controls — all inline in the header. When collapsed, the header still shows key metadata (row count, execution time, error summary).
 
+Since v0.26.0 every result grid, in tab and stacked view alike, keeps its scroll position when you switch to another editor tab and back. The position is reset by a new run, a page change or a re-run of that result.
+
+<video src="/videos/posts/tabularis-grid-scroll-restore.mp4" poster="/videos/posts/tabularis-grid-scroll-restore.jpg" controls autoplay loop muted playsinline></video>
+
 ### Window Controls & Detachable Results
 
 The right side of the results bar carries a set of window controls:
@@ -318,6 +322,19 @@ Since v0.13.0, history writes are **atomic** (written to a temp file, then renam
 
 ### Transaction Management
 By default, queries are executed in auto-commit mode. However, you can manually wrap your statements in `BEGIN; ... COMMIT;` blocks. If an error occurs midway through a block, Tabularis halts execution and outputs the precise line and database engine error.
+
+#### A tab keeps its transaction between runs (PostgreSQL)
+
+Since v0.26.0, on PostgreSQL (the built-in driver, and the [PostgreSQL plugin](https://github.com/TabularisDB/tabularis-postgresql-plugin) from 1.0.0-rc.5), an editor tab behaves like a session. `BEGIN`, the changes, a verifying `SELECT` and the final `COMMIT` can each be a separate run: when a run leaves an explicit transaction open, the tab keeps that connection instead of returning it to the pool, and the next run from the same tab continues the same transaction.
+
+<video src="/videos/posts/tabularis-tab-transaction.mp4" poster="/videos/posts/tabularis-tab-transaction.jpg" controls autoplay loop muted playsinline></video>
+
+- While a transaction is open the tab shows a **TX** badge (*"Transaction open — this tab keeps its connection until you COMMIT or ROLLBACK"*). Its uncommitted changes are not visible to other tabs.
+- `COMMIT`, `ROLLBACK`, closing the tab, disconnecting, quitting the app or 30 minutes of inactivity release the connection. A released connection is always rolled back before it goes back to the pool.
+- Transaction control is detected from a statement's leading keywords (`BEGIN`, `START TRANSACTION`, `COMMIT`, `END`, `ROLLBACK`, `ABORT`, `PREPARE TRANSACTION`, `... AND CHAIN`). `ROLLBACK TO SAVEPOINT` keeps the transaction open.
+- After a failed statement the transaction stays open but aborted, so you can `ROLLBACK` from the same tab. A failed `COMMIT` ends it.
+- Paging, row counts, exports and **Copy all rows** run on the tab's session, so they see its uncommitted changes.
+- Tabs that never open a transaction hold no connection. Other drivers keep the per-run behaviour.
 
 ### Powerful Data Grid
 The results grid is heavily optimized to handle thousands of rows without dropping frames:

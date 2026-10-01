@@ -117,6 +117,12 @@ yay -S tabularis-bin
 
 [![AUR](https://img.shields.io/badge/AUR-tabularis--bin-1793D1?logo=archlinux&logoColor=white)](https://aur.archlinux.org/packages/tabularis-bin)
 
+Since v0.26.0 the [nightly channel](/wiki/updates#release-channels) is on the AUR too, as `tabularis-nightly-bin`:
+
+```bash
+yay -S tabularis-nightly-bin
+```
+
 ## Updates
 
 Tabularis checks for new releases against the GitHub Releases API on startup (if `autoCheckUpdatesOnStartup` is enabled, which is the default). When an update is available, a notification appears in the UI with the option to download and install it automatically.

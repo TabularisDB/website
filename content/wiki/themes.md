@@ -17,6 +17,10 @@ Switch themes instantly in **Settings → Appearance**. Changes apply immediatel
 - **Dark Themes**: Tabularis Dark, Monokai, One Dark Pro, Nord, Dracula, GitHub Dark, Solarized Dark, Gruvbox Material Dark, High Contrast.
 - **Light Themes**: Tabularis Light, Solarized Light, Gruvbox Material Light.
 
+Since v0.26.0 every built-in theme meets **WCAG 2.2 AA** contrast on the color pairs the UI actually paints (text tiers on each background, accent text, labels on accent fills, data colors and the focus border at 3:1). The fixes changed lightness only and kept each theme's hue; the most visible differences are darker status colors in Solarized, Nord and Tabularis Light and a lighter accent and focus ring in GitHub Dark. The check runs in CI on every change, so a new preset or a token change cannot regress it.
+
+<video src="/videos/posts/tabularis-theme-tokens.mp4" poster="/videos/posts/tabularis-theme-tokens.jpg" controls autoplay loop muted playsinline></video>
+
 ## Theme Mode: Static or Follow System
 
 Since v0.22.0 the **Theme Mode** switch in **Settings → Appearance** decides whether the theme is fixed or tracks the operating system:
@@ -65,7 +69,11 @@ Packages are stored by kind under the app data directory, in `plugins/themes/<pa
 
 ### Authoring a theme
 
-`@tabularis/create-plugin` 0.3.0 ships a second binary, `tabularis-theme`, which scaffolds a two-variant repository, validates both variants offline with the same schemas the app uses, and builds a deterministic ZIP. The generated repository includes a read-only validation workflow for branches and pull requests and a separate draft-release workflow for tags. Theme definitions and manifests may carry optional `$schema` hints for editor completion; the runtime ignores them for validation and never fetches a remote schema. The full guide is [THEMES.md](https://github.com/TabularisDB/tabularis/blob/main/packages/create-plugin/THEMES.md); [Ember](https://github.com/TabularisDB/tabularis-ember-theme) is the reference two-variant theme.
+`@tabularis/create-plugin` (0.3.0, 0.4.0 since v0.26.0) ships a second binary, `tabularis-theme`, which scaffolds a two-variant repository, validates both variants offline with the same schemas the app uses, and builds a deterministic ZIP. The generated repository includes a read-only validation workflow for branches and pull requests and a separate draft-release workflow for tags. Theme definitions and manifests may carry optional `$schema` hints for editor completion; the runtime ignores them for validation and never fetches a remote schema. The full guide is [THEMES.md](https://github.com/TabularisDB/tabularis/blob/main/packages/create-plugin/THEMES.md); [Ember](https://github.com/TabularisDB/tabularis-ember-theme) is the reference two-variant theme.
+
+#### Package identity: `id` and `name`
+
+Since v0.26.0 a theme manifest may carry an optional `id`, the stable package identifier (a lowercase slug), next to `name`, which then becomes a free-form display name. Without `id`, `name` must still be a slug, so packages installed before keep the same folder and selection IDs. The app validates only the runtime contract (`id`, `name`, `version`, `kind`, `min_runtime_version`, `theme_schema_version`, `theme_variants`) and tolerates extra catalog metadata, which the registry validates with `tabularium validate .tabularium --kind theme`. The archive still admits only the manifest, README/LICENSE and the declared variant files.
 
 ## Typography Configuration
 
@@ -79,7 +87,7 @@ Readability is critical when parsing logs or complex queries.
 
 ## CSS Variables
 
-Tabularis applies themes by setting CSS custom properties on the `<html>` element. The full set of variables used by the UI is:
+Tabularis applies themes by setting CSS custom properties on the `<html>` element. Since v0.26.0 the whole UI reads its colors, radii and fonts from these variables: status banners derive from the accents, rounded corners follow `layout.borderRadius` (so square-corner themes are square everywhere), the grid paints row states and key icons with the `semantic-*` tokens, and the ER diagram, visual query builder and notebook charts follow the theme too. The **System** font setting is now labelled **Theme default** and follows the theme's `typography.fontFamily` unless you pick an explicit font. The full set of variables used by the UI is:
 
 ```css
 /* Background */

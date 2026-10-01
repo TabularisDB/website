@@ -98,6 +98,7 @@ Every plugin ships one manifest that tells Tabularis its capabilities and the da
 | `explain` | bool | `true` if the driver implements the `explain_query` method (EXPLAIN / query plan support). Enables the Visual EXPLAIN button in the SQL editor and notebook cells; when `false` or omitted, the Visual EXPLAIN UI is hidden for connections using this driver. Defaults to `false`. |
 | `sql_dialect` | string | Optional statement-splitting dialect: `postgres`, `mysql`, `mssql`, `sqlite`, `oracle`, or `generic`. Oracle-like plugins, including DM/Dameng, should use `"oracle"`. |
 | `supports_ssl` | bool | `true` to show the SSL/TLS configuration tab (mode + CA/client cert/key) in the connection modal. The values are forwarded to the plugin as `ssl_mode`, `ssl_ca`, `ssl_cert`, and `ssl_key` in `ConnectionParams`. Network drivers only. Defaults to `false`. |
+| `table_query_templates` | bool | Since v0.26.0. Opts the **Generate SQL** dialog into the optional `get_table_query_template` RPC for SELECT, UPDATE and DELETE previews (see [Table Query Templates](#table-query-templates-optional)). Defaults to `false`; built-in drivers and plugins without it keep the host's templates. |
 | `single_database` | bool | `true` for drivers exposing a single implicit database (e.g. a flat search/document store like Meilisearch). Skips the database tab and the database-name field in the connection modal. |
 
 ### Data Type Categories
@@ -134,6 +135,16 @@ Plugins can declare custom configuration fields in their manifest. Tabularis ren
 Built-in drivers use the same mechanism for their own settings. Since v0.23.0 the built-in PostgreSQL driver exposes **Pool Max Size** (default 10, capped at 64; invalid values fall back to the default), the maximum number of connections kept in its pool, which is worth lowering behind pgBouncer.
 
 ![Plugin settings modal with configurable fields](/img/posts/plugin-settings-modal.png)
+
+### Call timeout and cancellation
+
+Since v0.26.0 the time Tabularis waits for a plugin to answer a single call, queries included, is configurable instead of a fixed 120 seconds. **Settings → Plugins → Plugin runtime → Call timeout** sets it for all plugins (default 120, `0` disables the limit), stored as `pluginCallTimeoutSeconds` in `config.json`. Each plugin's settings page has its own **Call timeout** override, stored as `plugins.<id>.callTimeoutSeconds`: blank inherits the global value, `0` disables the limit for that plugin only. A change applies to the next call without restarting the plugin. Plugin initialization keeps a separate 15-second limit.
+
+When a call times out, the host sends the plugin a `cancel` notification for that request id (see [Cancel Notification](#cancel-notification-optional)), so a plugin that supports it can stop the statement on the server instead of leaving it running.
+
+<video src="/videos/posts/tabularis-plugin-call-timeout.mp4" poster="/videos/posts/tabularis-plugin-call-timeout.jpg" controls autoplay loop muted playsinline></video>
+
+![The PostgreSQL plugin settings page with a Call timeout override inheriting the global 120 s](/img/tabularis-plugin-call-timeout-override.png)
 
 ### Declaring settings in the manifest
 
@@ -374,6 +385,39 @@ Execute a SQL query and return results.
   "execution_time_ms": 5
 }
 ```
+
+#### Editor sessions and open transactions *(optional, since v0.26.0)*
+
+`execute_query` and `execute_query_batch` may carry a `session_id`, the id of the editor tab that sent the run. A plugin that supports sessions keeps that session's connection when a run leaves an explicit transaction open, so `BEGIN`, the changes, a verifying `SELECT` and `COMMIT` can be separate runs. With a `session_id` it replies `{ "result": QueryResult, "in_transaction": bool }` (or `{ "results": [...], "in_transaction": bool }` for a batch); the host recognizes the wrapper by the presence of `in_transaction`, so a column named `result` is not mistaken for it, and reads `null` as `false`. The host calls `release_session` when the tab closes, disconnects or the app exits, and tolerates method-not-found. Plugins that ignore `session_id` and reply with the bare shapes keep the per-run behaviour. The [PostgreSQL plugin](https://github.com/TabularisDB/tabularis-postgresql-plugin) implements this from 1.0.0-rc.5.
+
+### Cancel Notification *(optional)*
+
+Since v0.26.0, when a call exceeds the [call timeout](#call-timeout-and-cancellation) while it is still pending, the host writes a JSON-RPC notification to the plugin's stdin:
+
+```json
+{"jsonrpc":"2.0","method":"cancel","params":{"id":42}}
+```
+
+`params.id` is the id of the request that timed out. There is no top-level `id`, so this is a notification: the plugin must not reply. Ignore ids you do not know (the request may have finished in the meantime), and keep reading stdin while a request runs so the notification can arrive. No cancel is sent for a response that raced the timeout, or when the timeout is disabled. Plugins that do not implement `cancel` keep working; a reply to it matches no pending request and is dropped. The [PostgreSQL plugin](https://github.com/TabularisDB/tabularis-postgresql-plugin) implements it from 1.0.0-rc.6 with `pg_cancel_backend`.
+
+### Table Query Templates *(optional)*
+
+Since v0.26.0, a driver that declares `table_query_templates: true` is asked for the SELECT, UPDATE and DELETE previews in **Generate SQL** through `get_table_query_template`. The method returns a SQL string and must not execute it.
+
+```json
+{
+  "params": ConnectionParams,
+  "request": {
+    "table": "orders",
+    "schema": "sales",
+    "kind": "select",
+    "columns": ["id", "status"],
+    "limit": 100
+  }
+}
+```
+
+`kind` is `select`, `update` or `delete`. Table, schema and column names are unquoted identifiers that the driver must quote and escape. `columns` defaults to `[]` (SELECT uses `*`); `schema` and `limit` may be null. SELECT All passes no limit, SELECT Fields passes 100, and UPDATE/DELETE reject a limit. UPDATE and DELETE templates must include `WHERE 1 = 0`, and UPDATE values use the editor's `:value_1`, `:value_2` placeholders. Only a `-32601` error falls back to the host template; other errors are shown to the user. Older hosts ignore the capability, so it does not require a higher `min_runtime_version`. The [SQL Server plugin](https://github.com/TabularisDB/tabularis-sqlserver-plugin) uses it from 1.0.0-beta.3.
 
 ### Materialized Views *(optional)*
 
