@@ -301,11 +301,11 @@
       "id": "cassandra",
       "name": "Cassandra",
       "target": "Wide-column plugin",
-      "status": "open",
-      "tagline": "Expose keyspaces, tables, CQL queries, and practical inspection workflows.",
-      "description": "Cassandra support should be scoped around CQL query execution, keyspace/table discovery, paging, and safe read workflows before attempting broad administration features.",
-      "stage": "Open brief",
-      "nextStep": "Define a minimal CQL driver contract and identify whether ScyllaDB can share the same implementation.",
+      "status": "shipped",
+      "tagline": "Browse keyspaces, page through CQL results and edit rows from the desktop.",
+      "description": "Cassandra ships as a community plugin (0.1.0) written in Rust on scylla-rust-driver: keyspace, table, column and index discovery, CQL queries with native forward paging, and row editing for single-column primary keys. TLS and grid edits on composite keys are not supported yet.",
+      "stage": "Shipped",
+      "nextStep": "Install the Cassandra plugin from the registry, test it against your clusters, and report gaps in the tabularis-cassandra-plugin repository.",
       "difficulty": "High",
       "accent": "#60a5fa",
       "radar": {
@@ -314,41 +314,41 @@
         "scale": 0.95
       },
       "tags": [
+        "shipped",
         "wide-column",
-        "cql",
-        "features"
+        "cql"
       ],
       "capabilities": [
         {
           "label": "keyspaces",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "tables",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "cql",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "paging",
-          "state": "needed"
+          "state": "ready"
         }
       ],
-      "signal": "Worth treating as the base driver for ScyllaDB compatibility too.",
-      "claimUrl": "https://github.com/TabularisDB/tabularis/discussions",
-      "sponsorUrl": "/sponsors"
+      "signal": "Shipped from the bounty as one plugin for Cassandra and ScyllaDB.",
+      "claimUrl": "/plugins",
+      "sponsorUrl": "/plugins"
     },
     {
       "id": "scylladb",
       "name": "ScyllaDB",
       "target": "Cassandra-compatible workflow",
-      "status": "open",
-      "tagline": "Use the Cassandra path as the base, then validate Scylla-specific behavior.",
-      "description": "ScyllaDB can likely ride on a Cassandra/CQL driver, but full support should still document compatibility and any metadata or paging differences.",
-      "stage": "Via Cassandra",
-      "nextStep": "Scope ScyllaDB as a validation layer on top of the Cassandra bounty.",
+      "status": "shipped",
+      "tagline": "Use the Cassandra plugin against ScyllaDB, verified end to end.",
+      "description": "ScyllaDB is served by the Cassandra plugin (0.1.0) over the shared CQL protocol, verified against a real ScyllaDB container for connection, schema discovery, querying and row editing. Shard-aware and tablet-aware routing are not implemented yet.",
+      "stage": "Shipped",
+      "nextStep": "Install the Cassandra plugin from the registry and report any ScyllaDB-specific gaps in the tabularis-cassandra-plugin repository.",
       "difficulty": "Medium",
       "accent": "#a78bfa",
       "radar": {
@@ -357,31 +357,31 @@
         "scale": 0.84
       },
       "tags": [
+        "shipped",
         "wide-column",
-        "cql",
         "cassandra-compatible"
       ],
       "capabilities": [
         {
           "label": "keyspaces",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "tables",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "cql",
-          "state": "needed"
+          "state": "ready"
         },
         {
           "label": "docs",
-          "state": "stretch"
+          "state": "ready"
         }
       ],
-      "signal": "Best bundled with Cassandra so the board does not create two duplicate driver efforts.",
-      "claimUrl": "https://github.com/TabularisDB/tabularis/discussions",
-      "sponsorUrl": "/sponsors"
+      "signal": "Shipped through the Cassandra plugin, so the board did not split into two driver efforts.",
+      "claimUrl": "/plugins",
+      "sponsorUrl": "/plugins"
     },
     {
       "id": "firebird",

@@ -17,8 +17,10 @@ Tabularis ships with a set of keyboard shortcuts for common actions across navig
 
 | Action | macOS | Windows / Linux |
 | :--- | :--- | :--- |
+| Command palette: actions and objects together (since v0.26.0) | `⌘+K` | `Ctrl+K` |
 | Command palette: object search (tables, views, routines, triggers) | `⌘+P` | `Ctrl+P` |
 | Command palette: actions | `⌘+Shift+A` | `Ctrl+Shift+A` |
+| Open settings (since v0.26.0) | `⌘+,` | `Ctrl+,` |
 | Focus the sidebar table filter | `⌘+Shift+F` | `Ctrl+Shift+F` |
 | Toggle sidebar | `⌘+B` | `Ctrl+B` |
 | Toggle row editor sidebar (right) | `⌘+Shift+B` | `Ctrl+Shift+B` |
@@ -94,6 +96,12 @@ Most shortcuts can be reassigned from **Settings → Keyboard Shortcuts**. Each 
 
 Click **Edit** on any customizable row, then press the key combination you want to assign. The recorder captures modifier keys (Cmd/Ctrl, Shift, Alt) plus the final key. Press **Escape** to cancel. Changes are saved immediately to `keybindings.json` in your config directory.
 
+Since v0.26.0 the editor validates the combination before saving it. A combination without a modifier is refused with *"Add a modifier key, such as Ctrl or Alt."*, and one already used by another shortcut names it (*"This shortcut conflicts with “Toggle sidebar”."*) instead of silently replacing it.
+
+![The shortcut editor reporting a conflict with an existing binding](/img/tabularis-shortcut-conflict.png)
+
+Shortcuts also record the physical key (`code`) next to the character (`key`), so they keep working on non-US layouts such as AZERTY or QWERTZ. An override matches either one, which means that on some layouts a shortcut has two triggers: on AZERTY, **Open settings** fires on both `Ctrl+,` and `Ctrl+;`. This is intended.
+
 To revert a customized shortcut to its default, click the **↺** (reset) button on its row.
 
 ---
@@ -113,8 +121,8 @@ The file is only created when you first customize a shortcut. Its format is a ma
 ```json
 {
   "toggle_sidebar": {
-    "mac": { "metaKey": true, "key": "k" },
-    "win": { "ctrlKey": true, "key": "k" }
+    "mac": { "metaKey": true, "key": "e", "code": "KeyE" },
+    "win": { "ctrlKey": true, "key": "e", "code": "KeyE" }
   },
   "new_tab": {
     "mac": { "metaKey": true, "key": "n" },
@@ -128,6 +136,7 @@ Each `KeyMatch` supports the following fields:
 | Field | Type | Description |
 | :--- | :--- | :--- |
 | `key` | string | The key value (e.g. `"b"`, `"ArrowRight"`, `"F5"`) |
+| `code` | string | Optional physical key (e.g. `"KeyB"`, `"Digit1"`, `"Comma"`), matched independently of the keyboard layout (since v0.26.0) |
 | `ctrlKey` | boolean | Ctrl modifier |
 | `metaKey` | boolean | Cmd/Meta modifier |
 | `shiftKey` | boolean | Shift modifier |

@@ -11,7 +11,7 @@ Since v0.25.0 a database connection can be forwarded through an **AWS Systems Ma
 
 ## Requirements
 
-- The **AWS CLI** (`aws`) in your `PATH`, configured with credentials that can start sessions.
+- The **AWS CLI** (`aws`), configured with credentials that can start sessions. Since v0.26.0 Tabularis also looks in the standard install locations (`/opt/homebrew/bin`, `/usr/local/bin`, `/usr/local/sessionmanagerplugin/bin`) after your `PATH`, because an app launched from Finder or a desktop launcher does not inherit your shell profile. A CLI on your own `PATH` still takes priority.
 - The **Session Manager plugin** (`session-manager-plugin`) installed for the AWS CLI.
 - A target instance registered as a **managed node** in Systems Manager, with the SSM Agent running.
 - IAM permission `ssm:StartSession` on the target and on the document that will be used (see below).

@@ -53,7 +53,14 @@ Tabularis supports **inline cell editing** for tables. Changes are tracked as pe
 
 ### Editing a Cell
 
-Double-click a cell to enter edit mode. Type the new value and press `Enter` to confirm or `Escape` to cancel. Edited cells are highlighted to distinguish them from unchanged values.
+Double-click a cell to enter edit mode. Type the new value and press `Enter` to confirm or `Escape` to cancel. Edited cells are highlighted to distinguish them from unchanged values. Since v0.26.0 the edited value itself is drawn in the primary text color, so it stays readable on every theme; the row tint, the italic style and the `NEW` marker on inserted rows show the state.
+
+**Date cells** with no value open the date picker on today's date as a starting point. Since v0.26.0, click **Use this value** or press `Enter` to accept the date on screen without changing a field first.
+
+<div class="post-gallery">
+  <img src="/img/tabularis-grid-new-row-contrast.png" alt="A new row and a modified row in the data grid with readable edited values" loading="lazy">
+  <img src="/img/tabularis-date-use-this-value.png" alt="The date editor on a new row with the Use this value button" loading="lazy">
+</div>
 
 **ENUM columns** (MySQL and PostgreSQL) render a **dropdown of the allowed values** instead of a free-text input — both in the grid and in the row-editor sidebar. Nullable ENUM columns include a NULL option. The allowed values are introspected from the database (`information_schema` on MySQL, `pg_enum` on PostgreSQL), and MySQL SET columns get the same treatment with multi-value checkboxes.
 
@@ -245,7 +252,7 @@ The expansion editor supports a **Diff toggle** (off by default) that compares t
 
 JSON cells additionally show a **braces icon**. Clicking it opens the cell in a **standalone Tauri window** dedicated to the value, with the same JSON editor and Diff / Side-by-side toggles plus a Save button. Multiple cells can have their viewers open at the same time — each window keeps its own session and remembers its bounds. Saving flows back to the grid as a pending change; close the window without saving to discard the edit.
 
-Double-clicking a JSON cell opens the viewer directly in edit mode (skipping the chevron). Since v0.25.0 the viewer also opens from read-only query and notebook result grids, by double-click or Enter, including on generated columns; the blob editor and the row editor sidebar stay behind the read-only guard.
+Double-clicking a JSON cell opens the viewer directly in edit mode (skipping the chevron). Since v0.25.0 the viewer also opens from read-only query and notebook result grids, by double-click or Enter, including on generated columns; the blob editor and the row editor sidebar stay behind the read-only guard. Since v0.26.0 the right-click menu on a read-only result also offers **Open in JSON Editor**, while mutation actions such as Set NULL, paste, duplicate and delete stay hidden.
 
 There is no separate viewer window for plain text cells — text values aren't compared across windows as often as JSON, and the inline chevron is the entry point that mattered.
 
