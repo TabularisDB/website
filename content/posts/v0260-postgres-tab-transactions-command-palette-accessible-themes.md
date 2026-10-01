@@ -3,7 +3,7 @@ title: "v0.26.0: Transactions That Span Runs, a Command Palette That Acts, and T
 date: "2026-10-01T10:00:00"
 release: "v0.26.0"
 tags: ["release", "feature", "bugfix", "postgres", "mysql", "ui", "ux", "data-grid", "plugin", "community"]
-excerpt: "v0.26.0 keeps a PostgreSQL transaction open across separate runs of the same editor tab, turns the command palette into a context-aware action surface with remappable shortcuts and conflict checks, routes every UI color, radius and font through the theme with WCAG AA contrast and accessibility checks in CI, lets driver plugins generate their own SELECT, UPDATE and DELETE templates, makes the plugin call timeout configurable and cancels timed-out PostgreSQL plugin queries on the server, keeps grid scroll positions across tab switches, lands alongside new Cassandra/ScyllaDB and Oracle plugins and the first published theme package, and carries community fixes for MySQL foreign-key lookups, corporate TLS proxies, AWS CLI discovery and quoted file paths."
+excerpt: "v0.26.0 keeps a PostgreSQL transaction open across runs of the same tab, turns the command palette into an action surface, routes every UI color through the theme with WCAG AA checks in CI, and cancels timed-out plugin queries on the server."
 og:
   template: "screenshot-split"
   title: "v0.26.0:"

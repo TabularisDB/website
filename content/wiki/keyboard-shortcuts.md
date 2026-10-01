@@ -121,8 +121,8 @@ The file is only created when you first customize a shortcut. Its format is a ma
 ```json
 {
   "toggle_sidebar": {
-    "mac": { "metaKey": true, "key": "k", "code": "KeyK" },
-    "win": { "ctrlKey": true, "key": "k", "code": "KeyK" }
+    "mac": { "metaKey": true, "key": "e", "code": "KeyE" },
+    "win": { "ctrlKey": true, "key": "e", "code": "KeyE" }
   },
   "new_tab": {
     "mac": { "metaKey": true, "key": "n" },
