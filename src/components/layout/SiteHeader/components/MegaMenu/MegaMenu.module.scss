@@ -26,15 +26,6 @@
     border-bottom: 0.075rem solid var(--color-border);
     z-index: 1;
 
-    &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 2rem;
-        height: 0.85rem;
-    }
-
     &.open {
         opacity: 1;
         pointer-events: auto;
