@@ -32,7 +32,7 @@ export function Features() {
                 <span className="eyebrow">
                     <ListIcon /> Features
                 </span>
-                <h1 className="title">A complete SQL workspace: editor, notebooks, query builder, and more.</h1>
+                <h2 className="title">A complete SQL workspace: editor, notebooks, query builder, and more.</h2>
                 <p className="description">
                     Everything you need to write, understand, and manage SQL, without leaving the app.
                 </p>

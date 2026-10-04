@@ -111,7 +111,7 @@ export default function PluginBountyBoardPage() {
             <section className={styles.market}>
                 <header className="section-header">
                     <span className="eyebrow">Active work</span>
-                    <h3 className="title">Find the right target.</h3>
+                    <h2 className="title">Find the right target.</h2>
                     <p className="description">
                         Search by database or narrow the board by status, focus, and difficulty. Each card points to the
                         discussion, issue, or repository where work happens.
@@ -123,7 +123,7 @@ export default function PluginBountyBoardPage() {
             <section className={styles.market}>
                 <header className="section-header">
                     <span className="eyebrow">Shipped</span>
-                    <h3 className="title">Proof that the market can close.</h3>
+                    <h2 className="title">Proof that the market can close.</h2>
                     <p className="description">
                         Every plugin below started as an open bounty. They prove the board isn&apos;t just a wishlist.
                     </p>

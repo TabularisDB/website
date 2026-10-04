@@ -18,7 +18,7 @@ export function CompareOverview() {
                     <ArrowLeftRight />
                     Compare
                 </span>
-                <h1 className="title">Why teams are switching to Tabularis.</h1>
+                <h2 className="title">Why teams are switching to Tabularis.</h2>
                 <p className="description">
                     Notebooks, plugins, and AI-native workflows: see what the others are missing.
                 </p>

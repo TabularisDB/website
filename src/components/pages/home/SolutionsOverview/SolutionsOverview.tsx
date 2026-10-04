@@ -27,7 +27,7 @@ export function SolutionsOverview() {
                     <LayersIcon />
                     Solutions
                 </span>
-                <h1 className="title">Start from what you actually need.</h1>
+                <h2 className="title">Start from what you actually need.</h2>
                 <p className="description">Same client, different entry point — pick the one closest to your setup.</p>
             </header>
 

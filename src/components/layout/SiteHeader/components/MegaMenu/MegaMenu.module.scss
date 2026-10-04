@@ -20,14 +20,14 @@
     top: 100%;
     left: 0rem;
     width: 100%;
-    opacity: 0;
+    visibility: hidden;
     pointer-events: none;
     background-color: var(--color-bg);
     border-bottom: 0.075rem solid var(--color-border);
     z-index: 1;
 
     &.open {
-        opacity: 1;
+        visibility: visible;
         pointer-events: auto;
     }
 }

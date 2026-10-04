@@ -23,7 +23,7 @@
             "permanent": true
         },
         {
-            "source": "/videos/:slug",
+            "source": "/videos/:slug([^./]+)",
             "destination": "/demos/:slug",
             "permanent": true
         },

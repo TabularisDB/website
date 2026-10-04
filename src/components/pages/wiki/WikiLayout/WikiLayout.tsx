@@ -18,7 +18,13 @@ export function WikiLayout({categories, children, rightSidebar}: WikiLayoutProps
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     useEffect(() => {
-        window.scrollTo(0, 0);
+        const id = decodeURIComponent(window.location.hash.slice(1));
+        const target = id ? document.getElementById(id) : null;
+
+        requestAnimationFrame(() => {
+            if (target) target.scrollIntoView({block: 'start', behavior: 'instant'});
+            else window.scrollTo({top: 0, behavior: 'instant'});
+        });
     }, []);
 
     return (

@@ -177,13 +177,13 @@ export function CookieConsent() {
             </div>
 
             {showDetailedView ? (
-                <span className={styles.closeButton} onClick={() => setVisible(false)}>
+                <button type="button" className={styles.closeButton} onClick={() => setVisible(false)}>
                     Close <XIcon size={14} />
-                </span>
+                </button>
             ) : (
-                <span className={styles.customizeButton} onClick={() => setShowDetailedView(true)}>
+                <button type="button" className={styles.customizeButton} onClick={() => setShowDetailedView(true)}>
                     Customize <ArrowRight size={14} />
-                </span>
+                </button>
             )}
         </div>
     );

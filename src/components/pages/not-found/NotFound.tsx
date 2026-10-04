@@ -4,10 +4,14 @@ import {Button} from '@/components/ui/Button/Button';
 import styles from './NotFound.module.scss';
 import clsx from 'clsx';
 import {ArrowLeft} from 'lucide-react';
-import {usePathname} from 'next/navigation';
+import {useState, useEffect} from 'react';
 
 export default function NotFound() {
-    const pathname = usePathname();
+    const [pathname, setPathname] = useState('');
+
+    useEffect(() => {
+        setPathname(window.location.pathname);
+    }, []);
 
     return (
         <section className={clsx(styles.section, 'container')}>

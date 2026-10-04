@@ -139,6 +139,9 @@
 
 .lineCode {
     color: var(--color-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .keyword {
