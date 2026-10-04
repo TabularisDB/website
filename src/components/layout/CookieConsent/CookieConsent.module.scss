@@ -11,7 +11,7 @@
     align-items: center;
     gap: 0.5rem;
     width: min(18rem, 100%);
-    z-index: 9999;
+    z-index: calc(var(--z-menu) - 1);
 }
 
 .title {

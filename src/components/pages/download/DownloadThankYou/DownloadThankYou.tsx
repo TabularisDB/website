@@ -35,7 +35,8 @@ const RESOURCES = [
 
 export function DownloadThankYou() {
     const searchParams = useSearchParams();
-    const url = searchParams.get('url');
+    const rawUrl = searchParams.get('url');
+    const url = rawUrl?.startsWith('https://github.com/TabularisDB/') ? rawUrl : null;
 
     useEffect(() => {
         if (!url) return;
