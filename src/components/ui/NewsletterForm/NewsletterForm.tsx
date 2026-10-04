@@ -45,12 +45,10 @@ function isSuspiciousEmail(value: string): boolean {
 export function NewsletterForm({title, description, buttonLabel}: NewsletterFormProps) {
     const formRef = useRef<HTMLFormElement>(null);
     const mountedAt = useRef(0);
-    const [ready, setReady] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         mountedAt.current = Date.now();
-        setReady(true);
 
         const form = formRef.current;
         if (!form) return;
@@ -120,7 +118,7 @@ export function NewsletterForm({title, description, buttonLabel}: NewsletterForm
                     />
                 </div>
 
-                <button type="submit" className={styles.button} disabled={!ready}>
+                <button type="submit" className={styles.button}>
                     <span className={styles.buttonLabel}>{buttonLabel}</span>
                     <SendIcon className={styles.sendIcon} aria-hidden="true" />
                 </button>

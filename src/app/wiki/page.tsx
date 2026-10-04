@@ -1,26 +1,14 @@
 import {WikiLayout} from '@/components/pages/wiki/WikiLayout/WikiLayout';
-import type {WikiCategory} from '@/lib/wiki';
+import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
 import {getWikiPagesByCategory, WIKI_CATEGORIES} from '@/lib/wiki';
-import {BookOpen, Bot, Database, LayoutGrid, Plug, Rocket, Settings2, Shield} from 'lucide-react';
 import type {Metadata} from 'next';
 import Link from 'next/link';
 import styles from './WikiIndexPage.module.scss';
-import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
+import {CATEGORY_ICONS} from '@/components/pages/wiki/CategoryLabel/CategoryLabel';
 
 export const metadata: Metadata = {
     title: 'Docs | Tabularis',
     description: 'Learn everything about Tabularis features and how to use them.',
-};
-
-export const CATEGORY_ICONS: Record<WikiCategory, React.ReactNode> = {
-    'Getting Started': <Rocket size={18} />,
-    'Core Features': <LayoutGrid size={18} />,
-    'Database Objects': <Database size={18} />,
-    'Security & Networking': <Shield size={18} />,
-    'AI & MCP': <Bot size={18} />,
-    Integration: <Plug size={18} />,
-    Customization: <Settings2 size={18} />,
-    Reference: <BookOpen size={18} />,
 };
 
 function buildCategories() {

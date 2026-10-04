@@ -1,6 +1,6 @@
 .sidebarWrapper {
     position: sticky;
-    top: 6rem;
+    top: calc(var(--header-height) + 2rem);
 }
 
 .sidebarHeader {

@@ -59,7 +59,7 @@ export const PLATFORM_CONFIG: Record<Platform, PlatformConfig> = {
                 kind: 'file',
                 label: 'Portable',
                 desc: 'No installation required — run anywhere',
-                ext: '.zip',
+                ext: '.exe',
                 url: `${BASE}/tabularis_${APP_VERSION}_x64-portable.exe`,
             },
         ],
