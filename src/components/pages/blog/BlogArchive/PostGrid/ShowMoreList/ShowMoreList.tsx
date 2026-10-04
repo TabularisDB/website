@@ -1,7 +1,6 @@
 'use client';
 
-import {Children, isValidElement, type ReactNode, useState} from 'react';
-import {usePathname, useRouter, useSearchParams} from 'next/navigation';
+import {Children, isValidElement, type ReactNode, useEffect, useState} from 'react';
 import styles from './ShowMoreList.module.scss';
 
 interface ShowMoreListProps {
@@ -12,30 +11,28 @@ interface ShowMoreListProps {
 
 export function ShowMoreList({pageSize, className, children}: ShowMoreListProps) {
     const items = Children.toArray(children).filter(isValidElement);
+    const [page, setPage] = useState(1);
 
-    const searchParams = useSearchParams();
-    const router = useRouter();
-    const pathname = usePathname();
-
-    const initialPage = Math.max(1, Number(searchParams.get('page')) || 1);
-    const [page, setPage] = useState(initialPage);
+    useEffect(() => {
+        const fromUrl = Number(new URLSearchParams(window.location.search).get('page'));
+        if (fromUrl > 1) setPage(fromUrl);
+    }, []);
 
     const visibleCount = page * pageSize;
-    const visibleItems = items.slice(0, visibleCount);
     const hasMore = visibleCount < items.length;
 
     function handleShowMore() {
         const nextPage = page + 1;
         setPage(nextPage);
 
-        const params = new URLSearchParams(searchParams.toString());
-        params.set('page', String(nextPage));
-        router.replace(`${pathname}?${params.toString()}`, {scroll: false});
+        const url = new URL(window.location.href);
+        url.searchParams.set('page', String(nextPage));
+        window.history.replaceState(null, '', url);
     }
 
     return (
         <div className={styles.wrapper}>
-            <div className={className}>{visibleItems}</div>
+            <div className={className}>{items.slice(0, visibleCount)}</div>
 
             {hasMore && (
                 <button type="button" className={styles.showMore} onClick={handleShowMore}>

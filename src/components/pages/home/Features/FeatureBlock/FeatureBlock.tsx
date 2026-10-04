@@ -1,8 +1,8 @@
 import {Button} from '@/components/ui/Button/Button';
 import type {VideoDemo} from '@/lib/videos/index';
 import clsx from 'clsx';
-import {FeatureVideoPreview} from '../FeatureVideoPreview/FeatureVideoPreview';
-import type {Feature} from '../Features.data';
+import {FeatureVideoPreview} from '@/components/pages/home/Features/FeatureVideoPreview/FeatureVideoPreview';
+import type {Feature} from '@/components/pages/home/Features/Features.data';
 import styles from './FeatureBlock.module.scss';
 import {ArrowRight} from 'lucide-react';
 

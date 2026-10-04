@@ -31,6 +31,12 @@
     }
 }
 
+.group {
+    display: flex;
+    flex-shrink: 0;
+    gap: inherit;
+}
+
 .item {
     display: flex;
     align-items: center;
@@ -70,6 +76,9 @@
 
 .marqueeLink {
     color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.125rem;
 }
 
 @keyframes scroll {

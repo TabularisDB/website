@@ -32,7 +32,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
     if (!page) return {};
 
     const {meta} = page;
-    const title = `${meta.title} | Tabularis Wiki`;
+    const title = `${meta.title} | Tabularis Docs`;
 
     return {
         title,
@@ -70,7 +70,7 @@ export default async function WikiPageDetail({params}: PageProps) {
                 data={[
                     buildBreadcrumbJsonLd([
                         {name: 'Home', path: '/'},
-                        {name: 'Wiki', path: '/wiki'},
+                        {name: 'Docs', path: '/wiki'},
                         {name: meta.title, path: `/wiki/${slug}`},
                     ]),
                     buildArticleJsonLd({
@@ -81,7 +81,7 @@ export default async function WikiPageDetail({params}: PageProps) {
                     }),
                 ]}
             />
-            <Breadcrumbs crumbs={[{label: 'wiki', href: '/wiki/'}, {label: meta.title}]} />
+            <Breadcrumbs crumbs={[{label: 'Docs', href: '/wiki/'}, {label: meta.title}]} />
 
             <WikiLayout categories={categories} rightSidebar={<WikiTableOfContents />}>
                 <CategoryLabel category={meta.category} />

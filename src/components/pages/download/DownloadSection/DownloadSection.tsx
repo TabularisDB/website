@@ -3,11 +3,11 @@
 import {ReleaseInfo} from '@/components/pages/download/ReleaseInfos/ReleaseInfos';
 import {VersionPicker, type Channel} from '@/components/pages/download/VersionPicker/VersionPicker';
 import {LinuxIcon, MacOsIcon, WindowsIcon} from '@/components/ui/Icons/PlatformIcons';
-import {ALL_PLATFORMS, getPlatformConfig, Platform} from '@/lib/downloadConfig';
-import {NIGHTLY_RELEASE} from '@/lib/nightly';
+import {ALL_PLATFORMS, getPlatformConfig, Platform} from '@/lib/download/downloadConfig';
+import {NIGHTLY_RELEASE} from '@/lib/download/nightly';
 import {useEffect, useState} from 'react';
 import styles from './DownloadSection.module.scss';
-import {DownloadOptions} from '../DownloadOptions/DownloadOptions';
+import {DownloadOptions} from '@/components/pages/download/DownloadOptions/DownloadOptions';
 
 const ICONS = {linux: <LinuxIcon />, windows: <WindowsIcon />, macos: <MacOsIcon />};
 

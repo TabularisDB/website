@@ -11,9 +11,15 @@ export function TrustRow() {
 
     return (
         <div className={styles.trustWrapper}>
-            <span className={styles.downloadsCaption}>
-                Already downloaded {downloads ? formatDownloads(downloads) : '-k'} times
-            </span>
+            <div className={styles.downloads}>
+                {downloads ? (
+                    <span className={styles.downloadsCaption}>
+                        Already downloaded {formatDownloads(downloads)} times
+                    </span>
+                ) : (
+                    <span className="skeleton"></span>
+                )}
+            </div>
 
             <div className={clsx(styles.divider, 'divider')}></div>
             <div className={styles.featuredOn}>

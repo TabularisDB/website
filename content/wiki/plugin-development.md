@@ -231,31 +231,72 @@ Declarative Tabularis theme packages. Registry schema preparation only; host rel
 **Example (YAML)**
 
 ```yaml
-name: example-theme
-version: 0.1.0
+id: example
+name: example
+version: example
+description: example
+category: example
 kind: theme
-min_runtime_version: <first-supporting-version>
+tags:
+  - example
+license: example
+icon: example
+screenshots:
+  - url: example
+    caption: example
+    alt: example
+readme: example
+readmes: {}
+documentation_url: example
+homepage: example
+support:
+  email: example
+  issues_url: example
+min_runtime_version: example
 theme_schema_version: 1
 theme_variants:
-  - id: dark
-    name: Dark
-    file: themes/dark.json
+  - id: example
+    name: example
+    file: example
 ```
 
 **Example (JSON)**
 
 ```json
 {
-  "name": "example-theme",
-  "version": "0.1.0",
+  "id": "example",
+  "name": "example",
+  "version": "example",
+  "description": "example",
+  "category": "example",
   "kind": "theme",
-  "min_runtime_version": "<first-supporting-version>",
+  "tags": [
+    "example"
+  ],
+  "license": "example",
+  "icon": "example",
+  "screenshots": [
+    {
+      "url": "example",
+      "caption": "example",
+      "alt": "example"
+    }
+  ],
+  "readme": "example",
+  "readmes": {},
+  "documentation_url": "example",
+  "homepage": "example",
+  "support": {
+    "email": "example",
+    "issues_url": "example"
+  },
+  "min_runtime_version": "example",
   "theme_schema_version": 1,
   "theme_variants": [
     {
-      "id": "dark",
-      "name": "Dark",
-      "file": "themes/dark.json"
+      "id": "example",
+      "name": "example",
+      "file": "example"
     }
   ]
 }

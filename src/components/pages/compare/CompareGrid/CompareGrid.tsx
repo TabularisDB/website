@@ -1,7 +1,7 @@
 import {getProduct} from '@/lib/compare/products';
 import Link from 'next/link';
 import {Fragment} from 'react';
-import {COMPARE_PREVIEW_MAP} from '../Compare.data';
+import {COMPARE_PREVIEW_MAP} from '@/components/pages/compare/Compare.data';
 import styles from './CompareGrid.module.scss';
 import {CheckCircle2} from 'lucide-react';
 

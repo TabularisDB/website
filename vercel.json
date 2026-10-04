@@ -16,7 +16,34 @@
             "source": "/blog/jetbrains-open-source-support",
             "destination": "/blog/jetbrains-open-source-program",
             "permanent": true
-        }
+        },
+        {
+            "source": "/videos",
+            "destination": "/demos",
+            "permanent": true
+        },
+        {
+            "source": "/videos/:slug",
+            "destination": "/demos/:slug",
+            "permanent": true
+        },
+        {
+            "source": "/blog/tag/:tag",
+            "destination": "/blog/category/:tag",
+            "permanent": true
+        },
+        {
+            "source": "/blog/page/:page",
+            "destination": "/blog",
+            "permanent": true
+        },
+        {
+            "source": "/wiki/getting-started",
+            "destination": "/wiki/get-started",
+            "permanent": true
+        },
+        {"source": "/img/logo.png", "destination": "/img/brand/tabularis.png", "permanent": true},
+        {"source": "/img/sponsors/:file", "destination": "/img/logos/sponsors/:file", "permanent": true}
     ],
     "headers": [
         {

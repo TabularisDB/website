@@ -69,7 +69,7 @@
         border-color 0.15s ease,
         color 0.15s ease;
 
-    &:hover {
+    &:hover:not(.optionOn) {
         border-color: var(--color-border-hover);
     }
 
@@ -199,8 +199,8 @@
 }
 
 .fineprint {
-    font-size: 0.75rem;
-    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
 }
 
 .actions {

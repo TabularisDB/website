@@ -4,7 +4,7 @@ import {getRepoStars} from '@/lib/github';
 import clsx from 'clsx';
 import {usePathname} from 'next/navigation';
 import {useEffect, useState} from 'react';
-import {Brand} from '../Brand/Brand';
+import {Brand} from '@/components/layout/Brand/Brand';
 import {DesktopNav} from './components/DesktopNav/DesktopNav';
 import {HeaderActions} from './components/HeaderActions/HeaderActions';
 import {MobileMenu} from './components/MobileMenu/MobileMenu';
@@ -41,7 +41,7 @@ export function SiteHeader() {
             <header
                 className={clsx(
                     styles.siteHeader,
-                    scrolled && styles.scrolled,
+                    (scrolled || isMobileMenuOpen) && styles.border,
                     (openGroupLabel || isMobileMenuOpen) && styles.menuOpen,
                 )}
             >

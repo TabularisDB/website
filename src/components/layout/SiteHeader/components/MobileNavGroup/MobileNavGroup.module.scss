@@ -2,7 +2,8 @@
     color: var(--color-text-primary);
 }
 
-.summary {
+.summary,
+.linkGroup {
     display: flex;
     align-items: center;
     justify-content: space-between;

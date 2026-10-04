@@ -16,7 +16,7 @@ export function ProductOverview() {
                         <DatabaseIcon />
                         What it is
                     </span>
-                    <h2 className="title">A SQL client built for a world where agents write queries too.</h2>
+                    <h1 className="title">A SQL client built for a world where agents write queries too.</h1>
                     <p className="description">
                         In 2026, a lot of real SQL gets drafted and run by AI agents inside Claude Code, Cursor and
                         Devin, not just typed by a person. Tabularis is the open source desktop client built for that

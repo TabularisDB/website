@@ -8,7 +8,7 @@ import {buildOrganizationJsonLd, buildSoftwareApplicationJsonLd} from '@/lib/seo
 import {OG_IMAGE_URL, SITE_DESCRIPTION, SITE_TITLE} from '@/lib/siteConfig';
 import 'highlight.js/styles/atom-one-dark.css';
 import type {Metadata} from 'next';
-import {jetbrainsMono, outfit, urbanist} from './font';
+import {jetbrainsMono, urbanist} from './font';
 import './globals.scss';
 
 export const metadata: Metadata = {
@@ -39,11 +39,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
     return (
-        <html
-            lang="en"
-            data-scroll-behavior="smooth"
-            className={`${urbanist.variable} ${outfit.variable} ${jetbrainsMono.variable}`}
-        >
+        <html lang="en" data-scroll-behavior="smooth" className={`${urbanist.variable} ${jetbrainsMono.variable}`}>
             <body>
                 <SiteHeader />
                 <JsonLd data={[buildOrganizationJsonLd(), buildSoftwareApplicationJsonLd()]} />

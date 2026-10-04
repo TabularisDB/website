@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/img/brand/tabularis.png" width="120" height="120" alt="Tabularis" />
+  <img src="public/img/brand/tabularis.png" width="350" alt="Tabularis" />
 </div>
 
 # tabularis-website
@@ -40,12 +40,12 @@ The main app lives at [`TabularisDB/tabularis`](https://github.com/TabularisDB/t
 
 It is now a **standalone repo**. Four pieces of data still come from the app repo and its GitHub releases before each build:
 
-| Upstream file                     | Where it lands          | Consumed by                                                   |
-| --------------------------------- | ----------------------- | ------------------------------------------------------------- |
-| `src/version.ts`                  | `src/lib/version.ts`    | `APP_VERSION` used in download links, SEO metadata, JSON-LD   |
-| `CHANGELOG.md`                    | `CHANGELOG.md`          | `/changelog` page (`src/lib/changelog.ts`)                    |
-| `plugins/registry.json`           | `plugins/registry.json` | `/plugins` page (`src/lib/plugins.ts`)                        |
-| Latest `nightly-*` GitHub release | `src/lib/nightly.ts`    | Stable/nightly selector and direct asset links on `/download` |
+| Upstream file                     | Where it lands                | Consumed by                                                   |
+| --------------------------------- | ----------------------------- | ------------------------------------------------------------- |
+| `src/version.ts`                  | `src/lib/download/version.ts` | `APP_VERSION` used in download links, SEO metadata, JSON-LD   |
+| `CHANGELOG.md`                    | `CHANGELOG.md`                | `/changelog` page (`src/lib/changelog/index.ts`)              |
+| `plugins/registry.json`           | `plugins/registry.json`       | `/plugins` page (`src/lib/plugins/index.ts`)                  |
+| Latest `nightly-*` GitHub release | `src/lib/download/nightly.ts` | Stable/nightly selector and direct asset links on `/download` |
 
 The fetcher is `scripts/fetch-app-data.mjs`. It reads repository files from `raw.githubusercontent.com` and the latest nightly metadata from the GitHub Releases API, then writes the local files into place. Defaults: `TABULARIS_APP_REPO=TabularisDB/tabularis`, `TABULARIS_APP_REF=main`.
 

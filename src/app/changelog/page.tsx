@@ -34,7 +34,7 @@ export default function ChangelogPage() {
                     <HistoryIcon />
                     Changelog
                 </span>
-                <h2 className="title">Every release, documented.</h2>
+                <h1 className="title">Every release, documented.</h1>
                 <Button
                     className={styles.githubButton}
                     href={`${SOCIAL_URLS.github}/blob/main/CHANGELOG.md`}

@@ -6,6 +6,10 @@
     font-size: 0.85rem;
     margin-block: -1rem 3rem;
     width: 100%;
+
+    @media (max-width: 767px) {
+        margin-block: -0.5rem 2rem;
+    }
 }
 
 .item {

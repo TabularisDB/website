@@ -15,7 +15,7 @@ export function BlogOverview() {
                     <NewspaperIcon />
                     Blog
                 </span>
-                <h2 className="title">Latest from the blog.</h2>
+                <h1 className="title">Latest from the blog.</h1>
                 <p className="description">
                     Release notes, engineering deep dives, and behind-the-scenes looks at how Tabularis gets built.
                 </p>

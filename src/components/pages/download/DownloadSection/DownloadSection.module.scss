@@ -4,7 +4,6 @@
     align-items: center;
     gap: 1.5rem;
     width: 100%;
-    border-bottom: 0.1rem solid var(--color-border);
     padding-bottom: 5rem;
 }
 
@@ -29,6 +28,7 @@
     margin-top: 1.5rem;
     border-top: 0.1rem solid var(--color-border);
     padding-top: 1rem;
+    font-style: italic;
 }
 
 .content {

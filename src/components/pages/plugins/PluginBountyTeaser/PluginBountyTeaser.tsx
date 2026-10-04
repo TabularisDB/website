@@ -1,8 +1,8 @@
 import {Button} from '@/components/ui/Button/Button';
-import {BOUNTY_STATUS_LABEL, getActiveBounties, getBountyStats} from '@/lib/pluginBounties';
+import {BOUNTY_STATUS_LABEL, getActiveBounties, getBountyStats} from '@/lib/plugins/bounties';
 import Link from 'next/link';
 import type {CSSProperties} from 'react';
-import {STATUS_WEIGHT} from '../Plugin.data';
+import {STATUS_WEIGHT} from '@/components/pages/plugins/Plugin.data';
 import styles from './PluginBountyTeaser.module.scss';
 
 type DotStyle = CSSProperties & {'--dot-color': string};

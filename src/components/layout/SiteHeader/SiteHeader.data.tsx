@@ -52,7 +52,7 @@ export const navGroups: NavGroup[] = [
                     {
                         label: 'Multi-Database',
                         href: '/wiki/connections',
-                        description: 'One interface for Postgres, MySQL, SQLite and 20+ others',
+                        description: `One interface for Postgres, MySQL, SQLite and many others`,
                         icon: <DatabaseIcon />,
                     },
                     {
@@ -283,6 +283,11 @@ export const navGroups: NavGroup[] = [
             },
         ],
     },
+    {
+        label: 'Docs',
+        href: '/wiki',
+        matchPrefixes: ['/wiki'],
+    },
 ];
 
 export function NavLinkLabel({label, badge}: {label: string; badge?: string}) {
@@ -291,9 +296,7 @@ export function NavLinkLabel({label, badge}: {label: string; badge?: string}) {
     return (
         <strong>
             {words.length > 0 && <>{words.join(' ')} </>}
-            <span>
-                <div className="badge">{badge}</div>
-            </span>
+            <span className="badge">{badge}</span>
         </strong>
     );
 }

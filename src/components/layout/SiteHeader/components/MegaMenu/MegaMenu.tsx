@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import clsx from 'clsx';
 import {usePathname} from 'next/navigation';
-import {NavLinkLabel, type NavColumn} from '../../SiteHeader.data';
+import {NavLinkLabel, type NavColumn} from '@/components/layout/SiteHeader/SiteHeader.data';
 import styles from './MegaMenu.module.scss';
-import {useHeaderMenu} from '../../HeaderMenuContext';
+import {useHeaderMenu} from '@/components/layout/SiteHeader/HeaderMenuContext';
 import {ArrowRight} from 'lucide-react';
 
 interface MegaMenuProps {

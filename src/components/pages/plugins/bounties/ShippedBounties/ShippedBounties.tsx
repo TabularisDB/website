@@ -1,5 +1,5 @@
-import {getShippedBounties} from '@/lib/pluginBounties';
-import {BountyCard} from '../BountyCard/BountyCard';
+import {getShippedBounties} from '@/lib/plugins/bounties';
+import {BountyCard} from '@/components/pages/plugins/bounties/BountyCard/BountyCard';
 import styles from './ShippedBounties.module.scss';
 
 export function ShippedBounties() {

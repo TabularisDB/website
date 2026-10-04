@@ -1,7 +1,7 @@
 import {PlugIcon} from 'lucide-react';
 import {getAllPlugins, getLatestRelease} from '@/lib/plugins';
 import styles from './PluginGrid.module.scss';
-import {getPluginIcon} from '../Plugin.data';
+import {getPluginIcon} from '@/components/pages/plugins/Plugin.data';
 
 export function PluginGrid() {
     const plugins = getAllPlugins();

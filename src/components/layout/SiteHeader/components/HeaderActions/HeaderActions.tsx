@@ -27,17 +27,17 @@ export function HeaderActions({stars, mobileMenuOpen, onToggleMobileMenu}: Heade
 
     return (
         <div className={styles.headerActions}>
-            {stars !== null && (
-                <a
-                    href="https://github.com/TabularisDB/tabularis"
-                    className={clsx(styles.githubStars)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <GitHubIcon />
-                    <div>{formatStars(stars)}</div>
-                </a>
-            )}
+            <a
+                href="https://github.com/TabularisDB/tabularis"
+                className={clsx(styles.githubStars)}
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <GitHubIcon />
+                <div className={styles.starCount}>
+                    {stars ? formatStars(stars) : <span className="skeleton"></span>}
+                </div>
+            </a>
 
             <Button className={styles.searchTrigger} variant="outline" onClick={openSearch} aria-label="Search">
                 <SearchIcon />

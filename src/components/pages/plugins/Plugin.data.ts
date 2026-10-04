@@ -1,4 +1,4 @@
-import {BOUNTY_STATUS} from '@/lib/pluginBounties';
+import {BOUNTY_STATUS} from '@/lib/plugins/bounties';
 
 export const PLUGIN_ICONS: Record<string, string | null> = {
     redis: 'redis',

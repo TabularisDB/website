@@ -3,7 +3,7 @@
     padding: 3rem 1rem;
 
     @media (max-width: 767px) {
-        padding: 3rem 0;
+        padding: 3rem 0.5rem;
     }
 }
 
@@ -18,7 +18,7 @@
 }
 
 .brand {
-    width: 12rem;
+    width: 12rem !important;
     max-width: 100%;
 }
 

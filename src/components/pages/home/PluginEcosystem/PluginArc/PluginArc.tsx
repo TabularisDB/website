@@ -1,7 +1,7 @@
 'use client';
 
 import {useState, useEffect} from 'react';
-import {getShippedBounties} from '@/lib/pluginBounties';
+import {getShippedBounties} from '@/lib/plugins/bounties';
 import styles from './PluginArc.module.scss';
 import {Button} from '@/components/ui/Button/Button';
 import {ArrowRight} from 'lucide-react';

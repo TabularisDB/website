@@ -6,6 +6,7 @@ import {getSeoPageBySlug, getSeoPagePath, getSeoPagesBySection} from '@/lib/seo/
 import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import styles from './SolutionDetailPage.module.scss';
+import {SeoCapture} from '@/components/ui/SeoCapture/SeoCapture';
 
 interface PageProps {
     params: Promise<{slug: string}>;
@@ -66,6 +67,7 @@ export default async function SolutionDetailPage({params}: PageProps) {
             <article className={styles.wrapper}>
                 <Breadcrumbs crumbs={[{label: 'Solutions', href: '/solutions'}, {label: page.meta.title}]} />
                 <WikiContent html={page.html} />
+                <SeoCapture section="solutions" title={page.meta.title} />
             </article>
         </div>
     );

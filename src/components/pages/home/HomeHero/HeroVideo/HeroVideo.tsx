@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import {PlayIcon} from 'lucide-react';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import styles from './HeroVideo.module.scss';
+import {trackEvent} from '@/lib/analytics';
 
 interface HeroVideoPreviewProps {
     poster: string;
@@ -64,6 +65,7 @@ export function HeroVideo({
 
     const handleOpenModal = useCallback((event: React.MouseEvent) => {
         event.stopPropagation();
+        trackEvent('hero-video', 'open', 'click');
         setModalOpen(true);
     }, []);
 

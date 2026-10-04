@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-const SPONSORS_FILE = path.join(process.cwd(), "src", "lib", "sponsors.ts");
+const SPONSORS_FILE = path.join(process.cwd(), "src", "lib", "sponsors", "index.ts");
 const OUT_DIR = path.join(process.cwd(), "public");
 
 let source = fs.readFileSync(SPONSORS_FILE, "utf-8");

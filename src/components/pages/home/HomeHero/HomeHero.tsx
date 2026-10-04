@@ -1,9 +1,10 @@
 import {DownloadButton} from '@/components/ui/DownloadButton/DownloadButton';
 import {GitHubButton} from '@/components/ui/GithubButton/GithubButton';
+import {TrustRow} from '@/components/ui/TrustRow/TrustRow';
+import {getAllPlugins} from '@/lib/plugins';
 import {HeroVideo} from './HeroVideo/HeroVideo';
 import styles from './HomeHero.module.scss';
 import {ReleasePill} from './ReleasePill/ReleasePill';
-import {TrustRow} from '@/components/ui/TrustRow/TrustRow';
 
 export function HomeHero() {
     return (
@@ -11,8 +12,8 @@ export function HomeHero() {
             <ReleasePill />
             <h1 className={styles.tagline}>The database client your AI agent can actually use.</h1>
             <p className={styles.description}>
-                Tabularis is an open-source SQL workspace for PostgreSQL, MySQL, SQLite and 18+ other databases. Its
-                built-in MCP server lets Claude, Cursor and Devin read your schema and run queries.
+                Tabularis is an open-source SQL workspace for PostgreSQL, MySQL, SQLite and {getAllPlugins().length}{' '}
+                other databases. Its built-in MCP server lets Claude, Cursor and Devin read your schema and run queries.
             </p>
             <div className={styles.actions}>
                 <DownloadButton />

@@ -5,7 +5,7 @@ import {BountySchema} from '@/components/pages/plugins/bounties/BountySchema/Bou
 import {ShippedBounties} from '@/components/pages/plugins/bounties/ShippedBounties/ShippedBounties';
 import {Button} from '@/components/ui/Button/Button';
 import {DiscordIcon} from '@/components/ui/Icons/SocialIcons';
-import {getBountyStats} from '@/lib/pluginBounties';
+import {getBountyStats} from '@/lib/plugins/bounties';
 import {buildBreadcrumbJsonLd} from '@/lib/seo';
 import {SOCIAL_URLS} from '@/lib/social';
 import clsx from 'clsx';
@@ -50,7 +50,7 @@ export default function PluginBountyBoardPage() {
                     <HandCoinsIcon />
                     Plugin Bounty Board
                 </span>
-                <h2 className="title">Help ship the next driver.</h2>
+                <h1 className="title">Help ship the next driver.</h1>
                 <p className="description">
                     See what the community is building, find a concrete contribution, or propose the integration
                     Tabularis should support next. GitHub tracks the work; Discord is the fastest place to shape an

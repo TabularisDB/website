@@ -4,7 +4,7 @@ import Script from 'next/script';
 import {trackEvent} from '@/lib/analytics';
 import {SURVEY_EMAILCHEF} from '@/lib/siteConfig';
 import styles from './SurveyForm.module.scss';
-import {Button} from '../Button/Button';
+import {Button} from '@/components/ui/Button/Button';
 
 const EMAILCHEF_SCRIPT = `https://app.emailchef.com/signup/form.js/${SURVEY_EMAILCHEF.token}/en/api`;
 const EMAILCHEF_ACTION = `https://app.emailchef.com/signupwl/${SURVEY_EMAILCHEF.token}/en`;
@@ -208,7 +208,7 @@ export function SurveyForm({source, onSubmitted}: SurveyFormProps) {
                         )}
 
                         <p className={styles.fineprint}>
-                            We&apos;ll only use it to follow up on your feedback. No spam.
+                            *We&apos;ll only use it to follow up on your feedback. No spam.
                         </p>
                     </div>
                 )}
@@ -253,7 +253,10 @@ export function SurveyForm({source, onSubmitted}: SurveyFormProps) {
                             Next
                         </Button>
                     ) : (
-                        <Button type="submit">Send feedback</Button>
+                        <Button type="submit" className={styles.button}>
+                            {' '}
+                            Send feedback
+                        </Button>
                     )}
                 </div>
 

@@ -18,10 +18,15 @@
     }
 }
 
-.downloadsCaption {
+.downloads {
+    width: 13.25rem;
+    height: 1.25rem;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    justify-content: center;
+}
+
+.downloadsCaption {
     white-space: nowrap;
     color: var(--color-text-secondary);
 }

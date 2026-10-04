@@ -1,11 +1,10 @@
 import {PostGrid} from '@/components/pages/blog/BlogArchive/PostGrid/PostGrid';
+import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
 import {AUTHORS, authorAvatarUrl, authorGitHubUrl, getAuthor} from '@/lib/blog/authors';
 import {getAllAuthorHandles, getPostsByAuthor} from '@/lib/blog/posts';
 import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import styles from './BlogAuthorPage.module.scss';
-import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
-import {Suspense} from 'react';
 
 const POSTS_PER_PAGE = 12;
 
@@ -44,6 +43,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
     return {
         title,
         description,
+        alternates: {canonical: `/blog/author/${handle}`},
         openGraph: {
             type: 'profile',
             url: `https://tabularis.dev/blog/author/${author.handle}`,
@@ -95,9 +95,7 @@ export default async function AuthorArchivePage({params}: PageProps) {
                     </div>
                 </header>
 
-                <Suspense fallback={null}>
-                    <PostGrid posts={posts} pageSize={POSTS_PER_PAGE} />
-                </Suspense>
+                <PostGrid posts={posts} pageSize={POSTS_PER_PAGE} />
             </div>
         </div>
     );

@@ -2,14 +2,14 @@ import {JsonLd} from '@/components/layout/JsonLd';
 import {COMPARE_PREVIEW_MAP} from '@/components/pages/compare/Compare.data';
 import {ComparisonTable} from '@/components/pages/compare/ComparisonTable/ComparisonTable';
 import {WikiContent} from '@/components/pages/wiki/WikiContent/WikiContent';
-import {NewsletterForm} from '@/components/ui/NewsletterForm/NewsletterForm';
+import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
+import {SeoCapture} from '@/components/ui/SeoCapture/SeoCapture';
 import {getProduct} from '@/lib/compare/products';
 import {buildArticleJsonLd, buildBreadcrumbJsonLd} from '@/lib/seo';
 import {getSeoPageBySlug, getSeoPagePath, getSeoPagesBySection} from '@/lib/seo/seoPages';
 import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import styles from './CompareDetailPage.module.scss';
-import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
 
 interface PageProps {
     params: Promise<{slug: string}>;
@@ -99,13 +99,7 @@ export default async function CompareDetailPage({params}: PageProps) {
                 <WikiContent html={stripFirstH1(page.html)} />
             </div>
 
-            <div className={styles.newsletter}>
-                <NewsletterForm
-                    title="Get the evaluation checklist"
-                    description="Evaluating DBeaver? Get release notes, practical evaluation prompts, and product updates without chasing every changelog."
-                    buttonLabel="Send checklist"
-                />
-            </div>
+            <SeoCapture section="compare" title={page.meta.title} />
         </div>
     );
 }

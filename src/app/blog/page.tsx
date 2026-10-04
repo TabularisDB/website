@@ -6,6 +6,7 @@ import {Metadata} from 'next';
 export const metadata: Metadata = {
     title: 'Blog | Tabularis',
     description: 'Release notes and updates from the Tabularis project, one post per release.',
+    alternates: {canonical: '/blog'},
     openGraph: {
         type: 'website',
         url: 'https://tabularis.dev/blog/',

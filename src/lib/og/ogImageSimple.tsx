@@ -1,5 +1,5 @@
 import {ImageResponse} from 'next/og';
-import {Kicker, loadFonts, renderOg, Title} from './og.utils';
+import {Kicker, loadFonts, renderOg, Title} from './shared';
 
 export interface SimpleOgOptions {
     title: string;

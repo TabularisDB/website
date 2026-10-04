@@ -12,6 +12,7 @@ export async function generateMetadata({params}: {params: Promise<{category: str
     return {
         title: `#${category} | Tabularis Blog`,
         description: `All Tabularis blog posts tagged with "${category}".`,
+        alternates: {canonical: `/blog/category/${category}`},
     };
 }
 

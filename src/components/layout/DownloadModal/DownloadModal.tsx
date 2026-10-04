@@ -1,20 +1,18 @@
 'use client';
 
-import {VersionPicker} from '@/components/pages/download/VersionPicker/VersionPicker';
 import {DownloadOptions} from '@/components/pages/download/DownloadOptions/DownloadOptions';
-import type {Platform, ReleaseChannel} from '@/lib/downloadConfig';
-import {getPlatformConfig} from '@/lib/downloadConfig';
-import {NIGHTLY_RELEASE} from '@/lib/nightly';
+import {VersionPicker} from '@/components/pages/download/VersionPicker/VersionPicker';
+import type {Platform, ReleaseChannel} from '@/lib/download/downloadConfig';
+import {getPlatformConfig} from '@/lib/download/downloadConfig';
+import {NIGHTLY_RELEASE} from '@/lib/download/nightly';
+import {APP_VERSION} from '@/lib/download/version';
 import {SOCIAL_URLS} from '@/lib/social';
-import {APP_VERSION} from '@/lib/version';
 import clsx from 'clsx';
 import {ArrowRight, X} from 'lucide-react';
+import Link from 'next/link';
 import {useEffect, useState} from 'react';
 import {createPortal} from 'react-dom';
 import styles from './DownloadModal.module.scss';
-import Link from 'next/link';
-
-export type {Platform} from '@/lib/downloadConfig';
 
 interface DownloadModalProps {
     platform: Platform | null;

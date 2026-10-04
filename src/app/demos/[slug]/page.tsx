@@ -71,7 +71,7 @@ export default async function DemoDetail({params}: PageProps) {
                     <PlayIcon />
                     {formattedEyebrow}
                 </span>
-                <h2 className="title">{video.title}</h2>
+                <h1 className="title">{video.title}</h1>
                 <p className="description">{video.description}</p>
             </header>
 

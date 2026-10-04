@@ -9,6 +9,14 @@ interface SponsorModalProps {
     onClose: () => void;
 }
 
+function withUtm(url: string, campaign = 'sponsor'): string {
+    const u = new URL(url);
+    u.searchParams.set('utm_source', 'tabularis');
+    u.searchParams.set('utm_medium', 'referral');
+    u.searchParams.set('utm_campaign', campaign);
+    return u.toString();
+}
+
 export function SponsorModal({sponsor, onClose}: SponsorModalProps) {
     return (
         <div className={styles.overlay} onClick={onClose}>
@@ -54,7 +62,7 @@ export function SponsorModal({sponsor, onClose}: SponsorModalProps) {
                 </div>
 
                 <footer className={styles.footer}>
-                    <Button href={sponsor.url} className={styles.visitButton}>
+                    <Button href={withUtm(sponsor.url)} className={styles.visitButton}>
                         Visit {sponsor.name} <ArrowRight size={16} />
                     </Button>
                 </footer>

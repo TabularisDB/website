@@ -1,7 +1,7 @@
 import {LinuxIcon, MacOsIcon, WindowsIcon} from '@/components/ui/Icons/PlatformIcons';
 import {DuckDBIcon, MySQLIcon, PostgreSQLIcon, SQLiteIcon} from '@/components/ui/Icons/PluginIcons';
 import {Database, LineChart, MousePointerClick, Network, NotebookPen, Puzzle, ShieldCheck, Siren} from 'lucide-react';
-import {McpIcon} from '../home/ProductOverview/Diagram/icons/AgentIcons';
+import {McpIcon} from '@/components/pages/home/ProductOverview/Diagram/icons/AgentIcons';
 
 export const CATEGORY_ORDER = [
     'By database engine',

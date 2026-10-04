@@ -1,8 +1,8 @@
 import {Button} from '@/components/ui/Button/Button';
 import {getSeoPagesBySection} from '@/lib/seo/seoPages';
 import {ArrowRight, LayersIcon} from 'lucide-react';
-import {getIconForSlug} from '../../solutions/Solutions.data';
-import {SolutionsGrid} from '../../solutions/SolutionsGrid/SolutionsGrid';
+import {getIconForSlug} from '@/components/pages/solutions/Solutions.data';
+import {SolutionsGrid} from '@/components/pages/solutions/SolutionsGrid/SolutionsGrid';
 import {FEATURED_SOLUTION_SLUGS} from './SolutionsOverview.data';
 import styles from './SolutionsOverview.module.scss';
 
@@ -27,7 +27,7 @@ export function SolutionsOverview() {
                     <LayersIcon />
                     Solutions
                 </span>
-                <h2 className="title">Start from what you actually need.</h2>
+                <h1 className="title">Start from what you actually need.</h1>
                 <p className="description">Same client, different entry point — pick the one closest to your setup.</p>
             </header>
 

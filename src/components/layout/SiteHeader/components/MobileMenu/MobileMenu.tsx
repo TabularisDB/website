@@ -5,8 +5,8 @@ import {DiscordIcon, GitHubIcon} from '@/components/ui/Icons/SocialIcons';
 import {SOCIAL_URLS} from '@/lib/social';
 import clsx from 'clsx';
 import {DownloadIcon} from 'lucide-react';
-import {navGroups} from '../../SiteHeader.data';
-import {MobileNavGroup} from '../MobileNavGroup/MobileNavGroup';
+import {navGroups} from '@/components/layout/SiteHeader/SiteHeader.data';
+import {MobileNavGroup} from '@/components/layout/SiteHeader/components/MobileNavGroup/MobileNavGroup';
 import styles from './MobileMenu.module.scss';
 
 interface MobileMenuProps {

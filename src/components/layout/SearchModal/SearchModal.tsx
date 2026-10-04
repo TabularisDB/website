@@ -240,7 +240,7 @@ export function SearchModal() {
                         ref={inputRef}
                         className={styles.input}
                         type="text"
-                        placeholder={wikiOnly ? 'Search docs...' : 'Search wiki, blog, guides, plugins...'}
+                        placeholder={wikiOnly ? 'Search docs...' : 'Search docs, blog, guides, plugins...'}
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         onKeyDown={handleKeyboardNav}

@@ -1,6 +1,6 @@
-import {OG_CONTENT_TYPE, OG_SIZE} from '@/lib/og/og.utils';
+import {OG_CONTENT_TYPE, OG_SIZE} from '@/lib/og/shared';
 import {renderSimpleOgImage} from '@/lib/og/ogImageSimple';
-import {APP_VERSION} from '@/lib/version';
+import {APP_VERSION} from '@/lib/download/version';
 
 export const dynamic = 'force-static';
 export const alt = 'Download Tabularis';

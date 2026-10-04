@@ -4,11 +4,11 @@ import {NewsletterForm} from '@/components/ui/NewsletterForm/NewsletterForm';
 import {formatDate, getReleaseDate} from '@/lib/blog/posts';
 import {formatDownloads, getTotalDownloads} from '@/lib/github';
 import {buildBreadcrumbJsonLd, buildSoftwareApplicationJsonLd} from '@/lib/seo';
-import {APP_VERSION} from '@/lib/version';
+import {APP_VERSION} from '@/lib/download/version';
 import type {Metadata} from 'next';
 import styles from './DownloadPage.module.scss';
 import Link from 'next/link';
-import {DownloadIcon} from 'lucide-react';
+import {ArrowRight, DownloadIcon} from 'lucide-react';
 
 export const metadata: Metadata = {
     title: 'Download | Tabularis',
@@ -50,7 +50,7 @@ export default async function DownloadPage() {
                     <DownloadIcon />
                     Download
                 </span>
-                <h2 className="title">Get Tabularis running in one click.</h2>
+                <h1 className="title">Get Tabularis running in one click.</h1>
                 {downloads !== null && (
                     <p className="description">
                         Trusted by {formatDownloads(downloads)} downloads across macOS, Windows, and Linux.
@@ -61,32 +61,57 @@ export default async function DownloadPage() {
             <section className={styles.layout}>
                 <DownloadSection stableVersion={APP_VERSION} stableDate={rawDate ? formatDate(rawDate) : ''} />
                 <div className={styles.secondaryGrid}>
-                    <section className={styles.mirrors}>
-                        <h2 className={styles.mirrorsTitle}>Alternative Mirrors</h2>
-                        <p className={styles.mirrorsDesc}>
+                    <section className={styles.section}>
+                        <h2 className={styles.sectionTitle}>Alternative Mirrors</h2>
+                        <p className={styles.sectionDesc}>
                             Prefer a secondary download mirror? Tabularis is also available on SourceForge. The primary
                             and most up-to-date release channel remains GitHub Releases.
                         </p>
-                        <a
+                        <Link
                             href="https://sourceforge.net/projects/tabularis/files/latest/download"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={styles.mirrorsLink}
+                            className={styles.sectionLink}
                         >
-                            Download from SourceForge
-                        </a>
+                            Download from SourceForge <ArrowRight size={14} />
+                        </Link>
                     </section>
 
-                    <section className={styles.workflow}>
-                        <h2 className={styles.workflowTitle}>Explore by Workflow</h2>
-                        <p className={styles.workflowDesc}>
+                    <section className={styles.section}>
+                        <h2 className={styles.sectionTitle}>Explore by Workflow</h2>
+                        <p className={styles.sectionDesc}>
                             Not every download starts from the same use case. If you are here because of PostgreSQL,
                             MySQL, secure access, notebooks, or plugin extensibility, see how Tabularis fits your
                             workflow.
                         </p>
-                        <Link href="/solutions" className={styles.workflowLink}>
-                            Explore solutions
+                        <Link href="/solutions" className={styles.sectionLink}>
+                            Explore solutions <ArrowRight size={14} />
                         </Link>
+                    </section>
+
+                    <section className={styles.section}>
+                        <h2 className={styles.sectionTitle}>Release notes</h2>
+                        <p className={styles.sectionDesc}>
+                            See what changed in v{APP_VERSION}, or browse every previous release and its assets.
+                        </p>
+                        <div className={styles.sectionLinks}>
+                            <Link
+                                href={`https://github.com/TabularisDB/tabularis/releases/tag/v${APP_VERSION}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.sectionLink}
+                            >
+                                Read the v{APP_VERSION} release notes <ArrowRight size={14} />
+                            </Link>
+                            <Link
+                                href="https://github.com/TabularisDB/tabularis/releases"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.sectionLink}
+                            >
+                                All releases <ArrowRight size={14} />
+                            </Link>
+                        </div>
                     </section>
                 </div>
                 <NewsletterForm

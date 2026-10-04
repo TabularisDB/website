@@ -26,9 +26,10 @@ export const SOCIAL_LINKS: Social[] = [
 interface SocialLinksProps {
     linkClassName?: string;
     iconSize?: number;
+    showLabel?: boolean;
 }
 
-export function SocialLinks({linkClassName, iconSize = 18}: SocialLinksProps) {
+export function SocialLinks({linkClassName, iconSize = 18, showLabel = false}: SocialLinksProps) {
     return (
         <>
             {SOCIAL_LINKS.map(({label, href, Icon, rel}) => (
@@ -38,9 +39,10 @@ export function SocialLinks({linkClassName, iconSize = 18}: SocialLinksProps) {
                     target="_blank"
                     rel={`noopener noreferrer${rel ? ` ${rel}` : ''}`}
                     className={linkClassName}
-                    aria-label={label}
+                    aria-label={showLabel ? undefined : label}
                 >
                     <Icon size={iconSize} />
+                    {showLabel && <span>{label}</span>}
                 </a>
             ))}
         </>

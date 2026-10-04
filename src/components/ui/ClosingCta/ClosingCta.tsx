@@ -1,8 +1,8 @@
 'use client';
 import styles from './ClosingCta.module.scss';
-import {TrustRow} from '../TrustRow/TrustRow';
-import {GitHubButton} from '../GithubButton/GithubButton';
-import {DownloadButton} from '../DownloadButton/DownloadButton';
+import {TrustRow} from '@/components/ui/TrustRow/TrustRow';
+import {GitHubButton} from '@/components/ui/GithubButton/GithubButton';
+import {DownloadButton} from '@/components/ui/DownloadButton/DownloadButton';
 
 interface ClosingCtaProps {
     title: string;
@@ -13,7 +13,7 @@ export function ClosingCta({title, description}: ClosingCtaProps) {
     return (
         <div className={styles.closing}>
             <div className={styles.gridBackground} aria-hidden="true" />
-            <h1 className={styles.title}>{title}</h1>
+            <h2 className={styles.title}>{title}</h2>
             <p className={styles.description}>{description}</p>
             <div className={styles.actions}>
                 <DownloadButton />

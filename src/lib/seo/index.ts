@@ -1,5 +1,5 @@
-import {APP_VERSION} from '../download/version';
-import {SOCIAL_URLS} from '../social';
+import {SOCIAL_URLS} from '@/lib/social';
+import {APP_VERSION} from '@/lib/download/version';
 
 const BASE_URL = 'https://tabularis.dev';
 

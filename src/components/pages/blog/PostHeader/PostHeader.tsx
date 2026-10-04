@@ -16,6 +16,7 @@ export function PostHeader({tags, titleHtml, authors, date, readingTime}: PostHe
         year: 'numeric',
         month: 'long',
         day: 'numeric',
+        timeZone: 'UTC',
     });
 
     return (

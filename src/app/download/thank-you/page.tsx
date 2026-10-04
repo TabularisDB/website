@@ -11,10 +11,8 @@ export const metadata: Metadata = {
 
 export default function DownloadThankYouPage() {
     return (
-        <div className="container">
-            <Suspense>
-                <DownloadThankYou />
-            </Suspense>
-        </div>
+        <Suspense>
+            <DownloadThankYou />
+        </Suspense>
     );
 }

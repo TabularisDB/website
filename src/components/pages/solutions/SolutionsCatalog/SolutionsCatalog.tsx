@@ -1,6 +1,6 @@
 import {getSeoPagesBySection} from '@/lib/seo/seoPages';
-import {CATEGORY_ORDER, getCategoryForSlug, getIconForSlug} from '../Solutions.data';
-import {SolutionsGrid} from '../SolutionsGrid/SolutionsGrid';
+import {CATEGORY_ORDER, getCategoryForSlug, getIconForSlug} from '@/components/pages/solutions/Solutions.data';
+import {SolutionsGrid} from '@/components/pages/solutions/SolutionsGrid/SolutionsGrid';
 import styles from './SolutionsCatalog.module.scss';
 
 export function SolutionsCatalog() {

@@ -1,16 +1,16 @@
 ---
-title: "v0.26.0: Transactions That Span Runs, a Command Palette That Acts, and Themes That Reach Every Pixel"
-date: "2026-10-01T10:00:00"
-release: "v0.26.0"
-tags: ["release", "feature", "bugfix", "postgres", "mysql", "ui", "ux", "data-grid", "plugin", "community"]
-excerpt: "v0.26.0 keeps a PostgreSQL transaction open across runs of the same tab, turns the command palette into an action surface, routes every UI color through the theme with WCAG AA checks in CI, and cancels timed-out plugin queries on the server."
+title: 'v0.26.0: Transactions That Span Runs, a Command Palette That Acts, and Themes That Reach Every Pixel'
+date: '2026-10-01T10:00:00'
+release: 'v0.26.0'
+tags: ['release', 'feature', 'bugfix', 'postgres', 'mysql', 'ui', 'ux', 'data-grid', 'plugin', 'community']
+excerpt: 'v0.26.0 keeps a PostgreSQL transaction open across runs of the same tab, turns the command palette into an action surface, routes every UI color through the theme with WCAG AA checks in CI, and cancels timed-out plugin queries on the server.'
 og:
-  template: "screenshot-split"
-  title: "v0.26.0:"
-  accent: "Transactions, Palette, Themes"
-  claim: "Run BEGIN, check, and COMMIT as separate runs in one tab, drive the editor and the grid from the command palette, and get themes that are readable everywhere."
-  image: "/img/posts/v0260-og-shot.png"
-  appLabel: "tabularis"
+    template: 'screenshot-split'
+    title: 'v0.26.0:'
+    accent: 'Transactions, Palette, Themes'
+    claim: 'Run BEGIN, check, and COMMIT as separate runs in one tab, drive the editor and the grid from the command palette, and get themes that are readable everywhere.'
+    image: '/img/posts/v0260-og-shot.png'
+    appLabel: 'tabularis'
 ---
 
 # v0.26.0: Transactions That Span Runs, a Command Palette That Acts, and Themes That Reach Every Pixel
@@ -37,9 +37,9 @@ COMMIT;
 
 Between runs the connection went back to the pool, so run 2 could land on a different connection and show pre-transaction data, and run 3 could report `there is no transaction in progress` while the real transaction stayed open somewhere else. Worse, the pool did not reset connections on return, so the stranded connection, still holding its locks, could be handed to an unrelated query that then ran inside someone else's transaction.
 
-An editor tab is now a session. When a run leaves an explicit transaction open, the tab's connection is pinned to it instead of returning to the pool, and the next run from the same tab continues the same transaction. The tab shows a **TX** badge while that is the case, with the hint *"Transaction open — this tab keeps its connection until you COMMIT or ROLLBACK"*, because its uncommitted changes are invisible to every other tab. `COMMIT`, `ROLLBACK`, closing the tab or 30 minutes of inactivity release it. A pinned connection is never handed back to the pool without a `ROLLBACK` first.
+An editor tab is now a session. When a run leaves an explicit transaction open, the tab's connection is pinned to it instead of returning to the pool, and the next run from the same tab continues the same transaction. The tab shows a **TX** badge while that is the case, with the hint _"Transaction open — this tab keeps its connection until you COMMIT or ROLLBACK"_, because its uncommitted changes are invisible to every other tab. `COMMIT`, `ROLLBACK`, closing the tab or 30 minutes of inactivity release it. A pinned connection is never handed back to the pool without a `ROLLBACK` first.
 
-<video src="/videos/posts/tabularis-tab-transaction.mp4" poster="/videos/posts/tabularis-tab-transaction.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-tab-transaction.mp4" poster="/videos/posts/tabularis-tab-transaction.jpg" autoplay loop muted playsinline></video>
 
 Pinning is lazy: a tab that never opens a transaction holds nothing, so ten idle tabs still cost no connections. Transaction control is recognized from a statement's leading keywords only (`BEGIN`, `START TRANSACTION`, `COMMIT`, `END`, `ROLLBACK`, `ABORT`, `PREPARE TRANSACTION`, and `... AND CHAIN`, which ends one transaction and opens the next), so a `BEGIN` inside a string literal or a PL/pgSQL body is not mistaken for one, and `ROLLBACK TO SAVEPOINT` leaves the transaction open. A failed ordinary statement leaves the session pinned, since PostgreSQL keeps the aborted transaction open until you roll it back from the same tab; a failed `COMMIT` releases it, since PostgreSQL has already rolled back. Paging through a result, counting rows, exporting and **Copy all rows** go through the tab's session too, so they see the tab's own uncommitted changes. Closing a tab releases its connection only after the unsaved-file prompt, so cancelling that prompt cannot discard a live transaction, and every close path, a disconnect and the app exit release pinned sessions.
 
@@ -60,7 +60,7 @@ This works on the built-in PostgreSQL driver and on the [PostgreSQL plugin](http
 
 Root commands such as Open settings and Open connection manager stay available while the editor is loading or showing its error boundary, so the palette is a way out of a broken state rather than part of it.
 
-The same contributor reworked shortcut handling in PR [#773](https://github.com/TabularisDB/tabularis/pull/773). **Settings → Keyboard Shortcuts** opens a dedicated editor for each binding that records the combination, refuses one without a modifier (*"Add a modifier key, such as Ctrl or Alt."*), and names the shortcut it would collide with (*"This shortcut conflicts with “Toggle sidebar”."*) instead of silently overriding it. Shortcuts now track the physical key as well as the character, so switching connections with `Ctrl+Shift+1–9`, the palette shortcut and your own overrides keep working on AZERTY, QWERTZ and other layouts; an override matches either the key or its position, so on some layouts one shortcut has two triggers, which is intended. **Open settings** (`⌘+,` / `Ctrl+,`) is a new, remappable shortcut, notebook shortcuts appear in their own category, and closing Settings returns to where you came from.
+The same contributor reworked shortcut handling in PR [#773](https://github.com/TabularisDB/tabularis/pull/773). **Settings → Keyboard Shortcuts** opens a dedicated editor for each binding that records the combination, refuses one without a modifier (_"Add a modifier key, such as Ctrl or Alt."_), and names the shortcut it would collide with (_"This shortcut conflicts with “Toggle sidebar”."_) instead of silently overriding it. Shortcuts now track the physical key as well as the character, so switching connections with `Ctrl+Shift+1–9`, the palette shortcut and your own overrides keep working on AZERTY, QWERTZ and other layouts; an override matches either the key or its position, so on some layouts one shortcut has two triggers, which is intended. **Open settings** (`⌘+,` / `Ctrl+,`) is a new, remappable shortcut, notebook shortcuts appear in their own category, and closing Settings returns to where you came from.
 
 ---
 
@@ -74,11 +74,11 @@ PR [#809](https://github.com/TabularisDB/tabularis/pull/809) routes everything t
 
 PR [#812](https://github.com/TabularisDB/tabularis/pull/812) adds a **Design & Accessibility** workflow with three blocking checks, and fixes everything they found on the way in:
 
-| Check | What it verifies | Findings fixed |
-| :--- | :--- | ---: |
-| Theme tokens | No hardcoded colors, radii or fonts | already passing |
-| Theme contrast | WCAG 2.2 AA on the token pairs the UI paints, for all 12 built-in themes | 277 pairs |
-| jsx-a11y | `eslint-plugin-jsx-a11y` recommended rules on every component | 128 violations in 52 files |
+| Check          | What it verifies                                                         |             Findings fixed |
+| :------------- | :----------------------------------------------------------------------- | -------------------------: |
+| Theme tokens   | No hardcoded colors, radii or fonts                                      |            already passing |
+| Theme contrast | WCAG 2.2 AA on the token pairs the UI paints, for all 12 built-in themes |                  277 pairs |
+| jsx-a11y       | `eslint-plugin-jsx-a11y` recommended rules on every component            | 128 violations in 52 files |
 
 The contrast fixes change lightness only and keep each theme's hue, and a second test keeps the primary, secondary and muted text tiers in order so a fix cannot flatten the hierarchy. You will notice them most in Solarized, Nord, Tabularis Light, whose status colors are darker, and GitHub Dark, whose accent and focus ring are lighter. The accessibility fixes are the less visible half: clickable `div`s became buttons, rows and tabs that contain other controls respond to Enter and Space, several menus that ignored Escape now close on it, resize handles are keyboard-operable separators, labels are tied to their controls, icon-only buttons have translated names, and every newly focusable element has a focus ring. The sidebar width and editor split are still mouse-only.
 
@@ -107,7 +107,7 @@ PR [#833](https://github.com/TabularisDB/tabularis/pull/833) makes the limit a s
 PR [#842](https://github.com/TabularisDB/tabularis/pull/842) closes the other half. When a call times out, the host now also writes a JSON-RPC notification to the plugin:
 
 ```json
-{"jsonrpc":"2.0","method":"cancel","params":{"id":42}}
+{"jsonrpc": "2.0", "method": "cancel", "params": {"id": 42}}
 ```
 
 It has no top-level `id`, so the plugin must not answer it, and it is only sent if the request was still pending, so a response that raced the timeout does not trigger a cancel. The [PostgreSQL plugin](https://github.com/TabularisDB/tabularis-postgresql-plugin) handles it from 1.0.0-rc.6 by calling `pg_cancel_backend` on the statement's backend: in the PR's end-to-end test, `SELECT pg_sleep(60)` with a 3-second timeout failed on the host at 3.0 seconds and left no backend running half a second later. Plugins that do not implement `cancel` behave as before; at worst their reply is dropped with one log line. The contract is documented in the plugin guide as an optional **Cancel Notification**.

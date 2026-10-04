@@ -27,7 +27,7 @@ export default function NotFound() {
                             <ArrowLeft size={16} /> Go home
                         </Button>
                         <Button href="/wiki" variant="outline">
-                            Wiki
+                            Docs
                         </Button>
                         <Button href="/blog" variant="outline">
                             Blog

@@ -2,7 +2,7 @@
 import {useState} from 'react';
 import {SPONSORS} from '@/lib/sponsors';
 import type {Sponsor} from '@/lib/sponsors';
-import {SponsorModal} from '../SponsorModal/SponsorModal';
+import {SponsorModal} from '@/components/pages/sponsors/SponsorModal/SponsorModal';
 import styles from './SponsorsGrid.module.scss';
 
 export function SponsorsGrid() {

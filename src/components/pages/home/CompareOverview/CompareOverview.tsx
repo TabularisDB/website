@@ -2,9 +2,9 @@
 import {Button} from '@/components/ui/Button/Button';
 import {getSeoPagesBySection} from '@/lib/seo/seoPages';
 import {ArrowLeftRight, ArrowRight} from 'lucide-react';
-import {CompareGrid} from '../../compare/CompareGrid/CompareGrid';
+import {CompareGrid} from '@/components/pages/compare/CompareGrid/CompareGrid';
 import styles from './CompareOverview.module.scss';
-import {COMPARE_PREVIEW_MAP} from '../../compare/Compare.data';
+import {COMPARE_PREVIEW_MAP} from '@/components/pages/compare/Compare.data';
 
 export function CompareOverview() {
     const comparePages = getSeoPagesBySection('compare')
@@ -18,7 +18,7 @@ export function CompareOverview() {
                     <ArrowLeftRight />
                     Compare
                 </span>
-                <h2 className="title">Why teams are switching to Tabularis.</h2>
+                <h1 className="title">Why teams are switching to Tabularis.</h1>
                 <p className="description">
                     Notebooks, plugins, and AI-native workflows: see what the others are missing.
                 </p>

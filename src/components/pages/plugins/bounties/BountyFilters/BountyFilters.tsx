@@ -1,7 +1,7 @@
 'use client';
 
 import {SearchIcon} from 'lucide-react';
-import {BOUNTY_DIFFICULTY} from '@/lib/pluginBounties';
+import {BOUNTY_DIFFICULTY} from '@/lib/plugins/bounties';
 import styles from './BountyFilters.module.scss';
 
 export type StatusFilter = 'all' | 'motion' | 'coming-soon' | 'open';

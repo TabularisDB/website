@@ -1,6 +1,6 @@
-import {getActiveBounties, getShippedBounties} from '@/lib/pluginBounties';
+import {getActiveBounties, getShippedBounties} from '@/lib/plugins/bounties';
 import {PlugIcon} from 'lucide-react';
-import {getPluginIcon, STATUS_WEIGHT} from '../../Plugin.data';
+import {getPluginIcon, STATUS_WEIGHT} from '@/components/pages/plugins/Plugin.data';
 import styles from './BountySchema.module.scss';
 
 const NODE_COUNT = 6;
@@ -21,11 +21,11 @@ function NodeIcon({icon, name}: {icon: string | null; name: string}) {
 export function BountySchema() {
     const active = getActiveBounties().sort((a, b) => STATUS_WEIGHT[a.status] - STATUS_WEIGHT[b.status]);
 
-    let bounties = active.slice(0, 1);
+    let bounties = active;
     if (bounties.length < NODE_COUNT) {
         const activeIds = new Set(active.map((bounty) => bounty.id));
         const filler = getShippedBounties().filter((bounty) => !activeIds.has(bounty.id));
-        bounties = [...active.slice(0, 1), ...filler];
+        bounties = [...bounties, ...filler];
     }
     bounties = bounties.slice(0, NODE_COUNT);
 

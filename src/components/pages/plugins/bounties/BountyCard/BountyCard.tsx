@@ -2,10 +2,11 @@ import {ArrowRightIcon, PlugIcon, PlusIcon, StarIcon} from 'lucide-react';
 import Link from 'next/link';
 import {Button} from '@/components/ui/Button/Button';
 import {DiscordIcon} from '@/components/ui/Icons/SocialIcons';
-import {BOUNTY_STATUS, BOUNTY_STATUS_LABEL, type PluginBounty} from '@/lib/pluginBounties';
+import {BOUNTY_STATUS, BOUNTY_STATUS_LABEL, type PluginBounty} from '@/lib/plugins/bounties';
 import {SOCIAL_URLS} from '@/lib/social';
-import {getPluginIcon} from '../../Plugin.data';
+import {getPluginIcon} from '@/components/pages/plugins/Plugin.data';
 import styles from './BountyCard.module.scss';
+import {trackEvent} from '@/lib/analytics';
 
 function claimLabel(status: PluginBounty['status']) {
     if (status === BOUNTY_STATUS.SHIPPED) return 'View plugin';
@@ -103,15 +104,32 @@ export function BountyCard({bounty}: {bounty: PluginBounty}) {
             </div>
 
             <div className={styles.footer}>
-                <Button href={bounty.claimUrl} className={styles.button} size="sm">
+                <Button
+                    href={bounty.claimUrl}
+                    className={styles.button}
+                    size="sm"
+                    onClick={() => trackEvent('Bounty', 'Claim Work', bounty.id)}
+                >
                     {claimLabel(bounty.status)}
                     <ArrowRightIcon size={14} />
                 </Button>
-                <Button href={SOCIAL_URLS.discord} className={styles.button} variant="secondary" size="sm">
+                <Button
+                    href={SOCIAL_URLS.discord}
+                    className={styles.button}
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => trackEvent('Bounty', 'Discuss', bounty.id)}
+                >
                     <DiscordIcon />
                     Discuss
                 </Button>
-                <Button href={bounty.sponsorUrl} className={styles.button} variant="secondary" size="sm">
+                <Button
+                    href={bounty.sponsorUrl}
+                    className={styles.button}
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => trackEvent('Bounty', 'Sponsor', bounty.id)}
+                >
                     <StarIcon />
                     Sponsor
                 </Button>

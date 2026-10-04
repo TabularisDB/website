@@ -36,6 +36,12 @@ export const SURVEY_EMAILCHEF = {
     },
 } as const;
 
+export const NEWSLETTER_EMAILCHEF = {
+    token: '7o22666s726q5s6964223n2237353333227q',
+    formId: '7533',
+    redirect: '/thanks-newsletter',
+} as const;
+
 // The survey only renders once the custom fields are wired up — otherwise the
 // answers would POST to non-existent fields and be silently dropped.
 export const SURVEY_CONFIGURED = !SURVEY_EMAILCHEF.fields.role.startsWith('REPLACE');

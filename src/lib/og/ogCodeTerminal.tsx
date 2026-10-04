@@ -1,5 +1,5 @@
 import {ImageResponse} from 'next/og';
-import {loadFonts, renderOg, SplitLayout} from './og.utils';
+import {loadFonts, renderOg, SplitLayout} from './shared';
 
 // One Dark-ish palette.
 const C = {

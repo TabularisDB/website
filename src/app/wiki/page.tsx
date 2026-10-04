@@ -5,13 +5,14 @@ import {BookOpen, Bot, Database, LayoutGrid, Plug, Rocket, Settings2, Shield} fr
 import type {Metadata} from 'next';
 import Link from 'next/link';
 import styles from './WikiIndexPage.module.scss';
+import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
 
 export const metadata: Metadata = {
-    title: 'Wiki | Tabularis',
+    title: 'Docs | Tabularis',
     description: 'Learn everything about Tabularis features and how to use them.',
 };
 
-const CATEGORY_ICONS: Record<WikiCategory, React.ReactNode> = {
+export const CATEGORY_ICONS: Record<WikiCategory, React.ReactNode> = {
     'Getting Started': <Rocket size={18} />,
     'Core Features': <LayoutGrid size={18} />,
     'Database Objects': <Database size={18} />,
@@ -32,6 +33,7 @@ export default function WikiIndexPage() {
 
     return (
         <div className="wiki-container">
+            <Breadcrumbs crumbs={[{label: 'Docs', href: '/wiki/'}]} />
             <WikiLayout categories={categories}>
                 <header className={styles.hero}>
                     <h1 className={styles.title}>Documentation</h1>

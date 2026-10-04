@@ -2,7 +2,6 @@ import {NewsletterForm} from '@/components/ui/NewsletterForm/NewsletterForm';
 import {PostCard} from '@/components/ui/PostCard/PostCard';
 import {PostMeta} from '@/lib/blog/posts';
 import {NewspaperIcon} from 'lucide-react';
-import {Suspense} from 'react';
 import styles from './BlogArchive.module.scss';
 import {PostGrid} from './PostGrid/PostGrid';
 import {TagFilter} from './TagFilter/TagFilter';
@@ -25,7 +24,7 @@ export function BlogArchive({posts, activeTag}: BlogArchiveProps) {
                     <NewspaperIcon />
                     Blog
                 </span>
-                <h2 className="title">Latest from the blog</h2>
+                <h1 className="title">Latest from the blog</h1>
                 <p className="description">
                     Release notes, product updates, and the occasional deep dive into how Tabularis is built.
                 </p>
@@ -43,9 +42,7 @@ export function BlogArchive({posts, activeTag}: BlogArchiveProps) {
             {gridPosts.length > 0 && (
                 <section className={styles.archive}>
                     <h2 className={styles.archiveTitle}>Discover more posts</h2>
-                    <Suspense fallback={null}>
-                        <PostGrid posts={gridPosts} pageSize={POSTS_PER_PAGE} />
-                    </Suspense>
+                    <PostGrid posts={gridPosts} pageSize={POSTS_PER_PAGE} />
                 </section>
             )}
 

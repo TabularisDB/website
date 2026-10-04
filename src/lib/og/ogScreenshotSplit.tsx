@@ -1,5 +1,5 @@
 import {ImageResponse} from 'next/og';
-import {loadFonts, readPublicImage, renderOg, SplitLayout} from './og.utils';
+import {loadFonts, readPublicImage, renderOg, SplitLayout} from './shared';
 
 export interface ScreenshotSplitOgOptions {
     /** White first headline line. */

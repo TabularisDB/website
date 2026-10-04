@@ -1,10 +1,11 @@
 'use client';
 
-import {useEffect} from 'react';
-import {useSearchParams} from 'next/navigation';
-import {BookOpenIcon, PartyPopperIcon, StarIcon} from 'lucide-react';
-import {DiscordIcon, GitHubIcon} from '@/components/ui/Icons/SocialIcons';
+import {GitHubIcon} from '@/components/ui/Icons/SocialIcons';
+import {ThankYouResources} from '@/components/ui/ThankYouResources/ThankYouResources';
 import {SOCIAL_URLS} from '@/lib/social';
+import {BookOpenIcon, PartyPopperIcon, StarIcon} from 'lucide-react';
+import {useSearchParams} from 'next/navigation';
+import {useEffect} from 'react';
 import styles from './DownloadThankYou.module.scss';
 
 const RESOURCES = [
@@ -14,13 +15,7 @@ const RESOURCES = [
         icon: <StarIcon />,
         title: 'Star us on GitHub',
         desc: 'A star takes 2 seconds and is the single biggest way to help an open-source project grow.',
-    },
-    {
-        href: SOCIAL_URLS.discord,
-        external: true,
-        icon: <DiscordIcon />,
-        title: 'Join our Discord Community',
-        desc: 'Connect with other developers using Tabularis. Get help, share tips, and stay updated on the latest features.',
+        track: {category: 'invite-github-star', action: 'click', name: 'thank-you'},
     },
     {
         href: '/wiki',
@@ -57,7 +52,7 @@ export function DownloadThankYou() {
     }, [url]);
 
     return (
-        <>
+        <div className="container with-gap">
             <header className="page-header">
                 <span className="eyebrow">
                     <PartyPopperIcon />
@@ -79,25 +74,7 @@ export function DownloadThankYou() {
                 )}
             </header>
 
-            <h2 className={styles.sectionTitle}>While you wait</h2>
-            <div className={styles.cards}>
-                {RESOURCES.map((resource) => (
-                    <a
-                        key={resource.title}
-                        href={resource.href}
-                        {...(resource.external && {target: '_blank', rel: 'noopener noreferrer'})}
-                        className={styles.card}
-                    >
-                        <div className={styles.cardCover}>
-                            <span className={styles.cardIcon}>{resource.icon}</span>
-                        </div>
-                        <div className={styles.cardDetails}>
-                            <h3 className={styles.cardTitle}>{resource.title}</h3>
-                            <p className={styles.cardExcerpt}>{resource.desc}</p>
-                        </div>
-                    </a>
-                ))}
-            </div>
-        </>
+            <ThankYouResources resources={RESOURCES} title="While you wait" />
+        </div>
     );
 }

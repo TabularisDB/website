@@ -1,7 +1,4 @@
-export function applyIntrinsicAspectRatio(
-  wrapper: HTMLElement,
-  video: HTMLVideoElement,
-): void {
+export function applyIntrinsicAspectRatio(wrapper: HTMLElement, video: HTMLVideoElement): void {
   const sync = () => {
     if (video.videoWidth && video.videoHeight) {
       wrapper.style.aspectRatio = `${video.videoWidth} / ${video.videoHeight}`;
@@ -11,17 +8,12 @@ export function applyIntrinsicAspectRatio(
   else video.addEventListener("loadedmetadata", sync, { once: true });
 }
 
-// Listen to multiple events: cached videos may fire canplay before our listener attaches.
-const VIDEO_READY_EVENTS = [
-  "canplay",
-  "playing",
-  "loadeddata",
-  "timeupdate",
-] as const;
+const VIDEO_READY_EVENTS = ["canplay", "playing", "loadeddata"] as const;
 
 export function enhanceWrappedVideo(video: HTMLVideoElement): void {
   const wrapper = video.closest<HTMLElement>(".video-wrapper");
-  if (!wrapper) return;
+  if (!wrapper || video.dataset.enhanced !== undefined) return;
+  video.dataset.enhanced = "";
 
   applyIntrinsicAspectRatio(wrapper, video);
 
@@ -29,6 +21,9 @@ export function enhanceWrappedVideo(video: HTMLVideoElement): void {
   const errorEl = wrapper.querySelector<HTMLElement>(".video-error");
   if (!loader) return;
 
+  const showLoader = () => {
+    if (!video.error) loader.hidden = false;
+  };
   const showReady = () => {
     loader.hidden = true;
     if (errorEl) errorEl.hidden = true;
@@ -56,20 +51,14 @@ export function enhanceWrappedVideo(video: HTMLVideoElement): void {
 
   attachEvents();
 
-  // Markdown-rendered videos ship with preload="none" and autoplay moved to
-  // data-autoplay (see markdownVideos.ts), so nothing downloads up front:
-  // restore autoplay only when the player nears the viewport, mirroring what
-  // VideoPlayer.tsx does for the /videos page. Without JavaScript the video
-  // still works natively — real src, controls, download starts on play.
-  const showLoader = () => {
-    loader.hidden = false;
-  };
   if (video.dataset.autoplay !== undefined) {
     const startPlayback = () => {
       showLoader();
       video.autoplay = true;
       delete video.dataset.autoplay;
-      video.play().catch(() => {});
+      video.play().catch(() => {
+        if (video.error) showError();
+      });
     };
     if (typeof IntersectionObserver === "undefined") {
       startPlayback();
@@ -86,16 +75,18 @@ export function enhanceWrappedVideo(video: HTMLVideoElement): void {
       observer.observe(wrapper);
     }
   } else {
-    // Click-to-play video: surface the spinner once loading actually starts.
     video.addEventListener("loadstart", showLoader, { once: true });
     if (video.networkState === HTMLMediaElement.NETWORK_LOADING) showLoader();
   }
 
   const retryBtn = errorEl?.querySelector<HTMLButtonElement>(".video-error-retry");
   retryBtn?.addEventListener("click", () => {
-    loader.hidden = false;
     if (errorEl) errorEl.hidden = true;
-    video.load();
+    loader.hidden = false;
     attachEvents();
+    video.load();
+    video.play().catch(() => {
+      if (video.error) showError();
+    });
   });
 }

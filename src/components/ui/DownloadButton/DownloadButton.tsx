@@ -4,8 +4,8 @@ import {DownloadModal} from '@/components/layout/DownloadModal/DownloadModal';
 import {Platform} from '@/lib/download/downloadConfig';
 import clsx from 'clsx';
 import {useEffect, useState} from 'react';
-import {Button} from '../Button/Button';
-import {LinuxIcon, MacOsIcon, WindowsIcon} from '../Icons/PlatformIcons';
+import {Button} from '@/components/ui/Button/Button';
+import {LinuxIcon, MacOsIcon, WindowsIcon} from '@/components/ui/Icons/PlatformIcons';
 import styles from './DownloadButton.module.scss';
 
 function detectPlatform(): Platform {

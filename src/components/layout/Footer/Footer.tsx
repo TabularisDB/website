@@ -4,7 +4,7 @@ import styles from './Footer.module.scss';
 
 import {usePathname} from 'next/navigation';
 import Link from 'next/link';
-import {Brand} from '../Brand/Brand';
+import {Brand} from '@/components/layout/Brand/Brand';
 import {ClosingCta} from '@/components/ui/ClosingCta/ClosingCta';
 import {SocialLinks} from '@/components/ui/SocialLinks/SocialLinks';
 import {getClosingCtaContent, FOOTER_COLUMNS} from './Footer.data';
@@ -56,13 +56,15 @@ export function Footer() {
                     .
                 </p>
                 <p className={styles.footerLinksBottom}>
+                    <Link href="/subscribe">Subscribe</Link>
                     <Link href="/cookie-policy">Cookie Policy</Link>
-                    <span
+                    <button
+                        type="button"
                         className={styles.manageCookiesButton}
                         onClick={() => window.dispatchEvent(new Event('tabularis:manage-cookies'))}
                     >
                         Cookies Preferences
-                    </span>
+                    </button>
                 </p>
             </div>
         </footer>

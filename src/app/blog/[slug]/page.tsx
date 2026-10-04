@@ -8,8 +8,8 @@ import {buildArticleJsonLd, buildBreadcrumbJsonLd} from '@/lib/seo';
 import {getRelatedLinksForPost} from '@/lib/seo/seoRelated';
 import {Metadata} from 'next';
 import {notFound} from 'next/navigation';
-import {PostNav} from '../../../components/ui/PostNav/PostNav';
-import {WikiContent} from '../../../components/pages/wiki/WikiContent/WikiContent';
+import {PostNav} from '@/components/ui/PostNav/PostNav';
+import {WikiContent} from '@/components/pages/wiki/WikiContent/WikiContent';
 import styles from './BlogPostPage.module.scss';
 import {PostAuthor} from '@/components/pages/blog/PostAuthor/PostAuthor';
 import {PostHeader} from '@/components/pages/blog/PostHeader/PostHeader';
@@ -130,7 +130,7 @@ export default async function BlogPostPage({params}: PageProps) {
                             description="We send an email when there's something worth reading, nothing more."
                             buttonLabel="Subscribe"
                         />
-                        <PostNav prev={prev} next={next} basePath="/blog/" />
+                        <PostNav prev={prev} next={next} basePath="/blog" />
                     </main>
 
                     <aside className={styles.share}>

@@ -9,12 +9,12 @@ import {
     type DifficultyFilter,
     type FocusFilter,
     type StatusFilter,
-} from '../BountyFilters/BountyFilters';
+} from '@/components/pages/plugins/bounties/BountyFilters/BountyFilters';
 import styles from './BountyGrid.module.scss';
-import {BOUNTY_STATUS, getActiveBounties, PluginBounty} from '@/lib/pluginBounties';
-import {STATUS_WEIGHT} from '../../Plugin.data';
+import {BOUNTY_DIFFICULTY, BOUNTY_STATUS, getActiveBounties, PluginBounty} from '@/lib/plugins/bounties';
+import {STATUS_WEIGHT} from '@/components/pages/plugins/Plugin.data';
 import {XIcon} from 'lucide-react';
-import {BountyCard} from '../BountyCard/BountyCard';
+import {BountyCard} from '@/components/pages/plugins/bounties/BountyCard/BountyCard';
 
 function matchesStatus(bounty: PluginBounty, filter: StatusFilter) {
     if (filter === 'all') return true;
@@ -46,7 +46,7 @@ export function BountyGrid() {
         (bounty) =>
             matchesStatus(bounty, status) &&
             matchesFocus(bounty, focus) &&
-            (difficulty === 'all' || bounty.difficulty === difficulty) &&
+            (difficulty === 'all' || bounty.difficulty === (difficulty as BOUNTY_DIFFICULTY)) &&
             (!normalizedQuery ||
                 [bounty.name, bounty.target, bounty.tagline, bounty.description, ...bounty.tags].some((value) =>
                     value.toLowerCase().includes(normalizedQuery),
@@ -93,7 +93,9 @@ export function BountyGrid() {
             />
 
             <div className={styles.resultsRow}>
-                <span className={styles.count}>{filtered.length} Plugins</span>
+                <span className={styles.count}>
+                    {filtered.length} {filtered.length === 1 ? 'target' : 'targets'}
+                </span>
 
                 {activeChips.length > 0 && (
                     <div className={styles.chips}>

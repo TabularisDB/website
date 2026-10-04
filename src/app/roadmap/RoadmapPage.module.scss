@@ -105,3 +105,41 @@
         color: var(--color-accent-teal);
     }
 }
+
+.future {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 3rem 1.5rem;
+    border: 0.1rem dashed var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.futureTitle {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.futureText {
+    max-width: 600px;
+    color: var(--color-text-secondary);
+    line-height: 1.3;
+
+    a {
+        color: var(--color-accent-teal);
+    }
+}
+
+.futureActions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+
+    & svg {
+        width: 1rem;
+    }
+}

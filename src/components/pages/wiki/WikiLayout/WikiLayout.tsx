@@ -2,7 +2,7 @@
 
 import {useEffect, useState} from 'react';
 import clsx from 'clsx';
-import {WikiSidebar} from '../WikiSidebar/WikiSidebar';
+import {WikiSidebar} from '@/components/pages/wiki/WikiSidebar/WikiSidebar';
 import type {WikiCategory, WikiMeta} from '@/lib/wiki';
 import styles from './WikiLayout.module.scss';
 import {MenuIcon} from 'lucide-react';

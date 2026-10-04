@@ -17,7 +17,9 @@ export function WikiContent({html}: {html: string}) {
 
     useEffect(() => {
         if (!ref.current) return;
-        const imgs = ref.current.querySelectorAll<HTMLImageElement>("img:not([src*='shields.io']):not([src*='badge'])");
+        const imgs = ref.current.querySelectorAll<HTMLImageElement>(
+            "img:not([src*='shields.io']):not([src*='badge']):not(.no-lightbox):not(.no-lightbox img)",
+        );
         const imageList = Array.from(imgs).map((img) => ({
             src: img.getAttribute('src') ?? img.src,
             alt: img.alt,

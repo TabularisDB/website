@@ -1,7 +1,7 @@
 import {Button} from '@/components/ui/Button/Button';
-import type {DownloadOption, PlatformConfig} from '@/lib/downloadConfig';
+import type {DownloadOption, PlatformConfig} from '@/lib/download/downloadConfig';
 import {AlertCircleIcon, CopyIcon} from 'lucide-react';
-import {CopyButton} from '../../../ui/CopyButton/CopyButton';
+import {CopyButton} from '@/components/ui/CopyButton/CopyButton';
 import styles from './DownloadOptions.module.scss';
 
 interface DownloadOptionsProps {

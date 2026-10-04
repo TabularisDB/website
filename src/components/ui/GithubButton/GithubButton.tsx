@@ -4,8 +4,8 @@ import {useRepoStars} from '@/hooks/useRepoStars';
 import {formatStars} from '@/lib/github';
 import clsx from 'clsx';
 import {StarIcon} from 'lucide-react';
-import {Button} from '../Button/Button';
-import {GitHubIcon} from '../Icons/SocialIcons';
+import {Button} from '@/components/ui/Button/Button';
+import {GitHubIcon} from '@/components/ui/Icons/SocialIcons';
 import styles from './GithubButton.module.scss';
 import {SOCIAL_URLS} from '@/lib/social';
 
@@ -25,10 +25,12 @@ export function GitHubButton({withBackground = false}: GithubButtonProps) {
         >
             <GitHubIcon />
             <div className={clsx(styles.divider, 'divider')}></div>
-            <span className={styles.stars}>
+            <div className={styles.stars}>
                 <StarIcon />
-                <div>{stars != null ? formatStars(stars) : '—'}</div>
-            </span>
+                <div className={styles.starCount}>
+                    {stars ? formatStars(stars) : <span className="skeleton"></span>}
+                </div>
+            </div>
         </Button>
     );
 }

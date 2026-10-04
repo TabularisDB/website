@@ -9,7 +9,7 @@ export function PluginEcosystem() {
                     <PlugIcon />
                     Plugin ecosystem
                 </span>
-                <h2 className="title">An ecosystem that never stops growing.</h2>
+                <h1 className="title">An ecosystem that never stops growing.</h1>
                 <p className="description">
                     Every driver is a standalone plugin that talks JSON-RPC over stdin/stdout. Write one in any language
                     that speaks it, install it live, no restart needed.

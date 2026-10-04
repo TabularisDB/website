@@ -1,7 +1,7 @@
 import type {ReactNode} from 'react';
 import {ClaudeIcon, CursorIcon, DevinIcon, McpIcon} from './icons/AgentIcons';
 import {PostgreSQLIcon, MySQLIcon, SQLiteIcon, MongoDBIcon, RedisIcon} from '@/components/ui/Icons/PluginIcons';
-import {getShippedBounties} from '@/lib/pluginBounties';
+import {getShippedBounties} from '@/lib/plugins/bounties';
 
 export interface DiagramItem {
     label: string;

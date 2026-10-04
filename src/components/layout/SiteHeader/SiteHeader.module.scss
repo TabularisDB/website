@@ -4,7 +4,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    padding: 0rem 1.25rem;
+    padding: 0rem 1.5rem;
     height: var(--header-height);
     display: flex;
     align-items: center;
@@ -16,7 +16,7 @@
         backdrop-filter: none;
     }
 
-    &.scrolled {
+    &.border {
         border-bottom-color: var(--color-border);
     }
 }

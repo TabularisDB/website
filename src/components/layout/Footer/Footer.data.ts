@@ -133,7 +133,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
         links: [
             {label: 'Blog', href: '/blog'},
             {label: 'Changelog', href: '/changelog'},
-            {label: 'Product Demos', href: '/videos'},
+            {label: 'Product Demos', href: '/demos'},
             {label: 'Compare', href: '/compare'},
             {label: 'Roadmap', href: '/roadmap'},
         ],

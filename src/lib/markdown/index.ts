@@ -2,9 +2,9 @@ import {marked} from 'marked';
 import {markedHighlight} from 'marked-highlight';
 import {gfmHeadingId} from 'marked-gfm-heading-id';
 import hljs from 'highlight.js/lib/common';
-import {getAllPlugins, getLatestRelease} from '../plugins';
-import {SOCIAL_URLS} from '../social';
-import {APP_VERSION} from '../download/version';
+import {getAllPlugins, getLatestRelease} from '@/lib/plugins';
+import {SOCIAL_URLS} from '@/lib/social';
+import {APP_VERSION} from '@/lib/download/version';
 
 // {{APP_VERSION}} in any Markdown content (posts, wiki, seo) is replaced with
 // the current app version at build time — works inside code fences too, since

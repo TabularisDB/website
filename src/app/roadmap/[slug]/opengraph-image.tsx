@@ -1,5 +1,5 @@
 import {getAllInitiativeSlugs, getInitiativeBySlug, type InitiativeStatus} from '@/lib/roadmap';
-import {OG_CONTENT_TYPE, OG_SIZE} from '@/lib/og/og.utils';
+import {OG_CONTENT_TYPE, OG_SIZE} from '@/lib/og/shared';
 import {renderSimpleOgImage} from '@/lib/og/ogImageSimple';
 
 export const alt = 'Tabularis Roadmap';

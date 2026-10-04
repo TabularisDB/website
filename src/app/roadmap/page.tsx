@@ -7,6 +7,9 @@ import Link from 'next/link';
 import styles from './RoadmapPage.module.scss';
 import clsx from 'clsx';
 import {ComponentType} from 'react';
+import {Button} from '@/components/ui/Button/Button';
+import {GitHubIcon, DiscordIcon} from '@/components/ui/Icons/SocialIcons';
+import {SOCIAL_URLS} from '@/lib/social';
 
 export const metadata: Metadata = {
     title: 'Roadmap | Tabularis',
@@ -106,6 +109,27 @@ export default function RoadmapPage() {
                     );
                 })}
             </div>
+
+            <section className={styles.future}>
+                <h2 className={styles.futureTitle}>Not yet on the board</h2>
+                <p className={styles.futureText}>
+                    Other drivers and major features land here as they move from idea to scoped work. Propose one in a{' '}
+                    <a href={`${SOCIAL_URLS.github}/discussions`} target="_blank" rel="noopener noreferrer">
+                        GitHub Discussion
+                    </a>
+                    .
+                </p>
+                <div className={styles.futureActions}>
+                    <Button href={SOCIAL_URLS.github} variant="secondary">
+                        <GitHubIcon />
+                        Star on GitHub
+                    </Button>
+                    <Button href={SOCIAL_URLS.discord} variant="secondary">
+                        <DiscordIcon />
+                        Join Discord
+                    </Button>
+                </div>
+            </section>
         </div>
     );
 }
