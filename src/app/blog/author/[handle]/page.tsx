@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import {PostGrid} from '@/components/pages/blog/BlogArchive/PostGrid/PostGrid';
 import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
 import {AUTHORS, authorAvatarUrl, authorGitHubUrl, getAuthor} from '@/lib/blog/authors';
@@ -74,7 +75,14 @@ export default async function AuthorArchivePage({params}: PageProps) {
             <div className={styles.layout}>
                 <Breadcrumbs crumbs={[{label: 'Blog', href: '/blog'}, {label: author.name}]} />
                 <header className={styles.header}>
-                    <img src={authorAvatarUrl(author.github)} alt={author.name} className={styles.avatar} />
+                    <Image
+                        src={authorAvatarUrl(author.github)}
+                        alt={author.name}
+                        width={96}
+                        height={96}
+                        loading="eager"
+                        className={styles.avatar}
+                    />
                     <div className={styles.info}>
                         <h1 className={styles.name}>{author.name}</h1>
                         <p className={styles.bio}>{author.bio}</p>

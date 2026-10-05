@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import {JsonLd} from '@/components/layout/JsonLd';
 import {Button} from '@/components/ui/Button/Button';
 import {CopyButton} from '@/components/ui/CopyButton/CopyButton';
@@ -104,9 +105,11 @@ export default function BrandPage() {
                                 return (
                                     <article key={variant.id} className={styles.card}>
                                         <div className={styles.preview} data-tone={variant.tone}>
-                                            <img
+                                            <Image
                                                 src={`${file}.svg`}
                                                 alt={`Tabularis ${title.toLowerCase()}, ${variant.label.toLowerCase()}`}
+                                                width={type === 'logo' ? 2400 : 1024}
+                                                height={type === 'logo' ? 489 : 1024}
                                                 className={type === 'logo' ? styles.logo : styles.icon}
                                             />
                                         </div>

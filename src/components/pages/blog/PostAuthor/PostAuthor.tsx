@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import {authorAvatarUrl, authorGitHubUrl} from '@/lib/blog/authors';
 import type {Author} from '@/lib/blog/authors';
@@ -16,7 +17,13 @@ export function PostAuthor({authors}: PostAuthorProps) {
 
             {authors.map((author) => (
                 <div className={styles.author} key={author.handle}>
-                    <img src={authorAvatarUrl(author.github)} alt={author.name} className={styles.avatar} />
+                    <Image
+                        src={authorAvatarUrl(author.github)}
+                        alt={author.name}
+                        width={80}
+                        height={80}
+                        className={styles.avatar}
+                    />
                     <div className={styles.info}>
                         <div className={styles.nameRow}>
                             <Link href={`/blog/author/${author.handle}`} className={styles.name}>

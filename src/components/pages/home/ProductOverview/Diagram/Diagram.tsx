@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import clsx from 'clsx';
 import styles from './Diagram.module.scss';
 import {AI_AGENTS, NATIVE_DATABASES, PLUGIN_DATABASES} from './Diagram.data';
@@ -76,7 +77,7 @@ export function Diagram() {
             </svg>
 
             <div className={styles.hub}>
-                <img src={'/img/brand/tabularis-icon-color.svg'} alt="" />
+                <Image src="/img/brand/tabularis-icon-color.svg" alt="" width={128} height={128} />
                 <span>Built-in MCP Server</span>
             </div>
 

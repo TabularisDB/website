@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import {PlugIcon} from 'lucide-react';
 import {getAllPlugins, getLatestRelease} from '@/lib/plugins';
 import styles from './PluginGrid.module.scss';
@@ -23,10 +24,12 @@ export function PluginGrid() {
                     >
                         <div className={styles.cardCover}>
                             {iconSlug ? (
-                                <img
+                                <Image
                                     className={styles.cardIcon}
                                     src={`/img/logos/plugins/${iconSlug}.svg`}
                                     alt={plugin.name}
+                                    width={48}
+                                    height={48}
                                 />
                             ) : (
                                 <span className={styles.cardIcon}>

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import styles from './Brand.module.scss';
@@ -21,7 +22,14 @@ export function Brand({className}: BrandProps) {
 
     return (
         <Link href="/" onClick={handleClick}>
-            <img src="/img/brand/tabularis-logo-color.svg" alt="Tabularis" className={clsx(styles.logo, className)} />
+            <Image
+                src="/img/brand/tabularis-logo-color.svg"
+                alt="Tabularis"
+                width={128}
+                height={26}
+                loading="eager"
+                className={clsx(styles.logo, className)}
+            />
         </Link>
     );
 }

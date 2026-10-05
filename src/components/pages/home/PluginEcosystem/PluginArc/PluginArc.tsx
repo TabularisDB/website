@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import {useState, useEffect} from 'react';
 import {getShippedBounties} from '@/lib/plugins/bounties';
 import styles from './PluginArc.module.scss';
@@ -82,10 +83,12 @@ export function PluginArc() {
                 <div className={styles.compactGrid}>
                     {plugins.map((plugin) => (
                         <div key={plugin.name} className={styles.gridTile} title={plugin.name}>
-                            <img
+                            <Image
                                 className={styles.gridIcon}
                                 src={`/img/logos/plugins/${plugin.id}.svg`}
                                 alt={plugin.name}
+                                width={48}
+                                height={48}
                             />
                         </div>
                     ))}
@@ -104,10 +107,12 @@ export function PluginArc() {
                                 }
                                 title={plugin.name}
                             >
-                                <img
+                                <Image
                                     className={styles.icon}
                                     src={`/img/logos/plugins/${plugin.id}.svg`}
                                     alt={plugin.name}
+                                    width={48}
+                                    height={48}
                                 />
                             </div>
                         ))}

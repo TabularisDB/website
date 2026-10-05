@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import {ArrowRight, ChevronDown} from 'lucide-react';
 import Link from 'next/link';
-import {NavLinkLabel, type NavGroup} from '@/components/layout/SiteHeader/SiteHeader.data';
+import {NavLinkIcon, NavLinkLabel, type NavGroup} from '@/components/layout/SiteHeader/SiteHeader.data';
 import styles from './MobileNavGroup.module.scss';
 interface MobileNavGroupProps {
     group: NavGroup;
@@ -35,7 +35,11 @@ export function MobileNavGroup({group, onNavigate}: MobileNavGroupProps) {
                             const label = <NavLinkLabel label={link.label} badge={link.badge} />;
                             const content = (
                                 <>
-                                    {link.icon && <span className={styles.subLinkIcon}>{link.icon}</span>}
+                                    {(link.icon || link.iconSrc) && (
+                                        <span className={styles.subLinkIcon}>
+                                            <NavLinkIcon link={link} />
+                                        </span>
+                                    )}
                                     <span className={styles.subLinkText}>
                                         {label}
                                         {link.description && <span>{link.description}</span>}

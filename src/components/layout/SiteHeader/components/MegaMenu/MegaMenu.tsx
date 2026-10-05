@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import clsx from 'clsx';
 import {usePathname} from 'next/navigation';
-import {NavLinkLabel, type NavColumn} from '@/components/layout/SiteHeader/SiteHeader.data';
+import {NavLinkIcon, NavLinkLabel, type NavColumn} from '@/components/layout/SiteHeader/SiteHeader.data';
 import styles from './MegaMenu.module.scss';
 import {useHeaderMenu} from '@/components/layout/SiteHeader/HeaderMenuContext';
 import {ArrowRight} from 'lucide-react';
@@ -31,7 +31,11 @@ export function MegaMenu({columns, open}: MegaMenuProps) {
                                 );
                                 const content = (
                                     <>
-                                        {link.icon && <span className={styles.megaMenuLinkIcon}>{link.icon}</span>}
+                                        {(link.icon || link.iconSrc) && (
+                                            <span className={styles.megaMenuLinkIcon}>
+                                                <NavLinkIcon link={link} />
+                                            </span>
+                                        )}
                                         <span className={styles.megaMenuLinkText}>
                                             <NavLinkLabel label={link.label} badge={link.badge} />
                                             {link.description && <span>{link.description}</span>}

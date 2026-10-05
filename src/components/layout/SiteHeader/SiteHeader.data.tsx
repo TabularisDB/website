@@ -18,6 +18,7 @@ import {
     SirenIcon,
     StarIcon,
 } from 'lucide-react';
+import Image from 'next/image';
 import type {ReactNode} from 'react';
 
 export type NavLink = {
@@ -27,6 +28,8 @@ export type NavLink = {
     badge?: string;
     isLink?: boolean;
     icon?: ReactNode;
+    /** Image URL for raster logos; rendered lazily via next/image by NavLinkIcon. */
+    iconSrc?: string;
 };
 
 export type NavColumn = {
@@ -238,25 +241,25 @@ export const navGroups: NavGroup[] = [
                         label: 'DBeaver Alternative',
                         href: '/compare/dbeaver-alternative',
                         description: 'Open-source workspace vs mature IDE.',
-                        icon: <img src="/img/logos/dbeaver.png" alt="" />,
+                        iconSrc: '/img/logos/dbeaver.png',
                     },
                     {
                         label: 'DataGrip Alternative',
                         href: '/compare/datagrip-alternative',
                         description: 'Open workspace vs JetBrains IDE.',
-                        icon: <img src="/img/logos/datagrip.png" alt="" />,
+                        iconSrc: '/img/logos/datagrip.png',
                     },
                     {
                         label: 'TablePlus Alternative',
                         href: '/compare/tableplus-alternative',
                         description: 'Open workspace vs polished proprietary GUI.',
-                        icon: <img src="/img/logos/tableplus.png" alt="" />,
+                        iconSrc: '/img/logos/tableplus.png',
                     },
                     {
                         label: 'Navicat Alternative',
                         href: '/compare/navicat-alternative',
                         description: 'Open workspace vs per-seat commercial tool.',
-                        icon: <img src="/img/logos/navicat.png" alt="" />,
+                        iconSrc: '/img/logos/navicat.png',
                     },
                 ],
             },
@@ -272,7 +275,7 @@ export const navGroups: NavGroup[] = [
                         label: 'Beekeeper Studio Alternative',
                         href: '/compare/beekeeper-studio-alternative',
                         description: 'Broader workspace vs simple client.',
-                        icon: <img src="/img/logos/beekeeper.png" alt="" />,
+                        iconSrc: '/img/logos/beekeeper.png',
                     },
                     {
                         label: 'Browse all comparisons',
@@ -299,6 +302,11 @@ export function NavLinkLabel({label, badge}: {label: string; badge?: string}) {
             <span className="badge">{badge}</span>
         </strong>
     );
+}
+
+export function NavLinkIcon({link}: {link: NavLink}) {
+    if (link.iconSrc) return <Image src={link.iconSrc} alt="" width={22} height={22} />;
+    return link.icon ?? null;
 }
 
 export function isActive(pathname: string, group: NavGroup): boolean {

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import {authorAvatarUrl} from '@/lib/blog/authors';
 import type {Author} from '@/lib/blog/authors';
@@ -37,7 +38,14 @@ export function PostHeader({tags, titleHtml, authors, date, readingTime}: PostHe
                 <div className={styles.authors}>
                     {authors.map((author) => (
                         <Link key={author.handle} href={`/blog/author/${author.handle}`} className={styles.authorLink}>
-                            <img src={authorAvatarUrl(author.github)} alt={author.name} className={styles.avatar} />
+                            <Image
+                                src={authorAvatarUrl(author.github)}
+                                alt={author.name}
+                                width={48}
+                                height={48}
+                                loading="eager"
+                                className={styles.avatar}
+                            />
                             <span className={styles.authorName}>{author.name}</span>
                         </Link>
                     ))}

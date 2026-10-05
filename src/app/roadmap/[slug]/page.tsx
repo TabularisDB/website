@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import {JsonLd} from '@/components/layout/JsonLd';
 import {getAllInitiativeSlugs, getInitiativeBySlug, InitiativeStatus} from '@/lib/roadmap';
 import {buildBreadcrumbJsonLd} from '@/lib/seo';
@@ -136,11 +137,12 @@ export default async function InitiativePage({params}: PageProps) {
                                                 rel="noopener noreferrer"
                                                 className={styles.contributorLink}
                                             >
-                                                <img
-                                                    src={c.avatar}
+                                                <Image
+                                                    src={c.avatar ?? `https://github.com/${c.username}.png?size=120`}
                                                     alt={`@${c.username}`}
+                                                    width={44}
+                                                    height={44}
                                                     className={styles.contributorAvatar}
-                                                    loading="lazy"
                                                 />
                                                 <span className={styles.contributorMeta}>
                                                     <span className={styles.contributorUsername}>@{c.username}</span>

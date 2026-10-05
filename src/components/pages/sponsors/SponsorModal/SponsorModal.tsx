@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import {ArrowRight, X} from 'lucide-react';
 import type {Sponsor} from '@/lib/sponsors';
 import styles from './SponsorModal.module.scss';
@@ -23,7 +24,16 @@ export function SponsorModal({sponsor, onClose}: SponsorModalProps) {
             <div className={styles.modal} onClick={(e) => e.stopPropagation()} role="dialog" aria-label={sponsor.name}>
                 <header className={styles.header}>
                     <div className={styles.headerBrand}>
-                        <img src={sponsor.logoImgCompact} alt="" className={styles.headerLogo} />
+                        {sponsor.logoImgCompact && (
+                            <Image
+                                src={sponsor.logoImgCompact}
+                                alt=""
+                                width={40}
+                                height={40}
+                                loading="eager"
+                                className={styles.headerLogo}
+                            />
+                        )}
                         <h2 className={styles.headerTitle}>{sponsor.name}</h2>
                     </div>
                     <button className={styles.closeButton} onClick={onClose} aria-label="Close">

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import {getActiveBounties, getShippedBounties} from '@/lib/plugins/bounties';
 import {PlugIcon} from 'lucide-react';
 import {getPluginIcon, STATUS_WEIGHT} from '@/components/pages/plugins/Plugin.data';
@@ -12,7 +13,7 @@ const RIGHT_X = [86, 80, 84];
 
 function NodeIcon({icon, name}: {icon: string | null; name: string}) {
     return icon ? (
-        <img src={`/img/logos/plugins/${icon}.svg`} alt="" className={styles.nodeIcon} />
+        <Image src={`/img/logos/plugins/${icon}.svg`} alt="" width={32} height={32} className={styles.nodeIcon} />
     ) : (
         <PlugIcon className={styles.nodeIcon} aria-label={name} />
     );
@@ -56,7 +57,7 @@ export function BountySchema() {
                 </svg>
 
                 <div className={styles.hub}>
-                    <img src="/img/brand/tabularis-icon-color.svg" alt="" />
+                    <Image src="/img/brand/tabularis-icon-color.svg" alt="" width={90} height={90} />
                 </div>
 
                 {left.map((bounty, i) => (

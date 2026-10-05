@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import {DownloadOptions} from '@/components/pages/download/DownloadOptions/DownloadOptions';
 import {VersionPicker} from '@/components/pages/download/VersionPicker/VersionPicker';
 import type {Platform, ReleaseChannel} from '@/lib/download/downloadConfig';
@@ -62,7 +63,14 @@ export function DownloadModal({platform, onClose}: DownloadModalProps) {
                 >
                     <div className={styles.header}>
                         <span className={styles.title}>
-                            <img className={styles.logo} src="/img/brand/tabularis-icon-color.svg" alt="" />
+                            <Image
+                                className={styles.logo}
+                                src="/img/brand/tabularis-icon-color.svg"
+                                alt=""
+                                width={32}
+                                height={32}
+                                loading="eager"
+                            />
                             Download for {config.label}
                         </span>
                         <button className={styles.closeBtn} onClick={onClose} type="button" aria-label="Close">

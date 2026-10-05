@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import clsx from 'clsx';
 import {formatDate, PostMeta, postOgImage} from '@/lib/blog/posts';
@@ -17,7 +18,14 @@ export function PostCard({post, isFeaturedPost = false}: PostCardProps) {
     return (
         <Link href={`/blog/${post.slug}`} className={clsx(styles.card, isFeaturedPost && styles.featured)}>
             <div className={styles.coverWrapper}>
-                <img src={imageSrc} alt={post.title} className={styles.cover} />
+                <Image
+                    src={imageSrc}
+                    alt={post.title}
+                    width={1200}
+                    height={630}
+                    className={styles.cover}
+                    loading={isFeaturedPost ? 'eager' : 'lazy'}
+                />
             </div>
             <div className={styles.infos}>
                 {isFeaturedPost && (
@@ -39,9 +47,11 @@ export function PostCard({post, isFeaturedPost = false}: PostCardProps) {
 
                 {primaryAuthor && (
                     <span className={styles.author}>
-                        <img
+                        <Image
                             src={authorAvatarUrl(primaryAuthor.github)}
                             alt={primaryAuthor.name}
+                            width={40}
+                            height={40}
                             className={styles.avatar}
                         />
                         {primaryAuthor.name}

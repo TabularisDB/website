@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import {ArrowRightIcon, PlugIcon, PlusIcon, StarIcon} from 'lucide-react';
 import Link from 'next/link';
 import {Button} from '@/components/ui/Button/Button';
@@ -21,7 +22,13 @@ export function BountyCard({bounty}: {bounty: PluginBounty}) {
     const cover = (
         <div className={styles.cardCover}>
             {iconSlug ? (
-                <img className={styles.cardIcon} src={`/img/logos/plugins/${iconSlug}.svg`} alt={bounty.name} />
+                <Image
+                    className={styles.cardIcon}
+                    src={`/img/logos/plugins/${iconSlug}.svg`}
+                    alt={bounty.name}
+                    width={48}
+                    height={48}
+                />
             ) : (
                 <span className={styles.cardIcon}>
                     <PlugIcon />

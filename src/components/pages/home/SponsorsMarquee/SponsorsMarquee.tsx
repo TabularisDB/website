@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import {Sponsor, SPONSORS} from '@/lib/sponsors';
 import styles from './SponsorsMarquee.module.scss';
 import Link from 'next/link';
@@ -31,7 +32,14 @@ export function SponsorsMarquee() {
                                     tabIndex={copy === 1 ? -1 : undefined}
                                     onClick={() => setActiveSponsor(sponsor)}
                                 >
-                                    <img src={sponsor.logoImgCompact ?? sponsor.logoImg} alt="" height={28} />
+                                    {(sponsor.logoImgCompact ?? sponsor.logoImg) && (
+                                        <Image
+                                            src={(sponsor.logoImgCompact ?? sponsor.logoImg)!}
+                                            alt=""
+                                            width={28}
+                                            height={28}
+                                        />
+                                    )}
                                     <span className={styles.name}>{sponsor.name}</span>
                                 </button>
                             ))}

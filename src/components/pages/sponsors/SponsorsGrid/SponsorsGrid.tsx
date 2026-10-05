@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import {useState} from 'react';
 import {SPONSORS} from '@/lib/sponsors';
 import type {Sponsor} from '@/lib/sponsors';
@@ -13,7 +14,15 @@ export function SponsorsGrid() {
             <div className={styles.grid}>
                 {SPONSORS.map((sponsor) => (
                     <button key={sponsor.id} className={styles.card} onClick={() => setActiveSponsor(sponsor)}>
-                        <img src={sponsor.logoImgCompact} alt={sponsor.name} className={styles.cardLogo} />
+                        {sponsor.logoImgCompact && (
+                            <Image
+                                src={sponsor.logoImgCompact}
+                                alt={sponsor.name}
+                                width={48}
+                                height={48}
+                                className={styles.cardLogo}
+                            />
+                        )}
 
                         <div className={styles.cardDetails}>
                             <span className={styles.cardTitle}>{sponsor.name}</span>

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import {JsonLd} from '@/components/layout/JsonLd';
 import {COMPARE_PREVIEW_MAP} from '@/components/pages/compare/Compare.data';
 import {ComparisonTable} from '@/components/pages/compare/ComparisonTable/ComparisonTable';
@@ -53,7 +54,7 @@ function ProductLogo({id}: {id: string}) {
     if (!product) {
         return <span className={styles.logoFallback}>{id}</span>;
     }
-    return <img src={product.logo} alt={product.name} className={styles.logo} />;
+    return <Image src={product.logo} alt={product.name} width={56} height={56} loading="eager" className={styles.logo} />;
 }
 
 export default async function CompareDetailPage({params}: PageProps) {

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import styles from './LightboxOverlay.module.scss';
 
 interface LightboxOverlayProps {
@@ -39,7 +40,15 @@ export function LightboxOverlay({
                 </button>
             )}
 
-            <img src={src} alt={alt} className={styles.img} onClick={(e) => e.stopPropagation()} />
+            <Image
+                src={src}
+                alt={alt}
+                width={0}
+                height={0}
+                loading="eager"
+                className={styles.img}
+                onClick={(e) => e.stopPropagation()}
+            />
 
             {hasMultiple && (
                 <button

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import {useDownloads} from '@/hooks/useDownloads';
 import {formatDownloads} from '@/lib/github';
 import {REVIEWS, withReviewUtm} from '@/lib/reviews';
@@ -35,7 +36,7 @@ export function TrustRow() {
                             title={review.name}
                             aria-label={`Tabularis on ${review.name}`}
                         >
-                            <img
+                            <Image
                                 src={`/img/logos/reviews/${review.logoImg}`}
                                 alt={review.name}
                                 width={16}

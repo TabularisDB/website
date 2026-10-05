@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import {getProduct} from '@/lib/compare/products';
 import Link from 'next/link';
 import {Fragment} from 'react';
@@ -21,7 +22,7 @@ function ProductLogo({id}: {id: string}) {
     if (!product) {
         return <span className={styles.logoFallback}>{id}</span>;
     }
-    return <img src={product.logo} alt={product.name} className={styles.logo} />;
+    return <Image src={product.logo} alt={product.name} width={44} height={44} className={styles.logo} />;
 }
 
 export function CompareGrid({items, variant = 'accent'}: CompareGridProps) {
