@@ -30,6 +30,8 @@ export type NavLink = {
     icon?: ReactNode;
     /** Image URL for raster logos; rendered lazily via next/image by NavLinkIcon. */
     iconSrc?: string;
+    /** Intrinsic [width, height] of `iconSrc` when it isn't square, so next/image keeps the aspect ratio. */
+    iconSize?: [number, number];
 };
 
 export type NavColumn = {
@@ -254,6 +256,7 @@ export const navGroups: NavGroup[] = [
                         href: '/compare/tableplus-alternative',
                         description: 'Open workspace vs polished proprietary GUI.',
                         iconSrc: '/img/logos/tableplus.png',
+                        iconSize: [30, 22],
                     },
                     {
                         label: 'Navicat Alternative',
@@ -276,6 +279,7 @@ export const navGroups: NavGroup[] = [
                         href: '/compare/beekeeper-studio-alternative',
                         description: 'Broader workspace vs simple client.',
                         iconSrc: '/img/logos/beekeeper.png',
+                        iconSize: [20, 22],
                     },
                     {
                         label: 'Browse all comparisons',
@@ -305,7 +309,10 @@ export function NavLinkLabel({label, badge}: {label: string; badge?: string}) {
 }
 
 export function NavLinkIcon({link}: {link: NavLink}) {
-    if (link.iconSrc) return <Image src={link.iconSrc} alt="" width={22} height={22} />;
+    if (link.iconSrc) {
+        const [width, height] = link.iconSize ?? [22, 22];
+        return <Image src={link.iconSrc} alt="" width={width} height={height} />;
+    }
     return link.icon ?? null;
 }
 
