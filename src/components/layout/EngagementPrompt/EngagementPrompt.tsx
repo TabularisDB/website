@@ -4,7 +4,7 @@ import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import {trackEvent} from '@/lib/analytics';
 import {SURVEY_CONFIGURED} from '@/lib/siteConfig';
-import {getRepoStars, formatStars} from '@/lib/github';
+import {formatStars, REPO_STARS} from '@/lib/github';
 import {GitHubIcon} from '@/components/ui/Icons/SocialIcons';
 import {SOCIAL_URLS} from '@/lib/social';
 import {SurveyForm, SURVEY_STORAGE_KEY} from '@/components/ui/SurveyForm/SurveyForm';
@@ -44,15 +44,10 @@ function promoInCooldown(): boolean {
 
 export function EngagementPrompt() {
     const [content, setContent] = useState<Content | null>(null);
-    const [stars, setStars] = useState<number | null>(null);
     const shownRef = useRef(false);
     const pathname = usePathname();
     const excluded = isExcluded(pathname);
     const surveyOnly = pathname?.startsWith('/blog') ?? false;
-
-    useEffect(() => {
-        void getRepoStars().then(setStars);
-    }, []);
 
     useEffect(() => {
         if (excluded) return;
@@ -156,7 +151,7 @@ export function EngagementPrompt() {
                         className={styles.promoCtaBtn}
                         onClick={() => trackEvent(EVENT_CATEGORY.star, 'click')}
                     >
-                        Star on GitHub{stars !== null ? ` · ${formatStars(stars)}` : ''}
+                        Star on GitHub · {formatStars(REPO_STARS)}
                     </a>
                 </div>
             )}

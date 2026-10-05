@@ -9,7 +9,7 @@ import {useEffect, useState} from 'react';
 import styles from './HeaderActions.module.scss';
 
 interface HeaderActionsProps {
-    stars: number | null;
+    stars: number;
     mobileMenuOpen: boolean;
     onToggleMobileMenu: () => void;
 }
@@ -35,7 +35,7 @@ export function HeaderActions({stars, mobileMenuOpen, onToggleMobileMenu}: Heade
             >
                 <GitHubIcon />
                 <div className={styles.starCount}>
-                    {stars ? formatStars(stars) : <span className="skeleton"></span>}
+                    {formatStars(stars)}
                 </div>
             </a>
 

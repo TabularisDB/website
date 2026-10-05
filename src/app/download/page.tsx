@@ -2,7 +2,7 @@ import {JsonLd} from '@/components/layout/JsonLd';
 import {DownloadSection} from '@/components/pages/download/DownloadSection/DownloadSection';
 import {NewsletterForm} from '@/components/ui/NewsletterForm/NewsletterForm';
 import {formatDate, getReleaseDate} from '@/lib/blog/posts';
-import {formatDownloads, getTotalDownloads} from '@/lib/github';
+import {formatDownloads, TOTAL_DOWNLOADS} from '@/lib/github';
 import {buildBreadcrumbJsonLd, buildSoftwareApplicationJsonLd} from '@/lib/seo';
 import {APP_VERSION} from '@/lib/download/version';
 import type {Metadata} from 'next';
@@ -30,9 +30,8 @@ export const metadata: Metadata = {
     },
 };
 
-export default async function DownloadPage() {
+export default function DownloadPage() {
     const rawDate = getReleaseDate(APP_VERSION);
-    const downloads = await getTotalDownloads();
 
     return (
         <div className="container">
@@ -51,11 +50,9 @@ export default async function DownloadPage() {
                     Download
                 </span>
                 <h1 className="title">Get Tabularis running in one click.</h1>
-                {downloads !== null && (
-                    <p className="description">
-                        Trusted by {formatDownloads(downloads)} downloads across macOS, Windows, and Linux.
-                    </p>
-                )}
+                <p className="description">
+                    Trusted by {formatDownloads(TOTAL_DOWNLOADS)} downloads across macOS, Windows, and Linux.
+                </p>
             </header>
 
             <section className={styles.layout}>

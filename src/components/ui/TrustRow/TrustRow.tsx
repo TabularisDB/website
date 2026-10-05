@@ -1,25 +1,18 @@
 'use client';
 
 import Image from 'next/image';
-import {useDownloads} from '@/hooks/useDownloads';
-import {formatDownloads} from '@/lib/github';
+import {formatDownloads, TOTAL_DOWNLOADS} from '@/lib/github';
 import {REVIEWS, withReviewUtm} from '@/lib/reviews';
 import styles from './TrustRow.module.scss';
 import clsx from 'clsx';
 
 export function TrustRow() {
-    const downloads = useDownloads();
-
     return (
         <div className={styles.trustWrapper}>
             <div className={styles.downloads}>
-                {downloads ? (
-                    <span className={styles.downloadsCaption}>
-                        Already downloaded {formatDownloads(downloads)} times
-                    </span>
-                ) : (
-                    <span className="skeleton"></span>
-                )}
+                <span className={styles.downloadsCaption}>
+                    Already downloaded {formatDownloads(TOTAL_DOWNLOADS)} times
+                </span>
             </div>
 
             <div className={clsx(styles.divider, 'divider')}></div>

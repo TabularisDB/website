@@ -1,6 +1,6 @@
 'use client';
 
-import {getRepoStars} from '@/lib/github';
+import {REPO_STARS} from '@/lib/github';
 import clsx from 'clsx';
 import {usePathname} from 'next/navigation';
 import {useEffect, useState} from 'react';
@@ -16,7 +16,6 @@ export function SiteHeader() {
     const [openGroupLabel, setOpenGroupLabel] = useState<string | null>(null);
     const pathname = usePathname();
     const wide = pathname.startsWith('/wiki');
-    const [stars, setStars] = useState<number | null>(null);
     const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
@@ -26,10 +25,6 @@ export function SiteHeader() {
         onScroll();
         window.addEventListener('scroll', onScroll, {passive: true});
         return () => window.removeEventListener('scroll', onScroll);
-    }, []);
-
-    useEffect(() => {
-        void getRepoStars().then(setStars);
     }, []);
 
     useEffect(() => {
@@ -53,7 +48,7 @@ export function SiteHeader() {
                     <DesktopNav />
 
                     <HeaderActions
-                        stars={stars}
+                        stars={REPO_STARS}
                         mobileMenuOpen={isMobileMenuOpen}
                         onToggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     />

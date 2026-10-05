@@ -1,7 +1,6 @@
 'use client';
 
-import {useRepoStars} from '@/hooks/useRepoStars';
-import {formatStars} from '@/lib/github';
+import {formatStars, REPO_STARS} from '@/lib/github';
 import clsx from 'clsx';
 import {StarIcon} from 'lucide-react';
 import {Button} from '@/components/ui/Button/Button';
@@ -14,8 +13,6 @@ interface GithubButtonProps {
 }
 
 export function GitHubButton({withBackground = false}: GithubButtonProps) {
-    const stars = useRepoStars();
-
     return (
         <Button
             variant={withBackground ? 'secondary' : 'outline'}
@@ -28,7 +25,7 @@ export function GitHubButton({withBackground = false}: GithubButtonProps) {
             <div className={styles.stars}>
                 <StarIcon />
                 <div className={styles.starCount}>
-                    {stars ? formatStars(stars) : <span className="skeleton"></span>}
+                    {formatStars(REPO_STARS)}
                 </div>
             </div>
         </Button>
