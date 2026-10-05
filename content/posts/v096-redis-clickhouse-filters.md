@@ -1,14 +1,14 @@
 ---
-title: "Smarter Filters, Close Tab, and a Better Plugin Install: v0.9.6"
-date: "2026-03-07T12:30:00"
-release: "v0.9.6"
-tags: ["release", "filters", "plugins", "ux", "bugfix"]
-excerpt: "v0.9.6 ships a structured filter toolbar with ORDER BY autocomplete, a close-tab keyboard shortcut, a cleaner plugin install error experience, and a handful of focused bug fixes."
+title: 'Smarter Filters, Close Tab, and a Better Plugin Install: v0.9.6'
+date: '2026-03-07T12:30:00'
+release: 'v0.9.6'
+tags: ['release', 'filters', 'plugins', 'ux', 'bugfix']
+excerpt: 'v0.9.6 ships a structured filter toolbar with ORDER BY autocomplete, a close-tab keyboard shortcut, a cleaner plugin install error experience, and a handful of focused bug fixes.'
 og:
-  title: "Smarter Filters,"
-  accent: "v0.9.6."
-  claim: "Structured filter toolbar, ORDER BY autocomplete, close-tab shortcut, and a cleaner plugin install flow."
-  image: "/img/tabularis-plugin-manager.png"
+    title: 'Smarter Filters,'
+    accent: 'v0.9.6.'
+    claim: 'Structured filter toolbar, ORDER BY autocomplete, close-tab shortcut, and a cleaner plugin install flow.'
+    image: '/img/tabularis-plugin-manager.png'
 ---
 
 # Smarter Filters, Close Tab, and a Better Plugin Install: v0.9.6
@@ -27,7 +27,7 @@ The filter toolbar now supports **structured filter expressions** — column, op
 
 This does not replace the ability to type a raw WHERE clause — the raw input is still there for complex predicates. The structured mode handles the common case of "show me rows where status = active and created_at > last week" without requiring SQL knowledge.
 
-<video src="/videos/posts/filters-demo.mp4" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/filters-demo.mp4" autoplay loop muted playsinline ></video>
 
 ### ORDER BY Autocomplete
 
@@ -57,7 +57,6 @@ Until now, a failed plugin installation was silent — the progress spinner woul
 If a download times out, an asset hash mismatches, or the archive is malformed, you now see the exact error message and which step failed. The modal includes a copy button for sharing the log when opening an issue. Installer logging is also more detailed internally, so the stack trace reaching the modal is actionable rather than a generic failure code.
 
 ---
-
 
 :::star:::
 

@@ -1,0 +1,34 @@
+.filterBar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-block: 3rem 2rem;
+}
+
+.count {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+
+.archive {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-block: 3rem;
+}
+
+.archiveTitle {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.newsletter {
+    width: 100%;
+    max-width: 800px;
+    margin-inline: auto;
+    margin-top: 3rem;
+}

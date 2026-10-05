@@ -1,14 +1,14 @@
 ---
-title: "v0.9.10, UI Extensions in Progress, and Two Real Plugins"
-date: "2026-03-18T13:00:00"
-release: "v0.9.10"
-tags: ["release", "bugfix", "plugins", "ui", "extensibility"]
-excerpt: "v0.9.10 lands a handful of fixes, including multi-database window title and per-database record operations. Meanwhile, the UI extensions branch is being tested with two real plugins: a JSON Viewer and the Google Sheets driver."
+title: 'v0.9.10, UI Extensions in Progress, and Two Real Plugins'
+date: '2026-03-18T13:00:00'
+release: 'v0.9.10'
+tags: ['release', 'bugfix', 'plugins', 'ui', 'extensibility']
+excerpt: 'v0.9.10 lands a handful of fixes, including multi-database window title and per-database record operations. Meanwhile, the UI extensions branch is being tested with two real plugins: a JSON Viewer and the Google Sheets driver.'
 og:
-  title: "v0.9.10 Fixes and"
-  accent: "UI Extensions WIP."
-  claim: "Bugfixes, multi-database polish, and a first look at plugin UI slots tested with JSON Viewer and Google Sheets."
-  image: "/img/tabularis-plugin-manager.png"
+    title: 'v0.9.10 Fixes and'
+    accent: 'UI Extensions WIP.'
+    claim: 'Bugfixes, multi-database polish, and a first look at plugin UI slots tested with JSON Viewer and Google Sheets.'
+    image: '/img/tabularis-plugin-manager.png'
 ---
 
 # v0.9.10, UI Extensions in Progress, and Two Real Plugins
@@ -41,18 +41,18 @@ When a validation error occurs in a modal that has a name field, the input now r
 
 [Phase 2 of the plugin system](/blog/plugin-ui-extensions) was sketched out in a post from a few days ago. The design is slots: named insertion points in the host UI where a plugin can render a React component. Ten slots are currently defined:
 
-| Slot | Where it appears |
-|------|-----------------|
-| `row-edit-modal.field.after` | Below each field in the row edit modal |
-| `row-edit-modal.footer.before` | Before the action buttons in the modal footer |
-| `row-editor-sidebar.field.after` | Below each field in the row editor sidebar |
-| `row-editor-sidebar.header.actions` | Extra action buttons in the sidebar header |
-| `data-grid.toolbar.actions` | Alongside filter/sort/limit in the data grid toolbar |
-| `data-grid.context-menu.items` | Extra items in the row right-click menu |
-| `sidebar.footer.actions` | Persistent buttons in the main sidebar footer |
-| `settings.plugin.actions` | Action area in the plugin's settings panel |
-| `settings.plugin.before_settings` | Above the settings form for a plugin |
-| `connection-modal.connection_content` | Custom content inside the new connection modal |
+| Slot                                  | Where it appears                                     |
+| ------------------------------------- | ---------------------------------------------------- |
+| `row-edit-modal.field.after`          | Below each field in the row edit modal               |
+| `row-edit-modal.footer.before`        | Before the action buttons in the modal footer        |
+| `row-editor-sidebar.field.after`      | Below each field in the row editor sidebar           |
+| `row-editor-sidebar.header.actions`   | Extra action buttons in the sidebar header           |
+| `data-grid.toolbar.actions`           | Alongside filter/sort/limit in the data grid toolbar |
+| `data-grid.context-menu.items`        | Extra items in the row right-click menu              |
+| `sidebar.footer.actions`              | Persistent buttons in the main sidebar footer        |
+| `settings.plugin.actions`             | Action area in the plugin's settings panel           |
+| `settings.plugin.before_settings`     | Above the settings form for a plugin                 |
+| `connection-modal.connection_content` | Custom content inside the new connection modal       |
 
 Each slot receives a typed `SlotContext` — connection ID, driver name, table name, current row data, column name, and more depending on the slot. Plugin components are standard React components; they receive `context` and `pluginId` as props and return JSX. The plugin API (`@tabularis/plugin-api`) exposes utilities for read-only queries, toasts, theme detection, and reading plugin settings. That is the entire approved surface — direct Tauri access and DOM mutations outside the plugin subtree are blocked.
 
@@ -60,13 +60,13 @@ Manifests declare UI extensions alongside the existing driver configuration:
 
 ```json
 {
-  "ui_extensions": [
-    {
-      "slot": "row-editor-sidebar.field.after",
-      "module": "dist/index.js",
-      "order": 50
-    }
-  ]
+    "ui_extensions": [
+        {
+            "slot": "row-editor-sidebar.field.after",
+            "module": "dist/index.js",
+            "order": 50
+        }
+    ]
 }
 ```
 
@@ -86,11 +86,11 @@ The **JSON Viewer** plugin (`tabularis-json-viewer`) targets two slots: `row-edi
 
 ```json
 {
-  "id": "json-viewer",
-  "ui_extensions": [
-    { "slot": "row-editor-sidebar.field.after", "module": "dist/index.js", "order": 50 },
-    { "slot": "row-edit-modal.field.after",     "module": "dist/index.js", "order": 50 }
-  ]
+    "id": "json-viewer",
+    "ui_extensions": [
+        {"slot": "row-editor-sidebar.field.after", "module": "dist/index.js", "order": 50},
+        {"slot": "row-edit-modal.field.after", "module": "dist/index.js", "order": 50}
+    ]
 }
 ```
 
@@ -102,32 +102,31 @@ The **Google Sheets plugin** (`tabularis-google-sheets-plugin`) already existed 
 
 - `settings.plugin.before_settings` — renders a "Connect with Google" OAuth button above the plugin's settings form. The button opens a browser, completes the OAuth flow, and writes the tokens back to the plugin settings automatically. Previously the user had to paste tokens by hand.
 
-<img src="/img/tabularis-google-sheets-oauth.png" alt="Plugin Settings for google-sheets showing Google Account Connected status with Re-authorize and Disconnect buttons" style="width:100%;border-radius:8px;margin:1rem 0" />
+<img src="/img/tabularis-google-sheets-oauth.png" alt="Plugin Settings for google-sheets showing Google Account Connected status with Re-authorize and Disconnect buttons"  />
 
 - `connection-modal.connection_content` — replaces the generic database field in the new connection modal with a Google Sheets spreadsheet selector. When the driver is `google-sheets`, the modal shows a search box and a list of the user's spreadsheets instead of a raw text input.
 
 ```json
 {
-  "ui_extensions": [
-    {
-      "slot": "settings.plugin.before_settings",
-      "module": "ui/google-auth.js",
-      "order": 10
-    },
-    {
-      "slot": "connection-modal.connection_content",
-      "module": "ui/google-sheets-db-field.js",
-      "order": 10,
-      "driver": "google-sheets"
-    }
-  ]
+    "ui_extensions": [
+        {
+            "slot": "settings.plugin.before_settings",
+            "module": "ui/google-auth.js",
+            "order": 10
+        },
+        {
+            "slot": "connection-modal.connection_content",
+            "module": "ui/google-sheets-db-field.js",
+            "order": 10,
+            "driver": "google-sheets"
+        }
+    ]
 }
 ```
 
 The `driver` filter on the second slot is worth noting: `connection-modal.connection_content` contributions are only active when the selected driver matches. Other drivers do not see this component.
 
 ---
-
 
 :::star:::
 

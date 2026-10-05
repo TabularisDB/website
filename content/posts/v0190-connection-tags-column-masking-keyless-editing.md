@@ -1,16 +1,16 @@
 ---
 title: "v0.19.0: Connections That Know They're Production, Columns That Keep Secrets, and Tables Without a Primary Key You Can Finally Edit"
-date: "2026-08-10T11:00:00"
-release: "v0.19.0"
-tags: ["release", "feature", "bugfix", "mysql", "postgres", "sqlite", "ui", "ux", "data-grid", "plugin", "community"]
-excerpt: "v0.19.0 adds colored tags and environment classification with a production write guard, masks sensitive columns in the results grid, makes tables without a primary key editable, closes the plugin driver feature gap with BLOB and materialized-view forwarding plus plugin-owned connection fields, validates plugin archives before they can touch an existing install, and stops bundling libwayland in the Linux AppImage."
+date: '2026-08-10T11:00:00'
+release: 'v0.19.0'
+tags: ['release', 'feature', 'bugfix', 'mysql', 'postgres', 'sqlite', 'ui', 'ux', 'data-grid', 'plugin', 'community']
+excerpt: 'v0.19.0 adds colored tags and environment classification with a production write guard, masks sensitive columns in the results grid, makes tables without a primary key editable, closes the plugin driver feature gap with BLOB and materialized-view forwarding plus plugin-owned connection fields, validates plugin archives before they can touch an existing install, and stops bundling libwayland in the Linux AppImage.'
 og:
-  template: "screenshot-split"
-  title: "v0.19.0:"
-  accent: "Tag. Mask. Edit."
-  claim: "Colored connection tags and environment classification with a production write guard, masked sensitive columns with per-cell reveal, editing for tables without a primary key, plugin driver parity for BLOBs and materialized views, and an AppImage that finally behaves on modern Mesa."
-  image: "/img/tabularis-connection-tags-environments.png"
-  appLabel: "tabularis"
+    template: 'screenshot-split'
+    title: 'v0.19.0:'
+    accent: 'Tag. Mask. Edit.'
+    claim: 'Colored connection tags and environment classification with a production write guard, masked sensitive columns with per-cell reveal, editing for tables without a primary key, plugin driver parity for BLOBs and materialized views, and an AppImage that finally behaves on modern Mesa.'
+    image: '/img/tabularis-connection-tags-environments.png'
+    appLabel: 'tabularis'
 ---
 
 # v0.19.0: Connections That Know They're Production, Columns That Keep Secrets, and Tables Without a Primary Key You Can Finally Edit
@@ -31,7 +31,7 @@ Every connection list eventually turns into a minefield: the local scratch datab
 
 **The write guard.** Any statement that isn't provably read-only prompts for confirmation on a production connection, with a SQL preview and a per-connection "don't ask again" that lasts for the session. Detection is deliberately conservative — only `SELECT`, `SHOW`, `DESCRIBE`, `PRAGMA` and `EXPLAIN` of a `SELECT` count as read-only. Data-modifying CTEs, `EXPLAIN ANALYZE <write>` (which executes the write on PostgreSQL) and unknown statement types like `CALL` or `SET` all prompt. The guard covers editor runs, staged grid-edit commits, immediate cell edits, row insertion and notebook cells, and it stacks with the [destructive-query guard from v0.14.0](/blog/v0140-stored-routines-connection-windows-destructive-query-guard) rather than replacing it.
 
-<video src="/videos/posts/tabularis-production-guard.mp4" poster="/videos/posts/tabularis-production-guard.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-production-guard.mp4" poster="/videos/posts/tabularis-production-guard.jpg" autoplay loop muted playsinline ></video>
 
 ---
 
@@ -43,7 +43,7 @@ Screen-sharing a results grid used to mean hoping nobody could read fast. PR [#5
 - **The mask actually holds.** Masked cells can't be edited — double-click, Enter and F2 are guarded until you reveal — and the hover tooltip is suppressed so it can't leak the value.
 - **Display-only, by design.** Copy and export keep the real values, as the issue requested; write-path anonymization for exports is tracked separately in [#483](https://github.com/TabularisDB/tabularis/issues/483).
 
-<video src="/videos/posts/tabularis-column-masking.mp4" poster="/videos/posts/tabularis-column-masking.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video src="/videos/posts/tabularis-column-masking.mp4" poster="/videos/posts/tabularis-column-masking.jpg" autoplay loop muted playsinline ></video>
 
 Configuration lives in a new **Settings → Privacy** tab: an on/off toggle (default on), the column-name patterns as an editable list of case-insensitive substring matches, and per-connection overrides as `table.column` entries — **Always mask** and **Never mask** lists per connection, where never-mask wins over always-mask, which wins over the name patterns. A review round moved the per-connection overrides into the connection modal as well, so a saved connection can manage its own exceptions from a Privacy tab in edit mode. Strings are translated across all eleven locales.
 
@@ -79,7 +79,7 @@ Five threads landed this cycle that together move plugin drivers from "supported
 
 ![The plugin README modal open over the install gate, showing the ClickHouse plugin's README with release, downloads and CI badges, description and table of contents](/img/tabularis-plugin-readme-modal.png)
 
-**A bad archive can no longer eat a good install** (PR [#609](https://github.com/TabularisDB/tabularis/pull/609)). The manifest id and version are now verified against what the registry advertised *while the bundle is still in the temp directory* — previously the check ran after the archive had already replaced the plugin folder, so a corrupt download could wipe out a working installation. Uninstall resolves plugins by manifest id even when the folder name differs, and the install-error modal gains "Open plugins folder" and "Reload plugins" buttons, so a broken half-install is recoverable from the UI instead of requiring a restart and a file manager safari.
+**A bad archive can no longer eat a good install** (PR [#609](https://github.com/TabularisDB/tabularis/pull/609)). The manifest id and version are now verified against what the registry advertised _while the bundle is still in the temp directory_ — previously the check ran after the archive had already replaced the plugin folder, so a corrupt download could wipe out a working installation. Uninstall resolves plugins by manifest id even when the folder name differs, and the install-error modal gains "Open plugins folder" and "Reload plugins" buttons, so a broken half-install is recoverable from the UI instead of requiring a restart and a file manager safari.
 
 **`.tabularium` is the canonical manifest, and the scaffold finally validates** ([@NewtTheWolf](https://github.com/NewtTheWolf), PRs [#594](https://github.com/TabularisDB/tabularis/pull/594) and [#595](https://github.com/TabularisDB/tabularis/pull/595)). The manifest `create-plugin` scaffolded failed live registry validation on four counts — missing `engine` and `paradigms`, a forbidden `id` field, and a display name where the slug belongs. It now renders a manifest the registry accepts, and the in-repo plugin docs stop describing the old `manifest.json` world: slug `name`, optional legacy `id`, publishing pointed at `registry.tabularis.dev/submit`. Relatedly, the twelve plugins already migrated to the hosted Tabularium registry were removed from the legacy `registry.json`, which keeps only the five not yet migrated — and the MongoDB Atlas entry now points at the official TabularisDB repository and its published v0.1.0 release ([@Robbyfuu](https://github.com/Robbyfuu), [#496](https://github.com/TabularisDB/tabularis/pull/496)).
 

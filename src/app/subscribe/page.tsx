@@ -1,57 +1,61 @@
-import type { Metadata } from "next";
-import { JsonLd } from "@/components/JsonLd";
-import { SiteHeader } from "@/components/SiteHeader";
-import { Footer } from "@/components/Footer";
-import { NewsletterForm } from "@/components/NewsletterForm";
-import { buildBreadcrumbJsonLd } from "@/lib/seo";
+import type {Metadata} from 'next';
+import {MailIcon} from 'lucide-react';
+import {JsonLd} from '@/components/layout/JsonLd';
+import {NewsletterForm} from '@/components/ui/NewsletterForm/NewsletterForm';
+import {buildBreadcrumbJsonLd} from '@/lib/seo';
+import styles from './SubscribePage.module.scss';
+
+const TITLE = 'Subscribe | Tabularis';
+const DESCRIPTION =
+    'Subscribe to the Tabularis newsletter. Get release announcements, development insights, and project updates.';
 
 export const metadata: Metadata = {
-  title: "Subscribe | Tabularis",
-  description:
-    "Subscribe to the Tabularis newsletter. Get release announcements, development insights, and project updates.",
-  alternates: { canonical: "/subscribe" },
-  openGraph: {
-    type: "website",
-    url: "https://tabularis.dev/subscribe/",
-    title: "Subscribe | Tabularis",
-    description:
-      "Subscribe to the Tabularis newsletter. Get release announcements, development insights, and project updates.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Subscribe | Tabularis",
-    description:
-      "Subscribe to the Tabularis newsletter. Get release announcements, development insights, and project updates.",
-  },
+    title: TITLE,
+    description: DESCRIPTION,
+    alternates: {canonical: '/subscribe'},
+    openGraph: {
+        type: 'website',
+        url: 'https://tabularis.dev/subscribe',
+        title: TITLE,
+        description: DESCRIPTION,
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: TITLE,
+        description: DESCRIPTION,
+    },
 };
 
 export default function SubscribePage() {
-  return (
-    <div className="container">
-      <JsonLd
-        data={[
-          buildBreadcrumbJsonLd([
-            { name: "Home", path: "/" },
-            { name: "Subscribe", path: "/subscribe" },
-          ]),
-        ]}
-      />
-      <SiteHeader crumbs={[{ label: "subscribe" }]} />
+    return (
+        <div className="container with-gap">
+            <JsonLd
+                data={[
+                    buildBreadcrumbJsonLd([
+                        {name: 'Home', path: '/'},
+                        {name: 'Subscribe', path: '/subscribe'},
+                    ]),
+                ]}
+            />
 
-      <section className="subscribe-page">
-        <div className="subscribe-page-hero">
-          <h1>Newsletter</h1>
-          <p>
-            Stay up to date with Tabularis. Get release announcements,
-            development insights, tips, and project updates delivered to your
-            inbox.
-          </p>
+            <header className="page-header">
+                <span className="eyebrow">
+                    <MailIcon />
+                    Newsletter
+                </span>
+                <h1 className="title">Stay in the loop</h1>
+                <p className="description">
+                    Release announcements, development insights, tips and project updates, straight to your inbox.
+                </p>
+            </header>
+
+            <section className={styles.newsletter}>
+                <NewsletterForm
+                    title="Subscribe to the newsletter"
+                    description="Get release announcements, development insights, tips, and project updates delivered to your inbox. No spam, unsubscribe anytime."
+                    buttonLabel="Subscribe"
+                />
+            </section>
         </div>
-
-        <NewsletterForm />
-      </section>
-
-      <Footer />
-    </div>
-  );
+    );
 }

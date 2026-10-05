@@ -1,14 +1,14 @@
 ---
-title: "v0.9.18: Query History Becomes a Workflow"
-date: "2026-04-16T12:15:00"
-release: "v0.9.18"
-tags: ["release", "history", "sql-editor", "community", "postgresql", "mysql"]
-excerpt: "v0.9.18 adds a real query history workflow to Tabularis: per-connection storage, search, date grouping, fast re-run actions, and retention controls. The release also includes a strong set of community-driven improvements across PostgreSQL, MySQL, AI settings, and theming."
+title: 'v0.9.18: Query History Becomes a Workflow'
+date: '2026-04-16T12:15:00'
+release: 'v0.9.18'
+tags: ['release', 'history', 'sql-editor', 'community', 'postgresql', 'mysql']
+excerpt: 'v0.9.18 adds a real query history workflow to Tabularis: per-connection storage, search, date grouping, fast re-run actions, and retention controls. The release also includes a strong set of community-driven improvements across PostgreSQL, MySQL, AI settings, and theming.'
 og:
-  title: "v0.9.18:"
-  accent: "Query History Becomes a Workflow."
-  claim: "Search, reopen, rerun, and organize past SQL per connection, with community improvements across PostgreSQL, MySQL, AI, and UI polish."
-  image: "/img/tabularis-query-history-sidebar.png"
+    title: 'v0.9.18:'
+    accent: 'Query History Becomes a Workflow.'
+    claim: 'Search, reopen, rerun, and organize past SQL per connection, with community improvements across PostgreSQL, MySQL, AI, and UI polish.'
+    image: '/img/tabularis-query-history-sidebar.png'
 ---
 
 # v0.9.18: Query History Becomes a Workflow
@@ -97,12 +97,12 @@ This is useful more often than it sounds. Renaming a column alias in four places
 
 Here are the shortcuts that make it work:
 
-| Action | macOS | Windows / Linux |
-|:---|:---|:---|
-| Add cursor at click | `⌘+Click` | `Ctrl+Click` |
-| Add next occurrence | `⌘+D` | `Ctrl+D` |
-| Select all occurrences | `⌘+Shift+L` | `Ctrl+Shift+L` |
-| Cursors at line ends | `⌥+Shift+I` | `Alt+Shift+I` |
+| Action                 | macOS       | Windows / Linux |
+| :--------------------- | :---------- | :-------------- |
+| Add cursor at click    | `⌘+Click`   | `Ctrl+Click`    |
+| Add next occurrence    | `⌘+D`       | `Ctrl+D`        |
+| Select all occurrences | `⌘+Shift+L` | `Ctrl+Shift+L`  |
+| Cursors at line ends   | `⌥+Shift+I` | `Alt+Shift+I`   |
 
 ### Paste Into Multiple Carets
 
@@ -112,10 +112,9 @@ When you have multiple cursors active and paste text from the clipboard, Tabular
 
 This makes column-wise edits, repeated line transformations, and bulk query rewrites much less awkward. It is the kind of change you notice immediately because it removes a break in muscle memory.
 
-<img src="/img/tabularis-multi-carets.gif" alt="Multi-caret paste in the Tabularis SQL editor distributing clipboard lines across cursors" loading="lazy" decoding="async" style="width:100%;border-radius:8px;margin:1rem 0" />
+<img src="/img/tabularis-multi-carets.gif" alt="Multi-caret paste in the Tabularis SQL editor distributing clipboard lines across cursors" loading="lazy" decoding="async"  />
 
 ---
-
 
 :::star:::
 

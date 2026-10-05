@@ -1,0 +1,66 @@
+.layout {
+    max-width: 900px;
+    width: 100%;
+    margin-inline: auto;
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.secondaryGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+    width: 100%;
+    margin-bottom: 4rem;
+    border-top: 0.1rem solid var(--color-border);
+    border-left: 0.1rem solid var(--color-border);
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1.5rem;
+    border-right: 0.1rem solid var(--color-border);
+    border-bottom: 0.1rem solid var(--color-border);
+    transition: background-color 0.2s ease;
+}
+
+.sectionTitle {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.sectionDesc {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.sectionLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: auto;
+}
+
+.section > .sectionLink {
+    margin-top: auto;
+}
+
+.sectionLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-accent-teal);
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

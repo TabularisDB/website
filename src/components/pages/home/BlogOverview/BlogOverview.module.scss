@@ -1,0 +1,16 @@
+.section {
+    position: relative;
+}
+
+.latestPosts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    margin-block: 1rem;
+    max-width: 1100px;
+
+    @media (max-width: 800px) {
+        grid-template-columns: 1fr;
+    }
+}

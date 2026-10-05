@@ -1,13 +1,14 @@
-import { OG_SIZE, OG_CONTENT_TYPE, renderSimpleOgImage } from "@/lib/ogImageSimple";
+import {OG_CONTENT_TYPE, OG_SIZE} from '@/lib/og/shared';
+import {renderSimpleOgImage} from '@/lib/og/ogImageSimple';
 
-export const dynamic = "force-static";
-export const alt = "Tabularis Roadmap";
+export const dynamic = 'force-static';
+export const alt = 'Tabularis Roadmap';
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
 export default async function Image() {
-  return renderSimpleOgImage({
-    kicker: "Roadmap",
-    title: "What's shipping next",
-  });
+    return renderSimpleOgImage({
+        kicker: 'Roadmap',
+        title: "What's shipping next",
+    });
 }

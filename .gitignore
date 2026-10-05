@@ -10,3 +10,6 @@ public/feed.json
 
 # Local pre-publication drafts (mirrored in a private gist)
 drafts/
+
+
+build.log

@@ -1,28 +1,28 @@
 ---
-title: "Plugin registry platform"
-slug: "plugin-registry"
-category: "Ecosystem"
-status: "done"
+title: 'Plugin registry platform'
+slug: 'plugin-registry'
+category: 'Ecosystem'
+status: 'done'
 order: 3
-lede: "Shipped as **Tabularium**, a purpose-built plugin registry live at registry.tabularis.dev since Tabularis v0.16.0. Developers sign in via OAuth (GitHub, GitLab, Gitea/Forgejo — Codeberg included), claim a plugin slug, link their repo, and new releases are picked up automatically via webhooks. The registry stays a catalog + trust layer — binaries keep living in the author's Releases, with signature + SHA-256 verification on install. Built by Dominik Spitzli (@NewtTheWolf) on [#196](https://github.com/TabularisDB/tabularis/issues/196)."
+lede: "Shipped as Tabularium, a purpose-built plugin registry live at registry.tabularis.dev since Tabularis v0.16.0. Developers sign in via OAuth (GitHub, GitLab, Gitea/Forgejo, Codeberg included), claim a plugin slug, link their repo, and new releases are picked up automatically via webhooks. The registry stays a catalog and trust layer, with binaries kept in the author's Releases, and signature and SHA-256 verification on install. Built by Dominik Spitzli (@NewtTheWolf) on issue #196."
 contributors:
-  - username: debba
-    role: Maintainer
-  - username: NewtTheWolf
-    role: Registry platform lead
+    - username: debba
+      role: Maintainer
+    - username: NewtTheWolf
+      role: Registry platform lead
 links:
-  - label: "Tabularium registry (live)"
-    href: "https://registry.tabularis.dev"
-    external: true
-  - label: "Tabularium docs"
-    href: "https://docs.tabularium.wiki"
-    external: true
-  - label: "Tabularium source"
-    href: "https://github.com/TabularisDB/tabularium"
-    external: true
-  - label: "Issue #196"
-    href: "https://github.com/TabularisDB/tabularis/issues/196"
-    external: true
+    - label: 'Tabularium registry (live)'
+      href: 'https://registry.tabularis.dev'
+      external: true
+    - label: 'Tabularium docs'
+      href: 'https://docs.tabularium.wiki'
+      external: true
+    - label: 'Tabularium source'
+      href: 'https://github.com/TabularisDB/tabularium'
+      external: true
+    - label: 'Issue #196'
+      href: 'https://github.com/TabularisDB/tabularis/issues/196'
+      external: true
 ---
 
 ## What shipped

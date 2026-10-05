@@ -1,0 +1,33 @@
+.tools {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.logo {
+    height: 3.5rem;
+    width: 3.5rem;
+    object-fit: contain;
+}
+
+.logoFallback {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.content {
+    max-width: 1000px;
+    margin-inline: auto;
+}
+
+.contentTitle {
+    font-size: clamp(1.5rem, 9.23vw, 2.25rem);
+    font-weight: 500;
+    max-width: 800px;
+    color: var(--color-text-primary);
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 0.1rem solid var(--color-border);
+}

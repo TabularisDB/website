@@ -1,8 +1,8 @@
 ---
-title: "Updates"
+title: 'Updates'
 order: 14
-excerpt: "Keep Tabularis up to date — automatic checks on startup, manual check from settings, and package-manager-managed installs."
-category: "Reference"
+excerpt: 'Keep Tabularis up to date — automatic checks on startup, manual check from settings, and package-manager-managed installs.'
+category: 'Reference'
 ---
 
 # Updates
@@ -31,7 +31,7 @@ Choosing **Remind Me Later** on a core update keeps suppressing the modal on bac
 
 ![One core update and three plugin updates counted in the rail and Settings navigation](/img/tabularis-update-badges.png)
 
-<video class="video-borderless" src="/videos/posts/tabularis-update-toast.mp4" poster="/videos/posts/tabularis-update-toast.jpg" autoplay loop muted playsinline style="width:100%;border-radius:8px;margin:1rem 0"></video>
+<video class="video-borderless" src="/videos/posts/tabularis-update-toast.mp4" poster="/videos/posts/tabularis-update-toast.jpg" autoplay loop muted playsinline ></video>
 
 ## What's New
 
@@ -41,10 +41,10 @@ The **What's New** modal includes a compact author introduction with GitHub Spon
 
 Since v0.17.0 the updater supports two channels, selectable in **Settings → Info → Updates**:
 
-| Channel | What you get |
-|---------|--------------|
-| **Stable** (default) | Tagged releases only. |
-| **Nightly** | Signed builds cut from the newest commit that passed CI, typically daily. |
+| Channel              | What you get                                                              |
+| -------------------- | ------------------------------------------------------------------------- |
+| **Stable** (default) | Tagged releases only.                                                     |
+| **Nightly**          | Signed builds cut from the newest commit that passed CI, typically daily. |
 
 Nightly versions are stamped as the next patch with a prerelease suffix, so a nightly always supersedes the current stable and any real release supersedes the nightly — switching back to stable simply means waiting for (or installing) the next tagged release. Nightlies are signed like releases but are not manually verified; expect rough edges.
 
