@@ -40,6 +40,14 @@ const CLOSING_CTA_RULES: ClosingCtaRule[] = [
         },
     },
     {
+        path: '/brand',
+        content: {
+            title: 'Know the app behind the logo.',
+            description:
+                'Whatever you make with these assets, it helps to know the app they represent. Download Tabularis and try it on a real database. It’s free and open source (Apache 2.0).',
+        },
+    },
+    {
         path: '/demos',
         matchSubpagesOnly: true,
         content: {
@@ -136,6 +144,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
             {label: 'Product Demos', href: '/demos'},
             {label: 'Compare', href: '/compare'},
             {label: 'Roadmap', href: '/roadmap'},
+            {label: 'Brand Assets', href: '/brand'},
         ],
     },
     {

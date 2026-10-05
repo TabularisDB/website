@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/img/brand/tabularis.png" width="350" alt="Tabularis" />
+  <img src="public/img/brand/tabularis-logo-color.svg" width="350" alt="Tabularis" />
 </div>
 
 # tabularis-website

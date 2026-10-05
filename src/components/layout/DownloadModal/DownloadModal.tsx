@@ -62,7 +62,7 @@ export function DownloadModal({platform, onClose}: DownloadModalProps) {
                 >
                     <div className={styles.header}>
                         <span className={styles.title}>
-                            <img className={styles.logo} src="/img/brand/tabularis-compact.svg" alt="" />
+                            <img className={styles.logo} src="/img/brand/tabularis-icon-color.svg" alt="" />
                             Download for {config.label}
                         </span>
                         <button className={styles.closeBtn} onClick={onClose} type="button" aria-label="Close">

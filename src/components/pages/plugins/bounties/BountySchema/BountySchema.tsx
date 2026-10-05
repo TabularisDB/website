@@ -56,7 +56,7 @@ export function BountySchema() {
                 </svg>
 
                 <div className={styles.hub}>
-                    <img src="/img/brand/tabularis-compact.svg" alt="" />
+                    <img src="/img/brand/tabularis-icon-color.svg" alt="" />
                 </div>
 
                 {left.map((bounty, i) => (

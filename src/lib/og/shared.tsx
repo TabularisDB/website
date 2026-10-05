@@ -143,7 +143,7 @@ export function Kicker({children}: {children: ReactNode}): ReactElement {
 }
 
 export function Logo(): ReactElement | null {
-    const src = readPublicImage('/img/brand/tabularis.svg');
+    const src = readPublicImage('/img/brand/tabularis-logo-color.svg');
     if (!src) return null;
     return <img src={src} height={40} alt="" style={{marginBottom: 36, position: 'absolute', top: 48, left: 48}} />;
 }

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     metadataBase: new URL('https://tabularis.dev'),
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    icons: {icon: '/img/brand/tabularis-compact.svg'},
+    icons: {icon: '/img/brand/tabularis-icon-color.svg'},
     alternates: {
         types: {
             'application/rss+xml': [{url: '/feed.xml', title: 'Tabularis Blog'}],

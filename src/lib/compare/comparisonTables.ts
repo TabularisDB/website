@@ -17,7 +17,7 @@ export interface ComparisonTableData {
 
 const TABULARIS: ComparisonProduct = {
     name: 'Tabularis',
-    logo: '/img/brand/tabularis-compact.svg',
+    logo: '/img/brand/tabularis-icon-color.svg',
     width: 120,
     height: 120,
 };

@@ -78,6 +78,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'monthly',
             priority: 0.6,
         },
+        {
+            url: `${BASE_URL}/brand`,
+            lastModified: new Date(),
+            changeFrequency: 'yearly',
+            priority: 0.4,
+        },
     ];
 
     const wikiRoutes: MetadataRoute.Sitemap = wikiPages.map((page) => ({

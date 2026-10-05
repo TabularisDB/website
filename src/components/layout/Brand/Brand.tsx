@@ -21,7 +21,7 @@ export function Brand({className}: BrandProps) {
 
     return (
         <Link href="/" onClick={handleClick}>
-            <img src="/img/brand/tabularis.svg" alt="Tabularis" className={clsx(styles.logo, className)} />
+            <img src="/img/brand/tabularis-logo-color.svg" alt="Tabularis" className={clsx(styles.logo, className)} />
         </Link>
     );
 }
