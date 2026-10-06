@@ -71,7 +71,7 @@ body {
     font-family: var(--font-sans);
     padding: 2rem 1.5rem;
 
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
         padding: 1rem 1.5rem;
     }
 }
@@ -166,6 +166,10 @@ ol {
 
 .container.with-gap {
     gap: 6rem;
+
+    @media (max-width: 767px) {
+        gap: 4rem;
+    }
 }
 
 .wiki-container {
