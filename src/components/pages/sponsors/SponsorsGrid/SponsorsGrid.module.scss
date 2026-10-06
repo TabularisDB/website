@@ -1,6 +1,6 @@
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
     border-top: 0.1rem solid var(--color-border);
     border-left: 0.1rem solid var(--color-border);
     overflow: visible;
