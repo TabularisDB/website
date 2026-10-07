@@ -1,7 +1,6 @@
 import {SOCIAL_URLS} from '@/lib/social';
 import {APP_VERSION} from '@/lib/download/version';
-
-const BASE_URL = 'https://tabularis.dev';
+import {SITE_URL} from '../siteConfig';
 
 export interface BreadcrumbItem {
     name: string;
@@ -10,7 +9,7 @@ export interface BreadcrumbItem {
 
 export function toAbsoluteUrl(path: string): string {
     if (path.startsWith('http://') || path.startsWith('https://')) return path;
-    return `${BASE_URL}${path}`;
+    return `${SITE_URL}${path}`;
 }
 
 export function buildBreadcrumbJsonLd(items: BreadcrumbItem[]) {
@@ -31,7 +30,7 @@ export function buildOrganizationJsonLd() {
         '@context': 'https://schema.org',
         '@type': 'Organization',
         name: 'Tabularis',
-        url: BASE_URL,
+        url: SITE_URL,
         logo: toAbsoluteUrl('/img/brand/tabularis-logo-color.png'),
         sameAs: [SOCIAL_URLS.github, SOCIAL_URLS.discord, SOCIAL_URLS.bluesky, SOCIAL_URLS.x, SOCIAL_URLS.mastodon],
     };
@@ -47,7 +46,7 @@ export function buildSoftwareApplicationJsonLd() {
         operatingSystem: 'Windows, macOS, Linux',
         softwareVersion: APP_VERSION,
         downloadUrl: toAbsoluteUrl('/download'),
-        url: BASE_URL,
+        url: SITE_URL,
         image: toAbsoluteUrl('/img/og.png'),
         offers: {
             '@type': 'Offer',

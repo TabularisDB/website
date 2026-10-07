@@ -4,12 +4,25 @@ import {TransitionBlock} from '@/components/ui/TransitionBlock/TransitionBlock';
 import {buildBreadcrumbJsonLd} from '@/lib/seo';
 import {LayersIcon} from 'lucide-react';
 import {Metadata} from 'next';
+import {ogImages} from '@/lib/og/registry';
+
+const path = '/solutions';
+const title = 'Solutions | Tabularis';
+const description =
+    'Explore high-intent Tabularis pages for PostgreSQL, SQL notebooks, MCP workflows, and other database use cases.';
 
 export const metadata: Metadata = {
-    title: 'Solutions | Tabularis',
-    description:
-        'Explore high-intent Tabularis pages for PostgreSQL, SQL notebooks, MCP workflows, and other database use cases.',
-    alternates: {canonical: '/solutions'},
+    title,
+    description,
+    alternates: {canonical: path},
+    openGraph: {
+        type: 'website',
+        url: path,
+        title,
+        description,
+        images: ogImages(path, 'Tabularis Solutions'),
+    },
+    twitter: {card: 'summary_large_image'},
 };
 
 export default function SolutionsPage() {

@@ -5,11 +5,24 @@ import {buildBreadcrumbJsonLd} from '@/lib/seo';
 import {getSeoPagesBySection} from '@/lib/seo/seoPages';
 import {ArrowLeftRight} from 'lucide-react';
 import type {Metadata} from 'next';
+import {ogImages} from '@/lib/og/registry';
+
+const path = '/compare';
+const title = 'Compare | Tabularis';
+const description = 'Comparison pages for teams evaluating Tabularis against other database clients and SQL tools.';
 
 export const metadata: Metadata = {
-    title: 'Compare | Tabularis',
-    description: 'Comparison pages for teams evaluating Tabularis against other database clients and SQL tools.',
-    alternates: {canonical: '/compare'},
+    title,
+    description,
+    alternates: {canonical: path},
+    openGraph: {
+        type: 'website',
+        url: path,
+        title,
+        description,
+        images: ogImages(path, 'Compare Tabularis'),
+    },
+    twitter: {card: 'summary_large_image'},
 };
 
 export default function ComparePage() {

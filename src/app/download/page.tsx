@@ -9,25 +9,25 @@ import type {Metadata} from 'next';
 import styles from './DownloadPage.module.scss';
 import Link from 'next/link';
 import {ArrowRight, DownloadIcon} from 'lucide-react';
+import {ogImages} from '@/lib/og/registry';
+
+const path = '/download';
+const title = 'Download | Tabularis';
+const description =
+    'Download Tabularis for Windows, macOS, and Linux. Available via WinGet, Homebrew, Snap, AUR and more.';
 
 export const metadata: Metadata = {
-    title: 'Download | Tabularis',
-    description:
-        'Download Tabularis for Windows, macOS, and Linux. Available via WinGet, Homebrew, Snap, AUR and more.',
-    alternates: {canonical: '/download'},
+    title,
+    description,
+    alternates: {canonical: path},
     openGraph: {
         type: 'website',
-        url: 'https://tabularis.dev/download/',
-        title: 'Download | Tabularis',
-        description:
-            'Download Tabularis for Windows, macOS, and Linux. Available via WinGet, Homebrew, Snap, AUR and more.',
+        url: path,
+        title,
+        description,
+        images: ogImages(path, 'Download Tabularis'),
     },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'Download | Tabularis',
-        description:
-            'Download Tabularis for Windows, macOS, and Linux. Available via WinGet, Homebrew, Snap, AUR and more.',
-    },
+    twitter: {card: 'summary_large_image'},
 };
 
 export default function DownloadPage() {

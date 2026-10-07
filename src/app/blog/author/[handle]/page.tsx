@@ -5,6 +5,7 @@ import {AUTHORS, authorAvatarUrl, authorGitHubUrl, getAuthor} from '@/lib/blog/a
 import {getAllAuthorHandles, getPostsByAuthor} from '@/lib/blog/posts';
 import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
+import {ogImages} from '@/lib/og/registry';
 import styles from './BlogAuthorPage.module.scss';
 
 const POSTS_PER_PAGE = 12;
@@ -26,38 +27,22 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
     if (!(key in AUTHORS)) notFound();
 
     const author = getAuthor(key);
+    const path = `/blog/author/${author.handle}`;
     const title = `${author.name} | Tabularis Blog`;
-    const description = `Posts by ${author.name} on the Tabularis blog. ${author.bio}`;
-    // No per-author card exists, and the opengraph-image convention does not
-    // cascade into this nested segment, so fall back to the generated blog-section
-    // card (renamed to `.png` by scripts/finalize-og-images.mjs). Setting `images`
-    // explicitly is required: an openGraph block without it emits no og:image.
-    const images = [
-        {
-            url: 'https://tabularis.dev/blog/opengraph-image.png',
-            width: 1200,
-            height: 630,
-            alt: title,
-        },
-    ];
+    const description = `Posts by ${author.name} on the Tabularis blog.`;
 
     return {
         title,
         description,
-        alternates: {canonical: `/blog/author/${handle}`},
+        alternates: {canonical: path},
         openGraph: {
             type: 'profile',
-            url: `https://tabularis.dev/blog/author/${author.handle}`,
+            url: path,
             title,
             description,
-            images,
+            images: ogImages(path, title),
         },
-        twitter: {
-            card: 'summary_large_image',
-            title,
-            description,
-            images,
-        },
+        twitter: {card: 'summary_large_image'},
     };
 }
 

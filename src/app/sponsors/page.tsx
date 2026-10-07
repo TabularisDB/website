@@ -2,20 +2,24 @@ import {SponsorsGrid} from '@/components/pages/sponsors/SponsorsGrid/SponsorsGri
 import {SupportBlock} from '@/components/pages/sponsors/SupportBlock/SupportBlock';
 import {StarIcon} from 'lucide-react';
 import type {Metadata} from 'next';
+import {ogImages} from '@/lib/og/registry';
+
+const path = '/sponsors';
+const title = 'Sponsors and supporters | Tabularis';
+const description = 'Organizations supporting Tabularis development. Interested in sponsoring? Get in touch.';
 
 export const metadata: Metadata = {
-    title: 'Sponsors and supporters | Tabularis',
-    description: 'Organizations supporting Tabularis development. Interested in sponsoring? Get in touch.',
+    title,
+    description,
+    alternates: {canonical: path},
     openGraph: {
-        title: 'Sponsors and supporters | Tabularis',
-        description: 'Organizations supporting Tabularis development. Interested in sponsoring? Get in touch.',
-        url: 'https://tabularis.dev/sponsors',
+        type: 'website',
+        url: path,
+        title,
+        description,
+        images: ogImages(path, 'Tabularis sponsors and supporters'),
     },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'Sponsors and supporters | Tabularis',
-        description: 'Organizations supporting Tabularis development. Interested in sponsoring? Get in touch.',
-    },
+    twitter: {card: 'summary_large_image'},
 };
 
 export default function SponsorsPage() {

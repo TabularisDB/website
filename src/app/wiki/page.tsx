@@ -5,10 +5,24 @@ import type {Metadata} from 'next';
 import Link from 'next/link';
 import styles from './WikiIndexPage.module.scss';
 import {CATEGORY_ICONS} from '@/components/pages/wiki/CategoryLabel/CategoryLabel';
+import {ogImages} from '@/lib/og/registry';
+
+const path = '/wiki';
+const title = 'Docs | Tabularis';
+const description = 'Learn everything about Tabularis features and how to use them.';
 
 export const metadata: Metadata = {
-    title: 'Docs | Tabularis',
-    description: 'Learn everything about Tabularis features and how to use them.',
+    title,
+    description,
+    alternates: {canonical: path},
+    openGraph: {
+        type: 'website',
+        url: path,
+        title,
+        description,
+        images: ogImages(path, 'Tabularis Docs'),
+    },
+    twitter: {card: 'summary_large_image'},
 };
 
 function buildCategories() {

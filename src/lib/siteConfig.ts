@@ -1,5 +1,3 @@
-export const OG_IMAGE_URL = 'https://tabularis.dev/img/og.png';
-
 // emailchef-backed product-discovery survey (see SurveyPrompt.tsx).
 //
 // Submissions go to emailchef exactly like the newsletter/sponsor forms: a
@@ -49,3 +47,9 @@ export const SURVEY_CONFIGURED = !SURVEY_EMAILCHEF.fields.role.startsWith('REPLA
 export const SITE_TITLE = 'Tabularis | Open-Source Desktop Client for Modern Databases';
 export const SITE_DESCRIPTION =
     'Open-source desktop database client with support for PostgreSQL, MySQL/MariaDB, and SQLite. Hackable with plugins, with notebooks, AI, and MCP built in.';
+export const SITE_URL = 'https://tabularis.dev';
+export const OG_IMAGE_URL = `${SITE_URL}/img/og.png`;
+export const FEED_ALTERNATES = {
+    'application/rss+xml': [{url: '/feed.xml', title: 'Tabularis Blog'}],
+    'application/feed+json': [{url: '/feed.json', title: 'Tabularis Blog'}],
+};

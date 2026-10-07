@@ -5,7 +5,7 @@ import {JsonLd} from '@/components/layout/JsonLd';
 import {SearchModal} from '@/components/layout/SearchModal/SearchModal';
 import {SiteHeader} from '@/components/layout/SiteHeader/SiteHeader';
 import {buildOrganizationJsonLd, buildSoftwareApplicationJsonLd} from '@/lib/seo';
-import {OG_IMAGE_URL, SITE_DESCRIPTION, SITE_TITLE} from '@/lib/siteConfig';
+import {FEED_ALTERNATES, OG_IMAGE_URL, SITE_DESCRIPTION, SITE_TITLE} from '@/lib/siteConfig';
 import 'highlight.js/styles/atom-one-dark.css';
 import type {Metadata} from 'next';
 import {jetbrainsMono, urbanist} from './font';
@@ -16,12 +16,7 @@ export const metadata: Metadata = {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     icons: {icon: '/img/brand/tabularis-icon-color.svg'},
-    alternates: {
-        types: {
-            'application/rss+xml': [{url: '/feed.xml', title: 'Tabularis Blog'}],
-            'application/feed+json': [{url: '/feed.json', title: 'Tabularis Blog'}],
-        },
-    },
+    alternates: {types: FEED_ALTERNATES},
     openGraph: {
         type: 'website',
         url: 'https://tabularis.dev/',

@@ -12,21 +12,25 @@ import clsx from 'clsx';
 import {GitBranchIcon, HandCoinsIcon, PackageCheckIcon, TargetIcon} from 'lucide-react';
 import type {Metadata} from 'next';
 import styles from './PluginBountyBoardPage.module.scss';
+import {ogImages} from '@/lib/og/registry';
+
+const path = '/plugins/bounties';
+const title = 'Plugin Bounty Board | Tabularis';
 
 export const metadata: Metadata = {
-    title: 'Plugin Bounty Board | Tabularis',
+    title,
     description:
         'Request, sponsor, discuss, or claim the database drivers and plugins the Tabularis community wants next.',
-    alternates: {canonical: '/plugins/bounties'},
+    alternates: {canonical: path},
     openGraph: {
         type: 'website',
-        url: 'https://tabularis.dev/plugins/bounties/',
-        title: 'Plugin Bounty Board | Tabularis',
+        url: path,
+        title,
         description: 'A public market for the next Tabularis database drivers and plugin integrations.',
+        images: ogImages(path, 'Tabularis Plugin Bounties'),
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Plugin Bounty Board | Tabularis',
         description: 'Request, sponsor, discuss, or claim the database drivers and plugins the community wants next.',
     },
 };

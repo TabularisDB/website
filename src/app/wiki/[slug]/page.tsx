@@ -17,10 +17,7 @@ import {
 } from '@/lib/wiki';
 import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
-
-interface PageProps {
-    params: Promise<{slug: string}>;
-}
+import {ogImages} from '@/lib/og/registry';
 
 export function generateStaticParams() {
     return getAllWikiPages().map((p) => ({slug: p.slug}));
@@ -32,21 +29,27 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
     if (!page) return {};
 
     const {meta} = page;
+    const path = `/wiki/${meta.slug}`;
     const title = `${meta.title} | Tabularis Docs`;
 
     return {
         title,
         description: meta.excerpt,
-        alternates: {canonical: `/wiki/${slug}`},
+        alternates: {canonical: path},
         openGraph: {
             type: 'article',
-            url: `/wiki/${slug}`,
+            url: path,
             title,
             description: meta.excerpt,
             siteName: 'Tabularis',
+            images: ogImages(path, title),
         },
-        twitter: {card: 'summary_large_image', title, description: meta.excerpt},
+        twitter: {card: 'summary_large_image'},
     };
+}
+
+interface PageProps {
+    params: Promise<{slug: string}>;
 }
 
 function buildCategories() {

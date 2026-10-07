@@ -1,5 +1,6 @@
 import {BlogArchive} from '@/components/pages/blog/BlogArchive/BlogArchive';
 import {getAllTags, getPostsByTag} from '@/lib/blog/posts';
+import {ogImages} from '@/lib/og/registry';
 import {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 
@@ -9,10 +10,22 @@ export function generateStaticParams() {
 
 export async function generateMetadata({params}: {params: Promise<{category: string}>}): Promise<Metadata> {
     const {category} = await params;
+    const path = `/blog/category/${category}`;
+    const title = `#${category} | Tabularis Blog`;
+    const description = `All Tabularis blog posts tagged with "${category}".`;
+
     return {
-        title: `#${category} | Tabularis Blog`,
-        description: `All Tabularis blog posts tagged with "${category}".`,
-        alternates: {canonical: `/blog/category/${category}`},
+        title,
+        description,
+        alternates: {canonical: path},
+        openGraph: {
+            type: 'website',
+            url: path,
+            title,
+            description,
+            images: ogImages(path, title),
+        },
+        twitter: {card: 'summary_large_image'},
     };
 }
 

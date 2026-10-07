@@ -1,25 +1,25 @@
 import {BlogArchive} from '@/components/pages/blog/BlogArchive/BlogArchive';
 import {getAllPosts} from '@/lib/blog/posts';
-import {OG_IMAGE_URL} from '@/lib/siteConfig';
+import {ogImages} from '@/lib/og/registry';
+import {FEED_ALTERNATES} from '@/lib/siteConfig';
 import {Metadata} from 'next';
 
+const path = '/blog';
+const title = 'Blog | Tabularis';
+const description = 'Release notes and updates from the Tabularis project, one post per release.';
+
 export const metadata: Metadata = {
-    title: 'Blog | Tabularis',
-    description: 'Release notes and updates from the Tabularis project, one post per release.',
-    alternates: {canonical: '/blog'},
+    title,
+    description,
+    alternates: {canonical: path, types: FEED_ALTERNATES},
     openGraph: {
         type: 'website',
-        url: 'https://tabularis.dev/blog/',
-        title: 'Blog | Tabularis',
-        description: 'Release notes and updates from the Tabularis project, one post per release.',
-        images: [OG_IMAGE_URL],
+        url: path,
+        title,
+        description,
+        images: ogImages(path, title),
     },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'Blog | Tabularis',
-        description: 'Release notes and updates from the Tabularis project, one post per release.',
-        images: [OG_IMAGE_URL],
-    },
+    twitter: {card: 'summary_large_image'},
 };
 
 export default function BlogPage() {

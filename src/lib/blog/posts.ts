@@ -41,17 +41,9 @@ export interface PostMeta {
     authors: string[];
 }
 
-/**
- * Path to a post's Open Graph image, used as the card/hero visual.
- * In production the static export emits `opengraph-image.png`, and the
- * extension-less convention route is served as application/octet-stream by
- * static hosts (rejected by link-card scrapers) — so we use `.png` there.
- * The dev server only serves the extension-less convention route, so omit
- * `.png` in development.
- */
+/** Path to a post's Open Graph card (see lib/og/registry.tsx), also used as the card/hero visual. */
 export function postOgImage(slug: string): string {
-    const ext = process.env.NODE_ENV === 'production' ? '.png' : '';
-    return `/blog/${slug}/opengraph-image${ext}`;
+    return `/og/blog/${slug}.png`;
 }
 
 function parseAuthors(data: Record<string, unknown>): string[] {

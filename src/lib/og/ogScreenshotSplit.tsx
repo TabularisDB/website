@@ -14,6 +14,8 @@ export interface ScreenshotSplitOgOptions {
     release?: string;
     /** Drop the border/shadow frame around the image — for transparent artwork. */
     frameless?: boolean;
+    /** Small uppercase label above the title. Defaults to the blog label. */
+    eyebrow?: string;
 }
 
 /**
@@ -28,13 +30,14 @@ export async function renderScreenshotSplitOgImage({
     image,
     release,
     frameless,
+    eyebrow,
 }: ScreenshotSplitOgOptions): Promise<ImageResponse> {
     const fonts = await loadFonts({Urbanist: [500, 800]});
     const shotSrc = image ? readPublicImage(image) : null;
 
     return renderOg(
         <SplitLayout
-            eyebrow={release ? `Tabularis Blog | ${release}` : 'Tabularis Blog'}
+            eyebrow={eyebrow ?? (release ? `Tabularis Blog | ${release}` : 'Tabularis Blog')}
             title={[title, accent].filter(Boolean).join(' ') || undefined}
             visual={
                 <div style={{display: 'flex', flex: 1, alignItems: 'center'}}>

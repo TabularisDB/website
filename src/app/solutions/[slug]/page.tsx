@@ -7,10 +7,7 @@ import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import styles from './SolutionDetailPage.module.scss';
 import {SeoCapture} from '@/components/ui/SeoCapture/SeoCapture';
-
-interface PageProps {
-    params: Promise<{slug: string}>;
-}
+import {ogImages} from '@/lib/og/registry';
 
 export function generateStaticParams() {
     return getSeoPagesBySection('solutions').map((page) => ({slug: page.slug}));
@@ -21,24 +18,27 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
     const page = getSeoPageBySlug('solutions', slug);
     if (!page) return {};
 
+    const path = getSeoPagePath('solutions', slug);
+    const title = page.meta.metaTitle || `${page.meta.title} | Tabularis`;
+    const description = page.meta.description || page.meta.excerpt;
+
     return {
-        title: page.meta.metaTitle || `${page.meta.title} | Tabularis`,
-        description: page.meta.description || page.meta.excerpt,
-        alternates: {
-            canonical: getSeoPagePath('solutions', slug),
-        },
+        title,
+        description,
+        alternates: {canonical: path},
         openGraph: {
             type: 'article',
-            url: getSeoPagePath('solutions', slug),
-            title: page.meta.metaTitle || `${page.meta.title} | Tabularis`,
-            description: page.meta.description || page.meta.excerpt,
+            url: path,
+            title,
+            description,
+            images: ogImages(path, `Tabularis Solutions: ${page.meta.title}`),
         },
-        twitter: {
-            card: 'summary_large_image',
-            title: page.meta.metaTitle || `${page.meta.title} | Tabularis`,
-            description: page.meta.description || page.meta.excerpt,
-        },
+        twitter: {card: 'summary_large_image'},
     };
+}
+
+interface PageProps {
+    params: Promise<{slug: string}>;
 }
 
 export default async function SolutionDetailPage({params}: PageProps) {

@@ -34,9 +34,7 @@ export function HeaderActions({stars, mobileMenuOpen, onToggleMobileMenu}: Heade
                 rel="noopener noreferrer"
             >
                 <GitHubIcon />
-                <div className={styles.starCount}>
-                    {formatStars(stars)}
-                </div>
+                <div className={styles.starCount}>{formatStars(stars)}</div>
             </a>
 
             <Button className={styles.searchTrigger} variant="outline" onClick={openSearch} aria-label="Search">

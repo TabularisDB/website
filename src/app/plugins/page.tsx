@@ -4,10 +4,24 @@ import {Button} from '@/components/ui/Button/Button';
 import {ArrowRight, PlugIcon} from 'lucide-react';
 import type {Metadata} from 'next';
 import styles from './PluginsPage.module.scss';
+import {ogImages} from '@/lib/og/registry';
+
+const path = '/plugins';
+const title = 'Plugins | Tabularis';
+const description = 'Extend Tabularis with custom database drivers from the community.';
 
 export const metadata: Metadata = {
-    title: 'Plugins | Tabularis',
-    description: 'Extend Tabularis with custom database drivers from the community.',
+    title,
+    description,
+    alternates: {canonical: path},
+    openGraph: {
+        type: 'website',
+        url: path,
+        title,
+        description,
+        images: ogImages(path, 'Tabularis Plugins'),
+    },
+    twitter: {card: 'summary_large_image'},
 };
 
 export default function PluginsPage() {
