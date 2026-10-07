@@ -97,6 +97,26 @@ export const SPONSORS: Sponsor[] = [
         ],
     },
     {
+        id: 'anthropic',
+        name: 'Anthropic',
+        tagline: 'Supporting Tabularis through the Claude for Startups program.',
+        url: 'https://claude.com/programs/startups',
+        accentColor: '#D97757',
+        highlightColor: '#D97757',
+        ctaTextColor: '#ffffff',
+        logoImg: '/img/logos/sponsors/anthropic.svg',
+        logoImgCompact: '/img/logos/sponsors/anthropic_compact.png',
+        logoImgBg: '#FAF9F5',
+        kind: 'supporter',
+        modalDescription:
+            'Anthropic supports Tabularis through Claude for Startups, helping the team build and improve the project with Claude. This support helps us keep developing Tabularis as a free and open-source database client.',
+        features: [
+            {icon: '🤝', text: 'Support through the Claude for Startups program'},
+            {icon: '⌨️', text: 'Claude to help build and improve Tabularis'},
+            {icon: '❤️', text: 'Helping keep Tabularis free and open source'},
+        ],
+    },
+    {
         id: 'digitalocean',
         name: 'DigitalOcean',
         tagline: 'Simple, predictable cloud infrastructure for developers and growing teams.',
