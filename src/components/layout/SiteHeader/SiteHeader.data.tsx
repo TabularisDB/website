@@ -17,6 +17,7 @@ import {
     ShieldIcon,
     SirenIcon,
     StarIcon,
+    UsersIcon,
 } from 'lucide-react';
 import Image from 'next/image';
 import type {ReactNode} from 'react';
@@ -211,6 +212,12 @@ export const navGroups: NavGroup[] = [
             {
                 title: 'Community',
                 links: [
+                    {
+                        label: 'Contribute',
+                        href: '/community',
+                        description: 'Open issues across every project, and where to start.',
+                        icon: <UsersIcon />,
+                    },
                     {
                         label: 'GitHub',
                         href: SOCIAL_URLS.github,

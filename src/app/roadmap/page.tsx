@@ -1,7 +1,7 @@
 import {JsonLd} from '@/components/layout/JsonLd';
 import {getAllInitiativeMetas, type InitiativeMeta, type InitiativeStatus} from '@/lib/roadmap';
 import {buildBreadcrumbJsonLd} from '@/lib/seo';
-import {ArrowRight, Hammer, MapIcon, Milestone, Rocket} from 'lucide-react';
+import {ArrowRight, Hammer, MapIcon, Milestone, Rocket, UsersIcon} from 'lucide-react';
 import type {Metadata} from 'next';
 import Link from 'next/link';
 import styles from './RoadmapPage.module.scss';
@@ -87,7 +87,10 @@ export default function RoadmapPage() {
                 <h1 className="title">What we're building next.</h1>
                 <p className="description">
                     Active initiatives and the work queued behind them. Each card links to a GitHub epic, its open
-                    tasks, and how to claim one.
+                    tasks, and how to claim one. Looking for something smaller?{' '}
+                    <Link href="/community#issues" className={styles.headerLink}>
+                        Browse every open issue
+                    </Link>.
                 </p>
             </header>
 
@@ -122,6 +125,10 @@ export default function RoadmapPage() {
                     .
                 </p>
                 <div className={styles.futureActions}>
+                    <Button href="/community#issues">
+                        <UsersIcon />
+                        Find an issue
+                    </Button>
                     <Button href={SOCIAL_URLS.github} variant="secondary">
                         <GitHubIcon />
                         Star on GitHub

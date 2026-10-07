@@ -150,6 +150,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     {
         title: 'Community',
         links: [
+            {label: 'Contribute', href: '/community'},
             {label: 'GitHub', href: SOCIAL_URLS.github},
             {label: 'Discord', href: SOCIAL_URLS.discord},
             {label: 'Sponsors & supporters', href: '/sponsors'},
