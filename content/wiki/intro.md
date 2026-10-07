@@ -5,8 +5,6 @@ order: 1
 excerpt: 'Welcome to the Tabularis Wiki. Learn how to get started with the most modern database management tool.'
 ---
 
-# Introduction
-
 **Tabularis** is a desktop database management tool built with **Tauri** (Rust backend) and **React** (frontend). It natively supports PostgreSQL, MySQL, MariaDB, and SQLite, and can be extended to any other database engine via its JSON-RPC plugin system.
 
 ## What Tabularis Actually Does

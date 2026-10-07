@@ -5,8 +5,6 @@ excerpt: 'Keep Tabularis up to date — automatic checks on startup, manual chec
 category: 'Reference'
 ---
 
-# Updates
-
 ![The Updates panel in Settings → Info, with the release channel selector and update check](/img/tabularis-release-channel.png)
 
 Tabularis can notify you when a new version is available and, depending on how you installed it, update itself automatically or guide you to do it manually.

@@ -5,8 +5,6 @@ excerpt: "List server accounts, create and drop users, change passwords, and edi
 category: "Database Objects"
 ---
 
-# Users & Privileges
-
 Since v0.18.0 Tabularis can administer server accounts, not just read the schema they have access to. The **Users & Privileges** tab lists the accounts on the server, creates and drops them, changes passwords, and edits grants scope by scope.
 
 <video src="/videos/posts/tabularis-user-management-grant.mp4" poster="/videos/posts/tabularis-user-management-grant.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>

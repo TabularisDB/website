@@ -1,17 +1,19 @@
 ---
-title: "Plugin System"
+title: "Plugin System & Custom Drivers"
 order: 8
-excerpt: "Extend Tabularis with new database drivers using any programming language."
+excerpt: "How Tabularis plugins are structured and loaded: architecture, directory layout, the .tabularium manifest and plugin settings."
 category: "Integration"
 ---
 
-# Plugin System & Custom Drivers
-
 While Tabularis supports major relational databases natively via Rust, the ecosystem of data stores is vast. The Plugin System allows anyone to add support for external databases (like DuckDB, ClickHouse, or Redis) using **any programming language**.
 
-<video src="/videos/wiki/08-plugins.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+This page explains how a plugin is structured and loaded. The rest of the plugin documentation:
 
-For the complete protocol reference, see [`plugins/PLUGIN_GUIDE.md`](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md) in the repository.
+- [Installing Plugins](/wiki/installing-plugins) — for users: the Plugin Center, updates and plugin settings.
+- [Plugin Protocol](/wiki/plugin-protocol) — the JSON-RPC methods a driver implements.
+- [Building Your First Plugin](/wiki/building-plugins) — scaffold a driver and implement it step by step.
+- [UI Extensions](/wiki/ui-extensions) — add React components to the Tabularis interface.
+- [Publishing Plugins](/wiki/plugin-development) and [Plugin Kinds](/wiki/plugin-kinds) — release a plugin to the registry.
 
 ## Architecture: JSON-RPC over STDIO
 
@@ -28,14 +30,21 @@ Any output written to `stderr` is captured by Tabularis and shown in the log vie
 
 ## Directory Structure
 
-A plugin is distributed as a `.zip` file. When extracted into the Tabularis plugins folder, it must follow this layout:
+A plugin is distributed as a `.zip` file per platform. Tabularis installs it into a folder named after the plugin `id`, grouped by kind:
 
 ```text
 plugins/
-└── duckdb/
-    ├── .tabularium          (or legacy manifest.json)
-    └── duckdb-plugin        (or duckdb-plugin.exe on Windows)
+├── drivers/
+│   └── duckdb/
+│       ├── .tabularium      (or legacy manifest.json)
+│       ├── duckdb-plugin    (or duckdb-plugin.exe on Windows)
+│       ├── locales/         (optional, UI translations)
+│       └── ui/dist/         (optional, UI extension bundles)
+└── themes/
+    └── my-theme/
 ```
+
+Plugin folders placed directly under `plugins/` (without the `drivers/` level) are still loaded, so older manual installs keep working.
 
 **Plugin folder locations:**
 
@@ -47,7 +56,7 @@ plugins/
 
 ## The Manifest (`.tabularium`)
 
-Every plugin ships one manifest that tells Tabularis its capabilities and the data types it supports. Its canonical name is **`.tabularium`** — one file at the plugin root that serves both the host (loading the driver) and the [Tabularium registry](https://registry.tabularis.dev/docs/plugin-development) (listing it). The host still reads a legacy `manifest.json` as a fallback. With Tabularium 0.14.0 and Tabularis v0.25.0, a `.tabularium` may carry `id` as the stable lowercase identifier and `name` as the human-readable display name, which the connection catalogue shows for standalone plugins instead of title-casing the slug; manifests without `id` remain valid, and their `name` keeps acting as the identifier. When adopting the split, set `id` equal to the existing registry slug first, then change `name`. The full field reference with all constraints lives at [docs.tabularium.wiki/manifest](https://docs.tabularium.wiki/manifest/).
+Every plugin ships one manifest that tells Tabularis its capabilities and the data types it supports. Its canonical name is **`.tabularium`** — one file at the plugin root that serves both the host (loading the driver) and the [Tabularium registry](/wiki/plugin-development) (listing it). The host still reads a legacy `manifest.json` as a fallback. With Tabularium 0.14.0 and Tabularis v0.25.0, a `.tabularium` may carry `id` as the stable lowercase identifier and `name` as the human-readable display name, which the connection catalogue shows for standalone plugins instead of title-casing the slug; manifests without `id` remain valid, and their `name` keeps acting as the identifier. When adopting the split, set `id` equal to the existing registry slug first, then change `name`. The registry-side fields are listed in [Publishing Plugins](/wiki/plugin-development#core-manifest-fields) and, per kind, in [Plugin Kinds](/wiki/plugin-kinds).
 
 ```json
 {
@@ -80,7 +89,7 @@ Every plugin ships one manifest that tells Tabularis its capabilities and the da
 |------|------|-------------|
 | `schemas` | bool | `true` if the database supports named schemas (e.g. PostgreSQL). Shows the schema selector in the UI. |
 | `views` | bool | `true` to enable the Views section in the explorer. |
-| `materialized_views` | bool | `true` if the database supports materialized views. Enables the materialized views section in the explorer (see [Materialized Views](#materialized-views)). Defaults to `false`. |
+| `materialized_views` | bool | `true` if the database supports materialized views. Enables the materialized views section in the explorer (see [Materialized Views](/wiki/plugin-protocol#materialized-views-optional)). Defaults to `false`. |
 | `routines` | bool | `true` to enable stored procedures/functions in the explorer. |
 | `routine_management` | bool | `true` to enable routine management actions (run with parameters, create from template, edit, drop). The backing RPCs are optional — the host falls back to dialect-neutral SQL. Defaults to `false`. |
 | `triggers` | bool | `true` if the database supports triggers. Enables trigger listing and management for drivers that implement the trigger RPCs. Defaults to `false`. |
@@ -98,7 +107,7 @@ Every plugin ships one manifest that tells Tabularis its capabilities and the da
 | `explain` | bool | `true` if the driver implements the `explain_query` method (EXPLAIN / query plan support). Enables the Visual EXPLAIN button in the SQL editor and notebook cells; when `false` or omitted, the Visual EXPLAIN UI is hidden for connections using this driver. Defaults to `false`. |
 | `sql_dialect` | string | Optional statement-splitting dialect: `postgres`, `mysql`, `mssql`, `sqlite`, `oracle`, or `generic`. Oracle-like plugins, including DM/Dameng, should use `"oracle"`. |
 | `supports_ssl` | bool | `true` to show the SSL/TLS configuration tab (mode + CA/client cert/key) in the connection modal. The values are forwarded to the plugin as `ssl_mode`, `ssl_ca`, `ssl_cert`, and `ssl_key` in `ConnectionParams`. Network drivers only. Defaults to `false`. |
-| `table_query_templates` | bool | Since v0.26.0. Opts the **Generate SQL** dialog into the optional `get_table_query_template` RPC for SELECT, UPDATE and DELETE previews (see [Table Query Templates](#table-query-templates-optional)). Defaults to `false`; built-in drivers and plugins without it keep the host's templates. |
+| `table_query_templates` | bool | Since v0.26.0. Opts the **Generate SQL** dialog into the optional `get_table_query_template` RPC for SELECT, UPDATE and DELETE previews (see [Table Query Templates](/wiki/plugin-protocol#table-query-templates-optional)). Defaults to `false`; built-in drivers and plugins without it keep the host's templates. |
 | `single_database` | bool | `true` for drivers exposing a single implicit database (e.g. a flat search/document store like Meilisearch). Skips the database tab and the database-name field in the connection modal. |
 
 ### Data Type Categories
@@ -128,23 +137,11 @@ The optional `type_mappings` manifest field declares how generic inferred type n
 
 Keys are uppercase generic type names; the lookup is case-insensitive. Types without a mapping (or an omitted `type_mappings`) pass through unchanged.
 
+`@tabularis/create-plugin` scaffolds the `.tabularium` manifest directly and ships a `migrate` command that converts an existing legacy `manifest.json` plugin (and, with `--ci`, regenerates a registry-ready release workflow).
+
 ## Plugin Settings
 
-Plugins can declare custom configuration fields in their manifest. Tabularis renders these fields in **Settings → gear icon** next to the plugin. Users fill them in, the values are persisted in `config.json`, and Tabularis delivers them to the plugin at startup.
-
-Built-in drivers use the same mechanism for their own settings. Since v0.23.0 the built-in PostgreSQL driver exposes **Pool Max Size** (default 10, capped at 64; invalid values fall back to the default), the maximum number of connections kept in its pool, which is worth lowering behind pgBouncer.
-
-![Plugin settings modal with configurable fields](/img/posts/plugin-settings-modal.png)
-
-### Call timeout and cancellation
-
-Since v0.26.0 the time Tabularis waits for a plugin to answer a single call, queries included, is configurable instead of a fixed 120 seconds. **Settings → Plugins → Plugin runtime → Call timeout** sets it for all plugins (default 120, `0` disables the limit), stored as `pluginCallTimeoutSeconds` in `config.json`. Each plugin's settings page has its own **Call timeout** override, stored as `plugins.<id>.callTimeoutSeconds`: blank inherits the global value, `0` disables the limit for that plugin only. A change applies to the next call without restarting the plugin. Plugin initialization keeps a separate 15-second limit.
-
-When a call times out, the host sends the plugin a `cancel` notification for that request id (see [Cancel Notification](#cancel-notification-optional)), so a plugin that supports it can stop the statement on the server instead of leaving it running.
-
-<video src="/videos/posts/tabularis-plugin-call-timeout.mp4" poster="/videos/posts/tabularis-plugin-call-timeout.jpg" controls autoplay loop muted playsinline></video>
-
-![The PostgreSQL plugin settings page with a Call timeout override inheriting the global 120 s](/img/tabularis-plugin-call-timeout-override.png)
+Plugins can declare configuration fields that Tabularis renders in **Settings → gear icon** next to the plugin; the values are persisted in `config.json` and delivered to the plugin at startup. For the user side, including the per-plugin call timeout, see [Plugin Settings](/wiki/installing-plugins#plugin-settings).
 
 ### Declaring settings in the manifest
 
@@ -205,306 +202,6 @@ Plugin settings are stored under the top-level `plugins` key in `config.json`, k
 
 For the full developer reference (field schema, code examples in Rust and Python), see the [Plugin Guide](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md).
 
-## Protocol Specification
-
-Your plugin runs a continuous read loop on `stdin`. For each line received, parse the JSON-RPC request, execute the operation, and write a JSON-RPC response to `stdout` followed by `\n`.
-
-### Request format
-
-```json
-{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "method": "get_tables",
-  "params": {
-    "params": {
-      "driver": "duckdb",
-      "host": null,
-      "port": null,
-      "database": "/path/to/my.duckdb",
-      "username": null,
-      "password": null,
-      "ssl_mode": null
-    },
-    "schema": null
-  }
-}
-```
-
-The `params.params` object (a `ConnectionParams`) contains the values the user entered in the connection form. Additional fields at the top level of `params` are method-specific (e.g. `schema`, `table`, `query`).
-
-### Optional AI schema context
-
-External drivers automatically participate in **AI Query Assist** when they implement the standard `get_tables`, `get_columns`, and `get_foreign_keys` metadata methods. The host limits the selected tables and builds the final system prompt, so plugins do not need to know which AI provider the user configured.
-
-Drivers with an efficient batch metadata API can additionally implement `get_ai_schema_context`:
-
-```json
-{
-  "jsonrpc": "2.0",
-  "id": 12,
-  "method": "get_ai_schema_context",
-  "params": {
-    "params": { "driver": "my-driver", "database": "app" },
-    "schema": "public",
-    "max_tables": 20
-  }
-}
-```
-
-Return a result shaped as `{ "tables": [{ "name", "columns", "foreign_keys" }], "total_table_count": 42 }`. Respect `max_tables` while reporting the pre-limit count in `total_table_count`. If the method is not implemented, return `-32601`; Tabularis automatically falls back to the standard metadata calls, keeping existing plugins compatible.
-
-### Successful response
-
-```json
-{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": [
-    { "name": "users", "schema": "main", "comment": null }
-  ]
-}
-```
-
-### Error response
-
-```json
-{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "error": {
-    "code": -32603,
-    "message": "Database file not found."
-  }
-}
-```
-
-**Standard error codes:**
-
-| Code | Meaning |
-|------|---------|
-| `-32700` | Parse error |
-| `-32600` | Invalid request |
-| `-32601` | Method not found |
-| `-32602` | Invalid params |
-| `-32603` | Internal error |
-
-## Required Methods
-
-Your plugin must implement at minimum the following methods. For unimplemented optional methods, return an empty array `[]` or a `-32601` error.
-
-### `test_connection`
-
-Verify that a connection can be established.
-
-**Params:** `{ "params": ConnectionParams }`
-
-**Result:** `{ "success": true }` or an error response.
-
----
-
-### `ping` *(optional)*
-
-Lightweight health check called periodically on active connections. Tabularis pings every active connection at a configurable interval (default: 30 seconds). After 2 consecutive failures, the connection is automatically disconnected and the user is notified.
-
-**Params:** `{ "params": ConnectionParams }`
-
-**Result:** `null` on success, or an error response if the connection is dead.
-
-> If not implemented, Tabularis falls back to `test_connection`. Implementing `ping` is recommended when your plugin can do a cheaper liveness check than a full connection test.
-
----
-
-### `get_databases`
-
-List available databases.
-
-**Params:** `{ "params": ConnectionParams }`
-
-**Result:** `["db1", "db2"]`
-
----
-
-### `get_tables`
-
-List tables in a schema/database.
-
-**Params:** `{ "params": ConnectionParams, "schema": string | null }`
-
-**Result:**
-```json
-[{ "name": "users", "schema": "main", "comment": null }]
-```
-
----
-
-### `get_columns`
-
-Get column metadata for a table.
-
-**Params:** `{ "params": ConnectionParams, "schema": string | null, "table": string }`
-
-**Result:**
-```json
-[
-  {
-    "name": "id",
-    "data_type": "INTEGER",
-    "is_nullable": false,
-    "column_default": null,
-    "is_primary_key": true,
-    "is_auto_increment": true,
-    "comment": null
-  }
-]
-```
-
----
-
-### `execute_query`
-
-Execute a SQL query and return results.
-
-**Params:**
-```json
-{
-  "params": ConnectionParams,
-  "query": "SELECT * FROM users",
-  "limit": 100,
-  "page": 1,
-  "schema": null
-}
-```
-
-**Result:**
-```json
-{
-  "columns": ["id", "name"],
-  "rows": [[1, "Alice"]],
-  "total_count": 1,
-  "execution_time_ms": 5
-}
-```
-
-#### Editor sessions and open transactions *(optional, since v0.26.0)*
-
-`execute_query` and `execute_query_batch` may carry a `session_id`, the id of the editor tab that sent the run. A plugin that supports sessions keeps that session's connection when a run leaves an explicit transaction open, so `BEGIN`, the changes, a verifying `SELECT` and `COMMIT` can be separate runs. With a `session_id` it replies `{ "result": QueryResult, "in_transaction": bool }` (or `{ "results": [...], "in_transaction": bool }` for a batch); the host recognizes the wrapper by the presence of `in_transaction`, so a column named `result` is not mistaken for it, and reads `null` as `false`. The host calls `release_session` when the tab closes, disconnects or the app exits, and tolerates method-not-found. Plugins that ignore `session_id` and reply with the bare shapes keep the per-run behaviour. The [PostgreSQL plugin](https://github.com/TabularisDB/tabularis-postgresql-plugin) implements this from 1.0.0-rc.5.
-
-### Cancel Notification *(optional)*
-
-Since v0.26.0, when a call exceeds the [call timeout](#call-timeout-and-cancellation) while it is still pending, the host writes a JSON-RPC notification to the plugin's stdin:
-
-```json
-{"jsonrpc":"2.0","method":"cancel","params":{"id":42}}
-```
-
-`params.id` is the id of the request that timed out. There is no top-level `id`, so this is a notification: the plugin must not reply. Ignore ids you do not know (the request may have finished in the meantime), and keep reading stdin while a request runs so the notification can arrive. No cancel is sent for a response that raced the timeout, or when the timeout is disabled. Plugins that do not implement `cancel` keep working; a reply to it matches no pending request and is dropped. The [PostgreSQL plugin](https://github.com/TabularisDB/tabularis-postgresql-plugin) implements it from 1.0.0-rc.6 with `pg_cancel_backend`.
-
-### Table Query Templates *(optional)*
-
-Since v0.26.0, a driver that declares `table_query_templates: true` is asked for the SELECT, UPDATE and DELETE previews in **Generate SQL** through `get_table_query_template`. The method returns a SQL string and must not execute it.
-
-```json
-{
-  "params": ConnectionParams,
-  "request": {
-    "table": "orders",
-    "schema": "sales",
-    "kind": "select",
-    "columns": ["id", "status"],
-    "limit": 100
-  }
-}
-```
-
-`kind` is `select`, `update` or `delete`. Table, schema and column names are unquoted identifiers that the driver must quote and escape. `columns` defaults to `[]` (SELECT uses `*`); `schema` and `limit` may be null. SELECT All passes no limit, SELECT Fields passes 100, and UPDATE/DELETE reject a limit. UPDATE and DELETE templates must include `WHERE 1 = 0`, and UPDATE values use the editor's `:value_1`, `:value_2` placeholders. Only a `-32601` error falls back to the host template; other errors are shown to the user. Older hosts ignore the capability, so it does not require a higher `min_runtime_version`. The [SQL Server plugin](https://github.com/TabularisDB/tabularis-sqlserver-plugin) uses it from 1.0.0-beta.3.
-
-### Materialized Views *(optional)*
-
-Declare `materialized_views: true` in capabilities to enable the UI. If the plugin returns `-32601` (method not found), the host falls back to empty results for `get_materialized_views` and `get_materialized_view_columns`; `get_materialized_view_definition` and `refresh_materialized_view` surface a "not supported by this driver" error instead.
-
-| Method | Params | Result |
-|--------|--------|--------|
-| `get_materialized_views` | `{ "params", "schema" }` | `[{ "name": string, "schema": string \| null }]` |
-| `get_materialized_view_columns` | `{ "params", "view_name", "schema" }` | `[TableColumn]` (same shape as `get_columns`) |
-| `get_materialized_view_definition` | `{ "params", "view_name", "schema" }` | `string` (the SQL definition) |
-| `refresh_materialized_view` | `{ "params", "view_name", "schema" }` | `null` on success |
-
-### BLOB Operations *(optional)*
-
-If the plugin returns `-32601`, the host shows "BLOB export/preview not supported".
-
-- **`save_blob_to_file`** — params `{ "params", "table", "col_name", "pk_map", "schema", "file_path" }`. The plugin queries the binary value via the PK map and writes the raw bytes to `file_path` itself (it runs on the same machine as the host). Returns `null` on success.
-- **`fetch_blob_as_data_url`** — params `{ "params", "table", "col_name", "pk_map", "schema" }`. Returns the value in the BLOB wire format `"BLOB:<size_bytes>:<mime_type>:<base64_data>"` for preview in the row editor.
-
-For the full list of methods (CRUD, DDL, views, routines, triggers, batch/ER diagram methods), see the [complete plugin guide](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md).
-
-## Minimal Skeleton (Rust)
-
-```rust
-use std::io::{self, BufRead, Write};
-use serde_json::{json, Value};
-
-fn main() {
-    let stdin = io::stdin();
-    let mut stdout = io::stdout();
-
-    for line in stdin.lock().lines() {
-        let line = line.unwrap();
-        if line.trim().is_empty() { continue; }
-
-        let req: Value = match serde_json::from_str(&line) {
-            Ok(v) => v,
-            Err(_) => continue,
-        };
-
-        let id = req["id"].clone();
-        let method = req["method"].as_str().unwrap_or("");
-        let params = &req["params"];
-        let response = dispatch(method, params, id);
-
-        let mut res_str = serde_json::to_string(&response).unwrap();
-        res_str.push('\n');
-        stdout.write_all(res_str.as_bytes()).unwrap();
-        stdout.flush().unwrap();
-    }
-}
-
-fn dispatch(method: &str, _params: &Value, id: Value) -> Value {
-    match method {
-        "test_connection" => json!({
-            "jsonrpc": "2.0", "result": { "success": true }, "id": id
-        }),
-        // Optional: lightweight health check (called periodically).
-        // If omitted, Tabularis falls back to test_connection.
-        "ping" => json!({
-            "jsonrpc": "2.0", "result": null, "id": id
-        }),
-        "get_databases" => json!({
-            "jsonrpc": "2.0", "result": ["my_database"], "id": id
-        }),
-        "get_tables" => json!({
-            "jsonrpc": "2.0",
-            "result": [{ "name": "example", "schema": null, "comment": null }],
-            "id": id
-        }),
-        "execute_query" => json!({
-            "jsonrpc": "2.0",
-            "result": {
-                "columns": ["id"], "rows": [[1]],
-                "total_count": 1, "execution_time_ms": 1
-            },
-            "id": id
-        }),
-        _ => json!({
-            "jsonrpc": "2.0",
-            "error": { "code": -32601, "message": format!("Method '{}' not implemented", method) },
-            "id": id
-        }),
-    }
-}
-```
-
 ## Testing Your Plugin
 
 You can test your plugin directly from the shell before installing it in Tabularis:
@@ -518,152 +215,12 @@ You should see a valid JSON-RPC response on `stdout`.
 
 ## Installing Locally
 
-1. Create the plugin directory inside the Tabularis plugins folder:
+1. Create the plugin directory inside the Tabularis plugins folder, for example on Linux:
    ```
-   ~/.local/share/tabularis/plugins/myplugin/   (Linux)
+   ~/.local/share/tabularis/plugins/drivers/myplugin/
    ```
-2. Place your `.tabularium` (or legacy `manifest.json`) and the compiled executable there.
+2. Place your `.tabularium` (or legacy `manifest.json`) and the compiled executable there, plus `ui/dist/` and `locales/` if the plugin has UI extensions.
 3. On Linux/macOS, make it executable: `chmod +x myplugin`
-4. Open Tabularis and refresh the plugins list if needed. A locally installed plugin can be loaded directly from the plugins directory.
+4. Open Tabularis and refresh the plugins list if needed.
 
-## The Hosted Registry and the Connection Catalogue
-
-![Plugin Center with update metrics and its version selector](/img/tabularis-plugin-center-redesign.png)
-
-Since v0.16.0, plugin discovery runs through the hosted **Tabularium** registry at `registry.tabularis.dev` instead of a static JSON file:
-
-![The connection catalogue merging built-in drivers and registry plugins, with paradigm facets, Installed badges, per-plugin download counts, and the Deprecated badge on the built-in PostgreSQL tile](/img/tabularis-deprecated-badge-catalogue.png)
-
-- **The connection catalogue.** Creating a new connection starts from a searchable catalogue that merges built-in drivers with registry plugins into one grid, with paradigm facets for filtering. Drivers your platform can't run are badged and dimmed. Picking an uninstalled driver install-gates it — you can install the plugin inline and continue straight to the connection form.
-- **Deep-link installs.** Links of the form `tabularis://install/<slug>` open the app with a version-aware confirmation: **Install** for a new plugin, **Update** when a newer version exists, or an already-installed notice. An optional `?version=` pins a specific release.
-- **Version picking and updates.** Catalogue cards let you install a specific released version, and the **Installed** tab shows an Update button when a newer compatible release exists for your platform and app version. Since v0.25.0 the sidebar and the Plugins entry in Settings carry a count of pending updates, and a startup toast opens the **Updates** filter directly. See [Updates](/wiki/updates#update-badges-and-startup-toast).
-- **Theme packages.** Since v0.25.0 the registry also lists declarative theme packages. A **Filter by type** control switches between **Drivers** and **Themes**; themes are installed, updated, enabled, disabled and removed with the same lifecycle as drivers, and never execute code. See [Themes → Theme Packages](/wiki/themes#theme-packages-since-v0250).
-- **Plugin details with README.** Since v0.19.0, the install gate and every Plugin Center card known to the registry open a details modal showing the plugin's README, served locale-aware by the registry. Relative image and link paths are resolved against the plugin's repository, the HTML is sanitized, and links open in your OS browser.
-
-![The plugin README modal open over the install gate, showing the ClickHouse plugin's README with badges, description and table of contents](/img/tabularis-plugin-readme-modal.png)
-- **Runtime version floor.** Since v0.23.0 the host enforces a plugin's `min_runtime_version` at install and load time: an older Tabularis refuses the plugin with a message naming both versions, including installs from a URL or a local file that bypass the catalogue filter. Missing or non-semver floors are treated as compatible, and comparison follows semver precedence, so a prerelease host does not satisfy a stable floor. Development builds load the plugin anyway and show the mismatch as a warning toast.
-- **Deprecated built-in drivers.** Since v0.23.0 the built-in PostgreSQL driver is deprecated in favour of the `postgresql` plugin, which the app installs automatically when a built-in PostgreSQL connection exists. See [Deprecated Built-in PostgreSQL Driver and Plugin Migration](/wiki/connections#deprecated-built-in-postgresql-driver-and-plugin-migration).
-- **Backwards compatibility.** The legacy static [`registry.json`](https://github.com/TabularisDB/tabularis/blob/main/plugins/registry.json) is still merged into the catalogue (the hosted API wins on conflicting ids), so plugins that haven't migrated remain visible and installable, and older app versions keep working unchanged.
-
-`@tabularis/create-plugin` scaffolds the `.tabularium` manifest directly and ships a `migrate` command that converts an existing legacy `manifest.json` plugin (and, with `--ci`, regenerates a registry-ready release workflow).
-
-## Using a Custom Plugin Registry
-
-By default, Tabularis fetches the plugin list from the official Tabularium registry. You can point the app to a different registry (e.g., a self-hosted or company-internal Tabularium instance) by setting `customRegistryUrl` in your `config.json`:
-
-```json
-{
-  "customRegistryUrl": "https://registry.example.com/api/manifest"
-}
-```
-
-When this key is set, both the in-app plugin browser and the install command use your registry instead of the default one. A plain static JSON file following the [legacy registry schema](https://github.com/TabularisDB/tabularis/blob/main/plugins/registry.json) also still works.
-
-## UI Extensions (Phase 2)
-
-Starting with v0.9.13, plugins can inject custom React components into the Tabularis UI through a **slot-based extension system**. This allows plugins to add buttons, fields, previews, and menu items directly into the interface without modifying host code.
-
-### How It Works
-
-The system has three layers:
-
-1. **SlotAnchor** — Host components placed at predefined insertion points that determine WHERE extensions render.
-2. **PluginSlotRegistry** — A React context that stores registered contributions and determines WHAT gets rendered.
-3. **Plugin Modules** — JavaScript/TypeScript code that registers components during plugin activation.
-
-### Available Slots
-
-Eleven insertion points are available:
-
-| Slot Name | Location | Renders Per |
-|-----------|----------|-------------|
-| `row-edit-modal.field.after` | After each field in New Row modal | Each column |
-| `row-edit-modal.footer.before` | Before Save/Cancel buttons | Once per modal |
-| `row-editor-sidebar.field.after` | After each field in Row Editor sidebar | Each column |
-| `row-editor-sidebar.header.actions` | Sidebar header action area | Once per sidebar |
-| `data-grid.toolbar.actions` | Table toolbar (after LIMIT) | Once per table view |
-| `data-grid.context-menu.items` | Right-click context menu on grid rows | Each menu open |
-| `sidebar.footer.actions` | Main sidebar footer area | Once (global) |
-| `settings.plugin.actions` | Per-plugin actions in Settings | Each installed plugin |
-| `settings.plugin.before_settings` | Above plugin settings form | Each installed plugin |
-| `connection-modal.connection_content` | Inside the connection form | Each connection dialog |
-| `connection-modal.extra_fields` | Below host/port in the connection form | Each connection dialog |
-
-### Declaring UI Extensions in the Manifest
-
-Add an optional `ui_extensions` array to your manifest:
-
-```json
-{
-  "name": "postgis-toolkit",
-  "version": "1.0.0",
-  "ui_extensions": [
-    {
-      "slot": "row-editor-sidebar.field.after",
-      "module": "./ui/GeometryPreview.tsx",
-      "order": 50
-    },
-    {
-      "slot": "data-grid.toolbar.actions",
-      "module": "./ui/MapViewButton.tsx",
-      "order": 80
-    }
-  ]
-}
-```
-
-### Plugin API
-
-Slot components can import hooks from `@tabularis/plugin-api`:
-
-| Hook | Purpose |
-|------|---------|
-| `usePluginQuery()` | Execute read-only queries on the active connection |
-| `usePluginConnection()` | Access active connection metadata (ID, driver, schema) |
-| `usePluginToast()` | Show info/error/warning notification dialogs |
-| `usePluginModal()` | Open host-managed modals with custom content |
-| `usePluginSetting(pluginId)` | Read and write plugin-specific settings |
-| `usePluginTheme()` | Access theme information (dark/light, colors) |
-| `usePluginTranslation(pluginId)` | Access plugin-specific i18n translations |
-| `openUrl(url)` | Open a URL in the system browser |
-
-### Error Isolation
-
-Each slot contribution is wrapped in a `SlotErrorBoundary`. A crashing plugin component displays a compact error message without affecting the host application or other plugins.
-
-### Backward Compatibility
-
-The `ui_extensions` field is optional. Plugins without it continue to work identically. The slot anchors render nothing when no contributions are registered — zero overhead.
-
-### Built-in Example: JSON Viewer
-
-Tabularis ships with a built-in **JSON Viewer** plugin that demonstrates the slot system. It renders a formatted, collapsible JSON tree with syntax highlighting for JSON/JSONB columns in the row editor.
-
-**Slots used:** `row-editor-sidebar.field.after`, `row-edit-modal.field.after`
-
-Features:
-- Auto-detects JSON columns by name (contains "json") or by parsing the value
-- Syntax-highlighted tokens: strings (green), numbers (blue), booleans (yellow), null (red), keys (purple)
-- Collapsible objects and arrays with auto-expand for the first 2 depth levels
-- Copy-to-clipboard button for the formatted JSON
-
-Source code: [`src/plugins/examples/json-viewer/`](https://github.com/TabularisDB/tabularis/tree/main/src/plugins/examples/json-viewer)
-
-For the full specification, see the [Plugin UI Extensions Spec](/docs/plugin-ui-extensions-spec.md).
-
-## Publishing to the Registry
-
-To make your plugin available in the official in-app plugin browser:
-
-1. Build release binaries for all target platforms.
-2. Package each binary with your manifest into a `.zip` file, and keep a `.tabularium` registry manifest in your repo. The release workflow scaffolded by `@tabularis/create-plugin` (or regenerated via `create-plugin migrate --ci`) does this for you.
-3. Publish a GitHub Release with the ZIP assets — **and attach `.tabularium` as a standalone asset**; the registry resolves your metadata from the release assets (GitHub renames the dotfile to `default.tabularium`, which the registry also accepts).
-4. Submit your plugin at [registry.tabularis.dev/submit](https://registry.tabularis.dev/submit) — ownership is verified via OAuth against your linked repository, and CI can pre-validate your manifest via `POST /api/manifest/validate`. The registry's [plugin development page](https://registry.tabularis.dev/docs/plugin-development) documents every `.tabularium` field, derived live from the registry's schema.
-
-What the registry validates (the top three submit failures):
-
-- `name` must match `^[a-z][a-z0-9-]*$` — it becomes your registry slug, pinned at first submit.
-- `version` is semver **without a leading `v`** and must equal the release tag stripped of any `v` prefix.
-- A manifest that fails schema validation (e.g. a `description` over 280 chars) is rejected with **HTTP 422** — no silent fallback.
-
-The legacy path — a pull request against [`plugins/registry.json`](https://github.com/TabularisDB/tabularis/blob/main/plugins/registry.json) — still works during the transition; legacy entries are merged into the hosted catalogue automatically. New plugins should submit to the registry directly.
+A project scaffolded with `@tabularis/create-plugin` does all of this with `just dev-install`.

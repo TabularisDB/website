@@ -77,7 +77,9 @@ export function getWikiPageBySlug(slug: string): {meta: WikiMeta; html: string} 
     const {data, content} = matter(raw);
 
     const meta = parseWikiMeta(slug, data);
-    const rawHtml = marked.parse(content) as string;
+    // The page h1 always comes from the frontmatter title; wiki Markdown files
+    // start at h2.
+    const rawHtml = marked.parse(`# ${meta.title}\n\n${content}`) as string;
     const html = wrapVideosInHtml(rawHtml);
     return {meta, html};
 }

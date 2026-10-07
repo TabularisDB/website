@@ -5,8 +5,6 @@ excerpt: "Local-only log of every MCP tool call your AI agent makes. Filter, exp
 category: "AI & MCP"
 ---
 
-# AI Audit Log
-
 ![AI Audit Log](/img/tabularis-ai-audit-log.png)
 
 Every tool call your AI agent makes through the [Tabularis MCP server](/wiki/mcp-server) gets recorded. The audit log gives you three things:

@@ -1,0 +1,136 @@
+{
+  "kinds": [
+    {
+      "key": "driver",
+      "label": "Drivers",
+      "description": "Database driver plugins that extend Tabularis to talk to new data stores via JSON-RPC over STDIO — any language, any database.",
+      "catalogue_url": "https://registry.tabularis.dev/c/driver",
+      "fields": [
+        {
+          "key": "engine",
+          "type": "string",
+          "required": true,
+          "description": "Concrete database this driver connects to (e.g. \"firestore\", \"postgres\", \"qdrant\"). Tabularis groups the connection catalogue by engine: every driver targeting the same database shares one engine value, so two \"firestore\" drivers collapse into a single Firestore entry and the user picks which driver."
+        },
+        {
+          "key": "paradigms",
+          "type": "array<string>",
+          "required": true,
+          "description": "Data-model families the engine supports, most representative first. Single-model drivers declare one (e.g. [\"sql\"]); multi-model declare several (SurrealDB: [\"document\",\"graph\",\"relational\",\"key-value\",\"vector\"]). The first entry is the primary model used to place the engine in the catalogue; every entry feeds the filter chips, so a multi-model engine appears when ANY of its models is selected. Allowed values come from the registry's admin-managed paradigm list (facets), not a fixed enum, so new models never need a schema release."
+        },
+        {
+          "key": "color",
+          "type": "string",
+          "required": false,
+          "description": "Hex accent colour shown on the catalogue card and sidebar (e.g. \"#f97316\")."
+        },
+        {
+          "key": "default_port",
+          "type": "integer",
+          "required": false,
+          "description": "Default TCP port pre-filled in the connection modal. Omit for file-, folder-, and API-based drivers."
+        },
+        {
+          "key": "default_username",
+          "type": "string",
+          "required": false,
+          "description": "Default username pre-filled in the connection modal (e.g. \"postgres\", \"root\")."
+        },
+        {
+          "key": "is_builtin",
+          "type": "boolean",
+          "required": false,
+          "description": "True for drivers shipped with Tabularis. External plugins should omit this or leave it false."
+        },
+        {
+          "key": "executable",
+          "type": "string",
+          "required": true,
+          "description": "Relative path to the plugin executable inside the plugin folder. No extension on Linux/macOS; Tabularis appends .exe on Windows automatically."
+        },
+        {
+          "key": "interpreter",
+          "type": "string",
+          "required": false,
+          "description": "Optional interpreter for script-based plugins (e.g. \"python3\", \"node\"). Omit for native binaries."
+        },
+        {
+          "key": "capabilities",
+          "type": "object",
+          "required": true,
+          "description": "Feature flags that control which UI elements Tabularis renders for this driver."
+        },
+        {
+          "key": "settings",
+          "type": "array<object>",
+          "required": false,
+          "description": "Optional list of configuration fields the plugin exposes to the user via the Tabularis settings modal."
+        },
+        {
+          "key": "data_types",
+          "type": "array<object>",
+          "required": false,
+          "description": "List of data types this driver supports for column creation in the UI."
+        },
+        {
+          "key": "supports_ssl",
+          "type": "boolean",
+          "required": false,
+          "description": "true to show the SSL/TLS configuration tab (mode + CA/client cert/key) in the connection modal for this network driver. Defaults to false."
+        },
+        {
+          "key": "ui_extensions",
+          "type": "array<object>",
+          "required": false,
+          "description": "UI extension contributions rendered into named slots of the Tabularis interface. Only needed by plugins that ship a frontend module; driver-only plugins omit it."
+        },
+        {
+          "key": "type_mappings",
+          "type": "object",
+          "required": false,
+          "description": "Optional map of generic inferred type names to driver-native types, resolved by the host during paste/import (map_inferred_type). Keys are uppercase generic names (e.g. DATETIME, JSON); values are the driver-native equivalents (e.g. TIMESTAMP, JSONB). Lookup is case-insensitive; unmapped types pass through unchanged."
+        },
+        {
+          "key": "explain_parsers",
+          "type": "array<object>",
+          "required": false,
+          "description": "Plugin-owned raw EXPLAIN parser IIFE bundles loaded by Tabularis when the plugin is enabled."
+        },
+        {
+          "key": "connection_metadata",
+          "type": "boolean",
+          "required": false,
+          "description": "Opt in to get_connection_metadata, which returns connection-specific capabilities, data_types and type_mappings. Static manifest values remain the fallback."
+        }
+      ],
+      "example": {
+        "yaml": "name: tabularis-clickhouse-driver\ndescription: Connect Tabularis to ClickHouse over JSON-RPC with full DDL, query, and ER-diagram support.\ncategory: integration\nkind: driver\ntags:\n  - clickhouse\n  - analytics\n  - olap\nlicense: MIT\nicon: https://raw.githubusercontent.com/example/tabularis-clickhouse/main/assets/icon.svg\nhomepage: https://github.com/example/tabularis-clickhouse\ndocumentation_url: https://github.com/example/tabularis-clickhouse#readme\nsupport:\n  email: maintainers@example.com\n  issues_url: https://github.com/example/tabularis-clickhouse/issues\nscreenshots:\n  - url: https://raw.githubusercontent.com/example/tabularis-clickhouse/main/assets/screen-connect.png\n    caption: Connection form with native ClickHouse fields\n    alt: Tabularis connection dialog showing host, port, user, and database fields\n  - url: https://raw.githubusercontent.com/example/tabularis-clickhouse/main/assets/screen-query.png\n    caption: Running a SELECT against the ontime table\n    alt: Tabularis data grid showing ClickHouse query results\nmin_runtime_version: 0.9.13\nreadme: |\n  # ClickHouse driver for Tabularis\n\n  Adds a native ClickHouse connection to Tabularis. Supports SELECT/INSERT/UPDATE/DELETE through execute_query, schema introspection for the explorer, DDL generation (CREATE TABLE, ALTER TABLE, DROP), and ER-diagram rendering via get_relationships.",
+        "json": "{\n  \"name\": \"tabularis-clickhouse-driver\",\n  \"description\": \"Connect Tabularis to ClickHouse over JSON-RPC with full DDL, query, and ER-diagram support.\",\n  \"category\": \"integration\",\n  \"kind\": \"driver\",\n  \"tags\": [\n    \"clickhouse\",\n    \"analytics\",\n    \"olap\"\n  ],\n  \"license\": \"MIT\",\n  \"icon\": \"https://raw.githubusercontent.com/example/tabularis-clickhouse/main/assets/icon.svg\",\n  \"homepage\": \"https://github.com/example/tabularis-clickhouse\",\n  \"documentation_url\": \"https://github.com/example/tabularis-clickhouse#readme\",\n  \"support\": {\n    \"email\": \"maintainers@example.com\",\n    \"issues_url\": \"https://github.com/example/tabularis-clickhouse/issues\"\n  },\n  \"screenshots\": [\n    {\n      \"url\": \"https://raw.githubusercontent.com/example/tabularis-clickhouse/main/assets/screen-connect.png\",\n      \"caption\": \"Connection form with native ClickHouse fields\",\n      \"alt\": \"Tabularis connection dialog showing host, port, user, and database fields\"\n    },\n    {\n      \"url\": \"https://raw.githubusercontent.com/example/tabularis-clickhouse/main/assets/screen-query.png\",\n      \"caption\": \"Running a SELECT against the ontime table\",\n      \"alt\": \"Tabularis data grid showing ClickHouse query results\"\n    }\n  ],\n  \"min_runtime_version\": \"0.9.13\",\n  \"readme\": \"# ClickHouse driver for Tabularis\\n\\nAdds a native ClickHouse connection to Tabularis. Supports SELECT/INSERT/UPDATE/DELETE through execute_query, schema introspection for the explorer, DDL generation (CREATE TABLE, ALTER TABLE, DROP), and ER-diagram rendering via get_relationships.\\n\"\n}"
+      }
+    },
+    {
+      "key": "theme",
+      "label": "Themes",
+      "description": "Declarative Tabularis theme packages. Registry schema preparation only; host release and package acceptance gates remain outstanding.",
+      "catalogue_url": null,
+      "fields": [
+        {
+          "key": "theme_schema_version",
+          "type": "integer",
+          "required": true,
+          "description": null
+        },
+        {
+          "key": "theme_variants",
+          "type": "array<object>",
+          "required": true,
+          "description": null
+        }
+      ],
+      "example": {
+        "yaml": "id: example\nname: example\nversion: example\ndescription: example\ncategory: example\nkind: theme\ntags:\n  - example\nlicense: example\nicon: example\nscreenshots:\n  - url: example\n    caption: example\n    alt: example\nreadme: example\nreadmes: {}\ndocumentation_url: example\nhomepage: example\nsupport:\n  email: example\n  issues_url: example\nmin_runtime_version: example\ntheme_schema_version: 1\ntheme_variants:\n  - id: example\n    name: example\n    file: example\n",
+        "json": "{\n  \"id\": \"example\",\n  \"name\": \"example\",\n  \"version\": \"example\",\n  \"description\": \"example\",\n  \"category\": \"example\",\n  \"kind\": \"theme\",\n  \"tags\": [\n    \"example\"\n  ],\n  \"license\": \"example\",\n  \"icon\": \"example\",\n  \"screenshots\": [\n    {\n      \"url\": \"example\",\n      \"caption\": \"example\",\n      \"alt\": \"example\"\n    }\n  ],\n  \"readme\": \"example\",\n  \"readmes\": {},\n  \"documentation_url\": \"example\",\n  \"homepage\": \"example\",\n  \"support\": {\n    \"email\": \"example\",\n    \"issues_url\": \"example\"\n  },\n  \"min_runtime_version\": \"example\",\n  \"theme_schema_version\": 1,\n  \"theme_variants\": [\n    {\n      \"id\": \"example\",\n      \"name\": \"example\",\n      \"file\": \"example\"\n    }\n  ]\n}"
+      }
+    }
+  ]
+}

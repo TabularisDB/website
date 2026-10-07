@@ -5,8 +5,6 @@ excerpt: "Browse, run, create, edit, and drop stored procedures and functions fr
 category: "Database Objects"
 ---
 
-# Stored Procedures & Routines
-
 Tabularis manages stored procedures and functions (collectively called **routines**) from the Explorer sidebar. Beyond browsing definitions and parameters, you can **run** a routine with parameters, **create** one from a dialect-aware template, **edit** its definition, and **drop** it — the same full lifecycle it offers for tables and views.
 
 Management is gated on a `routine_management` driver capability, enabled out of the box for PostgreSQL and MySQL/MariaDB. Plugin drivers can opt in through their manifest (see [Driver Support](#driver-support)).

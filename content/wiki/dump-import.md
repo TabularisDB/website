@@ -5,8 +5,6 @@ excerpt: "Export a full database snapshot to SQL and restore it — with progres
 category: "Database Objects"
 ---
 
-# Dump & Import
-
 ![SQL Dump & Import](/img/tabularis-sql-dump-import.png)
 
 Tabularis lets you dump a database to a `.sql` file and import an existing `.sql` file back into any connection — right from the sidebar, without leaving the app.

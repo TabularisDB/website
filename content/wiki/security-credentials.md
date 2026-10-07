@@ -5,8 +5,6 @@ excerpt: "How Tabularis stores passwords and secrets using your OS keychain — 
 category: "Security & Networking"
 ---
 
-# Security & Credentials
-
 Tabularis follows a strict security principle: **secrets never touch disk in plain text**. All passwords, API keys, and passphrases are stored exclusively in your operating system's native keychain. Non-sensitive metadata (hostnames, ports, usernames) is stored in JSON config files.
 
 ![Connection security settings with keychain-backed credential storage](/img/tabularis-secure-connection-keychain.png)

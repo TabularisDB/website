@@ -5,8 +5,6 @@ order: 1.5
 excerpt: 'Download and install Tabularis on macOS, Windows, or Linux.'
 ---
 
-# Installation
-
 Tabularis ships as a native desktop application built with Tauri. There are no servers, no sign-ups, and no internet connection required to run it.
 
 ## System Requirements

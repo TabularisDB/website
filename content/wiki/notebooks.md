@@ -5,8 +5,6 @@ excerpt: "Create interactive multi-cell workspaces that combine SQL queries, Mar
 category: "Core Features"
 ---
 
-# SQL Notebooks
-
 **SQL Notebooks** bring a notebook-style workflow to Tabularis. Instead of juggling multiple console tabs, you can organize SQL queries and documentation into a single, structured document — run cells individually or sequentially, visualize results with charts, and share the whole thing as an HTML export.
 
 <video src="/videos/wiki/04-sql-notebook.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>

@@ -5,8 +5,6 @@ excerpt: "A deep dive into the Tabularis core: Tauri, Rust drivers, and the Reac
 category: "Reference"
 ---
 
-# Technical Architecture
-
 Tabularis represents a modern approach to desktop application development, moving away from resource-heavy Electron in favor of the **Tauri** framework. It bridges the performance and memory safety of **Rust** with the component-driven UI capabilities of **React**.
 
 ## The Tauri IPC Bridge

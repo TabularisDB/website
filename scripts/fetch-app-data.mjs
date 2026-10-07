@@ -73,10 +73,12 @@ function trackedAssets(pluginId, version, assets) {
 }
 
 // Tabularium plugin detail -> the legacy registry.json shape every consumer
-// (src/lib/plugins/index.ts, the :::plugin::: extension, the search index) reads.
-function toLegacyPlugin(detail) {
+// (src/lib/plugins/index.ts, the :::plugin::: extension, the search index) reads,
+// plus the plugin's kind, which the detail endpoint does not carry.
+function toLegacyPlugin(detail, kind) {
     return {
         id: detail.id,
+        kind,
         name: detail.name,
         description: detail.description,
         author: detail.author,
@@ -92,17 +94,24 @@ function toLegacyPlugin(detail) {
     };
 }
 
+// Every plugin of every registry kind (drivers, themes, …). The kind comes from
+// the listing it was found in.
 async function fetchTabulariumPlugins() {
+    const {kinds} = await fetchPlainJson(`${TABULARIUM}/api/kinds`);
     const listed = [];
-    for (let page = 1; ; page += 1) {
-        // kind=driver: the /plugins page lists database drivers; other registry
-        // kinds (once they exist) need their own surface.
-        const res = await fetchPlainJson(`${TABULARIUM}/api/plugins?kind=driver&page=${page}`);
-        listed.push(...res.plugins);
-        if (listed.length >= res.total || res.plugins.length === 0) break;
+    for (const {key} of kinds) {
+        const ofKind = [];
+        for (let page = 1; ; page += 1) {
+            const res = await fetchPlainJson(`${TABULARIUM}/api/plugins?kind=${encodeURIComponent(key)}&page=${page}`);
+            ofKind.push(...res.plugins.map((plugin) => ({id: plugin.id, kind: key})));
+            if (ofKind.length >= res.total || res.plugins.length === 0) break;
+        }
+        listed.push(...ofKind);
     }
-    const details = await Promise.all(listed.map((plugin) => fetchPlainJson(`${TABULARIUM}/api/plugins/${plugin.id}`)));
-    return details.map(toLegacyPlugin).filter((p) => p.latest_version && p.releases.length > 0);
+    const details = await Promise.all(
+        listed.map(async ({id, kind}) => toLegacyPlugin(await fetchPlainJson(`${TABULARIUM}/api/plugins/${id}`), kind)),
+    );
+    return details.filter((p) => p.latest_version && p.releases.length > 0);
 }
 
 // COMPAT(registry-ga): merge the legacy static registry.json (app repo) with
@@ -118,23 +127,66 @@ async function buildRegistry() {
         // 6-hour rebuild picks the data up again.
         console.warn(`tabularium registry unavailable, keeping legacy data only: ${err}`);
     }
-    const merged = new Map(legacy.plugins.map((plugin) => [plugin.id, plugin]));
+    // The static registry.json only ever listed drivers.
+    const merged = new Map(legacy.plugins.map((plugin) => [plugin.id, {kind: 'driver', ...plugin}]));
     for (const plugin of fromTabularium) {
         merged.set(plugin.id, plugin);
     }
     return {...legacy, plugins: [...merged.values()]};
 }
 
-// Plugin developer / manifest reference — generated live by the registry
-// (core schema + configured kinds + examples), re-published as a wiki page so
-// tabularis.dev stays the single docs entry point. The registry ships its own
-// title/excerpt frontmatter; we add the wiki's order/category and absolutize
-// root-relative registry links that would otherwise resolve against
-// tabularis.dev.
-async function buildPluginDevDocs() {
-    const raw = await fetchText(`${TABULARIUM}/api/docs/plugin-development?format=md`);
-    const absolute = raw.replaceAll('](/', `](${TABULARIUM}/`);
-    return absolute.replace(/^---\n/, `---\norder: 8.6\ncategory: "Integration"\n`);
+// Plugin kinds reference for the :::plugin-kinds::: block on the Plugin Kinds
+// wiki page. Labels and descriptions come from the registry's kind catalogue
+// (/api/kinds); fields come from the per-kind branches of the published
+// manifest schema, where each kind is an `if kind == <key> then {properties,
+// required}` entry in allOf. A branch lists the core fields too, so the fields
+// shared by every kind are treated as core and left out. Example manifests are
+// not part of the schema; they come from the registry's structured docs
+// (examples.perKind), which carry the admin's custom example when one is set.
+function schemaType(node) {
+    if (Array.isArray(node.enum) && node.enum.length > 0) return node.enum.map(String);
+    if (node.type === 'array' && node.items?.type) return `array<${node.items.type}>`;
+    return node.type ?? 'any';
+}
+
+async function buildPluginKinds() {
+    const [{kinds}, schema, docs] = await Promise.all([
+        fetchPlainJson(`${TABULARIUM}/api/kinds`),
+        fetchPlainJson(`${TABULARIUM}/manifest.schema.json`),
+        fetchPlainJson(`${TABULARIUM}/api/docs/plugin-development`),
+    ]);
+    const examples = new Map((docs.examples?.perKind ?? []).map((e) => [e.kindKey, e]));
+    const branches = new Map(
+        (schema.allOf ?? [])
+            .filter((entry) => entry.if?.properties?.kind?.const && entry.then?.properties)
+            .map((entry) => [entry.if.properties.kind.const, entry.then]),
+    );
+    const keySets = [...branches.values()].map((branch) => new Set(Object.keys(branch.properties)));
+    const isShared = (field) => keySets.length > 1 && keySets.every((keys) => keys.has(field));
+
+    return {
+        kinds: kinds.map((kind) => {
+            const branch = branches.get(kind.key) ?? {properties: {}, required: []};
+            const required = new Set(branch.required ?? []);
+            return {
+                key: kind.key,
+                label: kind.label,
+                description: kind.description ?? null,
+                catalogue_url: kind.publicPageEnabled ? `${TABULARIUM}/c/${kind.key}` : null,
+                fields: Object.entries(branch.properties)
+                    .filter(([field]) => !isShared(field))
+                    .map(([field, node]) => ({
+                        key: field,
+                        type: schemaType(node),
+                        required: required.has(field),
+                        description: node.description ?? null,
+                    })),
+                example: examples.has(kind.key)
+                    ? {yaml: examples.get(kind.key).yaml, json: examples.get(kind.key).json}
+                    : null,
+            };
+        }),
+    };
 }
 
 // Repo stars + total release-asset downloads, baked into the static HTML so
@@ -170,14 +222,15 @@ async function main() {
     }
 
     try {
-        await writeTarget('content/wiki/plugin-development.md', await buildPluginDevDocs());
+        const kinds = await buildPluginKinds();
+        await writeTarget('plugins/kinds.json', JSON.stringify(kinds, null, 2) + '\n');
         console.log(
-            `fetched ${TABULARIUM}/api/docs/plugin-development?format=md -> content/wiki/plugin-development.md`,
+            `fetched ${TABULARIUM}/api/kinds + ${TABULARIUM}/manifest.schema.json -> plugins/kinds.json (${kinds.kinds.length} kinds)`,
         );
     } catch (err) {
         // Same policy as buildRegistry: the site must stay deployable when the
         // registry is down — the committed copy from the last successful fetch ships.
-        console.warn(`plugin dev docs unavailable, keeping committed copy: ${err}`);
+        console.warn(`plugin kinds unavailable, keeping committed copy: ${err}`);
     }
 
     const registry = await buildRegistry();

@@ -5,8 +5,6 @@ excerpt: 'Browse, edit, filter, and export table data with a high-performance vi
 category: 'Core Features'
 ---
 
-# Data Grid
-
 The **Data Grid** is the primary view for browsing and editing table contents. It opens automatically when you double-click a table in the sidebar. Every table, view, or query result is displayed using a high-performance virtualized renderer — only the visible rows are rendered, so even large result sets feel instant.
 
 <video src="/videos/wiki/06-data-grid.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>

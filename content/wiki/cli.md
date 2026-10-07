@@ -5,8 +5,6 @@ excerpt: "Launch Tabularis from the terminal with flags for Visual EXPLAIN files
 category: "Reference"
 ---
 
-# Command Line Interface
-
 Tabularis is primarily a desktop application, but its binary accepts a small set of command-line flags that extend how the app can be launched. You can open a saved EXPLAIN plan straight into the Visual EXPLAIN viewer, start Tabularis as an MCP server for AI clients, or enable verbose logging for troubleshooting.
 
 The flags are parsed with [clap](https://docs.rs/clap), so `--help` and `--version` are always available.

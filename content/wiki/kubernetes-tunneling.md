@@ -5,8 +5,6 @@ excerpt: "Connect to databases running inside Kubernetes clusters through manage
 category: "Security & Networking"
 ---
 
-# Kubernetes Tunneling
-
 Starting with v0.13.0, Tabularis supports **Kubernetes port-forward tunnels** as a first-class transport option, alongside [SSH tunnels](/wiki/ssh-tunneling). You can connect to any database running inside a Kubernetes cluster by configuring a kubectl context, namespace, resource (service or pod), and container port — without keeping a manual `kubectl port-forward` alive in a terminal.
 
 ![The Kubernetes tab in the connection modal with cascading dropdowns for context, namespace, resource, and port](/img/tabularis-kubernetes-tunnel.png)

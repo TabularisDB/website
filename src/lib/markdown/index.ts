@@ -3,6 +3,7 @@ import {markedHighlight} from 'marked-highlight';
 import {gfmHeadingId} from 'marked-gfm-heading-id';
 import hljs from 'highlight.js/lib/common';
 import {getAllPlugins, getLatestRelease} from '@/lib/plugins';
+import {renderPluginKindsMarkdown} from '@/lib/plugins/kinds';
 import {SOCIAL_URLS} from '@/lib/social';
 import {APP_VERSION} from '@/lib/download/version';
 
@@ -10,10 +11,16 @@ import {APP_VERSION} from '@/lib/download/version';
 // the current app version at build time — works inside code fences too, since
 // the substitution runs before parsing. Keeps install commands pointing at the
 // latest release without hand-editing content on every release.
+//
+// :::plugin-kinds::: expands to the per-kind manifest reference (headings,
+// field tables, examples) from plugins/kinds.json. It is expanded here, as
+// Markdown, so its headings get ids like any other heading on the page.
 marked.use({
     hooks: {
         preprocess(markdown: string) {
-            return markdown.replaceAll('{{APP_VERSION}}', APP_VERSION);
+            return markdown
+                .replaceAll('{{APP_VERSION}}', APP_VERSION)
+                .replace(/^:::plugin-kinds:::[ \t]*$/m, () => renderPluginKindsMarkdown());
         },
     },
 });

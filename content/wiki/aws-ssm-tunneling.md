@@ -5,8 +5,6 @@ excerpt: "Connect to databases behind AWS Systems Manager managed nodes through 
 category: "Security & Networking"
 ---
 
-# AWS SSM Tunneling
-
 Since v0.25.0 a database connection can be forwarded through an **AWS Systems Manager Session Manager** port-forwarding session. It is the third tunnel method next to [SSH](/wiki/ssh-tunneling) and [Kubernetes](/wiki/kubernetes-tunneling), and it suits databases that are reachable from an EC2 instance or another managed node but have no public endpoint and no SSH bastion: an RDS instance in a private subnet, or a database running on the node itself.
 
 ## Requirements

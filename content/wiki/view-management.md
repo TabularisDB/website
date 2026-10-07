@@ -5,8 +5,6 @@ excerpt: "Create, edit, and drop database views with a visual editor and live SQ
 category: "Database Objects"
 ---
 
-# View Management
-
 Tabularis provides full CRUD support for database views — `CREATE VIEW`, `ALTER VIEW`, and `DROP VIEW` — through a dedicated visual editor. Views appear alongside tables in the Explorer sidebar, grouped under their own section.
 
 ## Browsing Views

@@ -91,7 +91,7 @@ This makes it a practical starting point for anyone who wants to write a Tabular
 
 ## Custom Registry URL
 
-The official registry at `tabularis.dev` is the default, but organizations sometimes need to distribute private plugins internally. v0.9.2 introduces the [`customRegistryUrl`](/wiki/configuration#config-json-full-reference) key in `config.json`. Set it while the app is closed and Settings → Plugins will fetch from your endpoint instead:
+The official registry at `tabularis.dev` is the default, but organizations sometimes need to distribute private plugins internally. v0.9.2 introduces the [`customRegistryUrl`](/wiki/configuration#configjson-full-reference) key in `config.json`. Set it while the app is closed and Settings → Plugins will fetch from your endpoint instead:
 
 ```json
 {

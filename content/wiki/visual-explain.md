@@ -5,8 +5,6 @@ excerpt: "Inspect execution plans as interactive graphs, tables, and AI-powered 
 category: "Core Features"
 ---
 
-# Visual EXPLAIN
-
 **Visual EXPLAIN** turns raw execution plans into something you can actually work with. Select a query, click the EXPLAIN button, and Tabularis runs the appropriate `EXPLAIN` syntax for your database, parses the output, and presents it across six views — all without leaving the application.
 
 <video src="/videos/wiki/05-visual-explain.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
@@ -217,11 +215,11 @@ SQLite does not expose execution metrics — there is no ANALYZE equivalent for 
 
 ### Plugin Drivers
 
-Plugin drivers opt in to Visual EXPLAIN through the `explain` capability flag in their `manifest.json`. When a plugin declares `"explain": true` and implements the `explain_query` method, the EXPLAIN button and the editor context-menu entry work exactly as they do for the built-in drivers.
+Plugin drivers opt in to Visual EXPLAIN through the `explain` capability flag in their `.tabularium` manifest. When a plugin declares `"explain": true` and implements the `explain_query` method, the EXPLAIN button and the editor context-menu entry work exactly as they do for the built-in drivers.
 
-For drivers that do not declare the capability — or omit it entirely — the Visual EXPLAIN button is hidden in the SQL editor and in notebook cells, so you will only see it on connections that can actually produce a plan. See the [Plugins](/wiki/plugins) page for the full capability reference.
+For drivers that do not declare the capability — or omit it entirely — the Visual EXPLAIN button is hidden in the SQL editor and in notebook cells, so you will only see it on connections that can actually produce a plan. See [Plugin System](/wiki/plugins#capabilities) for the full capability reference and [Plugin Protocol](/wiki/plugin-protocol#explain_query-optional) for the `explain_query` method.
 
-Since v0.23.0 a plugin no longer has to pre-parse its plan into the host's node shape. `explain_query` may return a **raw** result (`engine`, `format` and `payload` strings), and the plugin declares a matching TypeScript parser bundle in the `explain_parsers` array of its `.tabularium` manifest. Tabularis loads the bundle at runtime and registers it in the `@tabularis/explain` parser registry alongside the built-in PostgreSQL, MySQL and SQLite parsers, so the Graph, Table, Diagram, Stats, Raw and AI views work unchanged. Disabling and re-enabling the plugin unregisters and reloads its formats. Plugins that keep returning the parsed plan shape are unaffected. A plugin using the raw shape must declare `min_runtime_version` `0.23.0` or later; older hosts refuse it at install and load time instead of failing inside Visual EXPLAIN. The [SQL Server plugin](https://github.com/TabularisDB/tabularis-sqlserver-plugin) is the first to use this, with a `sqlserver-showplan-xml` parser; the design is described in [How plugins can now inject their own parsers into Visual EXPLAIN](/blog/how-plugins-can-now-inject-their-own-parsers-into-visual-explain) and the manifest contract in the [plugin guide](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md).
+Since v0.23.0 a plugin no longer has to pre-parse its plan into the host's node shape. `explain_query` may return a **raw** result (`engine`, `format` and `payload` strings), and the plugin declares a matching TypeScript parser bundle in the `explain_parsers` array of its `.tabularium` manifest. Tabularis loads the bundle at runtime and registers it in the `@tabularis/explain` parser registry alongside the built-in PostgreSQL, MySQL and SQLite parsers, so the Graph, Table, Diagram, Stats, Raw and AI views work unchanged. Disabling and re-enabling the plugin unregisters and reloads its formats. Plugins that keep returning the parsed plan shape are unaffected. A plugin using the raw shape must declare `min_runtime_version` `0.23.0` or later; older hosts refuse it at install and load time instead of failing inside Visual EXPLAIN. The [SQL Server plugin](https://github.com/TabularisDB/tabularis-sqlserver-plugin) is the first to use this, with a `sqlserver-showplan-xml` parser; the design is described in [How plugins can now inject their own parsers into Visual EXPLAIN](/blog/how-plugins-can-now-inject-their-own-parsers-into-visual-explain) and the manifest contract in [EXPLAIN Parser Bundles](/wiki/plugin-protocol#explain-parser-bundles-optional-since-v0230).
 
 ## Re-running a Plan
 

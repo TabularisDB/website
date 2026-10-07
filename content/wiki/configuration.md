@@ -5,8 +5,6 @@ excerpt: "Adjust Tabularis to your workflow: language settings, AI providers, an
 category: "Customization"
 ---
 
-# Configuration
-
 Tabularis is designed to work perfectly out-of-the-box, but offers extensive configuration options via the UI **Settings** panel and an underlying `config.json` file.
 
 ## Accessing Settings
@@ -120,7 +118,7 @@ Any key omitted from the file falls back to its default value. You do not need a
 | `activeExternalDrivers` | `string[]` | `[]` | List of plugin driver IDs loaded at startup. |
 | `tabulariumRegistryUrl` | `string` | `null` | Base URL of the Tabularium plugin registry. Defaults to the official instance at `https://registry.tabularis.dev` when unset — point it at your own [self-hosted Tabularium](https://docs.tabularium.wiki/deploy/) to use a private registry. |
 | `customRegistryUrl` | `string` | `null` | Legacy pre-Tabularium registry override. Read once during config migration, then cleared — use `tabulariumRegistryUrl` instead. |
-| `pluginCallTimeoutSeconds` | `number` | `120` | Since v0.26.0. Maximum time in seconds Tabularis waits for a plugin to answer one JSON-RPC call, queries included. `0` disables the limit. Overridable per plugin with `plugins.<id>.callTimeoutSeconds`. See [Plugins → Call timeout](/wiki/plugins#call-timeout-and-cancellation). |
+| `pluginCallTimeoutSeconds` | `number` | `120` | Since v0.26.0. Maximum time in seconds Tabularis waits for a plugin to answer one JSON-RPC call, queries included. `0` disables the limit. Overridable per plugin with `plugins.<id>.callTimeoutSeconds`. See [Installing Plugins → Call timeout](/wiki/installing-plugins#call-timeout-and-cancellation). |
 | `plugins` | `object` | `{}` | Per-plugin config, including optional interpreter overrides, plugin settings values and, since v0.26.0, `callTimeoutSeconds` (blank inherits `pluginCallTimeoutSeconds`, `0` disables the limit for that plugin). |
 | `editorTheme` | `string` | `null` | Monaco editor theme ID. |
 | `editorFontFamily` | `string` | `"JetBrains Mono"` | SQL editor font family. The picker offers bundled families that need no system install — JetBrains Mono, plus the ExtraBold and ExtraBold Italic weights added in v0.18.0 — alongside system fonts. |

@@ -27,7 +27,7 @@ After **2 consecutive failures**, the connection is closed, any SSH tunnel is to
 
 The interval is configurable from **Settings → General → Connection Health Check** — a slider from 0 to 120 seconds. Setting it to 0 disables pings entirely.
 
-For plugin authors: implementing `ping` is optional but recommended if your driver can do a cheaper liveness check than a full `test_connection`. The [Plugin Guide](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md) and the [wiki](/wiki/plugins#ping-optional) document the protocol and fallback behavior.
+For plugin authors: implementing `ping` is optional but recommended if your driver can do a cheaper liveness check than a full `test_connection`. The [Plugin Guide](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md) and the [wiki](/wiki/plugin-protocol#ping-optional) document the protocol and fallback behavior.
 
 ---
 

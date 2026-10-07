@@ -5,8 +5,6 @@ excerpt: "Work with multiple database connections simultaneously in a side-by-si
 category: "Core Features"
 ---
 
-# Split View
-
 **Split View** lets you open up to four database connections side by side in the same window. Each pane has its own SQL editor and data grid. The left sidebar is shared — clicking inside a pane makes that connection the active one in the explorer. This is useful for comparing query results across environments, migrating data, or working on two databases at the same time.
 
 <video src="/videos/wiki/07-split-view.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>

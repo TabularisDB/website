@@ -1,11 +1,9 @@
 ---
-title: "AI Assistant"
+title: "AI Assistant & Context Engine"
 order: 7
 excerpt: "Use AI to generate SQL from natural language and explain complex queries."
 category: "AI & MCP"
 ---
-
-# AI Assistant & Context Engine
 
 Tabularis integrates a privacy-first AI assistant directly into the SQL Editor and notebooks. It goes beyond simple autocomplete by understanding your database structure to generate, explain, and label queries.
 

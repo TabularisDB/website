@@ -5,8 +5,6 @@ excerpt: "The bluntest MCP safety knob: block any non-SELECT statement reaching 
 category: "AI & MCP"
 ---
 
-# MCP Read-only Mode
-
 By default the [Tabularis MCP server](/wiki/mcp-server) lets your AI agent run any statement you'd run yourself — including `UPDATE`, `DELETE`, `DROP`. That's the right default when you're scripting the agent against a local sandbox. It's the wrong default when "production" is one wrong tool call away.
 
 Read-only mode is the bluntest of Tabularis' three safety knobs: it stops anything that isn't a clear `SELECT` from reaching the database.

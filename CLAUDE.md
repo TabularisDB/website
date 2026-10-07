@@ -40,6 +40,10 @@ Three pieces of data are fetched from `TabularisDB/tabularis` at build time by `
 | `CHANGELOG.md`          | `CHANGELOG.md`                                                     | `/changelog` page via `src/lib/changelog.ts`                                             |
 | `plugins/registry.json` | `plugins/registry.json`                                            | `/plugins` page via `src/lib/plugins.ts`, and the `:::plugin <id>:::` markdown extension |
 
+`plugins/registry.json` also merges every published plugin from the Tabularium registry, one listing per kind, and tags each entry with its `kind` (`driver`, `theme`, …); the `/plugins` page filters on it, and the home hero counts only drivers.
+
+Plugin kinds come from the Tabularium registry (`TABULARIUM_REGISTRY_URL`, default `https://registry.tabularis.dev`): `/api/kinds` for labels and descriptions, the per-kind `allOf` branches of `/manifest.schema.json` for fields, and `examples.perKind` of `/api/docs/plugin-development` for example manifests. They are written to `plugins/kinds.json` (committed, same overwrite rules) and rendered by the `:::plugin-kinds:::` block on `content/wiki/plugin-kinds.md`. The rest of that page and `content/wiki/plugin-development.md` are hand-written.
+
 These three files are **committed** to the repo so local dev works without network access. The Vercel build overwrites them before `next build` (via the `fetch-app-data` step in the build command). When editing them locally, be aware the deploy will blow your changes away — fix upstream instead.
 
 Rebuilds can be triggered from the app repo via a `repository_dispatch` event of type `app-data-updated`, handled by `.github/workflows/vercel-rebuild.yml`, which POSTs to a Vercel deploy hook (`VERCEL_DEPLOY_HOOK_URL` secret). The same workflow also rebuilds on a 6-hour cron to refresh baked-in GitHub API values (stargazers, total downloads).
@@ -74,6 +78,7 @@ Two exceptions to the loader pattern:
 
 - `:::plugin <plugin-id>:::` → renders a plugin card using the registry (`plugins/registry.json`). Plugin id must match `registry.json`.
 - `:::newsletter:::` → inserts `<div data-newsletter></div>`, hydrated on the client.
+- `:::plugin-kinds:::` → expands (as Markdown, in the `preprocess` hook) to one section per plugin kind with its extension field table and example manifests, from `plugins/kinds.json` via `src/lib/plugins/kinds.ts`. Must be on its own line.
 - `:::star:::` → renders a "Star on GitHub" call-to-action card (`renderStarCta`) linking to the Tabularis app repo. Must be on its own line; takes no arguments. Use sparingly — typically once near the end of a post.
 
 Blog posts additionally support a `:::contributors:::` placeholder expanded in `getPostBySlug` in `src/lib/posts.ts`. It fires **live GitHub API calls** at build time (comparing releases and searching merged PRs between two tags) to render per-release contributor avatars. A post's frontmatter `release:` tag is required for this to resolve.
@@ -93,7 +98,7 @@ Code blocks are syntax-highlighted by `marked-highlight` + `highlight.js`. The t
 ## Content authoring conventions
 
 - New blog post → add a `.md` file under `content/posts/` with frontmatter: `title`, `date` (ISO, include time for same-day ordering), `tags` (array), `excerpt`, optional `release` (e.g. `"v0.9.20"`) to link to a Tabularis release and enable `:::contributors:::`, optional `og: { title, accent, claim, image }` for custom OG cards. To **force** a fully pre-made OG image (skip the generated template), add `og.cover` pointing to a ready 1200×630 image under `/public`; `blog/[slug]/opengraph-image.tsx` renders it full-bleed. Reading time is auto-estimated (200 wpm).
-- Wiki page → frontmatter needs `title`, `order`, `excerpt`, `category` (one of the values in `WIKI_CATEGORIES` in `src/lib/wiki.tsx`).
+- Wiki page → frontmatter needs `title`, `order`, `excerpt`, `category` (one of the values in `WIKI_CATEGORIES` in `src/lib/wiki.tsx`). The page h1 is rendered from `title` by `getWikiPageBySlug`, so the body must not contain its own `# ` heading — start at `##`.
 - SEO page → frontmatter needs `section: solutions \| compare` plus `title`, `order`, `excerpt`, `description`. The section determines which route ( `/solutions/...` vs `/compare/...`) the page lives under.
 - Roadmap initiative → frontmatter needs `title`, `slug`, `category`, `status` (`in-progress | planned | done`), `order`, `lede`, and optionally `progressDone`/`progressTotal`/`progressLabel` and a `links:` array.
 - After renaming a slug or fixing a published-but-wrong URL, add a redirect entry to the `redirects` array in `vercel.json` (`source` → `destination`, `permanent: true`).

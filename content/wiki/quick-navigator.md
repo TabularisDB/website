@@ -5,8 +5,6 @@ excerpt: "Search actions and database objects together with Cmd+K / Ctrl+K, jump
 category: "Core Features"
 ---
 
-# Command Palette
-
 Starting with v0.13.0, Tabularis includes a "go to anything" search overlay in the spirit of the palette every code editor has. In v0.20.0 it grew into a full **command palette** with two modes: **object search** (the original Quick Navigator) and an **action palette** for running app commands. A label in the palette header always shows which mode you're in. Since v0.26.0 the two are also searchable together, and the action palette covers the editor, the result grid and saved connections.
 
 <video src="/videos/wiki/19-quick-navigator.mp4" poster="/videos/wiki/19-quick-navigator.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>

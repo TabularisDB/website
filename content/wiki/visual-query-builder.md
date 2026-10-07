@@ -5,8 +5,6 @@ excerpt: "Construct complex SQL queries visually by dragging tables and drawing 
 category: "Core Features"
 ---
 
-# Visual Query Builder
-
 Not every query needs to be handwritten. For exploring data, generating reporting views, or learning SQL structures, the **Visual Query Builder** provides an intuitive, drag-and-drop canvas for generating robust SQL statements.
 
 <video src="/videos/wiki/03-visual-query-builder.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>

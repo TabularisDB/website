@@ -5,9 +5,7 @@ excerpt: "Scaffold a working database driver in minutes using @tabularis/create-
 category: "Integration"
 ---
 
-# Building Your First Plugin
-
-The [Plugin System](./plugins) tells you *what* a Tabularis plugin is. This page tells you *how* to write one without reading the 1100-line protocol reference first.
+The [Plugin System](/wiki/plugins) tells you *what* a Tabularis plugin is. This page tells you *how* to write one without reading the 1100-line protocol reference first. When it runs, [Publishing Plugins](/wiki/plugin-development) takes it to the registry.
 
 Two npm packages handle the boilerplate:
 
@@ -39,7 +37,7 @@ Pick the template that matches your data source:
 | `folder`    | directory of files        | CSV folder, Parquet lake |
 | `api`       | no connection form needed | REST APIs, Google Sheets, HackerNews |
 
-Add `--with-ui` to also scaffold a React/Vite subworkspace targeting `data-grid.toolbar.actions` as a hello-world UI extension.
+Add `--with-ui` to also scaffold a React/Vite subworkspace targeting `data-grid.toolbar.actions` as a hello-world [UI extension](/wiki/ui-extensions).
 
 ## Implementation order that minimises surprises
 
@@ -56,77 +54,13 @@ Once `get_tables` and `get_columns` work, the driver also supplies schema contex
 
 Every step is independently shippable. A plugin with only the first three is already useful as a read-only viewer.
 
-## Connection-specific metadata (v0.24.0)
-
-A driver serving multiple engines can opt in with `"connection_metadata": true` at the manifest root and implement `get_connection_metadata`. After a successful connection test, the host requests effective `capabilities`, `data_types` and `type_mappings` for that connection before loading objects. Backend operations, including MCP, use the same metadata; the registered manifest is not mutated.
-
-Omitted fields keep static defaults, while explicit `false` or empty collections replace them. A connection cannot lift a manifest-level read-only restriction. Only a remote JSON-RPC `-32601` falls back to the manifest; authentication, transport and validation failures surface as errors. Static plugins receive no discovery calls. Discovery is cached per process and connection, with invalidation on tests and disconnects.
-
-A bridge must still implement and route its database operations, and the registry's driver schema must accept this opt-in before publication. Declare a suitable `min_runtime_version` if your plugin cannot work without discovery. See the complete [connection metadata protocol](https://github.com/TabularisDB/tabularis/blob/main/plugins/CONNECTION_METADATA.md) for allowed overrides, request shapes and cache behaviour.
+A driver that serves several engines can also report capabilities and data types per connection — see [Connection-specific Metadata](/wiki/plugin-protocol#connection-specific-metadata-optional-since-v0240).
 
 ## UI extensions
 
-The Tabularis host mounts **slot contributions** at eleven predefined points (plugin row in Settings, new connection form, row editor fields, data grid toolbar, context menu, etc.). Since v0.19.0, the `connection-modal.extra_fields` slot renders plugin UI below the host/port section of the connection form, backed by an opaque `extra` string map on `ConnectionParams` — persisted verbatim and forwarded to the driver, so a plugin can carry custom connection settings (an AWS region, say) without a core schema change. Since v0.25.0 the same slot context also exposes `credentialFieldsHidden` and `setCredentialFieldsHidden(hidden)`: a driver that authenticates without a database login (integrated authentication, IAM tokens, Kerberos) can hide the host username and password inputs, which clears both values, ignores the login part of an imported connection string and removes a previously stored password on save. The flag resets whenever the driver changes. Plugins declare contributions in the `.tabularium` manifest:
+Add `--with-ui` to the scaffold and the plugin also gets a React/Vite subworkspace in `ui/` with a hello-world contribution to `data-grid.toolbar.actions`. `just dev-install` builds the bundle along with the driver and copies `ui/dist/index.js` into the plugin folder, so the button shows up in the table toolbar. If you add more bundles, extend the `dev-install` recipe to copy them too.
 
-```json
-"ui_extensions": [
-  { "slot": "settings.plugin.before_settings", "module": "ui/dist/my-settings.js", "order": 10 },
-  { "slot": "data-grid.toolbar.actions",       "module": "ui/dist/my-toolbar.js",  "order": 10,
-    "driver": "my-driver" }
-]
-```
-
-Each module is an **IIFE bundle** that assigns a React component to `__tabularis_plugin__`. The host injects `React`, `ReactJSXRuntime`, and `__TABULARIS_API__` as runtime globals — plugins list them as Vite externals, no React is bundled.
-
-### Typed contributions with `@tabularis/plugin-api`
-
-```tsx
-import { defineSlot, usePluginSetting, usePluginToast } from "@tabularis/plugin-api";
-
-const MyToolbar = defineSlot("data-grid.toolbar.actions", ({ context }) => {
-  // context.connectionId, context.tableName, context.schema, context.driver
-  // are fully typed per slot — not optional, not unknown.
-  const { showInfo } = usePluginToast();
-  return (
-    <button onClick={() => showInfo(`Table: ${context.tableName}`)}>Hi</button>
-  );
-});
-
-export default MyToolbar.component;
-```
-
-`defineSlot(slotName, component)` binds the component to a slot and types `context` accordingly. Pick the wrong slot for the fields you read and the compiler tells you — no more `context.columnName!` sprinkled around. The `default export` must be `.component` so the host loader picks it up.
-
-### Hook catalogue
-
-Every hook is a thin, typed wrapper over the runtime `window.__TABULARIS_API__`:
-
-| Hook | What it gives you |
-|------|-------------------|
-| `usePluginQuery()` | `executeQuery(sql)`, `loading`, `error` |
-| `usePluginConnection()` | the active `connectionId`, `driver`, `schema` |
-| `usePluginToast()` | `showInfo`, `showError`, `showWarning` |
-| `usePluginSetting(pluginId)` | typed `getSetting<T>`, `setSetting`, `setSettings` |
-| `usePluginModal()` | `openModal({ title, content, size })`, `closeModal` |
-| `usePluginTheme()` | `themeId`, `isDark`, full `ThemeColors` token set |
-| `usePluginTranslation(pluginId)` | translator backed by the plugin's `locales/<lang>.json` files |
-| `openUrl(url)` | launches the **system** browser (not the Tauri webview) |
-
-Keep UI strings in `locales/<lang>.json` at the plugin root — the host loads them automatically (active language → English → the key itself). The host runtime is **[Lingui](https://lingui.dev/)**: author new keys ICU-style with single-brace `{var}` placeholders. Legacy i18next `{{var}}` placeholders still interpolate, so existing plugins keep working unchanged.
-
-### Multiple slots in one plugin
-
-Plugins that touch more than one slot need more than one IIFE bundle (one per slot). The scaffold's `--with-ui` generates a single-entry Vite config; when you need two, duplicate the config file, change `entry` and `fileName`, and wire them through `package.json`:
-
-```json
-"scripts": {
-  "build":          "pnpm run build:a && pnpm run build:b",
-  "build:a":        "vite build --config vite.a.config.ts",
-  "build:b":        "vite build --config vite.b.config.ts"
-}
-```
-
-Both configs share the same externals (`react`, `react/jsx-runtime`, `@tabularis/plugin-api`), output directory (`ui/dist/`), and IIFE name (`__tabularis_plugin__`). They differ only in `entry` and `fileName`. This is the shape the [Google Sheets companion plugin](https://github.com/TabularisDB/tabularis-google-sheets-plugin/tree/main/ui) uses for its OAuth wizard + custom connection field.
+Slots, the manifest declaration, bundle setup, `defineSlot`, the hook catalogue and translations are covered in [UI Extensions](/wiki/ui-extensions).
 
 ## Full walkthrough
 
@@ -134,8 +68,11 @@ The repo's [`plugins/PLUGIN_TUTORIAL.md`](https://github.com/TabularisDB/tabular
 
 ## Reference material
 
-- [Plugin System (architecture)](./plugins) — what a plugin is, how it runs, where it lives on disk.
+- [Plugin System (architecture)](/wiki/plugins) — what a plugin is, how it runs, where it lives on disk.
+- [Plugin Protocol](/wiki/plugin-protocol) — every JSON-RPC method with its request and response shape.
 - [`plugins/PLUGIN_GUIDE.md`](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md) — every RPC method, every manifest field, every capability flag.
+- [UI Extensions](/wiki/ui-extensions) — slots, bundles and hooks for plugin UI.
 - [`@tabularis/plugin-api` on npm](https://www.npmjs.com/package/@tabularis/plugin-api) — slot context types, hook signatures.
 - [`@tabularis/create-plugin` on npm](https://www.npmjs.com/package/@tabularis/create-plugin) — CLI flags, generated project layout.
-- [The Tabularium registry](https://registry.tabularis.dev) — browse published drivers to copy patterns from; [submit](https://registry.tabularis.dev/submit) yours when it's ready. Before submitting: attach `.tabularium` as a release asset and make sure `version` equals the tag minus `v` — see [docs.tabularium.wiki/publishing](https://docs.tabularium.wiki/publishing/).
+- [Publishing Plugins](/wiki/plugin-development) — release packaging, the pre-submit checklist and the registry's validation rules.
+- [The Tabularium registry](https://registry.tabularis.dev) — browse published drivers to copy patterns from.

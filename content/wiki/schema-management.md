@@ -5,8 +5,6 @@ excerpt: "Modify your database schema without writing DDL. Create tables, edit c
 category: "Database Objects"
 ---
 
-# Schema Management & ER Diagrams
-
 While knowing how to write `ALTER TABLE` statements is essential, Tabularis provides visual tools to manage your schema quickly, safely, and comprehensively.
 
 ![Schema Management & ER Diagram](/img/tabularis-schema-management-er-diagram.png)
@@ -60,7 +58,7 @@ Right-click any table in the sidebar and choose **Generate SQL** to open a modal
 
 ![The Generate SQL modal with tabs for CREATE TABLE, SELECT *, SELECT fields, UPDATE, and DELETE](/img/tabularis-generate-sql-dml-tabs.png)
 
-Since v0.26.0 a driver plugin can generate the SELECT, UPDATE and DELETE tabs itself in its own dialect, by opting in to [table query templates](/wiki/plugins#table-query-templates-optional). The [SQL Server plugin](https://github.com/TabularisDB/tabularis-sqlserver-plugin) does so from 1.0.0-beta.3, producing `SELECT TOP (100)` with bracket-quoted, schema-qualified names and `WHERE 1 = 0` guards on UPDATE and DELETE. If the plugin reports an error, the modal shows it instead of falling back to SQL in another dialect. The CREATE TABLE tab is unchanged.
+Since v0.26.0 a driver plugin can generate the SELECT, UPDATE and DELETE tabs itself in its own dialect, by opting in to [table query templates](/wiki/plugin-protocol#table-query-templates-optional). The [SQL Server plugin](https://github.com/TabularisDB/tabularis-sqlserver-plugin) does so from 1.0.0-beta.3, producing `SELECT TOP (100)` with bracket-quoted, schema-qualified names and `WHERE 1 = 0` guards on UPDATE and DELETE. If the plugin reports an error, the modal shows it instead of falling back to SQL in another dialect. The CREATE TABLE tab is unchanged.
 
 <video src="/videos/posts/tabularis-generate-sql-sqlserver.mp4" poster="/videos/posts/tabularis-generate-sql-sqlserver.jpg" controls autoplay loop muted playsinline></video>
 

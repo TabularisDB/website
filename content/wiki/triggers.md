@@ -5,8 +5,6 @@ excerpt: "Browse, create, edit, and drop triggers on PostgreSQL, MySQL/MariaDB, 
 category: "Database Objects"
 ---
 
-# Triggers
-
 Tabularis manages **triggers** as a first-class database object across all three built-in drivers — listing, viewing definitions, creating, editing, and dropping — with sidebar integration and a guided editor modal.
 
 ## Browsing Triggers

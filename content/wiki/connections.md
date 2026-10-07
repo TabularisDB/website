@@ -5,8 +5,6 @@ excerpt: "Learn how to manage your database connections securely with SSH tunnel
 category: "Database Objects"
 ---
 
-# Connection Management
-
 Tabularis stores connection profiles as JSON (non-sensitive fields) and delegates all secrets to the OS keychain — Keychain Access on macOS, Windows Credential Manager on Windows, and libsecret (GNOME Keyring / KWallet) on Linux.
 
 ![Connection Manager](/img/tabularis-connection-manager.png)
@@ -23,7 +21,7 @@ The following drivers are registered at startup and available natively, with no 
 
 Each built-in driver renders with its own branded icon in the Connections page — the PostgreSQL elephant, MySQL dolphin, and SQLite cylinder — displayed in the driver's official color. Plugin drivers use any icon declared in their manifest, or a generic fallback.
 
-Additional drivers can be added via the [Plugin System](/wiki/plugins).
+Additional drivers can be installed as [plugins](/wiki/installing-plugins).
 
 ### Deprecated Built-in PostgreSQL Driver and Plugin Migration
 
@@ -75,7 +73,7 @@ When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`)
 | **Startup script** | No | SQL run on every new pooled connection (see [Startup Script](#startup-script) below). |
 | **Kubernetes** | No | Tunnels the connection through a managed `kubectl port-forward`. Mutually exclusive with SSH and AWS SSM. See [Kubernetes Tunneling](/wiki/kubernetes-tunneling). |
 | **AWS SSM** | No | Since v0.25.0. Forwards the connection through an AWS Systems Manager Session Manager port-forwarding session opened with the AWS CLI. Takes a managed node id plus optional profile and region. Mutually exclusive with SSH and Kubernetes. See [AWS SSM Tunneling](/wiki/aws-ssm-tunneling). |
-| **CA Certificate** | No | Path to a PEM bundle to trust for TLS (PostgreSQL only). See [TLS & CA Certificates](#tls--ca-certificates) below. |
+| **CA Certificate** | No | Path to a PEM bundle to trust for TLS (PostgreSQL only). See [TLS & CA Certificates](#tls--ca-certificates-postgresql) below. |
 | **Client Certificate** / **Client Key** | No | PEM paths for mutual TLS (PostgreSQL only). Since v0.21.0 they are presented to servers that require client authentication. See [Client Certificates](#client-certificates-mtls) below. |
 | **Detect JSON in text columns** | No | Per-connection toggle: when enabled, plain `TEXT` / `VARCHAR` values that parse as JSON are routed through the JSON cell renderer in the data grid (chevron, viewer window, diff). The same flag also enables native array detection for `text[]` / `int[]` (PostgreSQL) and Firestore arrays. See [Data Grid → JSON & long text cells](/wiki/data-grid#json--long-text-cells). |
 

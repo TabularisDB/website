@@ -5,8 +5,6 @@ excerpt: "Pause MCP writes (or every query) and require explicit user approval â
 category: "AI & MCP"
 ---
 
-# MCP Approval Gates
-
 Approval gates are the middle ground between letting the agent do whatever it wants and locking the connection down with [Read-only Mode](/wiki/mcp-readonly-mode). They pause sensitive queries, show you the SQL, show you the **execution plan** before anything runs, and let you approve, edit, or deny.
 
 This is the feature that makes "give your AI agent access to your production database" not entirely insane.

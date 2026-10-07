@@ -5,11 +5,9 @@ excerpt: "Use Tabularis as an MCP server to let Claude Desktop, Claude Code, Cur
 category: "AI & MCP"
 ---
 
-# MCP Server
-
 Tabularis includes a built-in **Model Context Protocol (MCP)** server. Once configured, external AI assistants — including **Claude Desktop**, **Claude Code**, **Cursor**, **Windsurf**, **Antigravity**, and **Codex** — can list your saved connections, inspect schemas, describe tables, and run SQL queries, all without leaving their chat interface.
 
-Starting with v0.13.0, MCP operations are dispatched through the same driver registry the GUI uses — so connections backed by **plugin drivers** (installed from the [plugin registry](/wiki/plugins)) work over MCP exactly like the built-in MySQL, PostgreSQL, and SQLite drivers.
+Starting with v0.13.0, MCP operations are dispatched through the same driver registry the GUI uses — so connections backed by **plugin drivers** (installed from the [plugin registry](/wiki/installing-plugins)) work over MCP exactly like the built-in MySQL, PostgreSQL, and SQLite drivers.
 
 ![MCP Server Integration](/img/tabularis-mcp-server.png)
 

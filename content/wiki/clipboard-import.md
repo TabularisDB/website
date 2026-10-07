@@ -5,8 +5,6 @@ excerpt: "Paste CSV, TSV, JSON, or Markdown table data directly into any databas
 category: "Database Objects"
 ---
 
-# Clipboard Import
-
 **Clipboard Import** lets you take structured data sitting in your clipboard — a copied spreadsheet range, a CSV paste, a JSON array, or a Markdown table — and insert it into a database table without writing a single SQL statement.
 
 Right-click a database or schema in the sidebar and choose **Import from Clipboard**, or use the context menu on an existing table. The import modal opens and immediately reads your clipboard.

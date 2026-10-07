@@ -5,8 +5,6 @@ excerpt: 'Personalize your workspace with 12 built-in themes, installable theme 
 category: 'Customization'
 ---
 
-# Themes & Customization
-
 A developer tool should adapt to your preferences. Tabularis ships with a robust, CSS-variable-based theming engine that ensures every pixel—from the sidebar to the SQL editor—feels cohesive.
 
 ![Appearance settings with built-in and installed theme variants](/img/tabularis-appearance-section.png)
