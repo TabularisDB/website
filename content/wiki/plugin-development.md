@@ -5,6 +5,8 @@ title: "Plugin Development"
 excerpt: "Build database driver plugins for Tabularis and publish them to this Tabularium registry — protocol, manifest, scaffold, release workflow."
 ---
 
+# Plugin Development
+
 Tabularis is the desktop app that connects to your databases. **Tabularium** is the registry it pulls plugins from — this instance, or [registry.tabularis.dev](https://registry.tabularis.dev), or any other self-hosted Tabularium your users point their `tabulariumRegistryUrl` at. This page covers both halves of the developer story:
 
 - **Runtime** — how a Tabularis plugin works on the wire (JSON-RPC over STDIO, manifest, methods).
