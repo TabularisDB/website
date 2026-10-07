@@ -8,10 +8,7 @@ import styles from './InitiativePage.module.scss';
 import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
 import Link from 'next/link';
 import clsx from 'clsx';
-
-interface PageProps {
-    params: Promise<{slug: string}>;
-}
+import {ogImages} from '@/lib/og/registry';
 
 export function generateStaticParams() {
     return getAllInitiativeSlugs().map((slug) => ({slug}));
@@ -23,25 +20,27 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
     if (!initiative) return {};
 
     const {title, lede} = initiative.meta;
+    const path = `/roadmap/${initiative.meta.slug}`;
     const pageTitle = `${title} — Roadmap | Tabularis`;
     const pageDesc = lede || 'Tabularis roadmap initiative details.';
 
     return {
         title: pageTitle,
         description: pageDesc,
-        alternates: {canonical: `/roadmap/${slug}`},
+        alternates: {canonical: path},
         openGraph: {
             type: 'article',
-            url: `https://tabularis.dev/roadmap/${slug}/`,
+            url: path,
             title: pageTitle,
             description: pageDesc,
+            images: ogImages(path, `${title} — Tabularis Roadmap`),
         },
-        twitter: {
-            card: 'summary_large_image',
-            title: pageTitle,
-            description: pageDesc,
-        },
+        twitter: {card: 'summary_large_image'},
     };
+}
+
+interface PageProps {
+    params: Promise<{slug: string}>;
 }
 
 const STATUS_LABEL: Record<InitiativeStatus, string> = {

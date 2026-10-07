@@ -7,22 +7,24 @@ import {ArrowUpRight, ArrowUpRightIcon, Box, CopyIcon, Download, Droplet, Palett
 import type {Metadata} from 'next';
 import styles from './BrandPage.module.scss';
 
+import {ogImages} from '@/lib/og/registry';
+
+const path = '/brand';
+const title = 'Brand assets | Tabularis';
+
 export const metadata: Metadata = {
-    title: 'Brand assets | Tabularis',
+    title,
     description:
         'Download the Tabularis logo, icon and fonts in SVG and PNG, in color, white and black, with the brand colors.',
-    alternates: {canonical: '/brand'},
+    alternates: {canonical: path},
     openGraph: {
         type: 'website',
-        url: 'https://tabularis.dev/brand',
-        title: 'Brand assets | Tabularis',
+        url: path,
+        title,
         description: 'Logos, icons, fonts and colors for press, partners and community projects.',
+        images: ogImages(path, 'Tabularis brand assets: logos, icons, colors and fonts to download'),
     },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'Brand assets | Tabularis',
-        description: 'Logos, icons, fonts and colors for press, partners and community projects.',
-    },
+    twitter: {card: 'summary_large_image'},
 };
 
 const BRAND_DIR = '/img/brand';

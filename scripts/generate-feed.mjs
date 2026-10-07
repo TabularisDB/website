@@ -58,7 +58,7 @@ const posts = files
       excerpt: data.excerpt ?? "",
       tags: data.tags ?? [],
       url: `${BASE_URL}/blog/${slug}`,
-      image: `${BASE_URL}/blog/${slug}/opengraph-image.png`,
+      image: `${BASE_URL}/og/blog/${slug}.png`,
       html,
     };
   })

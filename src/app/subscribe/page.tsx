@@ -4,26 +4,25 @@ import {JsonLd} from '@/components/layout/JsonLd';
 import {NewsletterForm} from '@/components/ui/NewsletterForm/NewsletterForm';
 import {buildBreadcrumbJsonLd} from '@/lib/seo';
 import styles from './SubscribePage.module.scss';
+import {ogImages} from '@/lib/og/registry';
 
-const TITLE = 'Subscribe | Tabularis';
-const DESCRIPTION =
+const path = '/subscribe';
+const title = 'Subscribe | Tabularis';
+const description =
     'Subscribe to the Tabularis newsletter. Get release announcements, development insights, and project updates.';
 
 export const metadata: Metadata = {
-    title: TITLE,
-    description: DESCRIPTION,
-    alternates: {canonical: '/subscribe'},
+    title,
+    description,
+    alternates: {canonical: path},
     openGraph: {
         type: 'website',
-        url: 'https://tabularis.dev/subscribe',
-        title: TITLE,
-        description: DESCRIPTION,
+        url: path,
+        title,
+        description,
+        images: ogImages(path, 'Tabularis Newsletter'),
     },
-    twitter: {
-        card: 'summary_large_image',
-        title: TITLE,
-        description: DESCRIPTION,
-    },
+    twitter: {card: 'summary_large_image'},
 };
 
 export default function SubscribePage() {

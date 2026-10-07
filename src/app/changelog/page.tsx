@@ -6,22 +6,24 @@ import {SOCIAL_URLS} from '@/lib/social';
 import {HistoryIcon} from 'lucide-react';
 import type {Metadata} from 'next';
 import styles from './ChangelogPage.module.scss';
+import {ogImages} from '@/lib/og/registry';
+
+const path = '/changelog';
+const title = 'Changelog | Tabularis';
+const description = 'Full release history and changelog for Tabularis.';
 
 export const metadata: Metadata = {
-    title: 'Changelog | Tabularis',
-    description: 'Full release history and changelog for Tabularis.',
-    alternates: {canonical: '/changelog'},
+    title,
+    description,
+    alternates: {canonical: path},
     openGraph: {
         type: 'website',
-        url: 'https://tabularis.dev/changelog/',
-        title: 'Changelog | Tabularis',
-        description: 'Full release history and changelog for Tabularis.',
+        url: path,
+        title,
+        description,
+        images: ogImages(path, 'Tabularis Changelog'),
     },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'Changelog | Tabularis',
-        description: 'Full release history and changelog for Tabularis.',
-    },
+    twitter: {card: 'summary_large_image'},
 };
 
 export default function ChangelogPage() {

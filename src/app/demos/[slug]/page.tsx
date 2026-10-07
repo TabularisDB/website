@@ -9,10 +9,7 @@ import clsx from 'clsx';
 import {Button} from '@/components/ui/Button/Button';
 import {ArrowRight, PlayIcon} from 'lucide-react';
 import {VideoPlayer} from '@/components/ui/VideoPlayer/VideoPlayer';
-
-interface PageProps {
-    params: Promise<{slug: string}>;
-}
+import {ogImages} from '@/lib/og/registry';
 
 export function generateStaticParams() {
     return getAllVideoDemos().map((video) => ({slug: video.slug}));
@@ -23,25 +20,28 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
     const video = getVideoDemoBySlug(slug);
     if (!video) return {};
 
+    const path = `/demos/${video.slug}`;
+    const title = `${video.title} | Tabularis Demo`;
+    const description = video.description;
+
     return {
-        title: `${video.title} | Tabularis Demo`,
-        description: video.description,
-        alternates: {canonical: `/demos/${video.slug}`},
+        title,
+        description,
+        alternates: {canonical: path},
         openGraph: {
             type: 'video.other',
-            url: `/demos/${video.slug}`,
-            title: `${video.title} | Tabularis Demo`,
-            description: video.description,
-            images: [video.poster],
+            url: path,
+            title,
+            description,
+            images: ogImages(path, title),
             videos: [video.src],
         },
-        twitter: {
-            card: 'summary_large_image',
-            title: `${video.title} | Tabularis Demo`,
-            description: video.description,
-            images: [video.poster],
-        },
+        twitter: {card: 'summary_large_image'},
     };
+}
+
+interface PageProps {
+    params: Promise<{slug: string}>;
 }
 
 export default async function DemoDetail({params}: PageProps) {

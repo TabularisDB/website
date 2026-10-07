@@ -12,9 +12,7 @@ import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import styles from './CompareDetailPage.module.scss';
 
-interface PageProps {
-    params: Promise<{slug: string}>;
-}
+import {ogImages} from '@/lib/og/registry';
 
 export function generateStaticParams() {
     return getSeoPagesBySection('compare').map((page) => ({slug: page.slug}));
@@ -25,24 +23,27 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
     const page = getSeoPageBySlug('compare', slug);
     if (!page) return {};
 
+    const path = getSeoPagePath('compare', slug);
+    const title = page.meta.metaTitle || `${page.meta.title} | Tabularis`;
+    const description = page.meta.description || page.meta.excerpt;
+
     return {
-        title: page.meta.metaTitle || `${page.meta.title} | Tabularis`,
-        description: page.meta.description || page.meta.excerpt,
-        alternates: {
-            canonical: getSeoPagePath('compare', slug),
-        },
+        title,
+        description,
+        alternates: {canonical: path},
         openGraph: {
             type: 'article',
-            url: getSeoPagePath('compare', slug),
-            title: page.meta.metaTitle || `${page.meta.title} | Tabularis`,
-            description: page.meta.description || page.meta.excerpt,
+            url: path,
+            title,
+            description,
+            images: ogImages(path, `Compare: ${page.meta.title}`),
         },
-        twitter: {
-            card: 'summary_large_image',
-            title: page.meta.metaTitle || `${page.meta.title} | Tabularis`,
-            description: page.meta.description || page.meta.excerpt,
-        },
+        twitter: {card: 'summary_large_image'},
     };
+}
+
+interface PageProps {
+    params: Promise<{slug: string}>;
 }
 
 export function stripFirstH1(html: string): string {
@@ -54,7 +55,9 @@ function ProductLogo({id}: {id: string}) {
     if (!product) {
         return <span className={styles.logoFallback}>{id}</span>;
     }
-    return <Image src={product.logo} alt={product.name} width={56} height={56} loading="eager" className={styles.logo} />;
+    return (
+        <Image src={product.logo} alt={product.name} width={56} height={56} loading="eager" className={styles.logo} />
+    );
 }
 
 export default async function CompareDetailPage({params}: PageProps) {

@@ -8,6 +8,12 @@ import {ProductOverview} from '@/components/pages/home/ProductOverview/ProductOv
 import {SolutionsOverview} from '@/components/pages/home/SolutionsOverview/SolutionsOverview';
 import {SponsorsMarquee} from '@/components/pages/home/SponsorsMarquee/SponsorsMarquee';
 import {buildBreadcrumbJsonLd, buildSoftwareApplicationJsonLd, buildVideoObjectJsonLd} from '@/lib/seo';
+import type {Metadata} from 'next';
+import {FEED_ALTERNATES} from '@/lib/siteConfig';
+
+export const metadata: Metadata = {
+    alternates: {canonical: '/', types: FEED_ALTERNATES},
+};
 
 export default function HomePage() {
     return (

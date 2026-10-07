@@ -10,22 +10,24 @@ import {ComponentType} from 'react';
 import {Button} from '@/components/ui/Button/Button';
 import {GitHubIcon, DiscordIcon} from '@/components/ui/Icons/SocialIcons';
 import {SOCIAL_URLS} from '@/lib/social';
+import {ogImages} from '@/lib/og/registry';
+
+const path = '/roadmap';
+const title = 'Roadmap | Tabularis';
+const description = 'Tabularis roadmap. Active initiatives, open tasks, planned work.';
 
 export const metadata: Metadata = {
-    title: 'Roadmap | Tabularis',
-    description: 'Tabularis roadmap. Active initiatives, open tasks, planned work.',
-    alternates: {canonical: '/roadmap'},
+    title,
+    description,
+    alternates: {canonical: path},
     openGraph: {
         type: 'website',
-        url: 'https://tabularis.dev/roadmap/',
-        title: 'Roadmap | Tabularis',
-        description: 'Tabularis roadmap. Active initiatives, open tasks, planned work.',
+        url: path,
+        title,
+        description,
+        images: ogImages(path, 'Tabularis Roadmap'),
     },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'Roadmap | Tabularis',
-        description: 'Tabularis roadmap. Active initiatives, open tasks, planned work.',
-    },
+    twitter: {card: 'summary_large_image'},
 };
 
 const STATUS_ORDER: InitiativeStatus[] = ['in-progress', 'planned', 'done'];

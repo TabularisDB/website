@@ -6,7 +6,6 @@ import path from 'path';
 /* ─── CONSTANTS ─────────────────────────────────────────────────────────────── */
 
 export const OG_SIZE = {width: 1200, height: 630} as const;
-export const OG_CONTENT_TYPE = 'image/png' as const;
 
 const TEAL_COLOR = '#35d0c0';
 const TEXT_COLOR = '#eef0f3';

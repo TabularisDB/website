@@ -31,7 +31,7 @@ const latest = posts.slice(0, 5).map((p) => ({
   title: p.title,
   date: p.date,
   url: `${BASE_URL}/blog/${p.slug}`,
-  image: `${BASE_URL}/blog/${p.slug}/opengraph-image.png`,
+  image: `${BASE_URL}/og/blog/${p.slug}.png`,
 }));
 
 fs.writeFileSync(

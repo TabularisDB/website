@@ -44,16 +44,5 @@
         },
         {"source": "/img/logo.png", "destination": "/img/brand/tabularis-logo-color.png", "permanent": true},
         {"source": "/img/sponsors/:file", "destination": "/img/logos/sponsors/:file", "permanent": true}
-    ],
-    "headers": [
-        {
-            "source": "/:path*/opengraph-image",
-            "headers": [
-                {
-                    "key": "Content-Type",
-                    "value": "image/png"
-                }
-            ]
-        }
     ]
 }
