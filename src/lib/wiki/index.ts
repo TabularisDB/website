@@ -77,7 +77,10 @@ export function getWikiPageBySlug(slug: string): {meta: WikiMeta; html: string} 
     const {data, content} = matter(raw);
 
     const meta = parseWikiMeta(slug, data);
-    const rawHtml = marked.parse(content) as string;
+    // Pages generated from the registry (plugin-development) carry their title
+    // only in frontmatter; hand-written pages open with their own H1.
+    const hasH1 = marked.lexer(content).some((token) => token.type === 'heading' && token.depth === 1);
+    const rawHtml = marked.parse(hasH1 ? content : `# ${meta.title}\n\n${content}`) as string;
     const html = wrapVideosInHtml(rawHtml);
     return {meta, html};
 }

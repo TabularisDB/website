@@ -2,17 +2,15 @@
 order: 8.6
 category: "Integration"
 title: "Plugin Development"
-excerpt: "Build database driver plugins for Tabularis and publish them to this Tabularium registry — protocol, manifest, scaffold, release workflow."
+excerpt: "Build database driver plugins for Tabularis and publish them to the registry — protocol, manifest, scaffold, release workflow."
 ---
 
-# Plugin Development
-
-Tabularis is the desktop app that connects to your databases. **Tabularium** is the registry it pulls plugins from — this instance, or [registry.tabularis.dev](https://registry.tabularis.dev), or any other self-hosted Tabularium your users point their `tabulariumRegistryUrl` at. This page covers both halves of the developer story:
+Tabularis is the desktop app that connects to your databases. The **registry** is where it pulls plugins from — [registry.tabularis.dev](https://registry.tabularis.dev), or any self-hosted registry your users point their `tabulariumRegistryUrl` at. This page covers both halves of the developer story:
 
 - **Runtime** — how a Tabularis plugin works on the wire (JSON-RPC over STDIO, manifest, methods).
-- **Registry** — how that plugin is packaged and submitted here so other Tabularis users can find and install it.
+- **Registry** — how that plugin is packaged and submitted to the registry so other Tabularis users can find and install it.
 
-The per-kind sections below — currently only **Drivers** — list every manifest field this registry expects, derived live from the configured kind schema. Use [`/api/docs/plugin-development?format=md`](https://registry.tabularis.dev/api/docs/plugin-development?format=md) for an LLM-pasteable copy of everything on this page (also linked in the page header).
+The per-kind sections below — currently only **Drivers** — list every manifest field the registry expects, derived live from the configured kind schema. Use [`registry.tabularis.dev/api/docs/plugin-development?format=md`](https://registry.tabularis.dev/api/docs/plugin-development?format=md) for an LLM-pasteable copy of everything on this page.
 
 For the full runtime protocol reference and every RPC method, see [`plugins/PLUGIN_GUIDE.md`](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md).
 
@@ -50,7 +48,7 @@ Tabularis avoids dynamic linking. Plugins are **standalone executables** that ru
 
 **`.tabularium`** is the single canonical manifest — one file that serves both the host (loading the driver: `executable`, `capabilities`, `data_types`, `settings`) and the registry (listing it: `name`, `description`, `category`, `kind`, plus the kind-specific fields below). The host still reads a legacy `manifest.json` as a fallback; the registry does not treat `manifest.json` as a first-class source.
 
-It lives at the plugin's repo root **and must be uploaded as a standalone release asset** — the registry resolves the manifest from release assets (GitHub silently renames the dotfile to `default.tabularium`; the registry accepts both names). The **Drivers** section below shows exactly which fields and constraints this registry expects.
+It lives at the plugin's repo root **and must be uploaded as a standalone release asset** — the registry resolves the manifest from release assets (GitHub silently renames the dotfile to `default.tabularium`; the registry accepts both names). The **Drivers** section below shows exactly which fields and constraints the registry expects.
 
 ## Required methods
 
@@ -80,20 +78,20 @@ t("toolbar.greeting", { table });
 
 The host runtime is **[Lingui](https://lingui.dev/)** — author new keys ICU-style with single-brace `{var}` placeholders. Legacy i18next `{{var}}` placeholders still interpolate, so existing plugins keep working unchanged.
 
-## Publishing to this registry
+## Publishing to the registry
 
 Once your driver runs locally and binaries are on GitHub Releases:
 
 1. Build release binaries (`.github/workflows/release.yml` from the scaffold does this on tag push).
 2. Package each binary with the `.tabularium` manifest into a `.zip` per platform.
 3. Publish a GitHub Release with the ZIPs attached — **plus `.tabularium` as a standalone asset** (it will show up as `default.tabularium`; that's fine). The release tag stripped of `v` must equal the manifest `version`.
-4. Submit at [`/submit`](https://registry.tabularis.dev/submit). The exact shape is in the [schema reference](https://registry.tabularis.dev/docs/plugin-development/schema). CI can validate against this registry via `POST /api/manifest/validate`. A manifest that fails validation is rejected with **HTTP 422** — there is no silent fallback.
+4. Submit at [`registry.tabularis.dev/submit`](https://registry.tabularis.dev/submit). The exact shape is in the [schema reference](https://registry.tabularis.dev/docs/plugin-development/schema). CI can validate against the registry via `POST https://registry.tabularis.dev/api/manifest/validate`. A manifest that fails validation is rejected with **HTTP 422** — there is no silent fallback.
 
-The admin may require manual approval — check `/requests` after submitting.
+The registry admin may require manual approval — check `registry.tabularis.dev/requests` after submitting.
 
-## Using this registry from Tabularis
+## Using the registry from Tabularis
 
-End users point their Tabularis at any Tabularium by setting `tabulariumRegistryUrl` in their `config.json`:
+End users point their Tabularis at any registry by setting `tabulariumRegistryUrl` in their `config.json`:
 
 ```json
 { "tabulariumRegistryUrl": "https://registry.tabularis.dev" }
@@ -307,12 +305,12 @@ theme_variants:
 ## Where to get help
 
 - **Tabularis source + runtime docs** — [`TabularisDB/tabularis`](https://github.com/TabularisDB/tabularis). The [`plugins/PLUGIN_GUIDE.md`](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md) covers every RPC method with full parameter shapes.
-- **Tabularium source (this registry)** — [`TabularisDB/tabularium`](https://github.com/TabularisDB/tabularium). Schema, validators, and submission flow.
+- **Registry source** — [`TabularisDB/tabularium`](https://github.com/TabularisDB/tabularium). Schema, validators, and submission flow.
 - **Example plugins to copy patterns from** — the [community registry](https://github.com/TabularisDB/tabularis/blob/main/plugins/registry.json) and the [Google Sheets driver](https://github.com/TabularisDB/tabularis-google-sheets-plugin) (OAuth, sheets-as-tables, UI extensions).
-- **LLM-friendly export** — the **Raw markdown ↗** and **Copy as markdown** buttons at the top of this page surface everything as one flat document at [`/api/docs/plugin-development?format=md`](https://registry.tabularis.dev/api/docs/plugin-development?format=md). Paste straight into any LLM (or `curl` it) when an assistant needs to author or review plugin manifests against this registry.
-- **Found something wrong here?** — Open an issue against [Tabularium](https://github.com/TabularisDB/tabularium/issues), or ping this instance's admin.
+- **LLM-friendly export** — this page is also available as one flat Markdown document at [`registry.tabularis.dev/api/docs/plugin-development?format=md`](https://registry.tabularis.dev/api/docs/plugin-development?format=md). Paste straight into any LLM (or `curl` it) when an assistant needs to author or review plugin manifests against the registry.
+- **Found something wrong here?** — Open an issue against the [registry](https://github.com/TabularisDB/tabularium/issues).
 
 Happy hacking — and when you ship something, [submit it](https://registry.tabularis.dev/submit) so the rest of Tabularis can use it.
 
 ---
-_Generated by Tabularium for https://registry.tabularis.dev._
+_Generated by the registry at https://registry.tabularis.dev._

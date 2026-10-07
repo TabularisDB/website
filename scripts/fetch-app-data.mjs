@@ -1,5 +1,6 @@
 import {writeFile, mkdir} from 'node:fs/promises';
 import {dirname, resolve} from 'node:path';
+import {toWikiPage} from './plugin-dev-docs.mjs';
 
 const REPO = process.env.TABULARIS_APP_REPO ?? 'TabularisDB/tabularis';
 const REF = process.env.TABULARIS_APP_REF ?? 'main';
@@ -125,16 +126,8 @@ async function buildRegistry() {
     return {...legacy, plugins: [...merged.values()]};
 }
 
-// Plugin developer / manifest reference — generated live by the registry
-// (core schema + configured kinds + examples), re-published as a wiki page so
-// tabularis.dev stays the single docs entry point. The registry ships its own
-// title/excerpt frontmatter; we add the wiki's order/category and absolutize
-// root-relative registry links that would otherwise resolve against
-// tabularis.dev.
 async function buildPluginDevDocs() {
-    const raw = await fetchText(`${TABULARIUM}/api/docs/plugin-development?format=md`);
-    const absolute = raw.replaceAll('](/', `](${TABULARIUM}/`);
-    return absolute.replace(/^---\n/, `---\norder: 8.6\ncategory: "Integration"\n`);
+    return toWikiPage(await fetchText(`${TABULARIUM}/api/docs/plugin-development?format=md`), TABULARIUM);
 }
 
 // Repo stars + total release-asset downloads, baked into the static HTML so

@@ -42,6 +42,8 @@ Three pieces of data are fetched from `TabularisDB/tabularis` at build time by `
 
 These three files are **committed** to the repo so local dev works without network access. The Vercel build overwrites them before `next build` (via the `fetch-app-data` step in the build command). When editing them locally, be aware the deploy will blow your changes away — fix upstream instead.
 
+The same step also regenerates `content/wiki/plugin-development.md` from the registry (`registry.tabularis.dev/api/docs/plugin-development?format=md`), via `toWikiPage` in `scripts/plugin-dev-docs.mjs`. Don't edit that wiki page by hand: wording that only makes sense on the registry itself is rewritten in `scripts/plugin-dev-docs.mjs`, and its title comes from the frontmatter (the wiki loader renders the frontmatter `title` as H1 when the markdown has none).
+
 Rebuilds can be triggered from the app repo via a `repository_dispatch` event of type `app-data-updated`, handled by `.github/workflows/vercel-rebuild.yml`, which POSTs to a Vercel deploy hook (`VERCEL_DEPLOY_HOOK_URL` secret). The same workflow also rebuilds on a 6-hour cron to refresh baked-in GitHub API values (stargazers, total downloads).
 
 ## Architecture
