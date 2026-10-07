@@ -21,10 +21,6 @@ export async function renderBlogPostOgImage(slug: string): Promise<ImageResponse
     // Ready-made 1200×630 image, rendered full-bleed.
     const coverSrc = og?.cover ? readPublicImage(og.cover) : null;
 
-    if (slug === 'vercel-open-source-program') {
-        return renderVercelPartnershipOgImage();
-    }
-
     if (coverSrc) {
         return new ImageResponse(
             <div style={{display: 'flex', width: OG_SIZE.width, height: OG_SIZE.height}}>
@@ -32,6 +28,10 @@ export async function renderBlogPostOgImage(slug: string): Promise<ImageResponse
             </div>,
             {...OG_SIZE},
         );
+    }
+
+    if (slug === 'vercel-open-source-program') {
+        return renderVercelPartnershipOgImage();
     }
 
     if (og?.template === 'code-terminal') {

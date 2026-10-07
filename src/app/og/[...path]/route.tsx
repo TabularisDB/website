@@ -14,5 +14,7 @@ export function generateStaticParams() {
 export async function GET(_req: Request, {params}: {params: Promise<{path: string[]}>}) {
     const {path} = await params;
     const pagePath = '/' + path.join('/').replace(/\.png$/, '');
-    return getOgCards()[pagePath]();
+    const card = getOgCards()[pagePath];
+    if (!card) return new Response(null, {status: 404});
+    return card();
 }
