@@ -3,6 +3,11 @@ export interface CommunityIssueLabel {
     color: string;
 }
 
+export interface CommunityIssueAssignee {
+    login: string;
+    avatarUrl: string;
+}
+
 export interface CommunityIssue {
     repo: string;
     number: number;
@@ -10,7 +15,7 @@ export interface CommunityIssue {
     url: string;
     labels: CommunityIssueLabel[];
     kind: 'bug' | 'feature' | null;
-    assigned: boolean;
+    assignees: CommunityIssueAssignee[];
     comments: number;
     createdAt: string;
 }

@@ -2,7 +2,8 @@
 
 import {useEffect, useState} from 'react';
 import clsx from 'clsx';
-import {ArrowUpRightIcon, MessageSquareIcon, SearchIcon, UserCheckIcon, XIcon} from 'lucide-react';
+import {ArrowUpRightIcon, MessageSquareIcon, SearchIcon, XIcon} from 'lucide-react';
+import Image from 'next/image';
 import {
     cleanIssueTitle,
     COMMUNITY_ISSUES,
@@ -37,7 +38,7 @@ function repoLabel(repo: string) {
 
 function IssueCard({issue}: {issue: CommunityIssue}) {
     return (
-        <a href={issue.url} target="_blank" rel="noopener noreferrer" className={styles.card}>
+        <article className={styles.card}>
             <div className={styles.cardMeta}>
                 <span className={styles.cardRepo}>
                     {repoLabel(issue.repo)} #{issue.number}
@@ -45,7 +46,12 @@ function IssueCard({issue}: {issue: CommunityIssue}) {
                 {issue.kind && <span className={clsx(styles.kind, styles[issue.kind])}>{issue.kind}</span>}
             </div>
 
-            <h3 className={styles.cardTitle}>{cleanIssueTitle(issue.title)}</h3>
+            <h3 className={styles.cardTitle}>
+                {/* Stretched over the whole card; the assignee links sit above it. */}
+                <a href={issue.url} target="_blank" rel="noopener noreferrer" className={styles.cardLink}>
+                    {cleanIssueTitle(issue.title)}
+                </a>
+            </h3>
 
             {issue.labels.length > 0 && (
                 <ul className={styles.labels}>
@@ -66,15 +72,34 @@ function IssueCard({issue}: {issue: CommunityIssue}) {
                         {issue.comments}
                     </span>
                 )}
-                {issue.assigned && (
+                {issue.assignees.length > 0 && (
                     <span className={clsx(styles.footerItem, styles.claimed)}>
-                        <UserCheckIcon aria-hidden="true" />
-                        Claimed
+                        Claimed by
+                        <span className={styles.assignees}>
+                            {issue.assignees.map((assignee) => (
+                                <a
+                                    key={assignee.login}
+                                    href={`https://github.com/${assignee.login}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={styles.assignee}
+                                    title={`@${assignee.login}`}
+                                >
+                                    <Image
+                                        src={`${assignee.avatarUrl}${assignee.avatarUrl.includes('?') ? '&' : '?'}s=48`}
+                                        alt={`@${assignee.login}`}
+                                        width={22}
+                                        height={22}
+                                        className={styles.avatar}
+                                    />
+                                </a>
+                            ))}
+                        </span>
                     </span>
                 )}
                 <ArrowUpRightIcon className={styles.cardArrow} aria-hidden="true" />
             </div>
-        </a>
+        </article>
     );
 }
 
@@ -100,7 +125,7 @@ export function IssueBoard() {
             (label === ALL || issue.labels.some((l) => l.name === label)) &&
             (repo === ALL || issue.repo === repo) &&
             (kind === ALL || issue.kind === kind) &&
-            (!unclaimedOnly || !issue.assigned) &&
+            (!unclaimedOnly || issue.assignees.length === 0) &&
             (!normalizedQuery ||
                 issue.title.toLowerCase().includes(normalizedQuery) ||
                 String(issue.number) === normalizedQuery.replace(/^#/, '')),

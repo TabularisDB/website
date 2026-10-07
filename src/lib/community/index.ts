@@ -1,7 +1,7 @@
 import {COMMUNITY_ISSUES, FEATURED_LABELS, ISSUES_FETCHED_AT, ISSUES_ORG} from './issues';
 import type {CommunityIssueLabel} from './types';
 
-export type {CommunityIssue, CommunityIssueLabel} from './types';
+export type {CommunityIssue, CommunityIssueAssignee, CommunityIssueLabel} from './types';
 export {COMMUNITY_ISSUES, FEATURED_LABELS, ISSUES_FETCHED_AT, ISSUES_ORG};
 
 export interface LabelCount extends CommunityIssueLabel {

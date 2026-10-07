@@ -3,7 +3,7 @@ import type {CommunityIssue} from './types';
 
 export const ISSUES_ORG = "TabularisDB";
 export const FEATURED_LABELS = ["good first issue","help wanted"];
-export const ISSUES_FETCHED_AT = "2026-10-07T21:38:21.686Z";
+export const ISSUES_FETCHED_AT = "2026-10-07T21:41:08.632Z";
 export const COMMUNITY_ISSUES: CommunityIssue[] = [
   {
     "repo": "tabularis",
@@ -21,7 +21,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-07T20:56:11Z"
   },
@@ -41,7 +41,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-07T20:56:09Z"
   },
@@ -61,7 +61,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "princecherry9905",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/230962627?v=4"
+      }
+    ],
     "comments": 2,
     "createdAt": "2026-10-07T20:56:07Z"
   },
@@ -81,7 +86,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-07T20:56:06Z"
   },
@@ -101,7 +106,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-07T20:56:04Z"
   },
@@ -121,7 +126,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "princecherry9905",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/230962627?v=4"
+      }
+    ],
     "comments": 2,
     "createdAt": "2026-10-07T20:56:02Z"
   },
@@ -141,7 +151,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-07T20:56:00Z"
   },
@@ -161,7 +171,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-07T20:55:58Z"
   },
@@ -181,7 +191,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-07T20:55:57Z"
   },
@@ -201,7 +211,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-07T20:55:55Z"
   },
@@ -221,7 +231,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-07T20:55:53Z"
   },
@@ -241,7 +251,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-07T20:55:52Z"
   },
@@ -261,7 +271,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-07T20:55:50Z"
   },
@@ -281,7 +291,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-07T20:55:49Z"
   },
@@ -297,7 +307,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-07T14:34:32Z"
   },
@@ -313,7 +323,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "benedettoraviotta",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/59974565?v=4"
+      }
+    ],
     "comments": 2,
     "createdAt": "2026-10-07T10:08:07Z"
   },
@@ -329,7 +344,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "wajrock",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/157038485?v=4"
+      }
+    ],
     "comments": 0,
     "createdAt": "2026-10-06T18:51:20Z"
   },
@@ -349,7 +369,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-06T18:47:58Z"
   },
@@ -369,7 +389,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-06T18:47:54Z"
   },
@@ -389,7 +409,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-06T18:47:53Z"
   },
@@ -409,7 +429,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-06T18:47:51Z"
   },
@@ -429,7 +449,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-06T18:47:50Z"
   },
@@ -449,7 +469,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-06T18:47:48Z"
   },
@@ -469,7 +489,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-06T18:47:46Z"
   },
@@ -489,7 +509,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-06T18:44:58Z"
   },
@@ -509,7 +529,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-06T18:44:57Z"
   },
@@ -529,7 +549,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-06T18:44:55Z"
   },
@@ -549,7 +569,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-06T18:44:53Z"
   },
@@ -569,7 +589,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-06T18:44:52Z"
   },
@@ -589,7 +609,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "njtherealss",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/338089768?v=4"
+      }
+    ],
     "comments": 2,
     "createdAt": "2026-10-06T18:44:50Z"
   },
@@ -609,7 +634,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-06T18:44:48Z"
   },
@@ -629,7 +654,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-06T18:44:46Z"
   },
@@ -649,7 +674,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-06T18:44:42Z"
   },
@@ -669,7 +694,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-06T18:44:40Z"
   },
@@ -689,7 +714,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-06T18:44:39Z"
   },
@@ -700,7 +725,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis-sqlserver-plugin/issues/37",
     "labels": [],
     "kind": null,
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-10-06T06:03:08Z"
   },
@@ -716,7 +741,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 1,
     "createdAt": "2026-10-02T12:43:52Z"
   },
@@ -732,7 +757,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "aesslinger",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
+      }
+    ],
     "comments": 2,
     "createdAt": "2026-09-30T14:00:07Z"
   },
@@ -743,7 +773,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis/issues/840",
     "labels": [],
     "kind": null,
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-09-30T11:41:23Z"
   },
@@ -754,7 +784,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis/issues/839",
     "labels": [],
     "kind": null,
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-09-29T13:50:29Z"
   },
@@ -765,7 +795,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis/issues/837",
     "labels": [],
     "kind": null,
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "aesslinger",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
+      }
+    ],
     "comments": 2,
     "createdAt": "2026-09-29T12:38:58Z"
   },
@@ -776,7 +811,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis-oracle-plugin/issues/12",
     "labels": [],
     "kind": null,
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-09-29T11:27:47Z"
   },
@@ -792,7 +827,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 1,
     "createdAt": "2026-09-27T08:57:04Z"
   },
@@ -808,7 +843,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 3,
     "createdAt": "2026-09-25T08:01:09Z"
   },
@@ -832,7 +867,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-09-21T14:22:14Z"
   },
@@ -856,7 +891,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-09-21T14:22:12Z"
   },
@@ -884,7 +919,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-09-21T14:22:10Z"
   },
@@ -900,7 +935,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 2,
     "createdAt": "2026-09-19T06:35:25Z"
   },
@@ -911,7 +946,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis/issues/788",
     "labels": [],
     "kind": null,
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-09-18T16:54:24Z"
   },
@@ -922,7 +957,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis/issues/771",
     "labels": [],
     "kind": null,
-    "assigned": false,
+    "assignees": [],
     "comments": 4,
     "createdAt": "2026-09-16T07:14:43Z"
   },
@@ -938,7 +973,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-09-13T13:36:14Z"
   },
@@ -954,7 +989,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 1,
     "createdAt": "2026-09-13T05:14:36Z"
   },
@@ -970,7 +1005,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-09-13T05:07:09Z"
   },
@@ -986,7 +1021,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-09-10T08:11:26Z"
   },
@@ -1002,7 +1037,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 1,
     "createdAt": "2026-09-07T09:31:38Z"
   },
@@ -1013,7 +1048,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis-csv-plugin/issues/4",
     "labels": [],
     "kind": null,
-    "assigned": false,
+    "assignees": [],
     "comments": 1,
     "createdAt": "2026-09-04T21:23:42Z"
   },
@@ -1024,7 +1059,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis/issues/714",
     "labels": [],
     "kind": null,
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-09-04T13:28:23Z"
   },
@@ -1044,7 +1079,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-09-03T15:31:21Z"
   },
@@ -1055,7 +1090,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis-duckdb-plugin/issues/6",
     "labels": [],
     "kind": null,
-    "assigned": false,
+    "assignees": [],
     "comments": 2,
     "createdAt": "2026-09-03T13:19:00Z"
   },
@@ -1071,7 +1106,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 2,
     "createdAt": "2026-08-31T19:10:24Z"
   },
@@ -1087,7 +1122,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "aesslinger",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
+      }
+    ],
     "comments": 0,
     "createdAt": "2026-08-31T14:24:22Z"
   },
@@ -1103,7 +1143,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 2,
     "createdAt": "2026-08-31T11:21:21Z"
   },
@@ -1119,7 +1159,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-08-31T10:55:03Z"
   },
@@ -1135,7 +1175,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-08-31T10:21:42Z"
   },
@@ -1151,7 +1191,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 3,
     "createdAt": "2026-08-31T07:47:41Z"
   },
@@ -1167,7 +1207,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-08-28T23:20:50Z"
   },
@@ -1183,7 +1223,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "aesslinger",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
+      }
+    ],
     "comments": 3,
     "createdAt": "2026-08-21T12:28:56Z"
   },
@@ -1199,7 +1244,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "aesslinger",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
+      }
+    ],
     "comments": 0,
     "createdAt": "2026-08-18T15:46:58Z"
   },
@@ -1215,7 +1265,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "aesslinger",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
+      }
+    ],
     "comments": 0,
     "createdAt": "2026-08-18T15:46:48Z"
   },
@@ -1231,7 +1286,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "aesslinger",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
+      }
+    ],
     "comments": 0,
     "createdAt": "2026-08-18T15:46:40Z"
   },
@@ -1247,7 +1307,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "aesslinger",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
+      }
+    ],
     "comments": 0,
     "createdAt": "2026-08-18T15:46:32Z"
   },
@@ -1263,7 +1328,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "aesslinger",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
+      }
+    ],
     "comments": 0,
     "createdAt": "2026-08-18T15:46:23Z"
   },
@@ -1279,7 +1349,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "aesslinger",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
+      }
+    ],
     "comments": 2,
     "createdAt": "2026-08-18T15:46:12Z"
   },
@@ -1295,7 +1370,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "aesslinger",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
+      }
+    ],
     "comments": 0,
     "createdAt": "2026-08-18T15:46:02Z"
   },
@@ -1311,7 +1391,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "aesslinger",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
+      }
+    ],
     "comments": 0,
     "createdAt": "2026-08-18T15:45:51Z"
   },
@@ -1327,7 +1412,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 1,
     "createdAt": "2026-08-17T09:44:02Z"
   },
@@ -1343,7 +1428,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-08-14T09:10:48Z"
   },
@@ -1354,7 +1439,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis/issues/631",
     "labels": [],
     "kind": null,
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "aesslinger",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
+      }
+    ],
     "comments": 1,
     "createdAt": "2026-08-13T12:33:56Z"
   },
@@ -1370,7 +1460,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "aesslinger",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
+      }
+    ],
     "comments": 0,
     "createdAt": "2026-08-12T18:48:46Z"
   },
@@ -1381,7 +1476,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis-bigquery-plugin/issues/1",
     "labels": [],
     "kind": null,
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-08-11T13:28:29Z"
   },
@@ -1392,7 +1487,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis-clickhouse-plugin/issues/4",
     "labels": [],
     "kind": null,
-    "assigned": false,
+    "assignees": [],
     "comments": 1,
     "createdAt": "2026-08-04T15:37:52Z"
   },
@@ -1408,7 +1503,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 1,
     "createdAt": "2026-08-03T13:02:33Z"
   },
@@ -1424,7 +1519,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 3,
     "createdAt": "2026-07-28T22:05:05Z"
   },
@@ -1444,7 +1539,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-07-25T17:13:41Z"
   },
@@ -1455,7 +1550,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis/issues/526",
     "labels": [],
     "kind": null,
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "debba",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/3198901?v=4"
+      }
+    ],
     "comments": 0,
     "createdAt": "2026-07-24T13:42:54Z"
   },
@@ -1471,7 +1571,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 2,
     "createdAt": "2026-07-23T06:11:14Z"
   },
@@ -1482,7 +1582,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis/issues/506",
     "labels": [],
     "kind": null,
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-07-21T18:26:37Z"
   },
@@ -1493,7 +1593,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis/issues/484",
     "labels": [],
     "kind": null,
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-07-15T10:01:29Z"
   },
@@ -1504,7 +1604,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis/issues/483",
     "labels": [],
     "kind": null,
-    "assigned": false,
+    "assignees": [],
     "comments": 1,
     "createdAt": "2026-07-15T09:05:20Z"
   },
@@ -1520,7 +1620,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 1,
     "createdAt": "2026-07-11T04:05:36Z"
   },
@@ -1536,7 +1636,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 1,
     "createdAt": "2026-07-08T22:29:12Z"
   },
@@ -1552,7 +1652,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "debba",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/3198901?v=4"
+      }
+    ],
     "comments": 3,
     "createdAt": "2026-07-01T11:38:32Z"
   },
@@ -1563,7 +1668,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis/issues/381",
     "labels": [],
     "kind": null,
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "NewtTheWolf",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/59208097?v=4"
+      }
+    ],
     "comments": 0,
     "createdAt": "2026-06-25T18:25:35Z"
   },
@@ -1579,7 +1689,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 2,
     "createdAt": "2026-06-19T16:28:06Z"
   },
@@ -1595,7 +1705,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 4,
     "createdAt": "2026-06-19T14:35:43Z"
   },
@@ -1611,7 +1721,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-06-19T13:58:23Z"
   },
@@ -1627,7 +1737,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 2,
     "createdAt": "2026-06-19T03:25:16Z"
   },
@@ -1638,7 +1748,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis/issues/316",
     "labels": [],
     "kind": null,
-    "assigned": false,
+    "assignees": [],
     "comments": 7,
     "createdAt": "2026-06-10T03:06:09Z"
   },
@@ -1654,7 +1764,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 1,
     "createdAt": "2026-06-09T00:20:05Z"
   },
@@ -1670,7 +1780,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 7,
     "createdAt": "2026-06-08T12:55:01Z"
   },
@@ -1686,7 +1796,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 1,
     "createdAt": "2026-06-02T13:53:58Z"
   },
@@ -1702,7 +1812,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 2,
     "createdAt": "2026-05-19T09:24:12Z"
   },
@@ -1713,7 +1823,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "url": "https://github.com/TabularisDB/tabularis/issues/205",
     "labels": [],
     "kind": null,
-    "assigned": false,
+    "assignees": [],
     "comments": 1,
     "createdAt": "2026-05-16T18:20:43Z"
   },
@@ -1737,7 +1847,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 5,
     "createdAt": "2026-05-14T09:30:36Z"
   },
@@ -1753,7 +1863,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 3,
     "createdAt": "2026-05-12T10:44:41Z"
   },
@@ -1769,7 +1879,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-04-14T21:54:38Z"
   },
@@ -1785,7 +1895,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-04-14T21:54:36Z"
   },
@@ -1801,7 +1911,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-04-14T21:54:33Z"
   },
@@ -1817,7 +1927,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-04-14T21:54:30Z"
   },
@@ -1833,7 +1943,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-04-14T21:54:27Z"
   },
@@ -1849,7 +1959,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-04-14T21:54:24Z"
   },
@@ -1865,7 +1975,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 2,
     "createdAt": "2026-04-14T21:54:22Z"
   },
@@ -1881,7 +1991,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-04-14T21:54:19Z"
   },
@@ -1897,7 +2007,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-04-14T21:54:16Z"
   },
@@ -1913,7 +2023,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-04-14T21:54:13Z"
   },
@@ -1929,7 +2039,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "bug",
-    "assigned": false,
+    "assignees": [],
     "comments": 7,
     "createdAt": "2026-03-17T08:04:10Z"
   },
@@ -1945,7 +2055,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 4,
     "createdAt": "2026-03-09T11:32:26Z"
   },
@@ -1961,7 +2071,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "debba",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/3198901?v=4"
+      }
+    ],
     "comments": 6,
     "createdAt": "2026-03-02T17:09:08Z"
   },
@@ -1981,7 +2096,12 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": true,
+    "assignees": [
+      {
+        "login": "debba",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/3198901?v=4"
+      }
+    ],
     "comments": 0,
     "createdAt": "2026-02-27T18:03:40Z"
   },
@@ -2001,7 +2121,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 5,
     "createdAt": "2026-02-10T07:45:53Z"
   },
@@ -2021,7 +2141,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 0,
     "createdAt": "2026-02-10T07:40:15Z"
   },
@@ -2041,7 +2161,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 2,
     "createdAt": "2026-02-10T07:40:10Z"
   },
@@ -2061,7 +2181,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assigned": false,
+    "assignees": [],
     "comments": 5,
     "createdAt": "2026-02-10T07:40:08Z"
   }

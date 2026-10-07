@@ -244,7 +244,7 @@ async function buildCommunityIssues() {
                     : names.includes('enhancement') || names.includes('feature request')
                       ? 'feature'
                       : null,
-                assigned: (item.assignees ?? []).length > 0,
+                assignees: (item.assignees ?? []).map((a) => ({login: a.login, avatarUrl: a.avatar_url})),
                 comments: item.comments ?? 0,
                 createdAt: item.created_at,
             });
