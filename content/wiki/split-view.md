@@ -11,8 +11,8 @@ category: "Core Features"
 
 ## Activating Split View
 
-1. In the connection list, **select at least two connections** (hold `Ctrl`/`Cmd` and click each one).
-2. Right-click one of the selected connections and choose **Open in Split View**, or use the split view button that appears in the toolbar when multiple connections are selected.
+1. In the open connections rail of the sidebar, **select at least two connections** (hold `Ctrl`/`Cmd` and click each one).
+2. Right-click one of the selected connections and choose **Split Vertical** or **Split Horizontal**.
 3. The workspace divides into panes, each showing one connection.
 
 A split group can hold **up to four connections** (since v0.17.0). Add another open connection to an existing group from its context menu (**Add to Split Group**) or by dragging it onto the group badge in the connection rail. The badge renders the driver icons of its members in pane order — drag one icon over another to swap the two panels, or right-click an icon to remove just that connection from the group.
@@ -21,14 +21,14 @@ A split group can hold **up to four connections** (since v0.17.0). Add another o
 
 ## Layout Modes
 
-Split View supports two orientations:
+The orientation is picked when you activate the split:
 
 | Mode | Description |
 |------|-------------|
 | **Vertical** | Panes are placed side by side (left / right). Best for wide monitors. |
 | **Horizontal** | Panes are stacked (top / bottom). Useful on portrait or narrow screens. |
 
-Switch between modes from the toolbar at the top of the split workspace.
+To rearrange panels afterwards, drag a panel's **Move panel** grip onto an edge (left, right, top or bottom) of another panel; the dragged panel docks on that side, so a group can mix side-by-side and stacked panels.
 
 ## Working in Split Panes
 
@@ -37,17 +37,17 @@ Each pane behaves exactly like a standalone Tabularis session:
 - Browse schemas, tables, views, and routines in the sidebar.
 - Open the SQL editor, run queries, and inspect results in the data grid.
 - Open the Visual Query Builder or ER Diagram for that connection.
-- Execute exports (CSV, JSON) independently per pane.
+- Execute exports (CSV, JSON, Markdown) independently per pane.
 
 Tabs are local to each pane — closing a tab in the left pane does not affect the right pane.
 
 ## Resizing Panes
 
-Drag the **divider** between the two panes to adjust the relative widths (vertical mode) or heights (horizontal mode). Double-click the divider to reset to an equal 50/50 split.
+Drag a **divider** between panes to adjust their relative widths or heights. A focused divider can also be moved with the arrow keys, 5% per press.
 
 ## Closing Split View
 
-Click the **X** on a pane's header to close that connection and collapse the split. The remaining connection returns to the full-width view. Alternatively, close all but one connection to exit split view automatically.
+Click the **X** on a pane's header to close that connection and collapse the split. The remaining connection returns to the full-width view. Alternatively, close all but one connection to exit split view automatically, or pick **Separate Connections** from the group badge's context menu to dissolve the group.
 
 ## Use Cases
 

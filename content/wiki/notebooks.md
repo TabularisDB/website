@@ -11,7 +11,7 @@ category: "Core Features"
 
 ## Creating a Notebook
 
-Click the **+** dropdown in the tab bar and select **New Notebook**. A new tab opens with an empty notebook. From here you can add two types of cells:
+Click the **New Notebook** button (book icon) in the tab bar. A new tab opens with an empty notebook. From here you can add two types of cells:
 
 - **SQL** — a full Monaco editor with execution, inline results, charts, and per-cell schema selection.
 - **Markdown** — a text block with editing and preview toggle, useful for documenting queries, adding notes, or logically separating sections.
@@ -61,7 +61,7 @@ Configure the chart by selecting a **label column** (X axis / categories) and on
 
 ### Execution History
 
-Each SQL cell keeps a local history of past executions. Click the **History** icon in the cell header to browse previous queries and results. This is useful for comparing how results change as you iterate on a query.
+Each SQL cell keeps a local history of its last 10 executions. Click the **History** icon in the cell header to browse previous queries and results. This is useful for comparing how results change as you iterate on a query.
 
 ![Execution history panel](/img/posts/tabularis-notebook-execution-history-panel.png)
 
@@ -89,7 +89,7 @@ This enables building multi-step analytical workflows where each cell builds on 
 
 ## Notebook Parameters
 
-Notebooks support a global parameter system using `@paramName` syntax. Open the **Parameters** panel from the toolbar to define name/value pairs. Each `@paramName` token is substituted with its value across all SQL cells at execution time.
+Notebooks support a global parameter system using `@paramName` (or `${paramName}`) syntax. Open the **Parameters** panel from the toolbar to define name/value pairs. Each reference is substituted with its value across all SQL cells at execution time. Values are inserted as raw text, so add quotes yourself when a value is a string literal (for example `'2024-01-01'`). A reference to an undefined parameter is left as is (it may be a native SQL variable).
 
 This is useful for:
 - Running the same notebook against different date ranges or IDs without editing every cell.
@@ -101,11 +101,11 @@ This is useful for:
 
 ### Naming Cells
 
-Double-click the cell name in the header to rename it. Cell names are used in cross-cell variable references and in the outline panel. Unnamed cells show as "Untitled" with a preview of their content.
+Click the cell name in the header to rename it. Cell names appear in the outline panel; cross-cell variable references always use the cell position (`{{cell_N}}`), not the name. Unnamed cells show as "Untitled" with a preview of their content.
 
 ### Reordering
 
-Drag and drop cells to reorder them. Grab the drag handle on the left side of the cell header and move the cell to a new position.
+Drag and drop cells to reorder them. Grab the drag handle on the left side of the cell header and move the cell to a new position, or use the **Move Up** / **Move Down** arrows in the cell header.
 
 ### Collapsing
 
@@ -124,7 +124,9 @@ Click **Run All** in the notebook toolbar (or press `Cmd/Ctrl + Shift + Enter`) 
 - **Stop on Error** — halts execution when a cell fails, skipping remaining cells.
 - **Summary** — after completion, a summary panel shows success/failure/skipped counts with links to any errors.
 
-From the summary, you can also **Convert to Console** to extract all SQL cells into a single console tab.
+### Parallel cells
+
+Toggle **Parallel Execution (Run All)** in a SQL cell header to mark it as parallel. During Run All, all parallel cells run concurrently first, then the remaining cells run one by one in order.
 
 ![Parallel execution of concurrent cells](/img/posts/tabularis-notebook-parallel-execution-concurrent-cells.png)
 
@@ -140,7 +142,7 @@ If you have an AI provider configured in Settings, notebooks offer additional ca
 
 - **Generate SQL** — use the AI overlay to generate SQL from natural language, same as in the regular editor.
 - **Explain Query** — ask the AI to explain the SQL in a cell.
-- **Cell Naming** — click the AI icon on any cell to automatically generate a descriptive name based on its content. Use **Name All** in the toolbar to batch-generate names for all unnamed cells. The naming prompt is customizable in **Settings > AI > Notebook Cell Name Prompt**.
+- **Cell Naming** — click the AI icon on any cell to automatically generate a descriptive name based on its content. Click the sparkles icon in the **Outline** panel (*Generate names for unnamed cells with AI*) to batch-generate names for all unnamed cells. The naming prompt is customizable in **Settings > AI > Notebook Cell Name Prompt**.
 
 ![AI explain buttons and history](/img/posts/tabularis-notebook-ai-explain-buttons-history.png)
 
@@ -150,19 +152,19 @@ Notebooks are managed from the **Notebooks** section in the sidebar, which lists
 
 - **Search** the list by name.
 - **Open** a notebook with a single click.
-- Use the context menu to **rename**, **export**, **import**, **delete** (with confirmation), or **Save as HTML**.
+- Use the context menu to **rename**, **export**, **import**, **delete** (with confirmation), or **Export as HTML**.
 
 The list refreshes live — creating a notebook adds it immediately, and renames or deletions reflect without a manual reload. You can also rename a notebook directly from its editor tab by double-clicking the title.
 
 ### Edit History
 
-Notebook editing is undoable. Every structural change — adding, removing, reordering, or editing cells — is captured into a timeline. Open the **history panel** to scrub back through previous states and jump to any point; each entry is labeled by what changed.
+Notebook editing is undoable. Every structural change — adding, removing, reordering, or editing cells — is captured into a timeline. Open the **history panel** to scrub back through previous states and jump to any point; each entry is labeled by what changed. When focus is not inside a cell editor or input, `Cmd/Ctrl + Z` undoes and `Cmd/Ctrl + Shift + Z` (or `Ctrl + Y`) redoes.
 
 ![Notebook edit history panel](/img/posts/tabularis-notebook-edit-history.png)
 
 ## Persistence
 
-Notebooks are saved automatically to disk in the app config directory (JSON format), organized **per connection** under `notebooks/<connectionId>/<notebookId>`. Legacy flat notebooks from older versions are migrated automatically the first time their connection loads. Saving is debounced — changes are written after you stop editing, not on every keystroke.
+Notebooks are saved automatically to disk in the app config directory (JSON format), organized **per connection** under `notebooks/<connectionId>/<notebookId>`. Legacy flat notebooks from older versions are migrated automatically the first time you open them. Saving is debounced — changes are written after you stop editing, not on every keystroke.
 
 | Platform | Path |
 |----------|------|
@@ -170,11 +172,13 @@ Notebooks are saved automatically to disk in the app config directory (JSON form
 | Linux | `~/.config/tabularis/notebooks/` |
 | Windows | `%APPDATA%\tabularis\notebooks\` |
 
+If you set a custom storage location, notebooks are stored there instead.
+
 ## Import & Export
 
 ### Notebook format
 
-Export a notebook as a `.tabularis-notebook` file to share with colleagues. Import via the toolbar button — the file is loaded into a new notebook tab with all cells, names, and parameters preserved.
+Export a notebook as a `.tabularis-notebook` file to share with colleagues. Import from the notebook toolbar or from the **Notebooks** sidebar context menu. Importing from the toolbar creates a new notebook from the file and switches the current tab to it; all cells, names, and parameters are preserved.
 
 ### HTML Export
 
@@ -190,3 +194,6 @@ Individual cell results can be exported to CSV or JSON using the result toolbar,
 |--------|-------|-----------------|
 | Run current cell | `Cmd + Enter` | `Ctrl + Enter` |
 | Run All cells | `Cmd + Shift + Enter` | `Ctrl + Shift + Enter` |
+| Undo / Redo notebook edits | `Cmd + Z` / `Cmd + Shift + Z` | `Ctrl + Z` / `Ctrl + Shift + Z` or `Ctrl + Y` |
+
+The Run All shortcut can be changed in **Settings → Keyboard Shortcuts**.

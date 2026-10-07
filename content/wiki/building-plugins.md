@@ -5,11 +5,11 @@ excerpt: "Scaffold a working database driver in minutes using @tabularis/create-
 category: "Integration"
 ---
 
-The [Plugin System](/wiki/plugins) tells you *what* a Tabularis plugin is. This page tells you *how* to write one without reading the 1100-line protocol reference first. When it runs, [Publishing Plugins](/wiki/plugin-development) takes it to the registry.
+The [Plugin System](/wiki/plugins) tells you *what* a Tabularis plugin is. This page tells you *how* to write one without reading the full [protocol guide](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md) first. When it runs, [Publishing Plugins](/wiki/plugin-development) takes it to the registry.
 
 Two npm packages handle the boilerplate:
 
-- **[`@tabularis/create-plugin`](https://www.npmjs.com/package/@tabularis/create-plugin)** — a scaffolder CLI. Generates a runnable Rust project with every JSON-RPC handler the host can call pre-wired, a cross-platform GitHub Actions release workflow, and (optionally) a TypeScript/React UI extension bundle ready to build with Vite.
+- **[`@tabularis/create-plugin`](https://www.npmjs.com/package/@tabularis/create-plugin)** — a scaffolder CLI. Generates a runnable Rust project with the core JSON-RPC handlers pre-wired, a cross-platform GitHub Actions release workflow, and (optionally) a TypeScript/React UI extension bundle ready to build with Vite.
 - **[`@tabularis/plugin-api`](https://www.npmjs.com/package/@tabularis/plugin-api)** — TypeScript types and runtime hooks for UI extensions. Gives you `defineSlot(...)` with fully typed context per slot, plus typed wrappers for `usePluginSetting`, `usePluginQuery`, `usePluginToast`, `usePluginModal`, and a few others.
 
 ## From zero to driver
@@ -23,10 +23,12 @@ just dev-install
 That's the whole flow. The generated project:
 
 - Compiles and runs on first `cargo check` — no blank files.
-- Contains stubs for every RPC method the host can call. Metadata methods return empty arrays (plugin loads cleanly), query/CRUD/DDL methods return `-32601 method not implemented`.
+- Wires the core RPC methods (metadata, views, routines, query execution, CRUD and DDL) to stub handlers. Metadata methods return empty results so the plugin loads cleanly. Every other method — triggers, materialized views, BLOB operations, sessions, batch execution, user and routine management — goes to a catch-all that returns a `-32601` error. Change that catch-all's message to `Method not found` if you want the host to use its [fallbacks](/wiki/plugin-protocol#signalling-an-unimplemented-method) for optional methods.
 - Has a working `test_connection` stub that returns success, so your driver appears in Tabularis' connection picker immediately after `just dev-install`.
 - Ships unit-tested utility functions (`quote_identifier`, `paginate`) to set the bar for the rest.
 - Includes a `.github/workflows/release.yml` with a 5-platform matrix — tag `v0.1.0`, push, get binaries.
+- Starts with a conservative manifest (`readonly: true`, `manage_tables: false`); turn capabilities on as you implement them.
+- Comes with `just repl`, a local REPL (`cargo run --bin test_plugin`) that sends JSON-RPC calls to your driver over stdio.
 
 Pick the template that matches your data source:
 
@@ -37,20 +39,20 @@ Pick the template that matches your data source:
 | `folder`    | directory of files        | CSV folder, Parquet lake |
 | `api`       | no connection form needed | REST APIs, Google Sheets, HackerNews |
 
-Add `--with-ui` to also scaffold a React/Vite subworkspace targeting `data-grid.toolbar.actions` as a hello-world [UI extension](/wiki/ui-extensions).
+Add `--with-ui` to also scaffold a React/Vite subworkspace with a hello-world [UI extension](/wiki/ui-extensions). Other flags: `--quote` (identifier quote character), `--dir` (target directory) and `--no-git` (skip `git init`).
 
 ## Implementation order that minimises surprises
 
 Handlers you fill in first → features that light up:
 
 1. `initialize` — receive the plugin's saved settings (OAuth tokens, paths, API keys).
-2. `test_connection` — turn the "Test" button in the connection form into a real check.
+2. `test_connection` — turn the "Test Connection" button in the connection form into a real check.
 3. `get_databases` + `get_tables` + `get_columns` — sidebar populates with real data.
 4. `execute_query` — users can run SQL in the editor.
 5. `insert_record` / `update_record` / `delete_record` — inline row editing in the data grid.
 6. `get_create_table_sql` and friends — SQL preview for DDL operations.
 
-Once `get_tables` and `get_columns` work, the driver also supplies schema context to **AI Query Assist** automatically. For databases that can fetch the first tables, columns, and foreign keys more efficiently in one operation, optionally add `get_ai_schema_context`; returning `-32601` keeps the host's standard metadata fallback. The plugin returns structured metadata, while Tabularis formats and sends the AI prompt.
+Once `get_tables` and `get_columns` work, the driver also supplies schema context to **AI Query Assist** automatically. For databases that can fetch the first tables, columns, and foreign keys more efficiently in one operation, optionally add `get_ai_schema_context`; returning a `-32601` "Method not found" error keeps the host's standard metadata fallback. The plugin returns structured metadata, while Tabularis formats and sends the AI prompt.
 
 Every step is independently shippable. A plugin with only the first three is already useful as a read-only viewer.
 
@@ -58,7 +60,15 @@ A driver that serves several engines can also report capabilities and data types
 
 ## UI extensions
 
-Add `--with-ui` to the scaffold and the plugin also gets a React/Vite subworkspace in `ui/` with a hello-world contribution to `data-grid.toolbar.actions`. `just dev-install` builds the bundle along with the driver and copies `ui/dist/index.js` into the plugin folder, so the button shows up in the table toolbar. If you add more bundles, extend the `dev-install` recipe to copy them too.
+Add `--with-ui` to the scaffold and the plugin also gets a React/Vite subworkspace in `ui/` with a hello-world contribution for `data-grid.toolbar.actions`. `just dev-install` copies `ui/dist/index.js` into the plugin folder when it exists. The host only loads modules declared in the manifest, so add the matching entry to `.tabularium` yourself:
+
+```json
+"ui_extensions": [
+  { "slot": "data-grid.toolbar.actions", "module": "ui/dist/index.js" }
+]
+```
+
+If you add more bundles, extend the `dev-install` recipe to copy them too.
 
 Slots, the manifest declaration, bundle setup, `defineSlot`, the hook catalogue and translations are covered in [UI Extensions](/wiki/ui-extensions).
 

@@ -13,20 +13,26 @@ In Tabularis, the UI runs in a secure, isolated WebView, while all database conn
 
 ```typescript
 // Frontend (React)
-const result = await invoke<QueryResponse>("execute_query", { 
+const result = await invoke<QueryResult>("execute_query", {
     connectionId: "conn-123",
-    query: "SELECT * FROM users"
+    query: "SELECT * FROM users",
+    limit: 500,
+    page: 1,
 });
 ```
 ```rust
 // Backend (Rust)
 #[tauri::command]
-async fn execute_query(
+pub async fn execute_query<R: Runtime>(
+    app: AppHandle<R>,
+    state: State<'_, QueryCancellationState>,
     connection_id: String,
     query: String,
-    page: u32,
-    page_size: u32,
-) -> Result<QueryResponse, String> {
+    limit: Option<u32>,      // page size
+    page: Option<u32>,
+    schema: Option<String>,
+    session_id: Option<String>, // pins a tab to one pooled connection
+) -> Result<QueryResult, String> {
     // Rust resolves the driver, runs the query, and returns a paginated result
 }
 ```
@@ -35,16 +41,19 @@ async fn execute_query(
 
 ### 1. Unified Driver Trait
 To support diverse database engines, Tabularis implements a strict trait (`DatabaseDriver`) in Rust. This ensures that the frontend React code does not need to know the specifics of PostgreSQL vs MySQL dialects when requesting schemas.
-- **Native Drivers**: Built upon the `sqlx` crate, providing asynchronous, connection-pooled access to PostgreSQL, MySQL, and SQLite.
+- **Native Drivers**: Asynchronous, connection-pooled access to MySQL and SQLite through the `sqlx` crate, and to PostgreSQL through `tokio-postgres` with a `deadpool-postgres` pool.
 - **JSON-RPC Drivers**: For plugins, the Rust backend spawns child processes and implements the `DatabaseDriver` trait by proxying method calls to the plugin via stdin/stdout.
 
 ### 2. Connection State & Concurrency
 Connection pools are managed using `tokio` and thread-safe static globals. Each driver (PostgreSQL, MySQL, SQLite) has its own pool map:
 ```rust
-// Three separate static globals, one per driver
-static POSTGRES_POOLS: Lazy<Arc<RwLock<HashMap<String, Pool<Postgres>>>>> = ...;
-static MYSQL_POOLS:    Lazy<Arc<RwLock<HashMap<String, Pool<MySql>>>>>    = ...;
-static SQLITE_POOLS:   Lazy<Arc<RwLock<HashMap<String, Pool<Sqlite>>>>>   = ...;
+// Three separate static globals, one per driver (RwLock is tokio::sync::RwLock)
+type PoolMap<T> = Arc<RwLock<HashMap<String, Pool<T>>>>;          // sqlx pools
+type PgPoolMap  = Arc<RwLock<HashMap<String, deadpool_postgres::Pool>>>;
+
+static MYSQL_POOLS:    Lazy<PoolMap<MySql>>  = ...;
+static POSTGRES_POOLS: Lazy<PgPoolMap>       = ...;
+static SQLITE_POOLS:   Lazy<PoolMap<Sqlite>> = ...;
 ```
 Using `RwLock` allows multiple concurrent readers while ensuring exclusive access for writes, so the UI remains responsive while connections are being established or closed.
 
@@ -59,5 +68,5 @@ When a query returns 100,000 rows, Tabularis doesn't attempt to load everything 
 - **Monaco & Web Workers**: The SQL Editor parsing logic is offloaded to Web Workers, preventing typing latency on the main UI thread.
 
 ## Security Model & Process Isolation
-- **No `eval()`**: The UI operates under a strict Content Security Policy (CSP).
-- **Plugin Sandbox**: External plugins run as separate OS processes. A memory leak or panic in a community plugin will crash the plugin process, but Tabularis will catch the EOF on stdout, display an error notification, and keep the main application running flawlessly.
+- **Plugin driver processes**: The database side of an external plugin runs as a separate OS process. A memory leak or panic in a community driver crashes the plugin process; Tabularis detects the closed stdout, logs the failure and keeps the main application running.
+- **Plugin code in the WebView**: Plugin UI extensions and EXPLAIN parser bundles are JavaScript that runs inside the main WebView (loaded with `new Function`), not in a separate process. The app does not set a Content Security Policy (`csp` is `null` in `tauri.conf.json`), so only install plugins you trust.

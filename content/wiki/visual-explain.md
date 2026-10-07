@@ -27,7 +27,7 @@ The header shows the connection name, driver icon, database, and schema so you a
 
 ## Which Queries Can Be Explained
 
-Visual EXPLAIN accepts DML statements: **SELECT**, **INSERT**, **UPDATE**, **DELETE**, **REPLACE**, **WITH** (CTEs), and **TABLE**.
+Visual EXPLAIN accepts DML statements: **SELECT**, **INSERT**, **UPDATE**, **DELETE**, **REPLACE**, **MERGE**, **WITH** (CTEs), and **TABLE**.
 
 DDL statements like CREATE, DROP, ALTER, and TRUNCATE are blocked — they are not valid inputs for `EXPLAIN` and would produce confusing errors from the database engine. If you try to explain a DDL statement, Tabularis shows an error message before anything is sent to the server.
 
@@ -45,10 +45,12 @@ In the standalone modal, the default depends on the query type:
 
 | Query type | Default |
 |-----------|---------|
-| SELECT, WITH, TABLE | ANALYZE on |
-| INSERT, UPDATE, DELETE | ANALYZE off, with a warning |
+| Statements starting with INSERT, UPDATE, DELETE, DROP, ALTER or TRUNCATE | ANALYZE off, with a warning |
+| Everything else (SELECT, WITH, TABLE, REPLACE, MERGE) | ANALYZE on |
 
-For data-modifying queries, a warning icon appears next to the toggle. Since `EXPLAIN ANALYZE` executes the statement, you need to enable it explicitly. The choice is bound to the query, schema and connection rather than carried over to a new source.
+Only the first keyword is checked: a statement counts as data-modifying when it starts with `INSERT`, `UPDATE`, `DELETE`, `DROP`, `ALTER` or `TRUNCATE`. For those, a warning icon appears next to the toggle, and since `EXPLAIN ANALYZE` executes the statement, you need to enable it explicitly. The choice is bound to the query, schema and connection rather than carried over to a new source.
+
+> **Untick Analyze yourself for `REPLACE`, `MERGE` and data-modifying CTEs** (for example `WITH deleted AS (DELETE … RETURNING …) SELECT …`). They are not recognized as data-modifying, so they open with ANALYZE on and no warning, and running the plan would really change your data. The same applies to data-modifying statements that begin with a comment.
 
 **Notebook exception:** the inline Query Plan section starts with plain EXPLAIN even for SELECT. Selecting Analyze does not run anything until you click Re-run. Its popout displays the already-fetched plan and has no separate execution controls.
 
@@ -71,12 +73,12 @@ Graph nodes, the table view, and the overview bar rank and colour on these value
 
 Diagnostic checks run on every node and surface as labelled chips on the graph, icons in the table and diagram rows, and one-line explanations in the node details panel:
 
-- **Hotspot** — the node accounts for ≥ 25% of total plan time
-- **More/fewer rows than planned** — the optimizer's estimate is off by ≥ 4x (warning) or ≥ 10x (critical)
-- **Sorted on disk** — the sort spilled out of memory
-- **Filter discards most rows** — ≥ 90% of rows read are thrown away
+- **Hotspot** — the node accounts for ≥ 25% of total plan time and takes at least 1 ms
+- **More/fewer rows than planned** — the optimizer's estimate is off by ≥ 4x (warning) or ≥ 10x (critical); skipped for nodes with fewer than 10 actual rows
+- **Sorted on disk** — the sort spilled out of memory, or the node wrote temporary blocks
+- **Filter discards most rows** — ≥ 90% of rows read are thrown away, and at least 1,000 rows are discarded
 - **Large sequential scan** — a seq/full scan of ≥ 10,000 rows
-- **Many heap fetches**, **fewer workers than planned**, **executed many times** (≥ 1,000 loops), **read from disk** (≥ 50% of block accesses missed shared buffers), and **never executed**
+- **Many heap fetches** (1,000 or more), **fewer workers than planned**, **executed many times** (≥ 1,000 loops), **read from disk** (≥ 50% of block accesses missed shared buffers, with at least 1,000 blocks read from disk), and **never executed**
 
 ![Graph view with finding chips on the nodes and one-line explanations in the details panel](/img/tabularis-explain-findings.png)
 
@@ -144,9 +146,9 @@ The raw view shows the database response in a read-only Monaco editor with synta
 
 The AI tab sends the query and the raw EXPLAIN output to the configured AI provider and returns a structured analysis: what the query is doing, where the bottlenecks are, which indexes might help, and which rewrites are worth testing.
 
-The analysis is generated in the language configured in Tabularis (any of the eleven supported UI languages, from Italian to Japanese to Korean), so you do not need to reason about plans in English if that is not your working language.
+When you pick a language explicitly in Tabularis (any of the eleven supported UI languages, from Italian to Japanese to Korean), the analysis is generated in that language, so you do not need to reason about plans in English if that is not your working language. With the language set to **Auto** (the default), the analysis is always in English.
 
-This tab requires an AI provider to be configured in **Settings > AI**. If none is set up, a warning is shown. It works with all supported providers: OpenAI, Anthropic, Ollama, OpenRouter, MiniMax, and custom OpenAI-compatible endpoints.
+This tab only appears when AI is enabled in **Settings > AI**. If no AI provider is selected, the tab shows a warning above the analysis, which then fails. It works with all supported providers: OpenAI, Anthropic, Ollama, OpenRouter, MiniMax, and custom OpenAI-compatible endpoints.
 
 The system prompt used for plan analysis can be customized in **Settings > AI > Explain Plan Analysis Prompt**.
 
@@ -168,8 +170,9 @@ Each finding is a clickable card — click it to select the corresponding node i
 
 ## Node Detail Panel
 
-The detail panel appears on the right side of both the graph and table views. It shows three sections for the selected node:
+The detail panel appears on the right side of the graph, diagram and table views. It shows these sections for the selected node:
 
+- **Findings** — the per-node findings described above, each with a one-line explanation
 - **General** — node type, relation, cost (startup to total), estimated rows, filter, index condition, join type, hash condition
 - **Analyze Data** — actual rows, actual time, loops, buffers hit, buffers read (only when ANALYZE was used)
 - **Extra Details** — any additional fields from the engine that don't fit the standard categories (e.g., MariaDB's `r_filtered`, MySQL's `using_temporary_table`)

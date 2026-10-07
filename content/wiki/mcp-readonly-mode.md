@@ -17,10 +17,12 @@ Before the MCP `run_query` tool dispatches to a driver, the SQL is run through a
 
 | Result      | First keyword                                                           |
 |-------------|-------------------------------------------------------------------------|
-| `select`    | `SELECT` · `SHOW` · `EXPLAIN` (see note below) · `DESCRIBE` · `PRAGMA` · `VALUES` |
+| `select`    | `SELECT` · `SHOW` · `EXPLAIN` (see note below) · `DESCRIBE` · `DESC` · `PRAGMA` · `VALUES` |
 | `write`     | `INSERT` · `UPDATE` · `DELETE` · `MERGE` · `REPLACE`                    |
 | `ddl`       | `CREATE` · `DROP` · `ALTER` · `TRUNCATE` · `RENAME` · `GRANT` · `REVOKE` · `COMMENT` |
-| `unknown`   | Anything else (including ambiguous CTEs).                               |
+| `unknown`   | Anything else, including empty input and multi-statement payloads.      |
+
+`WITH` queries (CTEs) are classified by what they contain: `ddl` if it contains `CREATE`, `DROP`, `ALTER`, `TRUNCATE` or `RENAME`, `write` if any DML keyword appears, `select` otherwise. Leading parentheses are skipped, so `(SELECT …) UNION (SELECT …)` counts as `select`.
 
 Read-only mode lets `select` through and **rejects everything else** — including `unknown`. That's deliberate (fail-closed): the classifier strips strings, comments and quoted identifiers before scanning, and CTEs that end in a write are caught, but if it can't classify with confidence the call is blocked rather than guessed at.
 
@@ -39,7 +41,7 @@ The block is also recorded in the [audit log](/wiki/ai-audit-log) with `status =
 
 ## Two modes of configuration
 
-In **MCP → Safety → Read-only mode** you choose how the policy is applied across connections:
+In **MCP Server → Safety → Read-only mode** you choose how the policy is applied across connections:
 
 ### Default off, allow-list of read-only connections
 
@@ -55,7 +57,7 @@ Tick the connections that are *allowed to write*.
 
 Use this when you want a deny-by-default policy: every connection is read-only unless you've explicitly cleared a single safe one (`local-sqlite`, `playground`, …).
 
-The toggle on the modal flips the meaning of the checkbox list automatically.
+The **Make all MCP queries read-only** toggle flips the meaning of the checkbox list automatically: it is labelled **Read-only connections** when the toggle is off and **Allow writes from MCP** when it is on.
 
 :::newsletter:::
 
@@ -70,8 +72,13 @@ When the agent calls `run_query` against a read-only connection with a non-`SELE
 ```json
 {
   "mcpReadonlyDefault": false,
-  "mcpReadonlyConnections": ["prod-readonly", "staging-billing"]
+  "mcpReadonlyConnections": [
+    "3f2a9c1e-8b4d-4e7a-9f10-2c6d5e8a7b01",
+    "a7c41d02-5e9f-4b38-8d21-6f0e3b9c4a55"
+  ]
 }
 ```
+
+`mcpReadonlyConnections` holds connection **IDs**, not connection names. Ticking connections in the Safety tab fills it in for you.
 
 The two fields together describe the full policy — see the two modes above for what `mcpReadonlyConnections` means depending on the value of `mcpReadonlyDefault`.

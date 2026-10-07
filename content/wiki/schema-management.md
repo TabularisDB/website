@@ -9,15 +9,25 @@ While knowing how to write `ALTER TABLE` statements is essential, Tabularis prov
 
 ![Schema Management & ER Diagram](/img/tabularis-schema-management-er-diagram.png)
 
-## Visual Schema Editor
+## Visual Schema Editing
 
-The left sidebar is a fully interactive management suite. Right-click any table to enter the Schema Editor.
+Schema changes are made from the Explorer sidebar, each through its own modal:
+
+- **Create a table**: the **+** button on the Tables header (tooltip "Create New Table") opens a modal with the table name and a column grid (Name, Type, Len, PK, NN, AI, Default).
+- **Table context menu**: right-click a table for **View Schema** (read-only structure), **Add Column**, **Generate SQL**, **View ER Diagram** and **Delete Table**.
+- **Column context menu**: right-click a column for **Modify Column** and **Delete Column**.
+- **Indexes and Foreign Keys folders**: right-click to **Add Index** / **Add Foreign Key**; right-click an existing entry to **Delete Index** / **Delete FK**.
 
 ### Modifying Structures
-- **Columns**: Add, rename, or drop columns. Change data types using a **searchable type picker** — start typing to filter the full list of available types for your database engine.
-- **Constraints**: Visually toggle `NOT NULL`, `UNIQUE`, and `PRIMARY KEY` constraints. Set default values with a simple text input.
-- **Indexes**: Manage b-tree, hash, or spatial indexes to optimize query performance.
-- **Foreign Keys**: Define relationships. Select the target table and column, and specify cascading rules (`ON DELETE CASCADE`, `ON UPDATE RESTRICT`).
+- **Columns**: Add, rename, modify or drop columns. Change data types using a **searchable type picker** — start typing to filter the full list of available types for your database engine.
+- **Constraints**: The column modal has **Not Null**, **Primary Key** and **Auto Increment** toggles, and a **Default Value** input. For uniqueness, create an index with **Unique Index** checked.
+- **Indexes**: Create an index from a name, one or more columns and an optional **Unique Index** flag. The database's default index method is used.
+- **Foreign Keys**: Define relationships. Select the target table and column, and the `ON DELETE` / `ON UPDATE` actions: `NO ACTION` (default), `RESTRICT`, `CASCADE`, `SET NULL` or `SET DEFAULT`.
+
+### Driver limitations
+
+- **SQLite** only supports renaming columns through the column modal, and cannot add or drop foreign keys on an existing table.
+- The **Primary Key** toggle in the column modal works only when adding a column, and is disabled on drivers that only support primary keys at table creation time.
 
 ### Table and Column Comments
 
@@ -42,7 +52,7 @@ Enabling auto-increment forces `NOT NULL` and clears any default value, matching
 The type picker includes types from popular PostgreSQL extensions — `hstore`, `ltree`, `citext`, PostGIS (`geometry`, `geography`), and more. When you select one of these types, Tabularis tracks which extension is required so you can verify the extension is enabled on the target database before applying the DDL.
 
 ### Safe DDL Generation
-When you make visual changes, Tabularis does not apply them blindly. It compiles your actions into a set of precise DDL (`CREATE`, `ALTER`, `DROP`) statements and presents them in a preview window. You can review the exact SQL that will run, copy it for version control migrations, or click "Apply" to execute it.
+When you make visual changes, Tabularis does not apply them blindly. Each modal compiles your input into the exact DDL (`CREATE`, `ALTER`, `DROP`) and shows it in an inline **SQL Preview** (the Create Table modal has a **Show SQL Preview** toggle), so you can review or copy it before running it with the modal's own button (**Create Table**, **Add Column** / **Save Changes**, **Create Index**, **Create Foreign Key**).
 
 ## Generate SQL
 
@@ -68,6 +78,6 @@ The modal is also reachable from the [Command Palette](/wiki/quick-navigator)'s 
 
 ## ER Diagrams
 
-Right-click any database or schema in the sidebar and choose **Open ER Diagram** to open a live, interactive entity-relationship diagram for that schema. Tables appear as nodes, foreign keys as directed edges. The layout is computed automatically using the **Dagre** engine.
+Click **View Schema Diagram** in the Explorer header, or right-click a database (multi-database connections) or a table (to focus on it) and choose **View ER Diagram**, to open a live, interactive entity-relationship diagram for that schema. Tables appear as nodes, foreign keys as directed edges. The layout is computed automatically using the **Dagre** engine.
 
 For full details — navigation, layout options, export, and per-driver FK support — see the dedicated [ER Diagram](/wiki/er-diagram) page.

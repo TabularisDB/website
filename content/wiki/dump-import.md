@@ -7,7 +7,7 @@ category: "Database Objects"
 
 ![SQL Dump & Import](/img/tabularis-sql-dump-import.png)
 
-Tabularis lets you dump a database to a `.sql` file and import an existing `.sql` file back into any connection — right from the sidebar, without leaving the app.
+Tabularis lets you dump a database to a `.sql` file and import an existing `.sql` file back into a PostgreSQL, MySQL/MariaDB or SQLite connection — right from the sidebar, without leaving the app.
 
 ## Dump a Database
 
@@ -15,11 +15,11 @@ Right-click a database in the sidebar and choose **Dump Database**. A modal open
 
 | Option | Description |
 | :--- | :--- |
-| **Include Structure** | Exports `CREATE TABLE`, `CREATE INDEX`, and other DDL statements. |
-| **Include Data** | Exports `INSERT INTO` statements for all rows. |
-| **Table selection** | Choose which tables to include. Use **Select All** / **Deselect All** for convenience. |
+| **Structure (DDL)** | Exports `CREATE TABLE`, `CREATE INDEX`, and other DDL statements, each table preceded by `DROP TABLE IF EXISTS`. |
+| **Data (INSERT)** | Exports `INSERT INTO` statements for all rows. |
+| **Select Tables** | Choose which tables to include. Use **Select All** / **Deselect All** for convenience. |
 
-At least one of _Include Structure_ or _Include Data_ must be selected, and at least one table must be chosen before starting.
+At least one of _Structure_ or _Data_ must be selected, and at least one table must be chosen before starting.
 
 Since v0.23.0 string literals are escaped per dialect (MySQL doubles backslashes and writes NUL as `\0`; PostgreSQL and SQLite only escape quotes) and `JSON` / `JSONB` columns are written as JSON literals with UTF-8 emitted as-is, so dumps round-trip on re-import. Before that, PostgreSQL and SQLite text columns came back with doubled backslashes and MySQL JSON columns could fail to import or lose non-ASCII text.
 
@@ -27,25 +27,22 @@ Click **Export** to open the OS file save dialog. The default filename is `<data
 
 ## Import a Database
 
-Right-click a database in the sidebar and choose **Import Database**, then select a `.sql` file using the file picker. The import starts immediately and shows:
+Right-click a database in the sidebar and choose **Run SQL File...**, then select a `.sql` file — or a `.zip` archive, in which case the first `.sql` file inside it is used. After you confirm the warning that the import may overwrite existing data, the import starts and shows:
 
-- A progress bar with the number of statements executed and a percentage (when the total is known in advance).
-- An indeterminate progress bar for files where the total statement count cannot be pre-calculated.
+- An indeterminate progress bar with the number of statements executed so far.
 - The elapsed time.
 
 The import can be cancelled at any time. Tabularis will close the modal automatically after a successful import.
 
-> **Note**: Import executes the SQL statements in your file sequentially. If a statement fails, execution stops and the error is displayed. Tabularis does not wrap the import in a transaction automatically — if you want atomicity, ensure your dump file contains `BEGIN;` and `COMMIT;` statements.
+> **Note**: Import executes the SQL statements in your file sequentially, inside a single transaction that is committed at the end. If a statement fails, execution stops and the error is displayed. To speed up loading, MySQL/MariaDB imports turn off `FOREIGN_KEY_CHECKS` and `UNIQUE_CHECKS` for the session, and PostgreSQL imports defer constraints (`SET CONSTRAINTS ALL DEFERRED`). Statements that commit implicitly on the server (such as DDL on MySQL) are not rolled back by a later failure.
 
-## Schema-Level Dump & Import (PostgreSQL)
+## Schemas (PostgreSQL)
 
-For PostgreSQL connections, dump and import operations are also available at the **schema** level. Right-click any schema node in the sidebar to access **Dump Schema** or **Import into Schema**. The operation covers the entire selected schema and follows the same streaming and cancellation model as the database-level dump.
-
-This is particularly useful when working with multi-schema databases where you want to snapshot or restore a single schema without touching the rest of the database.
+On PostgreSQL connections, dump and import work on the **active schema**: the dump reads the selected tables from it, and the import runs with `search_path` set to it. There are no separate schema-level menu entries.
 
 ## How to Access
 
-- **Database-level**: right-click a database node in the left sidebar.
-- **Schema-level** (PostgreSQL): right-click a schema node in the left sidebar.
+- Right-click a database node in the left sidebar → **Dump Database** / **Run SQL File...**
+- The same two actions are in the actions menu and buttons at the top of the Explorer.
 
-Both actions work with all native drivers (PostgreSQL, MySQL, SQLite) and with plugin drivers that implement the relevant commands.
+Both actions are available for the built-in drivers only (PostgreSQL, MySQL/MariaDB, SQLite); plugin drivers are not supported.

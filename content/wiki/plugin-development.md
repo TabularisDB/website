@@ -49,6 +49,8 @@ Point `$schema` at the registry schema for your kind to get autocomplete and inl
 | `support` | `object` | — | Where end users go when they have a problem with the plugin. |
 | `min_runtime_version` | `string` | — | Minimum host runtime version (semver range or single version). The host refuses to load the plugin on older runtimes. |
 
+The registry treats `description` as optional, but the Tabularis host does not: a driver manifest without `name`, `version` and `description` fails to load or install. Always include all three.
+
 ## Plugin kinds
 
 The extension fields and example manifests for every plugin kind are on the [Plugin Kinds](/wiki/plugin-kinds) page.

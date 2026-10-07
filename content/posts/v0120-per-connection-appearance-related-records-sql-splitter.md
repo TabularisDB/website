@@ -138,7 +138,7 @@ If you've been editing rows in a Discord-style table and watching the wrong ones
 
 If you've been pointing Tabularis at RDS with a self-signed cert and bouncing off "needs CA certificate", this is the upgrade.
 
-Full reference in the wiki: [Connections → TLS & CA Certificates](/wiki/connections#tls--ca-certificates-postgresql).
+Full reference in the wiki: [Connections → TLS & CA Certificates](/wiki/connections#tls--ca-certificates).
 
 ---
 

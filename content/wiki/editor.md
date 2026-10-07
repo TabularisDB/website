@@ -39,7 +39,7 @@ Since v0.24.0, when multiple tables are in scope, autocomplete ranks columns fro
 
 ### Accepting suggestions
 
-When the autocomplete dropdown is open, **Enter accepts the highlighted suggestion by default** (matching the behavior of every other Monaco-based editor). If you prefer Enter to insert a newline instead, toggle **Settings → Editor → Accept suggestion on Enter** off. The setting is honored across every editor surface — main SQL tabs, notebook cells, and the Raw SQL tab of the trigger editor.
+When the autocomplete dropdown is open, **Enter accepts the highlighted suggestion by default** (matching the behavior of every other Monaco-based editor). If you prefer Enter to insert a newline instead, toggle **Settings → Appearance → SQL Editor → Accept Suggestion with Enter** off. The setting is honored across every editor surface — main SQL tabs, notebook cells, and the Raw SQL tab of the trigger editor.
 
 `Tab` always accepts the highlighted suggestion, regardless of the setting.
 
@@ -64,8 +64,8 @@ The Monaco integration brings powerful developer features:
 | **Add Next Occurrence** | `Cmd + D` | `Ctrl + D` | Select the next occurrence of the current selection and add a cursor. |
 | **Select All Occurrences** | `Cmd + Shift + L` | `Ctrl + Shift + L` | Select all occurrences of the current selection and add cursors. |
 | **Cursors at Line Ends** | `Option + Shift + I` | `Alt + Shift + I` | Add a cursor at the end of each line in the current selection. |
-| **Copy Line Up** | `Option + Shift + ↑` | `Ctrl + Shift + ↑` | Duplicate the current line above. |
-| **Copy Line Down** | `Option + Shift + ↓` | `Ctrl + Shift + ↓` | Duplicate the current line below. |
+| **Copy Line Up** | `Option + Shift + ↑` | `Shift + Alt + ↑` (Windows) / `Ctrl + Shift + Alt + ↑` (Linux) | Duplicate the current line above. |
+| **Copy Line Down** | `Option + Shift + ↓` | `Shift + Alt + ↓` (Windows) / `Ctrl + Shift + Alt + ↓` (Linux) | Duplicate the current line below. |
 | **Command Palette**| `F1` | `F1` | Open the Monaco command palette. |
 
 ### Running-Tab Indicators
@@ -162,7 +162,7 @@ With **Run statement under cursor** turned off in Settings → General, pressing
 
 ### Execute Selection
 
-If you highlight a text selection in the editor and run it, Tabularis splits the selection by `;` and executes all contained queries concurrently. Results appear as separate tabs in the multi-result panel.
+If you highlight a text selection in the editor and run it, Tabularis splits the selection into statements and executes them one after another, in order, on the same session. Results appear as separate tabs in the multi-result panel.
 
 ## Multi-Result Panel
 
@@ -304,8 +304,8 @@ The History tab supports:
 
 - **Search** by SQL text
 - **Date grouping** such as Today / Yesterday / older buckets
-- **Double-click to reopen** a query in the editor without auto-running it
-- **Context menu actions** to copy SQL, run it, run it in a new tab, save it to Favorites, or delete the entry
+- **Double-click** (or `Enter`) to open a query in a new console tab and run it
+- **Context menu actions**: **Copy Query**, **Run Query**, **Insert to Editor** / **Open in New Tab** (both open the query in a console without running it), **Add to Favorites**, and delete the entry
 - **Clear All** for the current connection only
 
 This makes the sidebar history a fast iteration loop: run a query, tweak it, and jump back to any earlier version without digging through editor tabs.
@@ -339,5 +339,5 @@ The results grid is heavily optimized to handle thousands of rows without droppi
 - **Inline Editing**: Double-click any cell to modify its content. Changes are marked in yellow and can be committed back to the database with a single click (generating `UPDATE` statements securely via primary keys).
 - **Rich Data Types**: JSON / JSONB columns and long text columns open in a Monaco editor with diff and side-by-side toggles; JSON cells additionally open in a standalone Tauri window (see [Data Grid → JSON & long text cells](/wiki/data-grid#json--long-text-cells)). Spatial data displays coordinates.
 - **Foreign Key Navigation**: FK cells get a click-to-navigate affordance and a context-menu entry that opens the referenced table filtered to the matching row. See [Data Grid → Foreign Key Navigation](/wiki/data-grid#foreign-key-navigation).
-- **Exporting**: Export the current view to CSV or JSON instantly.
-- **Copy with Headers**: Highlight cells, right-click, and select "Copy with Headers" to easily paste data into Excel or Google Sheets.
+- **Exporting**: Export the current view to CSV, JSON or Markdown instantly.
+- **Copying with headers**: The **Export column names** toggle in the results toolbar adds a header row to CSV and Markdown copies, so data pastes cleanly into Excel or Google Sheets.

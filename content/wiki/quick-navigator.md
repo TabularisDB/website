@@ -20,8 +20,8 @@ The action palette runs app commands, filtered as you type, with the same keyboa
 | Category | Actions |
 | :--- | :--- |
 | **Navigation** | Open settings, open the connection manager |
-| **Connection** | Every saved connection: connect to it, or switch to it if it is already open; open a new console |
-| **Editor** | Run query, run all statements, save the SQL file (file-backed tabs), close the active tab |
+| **Connection** | Every saved connection: connect to it, or switch to it if it is already open |
+| **Editor** | Open a new console, run query, run all statements, save the SQL file (file-backed tabs), close the active tab |
 | **Results** | Copy the selected cells, rows or columns, copy a column's values as a SQL `IN (...)` list, copy all rows |
 | **Table** | Open the current table in a SQL console, inspect it, generate SQL, count rows |
 
@@ -46,12 +46,12 @@ Hover any result to reveal inline actions:
 
 | Action | Available on | Effect |
 | :--- | :--- | :--- |
-| **Inspect Structure** | tables | Opens the structure modal with columns, types, and keys |
-| **New Console** | tables | Opens a console tab pre-filled with a `SELECT *` — without running it |
-| **Generate SQL** | tables | Opens the [Generate SQL](/wiki/schema-management#generate-sql) modal |
-| **Count Rows** | tables, views | Runs a `COUNT(*)` against the object |
-| **Run Query** | tables, views | Opens a console tab with a `SELECT *` and runs it |
-| **Copy Name** | everything | Copies the object name to the clipboard |
+| **Inspect structure** | tables | Opens the structure modal with columns, types, and keys |
+| **New console** | tables | Opens a console tab pre-filled with a `SELECT *` — without running it |
+| **Generate SQL templates** | tables | Opens the [Generate SQL](/wiki/schema-management#generate-sql) modal |
+| **Count rows** | tables, views | Runs a `COUNT(*)` against the object |
+| **Run SELECT query** | tables, views | Opens a console tab with a `SELECT *` and runs it |
+| **Copy name** | everything | Copies the object name to the clipboard |
 
 Selecting a result (Enter or click) opens it — tables and views run a `SELECT *` in a console tab, routines and triggers open their definition — and reveals the object in the sidebar: collapsed databases or schemas auto-expand, lazily load their contents if needed, and the sidebar scrolls the item into view.
 

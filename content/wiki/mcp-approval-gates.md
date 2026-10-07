@@ -14,7 +14,7 @@ This is the feature that makes "give your AI agent access to your production dat
 ## How it works end-to-end
 
 1. Agent calls `run_query` with `UPDATE orders SET status = 'shipped' WHERE id = 42`.
-2. MCP server classifies it (`write`), and because **Approval mode** = `writes_only`, it doesn't dispatch yet.
+2. MCP server classifies it (`write`), and because **Approval mode** = `writes_only`, it doesn't dispatch yet. If the Tabularis app is not running, the call fails right away (see [below](#what-the-agent-experiences)).
 3. MCP server runs `EXPLAIN` against the connection (best-effort) and writes a `pending_approval` file with the query + the plan as JSON.
 4. The Tabularis main app, watching the directory via `notify`, picks up the file and pops up the **AI Approval Modal**:
    - Query in a Monaco editor (read-only by default; toggle "Edit before approving" to modify).
@@ -24,7 +24,7 @@ This is the feature that makes "give your AI agent access to your production dat
 5. You decide. Tabularis writes a `decision` file.
 6. The MCP server, polling every 500 ms, sees the decision:
    - **Approve** → executes (using the edited query if you changed it). Status: `success`.
-   - **Approve + edited** → the edited SQL is **re-classified and re-checked against read-only mode** before executing (since v0.13.0 — an approved `SELECT` can't be flipped into an unchecked `DELETE` in the modal). Status: `success`, the audit log captures the original, the effective query, and the approval id.
+   - **Approve + edited** → the edited SQL is **re-classified and re-checked against read-only mode** before executing (since v0.13.0 — an approved `SELECT` can't be flipped into an unchecked `DELETE` in the modal). Status: `success`; the audit log records the edited query (the one actually executed) together with the approval id.
    - **Deny** → returns `Query denied by user[: <reason>]` to the agent. Status: `denied`.
    - **Timeout** (default 120 s) → returns `Approval timed out after 120s — open Tabularis to approve writes`. Status: `timeout`.
 
@@ -32,7 +32,7 @@ Every outcome lands in the [audit log](/wiki/ai-audit-log) with the `approvalId`
 
 ## Three modes
 
-Set in **MCP → Safety → Approval gate → Approval required**:
+Set in **MCP Server → Safety → Approval gate → Approval required**:
 
 | Mode          | What gets gated                                          | When to use                                               |
 |---------------|----------------------------------------------------------|-----------------------------------------------------------|
@@ -67,18 +67,12 @@ To turn pre-flight off entirely, untick **Pre-flight EXPLAIN**.
 
 ## Never miss a pending approval
 
-An approval gate only helps if you notice it. When a pending approval appears, Tabularis runs an attention flow so the request reaches you even when the window is in the background:
-
-- Brings the window to the front with a user-attention request.
-- Sends an OS notification with a localized title and body (on Linux the alert plays through the OS notification sound).
-- Optionally plays an alert sound.
-
-Two toggles under **MCP → Safety** tune how insistent it is:
+An approval gate only helps if you notice it. When a pending approval appears, Tabularis can run an attention flow so the request reaches you even when the window is in the background. Two toggles under **MCP Server → Safety** control it, and both are on by default:
 
 | Setting | Effect |
 |---------|--------|
-| **Keep approval window on top** (`mcpApprovalAlwaysOnTop`) | The approval window stays above other windows while a request is pending. |
-| **Play alert sound** (`mcpApprovalNotifySound`) | Plays a sound alongside the notification. |
+| **Bring approval dialog to the front** (`mcpApprovalAlwaysOnTop`) | Focuses Tabularis with a user-attention request and keeps it temporarily above other windows while the request is pending. |
+| **Send notification and play sound** (`mcpApprovalNotifySound`) | Shows a native OS notification with a localized title and body and plays a short alert sound (on Linux the alert plays through the OS notification sound). |
 
 Both labels are localized across all eleven UI languages.
 
@@ -88,24 +82,26 @@ The agent's `tools/call` request blocks until you decide (or the timeout fires).
 
 Best practice for agents: their system prompt should mention that writes may be gated, so when the user is mid-conversation the agent doesn't conclude "tool unavailable" after a 30 s pause. Many clients already handle this.
 
-If Tabularis isn't running when the agent tries to write, the call still goes through the file-queue, but it'll time out with a clear error telling the agent (and the user reading the agent's reply) to start Tabularis.
+The MCP server checks a heartbeat file (`tabularis.alive`) that the app refreshes every 5 seconds and treats as stale after 15 seconds. If Tabularis isn't running when the agent tries to write, the call fails immediately with `Tabularis app is not running — open it to approve writes` instead of waiting for the timeout. If the app closes while a request is pending, the call fails with `Tabularis app closed during approval — open it to approve writes`. Both cases are logged with status `host_unavailable`.
 
 ## File-queue protocol
 
 The implementation is intentionally simple — a directory both processes can poll/watch:
 
 ```
-~/.config/tabularis/pending_approvals/
+<config dir>/pending_approvals/
   ├── {uuid}.pending.json    ← written by MCP server
   └── {uuid}.decision.json   ← written by Tabularis app
 ```
 
-`pending.json` carries the full payload (query, kind, connection, EXPLAIN plan, client hint).
-`decision.json` carries `decision` (approve/deny), an optional `reason`, and an optional `editedQuery`.
+The directory lives in the Tabularis config directory (`~/.config/tabularis` on Linux, or your custom storage location).
+
+`pending.json` carries the full payload (id, creation time, session id, connection id and name, query, kind, client hint, EXPLAIN plan or EXPLAIN error).
+`decision.json` carries the `approvalId`, `decision` (approve/deny), an optional `reason`, an optional `editedQuery`, and `decidedAt`.
 
 The Tabularis app cleans up consumed files automatically and runs a periodic janitor every 60 s that deletes entries older than 1 hour, so the directory never grows.
 
-This file-queue design has one crucial property: **no IPC or shared runtime needed**. The MCP server has no `AppHandle`, no Tauri runtime, no socket. Just `~/.config/tabularis/`. It works even if you launch the agent before Tabularis ever starts; the requests pile up and the modal handles them as soon as you open the app.
+This file-queue design has one crucial property: **no IPC or shared runtime needed**. The MCP server has no `AppHandle`, no Tauri runtime, no socket — just files in the config directory. The app still has to be running to approve a request: without a live heartbeat, gated calls are rejected rather than queued.
 
 ## Configuration
 
@@ -117,4 +113,4 @@ This file-queue design has one crucial property: **no IPC or shared runtime need
 }
 ```
 
-Increase `mcpApprovalTimeoutSeconds` if you walk away from the keyboard often; max is whatever your AI client tolerates as a tool call duration. Most allow 5+ minutes.
+Increase `mcpApprovalTimeoutSeconds` if you walk away from the keyboard often. The field in **MCP Server → Safety** accepts 10–600 seconds; keep it below what your AI client tolerates as a tool call duration. Most allow 5+ minutes.

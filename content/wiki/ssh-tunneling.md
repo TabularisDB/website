@@ -43,7 +43,7 @@ Used when **no password** is provided (key-only authentication). Tabularis spawn
 
 - Full `~/.ssh/config` support — `ProxyJump`, `IdentityFile`, `Host` aliases, and every other directive.
 - Agent forwarding works if configured in your SSH config.
-- `BatchMode=yes` is set so the process never hangs waiting for interactive input.
+- `BatchMode=yes` is set so the process never hangs waiting for interactive input (`BatchMode=no` when **Allow SSH password/PIN prompt** is enabled, see below).
 - `StrictHostKeyChecking=accept-new` — new hosts are accepted, changed keys are rejected.
 
 ## Interactive Authentication (Passphrases & Security Keys)
@@ -52,9 +52,9 @@ Some keys can't be unlocked non-interactively. A passphrase-protected private ke
 
 <video src="/videos/posts/tabularis-ssh-askpass.mp4" poster="/videos/posts/tabularis-ssh-askpass.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
-When **interactive prompts** are enabled on a connection and the tunnel needs a secret mid-connect — a key passphrase, a security-key PIN, or an SSH password — a modal asks for exactly that value and hands it straight to SSH. The secret is never written to disk.
+When **Allow SSH password/PIN prompt** is enabled on a connection and the tunnel needs a secret mid-connect — a key passphrase, a security-key PIN, or an SSH password — a modal asks for exactly that value and hands it straight to SSH. The secret is never written to disk.
 
-- Enable it with the **Allow interactive prompts** toggle in the connection modal.
+- Enable it with the **Allow SSH password/PIN prompt** toggle in the connection modal.
 - Leave it off for fully non-interactive setups (agent or stored credentials) so a connection can never block waiting for input.
 - Prompt text is localized across all eleven supported languages.
 
@@ -77,17 +77,17 @@ Manage profiles from **Settings → SSH Connections** or the SSH Connections mod
 | **Auth type** | `password` or `ssh_key` |
 | **Password** | SSH password (triggers Russh backend) |
 | **Key file** | Path to private key (triggers System SSH backend when no password) |
-| **Key passphrase** | Stored in OS keychain if "Save in keychain" is checked |
+| **Key passphrase** | Stored in OS keychain if **Save passwords in Keychain** is checked |
 
 ### Testing a Profile
 
-Click **Test** before saving. Tabularis performs a real SSH handshake and reports success or the exact error message. The test uses the same backend that the connection will use.
+Click **Test Connection** before saving. Tabularis performs a real SSH handshake and reports success or the exact error message. The test uses the same backend that the connection will use.
 
 ## Linking SSH to a Database Connection
 
 1. Open the connection editor (new or existing connection).
-2. Check **SSH enabled**.
-3. Select an SSH profile from the dropdown.
+2. Check **Use SSH Tunnel**.
+3. Choose **Use Existing SSH Connection** and select an SSH profile from the dropdown, or **Configure SSH Inline** to enter the SSH settings for this connection only.
 4. Save the connection.
 
 When you connect, the tunnel is established first, then the database driver connects through it. If the tunnel fails, the exact SSH error is surfaced — no generic "connection refused" messages.
@@ -101,7 +101,7 @@ The **SSH** tab of the connection modal has its own **Test SSH** button — avai
 - Host, user and port are validated client-side on both Test and Save; a problem marks the SSH tab with a red dot and navigates to it.
 - For a saved connection whose inline SSH secrets live in the keychain under the database connection's id, the test resolves them automatically — unless you have edited the password field, in which case it tests exactly what you typed.
 
-A full connection test (the **Test** button) reports its steps as it runs — SSH tunnel, Kubernetes port-forward, database connect — and opens a diagnostics modal on failure with a classified error and a timestamped step log. With a tunnel active, a "connection refused" is attributed to the tunnel rather than to the database host. See [Testing before saving](/wiki/connections#testing-before-saving).
+A full connection test (the **Test Connection** button) reports its steps as it runs — SSH tunnel, Kubernetes port-forward, database connect — and opens a diagnostics modal on failure with a classified error and a timestamped step log. With a tunnel active, a "connection refused" is attributed to the tunnel rather than to the database host. See [Testing before saving](/wiki/connections#testing-before-saving).
 
 ## HTTP / SOCKS5 Proxies
 
@@ -129,9 +129,9 @@ Set the SSH profile host to `db-host`, auth type to `ssh_key`, and leave the pas
 
 ## Tunnel Lifecycle
 
-- Tunnels are created when you **connect** and destroyed when you **disconnect**.
-- Each connection gets its own tunnel — there is no sharing between connections, even if they use the same SSH profile.
-- If the tunnel drops (network interruption), the database connection will fail on the next query. Disconnect and reconnect to re-establish the tunnel.
+- Tunnels are created the first time a connection needs them and stay open until Tabularis quits (or the proxy settings change). **Disconnect** closes the database pool but leaves the tunnel running.
+- Tunnels are shared: connections that use the same SSH user, host, and port and the same database host and port (and the same proxy) reuse one tunnel.
+- An existing tunnel is reused without a liveness check. If it drops (network interruption, bastion reboot), queries fail and disconnecting and reconnecting does not rebuild it; restart Tabularis to re-establish the tunnel.
 
 ## Troubleshooting
 

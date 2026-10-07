@@ -14,17 +14,17 @@ This page covers the most common issues users encounter and how to resolve them.
 - **Check the host and port.** Ensure the database server is running and accepting connections on the configured port. Use `telnet <host> <port>` or `nc -zv <host> <port>` from a terminal to verify network reachability.
 - **Firewall rules.** Cloud databases (AWS RDS, GCP Cloud SQL, Azure) often restrict inbound connections to specific IP ranges or VPCs. Verify your IP is allowlisted.
 - **SSL/TLS requirements.** Some servers require encrypted connections. Check if your provider mandates `sslmode=require` or similar.
-- **AWS RDS / private CA.** If "Test connection" succeeds but the connection drops shortly after with a TLS handshake error, the system trust store likely doesn't trust the database's CA. Paste the path to a PEM bundle in the connection's **CA Certificate** field — for AWS RDS, use <https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem>. See [Connections → TLS & CA Certificates](/wiki/connections#tls--ca-certificates-postgresql).
+- **AWS RDS / private CA.** If "Test connection" succeeds but the connection drops shortly after with a TLS handshake error, the system trust store likely doesn't trust the database's CA. Paste the path to a PEM bundle in the connection's **CA Certificate** field — for AWS RDS, use <https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem>. See [Connections → TLS & CA Certificates](/wiki/connections#tls--ca-certificates).
 
 ### "Authentication failed"
 
-- Double-check username and password. Passwords are stored in the OS keychain — if the keychain entry was deleted externally, re-enter the password in the connection editor and save.
+- Double-check username and password. With **Save passwords in Keychain** checked, passwords are stored in the OS keychain — if the keychain entry was deleted externally, re-enter the password in the connection editor and save.
 - For PostgreSQL, verify `pg_hba.conf` allows your auth method (usually `md5` or `scram-sha-256`).
 - For MySQL, ensure the user has `GRANT` privileges for the target host (e.g., `'user'@'%'` vs. `'user'@'localhost'`).
 
 ### "Too many connections"
 
-Your database server has a connection limit. Tabularis uses a single connection per profile. Close unused connections from the sidebar (right-click → **Disconnect**) or increase the server's `max_connections` setting.
+Your database server has a connection limit. Tabularis keeps a connection pool per open profile: up to 10 connections for MySQL/MariaDB, up to 10 for PostgreSQL by default (configurable with the built-in PostgreSQL driver's **Pool Max Size** setting in **Settings → Plugins**, up to 64), and up to 5 for SQLite. Close unused connections from the sidebar (right-click → **Disconnect**) or increase the server's `max_connections` setting.
 
 ### SQLite: "database is locked"
 
@@ -69,7 +69,7 @@ Ensure Tabularis has loaded your schema. Connect to the database and expand at l
 
 ### Data Grid is slow with wide tables
 
-Tables with 50+ columns can slow down rendering. Use the column visibility menu (right-click a column header) to hide columns you do not need. Reducing `resultPageSize` in [Configuration](/wiki/configuration) also helps.
+Tables with 50+ columns can slow down rendering. Query only the columns you need with an explicit `SELECT` list in the SQL editor. Reducing `resultPageSize` in [Configuration](/wiki/configuration) also helps.
 
 ### Editor autocomplete is delayed
 
@@ -77,7 +77,7 @@ Autocomplete loads table and column metadata on first trigger. For databases wit
 
 ## Logs & Debugging
 
-Tabularis captures application logs internally. Access them from **Settings → Logs**.
+Tabularis keeps application logs in an in-memory buffer (no log file is written to disk). Access them from **Settings → Logs**.
 
 | Action | How |
 | :--- | :--- |
@@ -97,22 +97,22 @@ On distributions with a recent Mesa (Arch, Solus, …), AppImages of v0.13.3 thr
 
 ### Where are my connections stored?
 
-Connection profiles (non-sensitive fields) are in `connections.json` inside the app config directory. Passwords and secrets are in your OS keychain. Since v0.23.0 the folder can be relocated from **Settings → Storage** or with the `TABULARIS_DATA_DIR` environment variable; see [Configuration](/wiki/configuration#custom-storage-location). See [Security & Credentials](/wiki/security-credentials) for details.
+Connection profiles are in `connections.json` inside the app config directory. Passwords are in your OS keychain when **Save passwords in Keychain** is checked on the connection; otherwise they are saved in `connections.json` too. Since v0.23.0 the folder can be relocated from **Settings → Storage** or with the `TABULARIS_DATA_DIR` environment variable; see [Configuration](/wiki/configuration#custom-storage-location). See [Security & Credentials](/wiki/security-credentials) for details.
 
 ### Can I use Tabularis with a read-only database user?
 
-Yes. Enable **Read-Only Mode** on the connection profile to add a client-side guard. Tabularis will parse your SQL and block any DML/DDL statements before they reach the server.
+Yes. A read-only database user is the most reliable way to prevent writes. Tabularis has no per-connection read-only toggle; marking the connection as **production** adds a confirmation before any statement that isn't provably read-only (see [Production Write Guard](/wiki/connections#production-write-guard)), and [MCP Read-Only Mode](/wiki/mcp-readonly-mode) blocks writes from AI clients.
 
 ### How do I reset Tabularis to default settings?
 
 Delete the app config directory:
 
-- **Linux**: `~/.config/dev.tabularis.app`
-- **macOS**: `~/Library/Application Support/dev.tabularis.app`
-- **Windows**: `%APPDATA%\dev.tabularis.app`
+- **Linux**: `~/.config/tabularis`
+- **macOS**: `~/Library/Application Support/tabularis`
+- **Windows**: `%APPDATA%\tabularis`
 
-Restart Tabularis. A fresh configuration will be created.
+Restart Tabularis. It starts with default settings.
 
 ### Does Tabularis send telemetry?
 
-Tabularis includes optional Matomo analytics that can be controlled via the cookie consent banner. No database content or query data is ever transmitted.
+No. The desktop app contains no analytics or telemetry code. Network requests are limited to your databases, update checks, the plugin registry, and the AI provider you configure. No database content or query data is ever transmitted to Tabularis.

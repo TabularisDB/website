@@ -23,21 +23,23 @@ The host injects `React`, `ReactJSXRuntime` and the plugin API (`__TABULARIS_API
 
 ## Available Slots
 
-Each slot passes its component a `context` object. The fields available depend on the slot:
+Each slot passes its component a `context` object (and a `pluginId` prop). The fields the host passes depend on the slot:
 
 | Slot | Location | Context | Typical use |
 |------|----------|---------|-------------|
-| `row-edit-modal.field.after` | After each field in the New Row modal | `connectionId`, `tableName`, `schema`, `driver`, `columnName`, `rowData`, `isInsertion` | Validation hints, field previews |
-| `row-edit-modal.footer.before` | Before Save/Cancel in the New Row modal | `connectionId`, `tableName`, `schema`, `driver`, `rowData`, `isInsertion` | Batch actions, templates |
-| `row-editor-sidebar.field.after` | After each field in the Row Editor sidebar | `connectionId`, `tableName`, `schema`, `driver`, `columnName`, `rowData`, `rowIndex` | Field-level previews, lookups |
-| `row-editor-sidebar.header.actions` | Row Editor sidebar header | `connectionId`, `tableName`, `schema`, `driver`, `rowData`, `rowIndex` | "Copy as JSON", audit links |
-| `data-grid.toolbar.actions` | Table toolbar | `connectionId`, `tableName`, `schema`, `driver` | Export buttons, analysis tools |
-| `data-grid.context-menu.items` | Right-click menu on grid rows | `connectionId`, `tableName`, `schema`, `driver`, `columnName`, `rowIndex`, `rowData` | Row-level custom actions |
-| `sidebar.footer.actions` | Explorer sidebar footer | `connectionId`, `driver` | Status indicators, quick actions |
+| `row-edit-modal.field.after` | After each field in the New Row modal | `connectionId`, `tableName`, `schema`, `driver`, `columnName`, `rowData`, `onFieldChange(value)` | Validation hints, field previews |
+| `row-edit-modal.footer.before` | Before Save/Cancel in the New Row modal | `connectionId`, `tableName`, `schema`, `driver`, `rowData` | Batch actions, templates |
+| `row-editor-sidebar.field.after` | After each field in the Row Editor sidebar | `connectionId`, `tableName`, `schema`, `columnName`, `rowData`, `rowIndex`, `isInsertion`, `onFieldChange(value)` | Field-level previews, lookups |
+| `row-editor-sidebar.header.actions` | Row Editor sidebar header | `connectionId`, `tableName`, `schema`, `rowData`, `rowIndex`, `isInsertion` | "Copy as JSON", audit links |
+| `data-grid.toolbar.actions` | Table toolbar | *(empty)* | Export buttons, analysis tools |
+| `data-grid.context-menu.items` | Right-click menu on grid rows | `connectionId`, `tableName`, `schema`, `columnName`, `rowIndex`, `rowData` | Row-level custom actions |
+| `sidebar.footer.actions` | Sidebar footer | *(empty)* | Status indicators, quick actions |
 | `settings.plugin.actions` | Per-plugin actions in Settings | `targetPluginId` | Diagnostics, re-auth buttons |
 | `settings.plugin.before_settings` | Above the plugin settings form | `targetPluginId` | OAuth panels, status banners |
-| `connection-modal.connection_content` | Inside the connection form | `driver` | Custom connection forms |
+| `connection-modal.connection_content` | Replaces the connection form for `no_connection_required` drivers | `driver`, `database`, `onDatabaseChange`, `connectionName` | Custom connection forms |
 | `connection-modal.extra_fields` | Below host/port in the connection form | `driver`, `extra`, `setExtraField`, `credentialFieldsHidden`, `setCredentialFieldsHidden` | Plugin-specific connection settings |
+
+The `SlotContextMap` types in `@tabularis/plugin-api` describe some slots with more fields than the host currently passes; rely on the fields listed above. In slots with an empty context, read the active connection with `usePluginConnection()`.
 
 ### Custom connection fields
 
@@ -52,7 +54,7 @@ Contributions are declared in the `ui_extensions` array of the `.tabularium` man
 ```json
 "ui_extensions": [
   { "slot": "settings.plugin.before_settings", "module": "ui/dist/my-settings.js", "order": 10 },
-  { "slot": "data-grid.toolbar.actions",       "module": "ui/dist/my-toolbar.js",  "order": 10,
+  { "slot": "connection-modal.extra_fields",   "module": "ui/dist/my-fields.js",   "order": 10,
     "driver": "my-driver" }
 ]
 ```
@@ -62,13 +64,13 @@ Contributions are declared in the `ui_extensions` array of the `.tabularium` man
 | `slot` | yes | Target slot name from the table above. |
 | `module` | yes | Path to the pre-built IIFE bundle, relative to the plugin folder. |
 | `order` | no | Sort order within the slot; lower renders first. Default `100`. |
-| `driver` | no | Only render when the active connection uses this driver — typically your own driver id. |
+| `driver` | no | Only render when the slot's `context.driver` equals this value — typically your own driver id. Slots whose context has no `driver` never render a contribution that sets this field. |
 
-Several slots can point at the same `module`.
+Several slots can point at the same `module`. Entries with an unknown slot name are skipped, and `module` must be a relative path inside the plugin folder (no leading `/` or `\`, no `..`). UI extensions load only for enabled plugins.
 
 ## Building the Bundles
 
-Each module is an **IIFE bundle** that assigns its default-exported React component to the global `__tabularis_plugin__`. Install `@tabularis/plugin-api` as a dev dependency for types and autocomplete — at runtime the host injects the real implementation:
+Each module is an **IIFE bundle** that assigns its default-exported React component to the global `__tabularis_plugin__` (the host accepts either the component itself or an object with a `default` property). Install `@tabularis/plugin-api` as a dev dependency for types and autocomplete — at runtime the host injects the real implementation:
 
 ```bash
 npm install --save-dev @tabularis/plugin-api
@@ -128,25 +130,25 @@ Use `defineSlot` from `@tabularis/plugin-api`. It binds the component to a slot 
 ```tsx
 import { defineSlot, usePluginToast } from "@tabularis/plugin-api";
 
-const MyToolbar = defineSlot("data-grid.toolbar.actions", ({ context }) => {
+const MyFooter = defineSlot("row-edit-modal.footer.before", ({ context }) => {
   // context.connectionId, context.tableName, context.schema, context.driver
-  // are fully typed for this slot.
+  // are typed for this slot.
   const { showInfo } = usePluginToast();
   return (
     <button onClick={() => showInfo(`Table: ${context.tableName}`)}>Hi</button>
   );
 });
 
-export default MyToolbar.component;
+export default MyFooter.component;
 ```
 
-Read a field the slot does not provide and the compiler tells you. The default export must be `.component` so the host loader picks it up. Older bundles that take a loose `SlotComponentProps` argument still work, but new plugins should use `defineSlot`.
+Reading a field that `SlotContextMap` does not declare is a compile error (but see the note above: some declared fields are not passed by the host yet). The default export must be `.component` so the host loader picks it up. Older bundles that take a loose `SlotComponentProps` argument still work, but new plugins should use `defineSlot`.
 
 ### Conditional rendering
 
 A contribution can be limited in two ways:
 
-1. **`driver` in the manifest** — the contribution only renders for connections using that driver.
+1. **`driver` in the manifest** — the contribution only renders when the slot context's `driver` matches (only in slots that pass `driver`).
 2. **In the component** — return `null` based on `context`, for example when `context.columnName` is not the column you handle.
 
 ## Plugin API Hooks
@@ -155,18 +157,18 @@ Every hook is a typed wrapper over the runtime `window.__TABULARIS_API__`:
 
 | Hook | What it gives you |
 |------|-------------------|
-| `usePluginQuery()` | `executeQuery(sql)`, `loading`, `error` — read-only queries on the active connection |
+| `usePluginQuery()` | `executeQuery(sql)`, `loading`, `error` — runs a query on the active connection |
 | `usePluginConnection()` | the active `connectionId`, `driver`, `schema` |
-| `usePluginToast()` | `showInfo`, `showError`, `showWarning` |
+| `usePluginToast()` | `showInfo`, `showError`, `showWarning` — shown as native message dialogs |
 | `usePluginSetting(pluginId)` | typed `getSetting<T>`, `setSetting`, `setSettings` |
 | `usePluginModal()` | `openModal({ title, content, size })`, `closeModal` — `size` is `sm`, `md`, `lg` or `xl` |
-| `usePluginTheme()` | `themeId`, `isDark`, the full `ThemeColors` token set |
+| `usePluginTheme()` | `themeId`, `themeName`, `isDark` (true unless the theme id contains `-light`), the full `ThemeColors` token set |
 | `usePluginTranslation(pluginId)` | translator backed by the plugin's `locales/<lang>.json` files |
 | `openUrl(url)` | opens the URL in the **system** browser, not the app webview |
 
 ## Translations
 
-Keep UI strings in `locales/<lang>.json` at the plugin root. The host loads them automatically and resolves each key from the active language, then English, then the key itself:
+Keep UI strings in `locales/<lang>.json` at the plugin root. The host loads them automatically and resolves each key from the active language, then English, then the key itself. Only the base language code is looked up (for example `pt.json` for Portuguese (Brazil), never `pt-BR.json`):
 
 ```text
 my-plugin/
@@ -185,7 +187,7 @@ t("toolbar.label");
 t("toolbar.greeting", { table });
 ```
 
-The host runtime is **[Lingui](https://lingui.dev/)**: author new keys ICU-style with single-brace `{var}` placeholders. Legacy i18next `{{var}}` placeholders still interpolate, so existing plugins keep working unchanged.
+Translations run on **[i18next](https://www.i18next.com/)**, with each plugin's strings in a namespace named after the plugin id. Use double-brace `{{var}}` placeholders.
 
 ## Security and Error Isolation
 
@@ -193,17 +195,6 @@ Plugin components must not import from `@tauri-apps/*`, access `window.__TAURI__
 
 Each contribution is wrapped in an error boundary: if a component throws, a small error badge replaces it and the host and other plugins keep working.
 
-## Built-in Example: JSON Viewer
-
-Tabularis ships a built-in **JSON Viewer** plugin that uses the slot system. It renders a formatted, collapsible JSON tree with syntax highlighting for JSON/JSONB columns in the row editor.
-
-**Slots used:** `row-editor-sidebar.field.after`, `row-edit-modal.field.after`
-
-- Auto-detects JSON columns by name (contains "json") or by parsing the value
-- Syntax-highlighted strings, numbers, booleans, null and keys
-- Collapsible objects and arrays, auto-expanded for the first two levels
-- Copy-to-clipboard button for the formatted JSON
-
-Source code: [`src/plugins/examples/json-viewer/`](https://github.com/TabularisDB/tabularis/tree/main/src/plugins/examples/json-viewer)
+## Example
 
 For a complete plugin with two UI extensions, see the [Google Sheets driver tutorial](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_TUTORIAL.md).

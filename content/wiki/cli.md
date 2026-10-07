@@ -1,11 +1,11 @@
 ---
 title: "Command Line Interface"
 order: 14.5
-excerpt: "Launch Tabularis from the terminal with flags for Visual EXPLAIN files, MCP server mode, and verbose logging."
+excerpt: "Launch Tabularis from the terminal with flags for Visual EXPLAIN files, MCP server mode, and debugging."
 category: "Reference"
 ---
 
-Tabularis is primarily a desktop application, but its binary accepts a small set of command-line flags that extend how the app can be launched. You can open a saved EXPLAIN plan straight into the Visual EXPLAIN viewer, start Tabularis as an MCP server for AI clients, or enable verbose logging for troubleshooting.
+Tabularis is primarily a desktop application, but its binary accepts a small set of command-line flags that extend how the app can be launched. You can open a saved EXPLAIN plan straight into the Visual EXPLAIN viewer, start Tabularis as an MCP server for AI clients, or open the developer tools for troubleshooting.
 
 The flags are parsed with [clap](https://docs.rs/clap), so `--help` and `--version` are always available.
 
@@ -34,7 +34,6 @@ This is useful when you:
 
 - Received an EXPLAIN plan from a colleague and want to inspect it without setting up a connection.
 - Captured the output of `EXPLAIN (FORMAT JSON)` or `EXPLAIN` from `psql` and want to see the interactive graph, table view, cost heatmap, and estimate-gap warnings described in the [Visual EXPLAIN](visual-explain) page.
-- Want to register Tabularis as the default application for `.json` or `.txt` files holding plan output.
 
 ### Supported formats
 
@@ -52,34 +51,31 @@ If the file is not in one of the supported formats, Tabularis shows an error in 
 ### Behaviour notes
 
 - The CLI-provided file path is consumed once. Navigating inside the Visual EXPLAIN window does not re-open the same file.
-- The Visual EXPLAIN window inherits the same four views (Graph, Table, Raw, AI Analysis) available from the in-app EXPLAIN button. The AI tab still requires an AI provider to be configured in **Settings → AI**.
-- The filename appears in the header (`-- loaded from plan.json`) so you can keep multiple plans straight when comparing them.
+- The Visual EXPLAIN window offers the same views as the in-app EXPLAIN button: Graph, Diagram, Table, Stats, Raw and AI. The AI tab only appears when AI is enabled in **Settings → AI**.
+- The file name appears in the window header (hover it for the full path), so you can keep multiple plans straight when comparing them.
+- **Open file** loads another plan (the picker filters `.json` and `.txt`), and **Reload** re-reads the current file from disk.
+- Opening a `.json` or `.txt` file from your file manager does not open it in Tabularis: the app registers no file associations, so pass the file with `--explain` instead.
+- If Tabularis is already running, a second `tabularis --explain FILE` only brings the existing window to the front and the flag is ignored. Quit Tabularis first.
 
 ## `--mcp`
 
-Starts Tabularis in **Model Context Protocol** mode instead of launching the GUI. In this mode the process speaks JSON-RPC 2.0 over `stdin`/`stdout` and is meant to be spawned as a child process by an MCP host like Claude Desktop, Claude Code, Cursor, Windsurf, or Antigravity.
+Starts Tabularis in **Model Context Protocol** mode instead of launching the GUI. In this mode the process speaks JSON-RPC 2.0 over `stdin`/`stdout` and is meant to be spawned as a child process by an MCP host like Claude Desktop, Claude Code, Codex, Cursor, Windsurf, or Antigravity.
 
 ```bash
 tabularis --mcp
 ```
 
-You will normally never run this command yourself — the one-click install in **Settings → MCP** writes the correct `mcpServers` entry into each client's config file. See the [MCP Server](mcp-server) page for the full integration.
+You will normally never run this command yourself — the one-click install on the **MCP** page (sidebar) configures each client, either by writing its config file or by running its CLI (Codex). See the [MCP Server](mcp-server) page for the full integration.
 
 ## `--debug`
 
-Enables verbose application logging, including `sqlx` query traces. DevTools are opened automatically when the main window appears.
+Opens the WebView DevTools automatically when the main window appears, and re-enables the native right-click menu that Tabularis normally suppresses. It does not change the log level: logging stays at Info with or without the flag.
 
 ```bash
 tabularis --debug
 ```
 
-The flag is independent from `--explain` and `--mcp`, so you can combine it with either when diagnosing a problem:
-
-```bash
-tabularis --debug --explain /path/to/plan.json
-```
-
-Logs are also captured in the in-app log buffer and can be viewed from **Settings → Logs** regardless of whether `--debug` is set.
+Logs are captured in the in-app log buffer and can be viewed from **Settings → Logs** regardless of whether `--debug` is set. See [Configuration → Application Logs](/wiki/configuration#application-logs).
 
 ## `--version` and `--help`
 
@@ -98,6 +94,7 @@ Some flags are mutually exclusive by behaviour:
 
 - **`--mcp` wins over everything.** If `--mcp` is set, Tabularis runs the MCP server loop and never builds the Tauri GUI, so `--explain` and `--debug` are ignored.
 - **`--explain` suppresses the main window.** Only the Visual EXPLAIN window opens; closing it exits the app.
-- **`--debug`** applies in all GUI modes.
+- **`--debug`** opens DevTools on the main window only. Combined with `--explain`, the main window is closed, so the Visual EXPLAIN window gets no DevTools.
+- **A running instance takes over.** If Tabularis is already open, launching it again (with or without `--explain` or `--debug`) only focuses the existing main window. `--mcp` is not affected, because it never starts the GUI.
 
-If the flags fail to parse for any reason (for instance, because the OS passes non-standard arguments at GUI launch time on certain platforms), Tabularis falls back to the default GUI launch rather than crashing.
+If the flags fail to parse for any reason (for instance, because the OS passes non-standard arguments at GUI launch time on certain platforms, or a bare file path is passed without `--explain`), Tabularis ignores all of them and falls back to the default GUI launch rather than crashing.

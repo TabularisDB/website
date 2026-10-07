@@ -19,14 +19,14 @@ This page explains how a plugin is structured and loaded. The rest of the plugin
 
 Tabularis avoids dynamic linking (`.so` or `.dll` files) for plugins, which can cause version conflicts and security issues. Instead, plugins are **standalone executables** — a binary or a script — that run as child processes.
 
-When a user opens a connection using a plugin driver, Tabularis:
+For each enabled plugin driver, Tabularis:
 
-1. Spawns the plugin executable as a child process.
+1. Spawns the plugin executable as a child process when the app starts (or when you enable the plugin in Settings).
 2. Sends **JSON-RPC 2.0** request objects to the plugin's `stdin`, one per line.
 3. Reads **JSON-RPC 2.0** response objects from the plugin's `stdout`, one per line.
-4. Reuses the same process instance for the entire session.
+4. Reuses that single process for every connection that uses the driver.
 
-Any output written to `stderr` is captured by Tabularis and shown in the log viewer — safe to use for debugging without breaking the protocol.
+Output written to `stderr` is passed through to Tabularis's own standard error (visible when you launch the app from a terminal). It is not part of the protocol, so it is safe to use for debugging.
 
 ## Directory Structure
 
@@ -95,7 +95,7 @@ Every plugin ships one manifest that tells Tabularis its capabilities and the da
 | `triggers` | bool | `true` if the database supports triggers. Enables trigger listing and management for drivers that implement the trigger RPCs. Defaults to `false`. |
 | `file_based` | bool | `true` for local file databases (e.g. SQLite, DuckDB). Replaces host/port with a file path field. |
 | `identifier_quote` | string | Character used to quote SQL identifiers: `"\""` (ANSI) or `` "`" `` (MySQL). |
-| `alter_primary_key` | bool | `true` if the database supports altering primary keys after table creation. |
+| `alter_primary_key` | bool | `true` if the database supports altering primary keys after table creation. Defaults to `true`. |
 | `alter_column` | bool | `true` to enable ALTER TABLE MODIFY COLUMN operations in the schema editor. |
 | `create_foreign_keys` | bool | `true` to enable FK constraint creation in the schema editor. |
 | `folder_based` | bool | `true` for databases that target a folder rather than a file or host (e.g., CSV plugin). Replaces host/port with a folder picker. |
@@ -109,6 +109,14 @@ Every plugin ships one manifest that tells Tabularis its capabilities and the da
 | `supports_ssl` | bool | `true` to show the SSL/TLS configuration tab (mode + CA/client cert/key) in the connection modal. The values are forwarded to the plugin as `ssl_mode`, `ssl_ca`, `ssl_cert`, and `ssl_key` in `ConnectionParams`. Network drivers only. Defaults to `false`. |
 | `table_query_templates` | bool | Since v0.26.0. Opts the **Generate SQL** dialog into the optional `get_table_query_template` RPC for SELECT, UPDATE and DELETE previews (see [Table Query Templates](/wiki/plugin-protocol#table-query-templates-optional)). Defaults to `false`; built-in drivers and plugins without it keep the host's templates. |
 | `single_database` | bool | `true` for drivers exposing a single implicit database (e.g. a flat search/document store like Meilisearch). Skips the database tab and the database-name field in the connection modal. |
+| `user_management` | bool | `true` to enable the **Users & Privileges** view (see [User Management](/wiki/user-management)). Defaults to `false`. |
+| `connection_uri` | bool | `true` if the driver consumes the raw connection URI verbatim instead of the decomposed host/port/database fields (e.g. `mongodb+srv://`). Defaults to `false`. |
+| `connection_uri_schemes` | string[] | Additional URI schemes the driver handles, beyond its own id and the scheme of `connection_string_example` (e.g. `["mongodb+srv"]`). |
+| `auto_increment_keyword` | string | Keyword appended after the column type for auto-increment columns in generated DDL (e.g. `AUTO_INCREMENT`). Empty by default. |
+| `serial_type` | string | Replacement type for auto-increment columns in generated DDL (e.g. `SERIAL`). Empty by default. |
+| `inline_pk` | bool | `true` if the primary key is declared inline in the column definition (e.g. SQLite `AUTOINCREMENT`). Defaults to `false`. |
+
+When the manifest includes a `capabilities` object, `schemas`, `views`, `routines` and `file_based` are required; the other flags fall back to the defaults listed above.
 
 ### Data Type Categories
 
@@ -141,7 +149,7 @@ Keys are uppercase generic type names; the lookup is case-insensitive. Types wit
 
 ## Plugin Settings
 
-Plugins can declare configuration fields that Tabularis renders in **Settings → gear icon** next to the plugin; the values are persisted in `config.json` and delivered to the plugin at startup. For the user side, including the per-plugin call timeout, see [Plugin Settings](/wiki/installing-plugins#plugin-settings).
+Plugins can declare configuration fields that Tabularis renders in **Settings → gear icon** next to the plugin; the values are persisted in `config.json` and delivered to the plugin through the `initialize` call. For the user side, including the per-plugin call timeout, see [Plugin Settings](/wiki/installing-plugins#plugin-settings).
 
 ### Declaring settings in the manifest
 
@@ -185,7 +193,7 @@ Supported setting types: `"string"`, `"boolean"`, `"number"`, `"select"`.
 
 ### The `initialize` call
 
-After spawning the plugin process, Tabularis immediately sends an `initialize` JSON-RPC call with the user's saved settings:
+Tabularis sends an `initialize` JSON-RPC call with the user's saved settings just before the first real request to the plugin, not at spawn time. Other requests wait for it to finish (up to 15 seconds):
 
 ```json
 {
@@ -196,7 +204,7 @@ After spawning the plugin process, Tabularis immediately sends an `initialize` J
 }
 ```
 
-Returning an error from `initialize` is safe — Tabularis ignores it silently. Plugins that do not implement `initialize` are completely unaffected.
+Returning an error from `initialize` is safe — Tabularis logs a warning and carries on. Plugins that do not implement `initialize` are completely unaffected.
 
 Plugin settings are stored under the top-level `plugins` key in `config.json`, keyed by plugin ID.
 
@@ -221,6 +229,6 @@ You should see a valid JSON-RPC response on `stdout`.
    ```
 2. Place your `.tabularium` (or legacy `manifest.json`) and the compiled executable there, plus `ui/dist/` and `locales/` if the plugin has UI extensions.
 3. On Linux/macOS, make it executable: `chmod +x myplugin`
-4. Open Tabularis and refresh the plugins list if needed.
+4. Restart Tabularis, or enable the plugin in **Settings → Plugins**. Once you have saved a list of enabled plugins, a folder copied in by hand stays disabled until you turn it on there.
 
-A project scaffolded with `@tabularis/create-plugin` does all of this with `just dev-install`.
+A project scaffolded with `@tabularis/create-plugin` handles steps 1–3 with `just dev-install`, which copies the executable, `.tabularium` and `ui/dist/index.js`. Copy `locales/` yourself if the plugin has translations.

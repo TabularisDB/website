@@ -17,8 +17,8 @@ excerpt: 'Welcome to the Tabularis Wiki. Learn how to get started with the most 
 - **Builds queries visually** with a drag-and-drop canvas that generates SQL in real time.
 - **Generates ER diagrams** from your live schema using the Dagre layout engine.
 - **Manages schema** — creates tables, alters columns, adds indexes and foreign keys — with a DDL preview before applying.
-- **Generates AI SQL** from natural language using OpenAI, Anthropic, OpenRouter, Ollama, or any OpenAI-compatible endpoint.
-- **Exports** query results to CSV or JSON (streamed, cancellable).
+- **Generates AI SQL** from natural language using OpenAI, Anthropic, OpenRouter, MiniMax, Ollama, or any OpenAI-compatible endpoint.
+- **Exports** query results to CSV, JSON, or Markdown (streamed, cancellable).
 - **Dumps and imports** databases to/from `.sql` files, with progress tracking and cancellation support.
 - **Extends** via plugins: any executable that speaks JSON-RPC over stdin/stdout becomes a new database driver.
 - **Runs as an MCP server** so external AI agents (Claude Desktop, Cursor) can query your local databases.
@@ -27,16 +27,16 @@ excerpt: 'Welcome to the Tabularis Wiki. Learn how to get started with the most 
 
 | Platform    | Minimum       | Notes                                       |
 | :---------- | :------------ | :------------------------------------------ |
-| **macOS**   | 10.15+        | Universal Binary (Intel + Apple Silicon)    |
+| **macOS**   | 10.15+        | Separate builds for Apple Silicon (`aarch64`) and Intel (`x64`) |
 | **Windows** | 10/11         | WebView2 required (pre-installed with Edge) |
-| **Linux**   | Ubuntu 20.04+ | Requires `webkit2gtk-4.1` and `libsecret-1` |
+| **Linux**   | Ubuntu 22.04+ | x86_64 only. Requires `webkit2gtk-4.1` and `libsecret-1` |
 
 ### Linux dependency install
 
 #### Debian / Ubuntu
 
 ```bash
-sudo apt install libwebkit2gtk-4.1-dev libsecret-1-dev
+sudo apt install libwebkit2gtk-4.1-0 libsecret-1-0
 ```
 
 #### Arch Linux
@@ -63,7 +63,7 @@ Download the right package from [GitHub Releases](https://github.com/TabularisDB
 
 ### 2. Create a connection
 
-Click `+` in the sidebar (or `Cmd/Ctrl + Shift + N`). Fill in host, port, database, and credentials. If the database is in a private network, enable the SSH tunnel in the SSH tab. Click **Test** to verify before saving. The password is stored in the OS keychain — never in a file.
+Click `+` in the sidebar (or `Cmd/Ctrl + Shift + N`). Fill in host, port, database, and credentials. If the database is in a private network, enable the SSH tunnel in the SSH tab. Click **Test Connection** to verify before saving. Check **Save passwords in Keychain** to keep the password in the OS keychain; without it, the password is saved in plain text in `connections.json`.
 
 ### 3. Start working
 
@@ -73,7 +73,7 @@ Once connected, the sidebar shows all schemas, tables, views, and routines. Doub
 
 The UI has three fixed regions:
 
-1. **Left sidebar** — a two-level navigation area: the narrow primary rail for app sections and open connections, plus the Explorer panel for the active connection. The Explorer is split into **Structure**, **Favorites**, and **History** tabs, so schema browsing, saved queries, and past executions are separated instead of mixed into one long tree. Collapse/expand it with `Cmd/Ctrl + B`.
+1. **Left sidebar** — a two-level navigation area: the narrow primary rail for app sections and open connections, plus the Explorer panel for the active connection. The Explorer is split into **Structure**, **Favorites**, **History**, and **Notebooks** tabs, so schema browsing, saved queries, past executions, and notebooks are separated instead of mixed into one long tree. Collapse/expand it with `Cmd/Ctrl + B`.
 2. **Tab bar** — each open table or SQL editor is a tab, color-coded by connection.
 3. **Main canvas** — shows the active view: data grid, SQL editor, query builder, ER diagram, or schema editor.
 
@@ -85,6 +85,9 @@ The UI has three fixed regions:
 | Execute query (in editor) | `Cmd + Enter` | `Ctrl + Enter`  |
 | Tab switcher              | `Ctrl + Tab`  | `Ctrl + Tab`    |
 | Monaco command palette    | `F1`          | `F1`            |
+| Command palette           | `Cmd + K`     | `Ctrl + K`      |
+| Quick navigator           | `Cmd + P`     | `Ctrl + P`      |
+| Actions palette           | `Cmd + Shift + A` | `Ctrl + Shift + A` |
 
 ## Local Data Storage
 
@@ -92,6 +95,7 @@ Tabularis stores all data locally. Nothing is sent to external servers except:
 
 - Your chosen database host (the actual connections you make).
 - GitHub API (`api.github.com`) for update checks, if enabled.
+- The plugin registry (`registry.tabularis.dev`) and GitHub release downloads, when you browse, install, or update plugins and theme packages.
 - Your configured AI provider endpoint, only when you explicitly trigger an AI feature.
 
 | Data type                  | Location                                             |
@@ -100,8 +104,8 @@ Tabularis stores all data locally. Nothing is sent to external servers except:
 | Connection metadata        | Same directory, `connections.json`                   |
 | Query history              | Same directory, `query_history/<connection-id>.json` |
 | SSH profiles               | Same directory, `ssh_connections.json`               |
-| Saved queries              | Same directory, per-connection `.sql` files          |
-| Passwords / API keys       | OS keychain only                                     |
-| Logs                       | `~/Library/Logs/tabularis/` (macOS)                  |
+| Saved queries              | Same directory, `saved_queries/<query-id>.sql` plus `saved_queries/meta.json` |
+| Passwords / API keys       | OS keychain (connection passwords only when **Save passwords in Keychain** is checked) |
+| Logs                       | In memory only; view or export them from **Settings → Logs** |
 
 See [Configuration](/wiki/configuration) for platform-specific paths.

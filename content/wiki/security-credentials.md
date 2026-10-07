@@ -1,11 +1,11 @@
 ---
 title: "Security & Credentials"
 order: 2.3
-excerpt: "How Tabularis stores passwords and secrets using your OS keychain — never on disk."
+excerpt: "How Tabularis stores passwords and secrets, and how to keep them in your OS keychain instead of on disk."
 category: "Security & Networking"
 ---
 
-Tabularis follows a strict security principle: **secrets never touch disk in plain text**. All passwords, API keys, and passphrases are stored exclusively in your operating system's native keychain. Non-sensitive metadata (hostnames, ports, usernames) is stored in JSON config files.
+Tabularis can keep every password, API key, and passphrase in your operating system's native keychain, with only non-sensitive metadata (hostnames, ports, usernames) in JSON config files. For connection passwords this depends on the **Save passwords in Keychain** option, which is off by default: when it is unchecked, the database password, SSH password, and SSH key passphrase are written to `connections.json` in plain text. Enable it on every connection whose credentials you want to keep off disk.
 
 ![Connection security settings with keychain-backed credential storage](/img/tabularis-secure-connection-keychain.png)
 
@@ -29,27 +29,31 @@ Tabularis uses the [`keyring`](https://docs.rs/keyring) Rust crate, which abstra
 | SSH password | `{connection_id}:ssh` |
 | SSH key passphrase | `{connection_id}:ssh_passphrase` |
 | AI provider API key | `ai_key:{provider}` |
+| Connection string (plugin drivers) | `{connection_id}:connection_uri` |
+| Proxy password | `proxy:global`, `proxy:ai:{provider}`, `proxy:connection:{connection_id}` |
+| Backup encryption password | `connections-backup` |
+| Backup target credential (e.g. WebDAV) | `connections-backup-{target}` |
 
 The keychain service name is `tabularis` for all entries.
 
-### On Disk (plain JSON, non-sensitive)
+### On Disk (plain JSON)
 
 | File | Content |
 | :--- | :--- |
-| `connections.json` | Connection profiles: name, host, port, username, driver, SSH profile reference |
-| `ssh_connections.json` | SSH profiles: host, port, username, key file path |
+| `connections.json` | Connection profiles: name, host, port, username, driver, SSH profile reference. Also holds the passwords of connections saved without **Save passwords in Keychain** |
+| `ssh_connections.json` | SSH profiles: host, port, username, key file path. The SSH password and key passphrase are also stored here in plain text if the profile's **Save passwords in Keychain** toggle (on by default) is unchecked |
 | `config.json` | App preferences, theme, editor settings |
 | `saved_queries/meta.json` | Saved query metadata |
 
 These files live in the app config directory (or in the custom data folder chosen under **Settings → Storage** since v0.23.0, see [Configuration](/wiki/configuration#custom-storage-location)):
 
-- **Linux**: `~/.config/dev.tabularis.app`
-- **macOS**: `~/Library/Application Support/dev.tabularis.app`
-- **Windows**: `%APPDATA%\dev.tabularis.app`
+- **Linux**: `~/.config/tabularis`
+- **macOS**: `~/Library/Application Support/tabularis`
+- **Windows**: `%APPDATA%\tabularis`
 
 ## Credential Cache
 
-To avoid hitting the OS keychain on every database operation, Tabularis maintains an in-memory credential cache. The cache uses a simple `HashMap` protected by a `Mutex` with four buckets: database passwords, SSH passwords, SSH passphrases, and AI keys.
+To avoid hitting the OS keychain on every database operation, Tabularis maintains an in-memory credential cache. The cache uses a simple `HashMap` protected by a `Mutex` with five buckets: database passwords, connection strings, SSH passwords, SSH passphrases, and AI keys.
 
 Key behaviors:
 
@@ -58,12 +62,12 @@ Key behaviors:
 - **Invalidation**: when you delete a connection, the corresponding cache entry and keychain entry are both removed.
 - The cache lives only in process memory — it is never written to disk and is cleared when Tabularis exits.
 
-## "Save in Keychain" Toggle
+## "Save passwords in Keychain" Toggle
 
-When creating or editing a connection, the **Save in keychain** checkbox controls persistence:
+When creating or editing a connection, the **Save passwords in Keychain** checkbox (off by default) controls where secrets are stored:
 
-- **Checked** — the password is stored in the OS keychain and loaded automatically on next launch.
-- **Unchecked** — the password is held in the in-memory cache for the current session only. After you quit Tabularis, the password is gone.
+- **Checked** — the password is stored in the OS keychain, removed from `connections.json`, and loaded automatically on next launch.
+- **Unchecked** — the password is saved in `connections.json` in plain text, together with the rest of the profile.
 
 This applies to database passwords, SSH passwords, and SSH key passphrases.
 
@@ -91,10 +95,12 @@ When you delete a connection in Tabularis, the associated keychain entries are a
 
 ## AI API Keys
 
-AI provider keys (OpenAI, Anthropic, OpenRouter, Ollama) follow the same keychain pattern. The key format is `ai_key:<provider>`, where provider is one of `openai`, `anthropic`, `openrouter`, `custom-openai`. Ollama runs locally and typically does not require an API key.
+AI provider keys (OpenAI, Anthropic, OpenRouter, MiniMax, Ollama) follow the same keychain pattern. The key format is `ai_key:<provider>`, where provider is one of `openai`, `anthropic`, `openrouter`, `minimax`, `custom-openai`. Ollama runs locally and typically does not require an API key.
+
+If no key is found in the keychain, Tabularis falls back to an environment variable: `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `OPENROUTER_API_KEY`, `MINIMAX_API_KEY`, or `CUSTOM_OPENAI_API_KEY`.
 
 Re-enter an API key from **Settings → AI** if it stops working — the old keychain entry is overwritten in place.
 
-## Read-Only Mode
+## Guarding Against Accidental Writes
 
-For an additional layer of protection, enable **Read-Only Mode** on any connection. Tabularis parses the SQL AST before execution and blocks `INSERT`, `UPDATE`, `DELETE`, `DROP`, `TRUNCATE`, `CREATE`, and `ALTER` statements at the client level. See [Connection Management](/wiki/connections) for details.
+There is no per-connection read-only toggle in the connection editor. Marking a connection as **production** enables the [Production Write Guard](/wiki/connections#production-write-guard), which asks for confirmation before any statement that isn't provably read-only, and [MCP Read-Only Mode](/wiki/mcp-readonly-mode) blocks writes coming from AI clients. For a hard guarantee, connect with a database user that only has read privileges.

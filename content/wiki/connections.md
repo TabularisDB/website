@@ -5,7 +5,7 @@ excerpt: "Learn how to manage your database connections securely with SSH tunnel
 category: "Database Objects"
 ---
 
-Tabularis stores connection profiles as JSON (non-sensitive fields) and delegates all secrets to the OS keychain — Keychain Access on macOS, Windows Credential Manager on Windows, and libsecret (GNOME Keyring / KWallet) on Linux.
+Tabularis stores connection profiles as JSON in `connections.json`. With **Save passwords in Keychain** enabled, secrets go to the OS keychain instead — Keychain Access on macOS, Windows Credential Manager on Windows, and the Secret Service (GNOME Keyring / KWallet) on Linux. With the option off (the default for a new connection), the database and SSH passwords are written to `connections.json` in plain text, so enable it for any connection whose password you want to keep off disk.
 
 ![Connection Manager](/img/tabularis-connection-manager.png)
 
@@ -53,6 +53,8 @@ A search bar filters by name or host in real time.
 
 Double-click a card or row to connect immediately.
 
+With **Reopen Last Connections** (Settings → General, on by default), Tabularis reconnects at startup to the connections that were open when you last closed it.
+
 ## Connection Profile Fields
 
 When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`):
@@ -65,44 +67,46 @@ When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`)
 | **Port** | Yes* | Auto-filled from the driver default |
 | **Database** | Yes* | The database name to connect to |
 | **Username** | Yes* | Database user |
-| **Password** | No | Stored in OS keychain; never written to disk |
-| **Save in keychain** | — | Controls whether the password persists after closing |
-| **SSH enabled** | No | Activates the SSH tunnel for this connection |
-| **SSH profile** | — | Which saved SSH profile to use for the tunnel |
-| **Allow interactive prompts** | No | Lets the SSH tunnel prompt in-app for a key passphrase, security-key PIN, or password when it can't authenticate silently. See [SSH Tunneling → Interactive Authentication](/wiki/ssh-tunneling#interactive-authentication-passphrases--security-keys). |
+| **Password** | No | Stored in the OS keychain when **Save passwords in Keychain** is checked; otherwise written to `connections.json` in plain text |
+| **Save passwords in Keychain** | — | Off by default. When checked, the database and SSH passwords are kept in the OS keychain and removed from `connections.json` |
+| **Use SSH Tunnel** | No | Activates the SSH tunnel for this connection |
+| **SSH profile** | — | **Use Existing SSH Connection** picks a saved SSH profile; **Configure SSH Inline** defines the tunnel on this connection only |
+| **Allow SSH password/PIN prompt** | No | Lets the SSH tunnel prompt in-app for a key passphrase, security-key PIN, or password when it can't authenticate silently. See [SSH Tunneling → Interactive Authentication](/wiki/ssh-tunneling#interactive-authentication-passphrases--security-keys). |
 | **Startup script** | No | SQL run on every new pooled connection (see [Startup Script](#startup-script) below). |
 | **Kubernetes** | No | Tunnels the connection through a managed `kubectl port-forward`. Mutually exclusive with SSH and AWS SSM. See [Kubernetes Tunneling](/wiki/kubernetes-tunneling). |
 | **AWS SSM** | No | Since v0.25.0. Forwards the connection through an AWS Systems Manager Session Manager port-forwarding session opened with the AWS CLI. Takes a managed node id plus optional profile and region. Mutually exclusive with SSH and Kubernetes. See [AWS SSM Tunneling](/wiki/aws-ssm-tunneling). |
-| **CA Certificate** | No | Path to a PEM bundle to trust for TLS (PostgreSQL only). See [TLS & CA Certificates](#tls--ca-certificates-postgresql) below. |
-| **Client Certificate** / **Client Key** | No | PEM paths for mutual TLS (PostgreSQL only). Since v0.21.0 they are presented to servers that require client authentication. See [Client Certificates](#client-certificates-mtls) below. |
+| **CA Certificate** | No | Path to a PEM bundle to trust for TLS (PostgreSQL and MySQL/MariaDB). See [TLS & CA Certificates](#tls--ca-certificates) below. |
+| **Client Certificate** / **Client Key** | No | PEM paths for mutual TLS (PostgreSQL and MySQL/MariaDB). Since v0.21.0 they are presented to servers that require client authentication. See [Client Certificates](#client-certificates-mtls) below. |
 | **Detect JSON in text columns** | No | Per-connection toggle: when enabled, plain `TEXT` / `VARCHAR` values that parse as JSON are routed through the JSON cell renderer in the data grid (chevron, viewer window, diff). The same flag also enables native array detection for `text[]` / `int[]` (PostgreSQL) and Firestore arrays. See [Data Grid → JSON & long text cells](/wiki/data-grid#json--long-text-cells). |
 
 *Not required for SQLite, which takes a file path instead.
 
-### TLS & CA Certificates (PostgreSQL)
+### TLS & CA Certificates
 
-Tabularis terminates Postgres TLS with [`tokio-postgres-rustls`](https://crates.io/crates/tokio-postgres-rustls) and verifies the server certificate via [`rustls-platform-verifier`](https://crates.io/crates/rustls-platform-verifier), so the platform's trust store (macOS Keychain, Windows certificate store, Linux CA bundle) is honored automatically.
+Tabularis terminates Postgres TLS with [`tokio-postgres-rustls`](https://crates.io/crates/tokio-postgres-rustls). In `verify-full` mode without a CA file, the server certificate is verified via [`rustls-platform-verifier`](https://crates.io/crates/rustls-platform-verifier), so the platform's trust store (macOS Keychain, Windows certificate store, Linux CA bundle) is honored automatically.
 
-If your database uses a CA the system store doesn't trust — typical for **AWS RDS**, GCP Cloud SQL with private CAs, or self-hosted Postgres behind a private PKI — paste the path to a PEM bundle into the connection's **CA Certificate** field. The bundle is loaded as an additional trust anchor only for that connection.
+If your database uses a CA the system store doesn't trust — typical for **AWS RDS**, GCP Cloud SQL with private CAs, or self-hosted Postgres behind a private PKI — paste the path to a PEM bundle into the connection's **CA Certificate** field. When a CA file is set, it **replaces** the platform trust store for that connection: only the roots in the bundle are trusted.
 
 **AWS RDS in particular**: download the global certificate bundle from <https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem> and point the field at it. Tabularis intentionally does not vendor the bundle — AWS rotates these CAs every one to three years, and a vendored copy would silently break released apps the moment the next rotation lands.
 
-MySQL/MariaDB connections continue to use `native-tls` and the system trust store; the `ssl_ca` field is a Postgres-only option for now. As of v0.13.0 the selected MySQL **SSL Mode** is honored on every code path — including the test-connection path, which previously attempted TLS even with `ssl_mode=disabled` — and connection pools are keyed by their TLS settings, so editing a connection's SSL mode can never silently reuse a pool created under the old mode.
+MySQL/MariaDB connections use `rustls`. The **CA Certificate** is passed to the TLS layer only in `verify_ca` and `verify_identity` modes (connections using AWS IAM authentication are upgraded to `verify_ca` automatically when a CA is set); **Client Certificate** and **Client Key** are sent whenever they are set. As of v0.13.0 the selected MySQL **SSL Mode** is honored on every code path — including the test-connection path, which previously attempted TLS even with `ssl_mode=disabled` — and connection pools are keyed by their TLS settings, so editing a connection's SSL mode can never silently reuse a pool created under the old mode.
 
-The **SSL Mode** selector aligns with libpq semantics:
+For PostgreSQL, the **SSL Mode** selector uses libpq mode names:
 
 | Mode | Behavior |
 | :--- | :--- |
 | `disable` | No encryption. |
-| `allow` | Try non-SSL first; fall back to SSL if the server requires it. |
-| `prefer` | Try SSL first; fall back to non-SSL. |
+| `allow` | Behaves like `prefer` (the underlying driver has no non-SSL-first mode). |
+| `prefer` | Try SSL first; fall back to non-SSL. No certificate validation. |
 | `require` | Force encryption, but **do not** require certificate validation. Use this with self-signed certificates (e.g., default AWS RDS without an explicit CA). |
-| `verify-ca` | Force encryption **and** validate that the server certificate is signed by a trusted CA (paste the CA bundle into the **CA Certificate** field). |
+| `verify-ca` | Force encryption **and** validate that the server certificate is signed by the CA in the **CA Certificate** field. A CA file is required in this mode; the platform trust store is not used. |
 | `verify-full` | Same as `verify-ca`, plus verify that the server hostname matches the certificate CN or SAN. Strictest mode; recommended for production. |
+
+For MySQL/MariaDB the selector offers the MySQL mode names instead: `disabled`, `preferred`, `required` (the default), `verify_ca`, and `verify_identity`.
 
 ### Client Certificates (mTLS)
 
-Servers that require client-side certificate authentication (Google Cloud SQL with mTLS enabled, or a private PKI) reject connections with `connection requires a valid client certificate`. Since v0.21.0, filling both **Client Certificate** and **Client Key** with PEM paths makes Tabularis present them during the TLS handshake in every SSL mode other than `disabled`. Connection pools are keyed by these paths as well, so editing the certificate never reuses a pool built without it.
+Servers that require client-side certificate authentication (Google Cloud SQL with mTLS enabled, or a private PKI) reject connections with `connection requires a valid client certificate`. Since v0.21.0, filling both **Client Certificate** and **Client Key** with PEM paths makes Tabularis present them during the TLS handshake in every SSL mode other than `disable`. Connection pools are keyed by these paths as well, so editing the certificate never reuses a pool built without it.
 
 ![PostgreSQL connection editor, SSL tab: SSL mode Verify Full with CA Certificate, Client Certificate and Client Key path fields](/img/tabularis-postgres-client-cert.png)
 
@@ -134,7 +138,7 @@ You can also create the file from inside Tabularis: **New SQLite Database…** i
 
 ### Testing before saving
 
-Click **Test** before saving. Tabularis makes a real connection attempt and returns the exact database error if it fails (e.g., `FATAL: password authentication failed for user "admin"`). The test goes through the SSH tunnel if one is configured.
+Click **Test Connection** before saving. Tabularis makes a real connection attempt and returns the exact database error if it fails (e.g., `FATAL: password authentication failed for user "admin"`). The test goes through the SSH tunnel if one is configured.
 
 The test reports its progress step by step — SSH tunnel, Kubernetes port-forward, database connect — so a test that hangs tells you *where* it hangs. A **Stop** button abandons an in-flight test; late results from an abandoned run are discarded.
 
@@ -174,7 +178,7 @@ SSH connections are stored as separate reusable profiles (`ssh_connections.json`
 | **Auth type** | `password` or `ssh_key` — determines which fields are shown in the UI |
 | **Password** | SSH password (uses Russh backend when set) |
 | **Key file** | Path to private key (for `ssh_key` auth; uses System SSH backend when no password) |
-| **Key passphrase** | Stored in OS keychain if "Save in keychain" is checked |
+| **Key passphrase** | Stored in OS keychain if "Save passwords in Keychain" is checked |
 
 ### ProxyJump / multi-hop example
 
@@ -215,7 +219,7 @@ Right-click any connection — in the sidebar or on the Connections page — for
 - **Edit** — modify any field, including switching the SSH profile
 - **Duplicate** — clone the profile with a new name and ID
 - **Delete** — removes the profile from `connections.json` and the associated keychain entry
-- **Disconnect** — closes the active connection pool and SSH tunnel without deleting the profile
+- **Disconnect** — closes the active connection pool without deleting the profile. SSH tunnels are shared between connections that use the same bastion and target, and stay open until Tabularis quits or the proxy settings change
 - **Open in New Window** — opens the connection in its own standalone window (see below)
 - **Switch to plugin** / **Switch back to built-in** — on built-in PostgreSQL connections only, since v0.23.0 (see [Deprecated Built-in PostgreSQL Driver and Plugin Migration](#deprecated-built-in-postgresql-driver-and-plugin-migration))
 
@@ -227,7 +231,9 @@ A connection opened this way is **owned** by its window and detaches from the or
 
 ## Per-Connection Appearance
 
-Every saved connection can override its driver's default icon and accent color. Open the New Connection modal (or edit an existing one) and expand the **Appearance** section in the General tab.
+Every saved connection can override its driver's default icon and accent color. Open the New Connection modal (or edit an existing one) and switch to the **Appearance** tab.
+
+<video src="/videos/wiki/16-per-connection-appearance.mp4" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
 - **Accent color** — pick from a 12-swatch curated palette or paste a custom hex. The accent applies to the connection card on the Connections page, the sidebar entry once the connection is open, the Visual Explain modal's connection chip, and the **editor tab bar** of the active connection — the active-tab indicator, body gradient, loading bar, rename input, and split-pane panel headers all follow the connection color (falling back to the default blue when no connection is active). Falls back to the driver manifest color when no override is set.
 - **Icon** — four mutually-exclusive tabs:
@@ -288,9 +294,7 @@ The toolbar on the Connections page exposes **Export** and **Import** buttons (t
 
 ![Export Connections modal with the three export modes, the encrypted option selected and password fields below](/img/tabularis-export-connections-modes.png)
 
-**Import** takes that payload — detecting the encrypted envelope and prompting for the password when needed — and merges it with the existing config (existing connection IDs are kept; new ones are appended), writes any embedded passwords back into the OS keychain under the same service-name conventions described in [Keychain Details](#keychain-details), and persists `connections.json` and `ssh_connections.json`. Empty password fields leave the matching keychain entry untouched, so partial payloads are safe. Plain exports produced by older versions import unchanged.
-
-A confirmation dialog is shown before import; the dialog uses a non-destructive variant to signal that nothing is being overwritten in place.
+**Import** takes that payload — detecting the encrypted envelope and prompting for the password when needed — and opens the same review modal used for [importing from other SQL clients](#import-from-other-sql-clients-beta): every connection in the file is listed, duplicates of existing connections can be imported as new (**Import**), replace the existing one (**Replace**), or be skipped (**Skip**), and each new connection can be assigned a target group. Embedded passwords go into the OS keychain (see [Keychain Details](#keychain-details)) for connections with **Save passwords in Keychain** enabled, and into `connections.json` otherwise. Plain exports produced by older versions import unchanged.
 
 ## Automatic Backups
 
@@ -339,9 +343,17 @@ This feature applies only to drivers that support cross-database access from a s
 
 ### Cleartext Password Plugin (MySQL bastions)
 
-Some MySQL proxies — notably [Warpgate](https://github.com/warp-tech/warpgate) — require the `mysql_clear_password` auth plugin and do not implement the prepared-statement protocol, so ordinary prepared queries fail with server error 1047. Enable **Cleartext password plugin** in the MySQL connection's advanced options to authenticate through them; when it's on, the driver routes every statement through the text protocol instead of preparing it.
+Some MySQL proxies — notably [Warpgate](https://github.com/warp-tech/warpgate) — require the `mysql_clear_password` auth plugin and do not implement the prepared-statement protocol, so ordinary prepared queries fail with server error 1047. Enable **Enable cleartext password plugin** in the MySQL connection's advanced options to authenticate through them; when it's on, the driver routes every statement through the text protocol instead of preparing it.
 
-Because the plugin sends the password in cleartext, the toggle is only available when an **enforced** TLS mode is selected (`require`, `verify-ca`, or `verify-full`) — `prefer` and `disable` are rejected, since they can silently fall back to an unencrypted link.
+Because the plugin sends the password in cleartext, the toggle is only available when an **enforced** TLS mode is selected (`required`, `verify_ca`, or `verify_identity`) — `preferred` and `disabled` are rejected, since they can silently fall back to an unencrypted link.
+
+### AWS RDS IAM Authentication (MySQL)
+
+For MySQL/MariaDB on AWS RDS, enable **Use AWS IAM Authentication (RDS)** and paste the output of `aws rds generate-db-auth-token` into the password field. The token is sent with the cleartext password plugin, so a TLS mode is required: `disabled` is refused and `preferred` is upgraded to `required`. Tokens expire every 15 minutes and are never read from the keychain — paste a fresh one when you connect.
+
+### PIPES_AS_CONCAT
+
+MySQL connections run with the `PIPES_AS_CONCAT` SQL mode by default (**Set PIPES_AS_CONCAT sql_mode on connect**), so `||` concatenates strings as in standard SQL. Servers that reject the setting, such as Vitess and PlanetScale, are detected and the mode is skipped automatically, so the option can stay enabled.
 
 ## Multi-Schema Support (PostgreSQL)
 
@@ -362,7 +374,7 @@ Tabularis continuously monitors every active connection with a lightweight ping 
 
 ### Configuring the interval
 
-Open **Settings → General → Connection Health Check** and adjust the **Ping Interval** slider (0–120 seconds). Setting it to **0** disables health checks entirely.
+Open **Settings → General → Connection Health Check** and set the **Ping Interval** field (0–120 seconds). Setting it to **0** disables health checks entirely.
 
 The setting maps to the `pingInterval` key in `config.json` (see [Configuration](/wiki/configuration)).
 
@@ -370,32 +382,39 @@ The setting maps to the `pingInterval` key in `config.json` (see [Configuration]
 
 When a health check failure triggers a disconnection:
 
-- The connection pool is closed and resources are freed.
-- Any SSH tunnel associated with the connection is torn down.
+- The connection pool is closed and resources are freed. Shared SSH tunnels are left running.
 - A toast notification appears with the error message and a button to navigate back to the Connections page.
 - You can reconnect at any time by clicking the connection again.
 
-## Read-Only Mode
+## Read-Only Access
 
-Toggle **Read-Only** on a connection to block DML and DDL statements at the application layer. Tabularis parses the SQL AST before execution and refuses to run `INSERT`, `UPDATE`, `DELETE`, `DROP`, `TRUNCATE`, `CREATE`, or `ALTER` statements. This is a client-side guard — not a substitute for proper database-level permissions.
+The connection editor has no read-only toggle. Two mechanisms cover the common cases:
+
+- Mark the connection as **production** to get the [Production Write Guard](#production-write-guard), which asks for confirmation before any statement that isn't provably read-only.
+- For AI clients, [MCP Read-Only Mode](/wiki/mcp-readonly-mode) blocks writes from MCP on selected connections or on all of them.
+
+Neither is a substitute for proper database-level permissions: for a hard guarantee, connect with a database user that only has read privileges.
 
 ## Keychain Details
 
-The keychain service names used by Tabularis follow these patterns:
+Every keychain entry uses the service name `tabularis`; the account identifies the secret:
 
-| Secret type | Keychain service key |
+| Secret type | Keychain account |
 | :--- | :--- |
-| DB password | `tabularis-connection-<uuid>` |
-| SSH password | `tabularis-ssh-<uuid>` |
-| SSH key passphrase | `tabularis-ssh-passphrase-<uuid>` |
-| AI API key | `tabularis-ai-<provider>` |
+| DB password | `<uuid>:db` |
+| Connection string (plugin drivers) | `<uuid>:connection_uri` |
+| SSH password | `<uuid>:ssh` |
+| SSH key passphrase | `<uuid>:ssh_passphrase` |
+| AI API key | `ai_key:<provider>` |
 
 On macOS you can inspect an entry manually:
 ```bash
-security find-generic-password -s "tabularis-connection-<uuid>" -w
+security find-generic-password -s "tabularis" -a "<uuid>:db" -w
 ```
 
 On Linux with `secret-tool`:
 ```bash
-secret-tool lookup service tabularis-connection-<uuid>
+secret-tool lookup service tabularis username "<uuid>:db"
 ```
+
+See [Security & Credentials](/wiki/security-credentials) for the full list.

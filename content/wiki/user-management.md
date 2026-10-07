@@ -9,11 +9,11 @@ Since v0.18.0 Tabularis can administer server accounts, not just read the schema
 
 <video src="/videos/posts/tabularis-user-management-grant.mp4" poster="/videos/posts/tabularis-user-management-grant.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
-The tab is available on any connection whose driver declares the `user_management` capability — today **MySQL** and **MariaDB** among the built-in drivers. PostgreSQL support is planned as a follow-up. Plugin drivers can opt in through `capabilities.userManagement`: all seven trait methods are forwarded over JSON-RPC, and the privilege catalog comes from the driver rather than being hard-coded for MySQL.
+The tab is available on any connection whose driver declares the `user_management` capability — today **MySQL** and **MariaDB** among the built-in drivers. PostgreSQL support is planned as a follow-up. Plugin drivers can opt in through `capabilities.userManagement`: all eight user-management methods, including the privilege catalog, are forwarded over JSON-RPC, so the catalog comes from the driver rather than being hard-coded for MySQL.
 
 ## Opening the Tab
 
-Open it from the Explorer sidebar of the active connection. It opens as a regular editor tab, so it sits alongside your console, table and notebook tabs and can be reordered and closed like any of them. Opening it a second time focuses the existing tab instead of adding another.
+Open it with the people icon (tooltip **Users & Privileges**) in the Explorer sidebar header of the active connection (on a narrow sidebar it moves into the header's actions menu). It opens as a regular editor tab, so it sits alongside your console, table and notebook tabs and can be reordered and closed like any of them. Opening it a second time focuses the existing tab instead of adding another.
 
 ## The Account List
 
@@ -55,4 +55,4 @@ Some grants cannot be represented as scope-plus-checkbox: roles, column-level pr
 
 - [Connection Management](/wiki/connections) — connection profiles, credentials and keychain storage
 - [Security & Credentials](/wiki/security-credentials) — where secrets live
-- [Read-Only Mode](/wiki/connections#read-only-mode) — preventing writes on a connection entirely
+- [Read-Only Access](/wiki/connections#read-only-access) — Production Write Guard and MCP read-only mode

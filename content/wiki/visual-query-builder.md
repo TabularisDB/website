@@ -12,19 +12,16 @@ Not every query needs to be handwritten. For exploring data, generating reportin
 ## Workflow: Point, Click, Query
 
 1. **Canvas Setup**: Open a new Query Builder tab. Drag tables from the left sidebar directly onto the infinite canvas.
-2. **Define Relationships (JOINs)**: If foreign keys exist, Tabularis automatically draws connecting lines between tables. If not, click and drag a line from one column to another to create a custom `JOIN`. You can click the relationship link to modify the join type (`INNER`, `LEFT`, `RIGHT`, `FULL OUTER`).
-3. **Select Columns**: Each table node has a checkbox list of its columns. Check the columns you want to include in the final `SELECT` clause.
-4. **Filtering & Sorting**: Use the bottom pane to apply conditions (`WHERE id > 100`) and sorting (`ORDER BY created_at DESC`).
-5. **Aggregations**: Easily group data visually. Select a column and apply functions like `COUNT`, `SUM`, `MIN`, or `MAX`. The builder automatically handles the corresponding `GROUP BY` clauses.
+2. **Define Relationships (JOINs)**: Joins are not created from foreign keys automatically. Drag a line from a column of one table to a column of another to create a `JOIN`. Click the join label to cycle through the join types (`INNER`, `LEFT`, `RIGHT`, `FULL OUTER`, `CROSS`).
+3. **Select Columns**: Each table node has a checkbox list of its columns. Check the columns you want to include in the final `SELECT` clause, and optionally give each one an alias.
+4. **Filtering, Sorting & Limit**: The collapsible **Query Settings** sidebar on the right holds the **WHERE Conditions** (operators `=`, `!=`, `>`, `<`, `>=`, `<=`, `LIKE`, `IN`, chained with `AND` / `OR`), **GROUP BY**, **ORDER BY** (`ASC` / `DESC`) and **LIMIT** sections.
+5. **Aggregations**: Select a column and apply `COUNT`, `COUNT DISTINCT`, `SUM`, `AVG`, `MIN` or `MAX`, with an optional alias. The builder adds the non-aggregated columns to `GROUP BY` automatically, and you can add more grouping columns by hand. A WHERE condition marked **Use aggregate function (HAVING)** goes into the `HAVING` clause instead.
 
-## Real-Time Code Generation & AST
+## SQL Generation
 
-Behind the scenes, the Visual Builder constructs an Abstract Syntax Tree (AST) of your visual layout.
-As you drag tables and toggle options, this AST is continuously compiled into highly formatted, dialect-specific SQL (e.g., using backticks for MySQL and double-quotes for Postgres).
+As you drag tables and toggle options, the builder regenerates the SQL from the canvas state, quoting identifiers for the connection's dialect (e.g., backticks for MySQL and double quotes for Postgres). Press **Run** to execute it; the canvas is kept with the tab.
 
-### Two-Way Synchronization
-Currently, the synchronization is **Visual -> SQL**. You build visually, and the SQL updates in real-time in the preview window. 
-You can click **"Open in SQL Editor"** at any time. This detaches the query from the visual builder, allowing you to hand-optimize the generated code, add complex CTEs (Common Table Expressions), or utilize database-specific functions that cannot be represented visually.
+Synchronization is one-way, **Visual → SQL**: the builder has no live SQL preview pane and no action that turns the tab into an editable console. To hand-optimize the generated code, add CTEs or use database-specific functions, write the query in a regular console tab.
 
 ## Limitations
 

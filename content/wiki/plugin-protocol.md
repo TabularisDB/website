@@ -54,7 +54,7 @@ Drivers with an efficient batch metadata API can additionally implement `get_ai_
 }
 ```
 
-Return a result shaped as `{ "tables": [{ "name", "columns", "foreign_keys" }], "total_table_count": 42 }`. Respect `max_tables` while reporting the pre-limit count in `total_table_count`. If the method is not implemented, return `-32601`; Tabularis automatically falls back to the standard metadata calls, keeping existing plugins compatible.
+Return a result shaped as `{ "tables": [{ "name", "columns", "foreign_keys" }], "total_table_count": 42 }`. Respect `max_tables` while reporting the pre-limit count in `total_table_count`. If the method is not implemented, return a `-32601` "Method not found" error; Tabularis automatically falls back to the standard metadata calls, keeping existing plugins compatible.
 
 ### Successful response
 
@@ -91,9 +91,13 @@ Return a result shaped as `{ "tables": [{ "name", "columns", "foreign_keys" }], 
 | `-32602` | Invalid params |
 | `-32603` | Internal error |
 
+#### Signalling an unimplemented method
+
+For an optional method your plugin does not implement, reply with code `-32601` and the message **`Method not found`**. Most host fallbacks (materialized views, BLOB operations, `execute_query_batch`, routine helpers, `get_ai_schema_context`, …) only see the error *message*, and they treat it as "not implemented" when it contains `method not found` (case-insensitive) or the text `-32601`. A custom message such as `"Method 'x' not implemented"` is shown to the user as an error instead of triggering the fallback. `get_connection_metadata` and `get_table_query_template` check the numeric code `-32601`.
+
 ## Required Methods
 
-Your plugin must implement at minimum the following methods. For unimplemented optional methods, return an empty array `[]` or a `-32601` error.
+Your plugin must implement at minimum the following methods. For unimplemented optional methods, return an empty array `[]` or a `-32601` "Method not found" error (see [above](#signalling-an-unimplemented-method)).
 
 ### `test_connection`
 
@@ -152,14 +156,18 @@ Get column metadata for a table.
   {
     "name": "id",
     "data_type": "INTEGER",
+    "is_pk": true,
     "is_nullable": false,
-    "column_default": null,
-    "is_primary_key": true,
     "is_auto_increment": true,
+    "is_generated": false,
+    "default_value": null,
+    "character_maximum_length": null,
     "comment": null
   }
 ]
 ```
+
+`name`, `data_type`, `is_pk`, `is_nullable` and `is_auto_increment` are required. `is_generated` defaults to `false`; `default_value`, `character_maximum_length` and `comment` may be omitted or `null`.
 
 ---
 
@@ -183,14 +191,17 @@ Execute a SQL query and return results.
 {
   "columns": ["id", "name"],
   "rows": [[1, "Alice"]],
-  "total_count": 1,
-  "execution_time_ms": 5
+  "affected_rows": 0,
+  "truncated": false,
+  "pagination": null
 }
 ```
 
+`columns`, `rows` and `affected_rows` are required. `truncated` defaults to `false`. `pagination` may be `null` or `{ "page", "page_size", "total_rows", "has_more" }` (`total_rows` may be `null`). A statement that produces several result sets can return the extra ones in `additional_results`, an array of the same shape.
+
 #### Editor sessions and open transactions *(optional, since v0.26.0)*
 
-`execute_query` and `execute_query_batch` may carry a `session_id`, the id of the editor tab that sent the run. A plugin that supports sessions keeps that session's connection when a run leaves an explicit transaction open, so `BEGIN`, the changes, a verifying `SELECT` and `COMMIT` can be separate runs. With a `session_id` it replies `{ "result": QueryResult, "in_transaction": bool }` (or `{ "results": [...], "in_transaction": bool }` for a batch); the host recognizes the wrapper by the presence of `in_transaction`, so a column named `result` is not mistaken for it, and reads `null` as `false`. The host calls `release_session` when the tab closes, disconnects or the app exits, and tolerates method-not-found. Plugins that ignore `session_id` and reply with the bare shapes keep the per-run behaviour. The [PostgreSQL plugin](https://github.com/TabularisDB/tabularis-postgresql-plugin) implements this from 1.0.0-rc.5.
+`execute_query` and `execute_query_batch` may carry a `session_id`, the id of the editor tab that sent the run. A plugin that supports sessions keeps that session's connection when a run leaves an explicit transaction open, so `BEGIN`, the changes, a verifying `SELECT` and `COMMIT` can be separate runs. With a `session_id` it replies `{ "result": QueryResult, "in_transaction": bool }` (or `{ "results": [...], "in_transaction": bool }` for a batch); the host recognizes the `execute_query` wrapper by the presence of `in_transaction` (and the batch wrapper by the `results` key), so a column named `result` is not mistaken for it, and reads `null` as `false`. The host calls `release_session` when the tab closes, disconnects or the app exits, and tolerates method-not-found. Plugins that ignore `session_id` and reply with the bare shapes keep the per-run behaviour. The [PostgreSQL plugin](https://github.com/TabularisDB/tabularis-postgresql-plugin) implements this from 1.0.0-rc.5.
 
 ### Cancel Notification *(optional)*
 
@@ -223,23 +234,38 @@ Since v0.26.0, a driver that declares `table_query_templates: true` is asked for
 
 ### Materialized Views *(optional)*
 
-Declare `materialized_views: true` in capabilities to enable the UI. If the plugin returns `-32601` (method not found), the host falls back to empty results for `get_materialized_views` and `get_materialized_view_columns`; `get_materialized_view_definition` and `refresh_materialized_view` surface a "not supported by this driver" error instead.
+Declare `materialized_views: true` in capabilities to enable the UI. If the plugin returns a "Method not found" error, the host falls back to empty results for `get_materialized_views` and `get_materialized_view_columns`; `get_materialized_view_definition` and `refresh_materialized_view` surface a "not supported by this driver" error instead.
 
 | Method | Params | Result |
 |--------|--------|--------|
-| `get_materialized_views` | `{ "params", "schema" }` | `[{ "name": string, "schema": string \| null }]` |
+| `get_materialized_views` | `{ "params", "schema" }` | `[{ "name": string, "definition": string \| null }]` |
 | `get_materialized_view_columns` | `{ "params", "view_name", "schema" }` | `[TableColumn]` (same shape as `get_columns`) |
 | `get_materialized_view_definition` | `{ "params", "view_name", "schema" }` | `string` (the SQL definition) |
 | `refresh_materialized_view` | `{ "params", "view_name", "schema" }` | `null` on success |
 
 ### BLOB Operations *(optional)*
 
-If the plugin returns `-32601`, the host shows "BLOB export/preview not supported".
+If the plugin returns a "Method not found" error, the host shows "BLOB export/preview not supported".
 
 - **`save_blob_to_file`** — params `{ "params", "table", "col_name", "pk_map", "schema", "file_path" }`. The plugin queries the binary value via the PK map and writes the raw bytes to `file_path` itself (it runs on the same machine as the host). Returns `null` on success.
 - **`fetch_blob_as_data_url`** — params `{ "params", "table", "col_name", "pk_map", "schema" }`. Returns the value in the BLOB wire format `"BLOB:<size_bytes>:<mime_type>:<base64_data>"` for preview in the row editor.
 
-For the full list of methods (CRUD, DDL, views, routines, triggers, batch/ER diagram methods), see the [complete plugin guide](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md).
+### Other methods
+
+The host also calls the following methods, depending on the capabilities you declare. Parameter shapes are in the [complete plugin guide](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md).
+
+| Area | Methods |
+|------|---------|
+| Schema metadata | `get_schemas`, `get_foreign_keys`, `get_indexes` |
+| Batch / ER diagram | `get_schema_snapshot`, `get_all_columns_batch`, `get_all_foreign_keys_batch`, `execute_query_batch` (falls back to one `execute_query` per statement) |
+| Row editing | `insert_record`, `update_record`, `delete_record` |
+| DDL generation | `get_create_table_sql`, `get_add_column_sql`, `get_alter_column_sql`, `get_create_index_sql`, `get_create_foreign_key_sql`, `drop_index`, `drop_foreign_key` |
+| Views | `get_views`, `get_view_definition`, `get_view_columns`, `create_view`, `alter_view`, `drop_view` |
+| Routines | `get_routines`, `get_routine_parameters`, `get_routine_definition` |
+| Routine management (`routine_management`) | `build_routine_call_sql`, `routine_create_template`, `get_routine_edit_script`, `drop_routine` — each optional, with a host fallback |
+| Triggers (`triggers`) | `get_triggers`, `get_trigger_definition`, `create_trigger`, `drop_trigger` |
+| User management (`user_management`) | `get_db_privilege_catalog`, `get_db_users`, `get_db_user_grants`, `create_db_user`, `drop_db_user`, `set_db_user_password`, `get_db_user_privileges`, `apply_db_user_privileges` |
+| Sessions | `release_session` |
 
 ### `explain_query` *(optional)*
 
@@ -405,13 +431,14 @@ fn dispatch(method: &str, _params: &Value, id: Value) -> Value {
             "jsonrpc": "2.0",
             "result": {
                 "columns": ["id"], "rows": [[1]],
-                "total_count": 1, "execution_time_ms": 1
+                "affected_rows": 0, "truncated": false, "pagination": null
             },
             "id": id
         }),
         _ => json!({
             "jsonrpc": "2.0",
-            "error": { "code": -32601, "message": format!("Method '{}' not implemented", method) },
+            // "Method not found" lets the host fall back for optional methods.
+            "error": { "code": -32601, "message": "Method not found" },
             "id": id
         }),
     }

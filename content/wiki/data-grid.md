@@ -23,17 +23,13 @@ Since v0.21.0 the pagination bar also has a **rows-per-page selector** that over
 
 ![The rows-per-page selector open in the results pagination bar, with presets from 50 to 5000, the global value marked as default, an All option and a Custom input](/img/tabularis-page-size-selector.png)
 
-The total row count is shown alongside the pagination controls, fetched via a `COUNT(*)` query when you open the table.
+The total row count is not fetched automatically. Click the **#** button (**Load row count**) next to the pagination controls to run a `COUNT(*)` over the current filtered query; the total then replaces the button.
 
 ### Column Comments
 
 Since v0.25.0, hovering a column header shows the column's database comment next to its type when the driver provides one (PostgreSQL and MySQL/MariaDB built in; plugins that return `comment` metadata). See [Schema Management → Table and Column Comments](/wiki/schema-management#table-and-column-comments).
 
 ![Column header tooltip showing the type and comment for price](/img/tabularis-grid-header-comment-tooltip.png)
-
-### Column Resizing
-
-Drag a column header border left or right to resize columns. Double-click the border to auto-fit the column to its content width.
 
 ### Sorting
 
@@ -43,7 +39,13 @@ Click the sort icon in a column header (revealed on hover) to sort by that colum
 
 ### Filtering
 
-A filter bar is available at the top of the grid. Type a condition to filter the results. The filter is applied as a `WHERE` clause, so it works across all pages and correctly reflects the total count.
+The toolbar at the top of a table tab has three inputs (**WHERE** and **ORDER BY** offer column autocomplete):
+
+- **WHERE** — a free-text condition (e.g. `status = 'active'`), applied server-side so it works across all pages and the row count reflects it.
+- **ORDER BY** — a sort expression (e.g. `created_at DESC`).
+- **LIMIT** — caps the number of rows fetched.
+
+The **Filters** button opens a **structured filter panel** in place of the WHERE input: **Add filter** builds a condition from a column, an operator suited to the column type and a value; each filter can be applied on its own (**Apply**) or together with the others (**Apply All**), duplicated or removed. **Unset** clears the filters, and the **SQL** button (*Switch to SQL WHERE input*) goes back to the free-text field.
 
 ## Inline Editing
 
@@ -66,17 +68,19 @@ Double-click a cell to enter edit mode. Type the new value and press `Enter` to 
 
 ### Adding a Row
 
-Click the **+ Add Row** button at the bottom of the grid. A new empty row appears at the end. Fill in the values for each cell and commit when ready.
+Click the **+** button (**New Row**) in the results toolbar. A new empty row appears at the end. Fill in the values for each cell and commit when ready. **Duplicate Row** in the row context menu stages a copy of an existing row as a new insertion.
 
 ### Deleting Rows
 
-Select one or more rows by clicking the row header checkbox, then click **Delete Selected** — or press `Delete` / `Backspace` with the rows selected (works whenever no cell is being edited and the grid isn't read-only). A confirmation is shown before the `DELETE` statement is executed.
+Select one or more rows by clicking the row header checkbox, then click the **−** button (**Delete Row**) in the results toolbar, pick **Delete Row** from the row context menu, or press `Delete` / `Backspace` with the rows selected (works whenever no cell is being edited and the grid isn't read-only). The rows are only **marked for deletion** as pending changes; nothing is deleted until you submit.
+
+<video src="/videos/wiki/18-delete-row-shortcut.mp4" poster="/videos/wiki/18-delete-row-shortcut.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
 ### Committing Changes
 
-Pending edits (cell modifications, new rows, deleted rows) are shown with a visual indicator. Click **Apply Changes** to generate and execute the corresponding `INSERT`, `UPDATE`, or `DELETE` statements. Click **Discard** to roll back all pending changes without touching the database.
+Pending edits (cell modifications, new rows, deleted rows) are shown with a visual indicator. Click **Submit** to generate and execute the corresponding `INSERT`, `UPDATE`, or `DELETE` statements, or **Rollback** to discard the pending changes without touching the database. With rows selected and **Apply to all** unchecked (the default), both act only on the pending changes of the selected rows; check **Apply to all**, or clear the selection, to act on every pending change. **Revert Selected** in the row context menu discards the pending changes of the selected rows.
 
-A DDL preview showing the exact SQL that will be executed is available before you confirm.
+On a connection marked as production, submitting asks for confirmation first (see [Production Write Guard](/wiki/connections#production-write-guard)).
 
 Edits and deletes are matched on the table's **full primary key**. For a table with a composite primary key (e.g. `PRIMARY KEY (profile_id, phone_type, key)`), the generated `WHERE` clause includes every PK column — `WHERE col1 = ? AND col2 = ? AND …` — so a change targets exactly one row rather than every row that happens to share part of the key.
 
@@ -125,7 +129,7 @@ Tabularis supports **row-level**, **column-level**, **cell-range** and **cell-le
 
 ### Cell-level selection
 
-Click any cell to give it a focused outline; the row checkbox stays untouched. Press `Ctrl/Cmd + C` to copy just that cell value to the clipboard, formatted using the same null/length/type rules used for row copy. The cell context menu also exposes a **Copy cell** action.
+Click any cell to give it a focused outline; the row checkbox stays untouched. Press `Ctrl/Cmd + C` to copy just that cell value to the clipboard, formatted using the same null/length/type rules used for row copy. The cell context menu also exposes a **Copy Cell** action.
 
 ### Row-level selection and copy formats
 
@@ -140,13 +144,14 @@ Selecting and copying are separate actions: selecting rows never writes to the c
 
 Every copy path shows a toast with the row count. When a copy covers only the loaded page of a larger result, the toast says "Copied N of M rows" — a partial copy is never silent.
 
-The default format is **CSV**; you can change it in **Settings → General → Default Copy Format** to one of:
+The default format is **CSV**; you can change it in **Settings → General → Default Copy Format**, or per session from the copy-format selector in the results toolbar, to one of:
 
 | Format         | Output                                                                                                                                                                                                              |
 | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **CSV**        | Tab- or comma-separated values (delimiter follows `csvDelimiter`), spreadsheet-friendly. A toolbar toggle controls whether the column-header row is included (`csvIncludeHeaders`, on by default).                  |
+| **CSV**        | Delimiter-separated values — comma (default), semicolon, tab or pipe, following `csvDelimiter` — spreadsheet-friendly. The **Export column names** toolbar toggle controls whether the header row is included (`csvIncludeHeaders`, on by default). |
 | **JSON**       | A JSON array of objects with column names as keys.                                                                                                                                                                  |
 | **SQL INSERT** | A sequence of `INSERT INTO \`table\` (col1, col2, …) VALUES (…);`statements, one per row. NULLs render as`NULL`, booleans as `TRUE`/`FALSE`, numbers unquoted, strings single-quoted with single quotes doubled-up. |
+| **Markdown**   | A Markdown table, with a header row when **Export column names** is on.                                                                                                                                              |
 
 The setting maps to the `copyFormat` key in `config.json` (see [Configuration](/wiki/configuration)).
 
@@ -157,7 +162,7 @@ Since v0.17.0 you can copy all values of a single column — from the cell conte
 | Action                             | Output                                                                                                                  |
 | :--------------------------------- | :---------------------------------------------------------------------------------------------------------------------- |
 | **Copy column values**             | Newline-separated, one value per line, `null` for NULL cells.                                                           |
-| **Copy column values (IN clause)** | A ready-to-paste SQL list: numbers raw (`1, 2, 3`), strings quoted with `''` escaping (`'O''Brien'`), `NULL` for nulls. |
+| **Copy column values as SQL IN**   | A ready-to-paste SQL list: numbers raw (`1, 2, 3`), strings quoted with `''` escaping (`'O''Brien'`), `NULL` for nulls. |
 
 Since v0.18.0 you can also select whole columns DBeaver-style: `Cmd/Ctrl + click` a column header toggles it and `Shift + click` range-selects headers. Since v0.22.0 a plain click on a header selects that column (replacing the current selection), and sorting moves to the sort icon next to the column name. From the keyboard, `Cmd/Ctrl + Space` (or `Cmd/Ctrl + Shift + Space`) selects the column(s) of the focused cell or range. `Ctrl/Cmd + C` then copies the selected columns for the rows in scope.
 
@@ -180,7 +185,7 @@ Known limitations: values containing the copy delimiter don't survive a copy→p
 
 ## Row Editor Sidebar
 
-Since v0.17.0 the row editor is a **right sidebar** — a layout sibling of the Explorer on the left, not an overlay covering your results. Toggle it with `Cmd/Ctrl + Shift + B` or open it from a row's context menu.
+Since v0.17.0 the row editor is a **right sidebar** — a layout sibling of the Explorer on the left, not an overlay covering your results. Toggle it with `Cmd/Ctrl + Shift + B` or open it with **Open Sidebar Editor** from a row's context menu. **Settings → General → Cell double-click action** chooses what double-clicking a data cell does: **Inline edit** (default), **Open in sidebar**, or **Both**.
 
 <video src="/videos/posts/tabularis-row-editor-sidebar.mp4" poster="/videos/posts/tabularis-row-editor-sidebar.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
@@ -227,6 +232,10 @@ Click the **Export** button in the toolbar and choose **CSV**. Tabularis streams
 
 Choose **JSON** from the export menu. The full result set is written as a JSON array of objects, with column names as keys. Same streaming and cancellation support as CSV.
 
+### Export to Markdown
+
+Choose **Markdown** to write the result as a Markdown table to a `.md` file, with the same streaming and cancellation support.
+
 > Exports are always performed on the **complete result set** — all rows that match the current filter, not just the visible page.
 >
 > The exception is a **multi-statement result** (Run All / Execute Selection): since v0.21.0 the active result tab exports the rows already loaded rather than re-running the script on a fresh connection, so scripts that build temp tables can be saved. When only part of the result was loaded, the progress modal says how many of the total rows were exported; page through the result or raise the tab's rows-per-page (or pick **All**) before exporting if you need more.
@@ -270,7 +279,7 @@ The same diff toggles are available in the **row-editor sidebar** for long field
 
 ## BLOB / Binary Columns
 
-Large binary columns (BLOB, `bytea`, etc.) are truncated in the grid to avoid loading multi-megabyte values into memory. The maximum bytes loaded per cell is controlled by `maxBlobSize` in `config.json` (default: 1 MB). Values exceeding this limit are shown as a truncated hex preview with the full size in bytes.
+Large binary columns (BLOB, `bytea`, etc.) are truncated in the grid to avoid loading multi-megabyte values into memory. The grid loads at most a 10 KiB preview of each binary value and shows the full size in bytes. The larger limit for loading and uploading a whole BLOB (for example from the row editor) is `maxBlobSize` in `config.json` (default: 100 MB).
 
 ### Hex preview and editing
 
@@ -284,8 +293,10 @@ When the active result is a table with foreign keys, FK cells get a click-to-nav
 
 <img src="/img/tabularis-foreignkey.gif" alt="Hovering a foreign key cell in the Tabularis data grid and clicking the arrow to open the referenced row in the parent table" loading="lazy" decoding="async"  />
 
+<video src="/videos/wiki/15-foreign-key-navigation.mp4" poster="/videos/wiki/15-foreign-key-navigation.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
 - **Hover** an FK cell → a small ↗ icon appears on the right of the cell. Clicking it opens (or reuses) a tab against the referenced table with `WHERE "ref_col" = value` pre-applied and runs the query.
-- **Right-click** an FK cell → the context menu's first entry is **Open referenced row in `<table>`**.
+- **Right-click** an FK cell → the context menu offers **Preview related record** (opens the panel below) and **Open referenced row in `<table>`**.
 
 The icon and menu entry only appear when the cell value is non-null, the row is not a pending insertion, and the row is not pending deletion. Identifier quoting follows the driver (backticks for MySQL/MariaDB, double-quotes elsewhere); numeric, bigint, boolean, and string values are formatted with the same rules used by the SQL INSERT copy format.
 
@@ -295,7 +306,9 @@ If the referenced table is already open as a tab, that tab is reused — the WHE
 
 ### Related Records Panel
 
-When you want to _check_ what a foreign key points at without losing the row you're already on, click the FK value (or pick **Show related record** from the cell context menu) and a **Related Records Panel** slides up from the bottom of the data grid. The parent table stays visible and interactive above it.
+When you want to _check_ what a foreign key points at without losing the row you're already on, click the FK value (or pick **Preview related record** from the cell context menu) and a **Related Records Panel** slides up from the bottom of the data grid. The parent table stays visible and interactive above it.
+
+<video src="/videos/wiki/17-related-records-panel.mp4" poster="/videos/wiki/17-related-records-panel.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
 - The panel renders a mini result grid of `SELECT * FROM <ref_table> WHERE <ref_col> = <value> LIMIT 100`, using the same identifier-quoting rules as FK navigation.
 - Clicking a different FK in the parent grid **swaps the panel content in place** — no close-then-reopen.
@@ -308,15 +321,19 @@ Right-click any column header to open the header context menu. Available actions
 
 | Action                             | Description                                                                                                                     |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **Select Column** / **Deselect Column** | Adds the column to, or removes it from, the column selection.                                                             |
+| **Copy Selected Columns (N)**      | Copies the selected columns for the rows in scope.                                                                              |
 | **Copy column name**               | Copies the column name as plain text to the clipboard. Useful when building queries or referencing column names in other tools. |
+| **Copy as `column`**               | Copies the column name quoted as an identifier.                                                                                 |
+| **Copy as table.column**           | Copies the column name qualified with the table name.                                                                           |
 | **Copy column values**             | Copies the column's values, newline-separated (see [Column-level copy](#column-level-copy)).                                    |
-| **Copy column values (IN clause)** | Copies the column's values as a ready-to-paste SQL `IN` list.                                                                   |
-
-More actions may appear depending on context (e.g., sort direction, column visibility toggles).
+| **Copy column values as SQL IN**   | Copies the column's values as a ready-to-paste SQL `IN` list.                                                                   |
 
 ## Null vs. Empty String
 
 The grid displays `NULL` values with a distinct grey `NULL` badge to differentiate them from empty strings. When editing, leave a cell blank to write an empty string; use the dedicated **Set NULL** option in the cell context menu to write a true `NULL`.
+
+The same menu offers other value shortcuts when they apply to the column: **Set DEFAULT** (columns with a default), **Set EMPTY** (text columns), **Insert Current Timestamp** (date/time columns) and **Set GENERATED** (auto-increment columns on a new row).
 
 ## Keyboard Shortcuts
 

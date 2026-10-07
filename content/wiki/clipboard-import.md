@@ -7,7 +7,7 @@ category: "Database Objects"
 
 **Clipboard Import** lets you take structured data sitting in your clipboard — a copied spreadsheet range, a CSV paste, a JSON array, or a Markdown table — and insert it into a database table without writing a single SQL statement.
 
-Right-click a database or schema in the sidebar and choose **Import from Clipboard**, or use the context menu on an existing table. The import modal opens and immediately reads your clipboard.
+Right-click a table in the sidebar and choose **Import from Clipboard...**, or press `Cmd/Ctrl + Shift + V`. The import modal opens and immediately reads your clipboard.
 
 ## Supported Formats
 
@@ -30,13 +30,13 @@ After parsing, Tabularis infers a column type for each field:
 | :--- | :--- |
 | `INTEGER` | Whole numbers |
 | `REAL` | Decimal numbers |
-| `BOOLEAN` | `true`/`false`, `1`/`0`, `yes`/`no` values |
-| `DATE` | ISO date strings |
+| `BOOLEAN` | `true`/`false`, `yes`/`no` values (`1`/`0` are inferred as `INTEGER`) |
+| `DATE` | `YYYY-MM-DD`, `DD/MM/YYYY` or `DD-MM-YYYY` date strings |
 | `DATETIME` | ISO datetime strings |
 | `TEXT` | Everything else |
 | `JSON` | Nested JSON objects or arrays within a cell |
 
-Inferred types are then mapped to the actual SQL types of your active driver (e.g., `INTEGER` becomes `INT` for MySQL, `INTEGER` for SQLite). Columns with mixed types fall back to `TEXT` and are flagged with a low-confidence indicator.
+Inferred types are then mapped to the actual SQL types of your active driver (e.g., `INTEGER` becomes `INT` for MySQL, `INTEGER` for SQLite). Columns mixing whole and decimal numbers become `REAL`; any other mix of types falls back to `TEXT` and is flagged with a low-confidence indicator. Empty cells are inserted as `NULL`.
 
 You can edit any column name or type directly in the **Column Schema** panel before importing.
 
@@ -80,7 +80,7 @@ The **Data Preview** panel shows the first rows as a table. It updates as you ad
 
 ## How to Access
 
-- **Right-click a database or schema** in the sidebar → **Import from Clipboard**
-- **Right-click a table** in the sidebar → **Import from Clipboard** (pre-selects that table in append mode)
+- **Right-click a table** in the sidebar → **Import from Clipboard...**
+- Press `Cmd/Ctrl + Shift + V` (customizable in **Settings → Keyboard Shortcuts**)
 
 The clipboard is read automatically when the modal opens. If the clipboard is empty or the content cannot be parsed, an error message is shown with a **Try again** button to re-read after you copy something.

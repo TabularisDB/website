@@ -9,7 +9,7 @@ Since v0.25.0 a database connection can be forwarded through an **AWS Systems Ma
 
 ## Requirements
 
-- The **AWS CLI** (`aws`), configured with credentials that can start sessions. Since v0.26.0 Tabularis also looks in the standard install locations (`/opt/homebrew/bin`, `/usr/local/bin`, `/usr/local/sessionmanagerplugin/bin`) after your `PATH`, because an app launched from Finder or a desktop launcher does not inherit your shell profile. A CLI on your own `PATH` still takes priority.
+- The **AWS CLI** (`aws`), configured with credentials that can start sessions. Since v0.26.0 Tabularis also looks in the standard install locations (`/opt/homebrew/bin`, `/usr/local/bin`, `/usr/local/sessionmanagerplugin/bin`, `/opt/local/bin`; on Windows `C:\Program Files\Amazon\AWSCLIV2` and `C:\Program Files\Amazon\SessionManagerPlugin\bin`) after your `PATH`, because an app launched from Finder or a desktop launcher does not inherit your shell profile. A CLI on your own `PATH` still takes priority.
 - The **Session Manager plugin** (`session-manager-plugin`) installed for the AWS CLI.
 - A target instance registered as a **managed node** in Systems Manager, with the SSM Agent running.
 - IAM permission `ssm:StartSession` on the target and on the document that will be used (see below).
@@ -42,7 +42,7 @@ Sessions are **reused** by connections that share the same node, profile, region
 3. Switch to the **AWS SSM** tab and enable **Use AWS SSM Port Forwarding**.
 4. Enter the **Managed Node** id (for example `i-0123456789abcdef0`). Set an **AWS Profile** and **AWS Region** if the defaults from your AWS CLI configuration are not the right ones.
 5. Optionally press **Test SSM**. It opens a real port-forwarding session and closes it again without connecting to the database, which tells an AWS problem apart from a database problem.
-6. **Test** and save.
+6. **Test Connection** and save.
 
 SSH, Kubernetes and AWS SSM are **mutually exclusive** on a connection: enabling one disables the others.
 

@@ -17,7 +17,7 @@ All of this is local. Nothing about your queries leaves your machine.
 
 ## Where to find it
 
-**MCP → Activity** (the plug icon in the sidebar opens the MCP page; the **Activity** tab hosts the audit log). Two sub-tabs:
+**MCP Server → Activity** (the CPU icon in the sidebar opens the MCP page; the **Activity** tab hosts the audit log). The same panel is also available in **Settings → AI Activity**. Two sub-tabs:
 
 - **Events** — flat table of every MCP tool call with filters and exports.
 - **Sessions** — same data grouped by session, with a "Export as Notebook" button per session.
@@ -31,14 +31,14 @@ For every `tools/call` MCP request, Tabularis writes one line to the audit log w
 | `id`             | UUID v4 for the event itself.                                                                      |
 | `sessionId`      | UUID v4 grouping events from the same agent burst (see *Sessions* below).                          |
 | `timestamp`      | ISO 8601, UTC.                                                                                     |
-| `tool`           | `list_connections` · `list_tables` · `describe_table` · `run_query`.                               |
+| `tool`           | `list_connections` · `list_databases` · `list_tables` · `describe_table` · `run_query`.            |
 | `connectionId` / `connectionName` | The connection the call hit (null for `list_connections`).                        |
 | `query`          | Full SQL text — only for `run_query`.                                                              |
 | `queryKind`      | `select` · `write` · `ddl` · `unknown`. Conservative: anything ambiguous → `unknown`.              |
 | `durationMs`     | Wall time the MCP server spent on the call.                                                        |
-| `status`         | `success` · `blocked_readonly` · `denied` · `timeout` · `error`.                                   |
-| `rows`           | Returned/affected row count when applicable.                                                        |
-| `error`          | Failure message — verbatim from the driver.                                                         |
+| `status`         | `success` · `blocked_readonly` · `denied` · `timeout` · `host_unavailable` · `error`.              |
+| `rows`           | Rows returned by `run_query`, or the number of tables/databases returned by the list tools. Affected rows are not recorded. |
+| `error`          | Failure message — the driver error verbatim, or the gate message for blocked, denied, timed-out and host-unavailable calls. |
 | `clientHint`     | What the agent told us in `initialize` — usually `claude-desktop`, `cursor`, etc.                  |
 | `approvalId`     | Set when the call went through the [approval gate](/wiki/mcp-approval-gates).                       |
 
@@ -50,7 +50,7 @@ Clicking any row opens the **Event details** modal with the full record — incl
 
 ![Sessions tab](/img/tabularis-ai-audit-log-sessions.png)
 
-A **session** is a contiguous burst of activity from the same MCP client. The session id rotates whenever there's a quiet gap longer than `aiSessionGapMinutes` (default: **10 minutes**) between two tool calls. This makes it easy to look back at "what did Claude do for me yesterday afternoon" without scrolling through thousands of unrelated events.
+A **session** is a contiguous burst of MCP activity. The session id rotates whenever there's a quiet gap longer than `aiSessionGapMinutes` (default: **10 minutes**) between two tool calls. Session state is shared by all MCP clients, so two agents running at the same time end up in the same session. Each event is tagged with the client that most recently connected, and the session card shows the client of its first event. This makes it easy to look back at "what did Claude do for me yesterday afternoon" without scrolling through thousands of unrelated events.
 
 Each session card shows:
 
@@ -98,7 +98,7 @@ You can clear the entire log from the panel (**Clear** button — confirmation r
 
 ## Configuration
 
-All settings can be edited from the UI (**MCP → Activity** + **MCP → Safety**) or directly in `config.json`:
+These keys have no control in the UI; set them directly in `config.json`:
 
 ```json
 {

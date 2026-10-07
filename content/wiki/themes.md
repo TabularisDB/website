@@ -78,10 +78,10 @@ Since v0.26.0 a theme manifest may carry an optional `id`, the stable package id
 
 Readability is critical when parsing logs or complex queries.
 
-- **Font Family**: You can use any monospace font installed on your system. We highly recommend coding-specific fonts like _JetBrains Mono_, _Fira Code_, or _Cascadia Code_.
+- **Font Family**: **Settings → Appearance** has two independent pickers: **Font Family** for the interface and a separate one for the SQL editor. Both offer the bundled families (DejaVu Sans Mono, Hack, JetBrains Mono, JetBrains Mono ExtraBold and ExtraBold Italic, Open Sans, Roboto), **System Default (Automatic)**, and a custom field where you can type the name of any font installed on your system. For the editor we recommend coding-specific fonts like _JetBrains Mono_, _Fira Code_, or _Cascadia Code_.
 - **Result Font** (since v0.24.0): **Settings → Appearance → Data Grid → Result font** offers **Same as interface**, bundled families and a custom family. It applies to result cells, inline edit inputs and multiline textareas. The default stays JetBrains Mono. The `resultFontFamily` value `inherit` follows subsequent interface-font changes; editor, log and hex fonts remain independent.
-- **Ligatures**: If your chosen font supports programming ligatures (e.g., combining `<=` into `≤`), Tabularis and the Monaco editor will render them natively.
-- **Font Size & Weight**: Fully adjustable via the UI.
+- **Ligatures**: The SQL editor does not render programming ligatures (such as `<=` drawn as `≤`), even with a font that supports them.
+- **Font Size**: The interface font size (10–20 px) and the SQL editor font size are set separately. There is no font-weight setting; for a heavier editor font pick one of the bundled JetBrains Mono ExtraBold families.
 
 ![Independent result-font picker with Same as interface selected](/img/tabularis-result-font.png)
 

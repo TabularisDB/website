@@ -26,7 +26,8 @@ Since v0.16.0, plugin discovery runs through the hosted **Tabularium** registry 
 - **Plugin details with README.** Since v0.19.0, the install gate and every Plugin Center card known to the registry open a details modal showing the plugin's README, served locale-aware by the registry. Relative image and link paths are resolved against the plugin's repository, the HTML is sanitized, and links open in your OS browser.
 
 ![The plugin README modal open over the install gate, showing the ClickHouse plugin's README with badges, description and table of contents](/img/tabularis-plugin-readme-modal.png)
-- **Runtime version floor.** Since v0.23.0 the host enforces a plugin's `min_runtime_version` at install and load time: an older Tabularis refuses the plugin with a message naming both versions, including installs from a URL or a local file that bypass the catalogue filter. Missing or non-semver floors are treated as compatible, and comparison follows semver precedence, so a prerelease host does not satisfy a stable floor. Development builds load the plugin anyway and show the mismatch as a warning toast.
+- **Runtime version floor.** Since v0.23.0 the host enforces a plugin's `min_runtime_version` at install and load time: an older Tabularis refuses the plugin with a message naming both versions, including plugins copied into the plugins folder by hand that bypass the catalogue filter. Missing or non-semver floors are treated as compatible, and comparison follows semver precedence, so a prerelease host does not satisfy a stable floor. Development builds load the plugin anyway and show the mismatch as a warning toast.
+- **Release integrity.** When the registry publishes a SHA-256 for a release, Tabularis checks the downloaded archive against it and refuses to install on a mismatch. The archive's manifest `id` and version must also match what the registry advertised, otherwise the install is aborted before anything is replaced.
 - **Deprecated built-in drivers.** Since v0.23.0 the built-in PostgreSQL driver is deprecated in favour of the `postgresql` plugin, which the app installs automatically when a built-in PostgreSQL connection exists. See [Deprecated Built-in PostgreSQL Driver and Plugin Migration](/wiki/connections#deprecated-built-in-postgresql-driver-and-plugin-migration).
 
 ## Using Another Registry
@@ -35,7 +36,7 @@ Tabularis installs plugins from [registry.tabularis.dev](https://registry.tabula
 
 ## Plugin Settings
 
-Plugins can declare custom configuration fields in their manifest. Tabularis renders these fields in **Settings → gear icon** next to the plugin. Users fill them in, the values are persisted in `config.json`, and Tabularis delivers them to the plugin at startup.
+Plugins can declare custom configuration fields in their manifest. Tabularis renders these fields in **Settings → gear icon** next to the plugin. Users fill them in, the values are persisted in `config.json`, and Tabularis delivers them to the plugin before its first call. Saving the settings of a running plugin restarts it so the new values take effect.
 
 Built-in drivers use the same mechanism for their own settings. Since v0.23.0 the built-in PostgreSQL driver exposes **Pool Max Size** (default 10, capped at 64; invalid values fall back to the default), the maximum number of connections kept in its pool, which is worth lowering behind pgBouncer.
 
@@ -43,7 +44,7 @@ Built-in drivers use the same mechanism for their own settings. Since v0.23.0 th
 
 ### Call timeout and cancellation
 
-Since v0.26.0 the time Tabularis waits for a plugin to answer a single call, queries included, is configurable instead of a fixed 120 seconds. **Settings → Plugins → Plugin runtime → Call timeout** sets it for all plugins (default 120, `0` disables the limit), stored as `pluginCallTimeoutSeconds` in `config.json`. Each plugin's settings page has its own **Call timeout** override, stored as `plugins.<id>.callTimeoutSeconds`: blank inherits the global value, `0` disables the limit for that plugin only. A change applies to the next call without restarting the plugin. Plugin initialization keeps a separate 15-second limit.
+Since v0.26.0 the time Tabularis waits for a plugin to answer a single call, queries included, is configurable instead of a fixed 120 seconds. **Settings → Plugins → Plugin runtime → Call timeout** sets it for all plugins (default 120, `0` disables the limit), stored as `pluginCallTimeoutSeconds` in `config.json`. Each plugin's settings page has its own **Call timeout** override, stored as `plugins.<id>.callTimeoutSeconds`: blank inherits the global value, `0` disables the limit for that plugin only. A change to the global value applies to the next call without restarting the plugin; saving a plugin's own settings page restarts that plugin. Plugin initialization keeps a separate 15-second limit.
 
 When a call times out, the host sends the plugin a `cancel` notification for that request id (see [Cancel Notification](/wiki/plugin-protocol#cancel-notification-optional)), so a plugin that supports it can stop the statement on the server instead of leaving it running.
 

@@ -28,33 +28,33 @@ Double-click a trigger — or right-click → **View Definition** — to open th
 The definition is fetched directly from the database catalog:
 
 - **PostgreSQL** — `pg_get_triggerdef`
-- **MySQL / MariaDB** — `information_schema.triggers`
+- **MySQL / MariaDB** — `SHOW CREATE TRIGGER`
 - **SQLite** — the original `sql` column in `sqlite_master`
 
 ## Creating a Trigger
 
 ![Create Trigger modal in Guided mode with name and table fields, BEFORE / AFTER / INSTEAD OF timing pills, INSERT / UPDATE / DELETE event buttons, a Monaco body editor, and a generated SQL preview](/img/tabularis-trigger-editor-modal.png)
 
-Right-click a table (or the Triggers accordion header) → **Create Trigger**. The **Trigger Editor Modal** opens in **Guided mode** with:
+Click the **+** button on the **Triggers** accordion header (tooltip **Create New Trigger**). The trigger editor opens in **Guided mode** with:
 
 | Field | Description |
 | :--- | :--- |
 | **Name** | Identifier; quoting follows the driver. |
-| **Table** | Pre-filled from the right-click context. |
-| **Timing** | `BEFORE` / `AFTER` / `INSTEAD OF` (driver-dependent). |
-| **Events** | Checkboxes: `INSERT`, `UPDATE`, `DELETE`, `TRUNCATE` (driver-dependent). Multi-event combinations are emitted as a single `CREATE TRIGGER`. |
+| **Table Name** | The target table, typed in by hand. |
+| **Timing** | `BEFORE` / `AFTER` / `INSTEAD OF`. The same options are offered for every driver, so pick one your database supports. |
+| **Events** | `INSERT`, `UPDATE`, `DELETE`. Selecting several emits a single `CREATE TRIGGER` with the events joined by `OR`, which is PostgreSQL syntax; MySQL and SQLite triggers take one event each. |
 | **Body** | The action body, edited in Monaco. |
 | **SQL Preview** | Live preview of the `CREATE TRIGGER` statement that will be executed. |
 
-A **Raw SQL** tab is always available alongside Guided mode for hand-written DDL.
+A **Raw SQL** tab is always available alongside Guided mode for hand-written DDL. On PostgreSQL a trigger calls a trigger function (`EXECUTE FUNCTION fn()`), so write that in the body or use Raw SQL rather than keeping the default `BEGIN … END` body.
 
 ## Editing a Trigger
 
 ![Edit Trigger modal with the existing trg_employees_au_audit_salary trigger loaded — name, table, AFTER timing, and UPDATE event pre-selected from the parsed definition, with the IF OLD.salary <> NEW.salary body in the Monaco editor and a Save Changes button](/img/tabularis-trigger-editor-modal-edit.png)
 
-Right-click a trigger → **Edit**. The modal opens in Guided mode by default and parses the loaded definition to populate the fields (timing, events, and body extracted from `FOR EACH ROW`). The **Raw SQL** tab shows the original definition unchanged.
+Right-click a trigger → **Edit**. The modal opens in Guided mode by default and parses the loaded definition to populate the fields (timing, the first event, and the body after `FOR EACH ROW`). Additional events and `FOR EACH STATEMENT` triggers are not represented in Guided mode (a `WHEN` clause stays inside the body text), so use the **Raw SQL** tab, which shows the original definition unchanged, for those. The name and table cannot be changed when editing.
 
-Triggers are edited as **drop + recreate** — the database engines don't expose an `ALTER TRIGGER` that covers what the modal needs to change. The modal warns you before running, then executes the two statements atomically.
+Triggers are edited as **drop + recreate** — the database engines don't expose an `ALTER TRIGGER` that covers what the modal needs to change. The modal asks for confirmation (**Recreate Trigger**), then drops the trigger and creates the new definition as two separate steps. If the new definition fails, the old trigger has already been dropped, so keep a copy of it (the Raw SQL tab) before saving.
 
 ## Dropping a Trigger
 

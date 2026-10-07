@@ -15,12 +15,12 @@ Double-click a view to open its data in the Data Grid. The grid works identicall
 
 ## Creating a View
 
-1. Right-click the **Views** section header in the sidebar and choose **Create View**.
-2. The **View Editor Modal** opens with two fields:
+1. Click the **+** button on the **Views** section header in the sidebar (tooltip **Create New View**).
+2. The view editor opens with two fields:
    - **Name** — the view name (e.g., `active_users`).
    - **Definition** — the `SELECT` statement that defines the view. A syntax-highlighted Monaco editor is provided.
-3. Click **Preview** to test-run the SELECT statement and verify it returns the expected results.
-4. Click **Create** to execute `CREATE VIEW <name> AS <definition>`.
+3. Click **Run Preview** to test-run the SELECT statement and check the first rows it returns.
+4. Click **Create View** to execute `CREATE VIEW <name> AS <definition>`.
 
 The sidebar refreshes automatically after creation.
 
@@ -32,7 +32,7 @@ Databases often hand back a view definition as a single dense line — MySQL, fo
 
 ![View Editor modal with the Beautify button and a multi-join view definition](/img/posts/tabularis-view-beautify.png)
 
-Modify the definition and click **Save**. Tabularis executes an `ALTER VIEW` (or `CREATE OR REPLACE VIEW`, depending on the driver) to update the view in place.
+Modify the definition and click **Save Changes**, then confirm (if the definition changed). Tabularis updates the view with `ALTER VIEW` on MySQL/MariaDB and `CREATE OR REPLACE VIEW` on PostgreSQL. SQLite has neither, so it runs `DROP VIEW` followed by `CREATE VIEW`. A view cannot be renamed from the editor.
 
 ## Dropping a View
 
@@ -40,7 +40,7 @@ Right-click a view → **Drop View**. A confirmation dialog is shown before the 
 
 ## Viewing the Definition
 
-Right-click a view → **View Definition** to see the full `CREATE VIEW` SQL in a read-only editor tab. This is useful for copying the definition into migration files.
+Right-click a view → **Edit View** to see its current `SELECT` definition in the view editor, where you can copy it into migration files.
 
 ## View Columns
 
@@ -60,6 +60,7 @@ PostgreSQL materialized views are browsed in their own **Materialized Views** se
 - **Browse columns and indexes** — expand a materialized view to see its columns; its indexes render with the same list Tabularis uses for tables.
 - **Open the data** — double-click to load the materialized data in the Data Grid. Because a materialized view holds a stored snapshot rather than a live query, it is **read-only** in the grid — inline editing is disabled.
 - **Refresh** — refreshing runs `REFRESH MATERIALIZED VIEW` and shows an in-flight spinner on the item until the server finishes.
+- **Context menu** — right-click a materialized view for **Show Data**, **Count Rows**, **Refresh**, **Show Definition** and **Copy Name**. Materialized views are not created, edited or dropped from the UI.
 - **Active schema** — materialized views are resolved against the schema currently selected in the sidebar header (see [Multi-Schema Support](/wiki/connections#multi-schema-support-postgresql)).
 
 ## Driver Support

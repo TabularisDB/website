@@ -11,9 +11,9 @@ Tabularis ships as a native desktop application built with Tauri. There are no s
 
 | Platform    | Minimum       | Notes                                       |
 | :---------- | :------------ | :------------------------------------------ |
-| **macOS**   | 10.15+        | Universal Binary (Intel + Apple Silicon)    |
+| **macOS**   | 10.15+        | Separate builds for Apple Silicon (`aarch64`) and Intel (`x64`) |
 | **Windows** | 10 / 11       | WebView2 required (pre-installed with Edge) |
-| **Linux**   | Ubuntu 20.04+ | Requires `webkit2gtk-4.1` and `libsecret-1` |
+| **Linux**   | Ubuntu 22.04+ | x86_64 only. Requires `webkit2gtk-4.1` and `libsecret-1` |
 
 ## macOS
 
@@ -33,7 +33,7 @@ brew install --cask tabularis@nightly
 
 ### Direct download
 
-Download the `.dmg` from [GitHub Releases](https://github.com/TabularisDB/tabularis/releases), open it, drag **tabularis** to your Applications folder, then launch it.
+Download the `.dmg` for your Mac (`aarch64` for Apple Silicon, `x64` for Intel) from [GitHub Releases](https://github.com/TabularisDB/tabularis/releases), open it, drag **tabularis** to your Applications folder, then launch it.
 
 As of **v0.13.1**, macOS builds are code-signed with a Developer ID certificate and notarized by Apple, so the `.dmg` opens with the normal "downloaded from the internet" confirmation — no "unidentified developer" warning and no manual workaround.
 
@@ -47,7 +47,15 @@ xattr -c /Applications/tabularis.app
 
 ## Windows
 
-Download `tabularis_x.x.x_x64-setup.exe` from [GitHub Releases](https://github.com/TabularisDB/tabularis/releases) and run it. Follow the on-screen instructions.
+### winget (recommended)
+
+```powershell
+winget install Debba.Tabularis
+```
+
+### Direct download
+
+Download `tabularis_x.x.x_x64-setup.exe` (or the `.msi` installer) from [GitHub Releases](https://github.com/TabularisDB/tabularis/releases) and run it. Follow the on-screen instructions.
 
 WebView2 is required — it ships pre-installed with Microsoft Edge and is present on all up-to-date Windows 10/11 machines.
 
@@ -55,12 +63,12 @@ WebView2 is required — it ships pre-installed with Microsoft Edge and is prese
 
 ### System libraries
 
-Before installing, make sure the required system libraries are present.
+Before installing, make sure the required system libraries are present. The `.deb` package declares them as dependencies, so this step only matters for the AppImage or a manual install.
 
 #### Debian / Ubuntu
 
 ```bash
-sudo apt install libwebkit2gtk-4.1-dev libsecret-1-dev
+sudo apt install libwebkit2gtk-4.1-0 libsecret-1-0
 ```
 
 #### Arch Linux
@@ -132,9 +140,9 @@ yay -S tabularis-nightly-bin
 
 ## Updates
 
-Tabularis checks for new releases against the GitHub Releases API on startup (if `autoCheckUpdatesOnStartup` is enabled, which is the default). When an update is available, a notification appears in the UI with the option to download and install it automatically.
+Tabularis checks for new releases against the GitHub Releases API two seconds after startup (if `autoCheckUpdatesOnStartup` is enabled, which is the default). On the stable channel the result is cached for 12 hours, so not every launch contacts GitHub. When an update is available, a notification appears in the UI with the option to download and install it automatically.
 
-To disable update checks, set `checkForUpdates: false` in your `config.json`. See [Configuration](/wiki/configuration) for the full reference.
+To disable update checks, turn off **Check for updates on startup** in **Settings → Info**, or set `autoCheckUpdatesOnStartup: false` in your `config.json`. See [Configuration](/wiki/configuration) for the full reference.
 
 ## Build from source
 

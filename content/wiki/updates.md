@@ -11,11 +11,11 @@ Tabularis can notify you when a new version is available and, depending on how y
 
 ## Automatic Update Check
 
-By default, Tabularis queries the GitHub Releases API every time it starts. If a newer version is found, a notification appears in the UI with the release notes and a prompt to install it.
+By default, Tabularis checks the GitHub Releases API two seconds after it starts. On the stable channel the result is cached for 12 hours (the cache is discarded after the app itself is updated), so restarting several times a day does not hit GitHub each time. If a newer version is found, a notification appears in the UI with the release notes and a prompt to install it.
 
-To disable automatic checks, set `autoCheckUpdatesOnStartup` to `false` in your `config.json`. See [Configuration](/wiki/configuration) for the full reference.
+To disable automatic checks, turn off **Check for updates on startup** in **Settings → Info**, or set `autoCheckUpdatesOnStartup` to `false` in your `config.json`. See [Configuration](/wiki/configuration) for the full reference.
 
-> Tabularis only **downloads** an update after you confirm the prompt — it never installs anything silently.
+> Tabularis only **downloads** an update after you confirm the prompt — it never installs anything silently. Once the update is installed, the app restarts automatically.
 
 Since v0.24.0, the update notification renders release notes as Markdown, including headings, lists, code and links; links open externally.
 
@@ -48,13 +48,15 @@ Nightly versions are stamped as the next patch with a prerelease suffix, so a ni
 
 ## Manual Update Check
 
-Open **Settings → Info** and look for the **Updates** section. Click **Check for Updates** to query the API on demand. The panel shows your current version and, if an update is available, a button to download and install it.
+Open **Settings → Info** and look for the **Updates** section. Click **Check for Updates Now** to query the API on demand, bypassing the 12-hour cache. The panel shows your current version and, if an update is available, a button to download and install it.
 
 ## Package Manager Installs
 
 When Tabularis detects it was installed via a system package manager, the built-in updater is disabled and the Updates panel shows a notice instead. Updates must be performed through the package manager itself.
 
-Since v0.20.0, distribution maintainers can declare this at build time: setting `PACKAGE_MANAGER_SRC` and `PACKAGE_MANAGER_NAME` when building marks the installation as package-managed — automatic update checks are skipped, the built-in installer is disabled, and the configured package manager name is shown in **Settings → Info**. This joins the existing Snap and Flatpak auto-detection.
+Since v0.20.0, distribution maintainers can declare this at build time: setting `PACKAGE_MANAGER_SRC` and `PACKAGE_MANAGER_NAME` when building marks the installation as package-managed — automatic update checks are skipped, the built-in installer is disabled, and the configured package manager name is shown in **Settings → Info**. This joins the existing Snap, Flatpak, and AUR (`tabularis-bin`) auto-detection.
+
+Homebrew and winget installs are not detected: the built-in updater stays active for them, and you can update either from the app or with the package manager commands below.
 
 ### AUR (Arch Linux)
 
@@ -87,7 +89,7 @@ brew upgrade --cask tabularis@nightly
 ### winget (Windows)
 
 ```bash
-winget upgrade --id debba.tabularis
+winget upgrade --id Debba.Tabularis
 ```
 
 ## Which Version Am I Running?

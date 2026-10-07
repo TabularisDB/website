@@ -26,19 +26,19 @@ When a database connection has Kubernetes enabled, Tabularis:
 
 You never need to choose a local port — Tabularis handles it automatically, exactly like the SSH tunnel system.
 
-Tunnels are **reused**: two connections targeting the same context/namespace/resource/port share one port-forward process. Tabularis health-checks the tunnel and manages its lifecycle — the process is stopped when no connection needs it anymore.
+Tunnels are **reused**: two connections targeting the same context/namespace/resource/port share one port-forward process. An existing port-forward is reused as is, and disconnecting a connection does not stop it: the process keeps running for the rest of the session.
 
 ## Configuring a Connection
 
 1. Open the connection editor (new or existing connection).
-2. Switch to the **Kubernetes** tab and enable it.
+2. Switch to the **Kubernetes** tab and enable **Use Kubernetes Port-Forward**.
 3. Pick the configuration with cascading dropdowns, each discovered live via kubectl. The context, namespace, saved-connection, and resource-name selectors are **searchable** — type to filter long lists instead of scrolling.
    - **Context** — from your kubeconfig.
    - **Namespace** — listed from the selected context.
    - **Resource type** and **resource name** — services and pods in the selected namespace.
    - **Container port** — the port the database listens on inside the cluster. The default is **driver-aware**: it follows the selected driver's manifest `default_port` (MySQL → `3306`, Postgres → `5432`, ClickHouse → `8123`, plugin drivers → their declared port) and can be derived from a service's actually-exposed port rather than always defaulting to MySQL's `3306`.
 4. Set the database credentials on the General tab as usual — host/port are replaced by the tunnel automatically.
-5. **Test** and save.
+5. **Test Connection** and save.
 
 Kubernetes, SSH and AWS SSM are **mutually exclusive** on a connection: enabling one disables the others. For databases reachable through an AWS Systems Manager managed node rather than a cluster, see [AWS SSM Tunneling](/wiki/aws-ssm-tunneling).
 

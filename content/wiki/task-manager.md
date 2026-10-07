@@ -9,7 +9,7 @@ The **Task Manager** is a built-in system monitor focused on Tabularis itself an
 
 ![Task Manager](/img/tabularis-task-manager.png)
 
-Open it from **Settings → Plugins**, using the **Open Task Manager** button in the Task Manager section.
+Open it from **Settings → Info**, using the **Open Task Manager** button in the Task Manager section.
 
 ## Interface Overview
 
@@ -40,7 +40,7 @@ Stats for the Tabularis process itself (the Tauri/Rust backend):
 | **Disk Write/s** | Write I/O rate |
 | **PID** | Operating system process ID |
 
-If Tabularis has spawned child processes (e.g., WebView2 on Windows), you can expand the row to see each child's PID, name, CPU, and RAM.
+If Tabularis has spawned child processes (e.g., WebView2 on Windows), you can expand the row to see each child's PID, name, CPU, and RAM. The panel also shows the number of child processes and a **Tree total**: the resident memory summed across the whole process tree (shared memory may be counted more than once).
 
 ### 3. Plugin Processes
 
@@ -58,7 +58,7 @@ A sortable table of all active plugin driver processes. Each row represents one 
 | Status | `running`, `stopped`, or other states |
 | Actions | Restart / Kill buttons |
 
-Click any column header to sort by that column. Click again to reverse the sort order.
+Click the **Plugin**, **CPU**, **RAM** or **Status** header to sort by that column. Click again to reverse the sort order.
 
 If a plugin has spawned sub-processes (e.g., a language runtime), expand the row with the chevron to inspect each child process individually.
 
@@ -74,7 +74,7 @@ Click **Kill** to force-terminate a plugin immediately. A confirmation modal app
 
 ### Refresh
 
-Click the **Refresh** button in the top-right corner to fetch a fresh snapshot of all stats. The page does not auto-refresh to avoid constant background polling.
+The stats refresh automatically every 2 seconds while the window is open. Click the **Refresh** button in the top-right corner to fetch a fresh snapshot immediately.
 
 ## When to Use It
 

@@ -24,10 +24,10 @@ No network port is opened. All communication happens locally via the process's s
 
 ## Quick Setup (One-Click Install)
 
-Starting with v0.9.9, Tabularis detects all supported AI clients automatically and lets you install the MCP configuration in a single click:
+Starting with v0.9.9, Tabularis lists every supported AI client, checks whether Tabularis is already configured in each one, and lets you install the MCP configuration in a single click:
 
-1. Open **Settings → MCP** (or click the plug icon in the sidebar).
-2. The **MCP Server Integration** panel lists every detected AI client alongside the resolved path to its config file.
+1. Click the CPU icon (**MCP Server**) in the sidebar and open the **Setup** tab.
+2. The **MCP Server Integration** panel lists every supported AI client alongside the resolved path to its config file, marking the ones where Tabularis is already **Installed**.
 3. Click **Install Config** next to the client you want to connect. For file-based clients, Tabularis writes or patches the required `mcpServers` entry directly into the config file. For command-based clients it runs the client's own CLI instead — `claude mcp add --scope user ...` for Claude Code, `codex mcp add tabularis -- ...` for Codex.
 4. Restart the target AI client. It will immediately see Tabularis as an available MCP server.
 
@@ -46,7 +46,7 @@ On macOS and Windows the paths are resolved automatically to their platform equi
 
 ## Manual Configuration
 
-If you prefer to configure it manually, the **Manual Configuration** section at the bottom of the integration panel shows the exact JSON block to paste for file-based clients, with the correct binary path pre-filled for your system.
+If you prefer to configure it manually, select a client that is not installed yet: the right-hand pane shows a **Manual Configuration** block with the exact JSON to paste for file-based clients (or a **Manual Command** for Claude Code and Codex), with the correct binary path pre-filled for your system.
 
 The block to add looks like:
 
@@ -101,7 +101,7 @@ Returns the list of all saved connections (id, name, driver, host, database). Pa
 
 ### `tabularis://{connection_id}/schema`
 
-Returns the table list for a specific connection. The `{connection_id}` can be the connection UUID, the exact connection name (case-insensitive), or a partial name match.
+Returns the table list for a specific connection. The `{connection_id}` can be the connection UUID or the exact connection name (case-insensitive). Partial names do not match.
 
 **Example:**
 ```
@@ -168,9 +168,10 @@ Executes a SQL query on a specific connection and returns the results.
 |-----------|------|-------------|
 | `connection_id` | `string` | Connection UUID or exact name |
 | `query` | `string` | The SQL query to execute |
+| `limit` | `integer` | Optional. Maximum number of rows to return (default `100`). If the query already has a smaller `LIMIT`, the query's `LIMIT` wins. |
 | `output_format` | `string` | Optional. `json` (default) or `toon`. Available on every tool since v0.25.0. |
 
-**Returns:** query results as JSON, or as TOON when requested. The MCP server currently caps query results to 100 rows per call.
+**Returns:** query results as JSON, or as TOON when requested. Results are capped at 100 rows per call unless the agent passes a different `limit`.
 
 **Example prompts:**
 
@@ -200,7 +201,7 @@ Claude (or any connected AI) will call the appropriate tool with the resolved `c
 - Use the **Install Config** button in Tabularis to let it write the correct path automatically.
 
 **`run_query` returns "Connection not found"**
-- Tool calls match by UUID or exact connection name. Use `tabularis://connections` or `list_connections` to see the available identifiers.
+- Tool calls match by UUID or exact connection name (case-insensitive). Use `tabularis://connections` or `list_connections` to see the available identifiers.
 
 **A schema resource works but shows only the `public` schema on PostgreSQL**
 - That is expected for the `tabularis://{connection_id}/schema` resource. Use `list_tables` or `describe_table` with an explicit `schema` argument when you need a different PostgreSQL schema.
@@ -209,7 +210,7 @@ Claude (or any connected AI) will call the appropriate tool with the resolved `c
 - Before v0.25.0 the standalone `--mcp` process built its driver registry once at startup, so a plugin installed or enabled in the GUI was invisible until the AI client restarted Tabularis. Since v0.25.0 the process rescans installed plugins on a registry miss (rate-limited to once every two seconds) and unregisters drivers that were disabled or uninstalled. If the error persists, check that the plugin is installed and enabled in **Settings → Plugins** and that the connection's driver id matches it.
 
 **No resources appear in the AI client**
-- Tabularis reads connections from `connections.json` at the standard app data path. If you haven't saved any connections yet, the resource list will be empty.
+- Tabularis reads connections from `connections.json` in its config directory (or in the custom storage location, if you set one). If you haven't saved any connections yet, the resource list will be empty.
 
-**The Install Config button is greyed out**
-- The config file for that client does not exist yet. Start the AI client at least once so it creates its config directory, then try again.
+**The client shows "Config file not found (create manually)"**
+- Tabularis could not resolve a config path for that client on your platform. Use the manual configuration block instead. When the path resolves, **Install Config** creates the config file and its directory if they do not exist yet.

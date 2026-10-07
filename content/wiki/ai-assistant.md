@@ -19,13 +19,19 @@ When you ask the AI to "Find users who ordered in the last 30 days", Tabularis i
 
 The snapshot is loaded through the driver of the editor's active connection and schema. Tabularis waits for that metadata before sending the request, so a fast click on **Generate SQL** cannot race ahead with an empty schema. Up to 20 tables are included with their columns, primary-key markers, nullability, defaults, and available foreign-key relationships; the prompt notes when additional tables were omitted.
 
-**Example Snapshot injected into the system prompt:**
+**Example snapshot injected into the system prompt** (it replaces the `{{SCHEMA}}` placeholder):
 ```text
-=== DATABASE SCHEMA ===
-Engine: PostgreSQL 15
-Table: users (id: uuid, username: varchar, created_at: timestamptz)
-Table: orders (id: uuid, user_id: uuid, total: numeric, status: varchar)
-FK: orders.user_id -> users.id
+Table: "users"
+  - id uuid PK NOT NULL
+  - username varchar NOT NULL
+  - created_at timestamptz NOT NULL DEFAULT now()
+Table: "orders"
+  - id uuid PK NOT NULL
+  - user_id uuid NOT NULL
+  - total numeric
+  - status varchar
+  FK: user_id -> users.id
+... and 12 more tables (not shown)
 ```
 By feeding this exact structural context to the LLM alongside your natural language prompt, the AI knows exactly which `JOIN` clauses to write and which data types it is dealing with.
 
@@ -40,7 +46,7 @@ Plugins return structured metadata only. Tabularis keeps ownership of truncation
 Tabularis is provider-agnostic. Configure your preferred engine in Settings:
 
 ### 1. Cloud Providers
-- **OpenAI** (`openai`): Uses your own API key and supports the model list shipped by the app plus any custom model entries you add.
+- **OpenAI** (`openai`): Uses your own API key. The model list shipped with the app is merged with the GPT models your key can access (cached for 24 hours; use the refresh button in **Settings → AI** to reload it), and you can add custom model entries.
 - **Anthropic** (`anthropic`): Good for complex query explanations and structured reasoning.
 - **MiniMax** (`minimax`): Available as a first-class provider in the AI settings.
 - **OpenRouter** (`openrouter`): Access a broader multi-model catalog through a unified API.
@@ -66,7 +72,7 @@ The AI is not limited to generating SQL. From the editor you can ask it to expla
 In [SQL Notebooks](/wiki/notebooks), the AI can generate descriptive names for cells based on their content:
 
 - **Single cell**: Click the AI icon on any cell header to generate a name for that cell.
-- **Batch naming**: Click **Name All** in the notebook toolbar to generate names for all unnamed cells at once.
+- **Batch naming**: In the notebook **Outline** panel, click the sparkles icon (*Generate names for unnamed cells with AI*) to name all unnamed cells at once.
 
 The naming prompt is customizable in **Settings > AI > Notebook Cell Name Prompt**. The cell content (SQL or Markdown) is sent as the user message alongside the prompt.
 
@@ -76,17 +82,18 @@ Tabularis can also generate short names for SQL result tabs. In multi-result vie
 
 ## Custom Prompts
 
-The AI settings currently expose four editable prompts:
+The AI settings currently expose five editable prompts:
 
-- **System Prompt** for SQL generation
-- **Explain Prompt** for query explanations
+- **SQL Generation** (system prompt). Use `{{SCHEMA}}` as the placeholder for the schema snapshot.
+- **Query Explanation**. Use `{{LANGUAGE}}` as the placeholder for the output language.
 - **Notebook Cell Name Prompt**
 - **Query Tab Name Prompt**
+- **Explain Plan Analysis Prompt**, used by the AI tab of [Visual Explain](/wiki/visual-explain). It also accepts `{{LANGUAGE}}`.
 
 ## Model Context Protocol (MCP)
 
-Tabularis ships with a built-in **MCP Server**, allowing external AI agents like Claude Desktop, Claude Code, Cursor, Windsurf, or Antigravity to interface with your saved connections over stdio.
+Tabularis ships with a built-in **MCP Server**, allowing external AI agents like Claude Desktop, Claude Code, Codex, Cursor, Windsurf, or Antigravity to interface with your saved connections over stdio.
 
-- Open the MCP integration panel from the sidebar or Settings.
+- Open the **MCP Server** page from the sidebar (CPU icon).
 - Install the config for your target client.
 - The agent can then list saved connections, inspect schemas and tables, and execute SQL through the Tabularis MCP server.
