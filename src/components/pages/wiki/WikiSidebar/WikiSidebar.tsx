@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import {XIcon} from 'lucide-react';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
-import {useEffect} from 'react';
+import {useLayoutEffect, useRef} from 'react';
 import styles from './WikiSidebar.module.scss';
 
 interface WikiSidebarProps {
@@ -14,15 +14,38 @@ interface WikiSidebarProps {
     onClose?: () => void;
 }
 
+// The sidebar is rendered by each wiki page, so it remounts on every
+// navigation. Its scroll offset lives at module scope to survive that.
+let savedScrollTop: number | null = null;
+
 export function WikiSidebar({categories, onClose}: WikiSidebarProps) {
     const pathname = usePathname();
+    const navRef = useRef<HTMLElement>(null);
 
-    useEffect(() => {
-        const activeLink = document.querySelector(`.${styles.active}`);
+    // Before paint, so the nav never visibly jumps. Only the nav scrolls —
+    // never the window.
+    useLayoutEffect(() => {
+        const nav = navRef.current;
+        if (!nav) return;
 
-        if (activeLink) {
-            activeLink.scrollIntoView({behavior: 'smooth', block: 'center'});
+        if (savedScrollTop !== null) nav.scrollTop = savedScrollTop;
+
+        // Centre the active link when it is out of view: on the first load, or
+        // after arriving through a link outside the sidebar (e.g. prev/next).
+        const active = nav.querySelector<HTMLElement>(`.${styles.active}`);
+        if (active) {
+            const offset = active.getBoundingClientRect().top - nav.getBoundingClientRect().top;
+            const visible = offset >= 0 && offset + active.offsetHeight <= nav.clientHeight;
+            if (savedScrollTop === null || !visible) {
+                nav.scrollTop += offset - (nav.clientHeight - active.offsetHeight) / 2;
+            }
         }
+
+        const onScroll = () => {
+            savedScrollTop = nav.scrollTop;
+        };
+        nav.addEventListener('scroll', onScroll, {passive: true});
+        return () => nav.removeEventListener('scroll', onScroll);
     }, []);
 
     return (
@@ -33,7 +56,7 @@ export function WikiSidebar({categories, onClose}: WikiSidebarProps) {
                     <XIcon />
                 </div>
             </header>
-            <nav className={styles.sidebar} aria-label="Wiki navigation">
+            <nav ref={navRef} className={styles.sidebar} aria-label="Wiki navigation">
                 {categories.map(({name, pages}) => (
                     <div key={name}>
                         <span className={styles.categoryTitle}>{name}</span>
