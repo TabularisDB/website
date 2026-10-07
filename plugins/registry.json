@@ -2,6 +2,7 @@
   "schema_version": 1,
   "plugins": [
     {
+      "kind": "driver",
       "id": "redis",
       "name": "Redis (Go)",
       "description": "Tabularis driver for Redis databases. Supports virtual table views for Strings, Hashes, Lists, Sets, and ZSets with native UI write operations.",
@@ -34,6 +35,7 @@
       ]
     },
     {
+      "kind": "driver",
       "id": "redis-rust",
       "name": "Redis (Rust)",
       "description": "Redis key-value store with Hash and RedisJSON row storage",
@@ -55,6 +57,7 @@
       ]
     },
     {
+      "kind": "driver",
       "id": "informix",
       "name": "IBM Informix",
       "description": "IBM Informix 11.70+ driver plugin for Tabularis (ODBC; requires the Informix Client SDK)",
@@ -93,6 +96,7 @@
       ]
     },
     {
+      "kind": "driver",
       "id": "tubularis-d1",
       "name": "Cloudflare D1 (HTTP API)",
       "description": "Cloudflare D1 (serverless SQLite) over the D1 HTTP API — per-connection credentials, views and ER diagrams. macOS / Linux / Windows.",
@@ -115,6 +119,7 @@
     },
     {
       "id": "dynamodb",
+      "kind": "driver",
       "name": "dynamodb",
       "description": "Tabularis driver plugin for AWS DynamoDB. Connect with an AWS region + access key, a named profile, or DynamoDB Local.",
       "author": "fuleinist <https://github.com/TabularisDB/tabularis-dynamodb-plugin>",
@@ -159,6 +164,7 @@
     },
     {
       "id": "postgresql",
+      "kind": "driver",
       "name": "PostgreSQL",
       "description": "Full-featured PostgreSQL driver for Tabularis: browse schemas, tables, views, routines, and triggers; run queries with EXPLAIN plans; edit rows with type-aware binding for enums, JSON, arrays, UUIDs; generate DDL for tables, columns, indexes, and foreign keys.",
       "author": "aesslinger <https://github.com/TabularisDB/tabularis-postgresql-plugin>",
@@ -302,6 +308,7 @@
     },
     {
       "id": "mongodb-atlas",
+      "kind": "driver",
       "name": "mongodb-atlas",
       "description": "MongoDB NoSQL database driver with Atlas (mongodb+srv) support",
       "author": "debba <https://github.com/TabularisDB/tabularis-mongodb-plugin>",
@@ -346,6 +353,7 @@
     },
     {
       "id": "mongodb",
+      "kind": "driver",
       "name": "mongodb",
       "description": "MongoDB (6.0+) driver for Tabularis. Browse databases and collections, infer schemas by sampling documents, run native queries (find/aggregate/CRUD via db.coll.op(...)), manage indexes, and edit documents.",
       "author": "danielnuld <https://github.com/danielnuld/tabularis-mongodb-plugin>",
@@ -378,6 +386,7 @@
     },
     {
       "id": "elasticsearch",
+      "kind": "driver",
       "name": "elasticsearch",
       "description": "Browse Elasticsearch indices, inspect mappings, and run queries directly from Tabularis.",
       "author": "erwin-lovecraft <https://github.com/TabularisDB/tabularis-elasticsearch-plugin>",
@@ -407,6 +416,7 @@
     },
     {
       "id": "csv",
+      "kind": "driver",
       "name": "csv",
       "description": "Query a folder of .csv / .tsv files as a database. Each file becomes a table.",
       "author": "NewtTheWolf <https://github.com/TabularisDB/tabularis-csv-plugin>",
@@ -430,6 +440,7 @@
     },
     {
       "id": "harper",
+      "kind": "driver",
       "name": "Harper",
       "description": "Tabularis driver plugin for Harper",
       "author": "cb1kenobi <https://github.com/HarperFast/tabularis-harper-plugin>",
@@ -463,6 +474,7 @@
     },
     {
       "id": "sqlserver",
+      "kind": "driver",
       "name": "sqlserver",
       "description": "Full-featured Microsoft SQL Server driver for Tabularis with schema browsing, query execution, visual plans, type-aware row editing, DDL, routines, triggers, BLOBs, and database-user management.",
       "author": "debba <https://github.com/TabularisDB/tabularis-sqlserver-plugin>",
@@ -507,6 +519,7 @@
     },
     {
       "id": "cassandra",
+      "kind": "driver",
       "name": "cassandra",
       "description": "Browse and query Apache Cassandra and ScyllaDB over CQL: keyspaces, tables, paged queries, and row editing.",
       "author": "Mohamed-Fameen <https://github.com/TabularisDB/tabularis-cassandra-plugin>",
@@ -529,6 +542,7 @@
     },
     {
       "id": "oracle",
+      "kind": "driver",
       "name": "oracle",
       "description": "Oracle Database driver for Tabularis (12c+, Free/XE, Autonomous Database, RDS) with multi-schema browsing, query execution, Visual EXPLAIN with runtime statistics, row editing, DDL, views, routines and table/column comments. Requires the Oracle Instant Client.",
       "author": "debba <https://github.com/TabularisDB/tabularis-oracle-plugin>",
@@ -551,6 +565,7 @@
     },
     {
       "id": "libsql",
+      "kind": "driver",
       "name": "libsql",
       "description": "libSQL / Turso driver. Connects to local libSQL/SQLite files (embedded libSQL fork: ALTER COLUMN and foreign-key add/drop work locally) and to remote Turso or sqld servers over the Hrana HTTP protocol.",
       "author": "jonaspm <https://github.com/TabularisDB/tabularis-libsql-plugin>",
@@ -584,6 +599,7 @@
     },
     {
       "id": "hackernews",
+      "kind": "driver",
       "name": "hackernews",
       "description": "Query Hacker News stories, comments, users and polls as SQL tables using the public API.",
       "author": "debba <https://github.com/TabularisDB/tabularis-hackernews-plugin>",
@@ -606,6 +622,7 @@
     },
     {
       "id": "google-sheets",
+      "kind": "driver",
       "name": "google-sheets",
       "description": "Query Google Sheets spreadsheets as SQL tables. Each tab becomes a table, the first row defines column headers.",
       "author": "debba <https://github.com/TabularisDB/tabularis-google-sheets-plugin>",
@@ -628,6 +645,7 @@
     },
     {
       "id": "duckdb",
+      "kind": "driver",
       "name": "duckdb",
       "description": "DuckDB local database",
       "author": "debba <https://github.com/TabularisDB/tabularis-duckdb-plugin>",
@@ -650,6 +668,7 @@
     },
     {
       "id": "db2",
+      "kind": "driver",
       "name": "db2",
       "description": "IBM Db2 driver plugin for Tabularis",
       "author": "NewtTheWolf <https://github.com/TabularisDB/tabularis-db2-plugin>",
@@ -683,6 +702,7 @@
     },
     {
       "id": "clickhouse",
+      "kind": "driver",
       "name": "clickhouse",
       "description": "ClickHouse columnar OLAP database driver",
       "author": "debba <https://github.com/TabularisDB/tabularis-clickhouse-plugin>",
@@ -705,6 +725,7 @@
     },
     {
       "id": "cloudflare-d1",
+      "kind": "driver",
       "name": "cloudflare-d1",
       "description": "Browse and manage Cloudflare D1 serverless SQLite databases from Tabularis.",
       "author": "josejorge <https://github.com/josejorge/tabularis_cloudflare_d1_plugin>",
@@ -747,6 +768,7 @@
     },
     {
       "id": "dameng",
+      "kind": "driver",
       "name": "dameng",
       "description": "DM / Dameng database driver for Tabularis using a user-provided JDBC driver.",
       "author": "haos666 <https://github.com/haos666/tabularis-dameng-plugin>",
@@ -770,6 +792,7 @@
     },
     {
       "id": "firestore",
+      "kind": "driver",
       "name": "firestore",
       "description": "Google Cloud Firestore driver for Tabularis. Browse collections, infer schemas, run SQL-flavoured queries, view the ER diagram, EXPLAIN plans, and CRUD against any project or the local emulator.",
       "author": "NewtTheWolf <https://codeberg.org/NewtTheWolf/firestore-tabularis>",
@@ -797,6 +820,25 @@
             "linux-arm64": "https://registry.tabularis.dev/api/plugins/firestore/releases/0.3.9?os=linux&arch=arm64&redirect=1",
             "linux-x64": "https://registry.tabularis.dev/api/plugins/firestore/releases/0.3.9?os=linux&arch=x64&redirect=1",
             "win-x64": "https://registry.tabularis.dev/api/plugins/firestore/releases/0.3.9?os=win&arch=x64&redirect=1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ember-theme",
+      "kind": "theme",
+      "name": "Ember Theme for Tabularis",
+      "description": "A warm two-variant theme for Tabularis: charcoal and amber in Ember Dark, parchment and copper in Ember Light.",
+      "author": "debba <https://github.com/TabularisDB/tabularis-ember-theme>",
+      "homepage": "https://github.com/TabularisDB/tabularis-ember-theme",
+      "registry_url": "https://registry.tabularis.dev/plugins/ember-theme",
+      "latest_version": "1.0.0",
+      "releases": [
+        {
+          "version": "1.0.0",
+          "min_tabularis_version": "0.25.1-1",
+          "assets": {
+            "universal": "https://github.com/TabularisDB/tabularis-ember-theme/releases/download/v1.0.0/theme-universal.zip"
           }
         }
       ]

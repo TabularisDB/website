@@ -52,3 +52,34 @@ export const STATUS_WEIGHT: Record<BOUNTY_STATUS, number> = {
     [BOUNTY_STATUS.OPEN]: 4,
     [BOUNTY_STATUS.SHIPPED]: 5,
 };
+
+export interface PluginsPageCopy {
+    title: string;
+    description: string;
+}
+
+// Header copy of /plugins (key "all") and of each kind page. A kind without an
+// entry falls back to its registry label and description.
+export const PLUGINS_PAGE_COPY: Record<string, PluginsPageCopy> = {
+    all: {
+        title: 'Drivers, themes and more, one install away.',
+        description:
+            'Plugins add new databases and new looks to Tabularis. Browse what the community has published on the Tabularium registry and install it from inside the app, or build your own.',
+    },
+    driver: {
+        title: 'Every database, one plugin away.',
+        description:
+            "Drivers connect Tabularis to databases it doesn't ship with. Each one runs as a standalone process speaking JSON-RPC, so it can be written in any language.",
+    },
+    theme: {
+        title: 'Make Tabularis your own.',
+        description:
+            'Theme packages restyle the whole app, usually with a light and a dark variant. They are declarative and never run code.',
+    },
+};
+
+// Singular, human label for a kind key: "driver" -> "Driver", "sql-template" -> "Sql template".
+export function getKindBadge(key: string): string {
+    const words = key.replace(/[-_]+/g, ' ');
+    return words.charAt(0).toUpperCase() + words.slice(1);
+}

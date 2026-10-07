@@ -7,6 +7,7 @@ import {AUTHORS} from '@/lib/blog/authors';
 import {getAllSeoPages, getSeoPagePath} from '@/lib/seo/seoPages';
 import {getAllInitiativeSlugs} from '@/lib/roadmap';
 import {getAllVideoDemos} from '@/lib/videos';
+import {getKindSlug, getPublishedKinds} from '@/lib/plugins/kinds';
 
 const BASE_URL = 'https://tabularis.dev';
 
@@ -42,6 +43,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'monthly',
             priority: 0.7,
         },
+        ...getPublishedKinds().map((kind) => ({
+            url: `${BASE_URL}/plugins/${getKindSlug(kind.key)}`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly' as const,
+            priority: 0.6,
+        })),
         {
             url: `${BASE_URL}/plugins/bounties`,
             lastModified: new Date(),

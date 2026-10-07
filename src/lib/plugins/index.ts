@@ -9,6 +9,8 @@ export interface PluginRelease {
 
 export interface Plugin {
     id: string;
+    // Registry kind key (e.g. "driver", "theme"), see plugins/kinds.json.
+    kind?: string;
     name: string;
     description: string;
     author: string;
@@ -42,6 +44,10 @@ export function getPluginRegistry(): PluginRegistry {
 
 export function getAllPlugins(): Plugin[] {
     return getPluginRegistry().plugins;
+}
+
+export function getDriverPlugins(): Plugin[] {
+    return getAllPlugins().filter((p) => (p.kind ?? 'driver') === 'driver');
 }
 
 export function getLatestRelease(plugin: Plugin): PluginRelease | undefined {

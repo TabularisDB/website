@@ -64,6 +64,20 @@
     color: var(--color-bg);
 }
 
+.kind {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 1;
+    padding: 0.2rem 0.6rem;
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--radius-full);
+    background-color: var(--color-bg);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+}
+
 .cardDetails {
     padding: 0.5rem;
     display: flex;
@@ -88,4 +102,50 @@
     margin-top: 0.25rem;
     font-size: 0.9rem;
     color: #4f8dea;
+}
+
+.catalogue {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+// Same pill look as the blog's TagFilter.
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+}
+
+.filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.875rem;
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    text-decoration: none;
+    transition:
+        border-color 0.15s ease,
+        color 0.15s ease;
+
+    &:hover {
+        border-color: var(--color-border-hover);
+    }
+}
+
+.filterActive {
+    border-color: var(--color-text-primary);
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+.filterCount {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
 }

@@ -6,6 +6,7 @@ import {getSeoPagesBySection} from '@/lib/seo/seoPages';
 import {OG_IMAGE_URL, SITE_URL} from '@/lib/siteConfig';
 import {getAllVideoDemos} from '@/lib/videos';
 import {getAllWikiPages} from '@/lib/wiki';
+import {getKindSlug, getPublishedKinds} from '@/lib/plugins/kinds';
 import {renderBlogPostOgImage} from './ogBlogPost';
 import {renderSimpleOgImage} from './ogImageSimple';
 import {renderScreenshotSplitOgImage} from './ogScreenshotSplit';
@@ -32,7 +33,7 @@ export function getOgCards(): Record<string, OgCard> {
         '/changelog': () => renderSimpleOgImage({kicker: 'Changelog', title: 'Release history'}),
         '/compare': () => renderSimpleOgImage({kicker: 'Compare', title: 'How Tabularis stacks up'}),
         '/download': () => renderSimpleOgImage({kicker: `Download · v${APP_VERSION}`, title: 'Get Tabularis'}),
-        '/plugins': () => renderSimpleOgImage({kicker: 'Plugins', title: 'Community drivers'}),
+        '/plugins': () => renderSimpleOgImage({kicker: 'Plugins', title: 'Community drivers and themes'}),
         '/plugins/bounties': () => renderSimpleOgImage({kicker: 'Bounties', title: 'Fund the plugin you need'}),
         '/roadmap': () => renderSimpleOgImage({kicker: 'Roadmap', title: "What's shipping next"}),
         '/solutions': () => renderSimpleOgImage({kicker: 'Solutions', title: 'Tabularis by use case'}),
@@ -73,6 +74,10 @@ export function getOgCards(): Record<string, OgCard> {
     for (const {meta} of getAllInitiatives()) {
         cards[`/roadmap/${meta.slug}`] = () =>
             renderSimpleOgImage({kicker: `Roadmap · ${ROADMAP_STATUS[meta.status]}`, title: meta.title});
+    }
+    for (const kind of getPublishedKinds()) {
+        cards[`/plugins/${getKindSlug(kind.key)}`] = () =>
+            renderSimpleOgImage({kicker: 'Plugins', title: `Community ${kind.label.toLowerCase()}`});
     }
     for (const video of getAllVideoDemos()) {
         cards[`/demos/${video.slug}`] = () =>
