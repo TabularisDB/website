@@ -94,14 +94,14 @@ export default function CookiePolicyPage() {
                                     </tr>
                                     <tr>
                                         <td>
-                                            <code>_GRECAPTCHA</code>
+                                            <em>None (cookieless)</em>
                                         </td>
-                                        <td>google.com</td>
+                                        <td>challenges.cloudflare.com</td>
                                         <td>
-                                            Google reCAPTCHA — spam and bot protection on the{' '}
-                                            <Link href="/sponsors">sponsors</Link> contact form
+                                            Cloudflare Turnstile — spam and bot protection on the newsletter, survey
+                                            and <Link href="/sponsors">sponsors</Link> contact forms
                                         </td>
-                                        <td>6 months</td>
+                                        <td>Session only</td>
                                     </tr>
                                 </tbody>
                             </table>

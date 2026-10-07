@@ -1,14 +1,13 @@
 'use client';
 import Image from 'next/image';
 import {useState} from 'react';
-import Script from 'next/script';
 import {trackEvent} from '@/lib/analytics';
+import {useProtectedForm} from '@/lib/forms';
 import {SURVEY_EMAILCHEF} from '@/lib/siteConfig';
 import styles from './SurveyForm.module.scss';
 import {Button} from '@/components/ui/Button/Button';
-
-const EMAILCHEF_SCRIPT = `https://app.emailchef.com/signup/form.js/${SURVEY_EMAILCHEF.token}/en/api`;
-const EMAILCHEF_ACTION = `https://app.emailchef.com/signupwl/${SURVEY_EMAILCHEF.token}/en`;
+import {Honeypot} from '@/components/ui/Honeypot/Honeypot';
+import {Turnstile} from '@/components/ui/Turnstile/Turnstile';
 
 const ROLES = [
     'Backend / full-stack developer',
@@ -45,6 +44,7 @@ export function SurveyForm({source, onSubmitted}: SurveyFormProps) {
     const [priorities, setPriorities] = useState<string[]>([]);
     const [missing, setMissing] = useState('');
     const [newsletter, setNewsletter] = useState(false);
+    const guard = useProtectedForm('survey', SURVEY_EMAILCHEF.redirect);
 
     function toggle(list: string[], setList: (v: string[]) => void, value: string) {
         setList(list.includes(value) ? list.filter((v) => v !== value) : [...list, value]);
@@ -53,17 +53,17 @@ export function SurveyForm({source, onSubmitted}: SurveyFormProps) {
     const LAST_STEP = 3;
 
     function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-        if (step !== LAST_STEP) {
-            e.preventDefault();
-            return;
-        }
-        try {
-            localStorage.setItem(SURVEY_STORAGE_KEY, 'submitted');
-        } catch {
-            // localStorage unavailable (private mode) — non-fatal.
-        }
-        trackEvent('survey', 'submitted', `${source}:${role || 'unknown'}`);
-        onSubmitted?.();
+        e.preventDefault();
+        if (step !== LAST_STEP) return;
+        void guard.submit(e.currentTarget, () => {
+            try {
+                localStorage.setItem(SURVEY_STORAGE_KEY, 'submitted');
+            } catch {
+                // localStorage unavailable (private mode) — non-fatal.
+            }
+            trackEvent('survey', 'submitted', `${source}:${role || 'unknown'}`);
+            onSubmitted?.();
+        });
     }
 
     const databasesValue = databases
@@ -87,7 +87,9 @@ export function SurveyForm({source, onSubmitted}: SurveyFormProps) {
                 ))}
             </div>
 
-            <form method="POST" action={EMAILCHEF_ACTION} className={styles.form} onSubmit={onSubmit}>
+            <form className={styles.form} onSubmit={onSubmit}>
+                <Honeypot />
+
                 {step === 0 && (
                     <fieldset className={styles.fieldset}>
                         <legend className={styles.question}>What best describes you?</legend>
@@ -211,6 +213,14 @@ export function SurveyForm({source, onSubmitted}: SurveyFormProps) {
                         <p className={styles.fineprint}>
                             *We&apos;ll only use it to follow up on your feedback. No spam.
                         </p>
+
+                        <Turnstile key={guard.widgetKey} action="survey" onToken={guard.onToken} />
+
+                        {guard.error && (
+                            <p className={styles.error} role="alert">
+                                {guard.error}
+                            </p>
+                        )}
                     </div>
                 )}
 
@@ -228,10 +238,6 @@ export function SurveyForm({source, onSubmitted}: SurveyFormProps) {
                         value={newsletter ? '1' : '0'}
                     />
                 )}
-                <input type="hidden" name="form_id" value={SURVEY_EMAILCHEF.formId} />
-                <input type="hidden" name="lang" value="" />
-                <input type="hidden" name="referrer" value="" />
-                <input type="hidden" name="redirect" value={SURVEY_EMAILCHEF.redirect} />
 
                 <div className={styles.actions}>
                     {step > 0 && (
@@ -254,8 +260,7 @@ export function SurveyForm({source, onSubmitted}: SurveyFormProps) {
                             Next
                         </Button>
                     ) : (
-                        <Button type="submit" className={styles.button}>
-                            {' '}
+                        <Button type="submit" className={styles.button} disabled={guard.pending}>
                             Send feedback
                         </Button>
                     )}
@@ -265,8 +270,6 @@ export function SurveyForm({source, onSubmitted}: SurveyFormProps) {
                     Made with
                     <Image src="/img/emailchef-logo.svg" alt="emailchef" width={174} height={34} />
                 </a>
-
-                <Script src={EMAILCHEF_SCRIPT} strategy="lazyOnload" />
             </form>
         </>
     );

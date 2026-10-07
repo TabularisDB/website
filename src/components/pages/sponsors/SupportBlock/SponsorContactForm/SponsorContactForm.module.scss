@@ -52,3 +52,9 @@
 .submitButton {
     padding: 0.8rem;
 }
+
+.error {
+    margin: 0;
+    color: color-mix(in srgb, var(--color-accent-red) 70%, white);
+    font-size: 0.85rem;
+}

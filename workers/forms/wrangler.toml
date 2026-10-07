@@ -1,0 +1,21 @@
+name = "tabularis-forms"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+# Endpoint: https://tabularis-forms.<account-subdomain>.workers.dev/<form-key>
+# Paste that base URL into FORMS_ENDPOINT in src/lib/siteConfig.ts.
+
+[vars]
+ALLOWED_ORIGINS = "https://tabularis.dev,https://www.tabularis.dev,http://localhost:3000"
+
+# Secrets — fill in secrets.json (gitignored) and upload them all at once with
+# `pnpm dlx wrangler secret bulk secrets.json`, or one by one with
+# `pnpm dlx wrangler secret put <NAME>`. Never commit them:
+#   TURNSTILE_SECRET
+#   EMAILCHEF_TOKEN_NEWSLETTER, EMAILCHEF_FORM_ID_NEWSLETTER
+#   EMAILCHEF_TOKEN_SURVEY,     EMAILCHEF_FORM_ID_SURVEY
+#   EMAILCHEF_TOKEN_SPONSOR,    EMAILCHEF_FORM_ID_SPONSOR
+#
+# The current emailchef tokens are public in this repo's history, so bots can
+# keep posting to emailchef directly. Recreate (or regenerate) the three
+# emailchef forms and store the NEW token/form_id here, then disable the old ones.

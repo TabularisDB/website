@@ -1,22 +1,21 @@
+// Spam-filtering proxy for every emailchef form (Cloudflare Worker, source in
+// workers/forms/). Forms POST to `${FORMS_ENDPOINT}/<form-key>` with a
+// Turnstile token; the Worker verifies it and forwards the fields to emailchef.
+// The emailchef tokens and form ids live only in the Worker's secrets.
+export const FORMS_ENDPOINT = 'https://tabularis-forms.andrea-92c.workers.dev';
+// Public Turnstile site key (Cloudflare dashboard → Turnstile → widget).
+export const TURNSTILE_SITE_KEY = '0x4AAAAAAFQfrxfeVQIZZDMA';
+
 // emailchef-backed product-discovery survey (see SurveyPrompt.tsx).
 //
-// Submissions go to emailchef exactly like the newsletter/sponsor forms: a
-// native POST to signupwl/<token>, with the survey answers mapped onto custom
-// fields of the resulting contact. Because emailchef is a contact-list tool,
-// an email is required and each answer is stored as a custom field.
+// Submissions go through the forms proxy like the newsletter/sponsor forms,
+// with the survey answers mapped onto custom fields of the resulting contact.
+// Because emailchef is a contact-list tool, an email is required and each
+// answer is stored as a custom field.
 //
-// To wire it up: create a new emailchef form whose custom fields cover the
-// survey questions, then fill in the values below from that form's embed code:
-//   - `token`  : the long string in the action URL,
-//                https://app.emailchef.com/signupwl/<token>/en
-//   - `formId` : the hidden `form_id` value
-//   - `fields` : the N in each custom field's name="field[N]" (email is -1)
-//
-// While `token` is left as the placeholder the survey does NOT render, so the
-// site never ships a broken submit.
+// `fields` holds the N in each custom field's name="field[N]" (email is -1),
+// taken from the emailchef form's embed code.
 export const SURVEY_EMAILCHEF = {
-    token: '7o22666s726q5s6964223n2237363036227q',
-    formId: '7606',
     // The redirect target after a successful submit.
     redirect: '/thanks-survey',
     // emailchef custom-field ids (the N in name="field[N]"). Create these custom
@@ -35,8 +34,6 @@ export const SURVEY_EMAILCHEF = {
 } as const;
 
 export const NEWSLETTER_EMAILCHEF = {
-    token: '7o22666s726q5s6964223n2237353333227q',
-    formId: '7533',
     redirect: '/thanks-newsletter',
 } as const;
 

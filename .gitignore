@@ -13,3 +13,9 @@ drafts/
 
 
 build.log
+
+# Cloudflare Worker secrets (uploaded with `wrangler secret bulk`)
+workers/forms/secrets.json
+
+# wrangler local state
+.wrangler
