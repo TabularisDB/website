@@ -9,6 +9,8 @@ category: "Database Objects"
 
 Right-click a table in the sidebar and choose **Import from Clipboard...**, or press `Cmd/Ctrl + Shift + V`. The import modal opens and immediately reads your clipboard.
 
+<video src="/videos/wiki/21-clipboard-import.mp4" poster="/videos/wiki/21-clipboard-import.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
 ## Supported Formats
 
 Tabularis detects the format automatically:

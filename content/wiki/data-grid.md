@@ -39,6 +39,8 @@ Click the sort icon in a column header (revealed on hover) to sort by that colum
 
 ### Filtering
 
+<video src="/videos/wiki/22-filter-toolbar.mp4" poster="/videos/wiki/22-filter-toolbar.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
 The toolbar at the top of a table tab has three inputs (**WHERE** and **ORDER BY** offer column autocomplete):
 
 - **WHERE** — a free-text condition (e.g. `status = 'active'`), applied server-side so it works across all pages and the row count reflects it.

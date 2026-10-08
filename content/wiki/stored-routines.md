@@ -38,6 +38,8 @@ The definition is fetched directly from the database catalog, so it always refle
 
 ## Running a Routine
 
+<video src="/videos/wiki/20-run-routine.mp4" poster="/videos/wiki/20-run-routine.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
 Right-click a routine → **Run…**. A modal titled **Run &lt;name&gt;** collects one input per `IN`/`INOUT` parameter (the [Command Palette](/wiki/quick-navigator) only opens a routine's definition):
 
 - A **NULL** checkbox to pass `NULL` explicitly.
