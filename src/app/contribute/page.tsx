@@ -4,7 +4,7 @@ import {InitiativeCard} from '@/components/pages/roadmap/InitiativeCard/Initiati
 import {Button} from '@/components/ui/Button/Button';
 import {CalloutBlock} from '@/components/ui/CalloutBlock/CalloutBlock';
 import {DiscordIcon, GitHubIcon} from '@/components/ui/Icons/SocialIcons';
-import {getIssueStats} from '@/lib/community';
+import {formatIssueDate, getIssueStats, ISSUES_FETCHED_AT} from '@/lib/community';
 import {ogImages} from '@/lib/og/registry';
 import {getAllInitiativeMetas} from '@/lib/roadmap';
 import {buildBreadcrumbJsonLd} from '@/lib/seo';
@@ -28,7 +28,7 @@ import styles from './ContributePage.module.scss';
 const path = '/contribute';
 const title = 'Contribute | Tabularis';
 const description =
-    'Contribute to Tabularis: open issues across every project, good first issues, plugins, themes, docs, and where the community talks.';
+    'Contribute to Tabularis: open issues across every project, good first issues, roadmap initiatives, plugins, themes and docs.';
 
 export const metadata: Metadata = {
     title,
@@ -67,7 +67,7 @@ const WAYS_TO_HELP: WayToHelp[] = [
         title: 'Join a roadmap initiative',
         text: 'Bigger efforts are split into epics with open tasks you can claim one at a time.',
         href: '/roadmap',
-        cta: 'See active initiatives',
+        cta: 'See the roadmap',
     },
     {
         icon: <PlugIcon />,
@@ -172,8 +172,9 @@ export default function ContributePage() {
                     </span>
                     <h2 className="title">Pick an issue and claim it.</h2>
                     <p className="description">
-                        Every open issue from the Tabularis app and its plugins. Filter by label or project, then
-                        comment on an issue to claim it.
+                        Every open issue from the Tabularis app and its plugins, as of{' '}
+                        {formatIssueDate(ISSUES_FETCHED_AT)}. Filter by label or project, then comment on an issue to
+                        claim it.
                     </p>
                 </header>
 

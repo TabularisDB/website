@@ -1,18 +1,17 @@
 import {JsonLd} from '@/components/layout/JsonLd';
 import {InitiativeCard} from '@/components/pages/roadmap/InitiativeCard/InitiativeCard';
 import {Button} from '@/components/ui/Button/Button';
+import {CalloutBlock} from '@/components/ui/CalloutBlock/CalloutBlock';
 import {DiscordIcon, GitHubIcon} from '@/components/ui/Icons/SocialIcons';
-import {getAllInitiativeMetas, type InitiativeStatus} from '@/lib/roadmap';
 import {ogImages} from '@/lib/og/registry';
+import {getAllInitiativeMetas, type InitiativeStatus} from '@/lib/roadmap';
 import {buildBreadcrumbJsonLd} from '@/lib/seo';
 import {SOCIAL_URLS} from '@/lib/social';
-import clsx from 'clsx';
 import {Hammer, MapIcon, Milestone, Rocket, UsersIcon} from 'lucide-react';
 import type {Metadata} from 'next';
 import Link from 'next/link';
 import type {ComponentType} from 'react';
 import styles from './RoadmapPage.module.scss';
-import {CalloutBlock} from '@/components/ui/CalloutBlock/CalloutBlock';
 
 const path = '/roadmap';
 const title = 'Roadmap | Tabularis';
@@ -34,7 +33,7 @@ export const metadata: Metadata = {
 
 const STATUS_ORDER: InitiativeStatus[] = ['in-progress', 'planned', 'done'];
 
-export const STATUS_LABEL: Record<InitiativeStatus, string> = {
+const CATEGORY_LABEL: Record<InitiativeStatus, string> = {
     'in-progress': 'Being built right now',
     planned: "What's next",
     done: 'Already shipped',
@@ -75,7 +74,7 @@ export default function RoadmapPage() {
                     Active initiatives and the work queued behind them. Each card links to a GitHub epic, its open
                     tasks, and how to claim one. Looking for something smaller?{' '}
                     <Link href="/contribute#issues" className={styles.headerLink}>
-                        Browse open issue
+                        Browse open issues
                     </Link>
                     .
                 </p>
@@ -86,10 +85,10 @@ export default function RoadmapPage() {
                     const StatusIcon = STATUS_ICON[group.status];
 
                     return (
-                        <section key={group.status} className={clsx(styles.category, group.status)}>
+                        <section key={group.status} className={styles.category}>
                             <h2 className={styles.categoryTitle}>
                                 <StatusIcon className={styles.categoryIcon} />
-                                {STATUS_LABEL[group.status]}
+                                {CATEGORY_LABEL[group.status]}
                             </h2>
 
                             <div className={styles.grid}>

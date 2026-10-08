@@ -122,21 +122,10 @@
 }
 
 .count {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
     font-size: 0.85rem;
     color: var(--color-text-primary);
     text-transform: uppercase;
-}
-
-.updated {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--color-text-secondary);
-    text-transform: none;
+    font-weight: 600;
 }
 
 .chips {

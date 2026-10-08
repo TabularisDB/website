@@ -1,8 +1,9 @@
 .section {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 3rem;
     scroll-margin-top: calc(var(--header-height) + 2.5rem);
+    padding-block: 3rem;
 }
 
 .waysGrid {

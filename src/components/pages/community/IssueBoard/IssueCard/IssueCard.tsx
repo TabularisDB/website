@@ -1,11 +1,11 @@
-import {cleanIssueTitle, formatIssueDate, type CommunityIssue} from '@/lib/community';
+import {cleanIssueTitle, formatIssueDate, labelTextColor, type CommunityIssue} from '@/lib/community';
 import {GitPullRequestIcon, MessageSquareIcon} from 'lucide-react';
 import Image from 'next/image';
 import styles from './IssueCard.module.scss';
 
 export function IssueCard({issue}: {issue: CommunityIssue}) {
     return (
-        <a href={issue.url} target="_blank" rel="noopener noreferrer" className={styles.issueCard}>
+        <article className={styles.issueCard}>
             <div className={styles.meta}>
                 <span className={styles.repo}>
                     {issue.repo} #{issue.number}
@@ -21,12 +21,20 @@ export function IssueCard({issue}: {issue: CommunityIssue}) {
                 )}
             </div>
 
-            <h3 className={styles.title}>{cleanIssueTitle(issue.title)}</h3>
+            <h3 className={styles.title}>
+                <a href={issue.url} target="_blank" rel="noopener noreferrer" className={styles.link}>
+                    {cleanIssueTitle(issue.title)}
+                </a>
+            </h3>
 
             {issue.labels.length > 0 && (
                 <ul className={styles.labels}>
                     {issue.labels.map((label) => (
-                        <li key={label.name} className={styles.label} style={{background: `#${label.color}`}}>
+                        <li
+                            key={label.name}
+                            className={styles.label}
+                            style={{background: `#${label.color}`, color: labelTextColor(label.color)}}
+                        >
                             {label.name}
                         </li>
                     ))}
@@ -67,6 +75,6 @@ export function IssueCard({issue}: {issue: CommunityIssue}) {
                     </span>
                 )}
             </div>
-        </a>
+        </article>
     );
 }

@@ -1,22 +1,20 @@
 'use client';
 
-import {useEffect, useState} from 'react';
-import {ArrowUpRightIcon, SearchIcon, XIcon} from 'lucide-react';
+import {Button} from '@/components/ui/Button/Button';
 import {
     COMMUNITY_ISSUES,
     FEATURED_LABELS,
-    formatIssueDate,
     getIssueLabels,
     ISSUE_PROJECT_GROUPS,
-    ISSUES_FETCHED_AT,
     issueSearchUrl,
     type CommunityIssue,
     type LabelCount,
 } from '@/lib/community';
+import {ArrowUpRightIcon, SearchIcon, XIcon} from 'lucide-react';
+import {useEffect, useState} from 'react';
 import {FilterSelect, type FilterOption, type FilterOptionGroup} from './FilterSelect/FilterSelect';
-import {IssueCard} from './IssueCard/IssueCard';
 import styles from './IssueBoard.module.scss';
-import {Button} from '@/components/ui/Button/Button';
+import {IssueCard} from './IssueCard/IssueCard';
 
 const PAGE_SIZE = 12;
 const ALL = 'all';
@@ -141,7 +139,6 @@ export function IssueBoard() {
             <div className={styles.resultsRow}>
                 <span className={styles.count}>
                     {filtered.length} {filtered.length === 1 ? 'issue' : 'issues'}
-                    <span className={styles.updated}>Updated {formatIssueDate(ISSUES_FETCHED_AT)}</span>
                 </span>
 
                 {activeChips.length > 0 && (
