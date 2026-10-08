@@ -104,6 +104,8 @@ For PostgreSQL, the **SSL Mode** selector uses libpq mode names:
 
 For MySQL/MariaDB the selector offers the MySQL mode names instead: `disabled`, `preferred`, `required` (the default), `verify_ca`, and `verify_identity`.
 
+![MySQL connection editor with the SSL Mode dropdown open, showing Disabled, Preferred, Required, Verify CA and Verify Identity](/img/tabularis-mysql-ssl-modes.png)
+
 ### Client Certificates (mTLS)
 
 Servers that require client-side certificate authentication (Google Cloud SQL with mTLS enabled, or a private PKI) reject connections with `connection requires a valid client certificate`. Since v0.21.0, filling both **Client Certificate** and **Client Key** with PEM paths makes Tabularis present them during the TLS handshake in every SSL mode other than `disable`. Connection pools are keyed by these paths as well, so editing the certificate never reuses a pool built without it.
@@ -348,6 +350,8 @@ Some MySQL proxies — notably [Warpgate](https://github.com/warp-tech/warpgate)
 Because the plugin sends the password in cleartext, the toggle is only available when an **enforced** TLS mode is selected (`required`, `verify_ca`, or `verify_identity`) — `preferred` and `disabled` are rejected, since they can silently fall back to an unencrypted link.
 
 ### AWS RDS IAM Authentication (MySQL)
+
+![MySQL connection editor on the SSL tab with Required mode and the Use AWS IAM Authentication (RDS) option available](/img/tabularis-mysql-iam.png)
 
 For MySQL/MariaDB on AWS RDS, enable **Use AWS IAM Authentication (RDS)** and paste the output of `aws rds generate-db-auth-token` into the password field. The token is sent with the cleartext password plugin, so a TLS mode is required: `disabled` is refused and `preferred` is upgraded to `required`. Tokens expire every 15 minutes and are never read from the keychain — paste a fresh one when you connect.
 

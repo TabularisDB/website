@@ -175,6 +175,8 @@ For debugging connection failures, plugin crashes, or unexpected behavior, Tabul
 
 ### Viewing Logs in the App
 
+![Settings Logs tab showing application log entries, the level filter, Export Logs and Max Log Entries](/img/tabularis-settings-logs.png)
+
 Open **Settings → Logs**. The tab lists the collected entries with their timestamp, level and message, and lets you:
 
 - **Filter by level** (Debug, Info, Warn, Error).
