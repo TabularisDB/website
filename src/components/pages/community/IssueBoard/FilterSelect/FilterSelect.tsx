@@ -3,12 +3,13 @@
 import {useEffect, useId, useRef, useState} from 'react';
 import clsx from 'clsx';
 import {SearchIcon} from 'lucide-react';
-import styles from './IssueBoard.module.scss';
+import styles from './FilterSelect.module.scss';
 
 export interface FilterOption<T extends string> {
     value: T;
     label: string;
     count?: number;
+    color?: string;
 }
 
 export interface FilterOptionGroup<T extends string> {
@@ -75,7 +76,12 @@ export function FilterSelect<T extends string>({
 
     const toggle = () => {
         setQuery('');
-        setActive(Math.max(flat.findIndex((option) => option.value === value), 0));
+        setActive(
+            Math.max(
+                flat.findIndex((option) => option.value === value),
+                0,
+            ),
+        );
         setOpen((prev) => !prev);
     };
 
@@ -106,35 +112,43 @@ export function FilterSelect<T extends string>({
             role="option"
             aria-selected={value === option.value}
             className={clsx(
-                styles.comboOption,
-                activeValue === option.value && styles.comboOptionActive,
-                value === option.value && styles.comboOptionSelected,
+                styles.option,
+                activeValue === option.value && styles.optionActive,
+                value === option.value && styles.optionSelected,
             )}
             onPointerMove={() => setActive(flat.indexOf(option))}
             onClick={() => pick(option.value)}
         >
-            <span>{option.label}</span>
-            {option.count !== undefined && <span className={styles.pillCount}>{option.count}</span>}
+            <span className={styles.optionLabel}>
+                {option.color && (
+                    <span className={styles.dot} style={{background: `#${option.color}`}} aria-hidden="true" />
+                )}
+                {option.label}
+            </span>
+            {option.count !== undefined && <span className={styles.optionCount}>{option.count}</span>}
         </li>
     );
 
     return (
-        <div className={styles.combo} ref={rootRef}>
+        <div className={styles.filterSelect} ref={rootRef}>
             <button
                 type="button"
-                className={clsx(styles.select, styles.comboTrigger)}
+                className={styles.trigger}
                 aria-haspopup="listbox"
                 aria-expanded={open}
                 aria-label={label}
                 onClick={toggle}
             >
-                {selected?.label ?? value}
+                {selected?.color && (
+                    <span className={styles.dot} style={{background: `#${selected.color}`}} aria-hidden="true" />
+                )}
+                <span className={styles.value}>{selected?.label ?? value}</span>
             </button>
 
             {open && (
-                <div className={styles.comboPanel} onKeyDown={onKeyDown}>
+                <div className={styles.panel} onKeyDown={onKeyDown}>
                     {searchPlaceholder && (
-                        <div className={styles.comboSearch}>
+                        <div className={styles.search}>
                             <SearchIcon aria-hidden="true" />
                             <input
                                 ref={inputRef}
@@ -152,7 +166,7 @@ export function FilterSelect<T extends string>({
                     )}
                     <ul
                         ref={listRef}
-                        className={styles.comboList}
+                        className={styles.list}
                         id={listId}
                         role="listbox"
                         aria-label={label}
@@ -162,7 +176,7 @@ export function FilterSelect<T extends string>({
                         {visibleOptions.map(renderOption)}
                         {visibleGroups.map((group) => (
                             <li key={group.key} role="presentation">
-                                <div className={styles.comboGroup} aria-hidden="true">
+                                <div className={styles.group} aria-hidden="true">
                                     {group.label}
                                 </div>
                                 <ul role="group" aria-label={group.label}>
@@ -170,7 +184,7 @@ export function FilterSelect<T extends string>({
                                 </ul>
                             </li>
                         ))}
-                        {flat.length === 0 && <li className={styles.comboEmpty}>No matches</li>}
+                        {flat.length === 0 && <li className={styles.empty}>No matches</li>}
                     </ul>
                 </div>
             )}

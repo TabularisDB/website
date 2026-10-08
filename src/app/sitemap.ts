@@ -56,7 +56,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 0.75,
         },
         {
-            url: `${BASE_URL}/community`,
+            url: `${BASE_URL}/contribute`,
             lastModified: new Date(),
             changeFrequency: 'daily',
             priority: 0.75,

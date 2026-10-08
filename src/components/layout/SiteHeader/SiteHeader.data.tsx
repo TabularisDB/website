@@ -214,9 +214,15 @@ export const navGroups: NavGroup[] = [
                 links: [
                     {
                         label: 'Contribute',
-                        href: '/community',
+                        href: '/contribute',
                         description: 'Open issues across every project, and where to start.',
                         icon: <UsersIcon />,
+                    },
+                    {
+                        label: 'Sponsors & supporters',
+                        href: '/sponsors',
+                        description: 'The organizations that help keep Tabularis free and independent.',
+                        icon: <StarIcon />,
                     },
                     {
                         label: 'GitHub',
@@ -229,12 +235,6 @@ export const navGroups: NavGroup[] = [
                         href: SOCIAL_URLS.discord,
                         description: 'Talk to users, contributors, and maintainers.',
                         icon: <DiscordIcon colored />,
-                    },
-                    {
-                        label: 'Sponsors & supporters',
-                        href: '/sponsors',
-                        description: 'The organizations that help keep Tabularis free and independent.',
-                        icon: <StarIcon />,
                     },
                 ],
             },

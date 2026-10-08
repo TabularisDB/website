@@ -17,6 +17,7 @@ export default tseslint.config(
             'src/lib/**',
             'postcss.config.mjs',
             'notes/**',
+            'workers/**',
         ],
     },
     eslint.configs.recommended,

@@ -1,11 +1,29 @@
 import {COMMUNITY_ISSUES, FEATURED_LABELS, ISSUE_PROJECT_GROUPS, ISSUES_FETCHED_AT, ISSUES_ORG} from './issues';
 import type {CommunityIssueLabel} from './types';
 
-export type {CommunityIssue, CommunityIssueAssignee, CommunityIssueLabel, CommunityIssuePullRequest, CommunityProjectGroup} from './types';
+export type {
+    CommunityIssue,
+    CommunityIssueAssignee,
+    CommunityIssueLabel,
+    CommunityIssuePullRequest,
+    CommunityProjectGroup,
+} from './types';
 export {COMMUNITY_ISSUES, FEATURED_LABELS, ISSUE_PROJECT_GROUPS, ISSUES_FETCHED_AT, ISSUES_ORG};
 
 export interface LabelCount extends CommunityIssueLabel {
     count: number;
+}
+
+// Fixed locale and time zone so the server-rendered date matches the hydrated one.
+const ISSUE_DATE_FORMAT = new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+});
+
+export function formatIssueDate(date: string): string {
+    return ISSUE_DATE_FORMAT.format(new Date(date));
 }
 
 /** Issue titles come from the app's issue forms ("[Bug]: …", "[Feat]: …"); the board shows the kind as a tag instead. */
@@ -13,9 +31,10 @@ export function cleanIssueTitle(title: string): string {
     return title.replace(/^\[[^\]]+\]:?\s*/, '');
 }
 
-/** GitHub search URL for the open issues of the org, optionally narrowed to one label. */
-export function issueSearchUrl(label?: string): string {
-    const q = `org:${ISSUES_ORG} is:issue is:open${label ? ` label:"${label}"` : ''}`;
+/** GitHub search URL for the open issues of the org, optionally narrowed to one label and one repo. */
+export function issueSearchUrl({label, repo}: {label?: string; repo?: string} = {}): string {
+    const scope = repo ? `repo:${ISSUES_ORG}/${repo}` : `org:${ISSUES_ORG}`;
+    const q = `${scope} is:issue is:open${label ? ` label:"${label}"` : ''}`;
     return `https://github.com/search?type=issues&q=${encodeURIComponent(q)}`;
 }
 

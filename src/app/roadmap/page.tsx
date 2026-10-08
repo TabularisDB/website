@@ -1,16 +1,18 @@
 import {JsonLd} from '@/components/layout/JsonLd';
-import {getAllInitiativeMetas, type InitiativeMeta, type InitiativeStatus} from '@/lib/roadmap';
+import {InitiativeCard} from '@/components/pages/roadmap/InitiativeCard/InitiativeCard';
+import {Button} from '@/components/ui/Button/Button';
+import {DiscordIcon, GitHubIcon} from '@/components/ui/Icons/SocialIcons';
+import {getAllInitiativeMetas, type InitiativeStatus} from '@/lib/roadmap';
+import {ogImages} from '@/lib/og/registry';
 import {buildBreadcrumbJsonLd} from '@/lib/seo';
-import {ArrowRight, Hammer, MapIcon, Milestone, Rocket, UsersIcon} from 'lucide-react';
+import {SOCIAL_URLS} from '@/lib/social';
+import clsx from 'clsx';
+import {Hammer, MapIcon, Milestone, Rocket, UsersIcon} from 'lucide-react';
 import type {Metadata} from 'next';
 import Link from 'next/link';
+import type {ComponentType} from 'react';
 import styles from './RoadmapPage.module.scss';
-import clsx from 'clsx';
-import {ComponentType} from 'react';
-import {Button} from '@/components/ui/Button/Button';
-import {GitHubIcon, DiscordIcon} from '@/components/ui/Icons/SocialIcons';
-import {SOCIAL_URLS} from '@/lib/social';
-import {ogImages} from '@/lib/og/registry';
+import {CalloutBlock} from '@/components/ui/CalloutBlock/CalloutBlock';
 
 const path = '/roadmap';
 const title = 'Roadmap | Tabularis';
@@ -44,22 +46,6 @@ const STATUS_ICON: Record<InitiativeStatus, ComponentType<{className?: string}>>
     done: Rocket,
 };
 
-function InitiativeCard({meta}: {meta: InitiativeMeta}) {
-    return (
-        <Link href={`/roadmap/${meta.slug}`} className={styles.card}>
-            <div className={styles.cardDetails}>
-                {meta.category && <span className={styles.cardScope}>{meta.category}</span>}
-                <h3 className={styles.cardTitle}>{meta.title}</h3>
-                {meta.lede && <p className={styles.cardExcerpt}>{meta.lede}</p>}
-            </div>
-
-            <span className={styles.cardLink}>
-                Read details <ArrowRight size={16} />
-            </span>
-        </Link>
-    );
-}
-
 export default function RoadmapPage() {
     const metas = getAllInitiativeMetas();
 
@@ -88,9 +74,10 @@ export default function RoadmapPage() {
                 <p className="description">
                     Active initiatives and the work queued behind them. Each card links to a GitHub epic, its open
                     tasks, and how to claim one. Looking for something smaller?{' '}
-                    <Link href="/community#issues" className={styles.headerLink}>
-                        Browse every open issue
-                    </Link>.
+                    <Link href="/contribute#issues" className={styles.headerLink}>
+                        Browse open issue
+                    </Link>
+                    .
                 </p>
             </header>
 
@@ -115,30 +102,31 @@ export default function RoadmapPage() {
                 })}
             </div>
 
-            <section className={styles.future}>
-                <h2 className={styles.futureTitle}>Not yet on the board</h2>
-                <p className={styles.futureText}>
-                    Other drivers and major features land here as they move from idea to scoped work. Propose one in a{' '}
-                    <a href={`${SOCIAL_URLS.github}/discussions`} target="_blank" rel="noopener noreferrer">
-                        GitHub Discussion
-                    </a>
-                    .
-                </p>
-                <div className={styles.futureActions}>
-                    <Button href="/community#issues">
-                        <UsersIcon />
-                        Find an issue
-                    </Button>
-                    <Button href={SOCIAL_URLS.github} variant="secondary">
-                        <GitHubIcon />
-                        Star on GitHub
-                    </Button>
-                    <Button href={SOCIAL_URLS.discord} variant="secondary">
-                        <DiscordIcon />
-                        Join Discord
-                    </Button>
-                </div>
-            </section>
+            <CalloutBlock
+                title="Not yet on the board"
+                actions={
+                    <>
+                        <Button href="/contribute#issues" size="sm">
+                            <UsersIcon />
+                            Find an issue
+                        </Button>
+                        <Button href={SOCIAL_URLS.github} variant="secondary" size="sm">
+                            <GitHubIcon />
+                            Star on GitHub
+                        </Button>
+                        <Button href={SOCIAL_URLS.discord} variant="secondary" size="sm">
+                            <DiscordIcon />
+                            Join Discord
+                        </Button>
+                    </>
+                }
+            >
+                Other drivers and major features land here as they move from idea to scoped work. Propose one in a{' '}
+                <a href={`${SOCIAL_URLS.github}/discussions`} target="_blank" rel="noopener noreferrer">
+                    GitHub Discussion
+                </a>
+                .
+            </CalloutBlock>
         </div>
     );
 }

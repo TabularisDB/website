@@ -98,8 +98,8 @@ export default function CookiePolicyPage() {
                                         </td>
                                         <td>challenges.cloudflare.com</td>
                                         <td>
-                                            Cloudflare Turnstile — spam and bot protection on the newsletter, survey
-                                            and <Link href="/sponsors">sponsors</Link> contact forms
+                                            Cloudflare Turnstile — spam and bot protection on the newsletter, survey and{' '}
+                                            <Link href="/sponsors">sponsors</Link> contact forms
                                         </td>
                                         <td>Session only</td>
                                     </tr>
