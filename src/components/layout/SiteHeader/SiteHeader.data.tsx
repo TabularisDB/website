@@ -17,6 +17,7 @@ import {
     ShieldIcon,
     SirenIcon,
     StarIcon,
+    TrophyIcon,
     UsersIcon,
 } from 'lucide-react';
 import Image from 'next/image';
@@ -217,6 +218,12 @@ export const navGroups: NavGroup[] = [
                         href: '/contribute',
                         description: 'Open issues across every project, and where to start.',
                         icon: <UsersIcon />,
+                    },
+                    {
+                        label: 'Leaderboard',
+                        href: '/contribute/leaderboard',
+                        description: 'Who is contributing the most, over any date range.',
+                        icon: <TrophyIcon />,
                     },
                     {
                         label: 'Sponsors & supporters',
