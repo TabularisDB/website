@@ -25,6 +25,12 @@ Since v0.21.0 the pagination bar also has a **rows-per-page selector** that over
 
 The total row count is not fetched automatically. Click the **#** button (**Load row count**) next to the pagination controls to run a `COUNT(*)` over the current filtered query; the total then replaces the button.
 
+### Column Widths
+
+The grid only renders the rows on screen. Since v0.27.0 column widths are measured once from the header and the first visible rows and then held, so scrolling into longer or shorter values no longer widens or narrows the columns; longer values are truncated with an ellipsis and stay readable in the tooltip and the cell expander. Widths are measured again when the column set changes (another query or table) or when rows first arrive in an empty result. Paging and refreshing keep them.
+
+<video src="/videos/posts/tabularis-stable-column-widths.mp4" poster="/videos/posts/tabularis-stable-column-widths.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
 ### Column Comments
 
 Since v0.25.0, hovering a column header shows the column's database comment next to its type when the driver provides one (PostgreSQL and MySQL/MariaDB built in; plugins that return `comment` metadata). See [Schema Management → Table and Column Comments](/wiki/schema-management#table-and-column-comments).
@@ -48,6 +54,14 @@ The toolbar at the top of a table tab has three inputs (**WHERE** and **ORDER BY
 - **LIMIT** — caps the number of rows fetched.
 
 The **Filters** button opens a **structured filter panel** in place of the WHERE input: **Add filter** builds a condition from a column, an operator suited to the column type and a value; each filter can be applied on its own (**Apply**) or together with the others (**Apply All**), duplicated or removed. **Unset** clears the filters, and the **SQL** button (*Switch to SQL WHERE input*) goes back to the free-text field.
+
+#### Filter by This Value
+
+<video src="/videos/posts/tabularis-filter-by-value.mp4" poster="/videos/posts/tabularis-filter-by-value.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
+Since v0.27.0, right-clicking a cell in a table tab offers filters built from that cell: **Filter: `col` = this value** and **Filter: `col` <> this value**, or **Filter: `col` IS NULL** and **Filter: `col` IS NOT NULL** on a `NULL` cell. The condition is combined with the current filter as `(existing) AND new`, written into the **WHERE** input where you can edit it, and the grid reloads from page 1.
+
+The value is formatted by column type: numbers are unquoted in numeric columns, a numeric-looking string stays quoted in a text column, booleans become `TRUE`/`FALSE`, and quotes are escaped. Identifiers are quoted for the active driver. The items are not offered on BLOB or JSON cells, on unsaved new rows, or in ad-hoc query results. A [masked](#column-masking) cell only offers `IS NULL` / `IS NOT NULL`, so its real value never reaches the filter.
 
 ## Inline Editing
 
@@ -200,6 +214,20 @@ Since v0.17.0 the row editor is a **right sidebar** — a layout sibling of the 
 Since v0.24.0, **Settings → Appearance → Data Grid → Result font** controls the typography of result cells, inline edit inputs and multiline textareas. Select **Same as interface**, a bundled font or a custom family. The default stays **JetBrains Mono**; choosing the interface font keeps cells in sync with later interface-font changes. Multiline editor width measurement follows the selected font, including proportional families. SQL editor, log, JSON and hex fonts remain independent.
 
 ![Result font set to Same as interface under Appearance → Data Grid](/img/tabularis-result-font.png)
+
+## Alternating Rows and Sticky Headers
+
+**Settings → Appearance → Data Grid** has two layout toggles for every grid, table tabs and query results alike:
+
+- **Sticky column headers** (on by default) keeps the header row visible while you scroll through results.
+- **Alternating row background** (since v0.27.0, off by default) tints every other row so a row is easier to follow across a wide table. The tint comes from the active theme; selected, new and pending-delete rows keep their own colors.
+
+Both are saved in `config.json` (`stickyColumnHeaders`, `resultZebraStripes`) and survive a restart; before v0.27.0 sticky headers reset when the app restarted.
+
+<div class="post-gallery">
+  <img src="/img/tabularis-settings-data-grid.png" alt="Settings, Appearance, Data Grid with Sticky column headers and Alternating row background both turned on" loading="lazy">
+  <img src="/img/tabularis-grid-zebra-stripes.png" alt="Customers table in the data grid with every other row tinted" loading="lazy">
+</div>
 
 ## Result Colors
 

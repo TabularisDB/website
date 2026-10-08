@@ -104,6 +104,8 @@ Any key omitted from the file falls back to its default value. You do not need a
 | `startMaximized` | `boolean` | `false` | Open the main window maximized. |
 | `resultColorByType` | `boolean` | `false` | Color result cell values by data type. See [Data Grid](/wiki/data-grid). |
 | `resultTypeColors` | `object` | `{}` | Per-type hex color overrides for `number`, `string`, `date` and `boolean`. Missing keys fall back to the theme colors. |
+| `stickyColumnHeaders` | `boolean` | `true` | Keep data grid column headers pinned while scrolling (Settings → Appearance → Data Grid). Persisted across restarts since v0.27.0. |
+| `resultZebraStripes` | `boolean` | `false` | Since v0.27.0. Alternate the background of data grid rows (Settings → Appearance → Data Grid → Alternating row background). See [Data Grid](/wiki/data-grid#alternating-rows-and-sticky-headers). |
 | `aiEnabled` | `boolean` | `false` | Master toggle for all AI features. |
 | `aiProvider` | `string` | `null` | Active AI provider: `openai`, `anthropic`, `minimax`, `ollama`, `openrouter`, `custom-openai`. |
 | `aiModel` | `string` | `null` | The model identifier string sent to the provider. |

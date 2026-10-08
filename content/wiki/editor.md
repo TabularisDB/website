@@ -100,6 +100,28 @@ Since v0.21.0 every multiline statement in the main query editor gets its own fo
 
 <video src="/videos/posts/tabularis-sql-folding.mp4" poster="/videos/posts/tabularis-sql-folding.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
+### Same-Name Tables From Different Schemas
+
+Since v0.27.0, when the same table is open from two schemas on one connection (for example `mira.clubs` and `mira_dev.clubs`), each of those tabs reads `schema.table` in the tab bar and the tab switcher. The prefix appears only while the names collide; closing one tab turns the other back into the plain table name. Only the label changes, and tabs with a custom title are left alone.
+
+## Convert Selection to SQL List
+
+<video src="/videos/posts/tabularis-convert-selection-sql-list.mp4" poster="/videos/posts/tabularis-convert-selection-sql-list.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
+Since v0.27.0 the editor's context menu has **Convert Selection to SQL List**, shown only when text is selected. It turns the selected values, for example a column pasted from a spreadsheet, into a list ready for `IN (...)`:
+
+```
+alice@example.com
+bob@example.com
+```
+
+becomes `'alice@example.com', 'bob@example.com'`.
+
+- Values are split on newlines, tabs and commas, trimmed, and blanks are skipped.
+- Embedded single quotes are doubled (`O'Brien` → `'O''Brien'`).
+- Purely numeric input stays unquoted (`1, 2, 3`). Values with a leading zero (`007`) or a leading `+` count as text, so IDs and phone numbers are not turned into numbers; mixed input is quoted throughout.
+- Every selection, multi-cursor included, is replaced in one undo step.
+
 ## SQL Formatting
 
 <video src="/videos/posts/tabularis-sql-format.mp4" poster="/videos/posts/tabularis-sql-format.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
@@ -164,6 +186,10 @@ With **Run statement under cursor** turned off in Settings → General, pressing
 
 If you highlight a text selection in the editor and run it, Tabularis splits the selection into statements and executes them one after another, in order, on the same session. Results appear as separate tabs in the multi-result panel.
 
+### T-SQL Batches
+
+Since v0.27.0, on dialects with a batch separator (T-SQL, used by the [SQL Server plugin](https://github.com/TabularisDB/tabularis-sqlserver-plugin)) scripts are split on `GO` only, the way SSMS does, and the `;`-separated statements of a batch are sent together. `DECLARE @var`, temporary tables and `SET` options are scoped to the batch, so they stay visible to every statement in it. This applies to every execution path: the Run button, Run All, a selection, Execute Selection, the run dropdown and auto-run. Running at the cursor runs the whole batch under the cursor, up to the surrounding `GO`, and the Run button label counts batches. Each `SELECT` in a batch still gets its own result tab. The [destructive query confirmation](#destructive-query-confirmation) checks each statement inside a batch, so a `DELETE` without `WHERE` cannot hide behind a `SELECT`. Other dialects are split per statement as before.
+
 ## Multi-Result Panel
 
 When multiple queries are executed (via Run All or Execute Selection), results are displayed in a **results panel** at the bottom of the editor. Each query gets its own result with independent pagination, error handling, and loading state. The rows-per-page selector in the pagination bar applies to the whole tab (see [Data Grid → Pagination](/wiki/data-grid#pagination)), and query errors are selectable with a **Copy** button.
@@ -173,6 +199,10 @@ The panel supports two view modes — **Tab view** (default) and **Stacked view*
 ### Tab View
 
 The default view. Each query result lives in its own tab. Click a tab to switch between results.
+
+Since v0.27.0 a result tab is named after its statement's leading comment: `-- Active customers` or `/* Active customers */` before a statement becomes the tab name, with whitespace collapsed and the label capped at 80 characters. Statements without a comment keep the numbered name, and renaming a tab by hand overrides it.
+
+<video src="/videos/posts/tabularis-result-tab-names.mp4" poster="/videos/posts/tabularis-result-tab-names.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
 | Action | How |
 |--------|-----|

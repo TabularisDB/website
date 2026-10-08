@@ -45,12 +45,12 @@ In the standalone modal, the default depends on the query type:
 
 | Query type | Default |
 |-----------|---------|
-| Statements starting with INSERT, UPDATE, DELETE, DROP, ALTER or TRUNCATE | ANALYZE off, with a warning |
-| Everything else (SELECT, WITH, TABLE, REPLACE, MERGE) | ANALYZE on |
+| Data-modifying statements (see below) | ANALYZE off, with a warning |
+| Everything else (SELECT, read-only WITH, TABLE) | ANALYZE on |
 
-Only the first keyword is checked: a statement counts as data-modifying when it starts with `INSERT`, `UPDATE`, `DELETE`, `DROP`, `ALTER` or `TRUNCATE`. For those, a warning icon appears next to the toggle, and since `EXPLAIN ANALYZE` executes the statement, you need to enable it explicitly. The choice is bound to the query, schema and connection rather than carried over to a new source.
+Since v0.27.0 a statement counts as data-modifying when its first keyword, read after any leading comments and parentheses, is `INSERT`, `UPDATE`, `DELETE`, `MERGE`, `REPLACE`, `UPSERT`, `TRUNCATE`, `CREATE`, `DROP`, `ALTER`, `GRANT`, `REVOKE`, `CALL`, `EXEC` or `EXECUTE`, when it is a `SELECT … INTO`, or when a `WITH` statement contains `INSERT`, `UPDATE`, `DELETE` or `MERGE` outside strings and comments (a data-modifying CTE such as `WITH deleted AS (DELETE … RETURNING …) SELECT …`). For those, a warning icon appears next to the toggle, and since `EXPLAIN ANALYZE` executes the statement, you need to enable it explicitly. The choice is bound to the query, schema and connection rather than carried over to a new source.
 
-> **Untick Analyze yourself for `REPLACE`, `MERGE` and data-modifying CTEs** (for example `WITH deleted AS (DELETE … RETURNING …) SELECT …`). They are not recognized as data-modifying, so they open with ANALYZE on and no warning, and running the plan would really change your data. The same applies to data-modifying statements that begin with a comment.
+The CTE check is a keyword scan, so it errs towards caution: a read-only CTE with a `FOR UPDATE` clause also opens with ANALYZE off, and you can tick it yourself. Side-effecting functions called from a `SELECT` are not detected; untick Analyze for those.
 
 **Notebook exception:** the inline Query Plan section starts with plain EXPLAIN even for SELECT. Selecting Analyze does not run anything until you click Re-run. Its popout displays the already-fetched plan and has no separate execution controls.
 

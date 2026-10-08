@@ -53,6 +53,8 @@ A search bar filters by name or host in real time.
 
 Double-click a card or row to connect immediately.
 
+Since v0.27.0 connections can be reordered within a group, in both views: drag a card or row onto another connection of the same group (or both ungrouped) and it takes that slot, with a dashed outline marking the target. The order is saved. Dropping onto a connection in a different group moves it there, at the end of that group. New, duplicated and imported connections sort after the ones you have ordered.
+
 With **Reopen Last Connections** (Settings → General, on by default), Tabularis reconnects at startup to the connections that were open when you last closed it.
 
 ## Connection Profile Fields

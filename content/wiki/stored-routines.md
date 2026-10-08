@@ -45,7 +45,7 @@ Right-click a routine → **Run…**. A modal titled **Run &lt;name&gt;** collec
 - A **NULL** checkbox to pass `NULL` explicitly.
 - A **raw value** toggle — on by default for numeric types — that controls whether the value is inlined verbatim or quoted as a literal.
 
-Clicking **Run** builds the invocation script, opens it in a new editor tab and runs it straight away; the tab keeps the exact statement that was sent, so you can edit and re-run it:
+Clicking **Open in Editor** builds the invocation script and opens it in a new editor tab **without running it**, so you can review the call before executing it (since v0.27.0; earlier versions ran it straight away):
 
 - **MySQL / MariaDB** — functions run as `SELECT fn(...) AS result;`. For procedures, `OUT`/`INOUT` parameters are threaded through session variables (`SET @p = …;` for `INOUT` inputs, then `CALL routine(@p); SELECT @p;`), and the multi-statement script runs on a single pooled connection so the session variables survive across statements.
 - **PostgreSQL** — functions run as `SELECT * FROM fn(...)` (pure `OUT` parameters are left out of the call), so a set-returning function comes back as a full result set in the grid. Procedures run as `CALL proc(...)`, with `OUT` parameters passed as `NULL` placeholders.
@@ -78,7 +78,7 @@ Right-click any routine in the sidebar:
 
 | Action | Description |
 | :--- | :--- |
-| **Run…** | Opens the Run modal to invoke it with parameters |
+| **Run…** | Opens the Run modal to build the call with parameters and open it in the editor for review |
 | **View Definition** | Opens the routine SQL in a read-only tab |
 | **Edit** | Opens a re-runnable script to change the definition |
 | **Drop** | Drops the routine after a confirmation |
