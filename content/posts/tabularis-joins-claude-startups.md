@@ -1,27 +1,27 @@
 ---
-title: "Tabularis Joins Claude Startups"
+title: "Tabularis Joins Claude for Startups"
 date: "2026-10-08T09:53:00"
 tags: ["community", "claude", "ai", "open-source"]
-excerpt: "Tabularis is now part of Claude Startups, Anthropic's program for early-stage companies. Here's what the program includes and what it changes for a small open-source database client."
+excerpt: "Tabularis is now part of Claude for Startups, Anthropic's program for early-stage companies. Here's what the program includes and what it changes for a small open-source database client."
 og:
-  title: "Tabularis joins Claude Startups —"
+  title: "Tabularis joins Claude for Startups"
   accent: "Build with us. Code with Claude."
   claim: "Anthropic's startup program, and what it gives a small open-source project built in public."
   image: "/img/og/claude-startups.png"
   cover: "/img/og/claude-startups.png"
 ---
 
-# Tabularis Joins Claude Startups
+# Tabularis Joins Claude for Startups
 
-Some news I'm genuinely happy to share: **Tabularis is now part of [Claude Startups](https://claude.com/programs/startups)**, Anthropic's program for early-stage companies building with Claude.
+Some news I'm genuinely happy to share: **Tabularis is now part of [Claude for Startups](https://claude.com/programs/startups)**, Anthropic's program for early-stage companies building with Claude.
 
 If you've followed this blog for a while, this probably won't come as news. Claude is already part of how Tabularis gets built, from the [AI assistant](/blog/ai-assistant) inside the app to the [MCP server](/blog/v099-mcp-multi-client) to experiments like [the one where Fable 5 opened an 1,800-line PR in 30 minutes](/blog/fable-5-opened-a-1800-line-pr-in-30-minutes). Joining the program makes that relationship official and gives a small project like ours resources that are hard to get otherwise.
 
 ![We're in: Tabularis joins the Claude for Startups program](/img/posts/tabularis-joins-claude-startups.png)
 
-## What Claude Startups is
+## What Claude for Startups is
 
-Claude Startups is Anthropic's program for young companies. It's open to startups **founded in the last 5 years or funded in the last 2**, and you don't need venture funding: bootstrapped and pre-seed teams are welcome too. You apply from the Claude Console with a company email and a short description of what you're building. Most applications are decided within minutes, and the rest go through a manual review that usually takes a couple of business days.
+Claude for Startups is Anthropic's program for young companies. It's open to startups **founded in the last 5 years or funded in the last 2**, and you don't need venture funding: bootstrapped and pre-seed teams are welcome too. You apply from the Claude Console with a company email and a short description of what you're building. Most applications are decided within minutes, and the rest go through a manual review that usually takes a couple of business days.
 
 Here's what the program includes:
 
@@ -48,7 +48,7 @@ The program changes a few practical things:
 
 ## What's next
 
-Joining Claude Startups doesn't change what Tabularis is: an open-source, cross-platform database client, built in public, with a plugin system anyone can extend. It does give us more fuel to build it faster and to try more ambitious ideas, and I'll keep sharing those experiments here on the blog, including what works and what doesn't.
+Joining Claude for Startups doesn't change what Tabularis is: an open-source, cross-platform database client, built in public, with a plugin system anyone can extend. It does give us more fuel to build it faster and to try more ambitious ideas, and I'll keep sharing those experiments here on the blog, including what works and what doesn't.
 
 If you've never contributed to Tabularis before, there's never been a better time to start. Pick an issue labelled `good first issue` on [GitHub](https://github.com/TabularisDB/tabularis/issues), improve a translation, write a plugin, or fix that small thing in the UI that has been bugging you.
 
