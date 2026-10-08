@@ -14,9 +14,16 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+
+    @media (max-width: 767px) {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
 }
 
 .preset {
+    flex-shrink: 0;
     padding: 0.4rem 0.85rem;
     border: 0.1rem solid var(--color-border);
     border-radius: var(--radius-full);
@@ -53,7 +60,17 @@
     }
 
     @media (max-width: 560px) {
-        grid-template-columns: 1fr;
+        > .field,
+        > .copy {
+            grid-column: 1 / -1;
+        }
+
+        > .toggle {
+            justify-content: flex-start;
+            padding: 0.6rem 0.75rem;
+            font-size: 0.8rem;
+            white-space: normal;
+        }
     }
 }
 
@@ -223,6 +240,23 @@
 
     @media (max-width: 767px) {
         grid-template-columns: repeat(2, 1fr);
+
+        // Five tiles in two columns: the last one takes the full row.
+        div:last-child {
+            grid-column: 1 / -1;
+        }
+
+        div {
+            padding: 0.85rem 1rem;
+        }
+
+        dt {
+            font-size: 0.7rem;
+        }
+
+        dd {
+            font-size: 1.35rem;
+        }
     }
 
     div {
@@ -257,8 +291,9 @@
     align-items: end;
     gap: 0.75rem;
 
+    // On mobile the table's top three ranks carry the medal colors instead.
     @media (max-width: 767px) {
-        grid-template-columns: 1fr;
+        display: none;
     }
 }
 
@@ -347,6 +382,42 @@
     }
 }
 
+.meta {
+    display: contents;
+
+    // Mobile: badges, join button and counts share one line, aligned under the login.
+    @media (max-width: 767px) {
+        display: flex;
+        flex-basis: 100%;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.4rem 0.6rem;
+    }
+}
+
+.mobileCounts {
+    display: none;
+
+    // Counts lead the line so they sit in the same place on every row.
+    @media (max-width: 767px) {
+        display: flex;
+        order: -1;
+        gap: 0.55rem;
+        font-size: 0.8rem;
+
+        svg {
+            width: 0.8rem;
+            height: 0.8rem;
+        }
+    }
+}
+
+.joinLong {
+    @media (max-width: 767px) {
+        display: none;
+    }
+}
+
 .counts {
     display: flex;
     gap: 1rem;
@@ -368,7 +439,8 @@
 .table {
     display: flex;
     flex-direction: column;
-    border-top: 0.1rem solid var(--color-border);
+    border: 0.1rem solid var(--color-border);
+    border-bottom: none;
 }
 
 .row {
@@ -385,7 +457,9 @@
     transition: background-color 0.15s ease;
 
     @media (max-width: 767px) {
-        grid-template-columns: 2rem minmax(0, 1fr) 4rem;
+        grid-template-columns: 1.75rem minmax(0, 1fr) 3.25rem;
+        gap: 0.6rem;
+        padding: 0.8rem 0.6rem;
 
         > :nth-child(3),
         > :nth-child(4),
@@ -396,7 +470,11 @@
     }
 }
 
-button.row:hover,
+.bodyRow {
+    position: relative;
+}
+
+.bodyRow:hover,
 .rowOpen {
     background-color: var(--color-surface);
 }
@@ -419,11 +497,70 @@ button.row:hover,
     color: var(--color-text-secondary);
 }
 
+@media (max-width: 767px) {
+    // Every rank sits in the same centered box, so 1–3 (filled) and the rest line up.
+    .rank {
+        display: grid;
+        place-content: center;
+        width: 1.6rem;
+        height: 1.6rem;
+        font-size: 0.8rem;
+    }
+
+    .rank1,
+    .rank2,
+    .rank3 {
+        border-radius: 50%;
+        color: var(--color-bg);
+    }
+
+    .rank1 {
+        background: var(--color-accent-amber);
+    }
+
+    .rank2 {
+        background: #c0c7d2;
+    }
+
+    .rank3 {
+        background: #cd8a5a;
+    }
+}
+
 .user {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.6rem;
     min-width: 0;
+}
+
+.expand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    // The login keeps its width; badges wrap to the next line instead of squeezing it.
+    flex-shrink: 0;
+    max-width: 100%;
+    min-width: 0;
+    color: inherit;
+    text-align: left;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        cursor: pointer;
+    }
+
+    &:focus-visible {
+        outline: none;
+
+        &::after {
+            outline: 2px solid var(--color-accent-teal);
+            outline-offset: -2px;
+        }
+    }
 }
 
 .avatar {
@@ -484,9 +621,7 @@ button.row:hover,
     }
 }
 
-.contributions {
-    display: flex;
-    flex-direction: column;
+.details {
     padding: 0.5rem 1rem 1rem 3.5rem;
     border-bottom: 0.1rem solid var(--color-border);
     background-color: var(--color-surface);
@@ -494,6 +629,41 @@ button.row:hover,
     @media (max-width: 767px) {
         padding-left: 1rem;
     }
+}
+
+.join {
+    // Lighter than --color-accent-blue so the label stays readable on the dark background.
+    --join-color: color-mix(in srgb, var(--color-accent-blue) 65%, white);
+
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    padding: 0.1rem 0.55rem;
+    border: 0.1rem solid color-mix(in srgb, var(--join-color) 55%, transparent);
+    border-radius: var(--radius-full);
+    background-color: color-mix(in srgb, var(--join-color) 10%, transparent);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--join-color);
+    white-space: nowrap;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+        background-color: color-mix(in srgb, var(--join-color) 22%, transparent);
+    }
+
+    svg {
+        width: 0.85rem;
+        height: 0.85rem;
+    }
+}
+
+.contributions {
+    display: flex;
+    flex-direction: column;
 
     li {
         display: grid;
@@ -505,9 +675,37 @@ button.row:hover,
 
         @media (max-width: 767px) {
             grid-template-columns: minmax(0, 1fr) auto;
+            grid-template-areas:
+                'kind points'
+                'title title'
+                'meta meta';
+            gap: 0.2rem 0.75rem;
+            padding: 0.65rem 0;
+            border-bottom: 0.1rem solid var(--color-border);
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            .kind {
+                grid-area: kind;
+            }
+
+            .cPoints {
+                grid-area: points;
+            }
+
+            .cTitle {
+                grid-area: title;
+                white-space: normal;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
 
             .cMeta {
-                grid-column: 1;
+                grid-area: meta;
+                font-size: 0.8rem;
             }
         }
     }

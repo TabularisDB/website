@@ -28,7 +28,8 @@ import {
     TicketIcon,
 } from 'lucide-react';
 import Image from 'next/image';
-import {Fragment, useEffect, useMemo, useState} from 'react';
+import {Fragment, useCallback, useEffect, useMemo, useState} from 'react';
+import {JoinGiveawayModal} from './JoinGiveawayModal/JoinGiveawayModal';
 import styles from './Leaderboard.module.scss';
 
 const DAY = 24 * 60 * 60 * 1000;
@@ -60,7 +61,10 @@ const STATE_LABELS: Record<Contribution['type'], Partial<Record<Contribution['st
 };
 
 function stateLabel(c: Contribution): string {
-    if (c.type === 'issue' && c.state === 'open') return c.triaged ? 'Triaged' : 'Untriaged';
+    if (c.type === 'issue' && c.state === 'open') {
+        if (!c.triaged) return 'Untriaged';
+        return c.maintainer ? 'Self-triaged' : 'Triaged';
+    }
     return STATE_LABELS[c.type][c.state] ?? c.state;
 }
 
@@ -75,6 +79,8 @@ export function Leaderboard() {
     const [expanded, setExpanded] = useState<string | null>(null);
     const [now, setNow] = useState<number | null>(null);
     const [copied, setCopied] = useState(false);
+    const [joinLogin, setJoinLogin] = useState<string | null>(null);
+    const closeJoin = useCallback(() => setJoinLogin(null), []);
 
     // ?from=2026-10-07T16:00&to=2026-10-13T16:00&team=1&entrants=1 (Europe/Rome wall times, bare dates or ISO instants).
     useEffect(() => {
@@ -273,6 +279,9 @@ export function Leaderboard() {
                                             />
                                             <span className={styles.podiumLogin}>@{row.login}</span>
                                         </a>
+                                        {!row.entrant && !row.team && (
+                                            <JoinButton onClick={() => setJoinLogin(row.login)} />
+                                        )}
                                         <span className={styles.podiumScore}>
                                             {row.score} <small>pts</small>
                                         </span>
@@ -306,44 +315,53 @@ export function Leaderboard() {
                                     const open = expanded === row.login;
                                     return (
                                         <Fragment key={row.login}>
-                                            <button
-                                                type="button"
-                                               
-                                                className={clsx(styles.row, open && styles.rowOpen)}
-                                                aria-expanded={open}
-                                                onClick={() => setExpanded(open ? null : row.login)}
-                                            >
-                                                <span className={styles.rank}>
+                                            <div className={clsx(styles.row, styles.bodyRow, open && styles.rowOpen)}>
+                                                <span className={clsx(styles.rank, i < 3 && styles[`rank${i + 1}`])}>
                                                     {i + 1}
                                                 </span>
                                                 <span className={styles.user}>
-                                                    <Image
-                                                        src={avatar(row.avatarUrl, 28)}
-                                                        alt=""
-                                                        width={28}
-                                                        height={28}
-                                                        className={styles.avatar}
-                                                    />
-                                                    <span className={styles.login}>@{row.login}</span>
-                                                    {row.team && <span className={styles.badge}>Team</span>}
-                                                    {row.entrant && (
-                                                        <span
-                                                            className={clsx(styles.badge, styles.badgeEntrant)}
-                                                            title="Entered the giveaway on Discord"
-                                                        >
-                                                            <TicketIcon aria-hidden="true" />
-                                                            Entered
-                                                        </span>
-                                                    )}
-                                                    {row.firstTime && (
-                                                        <span
-                                                            className={clsx(styles.badge, styles.badgeNew)}
-                                                            title="First contribution to a Tabularis project"
-                                                        >
-                                                            <SparklesIcon aria-hidden="true" />
-                                                            First-timer
-                                                        </span>
-                                                    )}
+                                                    {/* Covers the whole row (::after), so a click anywhere expands it. */}
+                                                    <button
+                                                        type="button"
+                                                        className={styles.expand}
+                                                        aria-expanded={open}
+                                                        onClick={() => setExpanded(open ? null : row.login)}
+                                                    >
+                                                        <Image
+                                                            src={avatar(row.avatarUrl, 28)}
+                                                            alt=""
+                                                            width={28}
+                                                            height={28}
+                                                            className={styles.avatar}
+                                                        />
+                                                        <span className={styles.login}>@{row.login}</span>
+                                                    </button>
+                                                    <span className={styles.meta}>
+                                                        {row.team && <span className={styles.badge}>Team</span>}
+                                                        {row.entrant && (
+                                                            <span
+                                                                className={clsx(styles.badge, styles.badgeEntrant)}
+                                                                title="Entered the giveaway on Discord"
+                                                            >
+                                                                <TicketIcon aria-hidden="true" />
+                                                                Entered
+                                                            </span>
+                                                        )}
+                                                        {row.firstTime && (
+                                                            <span
+                                                                className={clsx(styles.badge, styles.badgeNew)}
+                                                                title="First contribution to a Tabularis project"
+                                                            >
+                                                                <SparklesIcon aria-hidden="true" />
+                                                                First-timer
+                                                            </span>
+                                                        )}
+                                                        {!row.entrant && !row.team && (
+                                                            <JoinButton onClick={() => setJoinLogin(row.login)} />
+                                                        )}
+                                                        {/* The count columns are hidden on mobile; their values move here. */}
+                                                        <RowCounts row={row} className={styles.mobileCounts} />
+                                                    </span>
                                                 </span>
                                                 <span className={styles.num}>
                                                     {row.merged}
@@ -361,7 +379,7 @@ export function Leaderboard() {
                                                     {row.score}
                                                     <ChevronDownIcon aria-hidden="true" className={styles.chevron} />
                                                 </span>
-                                            </button>
+                                            </div>
                                             {open && <ContributionList row={row} />}
                                         </Fragment>
                                     );
@@ -372,6 +390,8 @@ export function Leaderboard() {
                 </>
             )}
 
+            <JoinGiveawayModal login={joinLogin} onClose={closeJoin} />
+
             <p className={styles.note}>
                 Data from the GitHub API as of {formatLeaderboardDate(CONTRIBUTIONS_FETCHED_AT)}, refreshed every few
                 hours. Public repos of the TabularisDB organization only; bots are excluded.
@@ -380,9 +400,9 @@ export function Leaderboard() {
     );
 }
 
-function RowCounts({row}: {row: LeaderboardRow}) {
+function RowCounts({row, className}: {row: LeaderboardRow; className?: string}) {
     return (
-        <span className={styles.counts}>
+        <span className={clsx(styles.counts, className)}>
             <span title="Merged pull requests">
                 <GitMergeIcon aria-hidden="true" />
                 {row.merged}
@@ -399,32 +419,44 @@ function RowCounts({row}: {row: LeaderboardRow}) {
     );
 }
 
+/** For contributors on the board who have not entered the giveaway yet: opens the how-to-enter modal. */
+function JoinButton({onClick}: {onClick: () => void}) {
+    return (
+        <button type="button" className={styles.join} onClick={onClick}>
+            <TicketIcon aria-hidden="true" />
+            Join<span className={styles.joinLong}> the giveaway</span>
+        </button>
+    );
+}
+
 function ContributionList({row}: {row: LeaderboardRow}) {
     return (
-        <ul className={styles.contributions} aria-label={`Contributions by @${row.login}`}>
-            {row.contributions.map((c) => (
-                <li key={contributionKey(c)}>
-                    <span className={clsx(styles.kind, styles[`state_${c.type}_${c.state}`])}>
-                        {c.type === 'pr' ? (
-                            c.state === 'merged' ? (
-                                <GitMergeIcon aria-hidden="true" />
+        <div className={styles.details}>
+            <ul className={styles.contributions} aria-label={`Contributions by @${row.login}`}>
+                {row.contributions.map((c) => (
+                    <li key={contributionKey(c)}>
+                        <span className={clsx(styles.kind, styles[`state_${c.type}_${c.state}`])}>
+                            {c.type === 'pr' ? (
+                                c.state === 'merged' ? (
+                                    <GitMergeIcon aria-hidden="true" />
+                                ) : (
+                                    <GitPullRequestIcon aria-hidden="true" />
+                                )
                             ) : (
-                                <GitPullRequestIcon aria-hidden="true" />
-                            )
-                        ) : (
-                            <CircleDotIcon aria-hidden="true" />
-                        )}
-                        {stateLabel(c)}
-                    </span>
-                    <a href={contributionUrl(c)} target="_blank" rel="noopener noreferrer" className={styles.cTitle}>
-                        {c.title}
-                    </a>
-                    <span className={styles.cMeta}>
-                        {c.repo} #{c.number} · {formatShortDate(c.createdAt)}
-                    </span>
-                    <span className={styles.cPoints}>+{row.points.get(contributionKey(c)) ?? 0}</span>
-                </li>
-            ))}
-        </ul>
+                                <CircleDotIcon aria-hidden="true" />
+                            )}
+                            {stateLabel(c)}
+                        </span>
+                        <a href={contributionUrl(c)} target="_blank" rel="noopener noreferrer" className={styles.cTitle}>
+                            {c.title}
+                        </a>
+                        <span className={styles.cMeta}>
+                            {c.repo} #{c.number} · {formatShortDate(c.createdAt)}
+                        </span>
+                        <span className={styles.cPoints}>+{row.points.get(contributionKey(c)) ?? 0}</span>
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
 }

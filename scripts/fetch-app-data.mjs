@@ -381,14 +381,13 @@ async function knownClosers() {
 // Closing or merging your own work must not climb the board: an issue its
 // author closed is withdrawn, a PR its author merged is self-merged, both worth
 // nothing. The search API returns neither the closer nor the merger, so each new
-// closed community issue and merged community PR costs one request; a failed
-// lookup (rate limit) leaves the contribution as is until the next build.
-async function resolveClosers(contributions, contributors) {
+// closed issue and merged PR costs one request; a failed lookup (rate limit)
+// leaves the contribution as is until the next build.
+async function resolveClosers(contributions) {
     const known = await knownClosers();
+    // Team members too: they are hidden by default, but the board can include them.
     const pending = contributions.filter(
-        (c) =>
-            !contributors[c.author].team &&
-            ((c.type === 'issue' && c.state === 'closed') || (c.type === 'pr' && c.state === 'merged')),
+        (c) => (c.type === 'issue' && c.state === 'closed') || (c.type === 'pr' && c.state === 'merged'),
     );
     let looked = 0;
     let failed = 0;
@@ -456,10 +455,13 @@ async function buildContributions() {
                 ...(type === 'pr' && item.pull_request?.merged_at && {mergedAt: item.pull_request.merged_at}),
                 firstTime: ['FIRST_TIMER', 'FIRST_TIME_CONTRIBUTOR'].includes(item.author_association),
                 ...(type === 'issue' && {triaged: names.some((n) => !FORM_LABELS.has(n) && !REJECTED_LABELS.has(n))}),
+                // Write or triage access to the repo: the author can label (triage) their own issues.
+                ...(type === 'issue' &&
+                    ['OWNER', 'MEMBER', 'COLLABORATOR'].includes(item.author_association) && {maintainer: true}),
             });
         }
     }
-    await resolveClosers(contributions, contributors);
+    await resolveClosers(contributions);
     contributions.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
     return {since: from.toISOString(), contributors, contributions};
 }
