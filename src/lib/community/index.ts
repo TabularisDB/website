@@ -1,8 +1,8 @@
-import {COMMUNITY_ISSUES, FEATURED_LABELS, ISSUES_FETCHED_AT, ISSUES_ORG} from './issues';
+import {COMMUNITY_ISSUES, FEATURED_LABELS, ISSUE_PROJECT_GROUPS, ISSUES_FETCHED_AT, ISSUES_ORG} from './issues';
 import type {CommunityIssueLabel} from './types';
 
-export type {CommunityIssue, CommunityIssueAssignee, CommunityIssueLabel} from './types';
-export {COMMUNITY_ISSUES, FEATURED_LABELS, ISSUES_FETCHED_AT, ISSUES_ORG};
+export type {CommunityIssue, CommunityIssueAssignee, CommunityIssueLabel, CommunityIssuePullRequest, CommunityProjectGroup} from './types';
+export {COMMUNITY_ISSUES, FEATURED_LABELS, ISSUE_PROJECT_GROUPS, ISSUES_FETCHED_AT, ISSUES_ORG};
 
 export interface LabelCount extends CommunityIssueLabel {
     count: number;

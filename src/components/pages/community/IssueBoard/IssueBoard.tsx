@@ -2,15 +2,17 @@
 
 import {useEffect, useState} from 'react';
 import clsx from 'clsx';
-import {ArrowUpRightIcon, MessageSquareIcon, SearchIcon, XIcon} from 'lucide-react';
+import {ArrowUpRightIcon, GitPullRequestIcon, MessageSquareIcon, SearchIcon, XIcon} from 'lucide-react';
 import Image from 'next/image';
 import {
     cleanIssueTitle,
     COMMUNITY_ISSUES,
     getIssueLabels,
+    ISSUE_PROJECT_GROUPS,
     issueSearchUrl,
     type CommunityIssue,
 } from '@/lib/community';
+import {FilterSelect, type FilterOption, type FilterOptionGroup} from './FilterSelect';
 import styles from './IssueBoard.module.scss';
 
 const PAGE_SIZE = 12;
@@ -18,36 +20,38 @@ const ALL = 'all';
 
 type KindFilter = typeof ALL | 'bug' | 'feature';
 
-const KIND_FILTERS: Array<{id: KindFilter; label: string}> = [
-    {id: ALL, label: 'Bugs and features'},
-    {id: 'bug', label: 'Bugs'},
-    {id: 'feature', label: 'Features'},
+const countIssues = (match: (issue: CommunityIssue) => boolean) => COMMUNITY_ISSUES.filter(match).length;
+
+const KIND_FILTERS: FilterOption<KindFilter>[] = [
+    {value: ALL, label: 'Bugs and features', count: COMMUNITY_ISSUES.length},
+    {value: 'bug', label: 'Bugs', count: countIssues((issue) => issue.kind === 'bug')},
+    {value: 'feature', label: 'Features', count: countIssues((issue) => issue.kind === 'feature')},
 ];
 
+const ALL_PROJECTS: FilterOption<string>[] = [{value: ALL, label: 'All projects', count: COMMUNITY_ISSUES.length}];
+const PROJECT_GROUPS: FilterOptionGroup<string>[] = ISSUE_PROJECT_GROUPS.map((group) => ({
+    key: group.kind,
+    label: group.label,
+    options: group.repos.map((repo) => ({value: repo, label: repo, count: countIssues((issue) => issue.repo === repo)})),
+}));
+
 const LABELS = getIssueLabels();
-const REPOS = [...new Set(COMMUNITY_ISSUES.map((issue) => issue.repo))].sort((a, b) =>
-    a === 'tabularis' ? -1 : b === 'tabularis' ? 1 : a.localeCompare(b),
-);
 
 // Fixed locale and time zone so the server-rendered date matches the hydrated one.
 const DATE_FORMAT = new Intl.DateTimeFormat('en-US', {month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC'});
-
-function repoLabel(repo: string) {
-    return repo === 'tabularis' ? 'Tabularis app' : repo.replace(/^tabularis-/, '');
-}
 
 function IssueCard({issue}: {issue: CommunityIssue}) {
     return (
         <article className={styles.card}>
             <div className={styles.cardMeta}>
                 <span className={styles.cardRepo}>
-                    {repoLabel(issue.repo)} #{issue.number}
+                    {issue.repo} #{issue.number}
                 </span>
                 {issue.kind && <span className={clsx(styles.kind, styles[issue.kind])}>{issue.kind}</span>}
             </div>
 
             <h3 className={styles.cardTitle}>
-                {/* Stretched over the whole card; the assignee links sit above it. */}
+                {/* Stretched over the whole card; the assignee and PR links sit above it. */}
                 <a href={issue.url} target="_blank" rel="noopener noreferrer" className={styles.cardLink}>
                     {cleanIssueTitle(issue.title)}
                 </a>
@@ -97,6 +101,24 @@ function IssueCard({issue}: {issue: CommunityIssue}) {
                         </span>
                     </span>
                 )}
+                {issue.pullRequests.length > 0 && (
+                    <span className={clsx(styles.footerItem, styles.pullRequests)}>
+                        <GitPullRequestIcon aria-hidden="true" />
+                        {issue.pullRequests.length} open {issue.pullRequests.length === 1 ? 'PR' : 'PRs'}
+                        {issue.pullRequests.map((pr) => (
+                            <a
+                                key={pr.url}
+                                href={pr.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.prLink}
+                                title={pr.author ? `#${pr.number} by @${pr.author}` : `#${pr.number}`}
+                            >
+                                #{pr.number}
+                            </a>
+                        ))}
+                    </span>
+                )}
                 <ArrowUpRightIcon className={styles.cardArrow} aria-hidden="true" />
             </div>
         </article>
@@ -125,7 +147,7 @@ export function IssueBoard() {
             (label === ALL || issue.labels.some((l) => l.name === label)) &&
             (repo === ALL || issue.repo === repo) &&
             (kind === ALL || issue.kind === kind) &&
-            (!unclaimedOnly || issue.assignees.length === 0) &&
+            (!unclaimedOnly || (issue.assignees.length === 0 && issue.pullRequests.length === 0)) &&
             (!normalizedQuery ||
                 issue.title.toLowerCase().includes(normalizedQuery) ||
                 String(issue.number) === normalizedQuery.replace(/^#/, '')),
@@ -134,11 +156,11 @@ export function IssueBoard() {
 
     const activeChips: Array<{key: string; label: string; onRemove: () => void}> = [];
     if (normalizedQuery) activeChips.push({key: 'query', label: `"${query.trim()}"`, onRemove: () => setQuery('')});
-    if (repo !== ALL) activeChips.push({key: 'repo', label: repoLabel(repo), onRemove: () => setRepo(ALL)});
+    if (repo !== ALL) activeChips.push({key: 'repo', label: repo, onRemove: () => setRepo(ALL)});
     if (kind !== ALL) {
         activeChips.push({
             key: 'kind',
-            label: KIND_FILTERS.find((item) => item.id === kind)!.label,
+            label: KIND_FILTERS.find((item) => item.value === kind)!.label,
             onRemove: () => setKind(ALL),
         });
     }
@@ -183,42 +205,32 @@ export function IssueBoard() {
                     />
                 </div>
 
-                <select
-                    className={styles.select}
+                <FilterSelect
+                    label="Filter by project"
                     value={repo}
-                    onChange={(event) => setRepo(event.target.value)}
-                    aria-label="Filter by project"
-                >
-                    <option value={ALL}>All projects</option>
-                    {REPOS.map((name) => (
-                        <option key={name} value={name}>
-                            {repoLabel(name)}
-                        </option>
-                    ))}
-                </select>
+                    onChange={setRepo}
+                    options={ALL_PROJECTS}
+                    groups={PROJECT_GROUPS}
+                    searchPlaceholder="Search projects…"
+                />
 
-                <select
-                    className={styles.select}
-                    value={kind}
-                    onChange={(event) => setKind(event.target.value as KindFilter)}
-                    aria-label="Filter by type"
-                >
-                    {KIND_FILTERS.map((item) => (
-                        <option key={item.id} value={item.id}>
-                            {item.label}
-                        </option>
-                    ))}
-                </select>
+                <FilterSelect label="Filter by type" value={kind} onChange={setKind} options={KIND_FILTERS} />
 
                 <label className={styles.toggle}>
                     <input
                         type="checkbox"
                         checked={unclaimedOnly}
                         onChange={(event) => setUnclaimedOnly(event.target.checked)}
+                        aria-describedby="unclaimed-note"
                     />
-                    Unclaimed only
+                    Unclaimed only*
                 </label>
             </div>
+
+            <p id="unclaimed-note" className={styles.note}>
+                * Unclaimed means no assignee and no open pull request: an open PR usually means someone is already
+                working on it.
+            </p>
 
             <div className={styles.resultsRow}>
                 <span className={styles.count}>
