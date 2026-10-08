@@ -49,9 +49,7 @@ export function PluginGrid({activeKind}: {activeKind?: string}) {
                 {plugins.map((plugin) => {
                     const kind = kindOf(plugin);
                     const latestRelease = getLatestRelease(plugin);
-                    const authorName = plugin.author.includes('<')
-                        ? plugin.author.split('<')[0].trim()
-                        : plugin.author;
+                    const authorName = plugin.author.includes('<') ? plugin.author.split('<')[0].trim() : plugin.author;
                     const iconSlug = getPluginIcon(plugin.id);
 
                     return (

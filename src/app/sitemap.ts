@@ -56,6 +56,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 0.75,
         },
         {
+            url: `${BASE_URL}/contribute`,
+            lastModified: new Date(),
+            changeFrequency: 'daily',
+            priority: 0.75,
+        },
+        {
             url: `${BASE_URL}/roadmap`,
             lastModified: new Date(),
             changeFrequency: 'weekly',

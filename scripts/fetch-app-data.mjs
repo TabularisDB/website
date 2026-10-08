@@ -213,6 +213,108 @@ async function buildGithubStats() {
     return {stars: repo.stargazers_count, downloads};
 }
 
+// Every open issue across the public repos of the org, with its labels, for the
+// /community issue board. Baked in at build time like the stats above; the
+// 6-hour rebuild cron keeps the list fresh. Featured labels lead the board's
+// label filter; closed-in-spirit labels are left out.
+const ORG = REPO.split('/')[0];
+const FEATURED_LABELS = ['good first issue', 'help wanted'];
+const HIDDEN_LABELS = new Set(['duplicate', 'invalid', 'wontfix']);
+
+// The board's project filter groups repos by registry kind (drivers, themes, …):
+// the app repo leads, plugin repos take the kind of their registry entry
+// (matched on the plugin homepage), repos missing from the registry come last.
+function buildProjectGroups(registry, kindLabels, repos) {
+    const repoOf = (url) =>
+        (url ?? '')
+            .replace(/\.git$|\/+$/g, '')
+            .match(new RegExp(`^https://github\\.com/${ORG}/([^/]+)$`, 'i'))?.[1]
+            ?.toLowerCase();
+    const kindOf = new Map();
+    for (const plugin of registry.plugins) {
+        const repo = repoOf(plugin.homepage);
+        if (repo && plugin.kind && !kindOf.has(repo)) kindOf.set(repo, plugin.kind);
+    }
+    const appRepo = REPO.split('/')[1];
+    const groups = new Map([['app', {kind: 'app', label: 'App', repos: []}]]);
+    for (const [key, label] of kindLabels) groups.set(key, {kind: key, label, repos: []});
+    const other = {kind: 'other', label: 'Other', repos: []};
+    for (const repo of [...repos].sort()) {
+        const key = repo === appRepo ? 'app' : kindOf.get(repo.toLowerCase());
+        if (key && !groups.has(key)) groups.set(key, {kind: key, label: key, repos: []});
+        (key ? groups.get(key) : other).repos.push(repo);
+    }
+    return [...groups.values(), other].filter((group) => group.repos.length > 0);
+}
+
+// Open PRs that would close an issue, keyed by "repo#number". Only closing
+// keywords count (fixes/closes/resolves #N, ORG/repo#N or the issue URL), the
+// same links GitHub draws; bare #N mentions are too noisy (bot release notes).
+const CLOSING_REF = new RegExp(
+    `\\b(?:close[sd]?|fix(?:e[sd])?|resolve[sd]?)\\b:?\\s+(?:https://github\\.com/${ORG}/([\\w.-]+)/issues/|(?:${ORG}/([\\w.-]+))?#)(\\d+)`,
+    'gi',
+);
+
+async function buildOpenPullRequests() {
+    const q = `org:${ORG} is:pr is:open is:public`;
+    const byIssue = new Map();
+    for (let page = 1; page <= 10; page += 1) {
+        const res = await fetchJson(
+            `https://api.github.com/search/issues?q=${encodeURIComponent(q)}&sort=created&order=desc&per_page=100&page=${page}`,
+        );
+        for (const item of res.items ?? []) {
+            if (item.user?.type === 'Bot') continue;
+            const prRepo = item.repository_url.split('/').pop();
+            const text = `${item.title ?? ''}\n${item.body ?? ''}`;
+            for (const [, urlRepo, refRepo, number] of text.matchAll(CLOSING_REF)) {
+                const key = `${(urlRepo ?? refRepo ?? prRepo).toLowerCase()}#${number}`;
+                const prs = byIssue.get(key) ?? [];
+                if (prs.some((pr) => pr.url === item.html_url)) continue;
+                prs.push({number: item.number, url: item.html_url, author: item.user?.login ?? null});
+                byIssue.set(key, prs);
+            }
+        }
+        if (!res.items || res.items.length < 100) break;
+    }
+    return byIssue;
+}
+
+async function buildCommunityIssues() {
+    const pullRequests = await buildOpenPullRequests();
+    const q = `org:${ORG} is:issue is:open is:public`;
+    const issues = [];
+    // The search API caps a query at 1000 results (10 pages of 100).
+    for (let page = 1; page <= 10; page += 1) {
+        const res = await fetchJson(
+            `https://api.github.com/search/issues?q=${encodeURIComponent(q)}&sort=created&order=desc&per_page=100&page=${page}`,
+        );
+        for (const item of res.items ?? []) {
+            const labels = (item.labels ?? []).map((l) => ({name: l.name, color: l.color}));
+            const names = labels.map((l) => l.name.toLowerCase());
+            if (names.some((name) => HIDDEN_LABELS.has(name))) continue;
+            const repo = item.repository_url.split('/').pop();
+            issues.push({
+                repo,
+                number: item.number,
+                title: item.title,
+                url: item.html_url,
+                labels,
+                kind: names.includes('bug')
+                    ? 'bug'
+                    : names.includes('enhancement') || names.includes('feature request')
+                      ? 'feature'
+                      : null,
+                assignees: (item.assignees ?? []).map((a) => ({login: a.login, avatarUrl: a.avatar_url})),
+                pullRequests: pullRequests.get(`${repo.toLowerCase()}#${item.number}`) ?? [],
+                comments: item.comments ?? 0,
+                createdAt: item.created_at,
+            });
+        }
+        if (!res.items || res.items.length < 100) break;
+    }
+    return issues;
+}
+
 async function main() {
     for (const {url, out, transform} of targets) {
         const raw = await fetchText(url);
@@ -221,8 +323,12 @@ async function main() {
         console.log(`fetched ${url} -> ${out}`);
     }
 
+    // Kind labels for the community board's project groups; empty when the
+    // registry is down, the groups then fall back to the kind keys.
+    let kindLabels = [];
     try {
         const kinds = await buildPluginKinds();
+        kindLabels = kinds.kinds.map((kind) => [kind.key, kind.label ?? kind.key]);
         await writeTarget('plugins/kinds.json', JSON.stringify(kinds, null, 2) + '\n');
         console.log(
             `fetched ${TABULARIUM}/api/kinds + ${TABULARIUM}/manifest.schema.json -> plugins/kinds.json (${kinds.kinds.length} kinds)`,
@@ -298,6 +404,28 @@ export const TOTAL_DOWNLOADS = ${downloads};
         // Same policy as buildRegistry: stale numbers beat a failed deploy —
         // the committed copy from the last successful fetch ships.
         console.warn(`GitHub stats unavailable, keeping committed copy: ${err}`);
+    }
+
+    const issuesOut = 'src/lib/community/issues.ts';
+    try {
+        const issues = await buildCommunityIssues();
+        const projects = buildProjectGroups(registry, kindLabels, new Set(issues.map((issue) => issue.repo)));
+        await writeTarget(
+            issuesOut,
+            `// Generated by scripts/fetch-app-data.mjs. Do not edit by hand.
+import type {CommunityIssue, CommunityProjectGroup} from './types';
+
+export const ISSUES_ORG = ${JSON.stringify(ORG)};
+export const FEATURED_LABELS = ${JSON.stringify(FEATURED_LABELS)};
+export const ISSUES_FETCHED_AT = ${JSON.stringify(new Date().toISOString())};
+export const ISSUE_PROJECT_GROUPS: CommunityProjectGroup[] = ${JSON.stringify(projects, null, 2)};
+export const COMMUNITY_ISSUES: CommunityIssue[] = ${JSON.stringify(issues, null, 2)};
+`,
+        );
+        console.log(`fetched ${ORG} community issues -> ${issuesOut} (${issues.length} issues)`);
+    } catch (err) {
+        // Same policy as buildRegistry: a stale list beats a failed deploy.
+        console.warn(`community issues unavailable, keeping committed copy: ${err}`);
     }
 }
 

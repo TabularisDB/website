@@ -1,0 +1,216 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.bar {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 0.75rem;
+
+    @media (max-width: 767px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.searchWrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 0.9rem;
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    svg {
+        width: 1rem;
+        height: 1rem;
+        color: var(--color-text-secondary);
+        flex-shrink: 0;
+    }
+
+    input {
+        flex: 1;
+        min-width: 0;
+        background: none;
+        border: none;
+        outline: none;
+        color: var(--color-text-primary);
+        font-size: 0.9rem;
+
+        &::placeholder {
+            color: var(--color-text-secondary);
+        }
+    }
+}
+
+.toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.65rem 0.9rem;
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-primary);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+
+    &:hover {
+        border-color: var(--color-border-hover);
+    }
+
+    input {
+        appearance: none;
+        display: grid;
+        place-content: center;
+        flex-shrink: 0;
+        width: 1rem;
+        height: 1rem;
+        margin: 0;
+        border: 0.1rem solid var(--color-border-hover);
+        border-radius: 4px;
+        background: transparent;
+        cursor: pointer;
+        transition:
+            background-color 0.15s ease,
+            border-color 0.15s ease;
+
+        &::after {
+            content: '';
+            width: 0.55rem;
+            height: 0.3rem;
+            border-bottom: 0.125rem solid var(--color-bg);
+            border-left: 0.125rem solid var(--color-bg);
+            transform: translateY(-0.05rem) rotate(-45deg);
+            opacity: 0;
+        }
+
+        &:checked {
+            border-color: var(--color-accent-teal);
+            background-color: var(--color-accent-teal);
+
+            &::after {
+                opacity: 1;
+            }
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--color-accent-teal);
+            outline-offset: 2px;
+        }
+    }
+}
+
+.note {
+    margin-top: -0.25rem;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    opacity: 0.8;
+    font-weight: 400;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+}
+
+.resultsRow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    min-height: 2rem;
+}
+
+.count {
+    font-size: 0.85rem;
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.chip {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.6rem;
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--radius-full);
+    background: var(--color-surface);
+    color: var(--color-text-secondary);
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+
+    svg {
+        width: 0.75rem;
+        height: 0.75rem;
+        color: var(--color-text-muted);
+    }
+
+    &:hover {
+        border-color: var(--color-text-secondary);
+    }
+}
+
+.githubLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-left: auto;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    transition: color 0.15s ease;
+
+    svg {
+        width: 0.9rem;
+        height: 0.9rem;
+    }
+
+    &:hover {
+        color: var(--color-accent-teal);
+    }
+
+    @media (max-width: 767px) {
+        margin-left: 0;
+        margin-top: 1rem;
+    }
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+    gap: 0.75rem;
+}
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 3rem 1.5rem;
+    text-align: center;
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+
+    span {
+        font-weight: 600;
+        color: var(--color-text-primary);
+    }
+
+    p {
+        color: var(--color-text-secondary);
+        font-size: 0.9rem;
+    }
+}
+
+.more {
+    align-self: center;
+    margin-top: 0.5rem;
+}

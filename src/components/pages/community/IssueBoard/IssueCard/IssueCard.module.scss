@@ -1,0 +1,141 @@
+.issueCard {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.75rem 1.5rem 1.25rem;
+    border: 0.1rem solid var(--color-border);
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background-color: var(--color-surface);
+    }
+}
+
+.meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.repo {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    opacity: 0.8;
+}
+
+.link {
+    color: inherit;
+    text-decoration: none;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+    }
+
+    &:focus-visible {
+        outline: none;
+
+        &::after {
+            outline: 2px solid var(--color-accent-teal);
+            outline-offset: -2px;
+        }
+    }
+}
+
+.title {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--color-text-primary);
+}
+
+.labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 550;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: auto;
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+}
+
+.footerItem {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    svg {
+        width: 0.85rem;
+        height: 0.85rem;
+    }
+}
+
+.pullRequests {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--color-accent-teal);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+
+    svg {
+        width: 0.8rem;
+        height: 0.8rem;
+    }
+}
+
+.assignees {
+    display: inline-flex;
+}
+
+.assignee {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    border-radius: 50%;
+    transition: transform 0.15s ease;
+
+    & + & {
+        margin-left: -0.4rem;
+    }
+
+    &:hover {
+        z-index: 2;
+        transform: translateY(-2px);
+    }
+}
+
+.avatar {
+    width: 1.375rem;
+    height: 1.375rem;
+    border-radius: 50%;
+    border: 0.1rem solid var(--color-bg);
+}

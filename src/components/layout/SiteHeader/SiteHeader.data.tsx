@@ -17,6 +17,7 @@ import {
     ShieldIcon,
     SirenIcon,
     StarIcon,
+    UsersIcon,
 } from 'lucide-react';
 import Image from 'next/image';
 import type {ReactNode} from 'react';
@@ -212,6 +213,18 @@ export const navGroups: NavGroup[] = [
                 title: 'Community',
                 links: [
                     {
+                        label: 'Contribute',
+                        href: '/contribute',
+                        description: 'Open issues across every project, and where to start.',
+                        icon: <UsersIcon />,
+                    },
+                    {
+                        label: 'Sponsors & supporters',
+                        href: '/sponsors',
+                        description: 'The organizations that help keep Tabularis free and independent.',
+                        icon: <StarIcon />,
+                    },
+                    {
                         label: 'GitHub',
                         href: SOCIAL_URLS.github,
                         description: 'Source code, issues, discussions, and stars.',
@@ -222,12 +235,6 @@ export const navGroups: NavGroup[] = [
                         href: SOCIAL_URLS.discord,
                         description: 'Talk to users, contributors, and maintainers.',
                         icon: <DiscordIcon colored />,
-                    },
-                    {
-                        label: 'Sponsors & supporters',
-                        href: '/sponsors',
-                        description: 'The organizations that help keep Tabularis free and independent.',
-                        icon: <StarIcon />,
                     },
                 ],
             },

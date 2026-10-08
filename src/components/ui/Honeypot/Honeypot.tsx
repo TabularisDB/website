@@ -6,7 +6,14 @@ export function Honeypot() {
     return (
         <div className={styles.honeypot} aria-hidden="true">
             <label htmlFor={HONEYPOT_NAME}>Website</label>
-            <input type="text" id={HONEYPOT_NAME} name={HONEYPOT_NAME} tabIndex={-1} autoComplete="off" defaultValue="" />
+            <input
+                type="text"
+                id={HONEYPOT_NAME}
+                name={HONEYPOT_NAME}
+                tabIndex={-1}
+                autoComplete="off"
+                defaultValue=""
+            />
         </div>
     );
 }
