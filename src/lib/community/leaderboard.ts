@@ -40,7 +40,7 @@ export const FULL_SCORE_MERGES = 5;
 export const SCORE_RULES: Array<{label: string; points: number; note?: string}> = [
     {label: 'Merged pull request', points: 10, note: `${10 / 2} from the ${FULL_SCORE_MERGES + 1}th merged PR on`},
     {label: 'Issue resolved by someone else', points: 3},
-    {label: 'Open issue triaged by a maintainer', points: 2},
+    {label: 'Open issue triaged by a maintainer', points: 2, note: 'Not when the author maintains the repo'},
     {label: 'Open or draft pull request', points: 0, note: 'Pending until it is merged'},
     {label: 'Open issue not triaged yet', points: 0},
     {label: 'Pull request merged by its own author', points: 0},
@@ -56,7 +56,7 @@ function scoreContribution(c: Contribution, mergeIndex: number): number {
         return mergeIndex < FULL_SCORE_MERGES ? 10 : 5;
     }
     if (c.state === 'closed') return 3;
-    if (c.state === 'open' && c.triaged) return 2;
+    if (c.state === 'open' && c.triaged && !c.maintainer) return 2;
     return 0;
 }
 

@@ -61,6 +61,8 @@ export interface Contribution {
     closedBy?: string;
     /** Issues only: a maintainer added a label beyond the issue form's own. */
     triaged?: boolean;
+    /** Issues only: the author maintains the repo, so the triage label may be their own. */
+    maintainer?: boolean;
     /** GitHub flagged this as the author's first contribution to the repo. */
     firstTime: boolean;
 }
