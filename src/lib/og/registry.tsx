@@ -32,6 +32,8 @@ export function getOgCards(): Record<string, OgCard> {
         '/brand': () => renderSimpleOgImage({kicker: 'Brand assets', title: 'Logos, colors and fonts'}),
         '/changelog': () => renderSimpleOgImage({kicker: 'Changelog', title: 'Release history'}),
         '/contribute': () => renderSimpleOgImage({kicker: 'Contribute', title: 'Build Tabularis with us'}),
+        '/contribute/leaderboard': () =>
+            renderSimpleOgImage({kicker: 'Contributor leaderboard', title: 'Make an impact. Earn your place.'}),
         '/compare': () => renderSimpleOgImage({kicker: 'Compare', title: 'How Tabularis stacks up'}),
         '/download': () => renderSimpleOgImage({kicker: `Download · v${APP_VERSION}`, title: 'Get Tabularis'}),
         '/plugins': () => renderSimpleOgImage({kicker: 'Plugins', title: 'Community drivers and themes'}),

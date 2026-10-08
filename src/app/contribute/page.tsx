@@ -18,6 +18,7 @@ import {
     MapIcon,
     PaletteIcon,
     PlugIcon,
+    TrophyIcon,
     UsersIcon,
 } from 'lucide-react';
 import type {Metadata} from 'next';
@@ -163,6 +164,19 @@ export default function ContributePage() {
                     </SmartLink>
                 ))}
             </div>
+
+            <CalloutBlock
+                title="Community giveaway: Oct 7 to Oct 13"
+                actions={
+                    <Button href="/contribute/leaderboard" size="sm">
+                        <TrophyIcon />
+                        See the leaderboard
+                    </Button>
+                }
+            >
+                The top three contributors win a prize. Every PR and issue opened
+                in the window shows up on the leaderboard.
+            </CalloutBlock>
 
             <section id="issues" className={styles.section}>
                 <header className="section-header">

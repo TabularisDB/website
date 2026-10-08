@@ -1,4 +1,4 @@
-import {writeFile, mkdir} from 'node:fs/promises';
+import {mkdir, readFile, writeFile} from 'node:fs/promises';
 import {dirname, resolve} from 'node:path';
 
 const REPO = process.env.TABULARIS_APP_REPO ?? 'TabularisDB/tabularis';
@@ -315,6 +315,155 @@ async function buildCommunityIssues() {
     return issues;
 }
 
+// Every public PR and issue opened across the org in the last
+// CONTRIBUTIONS_DAYS days, for the /contribute/leaderboard page, which ranks
+// contributors over any date range inside that window on the client. Bots are
+// left out; the author association marks team members so the page can hide them.
+const CONTRIBUTIONS_DAYS = 120;
+const sleep = (ms) => new Promise((done) => setTimeout(done, ms));
+
+// The search API allows 10 unauthenticated requests a minute (30 with a token):
+// on a 403/429, wait for the window to reset once and try again.
+async function fetchSearch(url) {
+    try {
+        return await fetchJson(url);
+    } catch (err) {
+        if (!/-> (403|429)/.test(String(err))) throw err;
+        console.warn('search API rate limited, waiting 61s');
+        await sleep(61_000);
+        return fetchJson(url);
+    }
+}
+
+// The search API caps a query at 1000 results: split the date range until each half fits.
+async function searchCreated(base, from, to) {
+    const range = `created:${from.toISOString().replace(/\.\d+Z$/, 'Z')}..${to.toISOString().replace(/\.\d+Z$/, 'Z')}`;
+    const url = (page) =>
+        `https://api.github.com/search/issues?q=${encodeURIComponent(`${base} ${range}`)}&sort=created&order=desc&per_page=100&page=${page}`;
+    const first = await fetchSearch(url(1));
+    if (first.total_count > 1000) {
+        const mid = new Date((from.getTime() + to.getTime()) / 2);
+        return [...(await searchCreated(base, mid, to)), ...(await searchCreated(base, from, mid))];
+    }
+    const items = [...(first.items ?? [])];
+    for (let page = 2; items.length < first.total_count && page <= 10; page += 1) {
+        const res = await fetchSearch(url(page));
+        if (!res.items?.length) break;
+        items.push(...res.items);
+    }
+    return items;
+}
+
+const REJECTED_LABELS = new Set(['duplicate', 'invalid', 'spam', 'wontfix']);
+// Labels the app's issue forms set on their own; any other label means a
+// maintainer triaged the issue.
+const FORM_LABELS = new Set(['bug', 'feature request']);
+const CONTRIBUTIONS_OUT = 'src/lib/community/contributions.ts';
+
+// Who closed each issue or merged each PR, from the last committed copy: they
+// never change, so only contributions closed since then need a lookup.
+async function knownClosers() {
+    try {
+        const body = await readFile(resolve(process.cwd(), CONTRIBUTIONS_OUT), 'utf8');
+        const closers = new Map();
+        for (const line of body.split('\n')) {
+            const match = line.match(/^\s*(\{"type":.*\}),$/);
+            if (!match) continue;
+            const c = JSON.parse(match[1]);
+            if (c.closedBy) closers.set(`${c.type}:${c.repo}#${c.number}`, c.closedBy);
+        }
+        return closers;
+    } catch {
+        return new Map();
+    }
+}
+
+// Closing or merging your own work must not climb the board: an issue its
+// author closed is withdrawn, a PR its author merged is self-merged, both worth
+// nothing. The search API returns neither the closer nor the merger, so each new
+// closed community issue and merged community PR costs one request; a failed
+// lookup (rate limit) leaves the contribution as is until the next build.
+async function resolveClosers(contributions, contributors) {
+    const known = await knownClosers();
+    const pending = contributions.filter(
+        (c) =>
+            !contributors[c.author].team &&
+            ((c.type === 'issue' && c.state === 'closed') || (c.type === 'pr' && c.state === 'merged')),
+    );
+    let looked = 0;
+    let failed = 0;
+    for (let i = 0; i < pending.length; i += 8) {
+        await Promise.all(
+            pending.slice(i, i + 8).map(async (c) => {
+                let closedBy = known.get(`${c.type}:${c.repo}#${c.number}`);
+                if (!closedBy) {
+                    try {
+                        looked += 1;
+                        if (c.type === 'pr') {
+                            const pr = await fetchJson(`https://api.github.com/repos/${ORG}/${c.repo}/pulls/${c.number}`);
+                            closedBy = pr.merged_by?.login;
+                        } else {
+                            const issue = await fetchJson(`https://api.github.com/repos/${ORG}/${c.repo}/issues/${c.number}`);
+                            closedBy = issue.closed_by?.login;
+                        }
+                    } catch {
+                        failed += 1;
+                    }
+                }
+                if (!closedBy) return;
+                c.closedBy = closedBy;
+                if (closedBy === c.author) c.state = c.type === 'pr' ? 'self-merged' : 'withdrawn';
+            }),
+        );
+    }
+    console.log(`resolved closers: ${pending.length} closed issues and merged PRs, ${looked} looked up, ${failed} failed`);
+}
+
+async function buildContributions() {
+    const to = new Date();
+    const from = new Date(to.getTime() - CONTRIBUTIONS_DAYS * 24 * 60 * 60 * 1000);
+    const contributors = {};
+    const contributions = [];
+    for (const type of ['pr', 'issue']) {
+        for (const item of await searchCreated(`org:${ORG} is:${type} is:public`, from, to)) {
+            if (!item.user || item.user.type === 'Bot' || item.user.login.endsWith('[bot]')) continue;
+            const login = item.user.login;
+            const team = ['OWNER', 'MEMBER'].includes(item.author_association);
+            const known = contributors[login];
+            contributors[login] = {avatarUrl: item.user.avatar_url, team: Boolean(known?.team) || team};
+            const names = (item.labels ?? []).map((l) => l.name.toLowerCase());
+            contributions.push({
+                type,
+                repo: item.repository_url.split('/').pop(),
+                number: item.number,
+                title: item.title,
+                author: login,
+                createdAt: item.created_at,
+                state:
+                    type === 'pr'
+                        ? item.pull_request?.merged_at
+                            ? 'merged'
+                            : item.state === 'open'
+                              ? item.draft
+                                  ? 'draft'
+                                  : 'open'
+                              : 'closed'
+                        : item.state === 'open'
+                          ? 'open'
+                          : item.state_reason === 'not_planned' || names.some((n) => REJECTED_LABELS.has(n))
+                            ? 'rejected'
+                            : 'closed',
+                ...(type === 'pr' && item.pull_request?.merged_at && {mergedAt: item.pull_request.merged_at}),
+                firstTime: ['FIRST_TIMER', 'FIRST_TIME_CONTRIBUTOR'].includes(item.author_association),
+                ...(type === 'issue' && {triaged: names.some((n) => !FORM_LABELS.has(n) && !REJECTED_LABELS.has(n))}),
+            });
+        }
+    }
+    await resolveClosers(contributions, contributors);
+    contributions.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+    return {since: from.toISOString(), contributors, contributions};
+}
+
 async function main() {
     for (const {url, out, transform} of targets) {
         const raw = await fetchText(url);
@@ -426,6 +575,29 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = ${JSON.stringify(issues, null,
     } catch (err) {
         // Same policy as buildRegistry: a stale list beats a failed deploy.
         console.warn(`community issues unavailable, keeping committed copy: ${err}`);
+    }
+
+    const contributionsOut = CONTRIBUTIONS_OUT;
+    try {
+        const {since, contributors, contributions} = await buildContributions();
+        await writeTarget(
+            contributionsOut,
+            `// Generated by scripts/fetch-app-data.mjs. Do not edit by hand.
+import type {Contribution, ContributorProfile} from './types';
+
+export const CONTRIBUTIONS_ORG = ${JSON.stringify(ORG)};
+export const CONTRIBUTIONS_SINCE = ${JSON.stringify(since)};
+export const CONTRIBUTIONS_FETCHED_AT = ${JSON.stringify(new Date().toISOString())};
+export const CONTRIBUTORS: Record<string, ContributorProfile> = ${JSON.stringify(contributors)};
+export const CONTRIBUTIONS: Contribution[] = [
+${contributions.map((c) => `    ${JSON.stringify(c)},`).join('\n')}
+];
+`,
+        );
+        console.log(`fetched ${ORG} contributions -> ${contributionsOut} (${contributions.length} PRs and issues)`);
+    } catch (err) {
+        // Same policy as the issue board: a stale leaderboard beats a failed deploy.
+        console.warn(`contributions unavailable, keeping committed copy: ${err}`);
     }
 }
 
