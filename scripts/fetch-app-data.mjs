@@ -360,8 +360,9 @@ const REJECTED_LABELS = new Set(['duplicate', 'invalid', 'spam', 'wontfix']);
 const FORM_LABELS = new Set(['bug', 'feature request']);
 const CONTRIBUTIONS_OUT = 'src/lib/community/contributions.ts';
 
-// Who closed each issue or merged each PR, from the last committed copy: they
-// never change, so only contributions closed since then need a lookup.
+// Who closed each issue or merged each PR, and who else approved each
+// self-merged PR, from the last committed copy: they never change, so only
+// contributions closed since then need a lookup.
 async function knownClosers() {
     try {
         const body = await readFile(resolve(process.cwd(), CONTRIBUTIONS_OUT), 'utf8');
@@ -370,7 +371,8 @@ async function knownClosers() {
             const match = line.match(/^\s*(\{"type":.*\}),$/);
             if (!match) continue;
             const c = JSON.parse(match[1]);
-            if (c.closedBy) closers.set(`${c.type}:${c.repo}#${c.number}`, c.closedBy);
+            if (c.closedBy)
+                closers.set(`${c.type}:${c.repo}#${c.number}`, {closedBy: c.closedBy, approvedBy: c.approvedBy});
         }
         return closers;
     } catch {
@@ -379,10 +381,12 @@ async function knownClosers() {
 }
 
 // Closing or merging your own work must not climb the board: an issue its
-// author closed is withdrawn, a PR its author merged is self-merged, both worth
-// nothing. The search API returns neither the closer nor the merger, so each new
-// closed issue and merged PR costs one request; a failed lookup (rate limit)
-// leaves the contribution as is until the next build.
+// author closed is withdrawn and worth nothing, a PR its author merged is
+// self-merged and scores less, unless someone else approved it before the
+// merge. The search API returns neither the closer, the merger nor the reviews,
+// so each new closed issue and merged PR costs one request, and each new
+// self-merged PR one more; a failed lookup (rate limit) leaves the contribution
+// as is until the next build.
 async function resolveClosers(contributions) {
     const known = await knownClosers();
     // Team members too: they are hidden by default, but the board can include them.
@@ -394,7 +398,7 @@ async function resolveClosers(contributions) {
     for (let i = 0; i < pending.length; i += 8) {
         await Promise.all(
             pending.slice(i, i + 8).map(async (c) => {
-                let closedBy = known.get(`${c.type}:${c.repo}#${c.number}`);
+                let {closedBy, approvedBy} = known.get(`${c.type}:${c.repo}#${c.number}`) ?? {};
                 if (!closedBy) {
                     try {
                         looked += 1;
@@ -411,11 +415,35 @@ async function resolveClosers(contributions) {
                 }
                 if (!closedBy) return;
                 c.closedBy = closedBy;
-                if (closedBy === c.author) c.state = c.type === 'pr' ? 'self-merged' : 'withdrawn';
+                if (closedBy !== c.author) return;
+                c.state = c.type === 'pr' ? 'self-merged' : 'withdrawn';
+                if (c.type !== 'pr') return;
+                if (approvedBy === undefined) {
+                    try {
+                        looked += 1;
+                        const reviews = await fetchJson(
+                            `https://api.github.com/repos/${ORG}/${c.repo}/pulls/${c.number}/reviews?per_page=100`,
+                        );
+                        approvedBy =
+                            reviews.find(
+                                (r) =>
+                                    r.state === 'APPROVED' &&
+                                    r.user &&
+                                    r.user.type !== 'Bot' &&
+                                    r.user.login !== c.author &&
+                                    r.submitted_at <= c.mergedAt,
+                            )?.user.login ?? null;
+                    } catch {
+                        failed += 1;
+                    }
+                }
+                if (approvedBy !== undefined) c.approvedBy = approvedBy;
             }),
         );
     }
-    console.log(`resolved closers: ${pending.length} closed issues and merged PRs, ${looked} looked up, ${failed} failed`);
+    console.log(
+        `resolved closers and approvals: ${pending.length} closed issues and merged PRs, ${looked} looked up, ${failed} failed`,
+    );
 }
 
 async function buildContributions() {

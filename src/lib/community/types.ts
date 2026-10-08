@@ -45,7 +45,7 @@ export interface ContributorProfile {
  * A public PR or issue opened across the org. PR states: merged, self-merged
  * (merged by its own author), open, draft or closed (unmerged). Issue states:
  * open, closed, rejected (not planned, duplicate, invalid, …) or withdrawn
- * (closed by its own author).
+ * (closed by its own author, by hand or through their own PR).
  */
 export interface Contribution {
     type: 'pr' | 'issue';
@@ -59,6 +59,11 @@ export interface Contribution {
     mergedAt?: string;
     /** Login of whoever closed the issue or merged the PR, when known. */
     closedBy?: string;
+    /**
+     * Self-merged PRs only: someone else who approved it before the merge, null
+     * when nobody did, absent until looked up.
+     */
+    approvedBy?: string | null;
     /** Issues only: a maintainer added a label beyond the issue form's own. */
     triaged?: boolean;
     /** Issues only: the author maintains the repo, so the triage label may be their own. */

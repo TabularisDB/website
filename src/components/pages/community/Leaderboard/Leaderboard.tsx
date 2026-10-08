@@ -65,6 +65,7 @@ function stateLabel(c: Contribution): string {
         if (!c.triaged) return 'Untriaged';
         return c.maintainer ? 'Self-triaged' : 'Triaged';
     }
+    if (c.state === 'self-merged' && c.approvedBy) return 'Self-merged, approved';
     return STATE_LABELS[c.type][c.state] ?? c.state;
 }
 
@@ -437,7 +438,7 @@ function ContributionList({row}: {row: LeaderboardRow}) {
                     <li key={contributionKey(c)}>
                         <span className={clsx(styles.kind, styles[`state_${c.type}_${c.state}`])}>
                             {c.type === 'pr' ? (
-                                c.state === 'merged' ? (
+                                c.state === 'merged' || c.state === 'self-merged' ? (
                                     <GitMergeIcon aria-hidden="true" />
                                 ) : (
                                     <GitPullRequestIcon aria-hidden="true" />

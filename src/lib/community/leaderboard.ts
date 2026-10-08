@@ -33,18 +33,30 @@ export function inRange(c: Contribution, from: Date, to: Date): boolean {
 /** Merged PRs past this many in the range score half: many tiny PRs should not outrank a few solid ones. */
 export const FULL_SCORE_MERGES = 5;
 
+const MERGE_POINTS = 10;
+/** A PR its author merged with nobody else's approval: real work, but nobody vouched for it. */
+const UNREVIEWED_MERGE_POINTS = 4;
+
 /**
  * Indicative points per contribution, shown on the page. Maintainers pick the
  * winners on usefulness, quality and impact; the score only orders the board.
  */
 export const SCORE_RULES: Array<{label: string; points: number; note?: string}> = [
-    {label: 'Merged pull request', points: 10, note: `${10 / 2} from the ${FULL_SCORE_MERGES + 1}th merged PR on`},
+    {
+        label: 'Merged pull request',
+        points: MERGE_POINTS,
+        note: `Merged or approved by someone else. ${MERGE_POINTS / 2} from the ${FULL_SCORE_MERGES + 1}th merged PR on`,
+    },
+    {
+        label: 'Pull request merged by its own author without approval',
+        points: UNREVIEWED_MERGE_POINTS,
+        note: `${UNREVIEWED_MERGE_POINTS / 2} from the ${FULL_SCORE_MERGES + 1}th merged PR on`,
+    },
     {label: 'Issue resolved by someone else', points: 3},
     {label: 'Open issue triaged by a maintainer', points: 2, note: 'Not when the author maintains the repo'},
     {label: 'Open or draft pull request', points: 0, note: 'Pending until it is merged'},
     {label: 'Open issue not triaged yet', points: 0},
-    {label: 'Pull request merged by its own author', points: 0},
-    {label: 'Issue closed by its own author', points: 0},
+    {label: 'Issue closed by its own author', points: 0, note: 'Also through their own PR: the PR scores'},
     {label: 'Pull request closed without merging', points: 0},
     {label: 'Issue not planned, duplicate or invalid', points: 0},
 ];
@@ -52,8 +64,13 @@ export const SCORE_RULES: Array<{label: string; points: number; note?: string}> 
 /** Points of one contribution; `mergeIndex` is the 0-based rank of a merged PR among the author's merges. */
 function scoreContribution(c: Contribution, mergeIndex: number): number {
     if (c.type === 'pr') {
-        if (c.state !== 'merged') return 0;
-        return mergeIndex < FULL_SCORE_MERGES ? 10 : 5;
+        const points =
+            c.state === 'merged' || (c.state === 'self-merged' && c.approvedBy)
+                ? MERGE_POINTS
+                : c.state === 'self-merged'
+                  ? UNREVIEWED_MERGE_POINTS
+                  : 0;
+        return mergeIndex < FULL_SCORE_MERGES ? points : points / 2;
     }
     if (c.state === 'closed') return 3;
     if (c.state === 'open' && c.triaged && !c.maintainer) return 2;
@@ -144,9 +161,10 @@ export function buildLeaderboard(from: Date, to: Date, {includeTeam, entrantsOnl
 
         if (c.type === 'pr') {
             summary.prs += 1;
-            if (c.state === 'merged' || c.state === 'self-merged') summary.merged += 1;
-            if (c.state === 'merged') row.merged += 1;
-            else if (c.state === 'open' || c.state === 'draft') row.pendingPrs += 1;
+            if (c.state === 'merged' || c.state === 'self-merged') {
+                summary.merged += 1;
+                row.merged += 1;
+            } else if (c.state === 'open' || c.state === 'draft') row.pendingPrs += 1;
         } else {
             row.issues += 1;
             summary.issues += 1;

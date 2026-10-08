@@ -111,10 +111,10 @@ export default function LeaderboardPage() {
                     <h2 className="title">The score is a hint, not the verdict.</h2>
                     <p className="description">
                         Only work that lands scores: pending PRs and untriaged issues count once a maintainer merges or
-                        triages them, and closing or merging your own work scores nothing. The score only orders the
-                        board. After the deadline, maintainers review every contribution for
-                        usefulness, quality and impact: a high PR count alone won&apos;t decide the ranking, and
-                        translations, docs, themes, testing and help on Discord count too.
+                        triages them, closing your own issues scores nothing, and merging your own PR scores less unless
+                        someone else approved it first. The score only orders the board. After the deadline, maintainers
+                        review every contribution for usefulness, quality and impact: a high PR count alone won&apos;t
+                        decide the ranking, and translations, docs, themes, testing and help on Discord count too.
                     </p>
                 </header>
 
