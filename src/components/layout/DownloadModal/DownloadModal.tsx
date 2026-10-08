@@ -1,5 +1,6 @@
 'use client';
 
+import {Modal} from '@/components/ui/Modal/Modal';
 import Image from 'next/image';
 import {DownloadOptions} from '@/components/pages/download/DownloadOptions/DownloadOptions';
 import {VersionPicker} from '@/components/pages/download/VersionPicker/VersionPicker';
@@ -8,11 +9,9 @@ import {getPlatformConfig} from '@/lib/download/downloadConfig';
 import {NIGHTLY_RELEASE} from '@/lib/download/nightly';
 import {APP_VERSION} from '@/lib/download/version';
 import {SOCIAL_URLS} from '@/lib/social';
-import clsx from 'clsx';
-import {ArrowRight, X} from 'lucide-react';
+import {ArrowRight} from 'lucide-react';
 import Link from 'next/link';
 import {useEffect, useState} from 'react';
-import {createPortal} from 'react-dom';
 import styles from './DownloadModal.module.scss';
 
 interface DownloadModalProps {
@@ -21,63 +20,37 @@ interface DownloadModalProps {
 }
 
 export function DownloadModal({platform, onClose}: DownloadModalProps) {
-    const open = platform !== null;
     const [channel, setChannel] = useState<ReleaseChannel>('stable');
-    const [mounted, setMounted] = useState(false);
     const config = platform ? getPlatformConfig(platform, channel) : null;
     const isNightly = channel === 'nightly';
     const version = isNightly ? (NIGHTLY_RELEASE.version ?? APP_VERSION) : APP_VERSION;
 
-    useEffect(() => setMounted(true), []);
     useEffect(() => setChannel('stable'), [platform]);
 
     useEffect(() => {
-        if (!open || !platform) return;
+        if (!platform) return;
         const _paq = (window as unknown as {_paq?: unknown[][]})._paq;
         _paq?.push(['trackEvent', 'Download', 'Lead', platform]);
-    }, [open, platform]);
+    }, [platform]);
 
-    useEffect(() => {
-        if (!open) return;
-
-        function handleKeyDown(e: KeyboardEvent) {
-            if (e.key === 'Escape') onClose();
-        }
-
-        document.addEventListener('keydown', handleKeyDown);
-        return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [open, onClose]);
-
-    function handleOverlayClick(e: React.MouseEvent<HTMLDivElement>) {
-        if (e.target === e.currentTarget) onClose();
-    }
-
-    const modal = (
-        <div className={clsx(styles.overlay, open && styles.open)} onClick={handleOverlayClick} aria-hidden={!open}>
-            {config && platform && (
-                <div
-                    className={styles.modal}
-                    role="dialog"
-                    aria-modal="true"
-                    aria-label={`Download for ${config.label}`}
-                >
-                    <div className={styles.header}>
-                        <span className={styles.title}>
-                            <Image
-                                className={styles.logo}
-                                src="/img/brand/tabularis-icon-color.svg"
-                                alt=""
-                                width={32}
-                                height={32}
-                                loading="eager"
-                            />
-                            Download for {config.label}
-                        </span>
-                        <button className={styles.closeBtn} onClick={onClose} type="button" aria-label="Close">
-                            <X size={15} />
-                        </button>
-                    </div>
-
+    return (
+        <Modal
+            open={config !== null}
+            onClose={onClose}
+            title={config ? `Download for ${config.label}` : ''}
+            icon={
+                <Image
+                    className={styles.logo}
+                    src="/img/brand/tabularis-icon-color.svg"
+                    alt=""
+                    width={32}
+                    height={32}
+                    loading="eager"
+                />
+            }
+        >
+            {config && (
+                <>
                     <div className={styles.meta}>
                         <VersionPicker channel={channel} onChannelChange={setChannel} />
                         <span className={styles.versionTag}>v{version}</span>
@@ -108,12 +81,8 @@ export function DownloadModal({platform, onClose}: DownloadModalProps) {
 
                         <DownloadOptions options={config.options} note={config.note} />
                     </div>
-                </div>
+                </>
             )}
-        </div>
+        </Modal>
     );
-
-    if (!mounted) return null;
-
-    return createPortal(modal, document.body);
 }

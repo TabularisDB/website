@@ -1,0 +1,92 @@
+.podium {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: end;
+    gap: 0.75rem;
+
+    @media (max-width: 767px) {
+        display: none;
+    }
+}
+
+.card {
+    --place-color: var(--color-text-secondary);
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 2rem 1.5rem 1.5rem;
+    border: 0.1rem solid var(--color-border);
+    border-top: 0.2rem solid var(--place-color);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--place-color) 8%, transparent), transparent 60%);
+    text-align: center;
+}
+
+.place1 {
+    --place-color: var(--medal-1);
+
+    order: 2;
+    padding-block: 2.75rem 2rem;
+}
+
+.place2 {
+    --place-color: var(--medal-2);
+
+    order: 1;
+}
+
+.place3 {
+    --place-color: var(--medal-3);
+
+    order: 3;
+}
+
+.rank {
+    position: absolute;
+    top: 0.75rem;
+    left: 1rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--place-color);
+}
+
+.user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--color-text-primary);
+
+    &:hover .login {
+        color: var(--color-accent-teal);
+    }
+}
+
+.avatar {
+    border: 0.15rem solid var(--place-color);
+    border-radius: 50%;
+}
+
+.login {
+    font-weight: 500;
+    transition: color 0.15s ease;
+}
+
+.score {
+    font-size: 1.75rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text-primary);
+
+    small {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--color-text-secondary);
+    }
+}
+
+.counts {
+    font-size: 0.85rem;
+}

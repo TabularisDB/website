@@ -1,0 +1,17 @@
+.counts {
+    display: flex;
+    gap: 1em;
+    color: var(--color-text-secondary);
+}
+
+.count {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    font-variant-numeric: tabular-nums;
+
+    svg {
+        width: 1.05em;
+        height: 1.05em;
+    }
+}

@@ -1,87 +1,52 @@
 .section {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
-    padding-block: 3rem;
-}
-
-.facts {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border-top: 0.1rem solid var(--color-border);
-    border-left: 0.1rem solid var(--color-border);
-
-    @media (max-width: 900px) {
-        grid-template-columns: 1fr;
-    }
-}
-
-.fact {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 2rem;
-    border-right: 0.1rem solid var(--color-border);
-    border-bottom: 0.1rem solid var(--color-border);
-
-    svg {
-        width: 1.5rem;
-        height: 1.5rem;
-        margin-bottom: 0.5rem;
-        color: var(--color-accent-teal);
-    }
-
-    h2 {
-        font-size: 1.1rem;
-        font-weight: 500;
-        color: var(--color-text-primary);
-    }
-
-    p {
-        font-size: 0.9rem;
-        line-height: 1.55;
-        color: var(--color-text-secondary);
-    }
-
-    a {
-        color: var(--color-text-primary);
-        text-decoration: underline;
-        text-underline-offset: 0.2em;
-
-        &:hover {
-            color: var(--color-accent-teal);
-        }
-    }
+    gap: 2rem;
+    scroll-margin-top: calc(var(--header-height) + 2.5rem);
 }
 
 .rules {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
     border-top: 0.1rem solid var(--color-border);
     border-left: 0.1rem solid var(--color-border);
+}
 
-    li {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        padding: 1rem 1.5rem;
-        border-right: 0.1rem solid var(--color-border);
-        border-bottom: 0.1rem solid var(--color-border);
-        font-size: 0.9rem;
-        color: var(--color-text-secondary);
-    }
+.rule {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 2rem 1.75rem;
+    border-right: 0.1rem solid var(--color-border);
+    border-bottom: 0.1rem solid var(--color-border);
+}
+
+.rulePoints {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+    font-weight: 500;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-accent-teal);
 
     small {
-        display: block;
-        margin-top: 0.15rem;
-        font-size: 0.8rem;
-        opacity: 0.75;
+        font-size: 0.9rem;
+        font-weight: 500;
+        opacity: 0.7;
     }
+}
 
-    strong {
-        font-size: 1.1rem;
-        font-variant-numeric: tabular-nums;
-        color: var(--color-text-primary);
-    }
+.ruleTitle {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+.ruleText {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
 }

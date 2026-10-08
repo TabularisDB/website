@@ -174,8 +174,8 @@ export default function ContributePage() {
                     </Button>
                 }
             >
-                The top three contributors win a prize. Every PR and issue opened
-                in the window shows up on the leaderboard.
+                The top three contributors win a prize. Every PR and issue opened in the window shows up on the
+                leaderboard.
             </CalloutBlock>
 
             <section id="issues" className={styles.section}>
