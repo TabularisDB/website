@@ -9,11 +9,9 @@
 name: Rebuild on Vercel
 
 on:
-  # Periodic rebuild to refresh GitHub API values. Every 6 hours, plus every
-  # 30 minutes while a contributor leaderboard window is running (see env).
+  # Periodic rebuild to refresh GitHub API values (every 6 hours).
   schedule:
     - cron: "0 */6 * * *"
-    - cron: "15,45 * * * *"
   # Manual trigger from the Actions tab.
   workflow_dispatch:
   # Allow the app repo to trigger a rebuild when version / CHANGELOG /
@@ -22,33 +20,10 @@ on:
   repository_dispatch:
     types: [app-data-updated]
 
-env:
-  # The 30-minute rebuilds only run inside this UTC window: the giveaway in
-  # src/lib/community/giveaway.ts, plus two days for merges after the deadline.
-  FAST_REBUILD_FROM: "2026-10-07T14:00:00Z"
-  FAST_REBUILD_UNTIL: "2026-10-15T14:00:00Z"
-
 jobs:
   trigger:
     runs-on: ubuntu-latest
     steps:
-      - name: Skip 30-minute rebuilds outside the leaderboard window
-        id: window
-        run: |
-          if [ "${{ github.event.schedule }}" != "15,45 * * * *" ]; then
-            echo "run=true" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          now=$(date -u +%s)
-          from=$(date -u -d "$FAST_REBUILD_FROM" +%s)
-          until=$(date -u -d "$FAST_REBUILD_UNTIL" +%s)
-          if [ "$now" -ge "$from" ] && [ "$now" -le "$until" ]; then
-            echo "run=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "Outside the leaderboard window, skipping"
-            echo "run=false" >> "$GITHUB_OUTPUT"
-          fi
       - name: Call Vercel deploy hook
-        if: steps.window.outputs.run == 'true'
         run: |
           curl -fsS -X POST "${{ secrets.VERCEL_DEPLOY_HOOK_URL }}"
