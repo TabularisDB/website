@@ -28,7 +28,7 @@ export default function CookiePolicyPage() {
             <article className={styles.article}>
                 <header className={styles.header}>
                     <h1 className={styles.title}>Cookie Policy</h1>
-                    <p className={styles.updated}>Last updated: March 2026</p>
+                    <p className={styles.updated}>Last updated: October 2026</p>
                 </header>
 
                 <section className={styles.section}>
@@ -82,6 +82,22 @@ export default function CookiePolicyPage() {
                                         </td>
                                         <td>tabularis.dev</td>
                                         <td>Stores your cookie consent preferences</td>
+                                        <td>Persistent (localStorage)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>tabularis-promo-cta-v1</code>
+                                        </td>
+                                        <td>tabularis.dev</td>
+                                        <td>Remembers when the promotional prompt was last shown, so it is not repeated</td>
+                                        <td>Persistent (localStorage), prompt reappears after 21 days</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>tabularis-survey-v1</code>
+                                        </td>
+                                        <td>tabularis.dev</td>
+                                        <td>Remembers that you completed or dismissed the user survey</td>
                                         <td>Persistent (localStorage)</td>
                                     </tr>
                                     <tr>
@@ -168,13 +184,14 @@ export default function CookiePolicyPage() {
                             <h3>Marketing</h3>
                         </div>
                         <p>
-                            These cookies are set by third-party services used on this website. The{' '}
-                            <Link href="/sponsors">sponsors</Link> page uses{' '}
+                            No marketing cookies are currently set, whatever you choose in the cookie banner. The
+                            newsletter, survey and <Link href="/sponsors">sponsors</Link> contact forms are sent to our
+                            own form proxy, which forwards your submission server-side to{' '}
                             <a href="https://www.emailchef.com" target="_blank" rel="noopener noreferrer">
                                 EmailChef
-                            </a>{' '}
-                            to manage sponsorship contact form submissions. By submitting the form you agree to
-                            EmailChef&apos;s{' '}
+                            </a>
+                            , our mailing list provider. No EmailChef scripts are loaded in your browser. By submitting a
+                            form you agree to EmailChef&apos;s{' '}
                             <a
                                 href="https://www.emailchef.com/privacy-policy/"
                                 target="_blank"
@@ -182,44 +199,19 @@ export default function CookiePolicyPage() {
                             >
                                 Privacy Policy
                             </a>
-                            .
+                            . This category is kept so that you can decide in advance, should we ever add a service
+                            that needs it; this policy will be updated first.
                         </p>
-                        <div className={styles.tableWrapper}>
-                            <table className={styles.table}>
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Provider</th>
-                                        <th>Purpose</th>
-                                        <th>Expiry</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <code>ec_*</code>
-                                        </td>
-                                        <td>emailchef.com</td>
-                                        <td>
-                                            Tracks form submission state and prevents duplicate submissions on the
-                                            sponsors contact form
-                                        </td>
-                                        <td>Session</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <code>_ec_visitor</code>
-                                        </td>
-                                        <td>emailchef.com</td>
-                                        <td>
-                                            Identifies the visitor for EmailChef analytics and mailing list management
-                                        </td>
-                                        <td>1 year</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
+                </section>
+
+                <section className={styles.section}>
+                    <h2>Third-party content</h2>
+                    <p>
+                        Some pages, such as the blog, the roadmap and the <Link href="/contribute">contribute</Link>{' '}
+                        page, show GitHub profile pictures loaded from <code>avatars.githubusercontent.com</code>. These
+                        images set no cookies, but like any image request they reveal your IP address to GitHub.
+                    </p>
                 </section>
 
                 <section className={styles.section}>
