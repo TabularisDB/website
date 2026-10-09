@@ -8,6 +8,7 @@ import styles from './SurveyForm.module.scss';
 import {Button} from '@/components/ui/Button/Button';
 import {Honeypot} from '@/components/ui/Honeypot/Honeypot';
 import {Turnstile} from '@/components/ui/Turnstile/Turnstile';
+import {PrivacyConsent} from '@/components/ui/PrivacyConsent/PrivacyConsent';
 
 const ROLES = [
     'Backend / full-stack developer',
@@ -87,7 +88,9 @@ export function SurveyForm({source, onSubmitted}: SurveyFormProps) {
                 ))}
             </div>
 
-            <form className={styles.form} onSubmit={onSubmit}>
+            {/* autoComplete="off" stops Firefox restoring control state (e.g. the
+                Next button's `disabled`) on reload, which breaks hydration. */}
+            <form className={styles.form} autoComplete="off" onSubmit={onSubmit}>
                 <Honeypot />
 
                 {step === 0 && (
@@ -195,6 +198,7 @@ export function SurveyForm({source, onSubmitted}: SurveyFormProps) {
                                 className={styles.input}
                                 placeholder="you@example.com"
                                 required
+                                autoComplete="email"
                             />
                         </div>
 
@@ -210,9 +214,9 @@ export function SurveyForm({source, onSubmitted}: SurveyFormProps) {
                             </label>
                         )}
 
-                        <p className={styles.fineprint}>
-                            *We&apos;ll only use it to follow up on your feedback. No spam.
-                        </p>
+                        <PrivacyConsent id={`survey-privacy-consent-${source}`}>
+                            I agree to the processing of my answers and email, used only to follow up on my feedback
+                        </PrivacyConsent>
 
                         <Turnstile key={guard.widgetKey} action="survey" onToken={guard.onToken} />
 

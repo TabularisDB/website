@@ -31,10 +31,17 @@
 
 .form {
     display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 32rem;
+}
+
+.field {
+    display: flex;
     align-items: center;
     gap: 0.375rem;
     width: 100%;
-    max-width: 32rem;
 
     padding: 0.5rem;
     border: 0.1rem solid var(--color-border);
@@ -113,6 +120,10 @@
     @media (max-width: 480px) {
         display: flex;
     }
+}
+
+.consent {
+    padding-inline: 0.75rem;
 }
 
 .error {

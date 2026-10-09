@@ -57,6 +57,7 @@ export function Footer() {
                 </p>
                 <p className={styles.footerLinksBottom}>
                     <Link href="/subscribe">Subscribe</Link>
+                    <Link href="/privacy-policy">Privacy Policy</Link>
                     <Link href="/cookie-policy">Cookie Policy</Link>
                     <button
                         type="button"

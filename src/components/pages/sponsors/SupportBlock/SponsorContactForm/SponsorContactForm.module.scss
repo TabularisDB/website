@@ -3,6 +3,11 @@
     flex-direction: column;
     gap: 1rem;
     text-align: left;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
 
     label {
         display: block;
@@ -21,11 +26,6 @@
     @media (max-width: 480px) {
         grid-template-columns: 1fr;
     }
-}
-
-.field {
-    display: flex;
-    flex-direction: column;
 }
 
 .input,

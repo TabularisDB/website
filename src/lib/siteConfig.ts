@@ -41,6 +41,14 @@ export const NEWSLETTER_EMAILCHEF = {
 // answers would POST to non-existent fields and be silently dropped.
 export const SURVEY_CONFIGURED = !SURVEY_EMAILCHEF.fields.role.startsWith('REPLACE');
 
+// Data controller named in the privacy policy and in the form consent notices.
+export const DATA_CONTROLLER = {
+    name: 'DEBBAWEB di Debernardi Andrea',
+    address: 'Via Monte Tabor 56/6, 17015 Celle Ligure (SV), Italy',
+    vat: 'IT01719480095',
+    email: 'andrea@tabularis.dev',
+} as const;
+
 export const SITE_TITLE = 'Tabularis | Open-Source Desktop Client for Modern Databases';
 export const SITE_DESCRIPTION =
     'Open-source desktop database client with support for PostgreSQL, MySQL/MariaDB, and SQLite. Hackable with plugins, with notebooks, AI, and MCP built in.';

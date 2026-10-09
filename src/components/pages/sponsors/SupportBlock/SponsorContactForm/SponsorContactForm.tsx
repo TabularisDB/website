@@ -4,6 +4,7 @@ import styles from './SponsorContactForm.module.scss';
 import {Button} from '@/components/ui/Button/Button';
 import {Honeypot} from '@/components/ui/Honeypot/Honeypot';
 import {Turnstile} from '@/components/ui/Turnstile/Turnstile';
+import {PrivacyConsent} from '@/components/ui/PrivacyConsent/PrivacyConsent';
 import {useProtectedForm} from '@/lib/forms';
 import {SendIcon} from 'lucide-react';
 
@@ -106,6 +107,10 @@ export function SponsorContactForm() {
                     className={styles.textarea}
                 />
             </div>
+
+            <PrivacyConsent id="sponsor-privacy-consent">
+                I agree to the processing of my personal data to handle my sponsorship enquiry
+            </PrivacyConsent>
 
             <Turnstile key={guard.widgetKey} action="sponsor" onToken={guard.onToken} />
 

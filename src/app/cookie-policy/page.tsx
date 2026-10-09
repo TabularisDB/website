@@ -190,16 +190,8 @@ export default function CookiePolicyPage() {
                             <a href="https://www.emailchef.com" target="_blank" rel="noopener noreferrer">
                                 EmailChef
                             </a>
-                            , our mailing list provider. No EmailChef scripts are loaded in your browser. By submitting a
-                            form you agree to EmailChef&apos;s{' '}
-                            <a
-                                href="https://www.emailchef.com/privacy-policy/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Privacy Policy
-                            </a>
-                            . This category is kept so that you can decide in advance, should we ever add a service
+                            , our mailing list provider. No EmailChef scripts are loaded in your browser. How form data is
+                            handled is described in our <Link href="/privacy-policy">Privacy Policy</Link>. This category is kept so that you can decide in advance, should we ever add a service
                             that needs it; this policy will be updated first.
                         </p>
                     </div>
