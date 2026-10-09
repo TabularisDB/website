@@ -91,6 +91,16 @@ export function isEntrant(login: string): boolean {
     return ENTRANTS.has(login.toLowerCase());
 }
 
+/**
+ * GitHub usernames of the org's members. The fetched `team` flag comes from the
+ * search API's author association, which reads MEMBER only for public members
+ * or with a token that sees the org, so the build cannot rely on it alone.
+ * Case does not matter.
+ */
+export const TEAM_MEMBERS: string[] = ['debba', 'NewtTheWolf', 'wajrock'];
+
+const TEAM = new Set(TEAM_MEMBERS.map((login) => login.toLowerCase()));
+
 export interface LeaderboardRow {
     login: string;
     avatarUrl: string;
@@ -129,7 +139,9 @@ export function buildLeaderboard(from: Date, to: Date, {includeTeam, entrantsOnl
     for (const c of [...CONTRIBUTIONS].reverse()) {
         if (!inRange(c, from, to)) continue;
         const profile = CONTRIBUTORS[c.author];
-        if (!profile || (profile.team && !includeTeam)) continue;
+        if (!profile) continue;
+        const team = profile.team || TEAM.has(c.author.toLowerCase());
+        if (team && !includeTeam) continue;
         const entrant = isEntrant(c.author);
         if (entrantsOnly && !entrant) continue;
 
@@ -138,7 +150,7 @@ export function buildLeaderboard(from: Date, to: Date, {includeTeam, entrantsOnl
             row = {
                 login: c.author,
                 avatarUrl: profile.avatarUrl,
-                team: profile.team,
+                team,
                 entrant,
                 firstTime: false,
                 score: 0,
