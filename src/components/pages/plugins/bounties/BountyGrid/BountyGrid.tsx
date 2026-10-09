@@ -15,6 +15,7 @@ import {BOUNTY_DIFFICULTY, BOUNTY_STATUS, getActiveBounties, PluginBounty} from 
 import {STATUS_WEIGHT} from '@/components/pages/plugins/Plugin.data';
 import {XIcon} from 'lucide-react';
 import {BountyCard} from '@/components/pages/plugins/bounties/BountyCard/BountyCard';
+import {EmptyState} from '@/components/ui/EmptyState/EmptyState';
 
 function matchesStatus(bounty: PluginBounty, filter: StatusFilter) {
     if (filter === 'all') return true;
@@ -116,10 +117,9 @@ export function BountyGrid() {
                     ))}
                 </div>
             ) : (
-                <div className={styles.empty}>
-                    <span>No matching target</span>
-                    <p>Try clearing one filter or start a new request in GitHub Discussions.</p>
-                </div>
+                <EmptyState title="No matching target">
+                    Try clearing one filter or start a new request in GitHub Discussions.
+                </EmptyState>
             )}
         </main>
     );

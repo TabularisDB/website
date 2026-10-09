@@ -15,6 +15,14 @@ export const LEADERBOARD_TIME_ZONE = 'Europe/Rome';
 
 export {GIVEAWAY};
 
+/** A date range as two "YYYY-MM-DDTHH:mm" wall times in LEADERBOARD_TIME_ZONE. */
+export interface LeaderboardRange {
+    from: string;
+    to: string;
+}
+
+export const GIVEAWAY_RANGE: LeaderboardRange = {from: GIVEAWAY.from, to: GIVEAWAY.to};
+
 /**
  * A PR opened up to this long before the range still counts when it is merged
  * inside the range: work started the day before should not miss out.
@@ -41,24 +49,39 @@ const UNREVIEWED_MERGE_POINTS = 4;
  * Indicative points per contribution, shown on the page. Maintainers pick the
  * winners on usefulness, quality and impact; the score only orders the board.
  */
-export const SCORE_RULES: Array<{label: string; points: number; note?: string}> = [
+export interface ScoreRule {
+    points: number;
+    title: string;
+    description: string;
+}
+
+export const SCORE_RULES: ScoreRule[] = [
     {
-        label: 'Merged pull request',
         points: MERGE_POINTS,
-        note: `Merged or approved by someone else. ${MERGE_POINTS / 2} from the ${FULL_SCORE_MERGES + 1}th merged PR on`,
+        title: 'Merged pull request',
+        description: `Merged by a maintainer, or by you after someone else approved it. From your ${FULL_SCORE_MERGES + 1}th merged pull request on, each one is worth ${MERGE_POINTS / 2}.`,
     },
     {
-        label: 'Pull request merged by its own author without approval',
         points: UNREVIEWED_MERGE_POINTS,
-        note: `${UNREVIEWED_MERGE_POINTS / 2} from the ${FULL_SCORE_MERGES + 1}th merged PR on`,
+        title: 'Self-merged pull request',
+        description: `A pull request you merged yourself without anyone else's approval. ${UNREVIEWED_MERGE_POINTS / 2} from your ${FULL_SCORE_MERGES + 1}th merged pull request on.`,
     },
-    {label: 'Issue resolved by someone else', points: 3},
-    {label: 'Open issue triaged by a maintainer', points: 2, note: 'Not when the author maintains the repo'},
-    {label: 'Open or draft pull request', points: 0, note: 'Pending until it is merged'},
-    {label: 'Open issue not triaged yet', points: 0},
-    {label: 'Issue closed by its own author', points: 0, note: 'Also through their own PR: the PR scores'},
-    {label: 'Pull request closed without merging', points: 0},
-    {label: 'Issue not planned, duplicate or invalid', points: 0},
+    {
+        points: 3,
+        title: 'Resolved issue',
+        description: 'An issue you opened that someone else closes as completed.',
+    },
+    {
+        points: 2,
+        title: 'Triaged issue',
+        description: 'An open issue a maintainer has labeled. Not when you maintain the repo yourself.',
+    },
+    {
+        points: 0,
+        title: 'Everything else',
+        description:
+            'Pending and draft pull requests, untriaged issues, issues you close yourself (even through your own pull request), pull requests closed without merging, and issues marked as not planned.',
+    },
 ];
 
 /** Points of one contribution; `mergeIndex` is the 0-based rank of a merged PR among the author's merges. */
@@ -86,6 +109,11 @@ export function contributionKey(c: Contribution): string {
 }
 
 const ENTRANTS = new Set(GIVEAWAY_ENTRANTS.map((login) => login.toLowerCase()));
+
+/** GitHub avatar URL at twice the displayed size, for sharp rendering on high-density screens. */
+export function avatarUrl(url: string, size: number): string {
+    return `${url}${url.includes('?') ? '&' : '?'}s=${size * 2}`;
+}
 
 export function isEntrant(login: string): boolean {
     return ENTRANTS.has(login.toLowerCase());
@@ -197,7 +225,7 @@ export function buildLeaderboard(from: Date, to: Date, {includeTeam, entrantsOnl
 
 // ---------------------------------------------------------------------------
 // Dates. Range values are "YYYY-MM-DDTHH:mm" wall times in LEADERBOARD_TIME_ZONE,
-// which is what <input type="datetime-local"> reads and writes.
+// which is what the leaderboard date fields read and write.
 
 const PARTS_FORMAT = new Intl.DateTimeFormat('en-US', {
     timeZone: LEADERBOARD_TIME_ZONE,

@@ -1,0 +1,107 @@
+.summary {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.statusRow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+}
+
+.range {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-primary);
+}
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.live {
+    color: var(--color-accent-teal);
+}
+
+.upcoming {
+    color: var(--color-accent-amber);
+}
+
+.ended {
+    color: var(--color-text-secondary);
+}
+
+.pulse {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: currentColor;
+    animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border-top: 0.1rem solid var(--color-border);
+    border-left: 0.1rem solid var(--color-border);
+
+    @media (max-width: 767px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.stat {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.25rem;
+    padding: 1.25rem 1.5rem;
+    border-right: 0.1rem solid var(--color-border);
+    border-bottom: 0.1rem solid var(--color-border);
+
+    @media (max-width: 767px) {
+        padding: 0.85rem 1rem;
+
+        // Five tiles in two columns: the last one takes the full row.
+        &:last-child {
+            grid-column: 1 / -1;
+        }
+    }
+}
+
+.statLabel {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+
+    @media (max-width: 767px) {
+        font-size: 0.7rem;
+    }
+}
+
+.statValue {
+    font-size: 2rem;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text-primary);
+
+    @media (max-width: 767px) {
+        font-size: 1.35rem;
+    }
+}

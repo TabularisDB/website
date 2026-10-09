@@ -15,6 +15,8 @@ import {useEffect, useState} from 'react';
 import {FilterSelect, type FilterOption, type FilterOptionGroup} from './FilterSelect/FilterSelect';
 import styles from './IssueBoard.module.scss';
 import {IssueCard} from './IssueCard/IssueCard';
+import {EmptyState} from '@/components/ui/EmptyState/EmptyState';
+import {CheckboxField} from '@/components/ui/CheckboxField/CheckboxField';
 
 const PAGE_SIZE = 12;
 const ALL = 'all';
@@ -120,15 +122,9 @@ export function IssueBoard() {
                     searchPlaceholder="Search labels…"
                 />
 
-                <label className={styles.toggle}>
-                    <input
-                        type="checkbox"
-                        checked={unclaimedOnly}
-                        onChange={(event) => setUnclaimedOnly(event.target.checked)}
-                        aria-describedby="unclaimed-note"
-                    />
+                <CheckboxField checked={unclaimedOnly} onChange={setUnclaimedOnly} aria-describedby="unclaimed-note">
                     Unclaimed only*
-                </label>
+                </CheckboxField>
             </div>
 
             <p id="unclaimed-note" className={styles.note}>
@@ -173,10 +169,9 @@ export function IssueBoard() {
                     ))}
                 </div>
             ) : (
-                <div className={styles.empty}>
-                    <span>No matching issue</span>
-                    <p>Try clearing a filter, or browse every open issue on GitHub.</p>
-                </div>
+                <EmptyState title="No matching target">
+                    Try clearing one filter or start a new request in GitHub Discussions.
+                </EmptyState>
             )}
 
             {filtered.length > visible && (

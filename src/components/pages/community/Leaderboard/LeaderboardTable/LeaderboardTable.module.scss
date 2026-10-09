@@ -1,0 +1,207 @@
+.table {
+    display: flex;
+    flex-direction: column;
+    border: 0.1rem solid var(--color-border);
+    border-bottom: none;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr) repeat(5, 5.5rem);
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 0.1rem solid var(--color-border);
+    font-size: 0.9rem;
+    color: var(--color-text-primary);
+    transition: background-color 0.15s ease;
+
+    @media (max-width: 767px) {
+        grid-template-columns: 1.75rem minmax(0, 1fr) 3.25rem;
+        gap: 0.6rem;
+        padding: 0.8rem 0.6rem;
+    }
+}
+
+.head {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+}
+
+.bodyRow {
+    position: relative;
+
+    &:hover {
+        background-color: var(--color-surface);
+    }
+}
+
+.open {
+    background-color: var(--color-surface);
+}
+
+.countColumn {
+    @media (max-width: 767px) {
+        display: none;
+    }
+}
+
+.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.rank {
+    font-weight: 600;
+    color: var(--color-text-secondary);
+
+    // Every rank sits in the same centered box, so the medals and the rest line up.
+    @media (max-width: 767px) {
+        display: grid;
+        place-content: center;
+        width: 1.6rem;
+        height: 1.6rem;
+        border-radius: 50%;
+        font-size: 0.8rem;
+    }
+}
+
+// On mobile the podium is hidden: the top three ranks carry the medal colors instead.
+@media (max-width: 767px) {
+    .medal1,
+    .medal2,
+    .medal3 {
+        color: var(--color-bg);
+    }
+
+    .medal1 {
+        background: var(--medal-1);
+    }
+
+    .medal2 {
+        background: var(--medal-2);
+    }
+
+    .medal3 {
+        background: var(--medal-3);
+    }
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.6rem;
+    min-width: 0;
+}
+
+.expand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    // The login keeps its width; badges wrap to the next line instead of squeezing it.
+    flex-shrink: 0;
+    max-width: 100%;
+    min-width: 0;
+    color: inherit;
+    text-align: left;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        cursor: pointer;
+    }
+
+    &:focus-visible {
+        outline: none;
+
+        &::after {
+            outline: 2px solid var(--color-accent-teal);
+            outline-offset: -2px;
+        }
+    }
+}
+
+.avatar {
+    flex-shrink: 0;
+    border-radius: 50%;
+}
+
+.login {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// Desktop: badges sit next to the login. Mobile: counts, badges and the join button share a line under it.
+.meta {
+    display: contents;
+
+    @media (max-width: 767px) {
+        display: flex;
+        flex-basis: 100%;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.4rem 0.6rem;
+    }
+}
+
+.mobileCounts {
+    display: none;
+
+    @media (max-width: 767px) {
+        display: block;
+        font-size: 0.8rem;
+    }
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex-shrink: 0;
+    padding: 0.1rem 0.5rem;
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+
+    svg {
+        width: 0.7rem;
+        height: 0.7rem;
+    }
+}
+
+.badgeNew {
+    border-color: color-mix(in srgb, var(--color-accent-purple) 50%, transparent);
+    color: var(--color-accent-purple);
+}
+
+.badgeEntrant {
+    border-color: color-mix(in srgb, var(--color-accent-amber) 50%, transparent);
+    color: var(--color-accent-amber);
+}
+
+.score {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.35rem;
+    font-weight: 600;
+}
+
+.chevron {
+    width: 0.9rem;
+    height: 0.9rem;
+    color: var(--color-text-secondary);
+    transition: transform 0.15s ease;
+
+    .open & {
+        transform: rotate(180deg);
+    }
+}

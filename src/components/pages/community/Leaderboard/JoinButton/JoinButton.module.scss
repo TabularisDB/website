@@ -1,0 +1,35 @@
+.join {
+    // Lighter than --color-accent-blue so the label stays readable on the dark background.
+    --join-color: color-mix(in srgb, var(--color-accent-blue) 65%, white);
+
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    padding: 0.1rem 0.55rem;
+    border: 0.1rem solid color-mix(in srgb, var(--join-color) 55%, transparent);
+    border-radius: var(--radius-full);
+    background-color: color-mix(in srgb, var(--join-color) 10%, transparent);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--join-color);
+    white-space: nowrap;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+        background-color: color-mix(in srgb, var(--join-color) 22%, transparent);
+    }
+
+    svg {
+        width: 0.85rem;
+        height: 0.85rem;
+    }
+}
+
+.long {
+    @media (max-width: 767px) {
+        display: none;
+    }
+}
