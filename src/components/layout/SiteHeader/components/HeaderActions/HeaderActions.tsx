@@ -1,5 +1,6 @@
 'use client';
 
+import {ThemeToggle} from '@/components/layout/ThemeToggle/ThemeToggle';
 import {Button} from '@/components/ui/Button/Button';
 import {GitHubIcon} from '@/components/ui/Icons/SocialIcons';
 import {formatStars} from '@/lib/github';
@@ -42,6 +43,8 @@ export function HeaderActions({stars, mobileMenuOpen, onToggleMobileMenu}: Heade
                 <div className={clsx(styles.divider)} />
                 <kbd className={styles.searchKdb}>{isMac ? '⌘K' : 'Ctrl+K'}</kbd>
             </Button>
+
+            <ThemeToggle />
 
             <Button href="/download" className={styles.download}>
                 <DownloadIcon />

@@ -7,7 +7,7 @@
     overflow: hidden;
     border: 1px solid var(--color-border-hover);
     background: var(--color-surface);
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 20px 45px rgb(var(--rgb-shadow) / calc(0.4 * var(--shadow-scale)));
 }
 
 .video {

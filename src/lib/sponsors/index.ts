@@ -19,6 +19,8 @@ export interface Sponsor {
     logoImg?: string;
     logoImgCompact?: string;
     logoImgBg?: string;
+    // Compact logo is white on transparent: invert it on the light theme.
+    invertLogoOnLight?: boolean;
     logoChar?: string;
     logoBg?: string;
     modalDescription?: string;
@@ -86,6 +88,7 @@ export const SPONSORS: Sponsor[] = [
         ctaTextColor: '#ffffff',
         logoImg: '/img/logos/sponsors/openai.png',
         logoImgCompact: '/img/logos/sponsors/openai_compact.png',
+        invertLogoOnLight: true,
         logoImgBg: '#ffffff',
         kind: 'supporter',
         modalDescription:
@@ -150,6 +153,7 @@ export const SPONSORS: Sponsor[] = [
         ctaTextColor: '#ffffff',
         logoImg: '/img/logos/sponsors/vercel.svg',
         logoImgCompact: '/img/logos/sponsors/vercel_compact.svg',
+        invertLogoOnLight: true,
         modalDescription:
             'Vercel is the platform for building and deploying the modern web — Git-based deploys, a preview URL for every change, a global edge network, and a developer experience that turns shipping into a non-event. tabularis.dev itself is an open-source Next.js app deployed on Vercel. Tabularis was accepted into the Vercel Open Source Program for the Spring 2026 cohort.',
         features: [

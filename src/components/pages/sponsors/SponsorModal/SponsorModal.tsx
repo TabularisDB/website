@@ -1,4 +1,5 @@
 'use client';
+import clsx from 'clsx';
 import Image from 'next/image';
 import {ArrowRight, X} from 'lucide-react';
 import type {Sponsor} from '@/lib/sponsors';
@@ -31,7 +32,7 @@ export function SponsorModal({sponsor, onClose}: SponsorModalProps) {
                                 width={40}
                                 height={40}
                                 loading="eager"
-                                className={styles.headerLogo}
+                                className={clsx(styles.headerLogo, sponsor.invertLogoOnLight && 'theme-invert-on-light')}
                             />
                         )}
                         <h2 className={styles.headerTitle}>{sponsor.name}</h2>

@@ -11,7 +11,7 @@
     text-decoration: none;
 
     &:hover .cardCover {
-        border-color: rgb(53 208 192 / 50%);
+        border-color: color-mix(in srgb, var(--color-accent-teal) 50%, transparent);
     }
 }
 
@@ -101,7 +101,7 @@
 .meta {
     margin-top: 0.25rem;
     font-size: 0.9rem;
-    color: #4f8dea;
+    color: var(--color-link-blue);
 }
 
 .catalogue {

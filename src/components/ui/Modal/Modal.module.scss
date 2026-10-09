@@ -6,7 +6,7 @@
     align-items: flex-start;
     justify-content: center;
     padding-top: 10vh;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgb(var(--rgb-backdrop) / calc(0.8 * var(--backdrop-scale)));
     opacity: 0;
     visibility: hidden;
     transition:
@@ -28,7 +28,7 @@
     background: var(--color-surface);
     border: 0.1rem solid var(--color-border);
     border-radius: var(--radius-md);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 60px rgb(var(--rgb-shadow) / calc(0.5 * var(--shadow-scale)));
 }
 
 .header {

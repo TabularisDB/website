@@ -30,7 +30,7 @@
     th {
         font-weight: 600;
         color: var(--color-text-primary);
-        background-color: rgba(255, 255, 255, 0.02);
+        background-color: rgb(var(--rgb-tint) / 0.02);
     }
 
     td {
@@ -91,7 +91,7 @@
 }
 
 .iconYes {
-    color: #14b8a6;
+    color: var(--color-check);
     flex-shrink: 0;
 }
 

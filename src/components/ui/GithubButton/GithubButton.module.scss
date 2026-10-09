@@ -14,7 +14,7 @@
 }
 
 .stars {
-    color: #fde047;
+    color: var(--color-star);
     display: flex;
     align-items: center;
     gap: 0.25rem;

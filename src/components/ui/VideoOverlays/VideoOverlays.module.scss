@@ -11,7 +11,7 @@
 .loaderIcon {
     width: 2rem;
     height: 2rem;
-    color: var(--color-text-muted, #fff);
+    color: #fff;
     animation: spin 1s linear infinite;
 }
 
@@ -35,7 +35,7 @@
 .errorIcon {
     width: 1.75rem;
     height: 1.75rem;
-    color: var(--color-danger, #e5484d);
+    color: var(--color-danger);
 }
 
 .errorText {
@@ -53,7 +53,7 @@
     border-radius: 999px;
     border: 1px solid var(--color-border);
     background: var(--color-surface);
-    color: var(--color-text);
+    color: var(--color-text-primary);
     font-size: 0.8125rem;
     cursor: pointer;
     transition: border-color 0.2s ease;

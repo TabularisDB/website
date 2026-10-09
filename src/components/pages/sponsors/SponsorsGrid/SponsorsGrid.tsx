@@ -1,4 +1,5 @@
 'use client';
+import clsx from 'clsx';
 import Image from 'next/image';
 import {useState} from 'react';
 import {SPONSORS} from '@/lib/sponsors';
@@ -20,7 +21,7 @@ export function SponsorsGrid() {
                                 alt={sponsor.name}
                                 width={48}
                                 height={48}
-                                className={styles.cardLogo}
+                                className={clsx(styles.cardLogo, sponsor.invertLogoOnLight && 'theme-invert-on-light')}
                             />
                         )}
 

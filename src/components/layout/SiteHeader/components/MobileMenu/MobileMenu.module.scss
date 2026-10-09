@@ -2,7 +2,7 @@
     position: fixed;
     inset: 0;
     top: var(--header-height);
-    background: rgba(0, 0, 0, 0.5);
+    background: rgb(var(--rgb-backdrop) / calc(0.5 * var(--backdrop-scale)));
     z-index: var(--z-menu);
     opacity: 0;
     pointer-events: none;

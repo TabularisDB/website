@@ -20,7 +20,7 @@
     aspect-ratio: 1200 / 630;
     overflow: hidden;
     border-radius: 0.75rem;
-    box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.6);
+    box-shadow: 0 1.5rem 4rem rgb(var(--rgb-shadow) / calc(0.6 * var(--shadow-scale)));
 }
 
 .cover {

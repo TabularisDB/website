@@ -6,7 +6,7 @@
     align-items: center;
     justify-content: center;
     padding: 1.5rem;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgb(var(--rgb-backdrop) / calc(0.6 * var(--backdrop-scale)));
     backdrop-filter: blur(2px);
 }
 
@@ -118,9 +118,9 @@
 
 .highlight {
     padding: 1rem;
-    border: 1px solid rgba(53, 208, 192, 0.3);
+    border: 1px solid color-mix(in srgb, var(--color-accent-teal) 30%, transparent);
     border-radius: var(--radius-sm);
-    background: rgba(53, 208, 192, 0.06);
+    background: color-mix(in srgb, var(--color-accent-teal) 6%, transparent);
 }
 
 .highlightTitle {

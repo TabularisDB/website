@@ -60,7 +60,7 @@
     width: 2.25rem;
     height: 2.25rem;
     border-radius: var(--radius-md);
-    background: rgba(53, 208, 192, 0.1);
+    background: color-mix(in srgb, var(--color-accent-teal) 10%, transparent);
     color: var(--color-accent-teal);
     flex-shrink: 0;
 

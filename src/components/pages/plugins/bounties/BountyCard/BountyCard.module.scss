@@ -129,6 +129,19 @@
     &[data-difficulty='Extreme'] {
         color: #e8654f;
     }
+
+    // Darker shades so the labels stay readable on the light theme.
+    :global(:root[data-theme='light']) & {
+        &[data-difficulty='Medium'] {
+            color: #64748b;
+        }
+        &[data-difficulty='High'] {
+            color: #b45309;
+        }
+        &[data-difficulty='Extreme'] {
+            color: #c2410c;
+        }
+    }
 }
 
 .tagline {
@@ -206,12 +219,12 @@
     &[data-state='ready'] {
         background: rgba(34, 197, 94, 0.15);
         border-color: rgba(34, 197, 94, 0.4);
-        color: #22c55e;
+        color: var(--color-success);
     }
     &[data-state='needed'] {
         background: transparent;
-        border: 1px dashed rgba(248, 113, 113, 0.5);
-        color: #f87171;
+        border: 1px dashed color-mix(in srgb, var(--color-danger) 50%, transparent);
+        color: var(--color-danger);
         opacity: 0.85;
     }
     &[data-state='stretch'] {

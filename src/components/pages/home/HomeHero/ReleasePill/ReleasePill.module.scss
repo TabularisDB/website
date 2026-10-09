@@ -1,5 +1,5 @@
 .pill {
-    border: 0.12rem solid rgba(255, 255, 255, 0.12);
+    border: 0.12rem solid rgb(var(--rgb-tint) / 0.12);
     border-radius: var(--radius-full);
     display: flex;
     align-items: center;

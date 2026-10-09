@@ -13,7 +13,7 @@
     top: 30%;
     border-radius: 50%;
     filter: blur(130px);
-    mix-blend-mode: screen;
+    mix-blend-mode: var(--aurora-blend);
     transform: translateY(-50%);
 }
 
@@ -21,7 +21,7 @@
     left: 10%;
     width: 48vw;
     height: 48vw;
-    opacity: 0.26;
+    opacity: calc(0.26 * var(--aurora-scale));
     background: radial-gradient(circle, rgba(139, 92, 246, 0.6), transparent 70%);
     animation: driftOne 22s ease-in-out infinite;
 }
@@ -30,7 +30,7 @@
     right: 10%;
     width: 68vw;
     height: 68vw;
-    opacity: 0.24;
+    opacity: calc(0.24 * var(--aurora-scale));
     background: radial-gradient(circle, rgba(16, 185, 129, 0.55), transparent 70%);
     animation: driftTwo 26s ease-in-out infinite;
 }

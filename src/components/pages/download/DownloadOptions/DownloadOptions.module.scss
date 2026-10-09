@@ -37,7 +37,7 @@
     padding: 0.75rem 1rem;
     border: 0.1rem solid var(--color-border);
     border-radius: var(--radius-sm);
-    background: rgb(255 255 255 / 2%);
+    background: rgb(var(--rgb-tint) / 2%);
 }
 
 .commandText {
@@ -71,7 +71,7 @@
     gap: 0.5rem;
     padding: 0.75rem;
     border-radius: var(--radius-sm);
-    background-color: rgb(245 166 35 / 8%);
+    background-color: color-mix(in srgb, var(--color-accent-amber) 8%, transparent);
     font-size: 0.9rem;
     color: var(--color-text-secondary);
 
@@ -79,7 +79,7 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        color: rgb(245 166 35);
+        color: var(--color-accent-amber);
 
         @media (max-width: 500px) {
             flex-direction: column;
