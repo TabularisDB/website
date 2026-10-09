@@ -1,6 +1,7 @@
 'use client';
 
 import {CheckboxField} from '@/components/ui/CheckboxField/CheckboxField';
+import {CopyButton} from '@/components/ui/CopyButton/CopyButton';
 import {
     CONTRIBUTIONS_SINCE,
     formatShortDate,
@@ -10,7 +11,9 @@ import {
     toZonedInput,
     type LeaderboardRange,
 } from '@/lib/community/leaderboard';
+import {SITE_URL} from '@/lib/siteConfig';
 import clsx from 'clsx';
+import {LinkIcon} from 'lucide-react';
 import {DateTimeField} from '../DateTimeField/DateTimeField';
 import styles from './LeaderboardControls.module.scss';
 
@@ -49,6 +52,7 @@ export function LeaderboardControls({
     onIncludeTeamChange,
     entrantsOnly,
     onEntrantsOnlyChange,
+    shareQuery,
 }: LeaderboardControlsProps) {
     const from = parseRangeBound(range.from, 'from');
     const truncated = from !== null && from < new Date(CONTRIBUTIONS_SINCE);
@@ -79,6 +83,13 @@ export function LeaderboardControls({
                 <CheckboxField className={styles.checkbox} checked={entrantsOnly} onChange={onEntrantsOnlyChange}>
                     Giveaway entrants only
                 </CheckboxField>
+
+                <CopyButton
+                    className={styles.copy}
+                    text={`${SITE_URL}/contribute/leaderboard${shareQuery}`}
+                    icon={<LinkIcon />}
+                    label="Copy link"
+                />
             </div>
 
             <p className={styles.note}>

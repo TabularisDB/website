@@ -8,10 +8,11 @@ import styles from './CopyButton.module.scss';
 interface CopyButtonProps {
     text: string;
     icon: React.ReactNode;
+    label?: string;
     className?: string;
 }
 
-export function CopyButton({text, icon, className}: CopyButtonProps) {
+export function CopyButton({text, icon, label, className}: CopyButtonProps) {
     const [copied, setCopied] = useState(false);
 
     async function handleCopy() {
@@ -27,11 +28,12 @@ export function CopyButton({text, icon, className}: CopyButtonProps) {
     return (
         <button
             type="button"
-            className={clsx(styles.button, className)}
+            className={clsx(styles.button, label && styles.labeled, className)}
             onClick={() => void handleCopy()}
-            aria-label="Copy"
+            aria-label={label ? undefined : 'Copy'}
         >
             {copied ? <CheckIcon /> : icon}
+            {label && (copied ? 'Copied' : label)}
         </button>
     );
 }

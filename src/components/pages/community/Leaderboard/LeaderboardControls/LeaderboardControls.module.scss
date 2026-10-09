@@ -65,6 +65,25 @@
     }
 }
 
+.copy {
+    justify-content: center;
+    padding: 0.65rem 0.9rem;
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-primary);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: border-color 0.15s ease;
+
+    &:hover {
+        border-color: var(--color-border-hover);
+    }
+
+    svg {
+        color: var(--color-accent-teal);
+    }
+}
+
 .note {
     font-size: 0.85rem;
     font-style: italic;

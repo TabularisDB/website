@@ -127,7 +127,9 @@ export default function LeaderboardPage() {
                 </p>
             </header>
 
-            <Accordion items={GIVEAWAY_QUESTIONS} />
+            <section className={styles.faq}>
+                <Accordion items={GIVEAWAY_QUESTIONS} />
+            </section>
 
             <section className={styles.section}>
                 <header className="section-header">
