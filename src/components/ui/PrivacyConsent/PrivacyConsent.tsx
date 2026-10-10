@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type {ReactNode} from 'react';
 import styles from './PrivacyConsent.module.scss';
 
+// The field name is not `field[...]`, so the forms Worker never forwards it.
 interface PrivacyConsentProps {
     id: string;
     children?: ReactNode;

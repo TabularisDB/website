@@ -61,8 +61,6 @@
         margin-top: 1rem;
     }
 
-    // :is() lifts specificity above the heading rules, so a page can start
-    // with a heading without inheriting its top margin.
     > :first-child:is(h2, h3, *) {
         margin-top: 0;
     }
