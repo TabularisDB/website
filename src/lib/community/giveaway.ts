@@ -10,4 +10,4 @@ export const GIVEAWAY = {
  * announcement on Discord. Maintainers add them by hand; the leaderboard marks
  * them as entrants and can show only them. Case does not matter.
  */
-export const GIVEAWAY_ENTRANTS: string[] = ['tonypartridge', 'Detoy', 'tosinxt', 'vivekyarra'];
+export const GIVEAWAY_ENTRANTS: string[] = ['tonypartridge', 'Detoy', 'tosinxt', 'vivekyarra', 'DhruvShah-Dev'];
