@@ -33,11 +33,23 @@ export function Footer() {
                     {FOOTER_COLUMNS.map((col) => (
                         <div key={col.title} className={styles.footerColumn}>
                             <span className={styles.columnTitle}>{col.title}</span>
-                            {col.links.map((link) => (
-                                <Link key={link.label} href={link.href} className={styles.footerLink}>
-                                    {link.label}
-                                </Link>
-                            ))}
+                            {col.links.map((link) =>
+                                link.external ? (
+                                    <a
+                                        key={link.label}
+                                        href={link.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={styles.footerLink}
+                                    >
+                                        {link.label}
+                                    </a>
+                                ) : (
+                                    <Link key={link.label} href={link.href} className={styles.footerLink}>
+                                        {link.label}
+                                    </Link>
+                                ),
+                            )}
                         </div>
                     ))}
                 </div>
@@ -56,7 +68,6 @@ export function Footer() {
                     .
                 </p>
                 <p className={styles.footerLinksBottom}>
-                    <Link href="/subscribe">Subscribe</Link>
                     <Link href="/privacy-policy">Privacy Policy</Link>
                     <Link href="/cookie-policy">Cookie Policy</Link>
                     <button
@@ -64,7 +75,7 @@ export function Footer() {
                         className={styles.manageCookiesButton}
                         onClick={() => window.dispatchEvent(new Event('tabularis:manage-cookies'))}
                     >
-                        Cookies Preferences
+                        Cookie Preferences
                     </button>
                 </p>
             </div>

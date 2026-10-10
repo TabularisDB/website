@@ -33,7 +33,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: var(--color-accent-purple);
+    color: var(--color-text-secondary);
 }
 
 .cardTitle {
@@ -48,6 +48,7 @@
     line-height: 1.5;
     color: var(--color-text-secondary);
     display: -webkit-box;
+    line-clamp: 4;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
