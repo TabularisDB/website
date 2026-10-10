@@ -2,8 +2,6 @@ import Link from 'next/link';
 import type {ReactNode} from 'react';
 import styles from './PrivacyConsent.module.scss';
 
-// Required consent checkbox shown on every form that sends personal data. The
-// field name is not `field[...]`, so the forms Worker never forwards it.
 interface PrivacyConsentProps {
     id: string;
     children?: ReactNode;
@@ -21,7 +19,10 @@ export function PrivacyConsent({id, children, className}: PrivacyConsentProps) {
                 <Link href="/privacy-policy" target="_blank">
                     Privacy Policy
                 </Link>
-                . <span className={styles.required} aria-hidden="true">*</span>
+                .{' '}
+                <span className={styles.required} aria-hidden="true">
+                    *
+                </span>
             </span>
         </label>
     );

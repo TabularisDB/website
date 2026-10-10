@@ -119,9 +119,15 @@ export function getClosingCtaContent(pathname: string): ClosingCtaContent | null
     return best ? best.content : null;
 }
 
+export interface FooterLink {
+    label: string;
+    href: string;
+    external?: boolean;
+}
+
 export interface FooterColumn {
     title: string;
-    links: {label: string; href: string}[];
+    links: FooterLink[];
 }
 
 export const FOOTER_COLUMNS: FooterColumn[] = [
@@ -134,16 +140,18 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
             {label: 'MCP Server', href: '/wiki/mcp-server'},
             {label: 'Plugins', href: '/plugins'},
             {label: 'Bounty Board', href: '/plugins/bounties'},
+            {label: 'Roadmap', href: '/roadmap'},
         ],
     },
     {
         title: 'Resources',
         links: [
+            {label: 'Documentation', href: '/wiki'},
             {label: 'Blog', href: '/blog'},
             {label: 'Changelog', href: '/changelog'},
+            {label: 'Newsletter', href: '/subscribe'},
             {label: 'Product Demos', href: '/demos'},
             {label: 'Compare', href: '/compare'},
-            {label: 'Roadmap', href: '/roadmap'},
             {label: 'Brand Assets', href: '/brand'},
         ],
     },
@@ -151,9 +159,10 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
         title: 'Community',
         links: [
             {label: 'Contribute', href: '/contribute'},
-            {label: 'GitHub', href: SOCIAL_URLS.github},
-            {label: 'Discord', href: SOCIAL_URLS.discord},
+            {label: 'Share Feedback', href: '/survey'},
             {label: 'Sponsors & supporters', href: '/sponsors'},
+            {label: 'Star on GitHub', href: SOCIAL_URLS.github, external: true},
+            {label: 'Join the Discord', href: SOCIAL_URLS.discord, external: true},
         ],
     },
 ];

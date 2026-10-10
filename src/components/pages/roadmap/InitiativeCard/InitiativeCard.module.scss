@@ -8,15 +8,15 @@
     padding: 2.5rem 2rem;
 
     &[data-status='in-progress'] .cardScope {
-        color: #fdba74;
+        color: #fdba74 !important;
     }
 
     &[data-status='planned'] .cardScope {
-        color: #c084fc;
+        color: #c084fc !important;
     }
 
     &[data-status='done'] .cardScope {
-        color: #60a5fa;
+        color: #60a5fa !important;
     }
 }
 
@@ -33,7 +33,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: var(--color-accent-purple);
+    color: var(--color-text-secondary);
 }
 
 .cardTitle {
