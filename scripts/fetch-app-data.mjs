@@ -94,20 +94,25 @@ function toLegacyPlugin(detail, kind) {
     };
 }
 
-// Every plugin of every registry kind (drivers, themes, …). The kind comes from
-// the listing it was found in.
-async function fetchTabulariumPlugins() {
+// Every plugin of every registry kind (drivers, themes, …), as the listing
+// returns it, plus the kind of the listing it was found in.
+async function listTabulariumPlugins() {
     const {kinds} = await fetchPlainJson(`${TABULARIUM}/api/kinds`);
     const listed = [];
     for (const {key} of kinds) {
         const ofKind = [];
         for (let page = 1; ; page += 1) {
             const res = await fetchPlainJson(`${TABULARIUM}/api/plugins?kind=${encodeURIComponent(key)}&page=${page}`);
-            ofKind.push(...res.plugins.map((plugin) => ({id: plugin.id, kind: key})));
+            ofKind.push(...res.plugins.map((plugin) => ({...plugin, kind: key})));
             if (ofKind.length >= res.total || res.plugins.length === 0) break;
         }
         listed.push(...ofKind);
     }
+    return listed;
+}
+
+async function fetchTabulariumPlugins() {
+    const listed = await listTabulariumPlugins();
     const details = await Promise.all(
         listed.map(async ({id, kind}) => toLegacyPlugin(await fetchPlainJson(`${TABULARIUM}/api/plugins/${id}`), kind)),
     );
@@ -372,7 +377,11 @@ async function knownClosers() {
             if (!match) continue;
             const c = JSON.parse(match[1]);
             if (c.closedBy)
-                closers.set(`${c.type}:${c.repo}#${c.number}`, {closedBy: c.closedBy, approvedBy: c.approvedBy});
+                closers.set(`${c.type}:${c.repo}#${c.number}`, {
+                    closedBy: c.closedBy,
+                    approvedBy: c.approvedBy,
+                    closingPrAuthor: c.closingPrAuthor,
+                });
         }
         return closers;
     } catch {
@@ -381,12 +390,34 @@ async function knownClosers() {
 }
 
 // Closing or merging your own work must not climb the board: an issue its
-// author closed is withdrawn and worth nothing, a PR its author merged is
-// self-merged and scores less, unless someone else approved it before the
-// merge. The search API returns neither the closer, the merger nor the reviews,
-// so each new closed issue and merged PR costs one request, and each new
-// self-merged PR one more; a failed lookup (rate limit) leaves the contribution
-// as is until the next build.
+// author closed, by hand or through their own merged PR, is withdrawn and worth
+// nothing; a PR its author merged is self-merged and scores less, unless
+// someone else approved it before the merge. The search API returns neither the
+// closer, the merger nor the reviews, so each new closed issue and merged PR
+// costs one request, each new closed issue one more (its timeline) and each new
+// self-merged PR one more (its reviews); a failed lookup (rate limit) leaves
+// the contribution as is until the next build.
+// The author of the merged PR that closed an issue, null when it was closed
+// another way. When a PR closes an issue, the issue's closed event lands within
+// seconds of the merge and carries the merger as its actor, so the closing PR is
+// the merged cross-referenced PR whose merge matches the close. The REST
+// timeline does not name the closer itself (GraphQL does, but needs a token).
+const CLOSE_MATCH_MS = 2 * 60 * 1000;
+
+async function findClosingPrAuthor(repo, number) {
+    const events = await fetchJson(
+        `https://api.github.com/repos/${ORG}/${repo}/issues/${number}/timeline?per_page=100`,
+    );
+    const closed = events.findLast((e) => e.event === 'closed');
+    if (!closed) return null;
+    const closedAt = new Date(closed.created_at).getTime();
+    const pr = events
+        .filter((e) => e.event === 'cross-referenced' && e.source?.issue?.pull_request?.merged_at)
+        .map((e) => e.source.issue)
+        .find((source) => Math.abs(new Date(source.pull_request.merged_at).getTime() - closedAt) <= CLOSE_MATCH_MS);
+    return pr?.user?.login ?? null;
+}
+
 async function resolveClosers(contributions) {
     const known = await knownClosers();
     // Team members too: they are hidden by default, but the board can include them.
@@ -398,7 +429,7 @@ async function resolveClosers(contributions) {
     for (let i = 0; i < pending.length; i += 8) {
         await Promise.all(
             pending.slice(i, i + 8).map(async (c) => {
-                let {closedBy, approvedBy} = known.get(`${c.type}:${c.repo}#${c.number}`) ?? {};
+                let {closedBy, approvedBy, closingPrAuthor} = known.get(`${c.type}:${c.repo}#${c.number}`) ?? {};
                 if (!closedBy) {
                     try {
                         looked += 1;
@@ -415,6 +446,19 @@ async function resolveClosers(contributions) {
                 }
                 if (!closedBy) return;
                 c.closedBy = closedBy;
+                if (c.type === 'issue' && closedBy !== c.author) {
+                    if (closingPrAuthor === undefined) {
+                        try {
+                            looked += 1;
+                            closingPrAuthor = await findClosingPrAuthor(c.repo, c.number);
+                        } catch {
+                            failed += 1;
+                        }
+                    }
+                    if (closingPrAuthor !== undefined) c.closingPrAuthor = closingPrAuthor;
+                    if (closingPrAuthor === c.author) c.state = 'withdrawn';
+                    return;
+                }
                 if (closedBy !== c.author) return;
                 c.state = c.type === 'pr' ? 'self-merged' : 'withdrawn';
                 if (c.type !== 'pr') return;
@@ -444,6 +488,38 @@ async function resolveClosers(contributions) {
     console.log(
         `resolved closers and approvals: ${pending.length} closed issues and merged PRs, ${looked} looked up, ${failed} failed`,
     );
+}
+
+// Plugins first published to the Tabularium registry since `from`, credited to
+// the owner of their GitHub repo. Plugins in the org's own repos are left out:
+// the PRs behind them already count. So are repos outside GitHub, whose owner
+// has no GitHub login to match. The registry lists approved plugins only.
+async function buildPluginContributions(from, contributors) {
+    const contributions = [];
+    for (const plugin of await listTabulariumPlugins()) {
+        const owner = (plugin.repoUrl ?? '').match(/^https:\/\/github\.com\/([^/]+)\/[^/]+/i)?.[1];
+        if (!owner || owner.toLowerCase() === ORG.toLowerCase() || plugin.createdAt < from.getTime()) continue;
+        // The repo URL may not match the login's case: the users API has the canonical login and the avatar.
+        const known = Object.keys(contributors).find((login) => login.toLowerCase() === owner.toLowerCase());
+        let login = known;
+        if (!login) {
+            const user = await fetchJson(`https://api.github.com/users/${owner}`);
+            login = user.login;
+            contributors[login] = {avatarUrl: user.avatar_url, team: false};
+        }
+        contributions.push({
+            type: 'plugin',
+            repo: plugin.id,
+            title: plugin.name,
+            author: login,
+            createdAt: new Date(plugin.createdAt).toISOString(),
+            state: 'published',
+            kind: plugin.kind,
+            url: `${TABULARIUM}/plugins/${plugin.id}`,
+            firstTime: false,
+        });
+    }
+    return contributions;
 }
 
 async function buildContributions() {
@@ -490,6 +566,14 @@ async function buildContributions() {
         }
     }
     await resolveClosers(contributions);
+    try {
+        const plugins = await buildPluginContributions(from, contributors);
+        contributions.push(...plugins);
+        console.log(`fetched ${TABULARIUM} plugin publications -> ${plugins.length} community plugins`);
+    } catch (err) {
+        // The PRs and issues still ship; the next build picks the plugins up again.
+        console.warn(`tabularium plugin publications unavailable, leaving them out: ${err}`);
+    }
     contributions.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
     return {since: from.toISOString(), contributors, contributions};
 }
@@ -624,7 +708,7 @@ ${contributions.map((c) => `    ${JSON.stringify(c)},`).join('\n')}
 ];
 `,
         );
-        console.log(`fetched ${ORG} contributions -> ${contributionsOut} (${contributions.length} PRs and issues)`);
+        console.log(`fetched ${ORG} contributions -> ${contributionsOut} (${contributions.length} PRs, issues and plugins)`);
     } catch (err) {
         // Same policy as the issue board: a stale leaderboard beats a failed deploy.
         console.warn(`contributions unavailable, keeping committed copy: ${err}`);

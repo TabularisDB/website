@@ -42,6 +42,8 @@ export function inRange(c: Contribution, from: Date, to: Date): boolean {
 export const FULL_SCORE_MERGES = 5;
 
 const MERGE_POINTS = 10;
+/** A whole package reviewed and approved by the registry: as much as a merged PR. */
+const PLUGIN_POINTS = 10;
 /** A PR its author merged with nobody else's approval: real work, but nobody vouched for it. */
 const UNREVIEWED_MERGE_POINTS = 4;
 
@@ -67,9 +69,15 @@ export const SCORE_RULES: ScoreRule[] = [
         description: `A pull request you merged yourself without anyone else's approval. ${UNREVIEWED_MERGE_POINTS / 2} from your ${FULL_SCORE_MERGES + 1}th merged pull request on.`,
     },
     {
+        points: PLUGIN_POINTS,
+        title: 'Published plugin',
+        description:
+            'A driver, theme or other plugin from your own GitHub repository, counted when the Tabularium registry first publishes it.',
+    },
+    {
         points: 3,
         title: 'Resolved issue',
-        description: 'An issue you opened that someone else closes as completed.',
+        description: "An issue you opened that someone else closes as completed, by hand or with their own pull request.",
     },
     {
         points: 2,
@@ -86,6 +94,7 @@ export const SCORE_RULES: ScoreRule[] = [
 
 /** Points of one contribution; `mergeIndex` is the 0-based rank of a merged PR among the author's merges. */
 function scoreContribution(c: Contribution, mergeIndex: number): number {
+    if (c.type === 'plugin') return PLUGIN_POINTS;
     if (c.type === 'pr') {
         const points =
             c.state === 'merged' || (c.state === 'self-merged' && c.approvedBy)
@@ -95,17 +104,19 @@ function scoreContribution(c: Contribution, mergeIndex: number): number {
                   : 0;
         return mergeIndex < FULL_SCORE_MERGES ? points : points / 2;
     }
-    if (c.state === 'closed') return 3;
+    // Until the closer is known, the author may have closed it themselves.
+    if (c.state === 'closed') return c.closedBy ? 3 : 0;
     if (c.state === 'open' && c.triaged && !c.maintainer) return 2;
     return 0;
 }
 
 export function contributionUrl(c: Contribution): string {
+    if (c.url) return c.url;
     return `https://github.com/${CONTRIBUTIONS_ORG}/${c.repo}/${c.type === 'pr' ? 'pull' : 'issues'}/${c.number}`;
 }
 
 export function contributionKey(c: Contribution): string {
-    return `${c.type}:${c.repo}#${c.number}`;
+    return c.type === 'plugin' ? `plugin:${c.repo}` : `${c.type}:${c.repo}#${c.number}`;
 }
 
 const ENTRANTS = new Set(GIVEAWAY_ENTRANTS.map((login) => login.toLowerCase()));
@@ -205,7 +216,7 @@ export function buildLeaderboard(from: Date, to: Date, {includeTeam, entrantsOnl
                 summary.merged += 1;
                 row.merged += 1;
             } else if (c.state === 'open' || c.state === 'draft') row.pendingPrs += 1;
-        } else {
+        } else if (c.type === 'issue') {
             row.issues += 1;
             summary.issues += 1;
         }

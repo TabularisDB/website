@@ -42,19 +42,27 @@ export interface ContributorProfile {
 }
 
 /**
- * A public PR or issue opened across the org. PR states: merged, self-merged
- * (merged by its own author), open, draft or closed (unmerged). Issue states:
- * open, closed, rejected (not planned, duplicate, invalid, …) or withdrawn
- * (closed by its own author, by hand or through their own PR).
+ * A public PR or issue opened across the org, or a plugin published to the
+ * Tabularium registry from the author's own GitHub repo. PR states: merged,
+ * self-merged (merged by its own author), open, draft or closed (unmerged).
+ * Issue states: open, closed, rejected (not planned, duplicate, invalid, …) or
+ * withdrawn (closed by its own author, by hand or through their own PR).
+ * Plugins are always published: the registry lists approved plugins only.
  */
 export interface Contribution {
-    type: 'pr' | 'issue';
+    type: 'pr' | 'issue' | 'plugin';
+    /** The repo name; the plugin id for plugins. */
     repo: string;
-    number: number;
+    /** PRs and issues only. */
+    number?: number;
     title: string;
     author: string;
     createdAt: string;
-    state: 'merged' | 'self-merged' | 'open' | 'draft' | 'closed' | 'rejected' | 'withdrawn';
+    state: 'merged' | 'self-merged' | 'open' | 'draft' | 'closed' | 'rejected' | 'withdrawn' | 'published';
+    /** Plugins only: the registry kind ("driver", "theme", …). */
+    kind?: string;
+    /** Plugins only: the plugin's registry page. */
+    url?: string;
     /** PRs only: when it was merged. */
     mergedAt?: string;
     /** Login of whoever closed the issue or merged the PR, when known. */
@@ -64,6 +72,12 @@ export interface Contribution {
      * when nobody did, absent until looked up.
      */
     approvedBy?: string | null;
+    /**
+     * Closed issues only: author of the merged PR that closed the issue, null
+     * when it was closed another way, absent until looked up. The author's own
+     * PR makes the issue withdrawn.
+     */
+    closingPrAuthor?: string | null;
     /** Issues only: a maintainer added a label beyond the issue form's own. */
     triaged?: boolean;
     /** Issues only: the author maintains the repo, so the triage label may be their own. */

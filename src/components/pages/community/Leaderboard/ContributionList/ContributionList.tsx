@@ -1,12 +1,13 @@
 import {contributionKey, contributionUrl, formatShortDate, type LeaderboardRow} from '@/lib/community/leaderboard';
 import type {Contribution} from '@/lib/community/types';
 import clsx from 'clsx';
-import {CircleDotIcon, GitMergeIcon, GitPullRequestIcon} from 'lucide-react';
+import {CircleDotIcon, GitMergeIcon, GitPullRequestIcon, PackageIcon} from 'lucide-react';
 import styles from './ContributionList.module.scss';
 
 const STATE_LABELS: Record<Contribution['type'], Partial<Record<Contribution['state'], string>>> = {
     pr: {merged: 'Merged', 'self-merged': 'Self-merged', open: 'Pending', draft: 'Draft', closed: 'Closed'},
     issue: {closed: 'Resolved', rejected: 'Not planned', withdrawn: 'Self-closed'},
+    plugin: {published: 'Published'},
 };
 
 function stateLabel(c: Contribution): string {
@@ -20,7 +21,7 @@ function stateLabel(c: Contribution): string {
 
 /** Same colors as the issue board: purple merged, teal open, amber resolved; struck through when it earns nothing. */
 function stateClass(c: Contribution): string | undefined {
-    if (c.type === 'pr' && c.state === 'merged') return styles.merged;
+    if ((c.type === 'pr' && c.state === 'merged') || c.type === 'plugin') return styles.merged;
     if (c.state === 'open') return styles.open;
     if (c.type === 'issue' && c.state === 'closed') return styles.resolved;
     if (c.state === 'closed' || c.state === 'rejected' || c.state === 'withdrawn') return styles.dropped;
@@ -28,6 +29,7 @@ function stateClass(c: Contribution): string | undefined {
 }
 
 function StateIcon({c}: {c: Contribution}) {
+    if (c.type === 'plugin') return <PackageIcon aria-hidden="true" />;
     if (c.type === 'issue') return <CircleDotIcon aria-hidden="true" />;
     return c.state === 'merged' || c.state === 'self-merged' ? (
         <GitMergeIcon aria-hidden="true" />
@@ -36,7 +38,7 @@ function StateIcon({c}: {c: Contribution}) {
     );
 }
 
-/** The pull requests and issues behind a row's score, shown when the row is expanded. */
+/** The pull requests, issues and plugins behind a row's score, shown when the row is expanded. */
 export function ContributionList({row}: {row: LeaderboardRow}) {
     return (
         <div className={styles.details}>
@@ -51,7 +53,8 @@ export function ContributionList({row}: {row: LeaderboardRow}) {
                             {c.title}
                         </a>
                         <span className={styles.meta}>
-                            {c.repo} #{c.number} · {formatShortDate(c.createdAt)}
+                            {c.type === 'plugin' ? `${c.kind} plugin` : `${c.repo} #${c.number}`} ·{' '}
+                            {formatShortDate(c.createdAt)}
                         </span>
                         <span className={styles.points}>+{row.points.get(contributionKey(c)) ?? 0}</span>
                     </li>
