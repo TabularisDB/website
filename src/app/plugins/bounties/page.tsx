@@ -1,11 +1,13 @@
 import {JsonLd} from '@/components/layout/JsonLd';
 import {BountyGrid} from '@/components/pages/plugins/bounties/BountyGrid/BountyGrid';
 import {BountyRequestCta} from '@/components/pages/plugins/bounties/BountyRequestCta/BountyRequestCta';
+import {RequestPluginButton} from '@/components/pages/plugins/bounties/RequestPluginButton/RequestPluginButton';
 import {BountySchema} from '@/components/pages/plugins/bounties/BountySchema/BountySchema';
 import {ShippedBounties} from '@/components/pages/plugins/bounties/ShippedBounties/ShippedBounties';
 import {Button} from '@/components/ui/Button/Button';
 import {DiscordIcon} from '@/components/ui/Icons/SocialIcons';
 import {getBountyStats} from '@/lib/plugins/bounties';
+import {getRequestKinds} from '@/lib/plugins/kinds';
 import {buildBreadcrumbJsonLd} from '@/lib/seo';
 import {SOCIAL_URLS} from '@/lib/social';
 import clsx from 'clsx';
@@ -37,6 +39,7 @@ export const metadata: Metadata = {
 
 export default function PluginBountyBoardPage() {
     const stats = getBountyStats();
+    const kinds = getRequestKinds();
 
     return (
         <div className={clsx('container', styles.layout)}>
@@ -61,14 +64,9 @@ export default function PluginBountyBoardPage() {
                     idea.
                 </p>
                 <div className={styles.actions}>
-                    <Button
-                        className={styles.button}
-                        href={`${SOCIAL_URLS.github}/discussions`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
+                    <RequestPluginButton className={styles.button} kinds={kinds}>
                         Request a plugin
-                    </Button>
+                    </RequestPluginButton>
                     <Button className={styles.button} href={SOCIAL_URLS.discord} variant="secondary">
                         <DiscordIcon />
                         Discuss on Discord
@@ -136,7 +134,7 @@ export default function PluginBountyBoardPage() {
                 <ShippedBounties />
             </section>
 
-            <BountyRequestCta />
+            <BountyRequestCta kinds={kinds} />
         </div>
     );
 }

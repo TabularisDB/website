@@ -30,6 +30,12 @@ export function getPluginKinds(): PluginKind[] {
     return (JSON.parse(fs.readFileSync(kindsPath, 'utf-8')) as {kinds: PluginKind[]}).kinds;
 }
 
+// Only what the client-side request form needs, so the full field schemas and
+// example manifests stay out of the page payload.
+export function getRequestKinds(): Pick<PluginKind, 'key' | 'label' | 'description'>[] {
+    return getPluginKinds().map(({key, label, description}) => ({key, label, description}));
+}
+
 function fieldTableMd(fields: PluginKindField[]): string {
     if (fields.length === 0) return '_None._\n';
     const rows = fields.map((f) => {
