@@ -44,7 +44,7 @@ export function HeaderActions({stars, mobileMenuOpen, onToggleMobileMenu}: Heade
                 <kbd className={styles.searchKdb}>{isMac ? '⌘K' : 'Ctrl+K'}</kbd>
             </Button>
 
-            <ThemeToggle />
+            <ThemeToggle className={styles.themeToggle} />
 
             <Button href="/download" className={styles.download}>
                 <DownloadIcon />

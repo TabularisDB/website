@@ -64,22 +64,6 @@
 }
 
 .compareLink {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.625rem 0.85rem;
-    border-radius: var(--radius-sm);
-    border: 0.1rem solid var(--color-border);
-    font-size: 0.8rem;
-    color: var(--color-text-secondary);
-    white-space: nowrap;
-    font-weight: 500;
-
-    &:hover {
-        border-color: var(--color-accent-teal);
-        color: var(--color-text-primary);
-    }
-
     & svg {
         width: 0.9rem;
         min-width: 0.9rem;

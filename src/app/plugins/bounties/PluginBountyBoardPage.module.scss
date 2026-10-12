@@ -1,21 +1,21 @@
-.layout {
-    gap: 4rem;
-}
-
-.actions {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0.75rem;
+.shipped {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
     margin-top: 1.5rem;
-}
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    transition: color 0.15s ease;
 
-.button {
-    padding: 0.625rem 1rem;
-}
-.button svg {
-    height: 1rem;
-    width: 1rem;
+    svg {
+        width: 1rem;
+        min-width: 1rem;
+        height: 1rem;
+    }
+
+    &:hover {
+        color: var(--color-text-primary);
+    }
 }
 
 .bountySchema {
@@ -85,9 +85,8 @@
     text-align: center;
 }
 
-.market {
+.category {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    margin-top: 4rem;
 }

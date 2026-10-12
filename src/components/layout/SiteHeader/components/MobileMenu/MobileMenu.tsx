@@ -1,13 +1,13 @@
 'use client';
 
-import {Button} from '@/components/ui/Button/Button';
-import {DiscordIcon, GitHubIcon} from '@/components/ui/Icons/SocialIcons';
-import {SOCIAL_URLS} from '@/lib/social';
-import clsx from 'clsx';
-import {DownloadIcon} from 'lucide-react';
 import {navGroups} from '@/components/layout/SiteHeader/SiteHeader.data';
 import {MobileNavGroup} from '@/components/layout/SiteHeader/components/MobileNavGroup/MobileNavGroup';
+import {ThemeToggle} from '@/components/layout/ThemeToggle/ThemeToggle';
+import {Button} from '@/components/ui/Button/Button';
+import clsx from 'clsx';
+import {DownloadIcon} from 'lucide-react';
 import styles from './MobileMenu.module.scss';
+import {useEffect} from 'react';
 
 interface MobileMenuProps {
     isOpen: boolean;
@@ -15,6 +15,22 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({isOpen, onClose}: MobileMenuProps) {
+    useEffect(() => {
+        if (!isOpen) return;
+
+        const previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+
+        const desktop = window.matchMedia('(min-width: 1024px)');
+        const closeOnDesktop = () => desktop.matches && onClose();
+        desktop.addEventListener('change', closeOnDesktop);
+
+        return () => {
+            document.body.style.overflow = previousOverflow;
+            desktop.removeEventListener('change', closeOnDesktop);
+        };
+    }, [isOpen, onClose]);
+
     return (
         <>
             <div className={clsx(styles.backdrop, isOpen && styles.active)} onClick={onClose} />
@@ -29,28 +45,7 @@ export function MobileMenu({isOpen, onClose}: MobileMenuProps) {
                         <DownloadIcon />
                         <span>Download</span>
                     </Button>
-                    <div className={styles.mobileSocials}>
-                        <a
-                            href="https://github.com/TabularisDB/tabularis"
-                            className={clsx(styles.githubStars)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <GitHubIcon />
-                            Leave a star
-                        </a>
-                        <div className={styles.divider}></div>
-
-                        <a
-                            href={SOCIAL_URLS.discord}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={styles.discord}
-                        >
-                            <DiscordIcon />
-                            Join us on Discord
-                        </a>
-                    </div>
+                    <ThemeToggle />
                 </footer>
             </div>
         </>

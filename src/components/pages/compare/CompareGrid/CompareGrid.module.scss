@@ -15,10 +15,6 @@
     padding: 3rem 1.5rem;
     transition: background-color 0.2s ease;
 
-    &:hover {
-        background-color: var(--color-surface);
-    }
-
     &:hover .accent {
         color: var(--color-accent-teal);
     }

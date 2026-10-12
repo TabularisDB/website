@@ -1,14 +1,14 @@
 ---
-section: "solutions"
-title: "Database Client for On-Call Engineers"
-metaTitle: "Database Client for On-Call & SRE Incident Response | Tabularis"
+section: 'solutions'
+title: 'Database Client for On-Call Engineers'
+metaTitle: 'Database Client for On-Call & SRE Incident Response | Tabularis'
 order: 6
-excerpt: "Reach production databases through managed SSH or Kubernetes tunnels in seconds — connection profiles, split view, and local credentials built for incident response."
-description: "Use Tabularis as the on-call database client for SRE and incident response: managed kubectl port-forward tunnels, SSH bastions, reusable connection profiles, and split view for comparing environments — no terminal juggling at 3 AM."
-image: "/img/tabularis-kubernetes-tunnel.png"
-audience: "SRE & on-call engineers"
-useCase: "Incident response"
-format: "Guide"
+excerpt: 'Reach production databases through managed SSH or Kubernetes tunnels in seconds, with connection profiles, split view, and local credentials built for incident response.'
+description: 'Use Tabularis as the on-call database client for SRE and incident response: managed kubectl port-forward tunnels, SSH bastions, reusable connection profiles, and split view for comparing environments — no terminal juggling at 3 AM.'
+image: '/img/tabularis-kubernetes-tunnel.png'
+audience: 'SRE & on-call engineers'
+useCase: 'Incident response'
+format: 'Guide'
 ---
 
 # Database Client for On-Call Engineers
@@ -38,7 +38,7 @@ Saved connection profiles carry the tunnel with them. Opening the "prod replica"
 
 ### Reusable tunnel profiles
 
-A Kubernetes tunnel profile (say, *staging cluster / postgres service*) is stored once and reused across any number of database connections — with a **Test** button that performs a real port-forward attempt and reports the exact error when something is off. You find out that credentials expired *before* the incident, not during it.
+A Kubernetes tunnel profile (say, _staging cluster / postgres service_) is stored once and reused across any number of database connections — with a **Test** button that performs a real port-forward attempt and reports the exact error when something is off. You find out that credentials expired _before_ the incident, not during it.
 
 ### Split view for comparing environments
 

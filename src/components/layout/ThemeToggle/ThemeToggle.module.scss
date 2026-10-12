@@ -5,12 +5,9 @@
     padding-inline: 0.75rem !important;
 
     svg {
-        min-width: 1rem;
-        width: 1rem;
-        height: 1rem;
-    }
-
-    &:hover {
-        color: var(--color-text-primary) !important;
+        --size: 1.125rem;
+        min-width: var(--size);
+        width: var(--size);
+        height: var(--size);
     }
 }

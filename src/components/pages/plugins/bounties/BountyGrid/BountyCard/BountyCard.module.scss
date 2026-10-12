@@ -1,0 +1,103 @@
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 2rem;
+    border: 0.1rem solid var(--color-border);
+    transition: border-color 0.2s ease;
+
+    &:hover {
+        border-color: var(--color-border-hover);
+    }
+
+    &:has(.cardLink:focus-visible) {
+        outline: 2px solid var(--color-accent-teal);
+        outline-offset: 2px;
+    }
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 3rem;
+}
+
+.cardIcon,
+.cardIcon svg {
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    object-fit: contain;
+    color: var(--color-text-primary);
+}
+
+.cardStatus {
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+
+    svg {
+        width: 0.875rem;
+        min-width: 0.875rem;
+        height: 0.875rem;
+    }
+}
+
+.cardDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.cardTitle {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+.cardExcerpt {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+}
+
+.cardMeta {
+    margin-top: auto;
+}
+
+.cardLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    transition: color 0.15s ease;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+    }
+
+    &:focus-visible {
+        outline: none;
+    }
+
+    svg {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .card:hover & {
+        color: var(--color-accent-teal);
+    }
+}

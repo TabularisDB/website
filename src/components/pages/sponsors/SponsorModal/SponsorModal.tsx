@@ -1,15 +1,12 @@
 'use client';
+
 import clsx from 'clsx';
 import Image from 'next/image';
-import {ArrowRight, X} from 'lucide-react';
+import {ArrowUpRightIcon, GiftIcon, InfoIcon, SparklesIcon} from 'lucide-react';
+import {Button} from '@/components/ui/Button/Button';
+import {Modal} from '@/components/ui/Modal/Modal';
 import type {Sponsor} from '@/lib/sponsors';
 import styles from './SponsorModal.module.scss';
-import {Button} from '@/components/ui/Button/Button';
-
-interface SponsorModalProps {
-    sponsor: Sponsor;
-    onClose: () => void;
-}
 
 function withUtm(url: string, campaign = 'sponsor'): string {
     const u = new URL(url);
@@ -19,65 +16,79 @@ function withUtm(url: string, campaign = 'sponsor'): string {
     return u.toString();
 }
 
+interface SponsorModalProps {
+    sponsor: Sponsor | null;
+    onClose: () => void;
+}
+
 export function SponsorModal({sponsor, onClose}: SponsorModalProps) {
     return (
-        <div className={styles.overlay} onClick={onClose}>
-            <div className={styles.modal} onClick={(e) => e.stopPropagation()} role="dialog" aria-label={sponsor.name}>
-                <header className={styles.header}>
-                    <div className={styles.headerBrand}>
-                        {sponsor.logoImgCompact && (
-                            <Image
-                                src={sponsor.logoImgCompact}
-                                alt=""
-                                width={40}
-                                height={40}
-                                loading="eager"
-                                className={clsx(styles.headerLogo, sponsor.invertLogoOnLight && 'theme-invert-on-light')}
-                            />
+        <Modal
+            open={sponsor !== null}
+            onClose={onClose}
+            title={sponsor?.name ?? ''}
+            icon={
+                sponsor?.logoImgCompact && (
+                    <Image
+                        src={sponsor.logoImgCompact}
+                        alt=""
+                        width={40}
+                        height={40}
+                        className={clsx(styles.icon, sponsor.invertLogoOnLight && 'theme-invert-on-light')}
+                    />
+                )
+            }
+        >
+            {sponsor && (
+                <>
+                    <div className={styles.body}>
+                        <section className={styles.section}>
+                            <h3 className={styles.sectionTitle}>
+                                <InfoIcon aria-hidden="true" />
+                                Overview
+                            </h3>
+                            <p className={styles.text}>{sponsor.modalDescription}</p>
+                        </section>
+
+                        {sponsor.features && (
+                            <section className={styles.section}>
+                                <h3 className={styles.sectionTitle}>
+                                    <SparklesIcon aria-hidden="true" />
+                                    Why it matters
+                                </h3>
+                                <ul className={styles.features}>
+                                    {sponsor.features.map((feature) => (
+                                        <li key={feature.text}>
+                                            <span aria-hidden="true">{feature.icon}</span>
+                                            {feature.text}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </section>
                         )}
-                        <h2 className={styles.headerTitle}>{sponsor.name}</h2>
+
+                        {sponsor.offer && (
+                            <section className={styles.section}>
+                                <h3 className={styles.sectionTitle}>
+                                    <GiftIcon aria-hidden="true" />
+                                    Offer for Tabularis users
+                                </h3>
+                                <div className={styles.highlight}>
+                                    <p className={styles.highlightTitle}>{sponsor.offer.title}</p>
+                                    <p className={styles.text}>{sponsor.offer.description}</p>
+                                </div>
+                            </section>
+                        )}
                     </div>
-                    <button className={styles.closeButton} onClick={onClose} aria-label="Close">
-                        <X size={20} />
-                    </button>
-                </header>
 
-                <div className={styles.body}>
-                    <div className={styles.section}>
-                        <span className={styles.categoryTitle}>Overview</span>
-                        <p className={styles.description}>{sponsor.modalDescription}</p>
+                    <div className={styles.actions}>
+                        <Button href={withUtm(sponsor.url)} size="sm">
+                            Visit {sponsor.name}
+                            <ArrowUpRightIcon />
+                        </Button>
                     </div>
-
-                    {sponsor.features && (
-                        <div className={styles.section}>
-                            <span className={styles.categoryTitle}>Why it matters</span>
-                            <ul className={styles.features}>
-                                {sponsor.features.map((f) => (
-                                    <li key={f.icon}>
-                                        <span>{f.icon}</span> <span>{f.text}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
-
-                    {sponsor.offer && (
-                        <div className={styles.section}>
-                            <span className={styles.categoryTitle}>Offer for Tabularis users</span>
-                            <div className={styles.highlight}>
-                                <h3 className={styles.highlightTitle}>{sponsor.offer.title}</h3>
-                                <p className={styles.highlightText}>{sponsor.offer.description}</p>
-                            </div>
-                        </div>
-                    )}
-                </div>
-
-                <footer className={styles.footer}>
-                    <Button href={withUtm(sponsor.url)} className={styles.visitButton}>
-                        Visit {sponsor.name} <ArrowRight size={16} />
-                    </Button>
-                </footer>
-            </div>
-        </div>
+                </>
+            )}
+        </Modal>
     );
 }

@@ -1,17 +1,20 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import clsx from 'clsx';
-import {PaletteIcon, PlugIcon} from 'lucide-react';
+import {getKindBadge, getPluginIcon} from '@/components/pages/plugins/Plugin.data';
 import {getAllPlugins, getLatestRelease} from '@/lib/plugins';
 import {getKindSlug, getPublishedKinds} from '@/lib/plugins/kinds';
-import {getKindBadge, getPluginIcon} from '@/components/pages/plugins/Plugin.data';
+import clsx from 'clsx';
+import {ArrowUpRightIcon, PaletteIcon, PlugIcon, TagIcon, UserIcon} from 'lucide-react';
+import Link from 'next/link';
 import styles from './PluginGrid.module.scss';
 
-// activeKind: a kind key to show only that kind, or undefined for every plugin.
+type Plugin = ReturnType<typeof getAllPlugins>[number];
+
+const kindOf = (plugin: Plugin) => plugin.kind ?? 'driver';
+
+const authorNameOf = (plugin: Plugin) => plugin.author.split('<')[0].trim();
+
 export function PluginGrid({activeKind}: {activeKind?: string}) {
     const all = getAllPlugins();
-    const kindOf = (p: (typeof all)[number]) => p.kind ?? 'driver';
-    const plugins = activeKind ? all.filter((p) => kindOf(p) === activeKind) : all;
+    const plugins = activeKind ? all.filter((plugin) => kindOf(plugin) === activeKind) : all;
     const kinds = getPublishedKinds();
 
     const filters = [
@@ -20,7 +23,7 @@ export function PluginGrid({activeKind}: {activeKind?: string}) {
             key: kind.key,
             label: kind.label,
             href: `/plugins/${getKindSlug(kind.key)}`,
-            count: all.filter((p) => kindOf(p) === kind.key).length,
+            count: all.filter((plugin) => kindOf(plugin) === kind.key).length,
         })),
     ];
 
@@ -46,52 +49,64 @@ export function PluginGrid({activeKind}: {activeKind?: string}) {
             )}
 
             <div className={styles.grid}>
-                {plugins.map((plugin) => {
-                    const kind = kindOf(plugin);
-                    const latestRelease = getLatestRelease(plugin);
-                    const authorName = plugin.author.includes('<') ? plugin.author.split('<')[0].trim() : plugin.author;
-                    const iconSlug = getPluginIcon(plugin.id);
-
-                    return (
-                        <a
-                            key={plugin.id}
-                            href={plugin.registry_url ?? plugin.homepage}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={styles.card}
-                        >
-                            <div className={styles.cardCover}>
-                                {iconSlug ? (
-                                    <Image
-                                        className={styles.cardIcon}
-                                        src={`/img/logos/plugins/${iconSlug}.svg`}
-                                        alt={plugin.name}
-                                        width={48}
-                                        height={48}
-                                    />
-                                ) : (
-                                    <span className={styles.cardIcon}>
-                                        {kind === 'theme' ? <PaletteIcon /> : <PlugIcon />}
-                                    </span>
-                                )}
-
-                                <span className={styles.kind}>{getKindBadge(kind)}</span>
-                                <span className={styles.version}>v{plugin.latest_version}</span>
-                            </div>
-                            <div className={styles.cardDetails}>
-                                <h3 className={styles.cardTitle}>{plugin.name}</h3>
-                                <p className={styles.cardExcerpt}>{plugin.description}</p>
-                                <div className={styles.meta}>
-                                    by {authorName}
-                                    {latestRelease?.min_tabularis_version && (
-                                        <> &middot; Requires v{latestRelease.min_tabularis_version}+</>
-                                    )}
-                                </div>
-                            </div>
-                        </a>
-                    );
-                })}
+                {plugins.map((plugin) => (
+                    <PluginCard key={plugin.id} plugin={plugin} />
+                ))}
             </div>
         </div>
+    );
+}
+
+function PluginCard({plugin}: {plugin: Plugin}) {
+    const kind = kindOf(plugin);
+    const iconSlug = getPluginIcon(plugin.id);
+    const minVersion = getLatestRelease(plugin)?.min_tabularis_version;
+
+    return (
+        <a
+            href={plugin.registry_url ?? plugin.homepage}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.card}
+        >
+            <div className={styles.cardHeader}>
+                {iconSlug ? (
+                    <img className={styles.cardIcon} src={`/img/logos/plugins/${iconSlug}.svg`} alt={plugin.name} />
+                ) : (
+                    <span className={styles.cardIcon}>{kind === 'theme' ? <PaletteIcon /> : <PlugIcon />}</span>
+                )}
+                <span className={styles.kind}>{getKindBadge(kind)}</span>
+            </div>
+
+            <div className={styles.cardDetails}>
+                <h3 className={styles.cardTitle}>{plugin.name}</h3>
+                <p className={styles.cardExcerpt}>{plugin.description}</p>
+            </div>
+
+            <div className={styles.meta}>
+                <span className={styles.metaItem}>
+                    <UserIcon aria-hidden="true" />
+                    {authorNameOf(plugin)}
+                </span>
+                <span className={styles.metaItem}>
+                    <TagIcon aria-hidden="true" />
+                    <span className={styles.mono}>v{plugin.latest_version}</span>
+                </span>
+                {minVersion && (
+                    <span className={styles.metaItem} title="Minimum Tabularis version">
+                        <img
+                            src="/img/brand/tabularis-icon-color.svg"
+                            alt="Requires Tabularis"
+                            className={styles.metaLogo}
+                        />
+                        <span className={styles.mono}>{minVersion}+</span>
+                    </span>
+                )}
+            </div>
+
+            <span className={styles.cardLink}>
+                View plugin <ArrowUpRightIcon aria-hidden="true" />
+            </span>
+        </a>
     );
 }

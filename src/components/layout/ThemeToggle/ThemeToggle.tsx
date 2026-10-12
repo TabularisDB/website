@@ -26,8 +26,6 @@ interface ThemeToggleProps {
     className?: string;
 }
 
-// Cycles system → light → dark. The preference is unknown during the static
-// render, so a neutral icon is shown until the component mounts.
 export function ThemeToggle({className}: ThemeToggleProps) {
     const [preference, setPreference] = useState<ThemePreference | null>(null);
 

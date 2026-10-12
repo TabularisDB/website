@@ -101,6 +101,7 @@
     font-size: 0.9rem;
     color: var(--color-text-secondary);
     transition: color 0.2s ease;
+    width: fit-content;
 
     &:hover {
         color: var(--color-text-primary);

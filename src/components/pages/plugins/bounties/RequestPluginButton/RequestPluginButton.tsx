@@ -5,7 +5,7 @@ import {
     takePendingRequest,
     type PluginRequestDraft,
     type PluginRequestKind,
-} from '@/components/pages/plugins/bounties/PluginRequestModal/PluginRequestModal';
+} from '@/components/pages/plugins/bounties/RequestPluginButton/PluginRequestModal/PluginRequestModal';
 import {Button} from '@/components/ui/Button/Button';
 import {useEffect, useState, type ReactNode} from 'react';
 

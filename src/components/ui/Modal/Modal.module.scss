@@ -6,7 +6,7 @@
     align-items: flex-start;
     justify-content: center;
     padding-top: 10vh;
-    background: rgb(var(--rgb-backdrop) / calc(0.8 * var(--backdrop-scale)));
+    background: var(--color-backdrop);
     opacity: 0;
     visibility: hidden;
     transition:

@@ -14,26 +14,13 @@
     width: var(--size);
     height: var(--size);
     border: 0.1rem solid var(--color-border);
-    border-radius: 22%;
-    background-color: var(--color-bg);
-    background-image:
-        radial-gradient(rgb(var(--rgb-tint) / 5%) 1px, transparent 1.5px),
-        radial-gradient(rgb(var(--rgb-tint) / 3%) 1px, transparent 1px);
-    background-size:
-        7px 7px,
-        11px 11px;
-    background-position:
-        0 0,
-        3px 5px;
-    box-shadow:
-        0 0.6rem 1.5rem rgb(var(--rgb-shadow) / calc(0.45 * var(--shadow-scale))),
-        inset 0 0.1rem 0 rgb(var(--rgb-tint) / 6%),
-        inset 0 -0.1rem 0 rgb(var(--rgb-shadow) / calc(0.4 * var(--shadow-scale)));
+    border-radius: var(--radius-lg);
+    background-color: #0f172a;
     overflow: hidden;
 }
 
 .icon {
-    height: 55%;
+    height: 75%;
     width: auto;
     object-fit: contain;
 }

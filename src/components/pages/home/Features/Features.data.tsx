@@ -21,7 +21,7 @@ export const FEATURES: Feature[] = [
         description:
             'Turn execution plans into interactive graphs, exact node tables, raw output, and optional AI analysis. Spot costly scans, estimate gaps, and optimizer choices faster.',
         href: '/wiki/visual-explain',
-        linkLabel: 'See it in the docs',
+        linkLabel: 'Read the docs',
         videoSlug: 'visual-explain',
     },
     {
@@ -30,9 +30,9 @@ export const FEATURES: Feature[] = [
         eyebrow: 'SQL Notebooks',
         title: 'SQL and Markdown, in one reusable document.',
         description:
-            'Combine SQL and Markdown in multi-cell workflows. Keep inline results, lightweight charts, shared variables, and parameters — repeatable analysis, not throwaway scratch files.',
+            'Combine SQL and Markdown in multi-cell workflows. Keep inline results, lightweight charts, shared variables, and parameters for repeatable analysis, not throwaway scratch files.',
         href: '/wiki/notebooks',
-        linkLabel: 'Read the Notebooks guide',
+        linkLabel: 'Read the guide',
         videoSlug: 'sql-notebooks',
     },
     {
@@ -43,7 +43,7 @@ export const FEATURES: Feature[] = [
         description:
             'Build joins, filters, and aggregations visually, then inspect the generated SQL. Useful when exploring a schema or assembling a query before dropping down to raw SQL.',
         href: '/wiki/visual-query-builder',
-        linkLabel: 'Explore the Query Builder',
+        linkLabel: 'Explore the builder',
         videoSlug: 'visual-query-builder',
     },
     {
@@ -54,7 +54,7 @@ export const FEATURES: Feature[] = [
         description:
             'Explain unfamiliar queries and iterate faster while staying in control of your provider. Works with OpenAI, Anthropic, OpenRouter, or Ollama for fully local use.',
         href: '/wiki/ai-assistant',
-        linkLabel: 'See how AI Assistance works',
+        linkLabel: 'See how it works',
         videoSlug: 'ai-assistant',
     },
 ];

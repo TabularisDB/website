@@ -13,6 +13,8 @@
 .table {
     width: 100%;
     table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
     border-top: 0.1rem solid var(--color-border);
     border-left: 0.1rem solid var(--color-border);
 
@@ -47,6 +49,7 @@
         }
     }
 }
+
 .featureHeader,
 .featureCell {
     color: var(--color-text-primary) !important;

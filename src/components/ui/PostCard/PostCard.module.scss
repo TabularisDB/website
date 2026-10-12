@@ -19,8 +19,7 @@
 .coverWrapper {
     aspect-ratio: 1200 / 630;
     overflow: hidden;
-    border-radius: 0.75rem;
-    box-shadow: 0 1.5rem 4rem rgb(var(--rgb-shadow) / calc(0.6 * var(--shadow-scale)));
+    background-color: var(--color-surface);
 }
 
 .cover {
@@ -119,8 +118,12 @@
         line-clamp: 3;
     }
 
+    .coverWrapper {
+        border-radius: var(--radius-md);
+    }
+
     @media (max-width: 700px) {
         grid-template-columns: 1fr;
-        gap: 0.5rem;
+        gap: 1.25rem;
     }
 }

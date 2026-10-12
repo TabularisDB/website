@@ -48,10 +48,14 @@
 }
 
 .cardLink {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--color-text-primary);
     transition: color 0.15s ease;
+    margin-top: auto;
 
     .card:hover & {
         color: var(--color-accent-teal);

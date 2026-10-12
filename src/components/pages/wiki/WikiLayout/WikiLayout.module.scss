@@ -90,7 +90,7 @@
         display: block;
         position: fixed;
         inset: 0;
-        background: rgb(var(--rgb-backdrop) / calc(0.5 * var(--backdrop-scale)));
+        background: var(--color-backdrop);
         z-index: calc(var(--z-header) - 1);
     }
 }

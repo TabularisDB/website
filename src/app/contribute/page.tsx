@@ -168,7 +168,7 @@ export default function ContributePage() {
             <CalloutBlock
                 title="Community giveaway: Oct 7 to Oct 13"
                 actions={
-                    <Button href="/contribute/leaderboard" size="sm">
+                    <Button href="/contribute/leaderboard">
                         <TrophyIcon />
                         See the leaderboard
                     </Button>
@@ -228,11 +228,11 @@ export default function ContributePage() {
                 title="Not sure where to start?"
                 actions={
                     <>
-                        <Button href={SOCIAL_URLS.discord} size="sm">
+                        <Button href={SOCIAL_URLS.discord}>
                             <DiscordIcon />
                             Ask on Discord
                         </Button>
-                        <Button href={`${SOCIAL_URLS.github}/discussions`} variant="secondary" size="sm">
+                        <Button href={`${SOCIAL_URLS.github}/discussions`} variant="secondary">
                             <GitHubIcon />
                             Open a discussion
                         </Button>

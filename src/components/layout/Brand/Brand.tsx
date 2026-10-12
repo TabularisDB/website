@@ -22,7 +22,6 @@ export function Brand({className}: BrandProps) {
 
     return (
         <Link href="/" onClick={handleClick}>
-            {/* The colour logo has white lettering; the light theme swaps in the black one. */}
             <Image
                 src="/img/brand/tabularis-logo-color.svg"
                 alt="Tabularis"
@@ -32,7 +31,7 @@ export function Brand({className}: BrandProps) {
                 className={clsx(styles.logo, 'theme-dark-only', className)}
             />
             <Image
-                src="/img/brand/tabularis-logo-black.svg"
+                src="/img/brand/tabularis-logo-color-dark.svg"
                 alt="Tabularis"
                 width={128}
                 height={26}

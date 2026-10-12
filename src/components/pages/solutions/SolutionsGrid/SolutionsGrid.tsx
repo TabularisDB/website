@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type {ReactNode} from 'react';
 import styles from './SolutionsGrid.module.scss';
+import {ArrowRight} from 'lucide-react';
 
 export interface SolutionGridItem {
     slug: string;
@@ -22,7 +23,9 @@ export function SolutionsGrid({items}: {items: SolutionGridItem[]}) {
                         <p className={styles.cardExcerpt}>{item.excerpt}</p>
                     </div>
 
-                    <span className={styles.cardLink}>Learn more</span>
+                    <span className={styles.cardLink}>
+                        Learn more <ArrowRight size={16} />
+                    </span>
                 </Link>
             ))}
         </div>

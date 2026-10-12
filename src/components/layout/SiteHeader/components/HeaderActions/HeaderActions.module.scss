@@ -36,7 +36,7 @@
 }
 
 .divider {
-    height: 1.375rem;
+    height: 1rem;
     width: 0.1rem;
     background-color: var(--color-border);
 
@@ -72,12 +72,17 @@
     }
 }
 
+.themeToggle {
+    @media (max-width: 1023px) {
+        display: none;
+    }
+}
+
 .download {
     svg {
-        --size: 1rem;
+        --size: 1.125rem;
         width: var(--size);
         min-width: var(--size);
-        min-height: var(--size);
         height: var(--size);
     }
 

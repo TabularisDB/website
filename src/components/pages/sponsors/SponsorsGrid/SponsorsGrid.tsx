@@ -1,6 +1,8 @@
 'use client';
+
 import clsx from 'clsx';
 import Image from 'next/image';
+import {ArrowRightIcon} from 'lucide-react';
 import {useState} from 'react';
 import {SPONSORS} from '@/lib/sponsors';
 import type {Sponsor} from '@/lib/sponsors';
@@ -14,11 +16,11 @@ export function SponsorsGrid() {
         <>
             <div className={styles.grid}>
                 {SPONSORS.map((sponsor) => (
-                    <button key={sponsor.id} className={styles.card} onClick={() => setActiveSponsor(sponsor)}>
+                    <article key={sponsor.id} className={styles.card}>
                         {sponsor.logoImgCompact && (
                             <Image
                                 src={sponsor.logoImgCompact}
-                                alt={sponsor.name}
+                                alt=""
                                 width={48}
                                 height={48}
                                 className={clsx(styles.cardLogo, sponsor.invertLogoOnLight && 'theme-invert-on-light')}
@@ -26,16 +28,23 @@ export function SponsorsGrid() {
                         )}
 
                         <div className={styles.cardDetails}>
-                            <span className={styles.cardTitle}>{sponsor.name}</span>
+                            <h3 className={styles.cardTitle}>{sponsor.name}</h3>
                             <p className={styles.cardTagline}>{sponsor.tagline}</p>
                         </div>
 
-                        <span className={styles.cardLink}>Learn more</span>
-                    </button>
+                        <button
+                            type="button"
+                            className={styles.cardLink}
+                            aria-label={`Learn more about ${sponsor.name}`}
+                            onClick={() => setActiveSponsor(sponsor)}
+                        >
+                            Learn more <ArrowRightIcon aria-hidden="true" />
+                        </button>
+                    </article>
                 ))}
             </div>
 
-            {activeSponsor && <SponsorModal sponsor={activeSponsor} onClose={() => setActiveSponsor(null)} />}
+            <SponsorModal sponsor={activeSponsor} onClose={() => setActiveSponsor(null)} />
         </>
     );
 }

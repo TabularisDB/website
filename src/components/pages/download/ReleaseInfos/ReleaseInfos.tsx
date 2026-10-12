@@ -1,7 +1,6 @@
-import Image from 'next/image';
+import {ArrowRight} from 'lucide-react';
 import Link from 'next/link';
 import styles from './ReleaseInfos.module.scss';
-import {ArrowRight} from 'lucide-react';
 
 interface ReleaseInfoProps {
     version: string;
@@ -16,11 +15,9 @@ export function ReleaseInfo({version, date, hash, hrefLabel, hrefLink, external 
     return (
         <div className={styles.wrapper}>
             <div className={styles.iconTile}>
-                <Image
+                <img
                     src="/img/brand/tabularis-icon-color.svg"
                     alt="Tabularis Icon"
-                    width={53}
-                    height={53}
                     loading="eager"
                     className={styles.icon}
                 />
