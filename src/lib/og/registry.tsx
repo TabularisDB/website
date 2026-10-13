@@ -6,6 +6,7 @@ import {getSeoPagesBySection} from '@/lib/seo/seoPages';
 import {OG_IMAGE_URL, SITE_URL} from '@/lib/siteConfig';
 import {getAllVideoDemos} from '@/lib/videos';
 import {getAllWikiPages} from '@/lib/wiki';
+import {BOUNTY_STATUS_LABEL, getActiveBounties} from '@/lib/plugins/bounties';
 import {getKindSlug, getPublishedKinds} from '@/lib/plugins/kinds';
 import {renderBlogPostOgImage} from './ogBlogPost';
 import {renderSimpleOgImage} from './ogImageSimple';
@@ -83,6 +84,10 @@ export function getOgCards(): Record<string, OgCard> {
     for (const kind of getPublishedKinds()) {
         cards[`/plugins/${getKindSlug(kind.key)}`] = () =>
             renderSimpleOgImage({kicker: 'Plugins', title: `Community ${kind.label.toLowerCase()}`});
+    }
+    for (const bounty of getActiveBounties()) {
+        cards[`/plugins/bounties/${bounty.id}`] = () =>
+            renderSimpleOgImage({kicker: `Bounty · ${BOUNTY_STATUS_LABEL[bounty.status]}`, title: bounty.name});
     }
     for (const video of getAllVideoDemos()) {
         cards[`/demos/${video.slug}`] = () =>

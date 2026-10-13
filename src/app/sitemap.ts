@@ -7,6 +7,7 @@ import {AUTHORS} from '@/lib/blog/authors';
 import {getAllSeoPages, getSeoPagePath} from '@/lib/seo/seoPages';
 import {getAllInitiativeSlugs} from '@/lib/roadmap';
 import {getAllVideoDemos} from '@/lib/videos';
+import {getActiveBounties} from '@/lib/plugins/bounties';
 import {getKindSlug, getPublishedKinds} from '@/lib/plugins/kinds';
 
 const BASE_URL = 'https://tabularis.dev';
@@ -55,6 +56,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'weekly',
             priority: 0.75,
         },
+        ...getActiveBounties().map((bounty) => ({
+            url: `${BASE_URL}/plugins/bounties/${bounty.id}`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.6,
+        })),
         {
             url: `${BASE_URL}/contribute`,
             lastModified: new Date(),

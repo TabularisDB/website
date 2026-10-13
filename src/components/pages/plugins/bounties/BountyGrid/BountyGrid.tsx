@@ -1,6 +1,6 @@
 'use client';
 
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
     BountyFilters,
     DIFFICULTY_FILTERS,
@@ -37,17 +37,53 @@ function matchesFocus(bounty: PluginBounty, filter: FocusFilter) {
     return tags.some((tag) => bountyTags.includes(tag) || target.includes(tag) || name.includes(tag));
 }
 
-export function BountyGrid() {
+const BOARD_PATH = '/plugins/bounties';
+
+function bountyFromPath(pathname: string) {
+    const match = /^\/plugins\/bounties\/([^/]+)\/?$/.exec(pathname);
+    return match ? decodeURIComponent(match[1]) : null;
+}
+
+interface BountyGridProps {
+    /** Bounty whose modal is open on load, from its `/plugins/bounties/<slug>` page. */
+    initialBountyId?: string;
+}
+
+export function BountyGrid({initialBountyId}: BountyGridProps) {
     const [status, setStatus] = useState<StatusFilter>('all');
     const [focus, setFocus] = useState<FocusFilter>('all');
     const [difficulty, setDifficulty] = useState<DifficultyFilter>('all');
     const [query, setQuery] = useState('');
     const [sort, setSort] = useState<BountySort>('votes');
-    const [selectedId, setSelectedId] = useState<string | null>(null);
+    const [selectedId, setSelectedId] = useState<string | null>(initialBountyId ?? null);
     const [baked] = useState(getActiveBounties);
+
+    // Every open modal has its own URL: opening pushes /plugins/bounties/<slug>, closing returns to the board.
+    const openBounty = useCallback((slug: string, mode: 'push' | 'replace' = 'push') => {
+        setSelectedId(slug);
+        const path = `${BOARD_PATH}/${slug}`;
+        if (window.location.pathname === path) return;
+        if (mode === 'push') window.history.pushState({bountyModal: true}, '', path);
+        else window.history.replaceState(null, '', path);
+    }, []);
+
+    const closeBounty = useCallback(() => {
+        setSelectedId(null);
+        if (!bountyFromPath(window.location.pathname)) return;
+        // Opened from the board: step back so Back doesn't reopen it. Landed on the bounty URL: swap it for the board.
+        if ((window.history.state as {bountyModal?: boolean} | null)?.bountyModal) window.history.back();
+        else window.history.replaceState(null, '', BOARD_PATH);
+    }, []);
+
+    useEffect(() => {
+        const onPopState = () => setSelectedId(bountyFromPath(window.location.pathname));
+        window.addEventListener('popstate', onPopState);
+        return () => window.removeEventListener('popstate', onPopState);
+    }, []);
+
     const live = useLiveBounties(
         baked,
-        useCallback((slug: string) => setSelectedId(slug), []),
+        useCallback((slug: string) => openBounty(slug, 'replace'), [openBounty]),
     );
 
     // A bounty that shipped since the build drops off; votes break ties within a status.
@@ -144,7 +180,7 @@ export function BountyGrid() {
                         <BountyCard
                             key={bounty.id}
                             bounty={bounty}
-                            onOpen={setSelectedId}
+                            onOpen={openBounty}
                             voteBusy={live.busy === `upvote:${bounty.id}`}
                             onVote={() => void live.run('upvote', bounty)}
                         />
@@ -160,7 +196,7 @@ export function BountyGrid() {
                 busy={live.busy}
                 error={selected ? live.error : null}
                 onClose={() => {
-                    setSelectedId(null);
+                    closeBounty();
                     live.clearError();
                 }}
                 onVote={(bounty) => void live.run('upvote', bounty)}
