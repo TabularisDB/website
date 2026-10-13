@@ -14,19 +14,21 @@ const RESOURCES: ThankYouResource[] = [
         href: '/download',
         icon: <DownloadIcon />,
         title: 'Try Tabularis',
+        linkLabel: 'Download',
         desc: 'Get to know the product your brand will sit next to. Free on Windows, macOS and Linux.',
     },
     {
         href: SOCIAL_URLS.github,
-        external: true,
         icon: <StarIcon />,
         title: 'See the traction on GitHub',
+        linkLabel: 'View on GitHub',
         desc: 'Stars, releases and contributors: the community your sponsorship reaches.',
     },
     {
         href: '/roadmap',
         icon: <MapIcon />,
         title: 'See what your support funds',
+        linkLabel: 'See the roadmap',
         desc: "The features and database drivers we're building next.",
     },
 ];

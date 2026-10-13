@@ -26,7 +26,7 @@ export function FeatureBlock({feature, video, reversed}: FeatureBlockProps) {
                 <h3 className={styles.title}>{feature.title}</h3>
                 <p className={styles.description}>{feature.description}</p>
                 <Button href={feature.href} className={styles.learnMore} size="sm">
-                    Learn more <ArrowRight />
+                    {feature.linkLabel} <ArrowRight />
                 </Button>
             </div>
         </div>

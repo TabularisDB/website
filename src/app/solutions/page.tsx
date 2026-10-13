@@ -1,10 +1,11 @@
 import {JsonLd} from '@/components/layout/JsonLd';
 import {SolutionsCatalog} from '@/components/pages/solutions/SolutionsCatalog/SolutionsCatalog';
-import {TransitionBlock} from '@/components/ui/TransitionBlock/TransitionBlock';
-import {buildBreadcrumbJsonLd} from '@/lib/seo';
-import {LayersIcon} from 'lucide-react';
-import {Metadata} from 'next';
+import {Button} from '@/components/ui/Button/Button';
+import {CalloutBlock} from '@/components/ui/CalloutBlock/CalloutBlock';
 import {ogImages} from '@/lib/og/registry';
+import {buildBreadcrumbJsonLd} from '@/lib/seo';
+import {GitCompareArrowsIcon, LayersIcon} from 'lucide-react';
+import {Metadata} from 'next';
 
 const path = '/solutions';
 const title = 'Solutions | Tabularis';
@@ -50,12 +51,18 @@ export default function SolutionsPage() {
 
             <SolutionsCatalog />
 
-            <TransitionBlock
+            <CalloutBlock
                 title="Need a different workflow?"
-                text="These pages are organized by real use case. If you're evaluating tools instead of workflows, go to the comparison pages next."
-                buttonHref="/compare"
-                buttonText="Browse comparisons"
-            />
+                actions={
+                    <Button href="/compare" size="sm">
+                        <GitCompareArrowsIcon />
+                        Browse comparisons
+                    </Button>
+                }
+            >
+                These pages are organized by real use case. If you&apos;re evaluating tools instead of workflows, go to
+                the comparison pages next.
+            </CalloutBlock>
         </section>
     );
 }

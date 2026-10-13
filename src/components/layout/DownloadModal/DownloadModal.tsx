@@ -9,7 +9,7 @@ import {getPlatformConfig} from '@/lib/download/downloadConfig';
 import {NIGHTLY_RELEASE} from '@/lib/download/nightly';
 import {APP_VERSION} from '@/lib/download/version';
 import {SOCIAL_URLS} from '@/lib/social';
-import {ArrowRight} from 'lucide-react';
+import {ArrowRight, ArrowUpRight} from 'lucide-react';
 import Link from 'next/link';
 import {useEffect, useState} from 'react';
 import styles from './DownloadModal.module.scss';
@@ -62,25 +62,25 @@ export function DownloadModal({platform, onClose}: DownloadModalProps) {
                                 rel="noopener noreferrer"
                             >
                                 View build on GitHub
-                                <ArrowRight size={15} />
+                                <ArrowUpRight aria-hidden="true" />
                             </a>
                         ) : (
                             <Link href="/changelog" className={styles.releasesLink}>
-                                View changelog <ArrowRight size={15} />
+                                View changelog
+                                <ArrowRight aria-hidden="true" />
                             </Link>
                         )}
                     </div>
 
-                    <div className={styles.body}>
+                    <Modal.Body>
                         {isNightly && (
-                            <p className={styles.warning}>
+                            <Modal.Text className={styles.warning}>
                                 Preview build from the latest successful CI run. It may be unstable and does not
                                 auto-update through package managers.
-                            </p>
+                            </Modal.Text>
                         )}
-
                         <DownloadOptions options={config.options} note={config.note} />
-                    </div>
+                    </Modal.Body>
                 </>
             )}
         </Modal>

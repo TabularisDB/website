@@ -124,12 +124,6 @@
     }
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
-    gap: 0.75rem;
-}
-
 .more {
     align-self: center;
     margin-top: 0.5rem;

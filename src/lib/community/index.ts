@@ -68,5 +68,5 @@ export function getIssueStats() {
 /** Dark or white text, whichever reads better on a GitHub label color. */
 export function labelTextColor(hex: string): string {
     const [r, g, b] = [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16));
-    return (r * 299 + g * 587 + b * 114) / 1000 > 150 ? 'var(--color-bg)' : 'var(--color-text-primary)';
+    return (r * 299 + g * 587 + b * 114) / 1000 > 150 ? '#030712' : '#ffffff';
 }

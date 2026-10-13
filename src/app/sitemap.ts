@@ -103,6 +103,48 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'yearly',
             priority: 0.4,
         },
+        {
+            url: `${BASE_URL}/download`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.9,
+        },
+        {
+            url: `${BASE_URL}/changelog`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly',
+            priority: 0.7,
+        },
+        {
+            url: `${BASE_URL}/sponsors`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.6,
+        },
+        {
+            url: `${BASE_URL}/sponsors/become`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.6,
+        },
+        {
+            url: `${BASE_URL}/subscribe`,
+            lastModified: new Date(),
+            changeFrequency: 'yearly',
+            priority: 0.5,
+        },
+        {
+            url: `${BASE_URL}/privacy-policy`,
+            lastModified: new Date(),
+            changeFrequency: 'yearly',
+            priority: 0.2,
+        },
+        {
+            url: `${BASE_URL}/cookie-policy`,
+            lastModified: new Date(),
+            changeFrequency: 'yearly',
+            priority: 0.2,
+        },
     ];
 
     const wikiRoutes: MetadataRoute.Sitemap = wikiPages.map((page) => ({

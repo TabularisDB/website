@@ -1,0 +1,19 @@
+.grid {
+    --min-width: 320px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(var(--min-width), 100%), 1fr));
+    gap: var(--space-grid, 1rem);
+}
+
+.joined {
+    gap: 0;
+    border-top: 0.1rem solid var(--color-border);
+    border-left: 0.1rem solid var(--color-border);
+
+    &.grid > * {
+        border: 0;
+        border-right: 0.1rem solid var(--color-border);
+        border-bottom: 0.1rem solid var(--color-border);
+    }
+}

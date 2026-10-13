@@ -48,7 +48,7 @@
 
 .panel {
     position: absolute;
-    z-index: 20;
+    z-index: var(--z-dropdown);
     top: calc(100% + 0.35rem);
     left: 0;
     width: max(100%, 18rem);
@@ -56,7 +56,7 @@
     border: 0.1rem solid var(--color-border);
     border-radius: var(--radius-md);
     background: var(--color-surface);
-    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0.75rem 2rem rgb(var(--rgb-shadow) / calc(0.35 * var(--shadow-scale)));
     overflow: hidden;
 }
 

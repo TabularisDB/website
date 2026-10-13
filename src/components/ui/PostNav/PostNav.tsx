@@ -15,31 +15,26 @@ interface PostNavProps {
 
 export function PostNav({prev, next, basePath}: PostNavProps) {
     return (
-        <nav className={styles.nav}>
+        <nav className={styles.nav} aria-label="Previous and next pages">
             <div className={styles.item}>
-                {prev ? (
+                {prev && (
                     <Link href={`${basePath}/${prev.slug}`}>
                         <span className={styles.label}>
-                            <ArrowLeft />
+                            <ArrowLeft aria-hidden="true" />
                             Previous
                         </span>
                         <span className={styles.title}>{prev.title}</span>
                     </Link>
-                ) : (
-                    <span className={styles.empty} />
                 )}
             </div>
             <div className={styles.item}>
-                {next ? (
+                {next && (
                     <Link href={`${basePath}/${next.slug}`} className={styles.next}>
                         <span className={styles.label}>
-                            Next <ArrowRight />
+                            Next <ArrowRight aria-hidden="true" />
                         </span>
-
                         <span className={styles.title}>{next.title}</span>
                     </Link>
-                ) : (
-                    <span className={styles.empty} />
                 )}
             </div>
         </nav>

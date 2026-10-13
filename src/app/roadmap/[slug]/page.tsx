@@ -49,6 +49,12 @@ const STATUS_LABEL: Record<InitiativeStatus, string> = {
     done: 'Shipped',
 };
 
+const STATUS_CLASS: Record<InitiativeStatus, string> = {
+    'in-progress': styles.inProgress,
+    planned: styles.planned,
+    done: styles.done,
+};
+
 export default async function InitiativePage({params}: PageProps) {
     const {slug} = await params;
     const initiative = getInitiativeBySlug(slug);
@@ -78,7 +84,9 @@ export default async function InitiativePage({params}: PageProps) {
                 <article className={styles.initiative}>
                     <header className={styles.header}>
                         <div className={styles.meta}>
-                            <span className={clsx(styles.badge, styles[meta.status])}>{STATUS_LABEL[meta.status]}</span>
+                            <span className={clsx(styles.badge, STATUS_CLASS[meta.status])}>
+                                {STATUS_LABEL[meta.status]}
+                            </span>
                             {meta.category && <span className={styles.category}>{meta.category}</span>}
                         </div>
 
@@ -114,7 +122,7 @@ export default async function InitiativePage({params}: PageProps) {
                                 <div className={styles.progression}>
                                     <span className={styles.progressionLabel}>Progress</span>
                                     <div className={styles.progressRow}>
-                                        <span className={clsx(styles.progressValue, styles[meta.status])}>
+                                        <span className={clsx(styles.progressValue, STATUS_CLASS[meta.status])}>
                                             {pct}% completed
                                         </span>
                                         {meta.progressLabel && (

@@ -7,8 +7,8 @@
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(330px, 100%), 1fr));
+    gap: 1rem;
     margin-top: 0.5rem;
 }
 
@@ -40,7 +40,7 @@
     gap: 0.35rem;
     padding: 0.3rem 0.6rem;
     border: 0.1rem solid var(--color-border);
-    border-radius: var(--radius-full, 999px);
+    border-radius: var(--radius-full);
     background: var(--color-surface);
     color: var(--color-text-secondary);
     font-size: 0.8rem;

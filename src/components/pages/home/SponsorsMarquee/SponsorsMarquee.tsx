@@ -38,6 +38,7 @@ export function SponsorsMarquee() {
                                             alt=""
                                             width={28}
                                             height={28}
+                                            className={sponsor.invertLogoOnLight ? 'theme-invert-on-light' : undefined}
                                         />
                                     )}
                                     <span className={styles.name}>{sponsor.name}</span>

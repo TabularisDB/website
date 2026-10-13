@@ -33,7 +33,7 @@
 
     &:hover {
         color: var(--color-text-primary);
-        background-color: rgba(255, 255, 255, 0.0375);
+        background-color: rgb(var(--rgb-tint) / 0.0375);
 
         & svg {
             color: var(--color-text-primary);
@@ -86,7 +86,7 @@
     &.active {
         color: var(--color-text-primary);
         font-weight: 500;
-        background-color: rgba(255, 255, 255, 0.0375);
+        background-color: rgb(var(--rgb-tint) / 0.0375);
         border-radius: var(--radius-sm);
         border-left-color: var(--color-accent-teal);
     }

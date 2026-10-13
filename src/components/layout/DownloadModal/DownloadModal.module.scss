@@ -27,23 +27,17 @@
     gap: 0.5rem;
     font-size: 0.85rem;
     color: var(--color-accent-teal);
-    text-decoration: none;
 
     &:hover {
         text-decoration: underline;
     }
-}
 
-.body {
-    flex: 1;
-    overflow-y: auto;
-    padding: 1.5rem;
+    svg {
+        width: 0.9rem;
+        height: 0.9rem;
+    }
 }
 
 .warning {
-    font-size: 0.85rem;
-    line-height: 1.5;
-    color: var(--color-text-secondary);
-    margin-bottom: 1rem;
     font-style: italic;
 }

@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import {searchIndex, type SearchDoc} from '@/lib/search';
 import {trackSiteSearch} from '@/lib/analytics';
 import styles from './SearchModal.module.scss';
+import {useScrollLock} from '@/hooks/useScrollLock';
 
 type SearchResult = {
     type: 'post' | 'wiki' | 'plugin' | 'page';
@@ -108,6 +109,8 @@ export function SearchModal() {
         },
         [closeModal, router],
     );
+
+    useScrollLock(open);
 
     // Debounced search
     useEffect(() => {

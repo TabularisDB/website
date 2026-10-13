@@ -22,6 +22,8 @@ import Link from 'next/link';
 import styles from './LeaderboardPage.module.scss';
 import {Accordion, AccordionItem} from '@/components/ui/Accordion/Accordion';
 import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
+import {Card} from '@/components/ui/Card/Card';
+import {CardGrid} from '@/components/ui/CardGrid/CardGrid';
 
 const path = '/contribute/leaderboard';
 const title = 'Contributor Leaderboard | Tabularis';
@@ -160,18 +162,24 @@ export default function LeaderboardPage() {
                     </p>
                 </header>
 
-                <ul className={styles.rules}>
+                <CardGrid variant="joined" minWidth={350} className={styles.rules}>
                     {SCORE_RULES.map((rule) => (
-                        <li key={rule.title} className={styles.rule}>
-                            <span className={styles.rulePoints}>
-                                {rule.points > 0 ? `+${rule.points}` : rule.points}
-                                <small>{rule.points === 1 ? 'pt' : 'pts'}</small>
-                            </span>
-                            <h3 className={styles.ruleTitle}>{rule.title}</h3>
-                            <p className={styles.ruleText}>{rule.description}</p>
-                        </li>
+                        <Card key={rule.title}>
+                            <Card.Header
+                                icon={
+                                    <span className={styles.points}>
+                                        {rule.points > 0 ? `+${rule.points}` : rule.points}
+                                        <small>{rule.points === 1 ? 'pt' : 'pts'}</small>
+                                    </span>
+                                }
+                            />
+                            <Card.Content>
+                                <Card.Title>{rule.title}</Card.Title>
+                                <Card.Description>{rule.description}</Card.Description>
+                            </Card.Content>
+                        </Card>
                     ))}
-                </ul>
+                </CardGrid>
             </section>
 
             <CalloutBlock

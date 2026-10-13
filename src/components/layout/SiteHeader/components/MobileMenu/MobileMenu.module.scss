@@ -2,8 +2,8 @@
     position: fixed;
     inset: 0;
     top: var(--header-height);
-    background: rgba(0, 0, 0, 0.5);
-    z-index: var(--z-menu);
+    background: var(--color-backdrop);
+    z-index: calc(var(--z-drawer) - 1);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s ease;
@@ -22,7 +22,9 @@
     right: 0;
     width: min(100%, 540px);
     height: 100%;
-    z-index: var(--z-menu);
+    z-index: var(--z-drawer);
+
+    --footer-height: 5rem;
 
     &.active {
         display: block;
@@ -38,17 +40,16 @@
     flex-direction: column;
     gap: 0.5rem;
     padding: 1rem;
-    height: calc(100% - var(--header-height) - 10rem);
+    height: calc(100% - var(--header-height) - var(--footer-height));
     overflow: auto;
 }
 
 .mobileMenuFooter {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: center;
     position: fixed;
-    height: 9rem;
-    gap: 1.5rem;
+    gap: 0.5rem;
+    height: var(--footer-height);
     right: 0;
     bottom: 0;
     width: 100%;
@@ -58,36 +59,13 @@
     width: min(100%, 540px);
 }
 
-.mobileSocials {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.divider {
-    height: 1.375rem;
-    width: 0.1rem;
-    background-color: var(--color-text-muted);
-}
-
-.githubStars,
-.discord {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--color-text-primary);
-    font-weight: 550;
-    font-size: 0.9rem;
-
-    svg {
-        --size: 1.375rem;
-        min-width: var(--size);
-        width: var(--size);
-        height: var(--size);
-    }
-}
-
 .download {
     width: 100%;
+
+    svg {
+        --size: 1.125rem;
+        width: var(--size);
+        min-width: var(--size);
+        height: var(--size);
+    }
 }

@@ -1,10 +1,12 @@
+import clsx from 'clsx';
 import Image from 'next/image';
-import {getProduct} from '@/lib/compare/products';
-import Link from 'next/link';
 import {Fragment} from 'react';
-import {COMPARE_PREVIEW_MAP} from '@/components/pages/compare/Compare.data';
-import styles from './CompareGrid.module.scss';
 import {CheckCircle2} from 'lucide-react';
+import {getProduct} from '@/lib/compare/products';
+import {COMPARE_PREVIEW_MAP} from '@/components/pages/compare/Compare.data';
+import {Card} from '@/components/ui/Card/Card';
+import {CardGrid} from '@/components/ui/CardGrid/CardGrid';
+import styles from './CompareGrid.module.scss';
 
 export interface CompareGridItem {
     slug: string;
@@ -25,38 +27,55 @@ function ProductLogo({id}: {id: string}) {
     return <Image src={product.logo} alt={product.name} width={44} height={44} className={styles.logo} />;
 }
 
+function Tools({tools}: {tools: string[]}) {
+    return (
+        <span className={styles.tools}>
+            {tools.map((tool, index) => (
+                <Fragment key={tool}>
+                    {index > 0 && <span className="divider" />}
+                    <ProductLogo id={tool} />
+                </Fragment>
+            ))}
+        </span>
+    );
+}
+
 export function CompareGrid({items, variant = 'accent'}: CompareGridProps) {
     return (
-        <div className={styles.grid}>
+        <CardGrid variant="joined">
             {items.map((item) => {
                 const preview = COMPARE_PREVIEW_MAP[item.slug];
+                const ariaLabel = `See comparison: ${item.title}`;
+
+                if (variant === 'highlights') {
+                    return (
+                        <Card key={item.slug} className={styles.centered}>
+                            <Card.Header icon={<Tools tools={preview.tools} />} />
+                            {preview.highlights && (
+                                <ul className={styles.highlights}>
+                                    {preview.highlights.map((point) => (
+                                        <li key={point}>
+                                            <CheckCircle2 aria-hidden="true" className={styles.highlightIcon} />
+                                            {point}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                            <Card.Link href={item.href} ariaLabel={ariaLabel} />
+                        </Card>
+                    );
+                }
 
                 return (
-                    <Link key={item.slug} href={item.href} className={styles.card} aria-label={item.title}>
-                        <div className={styles.tools}>
-                            {preview.tools.map((tool, index) => (
-                                <Fragment key={tool}>
-                                    {index > 0 && <div className="divider" />}
-                                    <ProductLogo id={tool} />
-                                </Fragment>
-                            ))}
-                        </div>
-
-                        {variant === 'highlights' && preview.highlights && (
-                            <ul className={styles.highlights}>
-                                {preview.highlights.map((point) => (
-                                    <li key={point}>
-                                        <CheckCircle2 size={18} className={styles.highlightIcon} />
-                                        {point}
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-
-                        {variant === 'accent' && <span className={styles.accent}>{preview.accent}</span>}
-                    </Link>
+                    <Card key={item.slug} className={clsx(styles.centered, styles.accentCard)}>
+                        <Card.Header icon={<Tools tools={preview.tools} />} />
+                        <Card.Description>{preview.accent}</Card.Description>
+                        <Card.Link href={item.href} ariaLabel={ariaLabel}>
+                            See comparison
+                        </Card.Link>
+                    </Card>
                 );
             })}
-        </div>
+        </CardGrid>
     );
 }

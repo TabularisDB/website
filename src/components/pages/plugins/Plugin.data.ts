@@ -62,7 +62,7 @@ export interface PluginsPageCopy {
 // entry falls back to its registry label and description.
 export const PLUGINS_PAGE_COPY: Record<string, PluginsPageCopy> = {
     all: {
-        title: 'Drivers, themes and more, one install away.',
+        title: 'Extend Tabularis your way.',
         description:
             'Plugins add new databases and new looks to Tabularis. Browse what the community has published on the Tabularium registry and install it from inside the app, or build your own.',
     },

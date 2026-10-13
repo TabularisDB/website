@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import type {ReactNode} from 'react';
-import styles from './SolutionsGrid.module.scss';
+import {Card} from '@/components/ui/Card/Card';
+import {CardGrid} from '@/components/ui/CardGrid/CardGrid';
 
 export interface SolutionGridItem {
     slug: string;
@@ -12,19 +12,19 @@ export interface SolutionGridItem {
 
 export function SolutionsGrid({items}: {items: SolutionGridItem[]}) {
     return (
-        <div className={styles.grid}>
+        <CardGrid variant="joined">
             {items.map((item) => (
-                <Link key={item.slug} href={item.href} className={styles.card}>
-                    <span className={styles.cardIcon}>{item.icon}</span>
-
-                    <div className={styles.cardDetails}>
-                        <span className={styles.cardTitle}>{item.title}</span>
-                        <p className={styles.cardExcerpt}>{item.excerpt}</p>
-                    </div>
-
-                    <span className={styles.cardLink}>Learn more</span>
-                </Link>
+                <Card key={item.slug}>
+                    <Card.Header icon={item.icon} />
+                    <Card.Content>
+                        <Card.Title>{item.title}</Card.Title>
+                        <Card.Description>{item.excerpt}</Card.Description>
+                    </Card.Content>
+                    <Card.Link href={item.href} ariaLabel={`Learn more about ${item.title}`}>
+                        Learn more
+                    </Card.Link>
+                </Card>
             ))}
-        </div>
+        </CardGrid>
     );
 }

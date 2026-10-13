@@ -1,4 +1,4 @@
-import {ThankYouResources} from '@/components/ui/ThankYouResources/ThankYouResources';
+import {ThankYouResource, ThankYouResources} from '@/components/ui/ThankYouResources/ThankYouResources';
 import {SOCIAL_URLS} from '@/lib/social';
 import {DownloadIcon, HeartHandshakeIcon, MapIcon, StarIcon} from 'lucide-react';
 import type {Metadata} from 'next';
@@ -9,26 +9,26 @@ export const metadata: Metadata = {
     robots: {index: false, follow: false},
 };
 
-const RESOURCES = [
+const RESOURCES: ThankYouResource[] = [
     {
         href: '/download',
-        external: false,
         icon: <DownloadIcon />,
         title: 'Download Tabularis',
+        linkLabel: 'Download',
         desc: 'Try it on Windows, macOS or Linux and start working with your databases.',
     },
     {
         href: '/roadmap',
-        external: false,
         icon: <MapIcon />,
         title: 'See the roadmap',
+        linkLabel: 'View roadmap',
         desc: "Track what we're building next and where your feedback fits in.",
     },
     {
         href: SOCIAL_URLS.github,
-        external: true,
         icon: <StarIcon />,
         title: 'Star us on GitHub',
+        linkLabel: 'Star on GitHub',
         desc: 'A star takes 2 seconds and is the single biggest way to help an open-source project grow.',
     },
 ];

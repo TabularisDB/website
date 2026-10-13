@@ -13,6 +13,8 @@
 .table {
     width: 100%;
     table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
     border-top: 0.1rem solid var(--color-border);
     border-left: 0.1rem solid var(--color-border);
 
@@ -30,7 +32,7 @@
     th {
         font-weight: 600;
         color: var(--color-text-primary);
-        background-color: rgba(255, 255, 255, 0.02);
+        background-color: rgb(var(--rgb-tint) / 0.02);
     }
 
     td {
@@ -47,6 +49,7 @@
         }
     }
 }
+
 .featureHeader,
 .featureCell {
     color: var(--color-text-primary) !important;
@@ -91,7 +94,7 @@
 }
 
 .iconYes {
-    color: #14b8a6;
+    color: var(--color-check);
     flex-shrink: 0;
 }
 

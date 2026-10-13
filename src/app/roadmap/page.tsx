@@ -86,8 +86,8 @@ export default function RoadmapPage() {
 
                     return (
                         <section key={group.status} className={styles.category}>
-                            <h2 className={styles.categoryTitle}>
-                                <StatusIcon className={styles.categoryIcon} />
+                            <h2 className="category-title">
+                                <StatusIcon aria-hidden="true" />
                                 {CATEGORY_LABEL[group.status]}
                             </h2>
 
@@ -105,15 +105,15 @@ export default function RoadmapPage() {
                 title="Not yet on the board"
                 actions={
                     <>
-                        <Button href="/contribute#issues" size="sm">
+                        <Button href="/contribute#issues">
                             <UsersIcon />
                             Find an issue
                         </Button>
-                        <Button href={SOCIAL_URLS.github} variant="secondary" size="sm">
+                        <Button href={SOCIAL_URLS.github} variant="secondary">
                             <GitHubIcon />
                             Star on GitHub
                         </Button>
-                        <Button href={SOCIAL_URLS.discord} variant="secondary" size="sm">
+                        <Button href={SOCIAL_URLS.discord} variant="secondary">
                             <DiscordIcon />
                             Join Discord
                         </Button>

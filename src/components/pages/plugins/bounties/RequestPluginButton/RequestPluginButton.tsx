@@ -1,11 +1,7 @@
 'use client';
 
-import {
-    PluginRequestModal,
-    takePendingRequest,
-    type PluginRequestDraft,
-    type PluginRequestKind,
-} from '@/components/pages/plugins/bounties/PluginRequestModal/PluginRequestModal';
+import {PluginRequestModal} from '@/components/pages/plugins/bounties/RequestPluginButton/PluginRequestModal/PluginRequestModal';
+import {takePendingRequest, type PluginRequestDraft, type PluginRequestKind} from '@/lib/plugins/requests';
 import {Button} from '@/components/ui/Button/Button';
 import {useEffect, useState, type ReactNode} from 'react';
 

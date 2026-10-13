@@ -1,0 +1,31 @@
+:root {
+    // Layout
+    --max-width: 1200px;
+    --max-width-lg: 1350px;
+    --header-height: 5rem;
+
+    // Spacing scale
+    --spacing-2xs: 0.25rem;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    --spacing-3xl: 4rem;
+    --spacing-section: 7rem;
+
+    // Radius
+    --radius-xs: 0.25rem;
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-full: 999px;
+
+    // Z-index scale
+    --z-dropdown: 10; // menus and panels anchored in the page
+    --z-header: 100; // site header
+    --z-prompt: 200; // cookie banner, engagement prompt
+    --z-drawer: 300; // mobile menu, wiki sidebar on mobile
+    --z-modal: 400; // modals, search, lightbox, video
+}

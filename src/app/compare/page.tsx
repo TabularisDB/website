@@ -1,11 +1,12 @@
 import {JsonLd} from '@/components/layout/JsonLd';
 import {CompareGrid} from '@/components/pages/compare/CompareGrid/CompareGrid';
-import {TransitionBlock} from '@/components/ui/TransitionBlock/TransitionBlock';
+import {Button} from '@/components/ui/Button/Button';
+import {CalloutBlock} from '@/components/ui/CalloutBlock/CalloutBlock';
+import {ogImages} from '@/lib/og/registry';
 import {buildBreadcrumbJsonLd} from '@/lib/seo';
 import {getSeoPagesBySection} from '@/lib/seo/seoPages';
-import {ArrowLeftRight} from 'lucide-react';
+import {ArrowLeftRight, LayersIcon} from 'lucide-react';
 import type {Metadata} from 'next';
-import {ogImages} from '@/lib/og/registry';
 
 const path = '/compare';
 const title = 'Compare | Tabularis';
@@ -56,12 +57,18 @@ export default function ComparePage() {
                 }))}
             />
 
-            <TransitionBlock
+            <CalloutBlock
                 title="Prefer to explore by use case?"
-                text="If you are earlier in the decision process, start from the workflow itself instead of the tool comparison."
-                buttonHref="/solutions"
-                buttonText="Browse solutions"
-            />
+                actions={
+                    <Button href="/solutions" size="sm">
+                        <LayersIcon />
+                        Browse solutions
+                    </Button>
+                }
+            >
+                If you are earlier in the decision process, start from the workflow itself instead of the tool
+                comparison.
+            </CalloutBlock>
         </div>
     );
 }

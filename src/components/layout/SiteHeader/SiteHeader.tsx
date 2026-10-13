@@ -33,13 +33,7 @@ export function SiteHeader() {
 
     return (
         <HeaderMenuContext.Provider value={{openGroupLabel, setOpenGroupLabel}}>
-            <header
-                className={clsx(
-                    styles.siteHeader,
-                    (scrolled || isMobileMenuOpen) && styles.border,
-                    (openGroupLabel || isMobileMenuOpen) && styles.menuOpen,
-                )}
-            >
+            <header className={clsx(styles.siteHeader, (scrolled || isMobileMenuOpen) && styles.border)}>
                 <div className={clsx(styles.container, wide && styles.containerWide)}>
                     <div onClick={() => setOpenGroupLabel(null)}>
                         <Brand />

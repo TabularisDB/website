@@ -28,7 +28,15 @@ export function Brand({className}: BrandProps) {
                 width={128}
                 height={26}
                 loading="eager"
-                className={clsx(styles.logo, className)}
+                className={clsx(styles.logo, 'theme-dark-only', className)}
+            />
+            <Image
+                src="/img/brand/tabularis-logo-color-dark.svg"
+                alt="Tabularis"
+                width={128}
+                height={26}
+                loading="eager"
+                className={clsx(styles.logo, 'theme-light-only', className)}
             />
         </Link>
     );

@@ -5,6 +5,7 @@ import {CopyButton} from '@/components/ui/CopyButton/CopyButton';
 import {buildBreadcrumbJsonLd} from '@/lib/seo';
 import {ArrowUpRight, ArrowUpRightIcon, Box, CopyIcon, Download, Droplet, Palette, Shapes, Type} from 'lucide-react';
 import type {Metadata} from 'next';
+import type {CSSProperties} from 'react';
 import styles from './BrandPage.module.scss';
 
 import {ogImages} from '@/lib/og/registry';
@@ -29,15 +30,28 @@ export const metadata: Metadata = {
 
 const BRAND_DIR = '/img/brand';
 
-const VARIANTS = [
-    {id: 'color', label: 'Color', tone: 'dark'},
-    {id: 'black', label: 'Black', tone: 'white'},
-    {id: 'white', label: 'White', tone: 'gray'},
-] as const;
-
 const ASSET_GROUPS = [
-    {type: 'logo', title: 'The full logo, for any background', icon: Shapes},
-    {type: 'icon', title: 'The icon, for tight spaces', icon: Box},
+    {
+        type: 'logo',
+        title: 'The full logo, for any background',
+        icon: Shapes,
+        variants: [
+            {id: 'color', label: 'Color', tone: 'dark'},
+            {id: 'color-dark', label: 'Color, dark text', tone: 'light'},
+            {id: 'black', label: 'Dark', tone: 'light'},
+            {id: 'white', label: 'Light', tone: 'dark'},
+        ],
+    },
+    {
+        type: 'icon',
+        title: 'The icon, for tight spaces',
+        icon: Box,
+        variants: [
+            {id: 'color', label: 'Color', tone: 'dark'},
+            {id: 'black', label: 'Dark', tone: 'light'},
+            {id: 'white', label: 'Light', tone: 'dark'},
+        ],
+    },
 ] as const;
 
 const FONTS = [
@@ -93,15 +107,18 @@ export default function BrandPage() {
             </header>
 
             <div className={styles.categoriesWrapper}>
-                {ASSET_GROUPS.map(({type, title, icon: GroupIcon}) => (
+                {ASSET_GROUPS.map(({type, title, icon: GroupIcon, variants}) => (
                     <section key={type} className={styles.category}>
-                        <h2 className={styles.categoryTitle}>
-                            <GroupIcon className={styles.categoryIcon} />
+                        <h2 className="category-title">
+                            <GroupIcon aria-hidden="true" />
                             {title}
                         </h2>
 
-                        <div className={`${styles.grid} ${styles.assetsGrid}`}>
-                            {VARIANTS.map((variant) => {
+                        <div
+                            className={`${styles.grid} ${styles.assetsGrid}`}
+                            style={{'--columns': variants.length} as CSSProperties}
+                        >
+                            {variants.map((variant) => {
                                 const file = `${BRAND_DIR}/tabularis-${type}-${variant.id}`;
 
                                 return (
@@ -109,7 +126,7 @@ export default function BrandPage() {
                                         <div className={styles.preview} data-tone={variant.tone}>
                                             <Image
                                                 src={`${file}.svg`}
-                                                alt={`Tabularis ${title.toLowerCase()}, ${variant.label.toLowerCase()}`}
+                                                alt={`Tabularis ${type}, ${variant.label.toLowerCase()}`}
                                                 width={type === 'logo' ? 2400 : 1024}
                                                 height={type === 'logo' ? 489 : 1024}
                                                 className={type === 'logo' ? styles.logo : styles.icon}
@@ -135,15 +152,15 @@ export default function BrandPage() {
                 ))}
 
                 <section className={styles.category}>
-                    <h2 className={styles.categoryTitle}>
-                        <Type className={styles.categoryIcon} />
+                    <h2 className="category-title">
+                        <Type aria-hidden="true" />
                         Two typefaces, one voice
                     </h2>
 
                     <div className={`${styles.grid} ${styles.fontsGrid}`}>
                         {FONTS.map((font) => (
                             <article key={font.name} className={styles.card}>
-                                <div className={`${styles.preview} ${font.className}`} data-tone="dark">
+                                <div className={`${styles.preview} ${font.className}`} data-tone="theme">
                                     <span className={styles.fontGlyph}>Aa</span>
                                     <span className={styles.fontSample}>{font.sample}</span>
                                 </div>
@@ -168,8 +185,8 @@ export default function BrandPage() {
                 </section>
 
                 <section className={styles.category}>
-                    <h2 className={styles.categoryTitle}>
-                        <Droplet className={styles.categoryIcon} />
+                    <h2 className="category-title">
+                        <Droplet aria-hidden="true" />
                         The colors we live in
                     </h2>
 

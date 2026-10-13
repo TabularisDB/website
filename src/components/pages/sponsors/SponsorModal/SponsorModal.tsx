@@ -1,14 +1,12 @@
 'use client';
+
+import clsx from 'clsx';
 import Image from 'next/image';
-import {ArrowRight, X} from 'lucide-react';
+import {ArrowUpRightIcon, GiftIcon, InfoIcon, SparklesIcon} from 'lucide-react';
+import {Button} from '@/components/ui/Button/Button';
+import {Modal} from '@/components/ui/Modal/Modal';
 import type {Sponsor} from '@/lib/sponsors';
 import styles from './SponsorModal.module.scss';
-import {Button} from '@/components/ui/Button/Button';
-
-interface SponsorModalProps {
-    sponsor: Sponsor;
-    onClose: () => void;
-}
 
 function withUtm(url: string, campaign = 'sponsor'): string {
     const u = new URL(url);
@@ -18,65 +16,67 @@ function withUtm(url: string, campaign = 'sponsor'): string {
     return u.toString();
 }
 
+interface SponsorModalProps {
+    sponsor: Sponsor | null;
+    onClose: () => void;
+}
+
 export function SponsorModal({sponsor, onClose}: SponsorModalProps) {
     return (
-        <div className={styles.overlay} onClick={onClose}>
-            <div className={styles.modal} onClick={(e) => e.stopPropagation()} role="dialog" aria-label={sponsor.name}>
-                <header className={styles.header}>
-                    <div className={styles.headerBrand}>
-                        {sponsor.logoImgCompact && (
-                            <Image
-                                src={sponsor.logoImgCompact}
-                                alt=""
-                                width={40}
-                                height={40}
-                                loading="eager"
-                                className={styles.headerLogo}
-                            />
+        <Modal
+            open={sponsor !== null}
+            onClose={onClose}
+            title={sponsor?.name ?? ''}
+            icon={
+                sponsor?.logoImgCompact && (
+                    <Image
+                        src={sponsor.logoImgCompact}
+                        alt=""
+                        width={40}
+                        height={40}
+                        className={clsx(styles.icon, sponsor.invertLogoOnLight && 'theme-invert-on-light')}
+                    />
+                )
+            }
+        >
+            {sponsor && (
+                <>
+                    <Modal.Body>
+                        <Modal.Section title="Overview" icon={<InfoIcon aria-hidden="true" />}>
+                            <Modal.Text>{sponsor.modalDescription}</Modal.Text>
+                        </Modal.Section>
+
+                        {sponsor.features && (
+                            <Modal.Section title="Why it matters" icon={<SparklesIcon aria-hidden="true" />}>
+                                <ul className={styles.features}>
+                                    {sponsor.features.map((feature) => (
+                                        <li key={feature.text}>
+                                            <span aria-hidden="true">{feature.icon}</span>
+                                            {feature.text}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </Modal.Section>
                         )}
-                        <h2 className={styles.headerTitle}>{sponsor.name}</h2>
-                    </div>
-                    <button className={styles.closeButton} onClick={onClose} aria-label="Close">
-                        <X size={20} />
-                    </button>
-                </header>
 
-                <div className={styles.body}>
-                    <div className={styles.section}>
-                        <span className={styles.categoryTitle}>Overview</span>
-                        <p className={styles.description}>{sponsor.modalDescription}</p>
-                    </div>
+                        {sponsor.offer && (
+                            <Modal.Section title="Offer for Tabularis users" icon={<GiftIcon aria-hidden="true" />}>
+                                <div className={styles.highlight}>
+                                    <p className={styles.highlightTitle}>{sponsor.offer.title}</p>
+                                    <Modal.Text>{sponsor.offer.description}</Modal.Text>
+                                </div>
+                            </Modal.Section>
+                        )}
+                    </Modal.Body>
 
-                    {sponsor.features && (
-                        <div className={styles.section}>
-                            <span className={styles.categoryTitle}>Why it matters</span>
-                            <ul className={styles.features}>
-                                {sponsor.features.map((f) => (
-                                    <li key={f.icon}>
-                                        <span>{f.icon}</span> <span>{f.text}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
-
-                    {sponsor.offer && (
-                        <div className={styles.section}>
-                            <span className={styles.categoryTitle}>Offer for Tabularis users</span>
-                            <div className={styles.highlight}>
-                                <h3 className={styles.highlightTitle}>{sponsor.offer.title}</h3>
-                                <p className={styles.highlightText}>{sponsor.offer.description}</p>
-                            </div>
-                        </div>
-                    )}
-                </div>
-
-                <footer className={styles.footer}>
-                    <Button href={withUtm(sponsor.url)} className={styles.visitButton}>
-                        Visit {sponsor.name} <ArrowRight size={16} />
-                    </Button>
-                </footer>
-            </div>
-        </div>
+                    <Modal.Actions>
+                        <Button href={withUtm(sponsor.url)} size="sm">
+                            Visit {sponsor.name}
+                            <ArrowUpRightIcon />
+                        </Button>
+                    </Modal.Actions>
+                </>
+            )}
+        </Modal>
     );
 }

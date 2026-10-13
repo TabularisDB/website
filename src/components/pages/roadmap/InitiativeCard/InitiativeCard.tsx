@@ -1,20 +1,25 @@
 import type {InitiativeMeta} from '@/lib/roadmap';
-import {ArrowRight} from 'lucide-react';
-import Link from 'next/link';
+import {Card} from '@/components/ui/Card/Card';
 import styles from './InitiativeCard.module.scss';
+import clsx from 'clsx';
+
+const STATUS_CLASS: Record<InitiativeMeta['status'], string> = {
+    'in-progress': styles.inProgress,
+    planned: styles.planned,
+    done: styles.done,
+};
 
 export function InitiativeCard({meta}: {meta: InitiativeMeta}) {
     return (
-        <Link href={`/roadmap/${meta.slug}`} className={styles.card} data-status={meta.status}>
-            <div className={styles.cardDetails}>
-                {meta.category && <span className={styles.cardScope}>{meta.category}</span>}
-                <h3 className={styles.cardTitle}>{meta.title}</h3>
-                {meta.lede && <p className={styles.cardExcerpt}>{meta.lede}</p>}
-            </div>
-
-            <span className={styles.cardLink}>
-                Read details <ArrowRight size={16} />
-            </span>
-        </Link>
+        <Card className={clsx(styles.card, STATUS_CLASS[meta.status])}>
+            <Card.Content>
+                {meta.category && <Card.Label className={styles.label}>{meta.category}</Card.Label>}
+                <Card.Title>{meta.title}</Card.Title>
+                {meta.lede && <Card.Description>{meta.lede}</Card.Description>}
+            </Card.Content>
+            <Card.Link href={`/roadmap/${meta.slug}`} ariaLabel={`Read details: ${meta.title}`}>
+                Read details
+            </Card.Link>
+        </Card>
     );
 }

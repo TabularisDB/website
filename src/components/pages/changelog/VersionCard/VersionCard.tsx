@@ -1,6 +1,7 @@
 import {GitHubIcon} from '@/components/ui/Icons/SocialIcons';
 import type {ChangelogVersion, SectionType} from '@/lib/changelog';
 import styles from './VersionCard.module.scss';
+import {Button} from '@/components/ui/Button/Button';
 
 const SECTION_LABELS: Record<SectionType, string> = {
     feat: 'Features',
@@ -39,10 +40,10 @@ export function VersionCard({version: v}: VersionCardProps) {
                     <h2 className={styles.title}>v{v.version}</h2>
 
                     {v.compareUrl && (
-                        <a href={v.compareUrl} target="_blank" rel="noopener noreferrer" className={styles.compareLink}>
+                        <Button href={v.compareUrl} className={styles.compareLink} variant="outline">
                             <GitHubIcon />
                             View diff
-                        </a>
+                        </Button>
                     )}
                 </div>
 

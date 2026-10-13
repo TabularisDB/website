@@ -43,7 +43,7 @@
 .pulse {
     width: 0.5rem;
     height: 0.5rem;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     background: currentColor;
     animation: pulse 1.6s ease-in-out infinite;
 }

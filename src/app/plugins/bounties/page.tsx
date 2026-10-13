@@ -1,20 +1,20 @@
 import {JsonLd} from '@/components/layout/JsonLd';
 import {BountyGrid} from '@/components/pages/plugins/bounties/BountyGrid/BountyGrid';
-import {BountyRequestCta} from '@/components/pages/plugins/bounties/BountyRequestCta/BountyRequestCta';
-import {RequestPluginButton} from '@/components/pages/plugins/bounties/RequestPluginButton/RequestPluginButton';
 import {BountySchema} from '@/components/pages/plugins/bounties/BountySchema/BountySchema';
-import {ShippedBounties} from '@/components/pages/plugins/bounties/ShippedBounties/ShippedBounties';
+import {RequestPluginButton} from '@/components/pages/plugins/bounties/RequestPluginButton/RequestPluginButton';
+import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
 import {Button} from '@/components/ui/Button/Button';
+import {CalloutBlock} from '@/components/ui/CalloutBlock/CalloutBlock';
 import {DiscordIcon} from '@/components/ui/Icons/SocialIcons';
+import {ogImages} from '@/lib/og/registry';
 import {getBountyStats} from '@/lib/plugins/bounties';
 import {getRequestKinds} from '@/lib/plugins/kinds';
 import {buildBreadcrumbJsonLd} from '@/lib/seo';
 import {SOCIAL_URLS} from '@/lib/social';
-import clsx from 'clsx';
-import {GitBranchIcon, HandCoinsIcon, PackageCheckIcon, TargetIcon} from 'lucide-react';
+import {ArrowRightIcon, GitBranchIcon, HandCoinsIcon, PackageCheckIcon, TargetIcon} from 'lucide-react';
 import type {Metadata} from 'next';
+import Link from 'next/link';
 import styles from './PluginBountyBoardPage.module.scss';
-import {ogImages} from '@/lib/og/registry';
 
 const path = '/plugins/bounties';
 const title = 'Plugin Bounty Board | Tabularis';
@@ -42,7 +42,7 @@ export default function PluginBountyBoardPage() {
     const kinds = getRequestKinds();
 
     return (
-        <div className={clsx('container', styles.layout)}>
+        <div className="container with-gap">
             <JsonLd
                 data={[
                     buildBreadcrumbJsonLd([
@@ -53,6 +53,7 @@ export default function PluginBountyBoardPage() {
                 ]}
             />
             <header className="page-header">
+                <Breadcrumbs crumbs={[{label: 'Plugins', href: '/plugins'}, {label: 'Plugin Bounty board'}]} />
                 <span className="eyebrow">
                     <HandCoinsIcon />
                     Plugin Bounty Board
@@ -63,15 +64,12 @@ export default function PluginBountyBoardPage() {
                     Tabularis should support next. GitHub tracks the work; Discord is the fastest place to shape an
                     idea.
                 </p>
-                <div className={styles.actions}>
-                    <RequestPluginButton className={styles.button} kinds={kinds}>
-                        Request a plugin
-                    </RequestPluginButton>
-                    <Button className={styles.button} href={SOCIAL_URLS.discord} variant="secondary">
-                        <DiscordIcon />
-                        Discuss on Discord
-                    </Button>
-                </div>
+
+                <Link href="/plugins" className={styles.shipped}>
+                    <PackageCheckIcon aria-hidden="true" />
+                    {stats.shippedCount} plugins already shipped from this board
+                    <ArrowRightIcon aria-hidden="true" />
+                </Link>
 
                 <div className={styles.bountySchema}>
                     <BountySchema />
@@ -98,43 +96,39 @@ export default function PluginBountyBoardPage() {
                         </div>
                         <p className={styles.text}>Targets that already have a claim, branch, or initial scope.</p>
                     </div>
-                    <div className={styles.stat}>
-                        <div className={styles.titleRow}>
-                            <div className={styles.iconWrap}>
-                                <PackageCheckIcon size={20} />
-                            </div>
-                            <h3 className={styles.title}>{stats.shippedCount} Shipped proofs</h3>
-                        </div>
-                        <p className={styles.text}>Existing plugin wins that prove external drivers can land.</p>
-                    </div>
                 </div>
             </header>
 
-            <section className={styles.market}>
+            <section className={styles.category}>
                 <header className="section-header">
-                    <span className="eyebrow">Active work</span>
+                    <span className="eyebrow">
+                        <TargetIcon />
+                        Active bounties
+                    </span>
                     <h2 className="title">Find the right target.</h2>
                     <p className="description">
-                        Search by database or narrow the board by status, focus, and difficulty. Each card points to the
-                        discussion, issue, or repository where work happens.
+                        Search by database or filter by status, focus and difficulty, then pick a bounty to claim it,
+                        sponsor it or discuss it with the community.
                     </p>
                 </header>
                 <BountyGrid />
             </section>
 
-            <section className={styles.market}>
-                <header className="section-header">
-                    <span className="eyebrow">Shipped</span>
-                    <h2 className="title">Proof that the market can close.</h2>
-                    <p className="description">
-                        Every plugin below started as an open bounty. They prove the board isn&apos;t just a wishlist.
-                    </p>
-                </header>
-
-                <ShippedBounties />
-            </section>
-
-            <BountyRequestCta kinds={kinds} />
+            <CalloutBlock
+                title="Not on the board yet?"
+                actions={
+                    <>
+                        <RequestPluginButton kinds={kinds}>Request a plugin</RequestPluginButton>
+                        <Button href={SOCIAL_URLS.discord} variant="secondary" size="sm">
+                            <DiscordIcon />
+                            Discuss on Discord
+                        </Button>
+                    </>
+                }
+            >
+                Suggest the integration you need. If the community backs it, it becomes a scoped bounty with an owner, a
+                target and a delivery path.
+            </CalloutBlock>
         </div>
     );
 }

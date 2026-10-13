@@ -3,7 +3,9 @@
 import {useEffect, useRef, type RefObject} from 'react';
 import {createPortal} from 'react-dom';
 import {VideoPlayer} from '@/components/ui/VideoPlayer/VideoPlayer';
+import {useScrollLock} from '@/hooks/useScrollLock';
 import styles from './VideoModal.module.scss';
+import {CloseButton} from '../CloseButton/CloseButton';
 
 const FOCUSABLE_SELECTOR = 'video, button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
@@ -31,12 +33,12 @@ export function VideoModal({
     const dialogRef = useRef<HTMLDivElement>(null);
     const previousFocusRef = useRef<HTMLElement | null>(null);
 
+    useScrollLock(open);
+
     useEffect(() => {
         if (!open) return;
 
         previousFocusRef.current = document.activeElement as HTMLElement | null;
-        const previousOverflow = document.body.style.overflow;
-        document.body.style.overflow = 'hidden';
         dialogRef.current?.focus();
 
         function handleKey(event: KeyboardEvent) {
@@ -76,7 +78,6 @@ export function VideoModal({
         window.addEventListener('keydown', handleKey);
         return () => {
             window.removeEventListener('keydown', handleKey);
-            document.body.style.overflow = previousOverflow;
             (restoreFocusTo?.current ?? previousFocusRef.current)?.focus();
         };
     }, [onClose, open, restoreFocusTo]);
@@ -98,13 +99,16 @@ export function VideoModal({
                 aria-label={ariaLabel}
                 tabIndex={-1}
             >
-                <VideoPlayer
-                    src={src}
-                    poster={poster}
-                    wrapperClassName={styles.player}
-                    videoClassName={styles.playerVideo}
-                    ariaLabel="Tabularis product overview"
-                />
+                <CloseButton onClick={onClose} label="Close video" />
+                <div className={styles.frame}>
+                    <VideoPlayer
+                        src={src}
+                        poster={poster}
+                        wrapperClassName={styles.player}
+                        videoClassName={styles.playerVideo}
+                        ariaLabel="Tabularis product overview"
+                    />
+                </div>
             </div>
         </div>,
         document.body,

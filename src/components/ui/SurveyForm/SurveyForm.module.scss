@@ -45,7 +45,7 @@
 }
 
 .required {
-    color: #f87171;
+    color: var(--color-danger);
 }
 
 .options {
@@ -86,7 +86,7 @@
 .optionOn {
     border-color: var(--color-accent-teal);
     color: var(--color-text-primary);
-    background: rgba(53, 208, 192, 0.06);
+    background: color-mix(in srgb, var(--color-accent-teal) 6%, transparent);
 }
 
 .indicator {
@@ -200,7 +200,7 @@
 
 .error {
     margin: 0;
-    color: color-mix(in srgb, var(--color-accent-red) 70%, white);
+    color: var(--color-danger);
     font-size: 0.85rem;
 }
 

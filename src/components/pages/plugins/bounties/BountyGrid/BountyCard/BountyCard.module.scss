@@ -1,0 +1,16 @@
+.logo {
+    width: 2.5rem;
+    height: 2.5rem;
+    object-fit: contain;
+}
+
+.status {
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+
+    svg {
+        width: 0.875rem;
+        height: 0.875rem;
+    }
+}

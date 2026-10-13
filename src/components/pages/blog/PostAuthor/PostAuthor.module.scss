@@ -17,12 +17,12 @@
 
 .author {
     display: flex;
-    align-items: center;
     gap: 0.75rem;
 }
 
 .avatar {
     width: 2.5rem;
+    min-width: 2.5rem;
     height: 2.5rem;
     overflow: hidden;
     border-radius: var(--radius-full);

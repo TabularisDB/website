@@ -9,12 +9,13 @@ import {
     type DifficultyFilter,
     type FocusFilter,
     type StatusFilter,
-} from '@/components/pages/plugins/bounties/BountyFilters/BountyFilters';
+} from './BountyFilters/BountyFilters';
 import styles from './BountyGrid.module.scss';
 import {BOUNTY_DIFFICULTY, BOUNTY_STATUS, getActiveBounties, PluginBounty} from '@/lib/plugins/bounties';
 import {STATUS_WEIGHT} from '@/components/pages/plugins/Plugin.data';
 import {XIcon} from 'lucide-react';
-import {BountyCard} from '@/components/pages/plugins/bounties/BountyCard/BountyCard';
+import {BountyCard} from '@/components/pages/plugins/bounties/BountyGrid/BountyCard/BountyCard';
+import {BountyModal} from '@/components/pages/plugins/bounties/BountyGrid/BountyModal/BountyModal';
 import {EmptyState} from '@/components/ui/EmptyState/EmptyState';
 
 function matchesStatus(bounty: PluginBounty, filter: StatusFilter) {
@@ -38,8 +39,11 @@ export function BountyGrid() {
     const [focus, setFocus] = useState<FocusFilter>('all');
     const [difficulty, setDifficulty] = useState<DifficultyFilter>('all');
     const [query, setQuery] = useState('');
+    const [selectedId, setSelectedId] = useState<string | null>(null);
 
     const activeBounties = getActiveBounties().sort((a, b) => STATUS_WEIGHT[a.status] - STATUS_WEIGHT[b.status]);
+
+    const selected = activeBounties.find((bounty) => bounty.id === selectedId) ?? null;
 
     const normalizedQuery = query.trim().toLowerCase();
 
@@ -81,7 +85,7 @@ export function BountyGrid() {
     }
 
     return (
-        <main className={styles.wrapper}>
+        <div className={styles.wrapper}>
             <BountyFilters
                 query={query}
                 onQueryChange={setQuery}
@@ -113,14 +117,14 @@ export function BountyGrid() {
             {filtered.length > 0 ? (
                 <div className={styles.grid}>
                     {filtered.map((bounty) => (
-                        <BountyCard key={bounty.id} bounty={bounty} />
+                        <BountyCard key={bounty.id} bounty={bounty} onOpen={setSelectedId} />
                     ))}
                 </div>
             ) : (
-                <EmptyState title="No matching target">
-                    Try clearing one filter or start a new request in GitHub Discussions.
-                </EmptyState>
+                <EmptyState title="No matching target">Try clearing a filter, or request it below.</EmptyState>
             )}
-        </main>
+
+            <BountyModal bounty={selected} onClose={() => setSelectedId(null)} />
+        </div>
     );
 }

@@ -1,0 +1,13 @@
+.toggle {
+    display: flex;
+    align-items: center;
+    color: var(--color-text-secondary) !important;
+    padding-inline: 0.75rem !important;
+
+    svg {
+        --size: 1.125rem;
+        min-width: var(--size);
+        width: var(--size);
+        height: var(--size);
+    }
+}

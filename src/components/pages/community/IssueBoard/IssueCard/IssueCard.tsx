@@ -1,31 +1,35 @@
 import {cleanIssueTitle, formatIssueDate, labelTextColor, type CommunityIssue} from '@/lib/community';
 import {GitPullRequestIcon, MessageSquareIcon} from 'lucide-react';
 import Image from 'next/image';
+import {Card} from '@/components/ui/Card/Card';
 import styles from './IssueCard.module.scss';
 
 export function IssueCard({issue}: {issue: CommunityIssue}) {
-    return (
-        <article className={styles.issueCard}>
-            <div className={styles.meta}>
-                <span className={styles.repo}>
-                    {issue.repo} #{issue.number}
-                </span>
-                {issue.pullRequests.length > 0 && (
-                    <span
-                        className={styles.pullRequests}
-                        title={issue.pullRequests.map((pr) => `#${pr.number}`).join(', ')}
-                    >
-                        <GitPullRequestIcon aria-hidden="true" />
-                        {issue.pullRequests.length} open {issue.pullRequests.length === 1 ? 'PR' : 'PRs'}
-                    </span>
-                )}
-            </div>
+    const title = cleanIssueTitle(issue.title);
 
-            <h3 className={styles.title}>
-                <a href={issue.url} target="_blank" rel="noopener noreferrer" className={styles.link}>
-                    {cleanIssueTitle(issue.title)}
-                </a>
-            </h3>
+    return (
+        <Card>
+            <Card.Header
+                icon={
+                    <Card.Label>
+                        {issue.repo} #{issue.number}
+                    </Card.Label>
+                }
+                aside={
+                    issue.pullRequests.length > 0 && (
+                        <span
+                            className={styles.pullRequests}
+                            title={issue.pullRequests.map((pr) => `#${pr.number}`).join(', ')}
+                        >
+                            <GitPullRequestIcon aria-hidden="true" />
+                            {issue.pullRequests.length} open {issue.pullRequests.length === 1 ? 'PR' : 'PRs'}
+                        </span>
+                    )
+                }
+            />
+
+            <Card.Title>{title}</Card.Title>
+            <Card.Link href={issue.url} ariaLabel={title} />
 
             {issue.labels.length > 0 && (
                 <ul className={styles.labels}>
@@ -75,6 +79,6 @@ export function IssueCard({issue}: {issue: CommunityIssue}) {
                     </span>
                 )}
             </div>
-        </article>
+        </Card>
     );
 }
