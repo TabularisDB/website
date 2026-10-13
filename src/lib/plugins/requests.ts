@@ -286,15 +286,15 @@ export interface MaintainedRepo {
     url: string;
 }
 
-/** Repositories the visitor can maintain on their linked accounts (first page of each), as link suggestions. */
-export async function fetchMaintainedRepos(): Promise<MaintainedRepo[]> {
+/** Repositories the visitor can maintain on their linked accounts (first page of each), or null on failure. */
+export async function fetchMaintainedRepos(): Promise<MaintainedRepo[] | null> {
     try {
         const res = await fetch(`${TABULARIUM_URL}/api/submit/repos?page=1`, {credentials: 'include'});
-        if (!res.ok) return [];
+        if (!res.ok) return null;
         const body = (await res.json()) as {groups: Array<{repos: MaintainedRepo[]}>};
         return body.groups.flatMap((group) => group.repos.map(({fullName, url}) => ({fullName, url})));
     } catch {
-        return [];
+        return null;
     }
 }
 

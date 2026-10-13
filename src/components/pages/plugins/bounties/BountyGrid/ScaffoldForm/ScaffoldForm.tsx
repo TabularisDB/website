@@ -60,12 +60,12 @@ export function ScaffoldForm({bounty, onScaffolded}: ScaffoldFormProps) {
         };
     }, [canScaffold]);
 
-    // Suggestions for the link field, loaded the first time it is shown.
+    // Suggestions for the link field, loaded the first time it is shown; retried on the next visit if that fails.
     useEffect(() => {
         if (mode !== 'link' || repos !== null) return;
         let cancelled = false;
         fetchMaintainedRepos().then((list) => {
-            if (!cancelled) setRepos(list);
+            if (!cancelled && list) setRepos(list);
         });
         return () => {
             cancelled = true;
@@ -151,11 +151,10 @@ export function ScaffoldForm({bounty, onScaffolded}: ScaffoldFormProps) {
     return (
         <div className={styles.wrapper}>
             {canScaffold && (
-                <div className={styles.modes} role="tablist" aria-label="Repository">
+                <div className={styles.modes} role="group" aria-label="Repository">
                     <button
                         type="button"
-                        role="tab"
-                        aria-selected={mode === 'create'}
+                        aria-pressed={mode === 'create'}
                         className={clsx(styles.mode, mode === 'create' && styles.modeActive)}
                         onClick={() => switchMode('create')}
                     >
@@ -163,8 +162,7 @@ export function ScaffoldForm({bounty, onScaffolded}: ScaffoldFormProps) {
                     </button>
                     <button
                         type="button"
-                        role="tab"
-                        aria-selected={mode === 'link'}
+                        aria-pressed={mode === 'link'}
                         className={clsx(styles.mode, mode === 'link' && styles.modeActive)}
                         onClick={() => switchMode('link')}
                     >
