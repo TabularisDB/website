@@ -68,6 +68,16 @@ select {
     color: inherit;
 }
 
+// iOS Safari zooms the page when focusing a field under 16px; component
+// styles set smaller sizes, so this has to win over them on touch devices.
+@media (hover: none) and (pointer: coarse) {
+    input,
+    textarea,
+    select {
+        font-size: max(16px, 1em) !important;
+    }
+}
+
 button {
     background: none;
     border: none;
