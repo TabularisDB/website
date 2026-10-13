@@ -60,9 +60,9 @@ export default function PluginBountyBoardPage() {
                 </span>
                 <h1 className="title">Help ship the next driver.</h1>
                 <p className="description">
-                    See what the community is building, find a concrete contribution, or propose the integration
-                    Tabularis should support next. GitHub tracks the work; Discord is the fastest place to shape an
-                    idea.
+                    See what the community is building, upvote what you need, or claim a target and get a repository
+                    scaffolded for it. Every bounty is a reviewed request on the Tabularium registry, and ships as soon
+                    as its plugin is listed there.
                 </p>
 
                 <Link href="/plugins" className={styles.shipped}>
@@ -92,9 +92,9 @@ export default function PluginBountyBoardPage() {
                             <div className={styles.iconWrap}>
                                 <GitBranchIcon size={20} />
                             </div>
-                            <h3 className={styles.title}>{stats.claimedCount + stats.scopedCount} In motion</h3>
+                            <h3 className={styles.title}>{stats.inProgressCount + stats.scopedCount} In motion</h3>
                         </div>
-                        <p className={styles.text}>Targets that already have a claim, branch, or initial scope.</p>
+                        <p className={styles.text}>Targets someone is building, or that already have an initial scope.</p>
                     </div>
                 </div>
             </header>
@@ -107,8 +107,8 @@ export default function PluginBountyBoardPage() {
                     </span>
                     <h2 className="title">Find the right target.</h2>
                     <p className="description">
-                        Search by database or filter by status, focus and difficulty, then pick a bounty to claim it,
-                        sponsor it or discuss it with the community.
+                        Search by database or filter by status, focus and difficulty, then pick a bounty to upvote it,
+                        claim it, sponsor it or discuss it with the community.
                     </p>
                 </header>
                 <BountyGrid />
@@ -126,8 +126,8 @@ export default function PluginBountyBoardPage() {
                     </>
                 }
             >
-                Suggest the integration you need. If the community backs it, it becomes a scoped bounty with an owner, a
-                target and a delivery path.
+                Suggest the integration you need. Once a maintainer reviews it, it lands here as a bounty the community
+                can upvote and claim.
             </CalloutBlock>
         </div>
     );

@@ -106,3 +106,148 @@ export async function sendPluginRequest(draft: PluginRequestDraft): Promise<Send
         return {ok: false, error: 'Could not reach the registry. Check your connection and try again.'};
     }
 }
+
+// ---------------------------------------------------------------------------
+// Bounty board: live votes and claims, and repository scaffolding.
+
+/** Live state of a request, refreshed in the browser over the baked-in build data. */
+export interface LiveRequest {
+    id: string;
+    slug: string;
+    status: 'pending' | 'approved' | 'rejected' | 'fulfilled';
+    upvotes: number;
+    claims: number;
+    claimers: Array<{
+        username: string | null;
+        displayName: string;
+        avatarUrl: string | null;
+        repoUrl: string | null;
+    }>;
+    claimedByMe: boolean;
+    votedByMe: boolean;
+}
+
+export type BountyAction = 'upvote' | 'claim';
+
+// An upvote or claim clicked while signed out, replayed once the visitor is back from sign-in.
+const PENDING_ACTION_KEY = 'tabularis:bounty-action';
+
+export function savePendingAction(action: BountyAction, slug: string): boolean {
+    try {
+        sessionStorage.setItem(PENDING_ACTION_KEY, JSON.stringify({action, slug}));
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+export function takePendingAction(): {action: BountyAction; slug: string} | null {
+    try {
+        const raw = sessionStorage.getItem(PENDING_ACTION_KEY);
+        if (!raw) return null;
+        sessionStorage.removeItem(PENDING_ACTION_KEY);
+        return JSON.parse(raw) as {action: BountyAction; slug: string};
+    } catch {
+        return null;
+    }
+}
+
+/** Every public request with the visitor's own votes and claims, or null when the registry is unreachable. */
+export async function fetchLiveRequests(): Promise<Map<string, LiveRequest> | null> {
+    try {
+        const bySlug = new Map<string, LiveRequest>();
+        for (let page = 1; page <= 10; page += 1) {
+            const res = await fetch(
+                `${TABULARIUM_URL}/api/requests?status=approved,fulfilled&limit=100&page=${page}`,
+                {credentials: 'include'},
+            );
+            if (!res.ok) return null;
+            const body = (await res.json()) as {total: number; requests: LiveRequest[]};
+            // A registry without request review has no status or claimers: keep the build data.
+            if (body.requests.some((request) => !request.status || !Array.isArray(request.claimers))) return null;
+            for (const request of body.requests) bySlug.set(request.slug, request);
+            if (bySlug.size >= body.total || body.requests.length === 0) break;
+        }
+        return bySlug;
+    } catch {
+        return null;
+    }
+}
+
+type ActionResult<T> = {ok: true; data: T} | {ok: false; error: string; signedOut?: boolean; reauthUrl?: string};
+
+async function postAction<T>(path: string, body: unknown = {}): Promise<ActionResult<T>> {
+    try {
+        const res = await fetch(`${TABULARIUM_URL}${path}`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(body),
+        });
+        if (res.status === 401) {
+            let reauthUrl: string | undefined;
+            try {
+                reauthUrl = ((await res.clone().json()) as {reauthUrl?: string}).reauthUrl;
+            } catch {
+                // No JSON body: a plain signed-out response.
+            }
+            return {ok: false, signedOut: !reauthUrl, reauthUrl, error: 'Sign in to Tabularium to continue.'};
+        }
+        if (!res.ok) {
+            let reauthUrl: string | undefined;
+            let hint: string | undefined;
+            try {
+                const json = (await res.clone().json()) as {reauthUrl?: string; hint?: string};
+                reauthUrl = json.reauthUrl;
+                hint = json.hint;
+            } catch {
+                // Non-JSON body: errorMessage falls back to the status.
+            }
+            const error = await errorMessage(res);
+            return {ok: false, error: hint ? `${error} ${hint}` : error, reauthUrl};
+        }
+        return {ok: true, data: (await res.json()) as T};
+    } catch {
+        return {ok: false, error: 'Could not reach the registry. Check your connection and try again.'};
+    }
+}
+
+export function toggleUpvote(requestId: string) {
+    return postAction<{upvotes: number; voted: boolean}>(`/api/requests/${encodeURIComponent(requestId)}/upvote`);
+}
+
+export function toggleClaim(requestId: string) {
+    return postAction<{claimed: boolean; claims: number; claimers: LiveRequest['claimers']}>(
+        `/api/requests/${encodeURIComponent(requestId)}/claim`,
+    );
+}
+
+export interface ScaffoldOptions {
+    repoName: string;
+    owner?: string;
+    private?: boolean;
+    driver?: {dbType: 'network' | 'file' | 'folder' | 'api'; withUi: boolean};
+    theme?: {minRuntimeVersion: string};
+}
+
+export interface ScaffoldedRepo {
+    repoUrl: string;
+    fullName: string;
+    submitUrl: string;
+    claimers: LiveRequest['claimers'];
+}
+
+/** Creates the claimer's repository, scaffolded by @tabularis/create-plugin. */
+export function scaffoldRepository(requestId: string, options: ScaffoldOptions) {
+    return postAction<ScaffoldedRepo>(`/api/requests/${encodeURIComponent(requestId)}/scaffold`, {
+        ...options,
+        returnTo: window.location.href.split('#')[0],
+    });
+}
+
+/** Local alternative to the hosted scaffold, for any forge. */
+export function localScaffoldCommand(slug: string, kind: string | null): string {
+    return kind === 'theme'
+        ? `npx --package @tabularis/create-plugin tabularis-theme scaffold ${slug} --dir ${slug} --min-runtime-version <version>`
+        : `npm create @tabularis/plugin@latest ${slug}`;
+}

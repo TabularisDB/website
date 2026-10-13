@@ -111,8 +111,8 @@ export function PluginRequestModal({open, onClose, kinds, resume}: PluginRequest
             <Modal.Body>
                 {created ? (
                     <Modal.Text className={styles.lead}>
-                        <strong>{created.name}</strong> is on the Tabularium wishlist. The community can now upvote it,
-                        and builders can claim it.
+                        <strong>{created.name}</strong> is on the Tabularium wishlist, waiting for review. Once a
+                        maintainer approves it, it shows up on this board, where the community can upvote and claim it.
                     </Modal.Text>
                 ) : (
                     <form id={FORM_ID} className={styles.form} onSubmit={handleSubmit}>
@@ -121,7 +121,8 @@ export function PluginRequestModal({open, onClose, kinds, resume}: PluginRequest
                             <a href={TABULARIUM_REQUESTS_URL} target="_blank" rel="noopener noreferrer">
                                 Tabularium wishlist
                             </a>
-                            , where the community votes and builders claim them.
+                            . A maintainer reviews each one before it becomes a bounty the community can vote on and
+                            claim.
                         </Modal.Text>
 
                         <label className={styles.field}>

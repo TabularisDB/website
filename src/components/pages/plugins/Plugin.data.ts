@@ -46,7 +46,7 @@ export function getPluginIcon(id: string): string | null {
 
 export const STATUS_WEIGHT: Record<BOUNTY_STATUS, number> = {
     [BOUNTY_STATUS.MOST_WANTED]: 0,
-    [BOUNTY_STATUS.CLAIMED]: 1,
+    [BOUNTY_STATUS.IN_PROGRESS]: 1,
     [BOUNTY_STATUS.SCOPED]: 2,
     [BOUNTY_STATUS.COMING_SOON]: 3,
     [BOUNTY_STATUS.OPEN]: 4,

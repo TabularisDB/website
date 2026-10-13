@@ -194,6 +194,87 @@ async function buildPluginKinds() {
     };
 }
 
+// Bounty board (/plugins/bounties): every approved or shipped plugin request on
+// Tabularium, with the board metadata its reviewer filled in. Fields a reviewer
+// left empty fall back to the last committed copy of the same bounty, then to
+// neutral defaults. The board refreshes votes and claims live in the browser;
+// the request.* webhooks and the 6-hour cron rebuild keep this snapshot current.
+const BOUNTIES_OUT = 'src/data/pluginBounties.json';
+const BOUNTY_ACCENTS = ['#ff5a3d', '#4f8cff', '#22c55e', '#f59e0b', '#a855f7', '#06b6d4', '#ec4899', '#14b8a6'];
+const KIND_TARGETS = {driver: 'Driver plugin', theme: 'Theme'};
+
+function hashOf(text) {
+    let h = 0;
+    for (const ch of text) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+    return h;
+}
+
+function firstSentence(text) {
+    const sentence = text.split(/(?<=[.!?])\s/)[0] ?? text;
+    return sentence.length > 160 ? `${sentence.slice(0, 157)}…` : sentence;
+}
+
+function toBounty(request, previous) {
+    const b = request.bounty ?? {};
+    const h = hashOf(request.slug);
+    const boardStatus = b.boardStatus ?? previous?.boardStatus ?? 'open';
+    const shipped = request.status === 'fulfilled';
+    const claimers = request.claimers.map(({username, displayName, avatarUrl, repoUrl}) => ({
+        username,
+        displayName,
+        avatarUrl,
+        repoUrl,
+    }));
+    return {
+        id: request.slug,
+        requestId: request.id,
+        kind: request.kind,
+        name: request.name,
+        target: previous?.target ?? KIND_TARGETS[request.kind] ?? 'Plugin',
+        // Same rule as bountyStatus() in src/lib/plugins/bounties.ts.
+        status: shipped ? 'shipped' : claimers.length > 0 ? 'in-progress' : boardStatus,
+        boardStatus,
+        tagline: b.tagline ?? previous?.tagline ?? firstSentence(request.description),
+        description: request.description,
+        stage: b.stage ?? previous?.stage ?? (shipped ? 'Shipped' : 'Open brief'),
+        nextStep:
+            b.nextStep ??
+            previous?.nextStep ??
+            'Claim it, create the repository from this page, then publish a release and submit it to the registry.',
+        difficulty: b.difficulty ?? previous?.difficulty ?? 'Medium',
+        accent: b.accent ?? previous?.accent ?? BOUNTY_ACCENTS[h % BOUNTY_ACCENTS.length],
+        radar: b.radar ?? previous?.radar ?? {x: 15 + (h % 71), y: 15 + ((h >>> 8) % 71), scale: 1},
+        tags: b.tags ?? previous?.tags ?? [],
+        capabilities: b.capabilities ?? previous?.capabilities ?? [],
+        signal: b.signal ?? previous?.signal ?? '',
+        sponsorUrl: b.sponsorUrl ?? previous?.sponsorUrl ?? '/sponsors',
+        upvotes: request.upvotes,
+        claimers,
+        pluginId: request.fulfilledPlugin?.id ?? null,
+    };
+}
+
+async function buildBounties() {
+    const committed = JSON.parse(await readFile(resolve(process.cwd(), BOUNTIES_OUT), 'utf8'));
+    const previous = new Map(committed.bounties.map((bounty) => [bounty.id, bounty]));
+    const requests = [];
+    for (let page = 1; page <= 50; page += 1) {
+        const res = await fetchPlainJson(
+            `${TABULARIUM}/api/requests?status=approved,fulfilled&sort=upvotes&limit=100&page=${page}`,
+        );
+        requests.push(...res.requests);
+        if (requests.length >= res.total || res.requests.length === 0) break;
+    }
+    // A registry that predates request review returns no status: nothing to build from.
+    if (requests.some((request) => !request.status)) {
+        throw new Error('the registry does not expose request review status yet');
+    }
+    return {
+        constellationIds: committed.constellationIds,
+        bounties: requests.map((request) => toBounty(request, previous.get(request.slug))),
+    };
+}
+
 // Repo stars + total release-asset downloads, baked into the static HTML so
 // visitors' browsers never hit the unauthenticated GitHub API (60 req/h per IP).
 // The 6-hour rebuild cron keeps them fresh.
@@ -600,6 +681,15 @@ async function main() {
         // Same policy as buildRegistry: the site must stay deployable when the
         // registry is down — the committed copy from the last successful fetch ships.
         console.warn(`plugin kinds unavailable, keeping committed copy: ${err}`);
+    }
+
+    try {
+        const bounties = await buildBounties();
+        await writeTarget(BOUNTIES_OUT, JSON.stringify(bounties, null, 4) + '\n');
+        console.log(`fetched ${TABULARIUM}/api/requests -> ${BOUNTIES_OUT} (${bounties.bounties.length} bounties)`);
+    } catch (err) {
+        // Same policy as the plugin kinds: the committed copy ships when the registry is down.
+        console.warn(`plugin requests unavailable, keeping committed bounty board: ${err}`);
     }
 
     const registry = await buildRegistry();
