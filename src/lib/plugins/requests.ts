@@ -1,3 +1,4 @@
+import {APP_VERSION} from '@/lib/download/version';
 import {TABULARIUM_URL} from '@/lib/tabularium';
 
 export const NAME_MAX = 120;
@@ -163,9 +164,13 @@ export async function fetchLiveRequests(): Promise<Map<string, LiveRequest> | nu
             );
             if (!res.ok) return null;
             const body = (await res.json()) as {total: number; requests: LiveRequest[]};
-            // A registry without request review has no status or claimers: keep the build data.
-            if (body.requests.some((request) => !request.status || !Array.isArray(request.claimers))) return null;
-            for (const request of body.requests) bySlug.set(request.slug, request);
+            // Entries without status or claimers (a registry that predates request review)
+            // are skipped, so their bounties keep the build data.
+            const valid = body.requests.filter((request) => request.status && Array.isArray(request.claimers));
+            if (valid.length < body.requests.length) {
+                console.warn(`ignored ${body.requests.length - valid.length} live requests without review data`);
+            }
+            for (const request of valid) bySlug.set(request.slug, request);
             if (bySlug.size >= body.total || body.requests.length === 0) break;
         }
         return bySlug;
@@ -248,6 +253,6 @@ export function scaffoldRepository(requestId: string, options: ScaffoldOptions) 
 /** Local alternative to the hosted scaffold, for any forge. */
 export function localScaffoldCommand(slug: string, kind: string | null): string {
     return kind === 'theme'
-        ? `npx --package @tabularis/create-plugin tabularis-theme scaffold ${slug} --dir ${slug} --min-runtime-version <version>`
+        ? `npx --package @tabularis/create-plugin tabularis-theme scaffold ${slug} --dir ${slug} --min-runtime-version ${APP_VERSION}`
         : `npm create @tabularis/plugin@latest ${slug}`;
 }
