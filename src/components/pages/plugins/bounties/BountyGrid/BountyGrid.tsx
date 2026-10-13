@@ -41,7 +41,7 @@ export function BountyGrid() {
     const [focus, setFocus] = useState<FocusFilter>('all');
     const [difficulty, setDifficulty] = useState<DifficultyFilter>('all');
     const [query, setQuery] = useState('');
-    const [sort, setSort] = useState<BountySort>('status');
+    const [sort, setSort] = useState<BountySort>('votes');
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [baked] = useState(getActiveBounties);
     const live = useLiveBounties(baked, useCallback((slug: string) => setSelectedId(slug), []));
