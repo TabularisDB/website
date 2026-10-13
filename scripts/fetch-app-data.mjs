@@ -617,7 +617,7 @@ async function main() {
         throw new Error(`No nightly-* release found in ${REPO}`);
     }
 
-    const nightlyVersion = String(nightly.name ?? '').match(/\bv?(\d+\.\d+\.\d+)\b/)?.[1] ?? null;
+    const nightlyVersion = String(nightly.name ?? '').match(/\bv?(\d+\.\d+\.\d+(?:-[0-9A-Za-z.]+)?)/)?.[1] ?? null;
     const nightlyData = {
         tag: nightly.tag_name,
         name: nightly.name || nightly.tag_name,
