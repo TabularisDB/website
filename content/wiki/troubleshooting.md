@@ -85,6 +85,8 @@ Tabularis keeps application logs in an in-memory buffer (no log file is written 
 | **Export logs** | Click **Export** in the Logs tab to save to a file |
 | **Clear logs** | Click **Clear** to reset the log buffer |
 
+The default log level is Info. For more detail, launch Tabularis from a terminal with `--debug`, or set `RUST_LOG` (for example `RUST_LOG=debug`); since v0.28.0 both raise the level, and `--debug` includes the SQL statements logged by `sqlx`. See [CLI](/wiki/cli).
+
 When reporting a bug, export the logs and attach them to your issue on [GitHub](https://github.com/TabularisDB/tabularis/issues).
 
 ## Installation Problems

@@ -45,6 +45,7 @@ Used when **no password** is provided (key-only authentication). Tabularis spawn
 - Agent forwarding works if configured in your SSH config.
 - `BatchMode=yes` is set so the process never hangs waiting for interactive input (`BatchMode=no` when **Allow SSH password/PIN prompt** is enabled, see below).
 - `StrictHostKeyChecking=accept-new` — new hosts are accepted, changed keys are rejected.
+- Since v0.28.0 the key file selected on the profile is passed with `-i` and `IdentitiesOnly=yes`, so SSH uses that key rather than trying others first.
 
 ## Interactive Authentication (Passphrases & Security Keys)
 
@@ -57,6 +58,8 @@ When **Allow SSH password/PIN prompt** is enabled on a connection and the tunnel
 - Enable it with the **Allow SSH password/PIN prompt** toggle in the connection modal.
 - Leave it off for fully non-interactive setups (agent or stored credentials) so a connection can never block waiting for input.
 - Prompt text is localized across all eleven supported languages.
+
+Since v0.28.0 stored secrets (the key passphrase and the account password) also go through Tabularis's own askpass helper, so SSH no longer falls back to a system `ssh-askpass` program, which on macOS failed looking for the missing `/usr/X11R6/bin/ssh-askpass`. The helper requires a per-launch token on every platform, returns the stored passphrase only for OpenSSH's prompt for the selected key, and the stored password only for password prompts. If the helper cannot start, the tunnel fails with an error instead of falling through.
 
 This is what makes a YubiKey-backed jump host usable: when the token needs its PIN, Tabularis surfaces the request rather than giving up.
 

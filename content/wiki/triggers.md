@@ -41,20 +41,20 @@ Click the **+** button on the **Triggers** accordion header (tooltip **Create Ne
 | :--- | :--- |
 | **Name** | Identifier; quoting follows the driver. |
 | **Table Name** | The target table, typed in by hand. |
-| **Timing** | `BEFORE` / `AFTER` / `INSTEAD OF`. The same options are offered for every driver, so pick one your database supports. |
-| **Events** | `INSERT`, `UPDATE`, `DELETE`. Selecting several emits a single `CREATE TRIGGER` with the events joined by `OR`, which is PostgreSQL syntax; MySQL and SQLite triggers take one event each. |
+| **Timing** | Since v0.28.0 only the timings the driver supports: `BEFORE` / `AFTER` / `INSTEAD OF` on PostgreSQL and SQLite, `BEFORE` / `AFTER` on MySQL / MariaDB. |
+| **Events** | `INSERT`, `UPDATE`, `DELETE`. On PostgreSQL several can be selected and are joined with `OR`; since v0.28.0 MySQL / MariaDB and SQLite allow one event per trigger, with the hint *"This database allows one event per trigger."* |
 | **Body** | The action body, edited in Monaco. |
 | **SQL Preview** | Live preview of the `CREATE TRIGGER` statement that will be executed. |
 
-A **Raw SQL** tab is always available alongside Guided mode for hand-written DDL. On PostgreSQL a trigger calls a trigger function (`EXECUTE FUNCTION fn()`), so write that in the body or use Raw SQL rather than keeping the default `BEGIN … END` body.
+A **Raw SQL** tab is always available alongside Guided mode for hand-written DDL; switching to it from Guided mode starts from the generated SQL. On PostgreSQL a trigger calls a trigger function, so since v0.28.0 Guided mode generates both: a `CREATE OR REPLACE FUNCTION` holding the body and a `CREATE TRIGGER … EXECUTE FUNCTION` that calls it. MySQL / MariaDB and SQLite keep the body inline.
 
 ## Editing a Trigger
 
 ![Edit Trigger modal with the existing trg_employees_au_audit_salary trigger loaded — name, table, AFTER timing, and UPDATE event pre-selected from the parsed definition, with the IF OLD.salary <> NEW.salary body in the Monaco editor and a Save Changes button](/img/tabularis-trigger-editor-modal-edit.png)
 
-Right-click a trigger → **Edit**. The modal opens in Guided mode by default and parses the loaded definition to populate the fields (timing, the first event, and the body after `FOR EACH ROW`). Additional events and `FOR EACH STATEMENT` triggers are not represented in Guided mode (a `WHEN` clause stays inside the body text), so use the **Raw SQL** tab, which shows the original definition unchanged, for those. The name and table cannot be changed when editing.
+Right-click a trigger → **Edit**. The modal opens in Guided mode by default and parses the loaded definition to populate the fields (timing, the events, and the body after `FOR EACH ROW`). Since v0.28.0 every event of a multi-event trigger is loaded, not just the first. On PostgreSQL, editing keeps the trigger's existing function (*"This trigger keeps its existing function. Edit the function itself in the SQL editor or raw SQL mode."*). `FOR EACH STATEMENT` triggers are not represented in Guided mode (a `WHEN` clause stays inside the body text), so use the **Raw SQL** tab, which shows the original definition unchanged, for those. The name and table cannot be changed when editing.
 
-Triggers are edited as **drop + recreate** — the database engines don't expose an `ALTER TRIGGER` that covers what the modal needs to change. The modal asks for confirmation (**Recreate Trigger**), then drops the trigger and creates the new definition as two separate steps. If the new definition fails, the old trigger has already been dropped, so keep a copy of it (the Raw SQL tab) before saving.
+Triggers are edited as **drop + recreate** — the database engines don't expose an `ALTER TRIGGER` that covers what the modal needs to change. The modal asks for confirmation (**Recreate Trigger**), then drops the trigger and creates the new definition as two separate steps. Since v0.28.0, if the new definition fails, Tabularis recreates the original trigger from its saved definition and reports *"The original trigger was restored."*; if restoring fails too, the error says so.
 
 ## Dropping a Trigger
 
@@ -66,6 +66,7 @@ Right-click a trigger → **Drop Trigger**. A confirmation is shown before the `
 | :--- | :--- | :--- | :--- |
 | List triggers | Yes | Yes | Yes |
 | Multi-event aggregation | Yes (`string_agg` on `information_schema.triggers`) | n/a (single-event only at the DB level) | n/a |
+| Guided timings | `BEFORE`, `AFTER`, `INSTEAD OF` | `BEFORE`, `AFTER` | `BEFORE`, `AFTER`, `INSTEAD OF` |
 | View definition | Yes (`pg_get_triggerdef`) | Yes | Yes (parsed from `sqlite_master.sql`) |
 | Create / Edit / Drop | Yes | Yes | Yes |
 | Multi-database connections | Schema-qualified | Database-qualified; pool is switched to the correct database before `CREATE TRIGGER` | n/a |

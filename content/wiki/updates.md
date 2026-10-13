@@ -56,7 +56,9 @@ When Tabularis detects it was installed via a system package manager, the built-
 
 Since v0.20.0, distribution maintainers can declare this at build time: setting `PACKAGE_MANAGER_SRC` and `PACKAGE_MANAGER_NAME` when building marks the installation as package-managed — automatic update checks are skipped, the built-in installer is disabled, and the configured package manager name is shown in **Settings → Info**. This joins the existing Snap, Flatpak, and AUR (`tabularis-bin`) auto-detection.
 
-Homebrew and winget installs are not detected: the built-in updater stays active for them, and you can update either from the app or with the package manager commands below.
+Since v0.28.0, WinGet installs are package-managed too: releases publish a dedicated NSIS installer for WinGet with the package manager embedded, so a WinGet install shows **"Updates managed by winget"** and is upgraded with `winget upgrade`. An existing WinGet installation picks this up on its next WinGet upgrade. Portable WinGet layouts (a `Debba.Tabularis*` folder under the WinGet `Packages` directories) are also detected. The installers on the download page and GitHub Releases keep the in-app updater.
+
+Homebrew installs are intentionally not detected: the cask is marked as auto-updating, so `brew upgrade` skips it unless forced, and the built-in updater stays active. You can update either from the app or with the commands below.
 
 ### AUR (Arch Linux)
 

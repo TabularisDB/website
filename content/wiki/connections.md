@@ -5,9 +5,11 @@ excerpt: "Learn how to manage your database connections securely with SSH tunnel
 category: "Database Objects"
 ---
 
-Tabularis stores connection profiles as JSON in `connections.json`. With **Save passwords in Keychain** enabled, secrets go to the OS keychain instead — Keychain Access on macOS, Windows Credential Manager on Windows, and the Secret Service (GNOME Keyring / KWallet) on Linux. With the option off (the default for a new connection), the database and SSH passwords are written to `connections.json` in plain text, so enable it for any connection whose password you want to keep off disk.
+Tabularis stores connection profiles as JSON in `connections.json`. With **Save passwords in Keychain** enabled, secrets go to the OS keychain instead — Keychain Access on macOS, Windows Credential Manager on Windows, and the Secret Service (GNOME Keyring / KWallet) on Linux. Since v0.28.0 the option is on by default for a new connection; existing connections keep their setting. With the option off, the database and SSH passwords are written to `connections.json` in plain text, and the form warns: *"Passwords will be stored in plain text in the connection file."* On Unix, `connections.json` and the SSH and Kubernetes connection files are written with mode `0600`, and an existing file with looser permissions is tightened on the next save.
 
 ![Connection Manager](/img/tabularis-connection-manager.png)
+
+![New MySQL connection form with Save passwords in Keychain unticked and the plain-text password warning](/img/tabularis-new-connection-keychain-warning.png)
 
 ## Supported Drivers
 
@@ -70,7 +72,7 @@ When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`)
 | **Database** | Yes* | The database name to connect to |
 | **Username** | Yes* | Database user |
 | **Password** | No | Stored in the OS keychain when **Save passwords in Keychain** is checked; otherwise written to `connections.json` in plain text |
-| **Save passwords in Keychain** | — | Off by default. When checked, the database and SSH passwords are kept in the OS keychain and removed from `connections.json` |
+| **Save passwords in Keychain** | — | On by default for new connections since v0.28.0 (off before). When checked, the database and SSH passwords are kept in the OS keychain and removed from `connections.json`. If the keychain refuses the write, the connection is still saved, with the password in the file and the plain-text warning shown |
 | **Use SSH Tunnel** | No | Activates the SSH tunnel for this connection |
 | **SSH profile** | — | **Use Existing SSH Connection** picks a saved SSH profile; **Configure SSH Inline** defines the tunnel on this connection only |
 | **Allow SSH password/PIN prompt** | No | Lets the SSH tunnel prompt in-app for a key passphrase, security-key PIN, or password when it can't authenticate silently. See [SSH Tunneling → Interactive Authentication](/wiki/ssh-tunneling#interactive-authentication-passphrases--security-keys). |
@@ -82,6 +84,10 @@ When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`)
 | **Detect JSON in text columns** | No | Per-connection toggle: when enabled, plain `TEXT` / `VARCHAR` values that parse as JSON are routed through the JSON cell renderer in the data grid (chevron, viewer window, diff). The same flag also enables native array detection for `text[]` / `int[]` (PostgreSQL) and Firestore arrays. See [Data Grid → JSON & long text cells](/wiki/data-grid#json--long-text-cells). |
 
 *Not required for SQLite, which takes a file path instead.
+
+### Connection String Import
+
+The **Connection String** field of the connection form (network drivers) fills the host, port, database, credentials and SSL settings from a URL such as `postgres://user:pass@host:5432/db` or `mysql://user:pass@localhost:3306/db`. Since v0.28.0 it also accepts JDBC URLs, `jdbc:postgresql://…` and `jdbc:mysql://…`: credentials in the query string are used when the URL has none before the host, and PostgreSQL and MySQL SSL modes (including `sslMode` in any case) land in the form. Drivers that pass the raw JDBC URL through keep it untouched.
 
 ### TLS & CA Certificates
 
@@ -105,6 +111,10 @@ For PostgreSQL, the **SSL Mode** selector uses libpq mode names:
 | `verify-full` | Same as `verify-ca`, plus verify that the server hostname matches the certificate CN or SAN. Strictest mode; recommended for production. |
 
 For MySQL/MariaDB the selector offers the MySQL mode names instead: `disabled`, `preferred`, `required` (the default), `verify_ca`, and `verify_identity`.
+
+Since v0.28.0 an unknown SSL mode (for example a typo like `verfy-full` in an imported or hand-edited connection) fails the connection with a message listing the accepted values, instead of falling back to a weaker mode. Matching is case-insensitive and a blank value still means the default. When the host is remote and the selected mode does not verify the server certificate, the form suggests `verify-full` (PostgreSQL) or `verify_identity` (MySQL/MariaDB).
+
+![SSL tab for a remote MySQL host in Required mode with the hint to use verify_identity](/img/tabularis-ssl-remote-hint.png)
 
 ![MySQL connection editor with the SSL Mode dropdown open, showing Disabled, Preferred, Required, Verify CA and Verify Identity](/img/tabularis-mysql-ssl-modes.png)
 

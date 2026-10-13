@@ -40,8 +40,9 @@ Tabularis ships with a set of keyboard shortcuts for common actions across navig
 | Trigger autocomplete suggestions | `⌘+I` | `Ctrl+Space` |
 | New console tab | `⌘+T` | `Ctrl+T` |
 | Close current tab (on the Settings and MCP pages: go back) | `⌘+W` | `Ctrl+W` |
+| Reopen the last closed tab (since v0.28.0) | `⌘+Shift+T` | `Ctrl+Shift+T` |
 | Save SQL file (file-backed console tab, since v0.23.0) | `⌘+S` | `Ctrl+S` |
-| Switch tab (circular) | `Ctrl+Tab` | `Ctrl+Tab` |
+| Switch tab, most recently used first (since v0.28.0; `Ctrl+Shift+Tab` walks back) | `Ctrl+Tab` | `Ctrl+Tab` |
 | Copy selection | `⌘+C` | `Ctrl+C` |
 | Format SQL (buffer or selection) | `⇧+⌥+F` | `Shift+Alt+F` |
 | Multi-Cursor (click) | `⌘+Click` | `Ctrl+Click` |
@@ -72,6 +73,7 @@ On Linux, where `Ctrl+Shift+A` opens the actions palette, `Shift+Alt+A` toggles 
 | Previous page | `⌘+←` | `Ctrl+←` |
 | Save grid changes | `⌘+S` | `Ctrl+S` |
 | Refresh the table data | `⌘+R` | `Ctrl+R` |
+| Jump to column (since v0.28.0) | `⌘+Shift+J` | `Ctrl+Shift+J` |
 | Mark the selected rows for deletion | `Delete` / `Backspace` | `Delete` / `Backspace` |
 | Move the focused cell | `↑` `↓` `←` `→` | `↑` `↓` `←` `→` |
 | Extend the cell range by one step | `Shift+↑` `Shift+↓` `Shift+←` `Shift+→` | `Shift+↑` `Shift+↓` `Shift+←` `Shift+→` |

@@ -69,7 +69,13 @@ You will normally never run this command yourself — the one-click install on t
 
 ## `--debug`
 
-Opens the WebView DevTools automatically when the main window appears, and re-enables the native right-click menu that Tabularis normally suppresses. It does not change the log level: logging stays at Info with or without the flag.
+Opens the WebView DevTools automatically when the main window appears, and re-enables the native right-click menu that Tabularis normally suppresses. Since v0.28.0 it also raises the log level from Info to Debug, which includes debug output from dependencies such as the SQL statements logged by `sqlx`. This applies in `--mcp` mode as well, where logs go to standard error only, so the JSON-RPC stream on standard output stays clean.
+
+Without `--debug`, the `RUST_LOG` environment variable sets the level (since v0.28.0): `RUST_LOG=trace` gives Trace, and a directive list such as `warn,sqlx=debug` uses the most verbose level it names, here Debug. Unset or unparseable values fall back to Info.
+
+```bash
+RUST_LOG=debug tabularis
+```
 
 ```bash
 tabularis --debug
@@ -92,7 +98,7 @@ tabularis --help
 
 Some flags are mutually exclusive by behaviour:
 
-- **`--mcp` wins over everything.** If `--mcp` is set, Tabularis runs the MCP server loop and never builds the Tauri GUI, so `--explain` and `--debug` are ignored.
+- **`--mcp` wins over everything.** If `--mcp` is set, Tabularis runs the MCP server loop and never builds the Tauri GUI, so `--explain` is ignored and `--debug` only raises the log level (since v0.28.0).
 - **`--explain` suppresses the main window.** Only the Visual EXPLAIN window opens; closing it exits the app.
 - **`--debug`** opens DevTools on the main window only. Combined with `--explain`, the main window is closed, so the Visual EXPLAIN window gets no DevTools.
 - **A running instance takes over.** If Tabularis is already open, launching it again (with or without `--explain` or `--debug`) only focuses the existing main window. `--mcp` is not affected, because it never starts the GUI.

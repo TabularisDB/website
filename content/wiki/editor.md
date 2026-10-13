@@ -33,6 +33,12 @@ Since v0.17.0 the completion engine also understands *where* the cursor is. A co
 
 Subqueries are scoped per parenthesis frame (the outer clause is restored when the subquery closes), and CTEs, nested `CASE … END`, quoted identifiers, and escape sequences are all handled. Anything the analyzer doesn't recognize falls back to the previous suggest-everything behavior, so a miss can never hide valid suggestions.
 
+### CTE and Derived-Table Columns
+
+Since v0.28.0, an alias that points at a CTE or a derived table resolves to that query's columns: typing `c.` after `WITH c AS (SELECT id, name FROM users)` or `FROM (SELECT …) AS c` suggests `id` and `name`. Explicit column lists (`WITH c (a, b) AS …`), quoted aliases, SQL Server brackets and `LATERAL` are handled, and a `FROM` alias wins over a CTE with the same name.
+
+![Autocomplete after tc. suggesting the columns of the top_customers CTE](/img/tabularis-autocomplete-cte-columns.png)
+
 ### Nearest-Table Ranking
 
 Since v0.24.0, when multiple tables are in scope, autocomplete ranks columns from the nearest relevant table first. In an `ON` or `USING` clause this is the table currently being joined; in SELECT, WHERE and SET contexts it is the primary table. Aliases and nested subquery scopes are respected. Other in-scope columns remain available below them, and single-table queries are unchanged. Since v0.26.0 quoted identifiers and keyword-like table names no longer break the detection, and the nearest table is always fetched first, so it is not cut off when more than five tables are in scope and its columns win for shared names such as `id`.
@@ -42,6 +48,12 @@ Since v0.24.0, when multiple tables are in scope, autocomplete ranks columns fro
 When the autocomplete dropdown is open, **Enter accepts the highlighted suggestion by default** (matching the behavior of every other Monaco-based editor). If you prefer Enter to insert a newline instead, toggle **Settings → Appearance → SQL Editor → Accept Suggestion with Enter** off. The setting is honored across every editor surface — main SQL tabs, notebook cells, and the Raw SQL tab of the trigger editor.
 
 `Tab` always accepts the highlighted suggestion, regardless of the setting.
+
+### Keyword Case
+
+Since v0.28.0, **Settings → Appearance → SQL Editor → Autocomplete → Keyword case** sets the case of the keywords autocomplete inserts: **Match typing** (default), where `sel` becomes `select` and `Sel` becomes `SELECT`, **UPPER**, or **lower**. Table and column names are never recased. The setting is saved as `autocompleteKeywordCase` in `config.json`.
+
+![Autocomplete keyword case setting with Match typing, UPPER and lower](/img/tabularis-settings-autocomplete-keyword-case.png)
 
 ### Caching Strategy
 To ensure the editor remains responsive even on databases with thousands of tables, Tabularis caches schema metadata:
@@ -74,11 +86,31 @@ Since v0.24.0, a tab with a query in flight replaces its type icon with a spinne
 
 <video src="/videos/posts/tabularis-running-tab.mp4" poster="/videos/posts/tabularis-running-tab.jpg" controls autoplay loop muted playsinline></video>
 
+### Reopen and Duplicate Tabs
+
+<video src="/videos/posts/tabularis-reopen-closed-tab.mp4" poster="/videos/posts/tabularis-reopen-closed-tab.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
+Since v0.28.0, `Ctrl/Cmd + Shift + T` reopens the last closed tab, also available as **Reopen Closed Tab** in the tab context menu. Closed tabs go onto a stack of 20 per connection, kept in memory only, and come back at their previous position with their SQL, title, filter, sort and parameters; results are not kept, so the query has to be run again. Every close path feeds the stack, including **Close Others** and **Close to the Right**. The shortcut can be rebound in **Settings → Keyboard Shortcuts**.
+
+![Tab context menu with Duplicate Tab and Reopen Closed Tab](/img/tabularis-tab-context-menu.png)
+
+**Duplicate Tab** in the tab context menu opens a copy right after the original, with the same SQL and parameters. A duplicated read-only tab, such as a materialized-view definition, stays read-only.
+
+### Switching Tabs by Recency
+
+Since v0.28.0, `Ctrl + Tab` goes back to the tab you used before instead of the next one in the bar: after visiting A, C and A again, `Ctrl + Tab` selects C. The order stays fixed while `Ctrl` is held, repeated `Tab` presses walk through it, and `Ctrl + Shift + Tab` walks back. Each connection keeps its own history.
+
 ### Reordering Tabs
 
 Since v0.18.0 tabs can be dragged along the tab bar to reorder them. Console, table, query-builder and notebook tabs share one tab bar, so any tab type can be moved — there is no console-only restriction. Reordering is scoped to the active connection: dragging reshuffles only that connection's tabs and leaves the others where they are. An insertion line shows where the tab will land, and dragging near an edge auto-scrolls the bar. The new order is persisted with the rest of your tabs in `preferences.json`.
 
 <video src="/videos/posts/tabularis-reorder-tabs.mp4" poster="/videos/posts/tabularis-reorder-tabs.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
+### Long-Query Notifications
+
+Since v0.28.0, when a query runs longer than a threshold and Tabularis is not the focused window when it finishes, a desktop notification shows the tab title, the outcome and the duration. **Run All** sends one notification for the whole batch, with the count of succeeded and failed statements. Table auto-refresh never notifies. Two settings under **Settings → General → Query Execution** control it: **Notify when long queries finish** (on by default) and **Notification threshold** (20 seconds by default), saved as `notifyLongQueries` and `notifyLongQueriesThresholdSec` in `config.json`.
+
+![Settings, General, Query execution: Notify when long queries finish with a 20-second threshold](/img/tabularis-settings-query-notifications.png)
 
 ## SQL Files
 
@@ -121,6 +153,12 @@ becomes `'alice@example.com', 'bob@example.com'`.
 - Embedded single quotes are doubled (`O'Brien` → `'O''Brien'`).
 - Purely numeric input stays unquoted (`1, 2, 3`). Values with a leading zero (`007`) or a leading `+` count as text, so IDs and phone numbers are not turned into numbers; mixed input is quoted throughout.
 - Every selection, multi-cursor included, is replaced in one undo step.
+
+## Invisible and Look-Alike Characters
+
+Since v0.28.0 the editor highlights invisible and look-alike characters that often come with SQL copied from chat apps, PDFs and documents: zero-width spaces, non-breaking spaces, bidi markers, curly quotes and similar. **Clean up pasted characters** in the editor context menu replaces them, on the selection or the whole document, in one undo step. Characters inside string literals and quoted identifiers are left alone. The highlight can be turned off with **Settings → Appearance → SQL Editor → Show invisible characters** (`editorHighlightInvisibleCharacters` in `config.json`).
+
+![Pasted SQL with invisible characters and curly quotes highlighted, with Clean up pasted characters in the context menu](/img/tabularis-editor-invisible-characters.png)
 
 ## SQL Formatting
 
@@ -333,10 +371,13 @@ History is stored per connection, newest first. If you run the exact same SQL tw
 The History tab supports:
 
 - **Search** by SQL text
+- **Outcome** (any, succeeded, failed) and **Time range** (last hour, today, last 7 or 30 days) filters, since v0.28.0, combined with the search box
 - **Date grouping** such as Today / Yesterday / older buckets
 - **Double-click** (or `Enter`) to open a query in a new console tab and run it
 - **Context menu actions**: **Copy Query**, **Run Query**, **Insert to Editor** / **Open in New Tab** (both open the query in a console without running it), **Add to Favorites**, and delete the entry
 - **Clear All** for the current connection only
+
+![Query History filtered to Failed and Today, showing 3 of 7 entries](/img/tabularis-query-history-filters.png)
 
 This makes the sidebar history a fast iteration loop: run a query, tweak it, and jump back to any earlier version without digging through editor tabs.
 

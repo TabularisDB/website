@@ -42,6 +42,10 @@ Right-click a view → **Drop View**. A confirmation dialog is shown before the 
 
 Right-click a view → **Edit View** to see its current `SELECT` definition in the view editor, where you can copy it into migration files.
 
+Since v0.28.0 the view context menu also has **Show Definition**, which opens the definition in a read-only SQL tab, and **Copy DDL**, which copies the same definition to the clipboard without opening anything.
+
+![Right-click menu on a view in the explorer with Show Definition and Copy DDL](/img/tabularis-view-copy-ddl.png)
+
 ## View Columns
 
 Expand a view in the sidebar to see its output columns. Each column shows:
@@ -60,7 +64,7 @@ PostgreSQL materialized views are browsed in their own **Materialized Views** se
 - **Browse columns and indexes** — expand a materialized view to see its columns; its indexes render with the same list Tabularis uses for tables.
 - **Open the data** — double-click to load the materialized data in the Data Grid. Because a materialized view holds a stored snapshot rather than a live query, it is **read-only** in the grid — inline editing is disabled.
 - **Refresh** — refreshing runs `REFRESH MATERIALIZED VIEW` and shows an in-flight spinner on the item until the server finishes.
-- **Context menu** — right-click a materialized view for **Show Data**, **Count Rows**, **Refresh**, **Show Definition** and **Copy Name**. Materialized views are not created, edited or dropped from the UI.
+- **Context menu** — right-click a materialized view for **Show Data**, **Count Rows**, **Refresh**, **Show Definition**, **Copy DDL** (since v0.28.0) and **Copy Name**. Materialized views are not created, edited or dropped from the UI.
 - **Active schema** — materialized views are resolved against the schema currently selected in the sidebar header (see [Multi-Schema Support](/wiki/connections#multi-schema-support-postgresql)).
 
 ## Driver Support

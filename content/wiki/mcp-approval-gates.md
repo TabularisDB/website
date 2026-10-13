@@ -42,6 +42,8 @@ Set in **MCP Server → Safety → Approval gate → Approval required**:
 
 The classifier is the same conservative one used for [read-only mode](/wiki/mcp-readonly-mode) — anything ambiguous is treated as a write. Better one false positive (you click Approve) than one false negative (an `UPDATE` slips through unwatched).
 
+Since v0.28.0 the classifier treats side-effecting reads (`SELECT … INTO`, locking clauses, side-effecting PostgreSQL functions, SQLite `PRAGMA` assignments) as writes, and a query that skips approval because it was classified as a read runs in a read-only transaction on the built-in drivers (PostgreSQL, MySQL/MariaDB, SQLite), so the database refuses any write the classifier missed. See [Read-only Mode → Enforced by the database](/wiki/mcp-readonly-mode#enforced-by-the-database).
+
 ## Pre-flight EXPLAIN
 
 The plan preview is the most useful thing in the modal — it's why approval gates are different from the "yes/no" prompts other tools offer.

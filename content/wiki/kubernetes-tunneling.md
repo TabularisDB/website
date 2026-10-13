@@ -26,7 +26,9 @@ When a database connection has Kubernetes enabled, Tabularis:
 
 You never need to choose a local port — Tabularis handles it automatically, exactly like the SSH tunnel system.
 
-Tunnels are **reused**: two connections targeting the same context/namespace/resource/port share one port-forward process. An existing port-forward is reused as is, and disconnecting a connection does not stop it: the process keeps running for the rest of the session.
+Tunnels are **reused**: two connections targeting the same context/namespace/resource/port share one port-forward process. Disconnecting a connection does not stop it: the process keeps running for the rest of the session.
+
+Since v0.28.0 a cached tunnel is checked before it is reused. If its `kubectl port-forward` process has died, it is recreated on the same local port, so an existing connection pool keeps pointing at the right address; if that port is now taken, the reconnect fails with an error instead of switching ports. Disconnecting, or a failed health check, closes the pool without starting a new tunnel, so it never waits on an unreachable cluster. All Kubernetes tunnels are stopped when the app exits.
 
 ## Configuring a Connection
 

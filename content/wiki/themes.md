@@ -39,13 +39,13 @@ Themes are no longer limited to the built-in presets and single-file personal th
 
 ### Managing themes
 
-**Settings → Appearance → Manage themes** lists built-in, personal and installed themes together.
+**Settings → Appearance** lists built-in, personal and installed themes together. Each theme's **…** menu holds its actions, and the **Import theme** menu next to the list holds the import options.
 
 - **Preview** applies a theme temporarily and shows a read-only SQL sample rendered with the shared Monaco renderer. **Cancel** or Escape restores the saved selection, taking the current system mode into account; **Apply** saves it.
 - Installed packages are read-only. **Duplicate as personal** creates an independent copy that **Edit personal theme** can change.
 - The application theme and the SQL editor theme are selected independently. The Follow System light and dark picks work with installed variants.
-- **Import Tabularis JSON** and **Export standalone JSON** keep the single-file format. **Import from VS Code** converts a VS Code JSON or JSONC theme, lists what could not be mapped, and asks for the light or dark base when it cannot detect it. **Export author package** writes the package layout for a theme you intend to publish.
-- **Local package** previews and installs a ZIP from disk. Installation is bound to the validated archive digest: rebuild the ZIP and you preview again before installing.
+- **Import theme → Import Tabularis JSON** and **Export standalone JSON** keep the single-file format. **Import theme → Import from VS Code** converts a VS Code JSON or JSONC theme, lists what could not be mapped, and asks for the light or dark base when it cannot detect it. **Export author package** writes the package layout for a theme you intend to publish.
+- **Import theme → Local package** previews and installs a ZIP from disk. Installation is bound to the validated archive digest: rebuild the ZIP and you preview again before installing.
 
 Installing a package never selects a variant on its own. Close the dialog and pick the variant explicitly.
 

@@ -18,6 +18,10 @@ Routines appear in the sidebar under the **Routines** section for each database 
 
 Each group is collapsible. The routine name and type icon help distinguish functions from procedures at a glance.
 
+### PostgreSQL Overloads
+
+PostgreSQL allows several functions with the same name and different arguments. Since v0.28.0 each overload is labelled with its signature, for example `f(a integer, b integer)`, in the sidebar and the command palette, and **View Definition**, the parameter list, **Run…**, **Edit** and **Drop** act on the exact overload you clicked. Before, overloads showed as identical rows and these actions picked whichever came back first. Plugin drivers receive the signature too, so a dialect with overloading can use it.
+
 ## Viewing Parameters
 
 Expand a routine in the sidebar to see its parameter list. Each parameter shows:
@@ -57,7 +61,7 @@ Click the **+** button on the **Routines** section header (tooltip **New routine
 - **MySQL / MariaDB** — a `DELIMITER`-wrapped `CREATE PROCEDURE` / `CREATE FUNCTION` skeleton.
 - **PostgreSQL** — a `CREATE OR REPLACE FUNCTION` or `CREATE OR REPLACE PROCEDURE` skeleton (`LANGUAGE plpgsql`) with dollar-quoting.
 
-The **+** button appears only on the connection-level Routines section. Routines sections nested under a schema (PostgreSQL) or under one of several databases do not have it, so on those connections write the `CREATE` statement in a console instead.
+Since v0.28.0 the **+** button is also on Routines sections nested under a schema (PostgreSQL) or under one of several databases (MySQL / MariaDB multi-database connections), and the new routine targets the schema or database the section belongs to. Before, only the connection-level Routines section had it.
 
 Fill in the body and run it like any other statement.
 
@@ -70,7 +74,7 @@ Right-click a routine → **Edit**. Tabularis opens a **re-runnable** script tha
 
 ## Dropping a Routine
 
-Right-click a routine → **Drop**. A **Drop routine** confirmation dialog is shown before the statement runs. On PostgreSQL, Tabularis resolves the exact identity signature via `pg_get_function_identity_arguments` and **refuses to guess** between overloads, so it never drops the wrong function when several share a name.
+Right-click a routine → **Drop**. A **Drop routine** confirmation dialog is shown before the statement runs. On PostgreSQL, the statement names the exact identity signature from `pg_get_function_identity_arguments`, so it never drops the wrong function when several share a name. Since v0.28.0 Drop also works on an overloaded name, using the signature of the row you clicked; before, it refused overloaded names.
 
 ## Context Menu Actions
 

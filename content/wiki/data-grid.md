@@ -55,6 +55,26 @@ The toolbar at the top of a table tab has three inputs (**WHERE** and **ORDER BY
 
 The **Filters** button opens a **structured filter panel** in place of the WHERE input: **Add filter** builds a condition from a column, an operator suited to the column type and a value; each filter can be applied on its own (**Apply**) or together with the others (**Apply All**), duplicated or removed. **Unset** clears the filters, and the **SQL** button (*Switch to SQL WHERE input*) goes back to the free-text field.
 
+Since v0.28.0 the panel is part of the layout rather than an overlay: it sits above the grid and pushes it down, with a maximum height and its own scroll for long filter lists, so the rows a filter returns stay visible. A click outside no longer closes it; `Esc`, the close button and the **Filters** button do. The panel resets when you switch to another table tab. Incomplete rows, such as the empty row added when the panel opens, are skipped by both **Apply All** and the per-row **Apply**.
+
+#### Match All / Match Any
+
+Since v0.28.0 the panel header has a two-button toggle. **Match all** joins the filter rows with `AND`; **Match any** joins them with `OR` and wraps the result in parentheses so it combines safely with the rest of the `WHERE`.
+
+#### Text Operators
+
+Since v0.28.0 string columns offer **contains**, **starts with**, **ends with**, **is empty** and **is not empty**. The first three generate `LIKE` patterns with `%`, `_` and the escape character escaped, so a value with an underscore matches literally; the escape character is `!` on every driver (`ESCAPE '\'` is a syntax error on MySQL and MariaDB under the default `sql_mode`). **is empty** matches both `NULL` and `''`.
+
+![Filter operator list on a text column showing contains, starts with, ends with, is empty and is not empty](/img/tabularis-filter-text-operators.png)
+
+#### Value Picker
+
+<video src="/videos/posts/tabularis-structured-filter-value-picker.mp4" poster="/videos/posts/tabularis-structured-filter-value-picker.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
+![Value picker listing city values by count with a search box and two values ticked](/img/tabularis-filter-value-picker.png)
+
+Since v0.28.0 a **Pick from values** button next to the value field lists the column's 100 most frequent non-`NULL` values with their counts, with a search box. In **Match all** mode the list is narrowed by the panel's other complete rows. Picking one value fills the field with `=`; picking several switches the operator to `IN` (`!=` becomes `NOT IN`, so negation is kept). Nothing is applied until you press **Apply**. The values query runs on the tab's connection, schema and session. The picker is not offered on BLOB, binary or JSON columns.
+
 #### Filter by This Value
 
 <video src="/videos/posts/tabularis-filter-by-value.mp4" poster="/videos/posts/tabularis-filter-by-value.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
@@ -62,6 +82,22 @@ The **Filters** button opens a **structured filter panel** in place of the WHERE
 Since v0.27.0, right-clicking a cell in a table tab offers filters built from that cell: **Filter: `col` = this value** and **Filter: `col` <> this value**, or **Filter: `col` IS NULL** and **Filter: `col` IS NOT NULL** on a `NULL` cell. The condition is combined with the current filter as `(existing) AND new`, written into the **WHERE** input where you can edit it, and the grid reloads from page 1.
 
 The value is formatted by column type: numbers are unquoted in numeric columns, a numeric-looking string stays quoted in a text column, booleans become `TRUE`/`FALSE`, and quotes are escaped. Identifiers are quoted for the active driver. The items are not offered on BLOB or JSON cells, on unsaved new rows, or in ad-hoc query results. A [masked](#column-masking) cell only offers `IS NULL` / `IS NOT NULL`, so its real value never reaches the filter.
+
+### Auto-Refresh
+
+<video src="/videos/posts/tabularis-table-auto-refresh.mp4" poster="/videos/posts/tabularis-table-auto-refresh.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
+![Table toolbar with auto-refresh set to 5s and the Paused while rows are selected status](/img/tabularis-table-auto-refresh-paused.png)
+
+Since v0.28.0 table tabs have a refresh button with an **Auto-refresh** interval select beside it: **Off**, **5s**, **10s**, **30s** or **60s**. New tabs start at Off and each tab keeps its own interval; while a timer is running the icon, label and select switch to the accent color. A refresh keeps the scroll position and the query settings, and a failure is shown inline while the last loaded rows stay on screen.
+
+The timer pauses while you edit a cell, have pending changes or have rows selected (selections are row indexes, so new data would shift them onto other records); the status line reads **Paused while editing** or **Paused while rows are selected**. Inactive tabs do not poll: when you come back, the tab waits the remaining time, or refreshes once if the interval has already elapsed. Manual runs, page changes and timer ticks go through one queue per tab, so they never overlap.
+
+## Jump to Column
+
+<video src="/videos/posts/tabularis-grid-jump-to-column.mp4" poster="/videos/posts/tabularis-grid-jump-to-column.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
+Since v0.28.0 `Ctrl/Cmd + Shift + J` in a grid opens **Jump to column**, a fuzzy column picker that shows each column's type. `Enter` scrolls the column into view and returns focus to the grid. The shortcut can be rebound in **Settings → Keyboard Shortcuts**.
 
 ## Inline Editing
 
@@ -157,6 +193,8 @@ Selecting and copying are separate actions: selecting rows never writes to the c
 | :-------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Copy Selected (N)** | The rows currently selected, from the loaded page.                                                                                                                                                                                                   |
 | **Copy All (M)**      | Every row of the result. The query is re-run unpaginated with the tab's total-row limit stripped, preserving the on-screen sort order. When the total is unknown, the label omits the count and the toast reports the actual number of rows fetched. |
+
+Since v0.28.0 **Copy All** also works in the multi-result panel (tab and stacked views) and in the detached results window. In a console tab it re-runs only the last executed statement, in the tab's own session, so uncommitted rows of an open transaction are included.
 
 Every copy path shows a toast with the row count. When a copy covers only the loaded page of a larger result, the toast says "Copied N of M rows" — a partial copy is never silent.
 
@@ -289,7 +327,11 @@ The expansion editor supports a **Diff toggle** (off by default) that compares t
 
 JSON cells additionally show a **braces icon**. Clicking it opens the cell in a **standalone Tauri window** dedicated to the value, with the same JSON editor and Diff / Side-by-side toggles plus a Save button. Multiple cells can have their viewers open at the same time — each window keeps its own session and remembers its bounds. Saving flows back to the grid as a pending change; close the window without saving to discard the edit.
 
+![JSON viewer with an invoice URL and its open-link button, and color swatches next to hex and rgb values](/img/tabularis-json-viewer-links-colors.png)
+
 Double-clicking a JSON cell opens the viewer directly in edit mode (skipping the chevron). Since v0.25.0 the viewer also opens from read-only query and notebook result grids, by double-click or Enter, including on generated columns; the blob editor and the row editor sidebar stay behind the read-only guard. Since v0.26.0 the right-click menu on a read-only result also offers **Open in JSON Editor**, while mutation actions such as Set NULL, paste, duplicate and delete stay hidden.
+
+Since v0.28.0 the JSON viewer decorates string values: `http`, `https` and `mailto` strings get a button that opens them in the system browser, and hex, `rgb()` / `rgba()` and `hsl()` / `hsla()` colors get a color swatch. Values stay editable.
 
 There is no separate viewer window for plain text cells — text values aren't compared across windows as often as JSON, and the inline chevron is the entry point that mattered.
 
@@ -310,6 +352,12 @@ The same diff toggles are available in the **row-editor sidebar** for long field
 ## BLOB / Binary Columns
 
 Large binary columns (BLOB, `bytea`, etc.) are truncated in the grid to avoid loading multi-megabyte values into memory. The grid loads at most a 10 KiB preview of each binary value and shows the full size in bytes. The larger limit for loading and uploading a whole BLOB (for example from the row editor) is `maxBlobSize` in `config.json` (default: 100 MB).
+
+### Image preview on hover
+
+![Image preview popover above an SVG-as-text cell in the data grid](/img/tabularis-grid-image-preview.png)
+
+Since v0.28.0, hovering a BLOB cell that holds an image, or a text cell that holds SVG markup, shows the image in a popover. Only data already loaded in the grid is used, so no extra query runs. SVG is rendered through an `<img>` data URL and never inserted into the page, so scripts inside it cannot run.
 
 ### Hex preview and editing
 
@@ -375,6 +423,7 @@ The same menu offers other value shortcuts when they apply to the column: **Set 
 | Copy selection (row or cell, depending on focus)   | `Ctrl/Cmd + C`         |
 | Paste at the selection (staged as pending changes) | `Ctrl/Cmd + V`         |
 | Move between cells                                 | Arrow keys             |
+| Jump to column (since v0.28.0)                     | `Ctrl/Cmd + Shift + J` |
 | Next page                                          | `Ctrl/Cmd + Right`     |
 | Previous page                                      | `Ctrl/Cmd + Left`      |
 | Mark selected rows for deletion                    | `Delete` / `Backspace` |

@@ -5,7 +5,7 @@ excerpt: "How Tabularis stores passwords and secrets, and how to keep them in yo
 category: "Security & Networking"
 ---
 
-Tabularis can keep every password, API key, and passphrase in your operating system's native keychain, with only non-sensitive metadata (hostnames, ports, usernames) in JSON config files. For connection passwords this depends on the **Save passwords in Keychain** option, which is off by default: when it is unchecked, the database password, SSH password, and SSH key passphrase are written to `connections.json` in plain text. Enable it on every connection whose credentials you want to keep off disk.
+Tabularis can keep every password, API key, and passphrase in your operating system's native keychain, with only non-sensitive metadata (hostnames, ports, usernames) in JSON config files. For connection passwords this depends on the **Save passwords in Keychain** option, which since v0.28.0 is on by default for new connections (connections created earlier keep their setting): when it is unchecked, the database password, SSH password, and SSH key passphrase are written to `connections.json` in plain text, and the form warns *"Passwords will be stored in plain text in the connection file."* Enable it on every connection whose credentials you want to keep off disk.
 
 ![Connection security settings with keychain-backed credential storage](/img/tabularis-secure-connection-keychain.png)
 
@@ -45,6 +45,8 @@ The keychain service name is `tabularis` for all entries.
 | `config.json` | App preferences, theme, editor settings |
 | `saved_queries/meta.json` | Saved query metadata |
 
+Since v0.28.0, on Linux and macOS the files that can hold secrets (`connections.json`, `ssh_connections.json` and `k8s_connections.json`) are written with mode `0600`, readable only by your user; an existing file with looser permissions is tightened the next time it is saved. Windows writes them as before.
+
 These files live in the app config directory (or in the custom data folder chosen under **Settings → Storage** since v0.23.0, see [Configuration](/wiki/configuration#custom-storage-location)):
 
 - **Linux**: `~/.config/tabularis`
@@ -64,12 +66,14 @@ Key behaviors:
 
 ## "Save passwords in Keychain" Toggle
 
-When creating or editing a connection, the **Save passwords in Keychain** checkbox (off by default) controls where secrets are stored:
+When creating or editing a connection, the **Save passwords in Keychain** checkbox (on by default for new connections since v0.28.0, off before) controls where secrets are stored:
 
 - **Checked** — the password is stored in the OS keychain, removed from `connections.json`, and loaded automatically on next launch.
 - **Unchecked** — the password is saved in `connections.json` in plain text, together with the rest of the profile.
 
 This applies to database passwords, SSH passwords, and SSH key passphrases.
+
+If the toggle is checked but the OS keychain refuses the write, the connection is still saved: the password stays in `connections.json`, the toggle is stored as unchecked, and the plain-text warning is shown. Saving a connection URI (plugin drivers) still requires the toggle.
 
 ## Inspecting Keychain Entries
 

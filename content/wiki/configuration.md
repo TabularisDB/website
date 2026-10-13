@@ -20,7 +20,8 @@ Open the Settings panel from:
 - **Display Timezone**: A searchable picker of IANA timezones (with current UTC-offset labels) under **Settings → Localization**, defaulting to **Auto** (your OS zone). The selected zone drives every UI timestamp — AI activity log, query history, favorites — plus CSV / JSON / notebook exports and their default filenames. Query-history date grouping (today / yesterday / older) is classified in the same zone, so headers and per-row times always agree.
 - **Window Decorations** (since v0.22.0): **Automatic** (default), **Always show** or **Always hide** for the native titlebar. In Automatic mode Tabularis hides native decorations on Linux when it detects a tiling window manager (Hyprland, Sway, i3, Niri, River, bspwm, awesome, dwm, leftwm, qtile, xmonad) through the session's environment variables, and keeps them on everywhere else. The choice applies to open windows immediately and to secondary windows when they are created. Stored as `windowDecorations` in `config.json`.
 - **Delay safety confirmations** (since v0.21.0): off by default. When enabled, the confirm button of the destructive-query and production-write dialogs stays disabled for five seconds so the warning is actually read. Stored as `safetyConfirmationDelayEnabled` in `config.json`.
-- **Startup**: **Show Welcome Screen**, **Reopen Last Connections** (on by default, reconnects to the connections that were open when the app was last closed) and **Start Maximized** (off by default). Stored as `showWelcome`, `autoConnectLastConnection` and `startMaximized`.
+- **Startup**: **Show Welcome Screen**, **Reopen Last Connections** (on by default, reconnects to the connections that were open when the app was last closed) and **Start Maximized** (off by default). Stored as `showWelcome`, `autoConnectLastConnection` and `startMaximized`. Since v0.28.0 the main window also remembers its size and position across restarts (saved in `main-window-placement.json` next to `config.json`), is moved back onto a connected monitor if its last one is gone, and still opens maximized when **Start Maximized** is on.
+- **Long-query notifications** (since v0.28.0): under **Query Execution**, **Notify when long queries finish** (on by default) sends a desktop notification when a query that ran at least the **Notification threshold** (20 seconds by default) finishes while Tabularis is in the background. Stored as `notifyLongQueries` and `notifyLongQueriesThresholdSec`. See [SQL Editor → Long-Query Notifications](/wiki/editor#long-query-notifications).
 - **Update Checks**: Lives in **Settings → Info**, not General. **Check for updates on startup** enables or disables the automatic check at launch, and **Release channel** picks **Stable** (tested releases) or **Nightly** (builds from the latest `main`). Checks query the GitHub Releases API — no version data is sent, only a GET request is made.
 
 ## Network & Proxies
@@ -106,6 +107,11 @@ Any key omitted from the file falls back to its default value. You do not need a
 | `resultTypeColors` | `object` | `{}` | Per-type hex color overrides for `number`, `string`, `date` and `boolean`. Missing keys fall back to the theme colors. |
 | `stickyColumnHeaders` | `boolean` | `true` | Keep data grid column headers pinned while scrolling (Settings → Appearance → Data Grid). Persisted across restarts since v0.27.0. |
 | `resultZebraStripes` | `boolean` | `false` | Since v0.27.0. Alternate the background of data grid rows (Settings → Appearance → Data Grid → Alternating row background). See [Data Grid](/wiki/data-grid#alternating-rows-and-sticky-headers). |
+| `rowEditorFollowSelection` | `boolean` | `true` | Keep the row editor sidebar on the selected grid row. Persisted across restarts since v0.28.0. |
+| `cellDoubleClickAction` | `string` | `"inline"` | What double-clicking a data cell does: `inline`, `sidebar` or `both` (**Settings → General → Cell double-click action**). Persisted across restarts since v0.28.0. |
+| `columnMaskingEnabled` | `boolean` | `true` | Mask sensitive columns in the results grid (**Settings → Privacy**). Persisted across restarts since v0.28.0. |
+| `columnMaskingPatterns` | `string[]` | built-in list | Column-name patterns (case-insensitive substrings) that trigger masking. |
+| `columnMaskingOverrides` | `object` | `{}` | Per-connection overrides, keyed by connection ID, each with `include` (always mask) and `exclude` (never mask) lists of `table.column` entries. |
 | `aiEnabled` | `boolean` | `false` | Master toggle for all AI features. |
 | `aiProvider` | `string` | `null` | Active AI provider: `openai`, `anthropic`, `minimax`, `ollama`, `openrouter`, `custom-openai`. |
 | `aiModel` | `string` | `null` | The model identifier string sent to the provider. |
@@ -152,7 +158,11 @@ Any key omitted from the file falls back to its default value. You do not need a
 | `editorTabSize` | `number` | `2` | SQL editor tab width. |
 | `editorWordWrap` | `boolean` | `true` | Whether the SQL editor wraps long lines. |
 | `editorShowLineNumbers` | `boolean` | `true` | Whether the SQL editor shows line numbers. |
+| `editorHighlightInvisibleCharacters` | `boolean` | `true` | Since v0.28.0. Highlight hidden Unicode and look-alike characters in the SQL editor (**Settings → Appearance → SQL Editor → Show invisible characters**). |
+| `autocompleteKeywordCase` | `string` | `"match"` | Since v0.28.0. Case of keywords inserted by autocomplete: `match` (follows what you typed), `upper` or `lower`. |
 | `editorAcceptSuggestionOnEnter` | `boolean` | `true` | Accept the highlighted autocomplete suggestion with Enter (**Settings → Appearance → SQL Editor → Accept Suggestion with Enter**). |
+| `notifyLongQueries` | `boolean` | `true` | Since v0.28.0. Desktop notification when a long query finishes while the window is unfocused (**Settings → General → Query Execution**). |
+| `notifyLongQueriesThresholdSec` | `number` | `20` | Since v0.28.0. Minimum run time, in seconds (1–3600), before a finished query triggers a notification. |
 | `runStatementUnderCursor` | `boolean` | `true` | Run only the statement under the cursor when nothing is selected. See [SQL Editor](/wiki/editor). |
 | `formatterKeywordCase` | `string` | `"upper"` | SQL formatter keyword case: `upper`, `lower` or `preserve`. |
 | `formatterFunctionCase` | `string` | `"preserve"` | SQL formatter function-name case: `upper`, `lower` or `preserve`. |
@@ -186,7 +196,7 @@ Open **Settings → Logs**. The tab lists the collected entries with their times
 - **Export Logs** to a `.log` file of your choice, ready to attach to a bug report.
 - Turn **Enable Logging** off, or change **Max Log Entries** (100–10000 in steps of 100, default 1000). Logs are kept in memory only, so they are lost when the app quits; once the limit is reached the oldest entries are dropped.
 
-The log level is fixed at Info. Setting `RUST_LOG` has no effect.
+The log level is Info by default. Since v0.28.0, launching with `--debug` raises it to Debug (in the app and in `--mcp` mode), which also includes the SQL statements logged by `sqlx`, and without `--debug` the `RUST_LOG` environment variable is honored: `RUST_LOG=trace` gives Trace, and a directive list such as `warn,sqlx=debug` uses the most verbose level it names. Unset or unparseable values fall back to Info. See [CLI](/wiki/cli).
 
 ### Terminal Output
 
@@ -227,6 +237,8 @@ Since v0.19.0, a **Privacy** tab in Settings controls sensitive-column masking i
 - per-connection overrides as `table.column` entries, one per line: an **Always mask** list (masked even when no pattern matches) and a **Never mask** list (never masked even when a pattern matches) — never-mask wins over always-mask, which wins over the name patterns.
 
 ![The Settings Privacy tab: the Mask sensitive columns toggle, the sensitive column name patterns list, and per-connection Always mask / Never mask overrides with a connection picker](/img/tabularis-privacy-settings.png)
+
+Since v0.28.0 these settings are saved in `config.json` (`columnMaskingEnabled`, `columnMaskingPatterns`, `columnMaskingOverrides`) and survive a restart; before, they were reset every time the app started.
 
 Masking is display-only: copy and export keep the real values. See [Data Grid → Column Masking](/wiki/data-grid) for the grid-side behavior.
 
