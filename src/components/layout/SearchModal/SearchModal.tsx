@@ -327,7 +327,7 @@ export function SearchModal() {
                                                 className={styles.resultTypeBadge}
                                                 style={{color: cfg.color, borderColor: cfg.color}}
                                             >
-                                                {cfg.label}
+                                                {result.type === 'page' && result.meta ? result.meta : cfg.label}
                                             </span>
                                             {(result.type === 'post' || result.type === 'plugin') && result.badge && (
                                                 <span className={styles.resultRelease}>{result.badge}</span>

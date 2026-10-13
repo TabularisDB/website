@@ -7,6 +7,9 @@ const CONTENT_DIR = path.join(process.cwd(), "content");
 const WIKI_DIR = path.join(CONTENT_DIR, "wiki");
 const POSTS_DIR = path.join(CONTENT_DIR, "posts");
 const SEO_DIR = path.join(CONTENT_DIR, "seo");
+const ROADMAP_DIR = path.join(CONTENT_DIR, "roadmap");
+const APP_DIR = path.join(process.cwd(), "src", "app");
+const VIDEOS_PATH = path.join(process.cwd(), "src", "lib", "videos", "index.ts");
 const REGISTRY_PATH = path.join(process.cwd(), "plugins", "registry.json");
 const OUT_PATH = path.join(process.cwd(), "public", "search-index.json");
 
@@ -102,6 +105,111 @@ if (fs.existsSync(SEO_DIR)) {
       tags: "",
     });
   }
+}
+
+function insertPage({ slug, title, body = "", excerpt = "", meta, url }) {
+  insert(db, {
+    type: "page",
+    slug,
+    title,
+    body,
+    excerpt,
+    meta,
+    badge: "",
+    url,
+    category: "",
+    tags: "",
+  });
+}
+
+// Static app routes, discovered from src/app/**/page.tsx. Dynamic routes
+// ([slug]) come from their content sources below; noindex pages are skipped.
+const STRING = `(?:'((?:[^'\\\\]|\\\\.)*)'|"((?:[^"\\\\]|\\\\.)*)")`;
+const unescape = (a, b) => (a ?? b).replace(/\\(.)/g, "$1");
+const stripSuffix = (title) => title.replace(/\s*\|\s*Tabularis.*$/, "");
+
+function findPageFiles(dir) {
+  const found = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (entry.name.startsWith("[")) continue;
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) found.push(...findPageFiles(full));
+    else if (entry.name === "page.tsx") found.push(full);
+  }
+  return found;
+}
+
+function firstString(source, pattern) {
+  const m = source.match(new RegExp(`${pattern}\\s*${STRING}`));
+  return m ? unescape(m[1], m[2]) : "";
+}
+
+for (const file of findPageFiles(APP_DIR)) {
+  const source = fs.readFileSync(file, "utf-8");
+  if (/robots:\s*\{\s*index:\s*false/.test(source)) continue;
+  const route = path
+    .relative(APP_DIR, path.dirname(file))
+    .split(path.sep)
+    .filter((seg) => seg && !seg.startsWith("("))
+    .join("/");
+  const title =
+    firstString(source, "const title\\s*=") || firstString(source, "title:");
+  if (!title) continue;
+  const description =
+    firstString(source, "const description\\s*=") ||
+    firstString(source, "description:");
+  // Card titles and descriptions declared in the page give it searchable text.
+  const body = [...source.matchAll(new RegExp(`(?:title|description|label):\\s*${STRING}`, "g"))]
+    .map((m) => unescape(m[1], m[2]))
+    .join("\n");
+  insertPage({
+    slug: route ? `route-${route.replace(/\//g, "-")}` : "route-home",
+    title: route ? stripSuffix(title) : "Tabularis",
+    body,
+    excerpt: description,
+    meta: "Page",
+    url: `/${route}`,
+  });
+}
+
+// Roadmap initiatives
+if (fs.existsSync(ROADMAP_DIR)) {
+  const files = fs.readdirSync(ROADMAP_DIR).filter((f) => f.endsWith(".md"));
+  for (const file of files) {
+    const raw = fs.readFileSync(path.join(ROADMAP_DIR, file), "utf-8");
+    const { data, content } = matter(raw);
+    const slug = data.slug ?? file.replace(/\.md$/, "");
+    insertPage({
+      slug: `roadmap-${slug}`,
+      title: data.title ?? "",
+      body: stripMarkdown(content),
+      excerpt: data.lede ?? "",
+      meta: "Roadmap",
+      url: `/roadmap/${slug}`,
+    });
+  }
+}
+
+// Demo videos (hardcoded in src/lib/videos/index.ts, read as text)
+if (fs.existsSync(VIDEOS_PATH)) {
+  const source = fs.readFileSync(VIDEOS_PATH, "utf-8");
+  const re = new RegExp(`slug:\\s*${STRING},\\s*title:\\s*${STRING},\\s*description:\\s*${STRING}`, "g");
+  let count = 0;
+  for (const m of source.matchAll(re)) {
+    const slug = unescape(m[1], m[2]);
+    const title = unescape(m[3], m[4]);
+    const description = unescape(m[5], m[6]);
+    insertPage({
+      slug: `demo-${slug}`,
+      title,
+      body: description,
+      excerpt: description,
+      meta: "Demo",
+      url: `/demos/${slug}`,
+    });
+    count++;
+  }
+  if (count === 0) console.warn("No demo videos parsed from src/lib/videos/index.ts");
 }
 
 // Plugins

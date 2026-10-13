@@ -23,7 +23,7 @@ There is **no lint or test command**. `eslint.config.mjs` explicitly ignores `**
 
 `pnpm build` runs four steps in order, all of which must succeed:
 
-1. `scripts/generate-search-index.mjs` → `public/search-index.json` (Orama index built from wiki + posts + SEO + plugin registry).
+1. `scripts/generate-search-index.mjs` → `public/search-index.json` (Orama index built from wiki + posts + SEO + roadmap + demo videos + plugin registry, plus every static `src/app/**/page.tsx` route not marked `noindex`, discovered automatically from its `title`/`description`).
 2. `scripts/generate-sponsors.mjs` → `public/sponsors.json` (re-emits `src/lib/sponsors.ts` as JSON).
 3. `next build` → emits the site to `out/`.
 4. `scripts/generate-latest-posts.mjs` → `public/latest-posts.json` (top-5 posts for the home widget). Runs **after** `next build` because it writes into the build output.
