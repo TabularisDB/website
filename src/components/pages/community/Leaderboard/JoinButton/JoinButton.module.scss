@@ -1,12 +1,10 @@
 .join {
-    // Lighter than --color-accent-blue so the label stays readable on the dark background.
-    --join-color: color-mix(in srgb, var(--color-accent-blue) 65%, white);
+    --join-color: var(--color-eyebrow-blue);
 
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
     position: relative;
-    z-index: 1;
     flex-shrink: 0;
     padding: 0.1rem 0.55rem;
     border: 0.1rem solid color-mix(in srgb, var(--join-color) 55%, transparent);

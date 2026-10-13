@@ -78,8 +78,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    border: 0.1rem solid var(--color-border);
     background: var(--color-surface);
     box-shadow: 0 8px 20px rgb(var(--rgb-shadow) / calc(0.25 * var(--shadow-scale)));
     cursor: pointer;
@@ -138,7 +138,6 @@
 .actions {
     position: relative;
     margin-top: 2rem;
-    z-index: 10;
 
     @media (max-width: 767px) {
         margin-top: 4rem;

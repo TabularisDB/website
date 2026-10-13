@@ -17,6 +17,7 @@ import styles from './IssueBoard.module.scss';
 import {IssueCard} from './IssueCard/IssueCard';
 import {EmptyState} from '@/components/ui/EmptyState/EmptyState';
 import {CheckboxField} from '@/components/ui/CheckboxField/CheckboxField';
+import {CardGrid} from '@/components/ui/CardGrid/CardGrid';
 
 const PAGE_SIZE = 12;
 const ALL = 'all';
@@ -163,14 +164,14 @@ export function IssueBoard() {
             </div>
 
             {shown.length > 0 ? (
-                <div className={styles.grid}>
+                <CardGrid>
                     {shown.map((issue) => (
                         <IssueCard key={issue.url} issue={issue} />
                     ))}
-                </div>
+                </CardGrid>
             ) : (
-                <EmptyState title="No matching target">
-                    Try clearing one filter or start a new request in GitHub Discussions.
+                <EmptyState title="No matching issue">
+                    Try clearing a filter, or browse all open issues on GitHub.
                 </EmptyState>
             )}
 

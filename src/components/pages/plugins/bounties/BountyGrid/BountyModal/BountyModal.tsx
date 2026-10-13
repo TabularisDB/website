@@ -1,5 +1,7 @@
 'use client';
 
+import {BountyIcon} from '@/components/pages/plugins/bounties/BountyGrid/BountyIcon/BountyIcon';
+import {BountyMeta} from '@/components/pages/plugins/bounties/BountyGrid/BountyMeta/BountyMeta';
 import {Button} from '@/components/ui/Button/Button';
 import {DiscordIcon} from '@/components/ui/Icons/SocialIcons';
 import {Modal} from '@/components/ui/Modal/Modal';
@@ -8,8 +10,6 @@ import {BOUNTY_STATUS, type PluginBounty} from '@/lib/plugins/bounties';
 import {SOCIAL_URLS} from '@/lib/social';
 import {ArrowUpRightIcon, FootprintsIcon, InfoIcon, ListChecksIcon, StarIcon} from 'lucide-react';
 import styles from './BountyModal.module.scss';
-import {BountyIcon} from '../BountyIcon/BountyIcon';
-import {BountyMeta} from '../BountyMeta/BountyMeta';
 
 function claimLabel(status: PluginBounty['status']) {
     return status === BOUNTY_STATUS.CLAIMED ? 'Follow the work' : 'Claim this bounty';
@@ -30,24 +30,15 @@ export function BountyModal({bounty, onClose}: BountyModalProps) {
         >
             {bounty && (
                 <>
-                    <div className={styles.body}>
+                    <Modal.Body>
                         <BountyMeta bounty={bounty} withStatus />
 
-                        <section className={styles.section}>
-                            <h3 className={styles.sectionTitle}>
-                                <InfoIcon aria-hidden="true" />
-                                Overview
-                            </h3>
-
-                            <p className={styles.text}>{bounty.description}</p>
-                        </section>
+                        <Modal.Section title="Overview" icon={<InfoIcon aria-hidden="true" />}>
+                            <Modal.Text>{bounty.description}</Modal.Text>
+                        </Modal.Section>
 
                         {bounty.capabilities.length > 0 && (
-                            <section className={styles.section}>
-                                <h3 className={styles.sectionTitle}>
-                                    <ListChecksIcon aria-hidden="true" />
-                                    Scope
-                                </h3>
+                            <Modal.Section title="Scope" icon={<ListChecksIcon aria-hidden="true" />}>
                                 <ul className={styles.capabilities}>
                                     {bounty.capabilities.map((capability) => (
                                         <li
@@ -59,20 +50,16 @@ export function BountyModal({bounty, onClose}: BountyModalProps) {
                                         </li>
                                     ))}
                                 </ul>
-                                <p className={styles.text}>{bounty.signal}</p>
-                            </section>
+                                <Modal.Text>{bounty.signal}</Modal.Text>
+                            </Modal.Section>
                         )}
 
-                        <section className={styles.section}>
-                            <h3 className={styles.sectionTitle}>
-                                <FootprintsIcon aria-hidden="true" />
-                                Next step
-                            </h3>
-                            <p className={styles.text}>{bounty.nextStep}</p>
-                        </section>
-                    </div>
+                        <Modal.Section title="Next step" icon={<FootprintsIcon aria-hidden="true" />}>
+                            <Modal.Text>{bounty.nextStep}</Modal.Text>
+                        </Modal.Section>
+                    </Modal.Body>
 
-                    <div className={styles.actions}>
+                    <Modal.Actions>
                         <Button
                             href={SOCIAL_URLS.discord}
                             className={styles.button}
@@ -102,7 +89,7 @@ export function BountyModal({bounty, onClose}: BountyModalProps) {
                             {claimLabel(bounty.status)}
                             <ArrowUpRightIcon />
                         </Button>
-                    </div>
+                    </Modal.Actions>
                 </>
             )}
         </Modal>

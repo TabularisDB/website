@@ -1,8 +1,10 @@
 import {SponsorsGrid} from '@/components/pages/sponsors/SponsorsGrid/SponsorsGrid';
-import {SupportBlock} from '@/components/pages/sponsors/SupportBlock/SupportBlock';
-import {StarIcon} from 'lucide-react';
-import type {Metadata} from 'next';
+import {Button} from '@/components/ui/Button/Button';
+import {CalloutBlock} from '@/components/ui/CalloutBlock/CalloutBlock';
+import {GitHubIcon} from '@/components/ui/Icons/SocialIcons';
 import {ogImages} from '@/lib/og/registry';
+import {HandshakeIcon, StarIcon} from 'lucide-react';
+import type {Metadata} from 'next';
 
 const path = '/sponsors';
 const title = 'Sponsors and supporters | Tabularis';
@@ -39,7 +41,24 @@ export default function SponsorsPage() {
 
             <SponsorsGrid />
 
-            <SupportBlock />
+            <CalloutBlock
+                title="Support Tabularis"
+                actions={
+                    <>
+                        <Button href="/sponsors/become" size="sm">
+                            <HandshakeIcon />
+                            Become a sponsor
+                        </Button>
+                        <Button href="https://github.com/sponsors/debba" variant="secondary" size="sm">
+                            <GitHubIcon />
+                            Sponsor on GitHub
+                        </Button>
+                    </>
+                }
+            >
+                Put your product in front of developers who work with databases every day, or support development
+                personally through GitHub Sponsors.
+            </CalloutBlock>
         </div>
     );
 }

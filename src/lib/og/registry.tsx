@@ -42,6 +42,8 @@ export function getOgCards(): Record<string, OgCard> {
         '/solutions': () => renderSimpleOgImage({kicker: 'Solutions', title: 'Tabularis by use case'}),
         '/sponsors': () =>
             renderSimpleOgImage({kicker: 'Sponsors & supporters', title: 'Support open-source database tooling'}),
+        '/sponsors/become': () =>
+            renderSimpleOgImage({kicker: 'Become a sponsor', title: 'Reach developers where they work'}),
         '/subscribe': () => renderSimpleOgImage({kicker: 'Newsletter', title: 'Stay in the loop'}),
         '/survey': () => renderSimpleOgImage({kicker: 'Community survey', title: 'What should Tabularis build next?'}),
         '/wiki': () => renderSimpleOgImage({kicker: 'Docs', title: 'Documentation'}),

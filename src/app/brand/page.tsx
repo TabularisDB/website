@@ -109,8 +109,8 @@ export default function BrandPage() {
             <div className={styles.categoriesWrapper}>
                 {ASSET_GROUPS.map(({type, title, icon: GroupIcon, variants}) => (
                     <section key={type} className={styles.category}>
-                        <h2 className={styles.categoryTitle}>
-                            <GroupIcon className={styles.categoryIcon} />
+                        <h2 className="category-title">
+                            <GroupIcon aria-hidden="true" />
                             {title}
                         </h2>
 
@@ -152,8 +152,8 @@ export default function BrandPage() {
                 ))}
 
                 <section className={styles.category}>
-                    <h2 className={styles.categoryTitle}>
-                        <Type className={styles.categoryIcon} />
+                    <h2 className="category-title">
+                        <Type aria-hidden="true" />
                         Two typefaces, one voice
                     </h2>
 
@@ -185,8 +185,8 @@ export default function BrandPage() {
                 </section>
 
                 <section className={styles.category}>
-                    <h2 className={styles.categoryTitle}>
-                        <Droplet className={styles.categoryIcon} />
+                    <h2 className="category-title">
+                        <Droplet aria-hidden="true" />
                         The colors we live in
                     </h2>
 

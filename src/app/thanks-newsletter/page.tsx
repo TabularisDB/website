@@ -1,6 +1,6 @@
 import {MatomoGoal} from '@/components/layout/MatomoGoal';
 import {DiscordIcon} from '@/components/ui/Icons/SocialIcons';
-import {ThankYouResources} from '@/components/ui/ThankYouResources/ThankYouResources';
+import {ThankYouResource, ThankYouResources} from '@/components/ui/ThankYouResources/ThankYouResources';
 import {SOCIAL_URLS} from '@/lib/social';
 import {BookOpenIcon, DownloadIcon, MailCheckIcon} from 'lucide-react';
 import type {Metadata} from 'next';
@@ -11,26 +11,26 @@ export const metadata: Metadata = {
     robots: {index: false, follow: false},
 };
 
-const RESOURCES = [
+const RESOURCES: ThankYouResource[] = [
     {
         href: '/download',
-        external: false,
         icon: <DownloadIcon />,
         title: 'Download Tabularis',
+        linkLabel: 'Download',
         desc: 'Get the latest version for Windows, macOS or Linux and start working with your databases.',
     },
     {
         href: SOCIAL_URLS.discord,
-        external: true,
-        icon: <DiscordIcon />,
+        icon: <DiscordIcon colored />,
         title: 'Join our Discord',
+        linkLabel: 'Join Discord',
         desc: 'Connect with the community, share feedback and get help from other developers.',
     },
     {
         href: '/blog',
-        external: false,
         icon: <BookOpenIcon />,
         title: 'Read the blog',
+        linkLabel: 'Browse articles',
         desc: 'Release notes, tutorials and behind-the-scenes posts about Tabularis development.',
     },
 ];

@@ -2,8 +2,10 @@ import {getKindBadge, getPluginIcon} from '@/components/pages/plugins/Plugin.dat
 import {getAllPlugins, getLatestRelease} from '@/lib/plugins';
 import {getKindSlug, getPublishedKinds} from '@/lib/plugins/kinds';
 import clsx from 'clsx';
-import {ArrowUpRightIcon, PaletteIcon, PlugIcon, TagIcon, UserIcon} from 'lucide-react';
+import {PaletteIcon, PlugIcon, TagIcon, UserIcon} from 'lucide-react';
 import Link from 'next/link';
+import {Card} from '@/components/ui/Card/Card';
+import {CardGrid} from '@/components/ui/CardGrid/CardGrid';
 import styles from './PluginGrid.module.scss';
 
 type Plugin = ReturnType<typeof getAllPlugins>[number];
@@ -48,11 +50,11 @@ export function PluginGrid({activeKind}: {activeKind?: string}) {
                 </nav>
             )}
 
-            <div className={styles.grid}>
+            <CardGrid>
                 {plugins.map((plugin) => (
                     <PluginCard key={plugin.id} plugin={plugin} />
                 ))}
-            </div>
+            </CardGrid>
         </div>
     );
 }
@@ -61,52 +63,41 @@ function PluginCard({plugin}: {plugin: Plugin}) {
     const kind = kindOf(plugin);
     const iconSlug = getPluginIcon(plugin.id);
     const minVersion = getLatestRelease(plugin)?.min_tabularis_version;
+    const fallbackIcon = kind === 'theme' ? <PaletteIcon /> : <PlugIcon />;
 
     return (
-        <a
-            href={plugin.registry_url ?? plugin.homepage}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.card}
-        >
-            <div className={styles.cardHeader}>
-                {iconSlug ? (
-                    <img className={styles.cardIcon} src={`/img/logos/plugins/${iconSlug}.svg`} alt={plugin.name} />
-                ) : (
-                    <span className={styles.cardIcon}>{kind === 'theme' ? <PaletteIcon /> : <PlugIcon />}</span>
-                )}
-                <span className={styles.kind}>{getKindBadge(kind)}</span>
-            </div>
-
-            <div className={styles.cardDetails}>
-                <h3 className={styles.cardTitle}>{plugin.name}</h3>
-                <p className={styles.cardExcerpt}>{plugin.description}</p>
-            </div>
-
-            <div className={styles.meta}>
-                <span className={styles.metaItem}>
-                    <UserIcon aria-hidden="true" />
-                    {authorNameOf(plugin)}
-                </span>
-                <span className={styles.metaItem}>
-                    <TagIcon aria-hidden="true" />
+        <Card>
+            <Card.Header
+                icon={
+                    iconSlug ? (
+                        <img src={`/img/logos/plugins/${iconSlug}.svg`} alt="" className={styles.logo} />
+                    ) : (
+                        fallbackIcon
+                    )
+                }
+                aside={<Card.Label>{getKindBadge(kind)}</Card.Label>}
+            />
+            <Card.Content>
+                <Card.Title>{plugin.name}</Card.Title>
+                <Card.Description>{plugin.description}</Card.Description>
+            </Card.Content>
+            <Card.Meta>
+                <Card.MetaItem icon={<UserIcon aria-hidden="true" />}>{authorNameOf(plugin)}</Card.MetaItem>
+                <Card.MetaItem icon={<TagIcon aria-hidden="true" />}>
                     <span className={styles.mono}>v{plugin.latest_version}</span>
-                </span>
+                </Card.MetaItem>
                 {minVersion && (
-                    <span className={styles.metaItem} title="Minimum Tabularis version">
-                        <img
-                            src="/img/brand/tabularis-icon-color.svg"
-                            alt="Requires Tabularis"
-                            className={styles.metaLogo}
-                        />
+                    <Card.MetaItem
+                        title="Minimum Tabularis version"
+                        icon={<img src="/img/brand/tabularis-icon-color.svg" alt="Requires Tabularis" />}
+                    >
                         <span className={styles.mono}>{minVersion}+</span>
-                    </span>
+                    </Card.MetaItem>
                 )}
-            </div>
-
-            <span className={styles.cardLink}>
-                View plugin <ArrowUpRightIcon aria-hidden="true" />
-            </span>
-        </a>
+            </Card.Meta>
+            <Card.Link href={plugin.registry_url ?? plugin.homepage} ariaLabel={`View ${plugin.name}`}>
+                View plugin
+            </Card.Link>
+        </Card>
     );
 }

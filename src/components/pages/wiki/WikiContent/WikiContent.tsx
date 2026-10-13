@@ -3,6 +3,7 @@
 import {useRef, useState, useEffect, useCallback, useMemo} from 'react';
 import {enhanceWrappedVideo} from '@/lib/videos/videoLoader';
 import {LightboxOverlay} from '@/components/ui/LightboxOverlay/LightboxOverlay';
+import {useScrollLock} from '@/hooks/useScrollLock';
 import '@/styles/prose.scss';
 
 interface LightboxState {
@@ -17,6 +18,8 @@ export function WikiContent({html}: {html: string}) {
     // Stable identity: React 19 rewrites innerHTML whenever this object changes,
     // which would replace the images (and their listeners) on every lightbox open.
     const innerHtml = useMemo(() => ({__html: html}), [html]);
+
+    useScrollLock(lightbox !== null);
 
     useEffect(() => {
         if (!ref.current) return;
@@ -64,14 +67,6 @@ export function WikiContent({html}: {html: string}) {
         window.addEventListener('keydown', handleKey);
         return () => window.removeEventListener('keydown', handleKey);
     }, [lightbox, close, prev, next]);
-
-    useEffect(() => {
-        if (!lightbox) return;
-        document.body.style.overflow = 'hidden';
-        return () => {
-            document.body.style.overflow = '';
-        };
-    }, [lightbox]);
 
     const handleTouchStart = useCallback((e: React.TouchEvent) => {
         touchStartX.current = e.touches[0].clientX;

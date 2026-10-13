@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import styles from './LightboxOverlay.module.scss';
+import {ArrowLeft, ArrowRight} from 'lucide-react';
+import {CloseButton} from '../CloseButton/CloseButton';
 
 interface LightboxOverlayProps {
     src: string;
@@ -36,7 +38,7 @@ export function LightboxOverlay({
                     }}
                     aria-label="Previous image"
                 >
-                    &#8592;
+                    <ArrowLeft />
                 </button>
             )}
 
@@ -60,13 +62,11 @@ export function LightboxOverlay({
                     }}
                     aria-label="Next image"
                 >
-                    &#8594;
+                    <ArrowRight />
                 </button>
             )}
 
-            <button type="button" className={styles.close} onClick={onClose} aria-label="Close">
-                &times;
-            </button>
+            <CloseButton onClick={onClose} className={styles.close} />
 
             {counter && (
                 <div className={styles.footer}>

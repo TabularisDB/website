@@ -41,21 +41,13 @@ export function SponsorModal({sponsor, onClose}: SponsorModalProps) {
         >
             {sponsor && (
                 <>
-                    <div className={styles.body}>
-                        <section className={styles.section}>
-                            <h3 className={styles.sectionTitle}>
-                                <InfoIcon aria-hidden="true" />
-                                Overview
-                            </h3>
-                            <p className={styles.text}>{sponsor.modalDescription}</p>
-                        </section>
+                    <Modal.Body>
+                        <Modal.Section title="Overview" icon={<InfoIcon aria-hidden="true" />}>
+                            <Modal.Text>{sponsor.modalDescription}</Modal.Text>
+                        </Modal.Section>
 
                         {sponsor.features && (
-                            <section className={styles.section}>
-                                <h3 className={styles.sectionTitle}>
-                                    <SparklesIcon aria-hidden="true" />
-                                    Why it matters
-                                </h3>
+                            <Modal.Section title="Why it matters" icon={<SparklesIcon aria-hidden="true" />}>
                                 <ul className={styles.features}>
                                     {sponsor.features.map((feature) => (
                                         <li key={feature.text}>
@@ -64,29 +56,25 @@ export function SponsorModal({sponsor, onClose}: SponsorModalProps) {
                                         </li>
                                     ))}
                                 </ul>
-                            </section>
+                            </Modal.Section>
                         )}
 
                         {sponsor.offer && (
-                            <section className={styles.section}>
-                                <h3 className={styles.sectionTitle}>
-                                    <GiftIcon aria-hidden="true" />
-                                    Offer for Tabularis users
-                                </h3>
+                            <Modal.Section title="Offer for Tabularis users" icon={<GiftIcon aria-hidden="true" />}>
                                 <div className={styles.highlight}>
                                     <p className={styles.highlightTitle}>{sponsor.offer.title}</p>
-                                    <p className={styles.text}>{sponsor.offer.description}</p>
+                                    <Modal.Text>{sponsor.offer.description}</Modal.Text>
                                 </div>
-                            </section>
+                            </Modal.Section>
                         )}
-                    </div>
+                    </Modal.Body>
 
-                    <div className={styles.actions}>
+                    <Modal.Actions>
                         <Button href={withUtm(sponsor.url)} size="sm">
                             Visit {sponsor.name}
                             <ArrowUpRightIcon />
                         </Button>
-                    </div>
+                    </Modal.Actions>
                 </>
             )}
         </Modal>

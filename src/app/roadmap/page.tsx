@@ -86,8 +86,8 @@ export default function RoadmapPage() {
 
                     return (
                         <section key={group.status} className={styles.category}>
-                            <h2 className={styles.categoryTitle}>
-                                <StatusIcon className={styles.categoryIcon} />
+                            <h2 className="category-title">
+                                <StatusIcon aria-hidden="true" />
                                 {CATEGORY_LABEL[group.status]}
                             </h2>
 

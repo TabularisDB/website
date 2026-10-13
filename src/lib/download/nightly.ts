@@ -14,83 +14,83 @@ export interface NightlyRelease {
 }
 
 export const NIGHTLY_RELEASE: NightlyRelease = {
-  "tag": "nightly-20261006-c0fe758",
-  "name": "Nightly (v0.26.1-2)",
-  "version": "0.26.1",
-  "publishedAt": "2026-10-06T09:53:37Z",
-  "url": "https://github.com/TabularisDB/tabularis/releases/tag/nightly-20261006-c0fe758",
+  "tag": "nightly-20261013-1d53f00",
+  "name": "Nightly (v0.27.1-5)",
+  "version": "0.27.1",
+  "publishedAt": "2026-10-13T10:10:59Z",
+  "url": "https://github.com/TabularisDB/tabularis/releases/tag/nightly-20261013-1d53f00",
   "assets": [
     {
       "name": "latest.json",
-      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261006-c0fe758/latest.json"
+      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261013-1d53f00/latest.json"
     },
     {
-      "name": "tabularis-0.26.1-2-1.x86_64.rpm",
-      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261006-c0fe758/tabularis-0.26.1-2-1.x86_64.rpm"
+      "name": "tabularis-0.27.1-5-1.x86_64.rpm",
+      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261013-1d53f00/tabularis-0.27.1-5-1.x86_64.rpm"
     },
     {
-      "name": "tabularis-0.26.1-2-1.x86_64.rpm.sig",
-      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261006-c0fe758/tabularis-0.26.1-2-1.x86_64.rpm.sig"
+      "name": "tabularis-0.27.1-5-1.x86_64.rpm.sig",
+      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261013-1d53f00/tabularis-0.27.1-5-1.x86_64.rpm.sig"
     },
     {
-      "name": "tabularis_0.26.1-2_aarch64.app.tar.gz",
-      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261006-c0fe758/tabularis_0.26.1-2_aarch64.app.tar.gz"
+      "name": "tabularis_0.27.1-5_aarch64.app.tar.gz",
+      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261013-1d53f00/tabularis_0.27.1-5_aarch64.app.tar.gz"
     },
     {
-      "name": "tabularis_0.26.1-2_aarch64.app.tar.gz.sig",
-      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261006-c0fe758/tabularis_0.26.1-2_aarch64.app.tar.gz.sig"
+      "name": "tabularis_0.27.1-5_aarch64.app.tar.gz.sig",
+      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261013-1d53f00/tabularis_0.27.1-5_aarch64.app.tar.gz.sig"
     },
     {
-      "name": "tabularis_0.26.1-2_aarch64.dmg",
-      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261006-c0fe758/tabularis_0.26.1-2_aarch64.dmg"
+      "name": "tabularis_0.27.1-5_aarch64.dmg",
+      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261013-1d53f00/tabularis_0.27.1-5_aarch64.dmg"
     },
     {
-      "name": "tabularis_0.26.1-2_amd64.AppImage",
-      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261006-c0fe758/tabularis_0.26.1-2_amd64.AppImage"
+      "name": "tabularis_0.27.1-5_amd64.AppImage",
+      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261013-1d53f00/tabularis_0.27.1-5_amd64.AppImage"
     },
     {
-      "name": "tabularis_0.26.1-2_amd64.AppImage.sig",
-      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261006-c0fe758/tabularis_0.26.1-2_amd64.AppImage.sig"
+      "name": "tabularis_0.27.1-5_amd64.AppImage.sig",
+      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261013-1d53f00/tabularis_0.27.1-5_amd64.AppImage.sig"
     },
     {
-      "name": "tabularis_0.26.1-2_amd64.deb",
-      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261006-c0fe758/tabularis_0.26.1-2_amd64.deb"
+      "name": "tabularis_0.27.1-5_amd64.deb",
+      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261013-1d53f00/tabularis_0.27.1-5_amd64.deb"
     },
     {
-      "name": "tabularis_0.26.1-2_amd64.deb.sig",
-      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261006-c0fe758/tabularis_0.26.1-2_amd64.deb.sig"
+      "name": "tabularis_0.27.1-5_amd64.deb.sig",
+      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261013-1d53f00/tabularis_0.27.1-5_amd64.deb.sig"
     },
     {
-      "name": "tabularis_0.26.1-2_x64-setup.exe",
-      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261006-c0fe758/tabularis_0.26.1-2_x64-setup.exe"
+      "name": "tabularis_0.27.1-5_x64-setup.exe",
+      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261013-1d53f00/tabularis_0.27.1-5_x64-setup.exe"
     },
     {
-      "name": "tabularis_0.26.1-2_x64-setup.exe.sig",
-      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261006-c0fe758/tabularis_0.26.1-2_x64-setup.exe.sig"
+      "name": "tabularis_0.27.1-5_x64-setup.exe.sig",
+      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261013-1d53f00/tabularis_0.27.1-5_x64-setup.exe.sig"
     },
     {
-      "name": "tabularis_0.26.1-2_x64.app.tar.gz",
-      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261006-c0fe758/tabularis_0.26.1-2_x64.app.tar.gz"
+      "name": "tabularis_0.27.1-5_x64.app.tar.gz",
+      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261013-1d53f00/tabularis_0.27.1-5_x64.app.tar.gz"
     },
     {
-      "name": "tabularis_0.26.1-2_x64.app.tar.gz.sig",
-      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261006-c0fe758/tabularis_0.26.1-2_x64.app.tar.gz.sig"
+      "name": "tabularis_0.27.1-5_x64.app.tar.gz.sig",
+      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261013-1d53f00/tabularis_0.27.1-5_x64.app.tar.gz.sig"
     },
     {
-      "name": "tabularis_0.26.1-2_x64.dmg",
-      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261006-c0fe758/tabularis_0.26.1-2_x64.dmg"
+      "name": "tabularis_0.27.1-5_x64.dmg",
+      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261013-1d53f00/tabularis_0.27.1-5_x64.dmg"
     },
     {
-      "name": "tabularis_0.26.1-2_x64_en-US.msi",
-      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261006-c0fe758/tabularis_0.26.1-2_x64_en-US.msi"
+      "name": "tabularis_0.27.1-5_x64_en-US.msi",
+      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261013-1d53f00/tabularis_0.27.1-5_x64_en-US.msi"
     },
     {
-      "name": "tabularis_0.26.1-2_x64_en-US.msi.sig",
-      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261006-c0fe758/tabularis_0.26.1-2_x64_en-US.msi.sig"
+      "name": "tabularis_0.27.1-5_x64_en-US.msi.sig",
+      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261013-1d53f00/tabularis_0.27.1-5_x64_en-US.msi.sig"
     },
     {
-      "name": "tabularis_nightly-20261006-c0fe758_x64-portable.exe",
-      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261006-c0fe758/tabularis_nightly-20261006-c0fe758_x64-portable.exe"
+      "name": "tabularis_nightly-20261013-1d53f00_x64-portable.exe",
+      "url": "https://github.com/TabularisDB/tabularis/releases/download/nightly-20261013-1d53f00/tabularis_nightly-20261013-1d53f00_x64-portable.exe"
     }
   ]
 } as const;

@@ -1,4 +1,5 @@
 @use '../styles/tokens';
+@use '../styles/themes';
 @use '../styles/base';
 
 .container,
@@ -20,7 +21,7 @@
     > *:nth-child(4n + 2) .section-header .eyebrow {
         color: var(--color-eyebrow-teal);
     }
-    > *:nth-child(4n + 3).section-header .eyebrow {
+    > *:nth-child(4n + 3) .section-header .eyebrow {
         color: var(--color-eyebrow-blue);
     }
 }
@@ -162,5 +163,20 @@
 
     50% {
         background-color: var(--color-surface-raised);
+    }
+}
+
+.category-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+
+    svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        flex-shrink: 0;
     }
 }

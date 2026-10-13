@@ -22,11 +22,11 @@ export function JoinGiveawayModal({login, onClose}: JoinGiveawayModalProps) {
             icon={<TicketIcon aria-hidden="true" className={styles.icon} />}
             className={styles.panel}
         >
-            <div className={styles.body}>
-                <p className={styles.intro}>
+            <Modal.Body className={styles.body}>
+                <Modal.Text>
                     Is this you, <strong>@{login}</strong>? You are already on the board. Entering takes one reply on
                     Discord:
-                </p>
+                </Modal.Text>
 
                 <ol className={styles.steps}>
                     <li className={styles.step}>
@@ -50,16 +50,18 @@ export function JoinGiveawayModal({login, onClose}: JoinGiveawayModalProps) {
                     </li>
                 </ol>
 
-                <p className={styles.note}>
+                <Modal.Text className={styles.note}>
                     A maintainer adds you to the entrants, and the Entered badge shows up next to your name after the
                     next refresh.
-                </p>
+                </Modal.Text>
+            </Modal.Body>
 
-                <Button href={SOCIAL_URLS.discord} className={styles.cta}>
+            <Modal.Actions>
+                <Button href={SOCIAL_URLS.discord} size="sm">
                     <DiscordIcon />
                     Open Discord
                 </Button>
-            </div>
+            </Modal.Actions>
         </Modal>
     );
 }

@@ -1,5 +1,5 @@
 .siteHeader {
-    z-index: 99;
+    z-index: var(--z-header);
     position: fixed;
     top: 0;
     left: 0;
@@ -10,11 +10,6 @@
     align-items: center;
     background-color: var(--color-bg);
     border-bottom: 0.1rem solid transparent;
-
-    &.menuOpen {
-        background-color: var(--color-bg);
-        backdrop-filter: none;
-    }
 
     &.border {
         border-bottom-color: var(--color-border);
@@ -27,7 +22,6 @@
     width: var(--max-width);
     margin: 0 auto;
     gap: 2rem;
-    z-index: 2;
 
     &.containerWide {
         width: var(--max-width-lg);

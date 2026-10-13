@@ -17,7 +17,7 @@ export function SolutionsCatalog() {
         <div className={styles.categoriesWrapper}>
             {grouped.map((category) => (
                 <div key={category.title} className={styles.category}>
-                    <h3 className={styles.categoryTitle}>{category.title}</h3>
+                    <h2 className="category-title">{category.title}</h2>
 
                     <SolutionsGrid
                         items={category.items.map((item) => ({

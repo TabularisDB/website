@@ -21,6 +21,10 @@
 html {
     scrollbar-gutter: stable;
     scrollbar-color: var(--color-border-hover) transparent;
+
+    @media (prefers-reduced-motion: no-preference) {
+        scroll-behavior: smooth;
+    }
 }
 
 html,

@@ -18,14 +18,16 @@
 }
 
 .left {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border-hover) transparent;
+
     @media (max-width: 1024px) {
         position: fixed;
-        z-index: 999999;
         top: 0;
         left: 0;
         bottom: 0;
         width: 280px;
-        z-index: var(--z-header);
+        z-index: var(--z-drawer);
         background: var(--color-bg);
         transform: translateX(-100%);
         transition: transform 0.2s ease;
@@ -91,6 +93,6 @@
         position: fixed;
         inset: 0;
         background: var(--color-backdrop);
-        z-index: calc(var(--z-header) - 1);
+        z-index: calc(var(--z-drawer) - 1);
     }
 }

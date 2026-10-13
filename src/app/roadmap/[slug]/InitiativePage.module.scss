@@ -33,7 +33,7 @@
     letter-spacing: 0.04em;
     color: var(--color-text-secondary);
 
-    &.in-progress {
+    &.inProgress {
         color: var(--color-eyebrow-orange);
     }
 
@@ -132,7 +132,7 @@
     color: var(--color-text-primary);
     font-size: 0.9rem;
 
-    &.in-progress {
+    &.inProgress {
         color: var(--color-eyebrow-orange);
     }
 
@@ -251,7 +251,7 @@
         font-size: 0.85em;
         background-color: rgb(var(--rgb-tint) / 0.06);
         padding: 0.1em 0.35em;
-        border-radius: 0.25rem;
+        border-radius: var(--radius-xs);
     }
 
     pre {

@@ -1,0 +1,33 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    width: 100%;
+    max-width: 800px;
+    margin-inline: auto;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.sectionTitle {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.375rem;
+    font-weight: 400;
+    color: var(--color-text-primary);
+
+    svg {
+        width: 1.375rem;
+        height: 1.375rem;
+        flex-shrink: 0;
+    }
+}
+
+.perks {
+    --icon-color: var(--color-eyebrow-teal);
+}

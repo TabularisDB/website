@@ -1,11 +1,12 @@
+import {CATEGORY_ICONS} from '@/components/pages/wiki/CategoryLabel/CategoryLabel';
 import {WikiLayout} from '@/components/pages/wiki/WikiLayout/WikiLayout';
 import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
+import {Card} from '@/components/ui/Card/Card';
+import {CardGrid} from '@/components/ui/CardGrid/CardGrid';
+import {ogImages} from '@/lib/og/registry';
 import {getWikiPagesByCategory, WIKI_CATEGORIES} from '@/lib/wiki';
 import type {Metadata} from 'next';
-import Link from 'next/link';
 import styles from './WikiIndexPage.module.scss';
-import {CATEGORY_ICONS} from '@/components/pages/wiki/CategoryLabel/CategoryLabel';
-import {ogImages} from '@/lib/og/registry';
 
 const path = '/wiki';
 const title = 'Docs | Tabularis';
@@ -52,14 +53,17 @@ export default function WikiIndexPage() {
                             {name}
                         </h2>
 
-                        <div className={styles.grid}>
+                        <CardGrid minWidth={360} className={styles.compact}>
                             {pages.map((page) => (
-                                <Link key={page.slug} href={`/wiki/${page.slug}`} className={styles.card}>
-                                    <span className={styles.cardTitle}>{page.title}</span>
-                                    <span className={styles.cardExcerpt}>{page.excerpt}</span>
-                                </Link>
+                                <Card key={page.slug}>
+                                    <Card.Content>
+                                        <Card.Title>{page.title}</Card.Title>
+                                        <Card.Description>{page.excerpt}</Card.Description>
+                                    </Card.Content>
+                                    <Card.Link href={`/wiki/${page.slug}`} ariaLabel={page.title} />
+                                </Card>
                             ))}
-                        </div>
+                        </CardGrid>
                     </section>
                 ))}
             </WikiLayout>

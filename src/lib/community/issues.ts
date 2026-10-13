@@ -3,7 +3,7 @@ import type {CommunityIssue, CommunityProjectGroup} from './types';
 
 export const ISSUES_ORG = "TabularisDB";
 export const FEATURED_LABELS = ["good first issue","help wanted"];
-export const ISSUES_FETCHED_AT = "2026-10-11T07:30:11.290Z";
+export const ISSUES_FETCHED_AT = "2026-10-13T14:05:16.998Z";
 export const ISSUE_PROJECT_GROUPS: CommunityProjectGroup[] = [
   {
     "kind": "app",
@@ -16,10 +16,7 @@ export const ISSUE_PROJECT_GROUPS: CommunityProjectGroup[] = [
     "kind": "driver",
     "label": "Drivers",
     "repos": [
-      "tabularis-clickhouse-plugin",
-      "tabularis-csv-plugin",
       "tabularis-db2-plugin",
-      "tabularis-duckdb-plugin",
       "tabularis-oracle-plugin",
       "tabularis-postgresql-plugin"
     ]
@@ -33,6 +30,862 @@ export const ISSUE_PROJECT_GROUPS: CommunityProjectGroup[] = [
   }
 ];
 export const COMMUNITY_ISSUES: CommunityIssue[] = [
+  {
+    "repo": "tabularis",
+    "number": 1046,
+    "title": "[Feat]: Export: propose a file name based on the table instead of a timestamp",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1046",
+    "labels": [
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [
+      {
+        "login": "cestercian",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/183791452?v=4"
+      }
+    ],
+    "pullRequests": [
+      {
+        "number": 1052,
+        "url": "https://github.com/TabularisDB/tabularis/pull/1052",
+        "author": "cestercian"
+      }
+    ],
+    "comments": 2,
+    "createdAt": "2026-10-12T17:48:52Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1045,
+    "title": "[Feat]: Connections: copy button on the connection error banner",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1045",
+    "labels": [
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [
+      {
+        "login": "Asymtode712",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/115717746?v=4"
+      }
+    ],
+    "pullRequests": [
+      {
+        "number": 1062,
+        "url": "https://github.com/TabularisDB/tabularis/pull/1062",
+        "author": "Asymtode712"
+      }
+    ],
+    "comments": 2,
+    "createdAt": "2026-10-12T17:48:44Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1044,
+    "title": "[Feat]: Tabs: rename console tabs",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1044",
+    "labels": [
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [
+      {
+        "number": 1056,
+        "url": "https://github.com/TabularisDB/tabularis/pull/1056",
+        "author": "notlakshitha"
+      }
+    ],
+    "comments": 0,
+    "createdAt": "2026-10-12T17:48:38Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1043,
+    "title": "[Feat]: Explorer: Enter opens the first match and Esc clears the table filter",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1043",
+    "labels": [
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-12T17:48:32Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1042,
+    "title": "[Feat]: Explorer: copy quoted and schema-qualified object names",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1042",
+    "labels": [
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-12T17:48:26Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1041,
+    "title": "[Feat]: Query history: copy the details of an entry",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1041",
+    "labels": [
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-12T17:48:12Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1040,
+    "title": "[Feat]: Saved queries: copy SQL, open without running, duplicate",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1040",
+    "labels": [
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-12T17:48:05Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1039,
+    "title": "[Feat]: SQL editor: change the selection to UPPERCASE / lowercase from the context menu",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1039",
+    "labels": [
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-12T17:47:57Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1038,
+    "title": "[Feat]: SQL editor: \"Select current statement\" action",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1038",
+    "labels": [
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [
+      {
+        "number": 1055,
+        "url": "https://github.com/TabularisDB/tabularis/pull/1055",
+        "author": "Detoy"
+      }
+    ],
+    "comments": 0,
+    "createdAt": "2026-10-12T17:47:50Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1037,
+    "title": "[Feat]: SQL editor: zoom the font with Ctrl/Cmd + =, - and 0",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1037",
+    "labels": [
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-12T17:47:44Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1036,
+    "title": "[Feat]: Command palette: toggle editor word wrap",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1036",
+    "labels": [
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-12T17:47:33Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1035,
+    "title": "[Feat]: Result status bar: show the number of columns",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1035",
+    "labels": [
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [
+      {
+        "login": "batool-fariha",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/339743174?v=4"
+      }
+    ],
+    "pullRequests": [
+      {
+        "number": 1057,
+        "url": "https://github.com/TabularisDB/tabularis/pull/1057",
+        "author": "batool-fariha"
+      }
+    ],
+    "comments": 1,
+    "createdAt": "2026-10-12T17:47:27Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1034,
+    "title": "[Feat]: Data grid: \"Set random UUID\" for UUID columns",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1034",
+    "labels": [
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [
+      {
+        "login": "Asymtode712",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/115717746?v=4"
+      }
+    ],
+    "pullRequests": [
+      {
+        "number": 1049,
+        "url": "https://github.com/TabularisDB/tabularis/pull/1049",
+        "author": "Asymtode712"
+      }
+    ],
+    "comments": 2,
+    "createdAt": "2026-10-12T17:47:20Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1033,
+    "title": "[Feat]: Data grid: open a URL or email address from a cell",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1033",
+    "labels": [
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-12T17:47:13Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1032,
+    "title": "[Feat]: Data grid: filter a column by the clipboard value (= clipboard, IN clipboard)",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1032",
+    "labels": [
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-12T17:47:07Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1031,
+    "title": "[Feat]: Data grid: comparison and \"contains\" operators in \"Filter by this value\"",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1031",
+    "labels": [
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-12T17:46:52Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1030,
+    "title": "[Feat]: Data grid: copy all column names (one per line or as a JSON array)",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1030",
+    "labels": [
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [
+      {
+        "login": "Rahul-pamula",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/153642358?v=4"
+      }
+    ],
+    "pullRequests": [],
+    "comments": 3,
+    "createdAt": "2026-10-12T17:46:43Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1029,
+    "title": "[Feat]: Data grid: copy the selection as an HTML table",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1029",
+    "labels": [
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-12T17:46:36Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1028,
+    "title": "[Bug]: Copied CSV does not quote values that contain the delimiter, quotes or line breaks",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1028",
+    "labels": [
+      {
+        "name": "bug",
+        "color": "d73a4a"
+      },
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      }
+    ],
+    "kind": "bug",
+    "assignees": [],
+    "pullRequests": [
+      {
+        "number": 1047,
+        "url": "https://github.com/TabularisDB/tabularis/pull/1047",
+        "author": "jay23606"
+      }
+    ],
+    "comments": 0,
+    "createdAt": "2026-10-12T17:46:27Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1027,
+    "title": "[Bug]: Copy as SQL INSERT and \"Copy quoted name\" always use MySQL backticks",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1027",
+    "labels": [
+      {
+        "name": "bug",
+        "color": "d73a4a"
+      },
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      }
+    ],
+    "kind": "bug",
+    "assignees": [],
+    "pullRequests": [
+      {
+        "number": 1051,
+        "url": "https://github.com/TabularisDB/tabularis/pull/1051",
+        "author": "jay23606"
+      }
+    ],
+    "comments": 0,
+    "createdAt": "2026-10-12T17:46:17Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1019,
+    "title": "[Feat]: SurrealDB database driver plugin",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1019",
+    "labels": [
+      {
+        "name": "help wanted",
+        "color": "008672"
+      },
+      {
+        "name": "roadmap",
+        "color": "1d76db"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-12T09:40:38Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1018,
+    "title": "[Feat]: Snowflake database driver plugin",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1018",
+    "labels": [
+      {
+        "name": "help wanted",
+        "color": "008672"
+      },
+      {
+        "name": "roadmap",
+        "color": "1d76db"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [
+      {
+        "number": 1050,
+        "url": "https://github.com/TabularisDB/tabularis/pull/1050",
+        "author": "KonstantinPythonLab"
+      }
+    ],
+    "comments": 0,
+    "createdAt": "2026-10-12T09:40:36Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1017,
+    "title": "[Feat]: Trino database driver plugin",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1017",
+    "labels": [
+      {
+        "name": "help wanted",
+        "color": "008672"
+      },
+      {
+        "name": "roadmap",
+        "color": "1d76db"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 4,
+    "createdAt": "2026-10-12T09:40:34Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1016,
+    "title": "[Feat]: Configurable plugin shutdown grace period",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1016",
+    "labels": [],
+    "kind": null,
+    "assignees": [
+      {
+        "login": "cestercian",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/183791452?v=4"
+      }
+    ],
+    "pullRequests": [
+      {
+        "number": 1025,
+        "url": "https://github.com/TabularisDB/tabularis/pull/1025",
+        "author": "cestercian"
+      }
+    ],
+    "comments": 2,
+    "createdAt": "2026-10-12T09:33:53Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1013,
+    "title": "[Feat]: Shortcut for Cursor Navigation in Filter",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1013",
+    "labels": [
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [
+      {
+        "number": 1024,
+        "url": "https://github.com/TabularisDB/tabularis/pull/1024",
+        "author": "Totopo27"
+      }
+    ],
+    "comments": 1,
+    "createdAt": "2026-10-12T09:00:34Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1012,
+    "title": "[Bug]: MySQL FLOAT values are shown with float artefacts (89.9 → 89.9000015258789)",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1012",
+    "labels": [],
+    "kind": null,
+    "assignees": [
+      {
+        "login": "verbaux",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/9459643?v=4"
+      }
+    ],
+    "pullRequests": [],
+    "comments": 2,
+    "createdAt": "2026-10-12T07:52:35Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1009,
+    "title": "[Bug]: Why MCP cannot be used after always upgrading to the latest version",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1009",
+    "labels": [
+      {
+        "name": "bug",
+        "color": "d73a4a"
+      }
+    ],
+    "kind": "bug",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-12T00:32:46Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1003,
+    "title": "[Feat]: Open a local data file (CSV, TSV, JSON, NDJSON, Parquet, XLSX) as a table",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1003",
+    "labels": [
+      {
+        "name": "roadmap",
+        "color": "1d76db"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-11T20:27:18Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1002,
+    "title": "[Feat]: MySQL / MariaDB connection through a local Unix socket",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1002",
+    "labels": [
+      {
+        "name": "help wanted",
+        "color": "008672"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-11T20:27:17Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1001,
+    "title": "[Feat]: Column statistics popover (distinct, nulls, min/max, top values)",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1001",
+    "labels": [
+      {
+        "name": "help wanted",
+        "color": "008672"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-11T20:27:16Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 1000,
+    "title": "[Feat]: Data grid: bulk edit actions on a cell selection (fill down, set value, trim, change case)",
+    "url": "https://github.com/TabularisDB/tabularis/issues/1000",
+    "labels": [
+      {
+        "name": "help wanted",
+        "color": "008672"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-11T20:27:14Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 996,
+    "title": "[Feat]: Data grid: setting for the default sort direction on header click",
+    "url": "https://github.com/TabularisDB/tabularis/issues/996",
+    "labels": [
+      {
+        "name": "good first issue",
+        "color": "7057ff"
+      },
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [
+      {
+        "number": 1006,
+        "url": "https://github.com/TabularisDB/tabularis/pull/1006",
+        "author": "Totopo27"
+      }
+    ],
+    "comments": 0,
+    "createdAt": "2026-10-11T20:27:08Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 993,
+    "title": "[Feat]: Credential profiles shared by several connections",
+    "url": "https://github.com/TabularisDB/tabularis/issues/993",
+    "labels": [
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-11T20:26:49Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 992,
+    "title": "[Feat]: Version history for saved queries",
+    "url": "https://github.com/TabularisDB/tabularis/issues/992",
+    "labels": [
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-11T20:26:48Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 991,
+    "title": "[Feat]: Conditional formatting rules for the data grid",
+    "url": "https://github.com/TabularisDB/tabularis/issues/991",
+    "labels": [
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-11T20:26:46Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 990,
+    "title": "[Feat]: Show server time and fetch time separately in the result status bar",
+    "url": "https://github.com/TabularisDB/tabularis/issues/990",
+    "labels": [
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [
+      {
+        "number": 1021,
+        "url": "https://github.com/TabularisDB/tabularis/pull/1021",
+        "author": "Totopo27"
+      }
+    ],
+    "comments": 0,
+    "createdAt": "2026-10-11T20:26:45Z"
+  },
+  {
+    "repo": "tabularis",
+    "number": 989,
+    "title": "[Feat]: Per-connection query timeout and connect timeout",
+    "url": "https://github.com/TabularisDB/tabularis/issues/989",
+    "labels": [
+      {
+        "name": "feature request",
+        "color": "02637c"
+      }
+    ],
+    "kind": "feature",
+    "assignees": [],
+    "pullRequests": [],
+    "comments": 0,
+    "createdAt": "2026-10-11T20:26:43Z"
+  },
   {
     "repo": "tabularis",
     "number": 973,
@@ -57,90 +910,21 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "kind": "feature",
-    "assignees": [],
-    "pullRequests": [],
-    "comments": 0,
+    "assignees": [
+      {
+        "login": "1-DARK",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/161078235?v=4"
+      }
+    ],
+    "pullRequests": [
+      {
+        "number": 981,
+        "url": "https://github.com/TabularisDB/tabularis/pull/981",
+        "author": "1-DARK"
+      }
+    ],
+    "comments": 3,
     "createdAt": "2026-10-10T19:19:18Z"
-  },
-  {
-    "repo": "tabularis",
-    "number": 972,
-    "title": "[Bug]: Unknown SSL mode silently disables certificate verification (PostgreSQL/MySQL)",
-    "url": "https://github.com/TabularisDB/tabularis/issues/972",
-    "labels": [
-      {
-        "name": "bug",
-        "color": "d73a4a"
-      },
-      {
-        "name": "help wanted",
-        "color": "008672"
-      },
-      {
-        "name": "security",
-        "color": "d73a4a"
-      }
-    ],
-    "kind": "bug",
-    "assignees": [
-      {
-        "login": "cestercian",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/183791452?v=4"
-      }
-    ],
-    "pullRequests": [
-      {
-        "number": 974,
-        "url": "https://github.com/TabularisDB/tabularis/pull/974",
-        "author": "cestercian"
-      }
-    ],
-    "comments": 1,
-    "createdAt": "2026-10-10T19:19:16Z"
-  },
-  {
-    "repo": "tabularis",
-    "number": 971,
-    "title": "[Bug]: Connection secrets stored in plain text by default, config files world-readable",
-    "url": "https://github.com/TabularisDB/tabularis/issues/971",
-    "labels": [
-      {
-        "name": "bug",
-        "color": "d73a4a"
-      },
-      {
-        "name": "security",
-        "color": "d73a4a"
-      }
-    ],
-    "kind": "bug",
-    "assignees": [],
-    "pullRequests": [],
-    "comments": 0,
-    "createdAt": "2026-10-10T19:19:14Z"
-  },
-  {
-    "repo": "tabularis",
-    "number": 959,
-    "title": "Theme package transport tests flake under parallel cargo test --lib (registry server port contention)",
-    "url": "https://github.com/TabularisDB/tabularis/issues/959",
-    "labels": [],
-    "kind": null,
-    "assignees": [
-      {
-        "login": "vivekyarra",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/253435813?v=4"
-      }
-    ],
-    "pullRequests": [
-      {
-        "number": 964,
-        "url": "https://github.com/TabularisDB/tabularis/pull/964",
-        "author": "vivekyarra"
-      }
-    ],
-    "comments": 2,
-    "createdAt": "2026-10-10T14:39:03Z"
   },
   {
     "repo": "tabularis",
@@ -206,37 +990,15 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
         "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
       }
     ],
-    "pullRequests": [],
-    "comments": 0,
-    "createdAt": "2026-10-09T15:14:21Z"
-  },
-  {
-    "repo": "tabularis-postgresql-plugin",
-    "number": 142,
-    "title": "Add numeric_precision/numeric_scale to get_columns and seq_in_fk to get_foreign_keys for DDL type fidelity (#840)",
-    "url": "https://github.com/TabularisDB/tabularis-postgresql-plugin/issues/142",
-    "labels": [
-      {
-        "name": "enhancement",
-        "color": "a2eeef"
-      }
-    ],
-    "kind": "feature",
-    "assignees": [
-      {
-        "login": "aesslinger",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
-      }
-    ],
     "pullRequests": [
       {
-        "number": 143,
-        "url": "https://github.com/TabularisDB/tabularis-postgresql-plugin/pull/143",
+        "number": 1063,
+        "url": "https://github.com/TabularisDB/tabularis/pull/1063",
         "author": "aesslinger"
       }
     ],
     "comments": 0,
-    "createdAt": "2026-10-09T14:24:00Z"
+    "createdAt": "2026-10-09T15:14:21Z"
   },
   {
     "repo": "tabularis",
@@ -287,7 +1049,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "pullRequests": [],
-    "comments": 2,
+    "comments": 4,
     "createdAt": "2026-10-09T07:03:48Z"
   },
   {
@@ -314,60 +1076,6 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
   },
   {
     "repo": "tabularis",
-    "number": 906,
-    "title": "[Bug]: PostgreSQL real (float4) values are shown with float artefacts (89.9 → 89.9000015258789)",
-    "url": "https://github.com/TabularisDB/tabularis/issues/906",
-    "labels": [
-      {
-        "name": "bug",
-        "color": "d73a4a"
-      }
-    ],
-    "kind": "bug",
-    "assignees": [
-      {
-        "login": "verbaux",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/9459643?v=4"
-      }
-    ],
-    "pullRequests": [],
-    "comments": 4,
-    "createdAt": "2026-10-08T05:02:45Z"
-  },
-  {
-    "repo": "tabularis",
-    "number": 896,
-    "title": "[Bug]: In-app updater is not disabled for Homebrew and WinGet installs",
-    "url": "https://github.com/TabularisDB/tabularis/issues/896",
-    "labels": [
-      {
-        "name": "bug",
-        "color": "d73a4a"
-      },
-      {
-        "name": "help wanted",
-        "color": "008672"
-      }
-    ],
-    "kind": "bug",
-    "assignees": [
-      {
-        "login": "Detoy",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/5773665?v=4"
-      }
-    ],
-    "pullRequests": [
-      {
-        "number": 975,
-        "url": "https://github.com/TabularisDB/tabularis/pull/975",
-        "author": "Detoy"
-      }
-    ],
-    "comments": 2,
-    "createdAt": "2026-10-07T20:56:11Z"
-  },
-  {
-    "repo": "tabularis",
     "number": 894,
     "title": "[Bug]: Visual Explain AI analysis is always in English when the language is set to Auto",
     "url": "https://github.com/TabularisDB/tabularis/issues/894",
@@ -388,36 +1096,15 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
         "avatarUrl": "https://avatars.githubusercontent.com/u/230962627?v=4"
       }
     ],
-    "pullRequests": [],
-    "comments": 2,
-    "createdAt": "2026-10-07T20:56:07Z"
-  },
-  {
-    "repo": "tabularis",
-    "number": 893,
-    "title": "[Bug]: PostgreSQL overloaded functions: View Definition / Edit pick an arbitrary overload",
-    "url": "https://github.com/TabularisDB/tabularis/issues/893",
-    "labels": [
-      {
-        "name": "bug",
-        "color": "d73a4a"
-      },
-      {
-        "name": "help wanted",
-        "color": "008672"
-      }
-    ],
-    "kind": "bug",
-    "assignees": [],
     "pullRequests": [
       {
-        "number": 926,
-        "url": "https://github.com/TabularisDB/tabularis/pull/926",
-        "author": "stroexd"
+        "number": 1026,
+        "url": "https://github.com/TabularisDB/tabularis/pull/1026",
+        "author": "princecherry9905"
       }
     ],
-    "comments": 0,
-    "createdAt": "2026-10-07T20:56:06Z"
+    "comments": 3,
+    "createdAt": "2026-10-07T20:56:07Z"
   },
   {
     "repo": "tabularis",
@@ -441,101 +1128,15 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
         "avatarUrl": "https://avatars.githubusercontent.com/u/230962627?v=4"
       }
     ],
-    "pullRequests": [],
-    "comments": 2,
+    "pullRequests": [
+      {
+        "number": 1053,
+        "url": "https://github.com/TabularisDB/tabularis/pull/1053",
+        "author": "princecherry9905"
+      }
+    ],
+    "comments": 4,
     "createdAt": "2026-10-07T20:56:02Z"
-  },
-  {
-    "repo": "tabularis",
-    "number": 889,
-    "title": "[Bug]: Trigger editor: multi-event SQL invalid on MySQL/SQLite, non-atomic edit can lose the trigger",
-    "url": "https://github.com/TabularisDB/tabularis/issues/889",
-    "labels": [
-      {
-        "name": "bug",
-        "color": "d73a4a"
-      },
-      {
-        "name": "help wanted",
-        "color": "008672"
-      }
-    ],
-    "kind": "bug",
-    "assignees": [
-      {
-        "login": "1-DARK",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/161078235?v=4"
-      }
-    ],
-    "pullRequests": [
-      {
-        "number": 955,
-        "url": "https://github.com/TabularisDB/tabularis/pull/955",
-        "author": "1-DARK"
-      }
-    ],
-    "comments": 2,
-    "createdAt": "2026-10-07T20:55:58Z"
-  },
-  {
-    "repo": "tabularis",
-    "number": 886,
-    "title": "[Bug]: Kubernetes port-forward tunnels are never stopped or health-checked",
-    "url": "https://github.com/TabularisDB/tabularis/issues/886",
-    "labels": [
-      {
-        "name": "bug",
-        "color": "d73a4a"
-      },
-      {
-        "name": "help wanted",
-        "color": "008672"
-      }
-    ],
-    "kind": "bug",
-    "assignees": [
-      {
-        "login": "Detoy",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/5773665?v=4"
-      }
-    ],
-    "pullRequests": [
-      {
-        "number": 942,
-        "url": "https://github.com/TabularisDB/tabularis/pull/942",
-        "author": "Detoy"
-      }
-    ],
-    "comments": 2,
-    "createdAt": "2026-10-07T20:55:53Z"
-  },
-  {
-    "repo": "tabularis",
-    "number": 879,
-    "title": "[Bug]: Stable AppImage ships AppRun.wrapped as 0770, fails under firejail / AppImage catalog test",
-    "url": "https://github.com/TabularisDB/tabularis/issues/879",
-    "labels": [
-      {
-        "name": "bug",
-        "color": "d73a4a"
-      }
-    ],
-    "kind": "bug",
-    "assignees": [
-      {
-        "login": "vivekyarra",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/253435813?v=4"
-      }
-    ],
-    "pullRequests": [
-      {
-        "number": 962,
-        "url": "https://github.com/TabularisDB/tabularis/pull/962",
-        "author": "vivekyarra"
-      }
-    ],
-    "comments": 2,
-    "createdAt": "2026-10-07T14:34:32Z"
   },
   {
     "repo": "tabularis",
@@ -589,38 +1190,6 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
   },
   {
     "repo": "tabularis",
-    "number": 869,
-    "title": "[Feat]: Structured filter: pick values from the column's distinct values",
-    "url": "https://github.com/TabularisDB/tabularis/issues/869",
-    "labels": [
-      {
-        "name": "help wanted",
-        "color": "008672"
-      },
-      {
-        "name": "feature request",
-        "color": "02637c"
-      }
-    ],
-    "kind": "feature",
-    "assignees": [
-      {
-        "login": "Detoy",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/5773665?v=4"
-      }
-    ],
-    "pullRequests": [
-      {
-        "number": 956,
-        "url": "https://github.com/TabularisDB/tabularis/pull/956",
-        "author": "Detoy"
-      }
-    ],
-    "comments": 2,
-    "createdAt": "2026-10-06T18:47:54Z"
-  },
-  {
-    "repo": "tabularis",
     "number": 865,
     "title": "[Feat]: Data grid: multi-column sort with Shift+click",
     "url": "https://github.com/TabularisDB/tabularis/issues/865",
@@ -642,7 +1211,7 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "pullRequests": [],
-    "comments": 2,
+    "comments": 4,
     "createdAt": "2026-10-06T18:47:48Z"
   },
   {
@@ -668,61 +1237,8 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "pullRequests": [],
-    "comments": 3,
-    "createdAt": "2026-10-06T18:44:58Z"
-  },
-  {
-    "repo": "tabularis",
-    "number": 862,
-    "title": "[Feat]: Tokyo Night theme package (Day and Night)",
-    "url": "https://github.com/TabularisDB/tabularis/issues/862",
-    "labels": [
-      {
-        "name": "good first issue",
-        "color": "7057ff"
-      },
-      {
-        "name": "feature request",
-        "color": "02637c"
-      }
-    ],
-    "kind": "feature",
-    "assignees": [
-      {
-        "login": "Detoy",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/5773665?v=4"
-      }
-    ],
-    "pullRequests": [],
     "comments": 4,
-    "createdAt": "2026-10-06T18:44:57Z"
-  },
-  {
-    "repo": "tabularis",
-    "number": 857,
-    "title": "[Feat]: Duplicate editor tab from the tab context menu",
-    "url": "https://github.com/TabularisDB/tabularis/issues/857",
-    "labels": [
-      {
-        "name": "good first issue",
-        "color": "7057ff"
-      },
-      {
-        "name": "feature request",
-        "color": "02637c"
-      }
-    ],
-    "kind": "feature",
-    "assignees": [],
-    "pullRequests": [
-      {
-        "number": 875,
-        "url": "https://github.com/TabularisDB/tabularis/pull/875",
-        "author": "dyk1454683243-sudo"
-      }
-    ],
-    "comments": 0,
-    "createdAt": "2026-10-06T18:44:48Z"
+    "createdAt": "2026-10-06T18:44:58Z"
   },
   {
     "repo": "tabularis",
@@ -747,58 +1263,8 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
       }
     ],
     "pullRequests": [],
-    "comments": 2,
+    "comments": 4,
     "createdAt": "2026-10-06T18:44:46Z"
-  },
-  {
-    "repo": "tabularis-postgresql-plugin",
-    "number": 129,
-    "title": "[Bug]: DB is not able to export using the new PostgreSQL plugin",
-    "url": "https://github.com/TabularisDB/tabularis-postgresql-plugin/issues/129",
-    "labels": [
-      {
-        "name": "bug",
-        "color": "d73a4a"
-      }
-    ],
-    "kind": "bug",
-    "assignees": [
-      {
-        "login": "aesslinger",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
-      }
-    ],
-    "pullRequests": [],
-    "comments": 2,
-    "createdAt": "2026-09-30T14:00:07Z"
-  },
-  {
-    "repo": "tabularis",
-    "number": 840,
-    "title": "Generate SQL / Create Table / column display drops type fidelity: serial width, composite FKs, numeric precision, VARCHAR length",
-    "url": "https://github.com/TabularisDB/tabularis/issues/840",
-    "labels": [
-      {
-        "name": "bug",
-        "color": "d73a4a"
-      }
-    ],
-    "kind": "bug",
-    "assignees": [
-      {
-        "login": "aesslinger",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
-      }
-    ],
-    "pullRequests": [
-      {
-        "number": 939,
-        "url": "https://github.com/TabularisDB/tabularis/pull/939",
-        "author": "aesslinger"
-      }
-    ],
-    "comments": 1,
-    "createdAt": "2026-09-30T11:41:23Z"
   },
   {
     "repo": "tabularis",
@@ -816,34 +1282,6 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "pullRequests": [],
     "comments": 1,
     "createdAt": "2026-09-29T13:50:29Z"
-  },
-  {
-    "repo": "tabularis",
-    "number": 837,
-    "title": "[Bug]: Create Trigger modal generates invalid PostgreSQL syntax (MySQL-style BEGIN/END body)",
-    "url": "https://github.com/TabularisDB/tabularis/issues/837",
-    "labels": [],
-    "kind": null,
-    "assignees": [
-      {
-        "login": "aesslinger",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
-      }
-    ],
-    "pullRequests": [
-      {
-        "number": 955,
-        "url": "https://github.com/TabularisDB/tabularis/pull/955",
-        "author": "1-DARK"
-      },
-      {
-        "number": 822,
-        "url": "https://github.com/TabularisDB/tabularis/pull/822",
-        "author": "aesslinger"
-      }
-    ],
-    "comments": 2,
-    "createdAt": "2026-09-29T12:38:58Z"
   },
   {
     "repo": "tabularis-oracle-plugin",
@@ -916,34 +1354,6 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
   },
   {
     "repo": "tabularis",
-    "number": 788,
-    "title": "Plugin driver shutdown kills in-flight requests instead of draining them",
-    "url": "https://github.com/TabularisDB/tabularis/issues/788",
-    "labels": [
-      {
-        "name": "bug",
-        "color": "d73a4a"
-      }
-    ],
-    "kind": "bug",
-    "assignees": [
-      {
-        "login": "vivekyarra",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/253435813?v=4"
-      }
-    ],
-    "pullRequests": [
-      {
-        "number": 961,
-        "url": "https://github.com/TabularisDB/tabularis/pull/961",
-        "author": "vivekyarra"
-      }
-    ],
-    "comments": 1,
-    "createdAt": "2026-09-18T16:54:24Z"
-  },
-  {
-    "repo": "tabularis",
     "number": 771,
     "title": "Feature proposal: share connections and their credentials with a team, through an encrypted vault on a shared folder",
     "url": "https://github.com/TabularisDB/tabularis/issues/771",
@@ -995,34 +1405,6 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
   },
   {
     "repo": "tabularis",
-    "number": 752,
-    "title": "[Bug]: Redis multi-DB connection — sidebar DB selection not passed to plugin (queries always run on DB 0)",
-    "url": "https://github.com/TabularisDB/tabularis/issues/752",
-    "labels": [
-      {
-        "name": "bug",
-        "color": "d73a4a"
-      }
-    ],
-    "kind": "bug",
-    "assignees": [
-      {
-        "login": "vivekyarra",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/253435813?v=4"
-      }
-    ],
-    "pullRequests": [
-      {
-        "number": 960,
-        "url": "https://github.com/TabularisDB/tabularis/pull/960",
-        "author": "vivekyarra"
-      }
-    ],
-    "comments": 1,
-    "createdAt": "2026-09-13T05:07:09Z"
-  },
-  {
-    "repo": "tabularis",
     "number": 733,
     "title": "[Bug]: Few library warning while opening the .appimage at command line",
     "url": "https://github.com/TabularisDB/tabularis/issues/733",
@@ -1054,24 +1436,6 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "pullRequests": [],
     "comments": 1,
     "createdAt": "2026-09-07T09:31:38Z"
-  },
-  {
-    "repo": "tabularis-csv-plugin",
-    "number": 4,
-    "title": "Page size defaults to 100",
-    "url": "https://github.com/TabularisDB/tabularis-csv-plugin/issues/4",
-    "labels": [],
-    "kind": null,
-    "assignees": [],
-    "pullRequests": [
-      {
-        "number": 5,
-        "url": "https://github.com/TabularisDB/tabularis-csv-plugin/pull/5",
-        "author": "vivekyarra"
-      }
-    ],
-    "comments": 2,
-    "createdAt": "2026-09-04T21:23:42Z"
   },
   {
     "repo": "tabularis",
@@ -1110,24 +1474,6 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "pullRequests": [],
     "comments": 0,
     "createdAt": "2026-09-03T15:31:21Z"
-  },
-  {
-    "repo": "tabularis-duckdb-plugin",
-    "number": 6,
-    "title": "datatype Date presented as int",
-    "url": "https://github.com/TabularisDB/tabularis-duckdb-plugin/issues/6",
-    "labels": [],
-    "kind": null,
-    "assignees": [],
-    "pullRequests": [
-      {
-        "number": 10,
-        "url": "https://github.com/TabularisDB/tabularis-duckdb-plugin/pull/10",
-        "author": "vivekyarra"
-      }
-    ],
-    "comments": 3,
-    "createdAt": "2026-09-03T13:19:00Z"
   },
   {
     "repo": "tabularis",
@@ -1215,7 +1561,13 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     ],
     "kind": "feature",
     "assignees": [],
-    "pullRequests": [],
+    "pullRequests": [
+      {
+        "number": 1020,
+        "url": "https://github.com/TabularisDB/tabularis/pull/1020",
+        "author": "Detoy"
+      }
+    ],
     "comments": 0,
     "createdAt": "2026-08-31T10:21:42Z"
   },
@@ -1258,50 +1610,6 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     ],
     "comments": 0,
     "createdAt": "2026-08-28T23:20:50Z"
-  },
-  {
-    "repo": "tabularis-postgresql-plugin",
-    "number": 51,
-    "title": "Improve schema search_path handling (overwrite → append/prepend)",
-    "url": "https://github.com/TabularisDB/tabularis-postgresql-plugin/issues/51",
-    "labels": [
-      {
-        "name": "enhancement",
-        "color": "a2eeef"
-      }
-    ],
-    "kind": "feature",
-    "assignees": [
-      {
-        "login": "aesslinger",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
-      }
-    ],
-    "pullRequests": [],
-    "comments": 3,
-    "createdAt": "2026-08-21T12:28:56Z"
-  },
-  {
-    "repo": "tabularis-postgresql-plugin",
-    "number": 32,
-    "title": "Phase 2.8: Wire up stubbed batch/snapshot RPC methods",
-    "url": "https://github.com/TabularisDB/tabularis-postgresql-plugin/issues/32",
-    "labels": [
-      {
-        "name": "enhancement",
-        "color": "a2eeef"
-      }
-    ],
-    "kind": "feature",
-    "assignees": [
-      {
-        "login": "aesslinger",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/14128427?v=4"
-      }
-    ],
-    "pullRequests": [],
-    "comments": 0,
-    "createdAt": "2026-08-18T15:46:58Z"
   },
   {
     "repo": "tabularis-postgresql-plugin",
@@ -1549,24 +1857,6 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "createdAt": "2026-08-11T13:28:29Z"
   },
   {
-    "repo": "tabularis-clickhouse-plugin",
-    "number": 4,
-    "title": "SHOW / DESCRIBE / DDL statements fail — plugin wraps every query in \"SELECT * FROM (…) LIMIT 501 OFFSET 0 FORMAT JSONEachRow\"",
-    "url": "https://github.com/TabularisDB/tabularis-clickhouse-plugin/issues/4",
-    "labels": [],
-    "kind": null,
-    "assignees": [],
-    "pullRequests": [
-      {
-        "number": 5,
-        "url": "https://github.com/TabularisDB/tabularis-clickhouse-plugin/pull/5",
-        "author": "vivekyarra"
-      }
-    ],
-    "comments": 2,
-    "createdAt": "2026-08-04T15:37:52Z"
-  },
-  {
     "repo": "tabularis",
     "number": 592,
     "title": "[Feat]: Tabularis App Mobile",
@@ -1599,38 +1889,6 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "pullRequests": [],
     "comments": 3,
     "createdAt": "2026-07-28T22:05:05Z"
-  },
-  {
-    "repo": "tabularis",
-    "number": 534,
-    "title": "[Feat]: Remember of app window's size and position",
-    "url": "https://github.com/TabularisDB/tabularis/issues/534",
-    "labels": [
-      {
-        "name": "good first issue",
-        "color": "7057ff"
-      },
-      {
-        "name": "feature request",
-        "color": "02637c"
-      }
-    ],
-    "kind": "feature",
-    "assignees": [
-      {
-        "login": "vivekyarra",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/253435813?v=4"
-      }
-    ],
-    "pullRequests": [
-      {
-        "number": 953,
-        "url": "https://github.com/TabularisDB/tabularis/pull/953",
-        "author": "vivekyarra"
-      }
-    ],
-    "comments": 1,
-    "createdAt": "2026-07-25T17:13:41Z"
   },
   {
     "repo": "tabularis",
@@ -1668,34 +1926,6 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
   },
   {
     "repo": "tabularis",
-    "number": 506,
-    "title": "[Feat]: SQL autocomplete — resolve CTEs and derived tables as column sources",
-    "url": "https://github.com/TabularisDB/tabularis/issues/506",
-    "labels": [
-      {
-        "name": "feature request",
-        "color": "02637c"
-      }
-    ],
-    "kind": "feature",
-    "assignees": [
-      {
-        "login": "vivekyarra",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/253435813?v=4"
-      }
-    ],
-    "pullRequests": [
-      {
-        "number": 963,
-        "url": "https://github.com/TabularisDB/tabularis/pull/963",
-        "author": "vivekyarra"
-      }
-    ],
-    "comments": 1,
-    "createdAt": "2026-07-21T18:26:37Z"
-  },
-  {
-    "repo": "tabularis",
     "number": 484,
     "title": "[Feat]: Import data from file (CSV/TSV/JSON)",
     "url": "https://github.com/TabularisDB/tabularis/issues/484",
@@ -1707,7 +1937,13 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     ],
     "kind": "feature",
     "assignees": [],
-    "pullRequests": [],
+    "pullRequests": [
+      {
+        "number": 1023,
+        "url": "https://github.com/TabularisDB/tabularis/pull/1023",
+        "author": "Detoy"
+      }
+    ],
     "comments": 0,
     "createdAt": "2026-07-15T10:01:29Z"
   },
@@ -1806,34 +2042,6 @@ export const COMMUNITY_ISSUES: CommunityIssue[] = [
     "pullRequests": [],
     "comments": 0,
     "createdAt": "2026-06-25T18:25:35Z"
-  },
-  {
-    "repo": "tabularis",
-    "number": 340,
-    "title": "[Feat]: Browse/access all databases on same connection",
-    "url": "https://github.com/TabularisDB/tabularis/issues/340",
-    "labels": [
-      {
-        "name": "feature request",
-        "color": "02637c"
-      }
-    ],
-    "kind": "feature",
-    "assignees": [],
-    "pullRequests": [
-      {
-        "number": 822,
-        "url": "https://github.com/TabularisDB/tabularis/pull/822",
-        "author": "aesslinger"
-      },
-      {
-        "number": 402,
-        "url": "https://github.com/TabularisDB/tabularis/pull/402",
-        "author": "debba"
-      }
-    ],
-    "comments": 2,
-    "createdAt": "2026-06-19T16:28:06Z"
   },
   {
     "repo": "tabularis",

@@ -1,34 +1,34 @@
 'use client';
 
 import {GitHubIcon} from '@/components/ui/Icons/SocialIcons';
-import {ThankYouResources} from '@/components/ui/ThankYouResources/ThankYouResources';
+import {ThankYouResource, ThankYouResources} from '@/components/ui/ThankYouResources/ThankYouResources';
 import {SOCIAL_URLS} from '@/lib/social';
 import {BookOpenIcon, PartyPopperIcon, StarIcon} from 'lucide-react';
 import {useSearchParams} from 'next/navigation';
 import {useEffect} from 'react';
 import styles from './DownloadThankYou.module.scss';
 
-const RESOURCES = [
+const RESOURCES: ThankYouResource[] = [
     {
         href: SOCIAL_URLS.github,
-        external: true,
         icon: <StarIcon />,
         title: 'Star us on GitHub',
+        linkLabel: 'Star on GitHub',
         desc: 'A star takes 2 seconds and is the single biggest way to help an open-source project grow.',
         track: {category: 'invite-github-star', action: 'click', name: 'thank-you'},
     },
     {
         href: '/wiki',
-        external: false,
         icon: <BookOpenIcon />,
         title: 'Explore our Documentation',
+        linkLabel: 'Read the docs',
         desc: 'Learn about Tabularis features, keyboard shortcuts, configuration options, and how to make the most of your new database client.',
     },
     {
-        href: SOCIAL_URLS.github,
-        external: true,
+        href: `${SOCIAL_URLS.github}/issues`,
         icon: <GitHubIcon />,
         title: 'Contribute on GitHub',
+        linkLabel: 'Browse issues',
         desc: 'Check out the source code, report bugs, request features, and contribute to the project on GitHub.',
     },
 ];

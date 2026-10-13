@@ -48,7 +48,7 @@
 
 .panel {
     position: absolute;
-    z-index: 20;
+    z-index: var(--z-dropdown);
     top: calc(100% + 0.35rem);
     left: 0;
     width: max(100%, 18rem);

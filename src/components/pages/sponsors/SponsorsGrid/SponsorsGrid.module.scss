@@ -1,76 +1,7 @@
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
-    border-top: 0.1rem solid var(--color-border);
-    border-left: 0.1rem solid var(--color-border);
-    overflow: visible;
-}
-
-.card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-    border-right: 0.1rem solid var(--color-border);
-    border-bottom: 0.1rem solid var(--color-border);
-    padding: 2.5rem 2rem;
-}
-
-.cardLogo {
-    max-width: 60%;
-    max-height: 3rem;
+.logo {
     width: auto;
+    max-width: 8rem;
     height: auto;
+    max-height: 3rem;
     object-fit: contain;
-}
-
-.cardDetails {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    width: 100%;
-    margin-top: 0.25rem;
-}
-
-.cardTitle {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--color-text-primary);
-}
-
-.cardTagline {
-    font-size: 0.9rem;
-    line-height: 1.5;
-    color: var(--color-text-secondary);
-}
-
-.cardLink {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    margin-top: auto;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--color-text-primary);
-    transition: color 0.15s ease;
-
-    &::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-    }
-
-    &:focus-visible {
-        outline: none;
-    }
-
-    svg {
-        width: 1rem;
-        height: 1rem;
-    }
-
-    .card:hover & {
-        color: var(--color-accent-teal);
-    }
 }

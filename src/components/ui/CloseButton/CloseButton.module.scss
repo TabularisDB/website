@@ -1,0 +1,25 @@
+.close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-surface);
+    color: var(--color-text-secondary);
+    transition:
+        border-color 0.15s ease,
+        color 0.15s ease;
+
+    &:hover {
+        border-color: var(--color-border-hover);
+        color: var(--color-text-primary);
+    }
+
+    svg {
+        width: 1rem;
+        height: 1rem;
+    }
+}

@@ -1,35 +1,30 @@
 import {getAllVideoDemos} from '@/lib/videos';
-import {ArrowRightIcon} from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
+import {Card} from '@/components/ui/Card/Card';
+import {CardGrid} from '@/components/ui/CardGrid/CardGrid';
 import styles from './VideosGrid.module.scss';
 
 export function VideosGrid() {
     const videos = getAllVideoDemos();
 
     return (
-        <div className={styles.grid}>
+        <CardGrid className={styles.grid}>
             {videos.map((video) => (
-                <Link key={video.slug} href={`/demos/${video.slug}`} className={styles.card}>
-                    <div className={styles.coverWrapper}>
-                        <Image
-                            src={`/og/demos/${video.slug}.png`}
-                            alt=""
-                            width={1200}
-                            height={630}
-                            className={styles.cover}
-                        />
-                    </div>
-
-                    <div className={styles.infos}>
-                        <h3 className={styles.title}>{video.title}</h3>
-                        <p className={styles.description}>{video.description}</p>
-                        <span className={styles.link}>
-                            Watch demo <ArrowRightIcon aria-hidden="true" />
-                        </span>
-                    </div>
-                </Link>
+                <Card key={video.slug}>
+                    <Card.Cover>
+                        <Image src={`/og/demos/${video.slug}.png`} alt="" width={1200} height={630} />
+                    </Card.Cover>
+                    <Card.Body>
+                        <Card.Content>
+                            <Card.Title>{video.title}</Card.Title>
+                            <Card.Description>{video.description}</Card.Description>
+                        </Card.Content>
+                        <Card.Link href={`/demos/${video.slug}`} ariaLabel={`Watch the ${video.title} demo`}>
+                            Watch demo
+                        </Card.Link>
+                    </Card.Body>
+                </Card>
             ))}
-        </div>
+        </CardGrid>
     );
 }

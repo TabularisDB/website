@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import {DownloadIcon} from 'lucide-react';
 import styles from './MobileMenu.module.scss';
 import {useEffect} from 'react';
+import {useScrollLock} from '@/hooks/useScrollLock';
 
 interface MobileMenuProps {
     isOpen: boolean;
@@ -15,20 +16,16 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({isOpen, onClose}: MobileMenuProps) {
+    useScrollLock(isOpen);
+
     useEffect(() => {
         if (!isOpen) return;
-
-        const previousOverflow = document.body.style.overflow;
-        document.body.style.overflow = 'hidden';
 
         const desktop = window.matchMedia('(min-width: 1024px)');
         const closeOnDesktop = () => desktop.matches && onClose();
         desktop.addEventListener('change', closeOnDesktop);
 
-        return () => {
-            document.body.style.overflow = previousOverflow;
-            desktop.removeEventListener('change', closeOnDesktop);
-        };
+        return () => desktop.removeEventListener('change', closeOnDesktop);
     }, [isOpen, onClose]);
 
     return (

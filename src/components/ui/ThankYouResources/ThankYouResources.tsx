@@ -1,16 +1,17 @@
-import type {ReactNode} from 'react';
-import Link from 'next/link';
 import {SocialLinks} from '@/components/ui/SocialLinks/SocialLinks';
-import styles from './ThankYouResources.module.scss';
 import {trackEvent} from '@/lib/analytics';
+import type {ReactNode} from 'react';
+import {Card} from '../Card/Card';
+import {CardGrid} from '../CardGrid/CardGrid';
+import styles from './ThankYouResources.module.scss';
 
 export interface ThankYouResource {
     href: string;
-    external?: boolean;
     icon: ReactNode;
     title: string;
     desc: string;
-    track?: {category: string; action: string; name?: string};
+    linkLabel: string;
+    track?: {category: string; action: string; name: string};
 }
 
 interface ThankYouResourcesProps {
@@ -25,48 +26,29 @@ export function ThankYouResources({resources, title = "What's next"}: ThankYouRe
                 <h2 id="thank-you-resources-title" className={styles.sectionTitle}>
                     {title}
                 </h2>
-                <div className={styles.cards}>
+                <CardGrid variant="joined">
                     {resources.map((resource) => {
                         const {track} = resource;
-                        const handleClick = track
-                            ? () => trackEvent(track.category, track.action, track.name)
-                            : undefined;
 
-                        const content = (
-                            <>
-                                <div className={styles.cardCover}>
-                                    <span className={styles.cardIcon}>{resource.icon}</span>
-                                </div>
-                                <div className={styles.cardDetails}>
-                                    <h3 className={styles.cardTitle}>{resource.title}</h3>
-                                    <p className={styles.cardExcerpt}>{resource.desc}</p>
-                                </div>
-                            </>
-                        );
-
-                        return resource.external ? (
-                            <a
-                                key={resource.title}
-                                href={resource.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={styles.card}
-                                onClick={handleClick}
-                            >
-                                {content}
-                            </a>
-                        ) : (
-                            <Link
-                                key={resource.title}
-                                href={resource.href}
-                                className={styles.card}
-                                onClick={handleClick}
-                            >
-                                {content}
-                            </Link>
+                        return (
+                            <Card key={resource.title}>
+                                <Card.Header icon={resource.icon} />
+                                <Card.Content>
+                                    <Card.Title>{resource.title}</Card.Title>
+                                    <Card.Description>{resource.desc}</Card.Description>
+                                </Card.Content>
+                                <Card.Link
+                                    href={resource.href}
+                                    onClick={
+                                        track ? () => trackEvent(track.category, track.action, track.name) : undefined
+                                    }
+                                >
+                                    {resource.linkLabel}
+                                </Card.Link>
+                            </Card>
                         );
                     })}
-                </div>
+                </CardGrid>
             </div>
 
             <div className={styles.follow}>

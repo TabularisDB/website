@@ -2,7 +2,7 @@
     position: relative;
     width: 100%;
     overflow: hidden;
-    border-radius: 0.75rem;
+    border-radius: var(--radius-md);
 }
 
 .video {

@@ -14,10 +14,10 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem 0.875rem;
     border: 0.1rem solid var(--color-border);
     border-radius: var(--radius-full);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 500;
     color: var(--color-text-secondary);
     white-space: nowrap;
@@ -42,120 +42,12 @@
     color: var(--color-text-secondary);
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(330px, 100%), 1fr));
-    gap: 1rem;
-}
-
-.card {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    padding: 2rem;
-    border: 0.1rem solid var(--color-border);
-    transition: border-color 0.2s ease;
-
-    &:hover {
-        border-color: var(--color-border-hover);
-    }
-}
-
-.cardHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-}
-
-.cardIcon,
-.cardIcon svg {
+.logo {
     width: 2.5rem;
     height: 2.5rem;
-    flex-shrink: 0;
     object-fit: contain;
-    color: var(--color-text-primary);
-}
-
-.kind {
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--color-text-secondary);
-}
-
-.cardDetails {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
-.cardTitle {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--color-text-primary);
-}
-
-.cardExcerpt {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    overflow: hidden;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    color: var(--color-text-secondary);
-}
-
-.meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.375rem 1rem;
-    margin-top: auto;
-    font-size: 0.8rem;
-    color: var(--color-text-secondary);
-}
-
-.metaItem {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-    min-width: 0;
-
-    svg {
-        color: var(--color-text-muted);
-    }
-}
-
-.metaItem svg,
-.metaLogo {
-    width: 0.875rem;
-    height: 0.875rem;
-    flex-shrink: 0;
 }
 
 .mono {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-}
-
-.cardLink {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--color-text-primary);
-    transition: color 0.15s ease;
-
-    svg {
-        width: 1rem;
-        height: 1rem;
-    }
-
-    .card:hover & {
-        color: var(--color-accent-teal);
-    }
 }

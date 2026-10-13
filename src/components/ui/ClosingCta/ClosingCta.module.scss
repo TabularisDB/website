@@ -18,7 +18,6 @@
 .gridBackground {
     position: absolute;
     inset: -20%;
-    z-index: 0;
     pointer-events: none;
     background-image:
         linear-gradient(to right, var(--color-grid-line) 1px, transparent 1px),
@@ -33,7 +32,6 @@
 .actions,
 .actions ~ * {
     position: relative;
-    z-index: 1;
 }
 
 .actions {
@@ -45,6 +43,10 @@
 
     @media (max-width: 480px) {
         width: 100%;
+    }
+
+    @media (max-width: 340px) {
+        flex-direction: column;
     }
 }
 

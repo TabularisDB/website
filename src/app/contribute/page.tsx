@@ -3,6 +3,8 @@ import {IssueBoard} from '@/components/pages/community/IssueBoard/IssueBoard';
 import {InitiativeCard} from '@/components/pages/roadmap/InitiativeCard/InitiativeCard';
 import {Button} from '@/components/ui/Button/Button';
 import {CalloutBlock} from '@/components/ui/CalloutBlock/CalloutBlock';
+import {Card} from '@/components/ui/Card/Card';
+import {CardGrid} from '@/components/ui/CardGrid/CardGrid';
 import {DiscordIcon, GitHubIcon} from '@/components/ui/Icons/SocialIcons';
 import {formatIssueDate, getIssueStats, ISSUES_FETCHED_AT} from '@/lib/community';
 import {ogImages} from '@/lib/og/registry';
@@ -10,7 +12,6 @@ import {getAllInitiativeMetas} from '@/lib/roadmap';
 import {buildBreadcrumbJsonLd} from '@/lib/seo';
 import {SOCIAL_URLS} from '@/lib/social';
 import {
-    ArrowRightIcon,
     BookOpenIcon,
     BugIcon,
     CircleDotIcon,
@@ -22,7 +23,6 @@ import {
     UsersIcon,
 } from 'lucide-react';
 import type {Metadata} from 'next';
-import Link from 'next/link';
 import type {ReactNode} from 'react';
 import styles from './ContributePage.module.scss';
 
@@ -100,28 +100,6 @@ const WAYS_TO_HELP: WayToHelp[] = [
     },
 ];
 
-function SmartLink({href, className, children}: {href: string; className?: string; children: ReactNode}) {
-    if (href.startsWith('http')) {
-        return (
-            <a href={href} className={className} target="_blank" rel="noopener noreferrer">
-                {children}
-            </a>
-        );
-    }
-    if (href.startsWith('#')) {
-        return (
-            <a href={href} className={className}>
-                {children}
-            </a>
-        );
-    }
-    return (
-        <Link href={href} className={className}>
-            {children}
-        </Link>
-    );
-}
-
 export default function ContributePage() {
     const stats = getIssueStats();
     const activeInitiatives = getAllInitiativeMetas().filter((meta) => meta.status === 'in-progress');
@@ -150,20 +128,20 @@ export default function ContributePage() {
                 </p>
             </header>
 
-            <div className={styles.waysGrid}>
+            <CardGrid variant="joined" className={styles.ways}>
                 {WAYS_TO_HELP.map((way) => (
-                    <SmartLink key={way.title} href={way.href} className={styles.wayCard}>
-                        <span className={styles.wayIcon}>{way.icon}</span>
-                        <div className={styles.wayDetails}>
-                            <h3 className={styles.wayTitle}>{way.title}</h3>
-                            <p className={styles.wayText}>{way.text}</p>
-                        </div>
-                        <span className={styles.wayLink}>
-                            {way.cta} <ArrowRightIcon size={16} />
-                        </span>
-                    </SmartLink>
+                    <Card key={way.title}>
+                        <Card.Header icon={way.icon} />
+                        <Card.Content>
+                            <Card.Title>{way.title}</Card.Title>
+                            <Card.Description>{way.text}</Card.Description>
+                        </Card.Content>
+                        <Card.Link href={way.href} ariaLabel={`${way.cta}: ${way.title}`}>
+                            {way.cta}
+                        </Card.Link>
+                    </Card>
                 ))}
-            </div>
+            </CardGrid>
 
             <CalloutBlock
                 title="Community giveaway: Oct 7 to Oct 13"
