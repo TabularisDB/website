@@ -1,6 +1,6 @@
 'use client';
 
-import {useRef, useState, useEffect, useCallback} from 'react';
+import {useRef, useState, useEffect, useCallback, useMemo} from 'react';
 import {enhanceWrappedVideo} from '@/lib/videos/videoLoader';
 import {LightboxOverlay} from '@/components/ui/LightboxOverlay/LightboxOverlay';
 import '@/styles/prose.scss';
@@ -14,6 +14,9 @@ export function WikiContent({html}: {html: string}) {
     const ref = useRef<HTMLDivElement>(null);
     const [lightbox, setLightbox] = useState<LightboxState | null>(null);
     const touchStartX = useRef<number | null>(null);
+    // Stable identity: React 19 rewrites innerHTML whenever this object changes,
+    // which would replace the images (and their listeners) on every lightbox open.
+    const innerHtml = useMemo(() => ({__html: html}), [html]);
 
     useEffect(() => {
         if (!ref.current) return;
@@ -92,7 +95,7 @@ export function WikiContent({html}: {html: string}) {
 
     return (
         <>
-            <article ref={ref} id="post-content" className="post-content" dangerouslySetInnerHTML={{__html: html}} />
+            <article ref={ref} id="post-content" className="post-content" dangerouslySetInnerHTML={innerHtml} />
 
             {lightbox && (
                 <LightboxOverlay
