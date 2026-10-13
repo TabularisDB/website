@@ -5,6 +5,7 @@ import {BOUNTY_DIFFICULTY} from '@/lib/plugins/bounties';
 import styles from './BountyFilters.module.scss';
 
 export type StatusFilter = 'all' | 'motion' | 'coming-soon' | 'open';
+export type BountySort = 'status' | 'votes';
 export type FocusFilter = 'all' | 'compatibility' | 'warehouse' | 'nosql' | 'sql' | 'docs';
 export type DifficultyFilter = 'all' | BOUNTY_DIFFICULTY.MEDIUM | BOUNTY_DIFFICULTY.HIGH | BOUNTY_DIFFICULTY.EXTREME;
 
@@ -28,6 +29,11 @@ export const STATUS_FILTERS: Array<{id: StatusFilter; label: string}> = [
     {id: 'open', label: 'Open brief'},
 ];
 
+export const SORTS: Array<{id: BountySort; label: string}> = [
+    {id: 'status', label: 'By status'},
+    {id: 'votes', label: 'Most voted'},
+];
+
 export const DIFFICULTY_FILTERS: Array<{id: DifficultyFilter; label: string}> = [
     {id: 'all', label: 'Any difficulty'},
     {id: BOUNTY_DIFFICULTY.MEDIUM, label: 'Medium'},
@@ -44,6 +50,8 @@ interface BountyFiltersProps {
     onFocusChange: (value: FocusFilter) => void;
     difficulty: DifficultyFilter;
     onDifficultyChange: (value: DifficultyFilter) => void;
+    sort: BountySort;
+    onSortChange: (value: BountySort) => void;
 }
 
 export function BountyFilters({
@@ -55,6 +63,8 @@ export function BountyFilters({
     onFocusChange,
     difficulty,
     onDifficultyChange,
+    sort,
+    onSortChange,
 }: BountyFiltersProps) {
     return (
         <div className={styles.bar}>
@@ -102,6 +112,19 @@ export function BountyFilters({
                 aria-label="Filter by difficulty"
             >
                 {DIFFICULTY_FILTERS.map((item) => (
+                    <option key={item.id} value={item.id}>
+                        {item.label}
+                    </option>
+                ))}
+            </select>
+
+            <select
+                className={styles.select}
+                value={sort}
+                onChange={(event) => onSortChange(event.target.value as BountySort)}
+                aria-label="Sort targets"
+            >
+                {SORTS.map((item) => (
                     <option key={item.id} value={item.id}>
                         {item.label}
                     </option>

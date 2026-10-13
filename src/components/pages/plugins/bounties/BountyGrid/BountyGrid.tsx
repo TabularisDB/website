@@ -1,17 +1,19 @@
 'use client';
 
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 import {
     BountyFilters,
     DIFFICULTY_FILTERS,
     FOCUS_FILTERS,
     STATUS_FILTERS,
+    type BountySort,
     type DifficultyFilter,
     type FocusFilter,
     type StatusFilter,
 } from './BountyFilters/BountyFilters';
 import styles from './BountyGrid.module.scss';
-import {BOUNTY_DIFFICULTY, BOUNTY_STATUS, getActiveBounties, PluginBounty} from '@/lib/plugins/bounties';
+import {BOUNTY_DIFFICULTY, BOUNTY_STATUS, getActiveBounties, type PluginBounty} from '@/lib/plugins/bounties';
+import {useLiveBounties} from './useLiveBounties';
 import {STATUS_WEIGHT} from '@/components/pages/plugins/Plugin.data';
 import {XIcon} from 'lucide-react';
 import {BountyCard} from '@/components/pages/plugins/bounties/BountyGrid/BountyCard/BountyCard';
@@ -20,7 +22,7 @@ import {EmptyState} from '@/components/ui/EmptyState/EmptyState';
 
 function matchesStatus(bounty: PluginBounty, filter: StatusFilter) {
     if (filter === 'all') return true;
-    if (filter === 'motion') return bounty.status === BOUNTY_STATUS.CLAIMED || bounty.status === BOUNTY_STATUS.SCOPED;
+    if (filter === 'motion') return bounty.status === BOUNTY_STATUS.IN_PROGRESS || bounty.status === BOUNTY_STATUS.SCOPED;
     if (filter === 'coming-soon') return bounty.status === BOUNTY_STATUS.COMING_SOON;
     return bounty.status === BOUNTY_STATUS.OPEN;
 }
@@ -39,9 +41,19 @@ export function BountyGrid() {
     const [focus, setFocus] = useState<FocusFilter>('all');
     const [difficulty, setDifficulty] = useState<DifficultyFilter>('all');
     const [query, setQuery] = useState('');
+    const [sort, setSort] = useState<BountySort>('status');
     const [selectedId, setSelectedId] = useState<string | null>(null);
+    const [baked] = useState(getActiveBounties);
+    const live = useLiveBounties(baked, useCallback((slug: string) => setSelectedId(slug), []));
 
-    const activeBounties = getActiveBounties().sort((a, b) => STATUS_WEIGHT[a.status] - STATUS_WEIGHT[b.status]);
+    // A bounty that shipped since the build drops off; votes break ties within a status.
+    const activeBounties = live.bounties
+        .filter((bounty) => bounty.status !== BOUNTY_STATUS.SHIPPED)
+        .sort((a, b) =>
+            sort === 'votes'
+                ? b.upvotes - a.upvotes || STATUS_WEIGHT[a.status] - STATUS_WEIGHT[b.status]
+                : STATUS_WEIGHT[a.status] - STATUS_WEIGHT[b.status] || b.upvotes - a.upvotes,
+        );
 
     const selected = activeBounties.find((bounty) => bounty.id === selectedId) ?? null;
 
@@ -95,6 +107,8 @@ export function BountyGrid() {
                 onFocusChange={setFocus}
                 difficulty={difficulty}
                 onDifficultyChange={setDifficulty}
+                sort={sort}
+                onSortChange={setSort}
             />
 
             <div className={styles.resultsRow}>
@@ -114,17 +128,41 @@ export function BountyGrid() {
                 )}
             </div>
 
+            {!selected && live.error && (
+                <p className={styles.error} role="alert">
+                    {live.error}
+                </p>
+            )}
+
             {filtered.length > 0 ? (
                 <div className={styles.grid}>
                     {filtered.map((bounty) => (
-                        <BountyCard key={bounty.id} bounty={bounty} onOpen={setSelectedId} />
+                        <BountyCard
+                            key={bounty.id}
+                            bounty={bounty}
+                            onOpen={setSelectedId}
+                            voteBusy={live.busy === `upvote:${bounty.id}`}
+                            onVote={() => live.run('upvote', bounty)}
+                        />
                     ))}
                 </div>
             ) : (
                 <EmptyState title="No matching target">Try clearing a filter, or request it below.</EmptyState>
             )}
 
-            <BountyModal bounty={selected} onClose={() => setSelectedId(null)} />
+            <BountyModal
+                bounty={selected}
+                session={live.session}
+                busy={live.busy}
+                error={selected ? live.error : null}
+                onClose={() => {
+                    setSelectedId(null);
+                    live.clearError();
+                }}
+                onVote={(bounty) => live.run('upvote', bounty)}
+                onClaim={(bounty) => live.run('claim', bounty)}
+                onScaffolded={live.setClaimers}
+            />
         </div>
     );
 }

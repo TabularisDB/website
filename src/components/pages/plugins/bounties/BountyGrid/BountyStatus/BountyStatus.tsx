@@ -15,7 +15,7 @@ const STATUS_ICON: Record<BOUNTY_STATUS, LucideIcon> = {
     [BOUNTY_STATUS.MOST_WANTED]: FlameIcon,
     [BOUNTY_STATUS.OPEN]: CircleDashedIcon,
     [BOUNTY_STATUS.SCOPED]: CircleDotDashedIcon,
-    [BOUNTY_STATUS.CLAIMED]: CircleDotIcon,
+    [BOUNTY_STATUS.IN_PROGRESS]: CircleDotIcon,
     [BOUNTY_STATUS.COMING_SOON]: ClockIcon,
     [BOUNTY_STATUS.SHIPPED]: PackageCheckIcon,
 };

@@ -1,0 +1,68 @@
+.avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--radius-full);
+    background: var(--color-surface-raised);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    object-fit: cover;
+}
+
+.stack {
+    display: inline-flex;
+    align-items: center;
+
+    .avatar + .avatar {
+        margin-left: -0.4rem;
+    }
+}
+
+.more {
+    margin-left: 0.35rem;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+
+    a {
+        color: var(--color-text-primary);
+
+        &:hover {
+            color: var(--color-accent-teal);
+        }
+    }
+}
+
+.repo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    min-width: 0;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    overflow-wrap: anywhere;
+
+    svg {
+        width: 0.875rem;
+        height: 0.875rem;
+        flex-shrink: 0;
+    }
+}

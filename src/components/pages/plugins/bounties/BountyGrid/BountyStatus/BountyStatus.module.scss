@@ -24,7 +24,7 @@
         color: var(--color-check);
     }
 
-    &[data-status='claimed'] {
+    &[data-status='in-progress'] {
         color: var(--color-eyebrow-blue);
     }
 
