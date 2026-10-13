@@ -69,7 +69,8 @@ export const SCORE_RULES: ScoreRule[] = [
     {
         points: 3,
         title: 'Resolved issue',
-        description: "An issue you opened that someone else closes as completed, by hand or with their own pull request.",
+        description:
+            'An issue you opened that someone else closes as completed, by hand or with their own pull request.',
     },
     {
         points: 2,
@@ -296,8 +297,16 @@ const SHORT_FORMAT = new Intl.DateTimeFormat('en-US', {
     day: 'numeric',
 });
 
+/**
+ * "Oct 7, 2026 at 16:00". Built from the parts rather than DISPLAY_FORMAT.format():
+ * the separator between date and time differs between Node and recent browsers,
+ * which made the server and client render different text.
+ */
 export function formatLeaderboardDate(date: Date | string): string {
-    return DISPLAY_FORMAT.format(new Date(date));
+    const parts = Object.fromEntries(
+        DISPLAY_FORMAT.formatToParts(new Date(date)).map((part) => [part.type, part.value]),
+    );
+    return `${parts.month} ${parts.day}, ${parts.year} at ${parts.hour}:${parts.minute}`;
 }
 
 export function formatShortDate(date: Date | string): string {
@@ -328,5 +337,9 @@ export function getCurrentGiveaway(now = new Date()): Giveaway | null {
 
 /** The most recent giveaway that has ended: the page keeps its final standings. */
 export function getLastGiveaway(now = new Date()): Giveaway | null {
-    return GIVEAWAYS.filter((giveaway) => giveawayDates(giveaway).to <= now).sort(byStart).at(-1) ?? null;
+    return (
+        GIVEAWAYS.filter((giveaway) => giveawayDates(giveaway).to <= now)
+            .sort(byStart)
+            .at(-1) ?? null
+    );
 }
