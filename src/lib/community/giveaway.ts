@@ -1,13 +1,24 @@
-/** The community giveaway window, the leaderboard's default range (Europe/Rome wall times). */
-export const GIVEAWAY = {
-    from: '2026-10-07T16:00',
-    to: '2026-10-13T16:00',
-    winners: 3,
-};
+export interface Giveaway {
+    title: string;
+    /** Window bounds as Europe/Rome wall times. */
+    from: string;
+    to: string;
+    /** How many contributors win a prize. */
+    winners: number;
+    /**
+     * GitHub usernames of the people who entered by replying to the announcement
+     * on Discord. Maintainers add them by hand. Case does not matter.
+     */
+    entrants: string[];
+}
 
-/**
- * GitHub usernames of the people who entered the giveaway by replying to the
- * announcement on Discord. Maintainers add them by hand; the leaderboard marks
- * them as entrants and can show only them. Case does not matter.
- */
-export const GIVEAWAY_ENTRANTS: string[] = ['tonypartridge', 'Detoy', 'tosinxt', 'vivekyarra', 'DhruvShah-Dev'];
+/** Every giveaway, oldest first. Add the next one at the end. */
+export const GIVEAWAYS: Giveaway[] = [
+    {
+        title: 'Community Giveaway',
+        from: '2026-10-07T16:00',
+        to: '2026-10-13T16:00',
+        winners: 3,
+        entrants: ['tonypartridge', 'Detoy', 'tosinxt', 'vivekyarra', 'DhruvShah-Dev'],
+    },
+];
