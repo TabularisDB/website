@@ -30,8 +30,8 @@ export const STATUS_FILTERS: Array<{id: StatusFilter; label: string}> = [
 ];
 
 export const SORTS: Array<{id: BountySort; label: string}> = [
-    {id: 'status', label: 'By status'},
     {id: 'votes', label: 'Most voted'},
+    {id: 'status', label: 'By status'},
 ];
 
 export const DIFFICULTY_FILTERS: Array<{id: DifficultyFilter; label: string}> = [
