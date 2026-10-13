@@ -94,7 +94,9 @@ export default function PluginBountyBoardPage() {
                             </div>
                             <h3 className={styles.title}>{stats.inProgressCount + stats.scopedCount} In motion</h3>
                         </div>
-                        <p className={styles.text}>Targets someone is building, or that already have an initial scope.</p>
+                        <p className={styles.text}>
+                            Targets someone is building, or that already have an initial scope.
+                        </p>
                     </div>
                 </div>
             </header>

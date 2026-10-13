@@ -13,7 +13,6 @@ interface BountyClaimersProps {
 function Avatar({claimer}: {claimer: BountyClaimer}) {
     const name = claimer.username ?? claimer.displayName;
     return claimer.avatarUrl ? (
-        // eslint-disable-next-line @next/next/no-img-element -- remote avatar, images are unoptimized anyway
         <img src={claimer.avatarUrl} alt="" width={24} height={24} className={styles.avatar} loading="lazy" />
     ) : (
         <span className={styles.avatar} aria-hidden="true">
@@ -27,7 +26,10 @@ export function BountyClaimers({claimers, compact, className}: BountyClaimersPro
 
     if (compact) {
         return (
-            <span className={clsx(styles.stack, className)} title={claimers.map((c) => c.username ?? c.displayName).join(', ')}>
+            <span
+                className={clsx(styles.stack, className)}
+                title={claimers.map((c) => c.username ?? c.displayName).join(', ')}
+            >
                 {claimers.slice(0, 4).map((claimer, i) => (
                     <Avatar key={`${claimer.username}-${i}`} claimer={claimer} />
                 ))}
@@ -44,7 +46,11 @@ export function BountyClaimers({claimers, compact, className}: BountyClaimersPro
                     <li key={`${name}-${i}`} className={styles.item}>
                         <Avatar claimer={claimer} />
                         {claimer.username ? (
-                            <a href={`https://github.com/${claimer.username}`} target="_blank" rel="noopener noreferrer">
+                            <a
+                                href={`https://github.com/${claimer.username}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 {name}
                             </a>
                         ) : (

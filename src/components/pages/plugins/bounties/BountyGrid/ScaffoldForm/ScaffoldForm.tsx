@@ -25,10 +25,12 @@ const SCAFFOLD_KINDS = new Set(['driver', 'theme']);
 
 interface ScaffoldFormProps {
     bounty: BoardBounty;
+    /** The repository already recorded for the viewer's claim; the form then stays closed until they change it. */
+    currentRepoUrl: string | null;
     onScaffolded: (claimers: LiveRequest['claimers']) => void;
 }
 
-export function ScaffoldForm({bounty, onScaffolded}: ScaffoldFormProps) {
+export function ScaffoldForm({bounty, currentRepoUrl, onScaffolded}: ScaffoldFormProps) {
     const isTheme = bounty.kind === 'theme';
     const canScaffold = !!bounty.kind && SCAFFOLD_KINDS.has(bounty.kind) && !!bounty.requestId;
     const [repoName, setRepoName] = useState(bounty.id);
@@ -39,38 +41,43 @@ export function ScaffoldForm({bounty, onScaffolded}: ScaffoldFormProps) {
     const [minRuntimeVersion, setMinRuntimeVersion] = useState(APP_VERSION);
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<{message: string; reauthUrl?: string} | null>(null);
-    const [created, setCreated] = useState<{repoUrl: string; fullName: string; submitUrl: string; linked: boolean} | null>(
-        null,
-    );
+    const [created, setCreated] = useState<{
+        repoUrl: string;
+        fullName: string;
+        submitUrl: string;
+        linked: boolean;
+    } | null>(null);
     const [mode, setMode] = useState<'create' | 'link'>(canScaffold ? 'create' : 'link');
     const [owners, setOwners] = useState<RepoOwner[] | null>(null);
     const [linkUrl, setLinkUrl] = useState('');
     const [repos, setRepos] = useState<MaintainedRepo[] | null>(null);
+    const [changing, setChanging] = useState(false);
+    const open = !currentRepoUrl || changing;
     const command = localScaffoldCommand(bounty.id, bounty.kind);
 
     // Accounts the repository can be created in; the field stays free text if this fails.
     useEffect(() => {
-        if (!canScaffold) return;
+        if (!canScaffold || !open) return;
         let cancelled = false;
-        fetchRepoOwners().then((list) => {
+        void fetchRepoOwners().then((list) => {
             if (!cancelled && list && list.length > 0) setOwners(list);
         });
         return () => {
             cancelled = true;
         };
-    }, [canScaffold]);
+    }, [canScaffold, open]);
 
     // Suggestions for the link field, loaded the first time it is shown; retried on the next visit if that fails.
     useEffect(() => {
-        if (mode !== 'link' || repos !== null) return;
+        if (!open || mode !== 'link' || repos !== null) return;
         let cancelled = false;
-        fetchMaintainedRepos().then((list) => {
+        void fetchMaintainedRepos().then((list) => {
             if (!cancelled && list) setRepos(list);
         });
         return () => {
             cancelled = true;
         };
-    }, [mode, repos]);
+    }, [open, mode, repos]);
 
     function switchMode(next: 'create' | 'link') {
         setMode(next);
@@ -131,8 +138,8 @@ export function ScaffoldForm({bounty, onScaffolded}: ScaffoldFormProps) {
             <div className={styles.done}>
                 <p>
                     <strong>{created.fullName}</strong> {created.linked ? 'is linked to your claim' : 'is ready'}. Build
-                    the plugin, publish a release, then submit the
-                    repository to the registry: the bounty ships as soon as <code>{bounty.id}</code> is listed.
+                    the plugin, publish a release, then submit the repository to the registry: the bounty ships as soon
+                    as <code>{bounty.id}</code> is listed.
                 </p>
                 <div className={styles.row}>
                     <Button href={created.repoUrl} external variant="secondary" size="sm">
@@ -148,8 +155,35 @@ export function ScaffoldForm({bounty, onScaffolded}: ScaffoldFormProps) {
         );
     }
 
+    if (!open) {
+        return (
+            <div className={styles.wrapper}>
+                <p className={styles.current}>
+                    Your claim points to <strong>{repoLabel(currentRepoUrl)}</strong>. Change it to create a new
+                    repository or link a different one.
+                </p>
+                <Button variant="secondary" size="sm" className={styles.submit} onClick={() => setChanging(true)}>
+                    <GitBranchIcon />
+                    Change repository
+                </Button>
+            </div>
+        );
+    }
+
     return (
         <div className={styles.wrapper}>
+            {currentRepoUrl && (
+                <button
+                    type="button"
+                    className={styles.cancel}
+                    onClick={() => {
+                        setChanging(false);
+                        setError(null);
+                    }}
+                >
+                    Keep {repoLabel(currentRepoUrl)}
+                </button>
+            )}
             {canScaffold && (
                 <div className={styles.modes} role="group" aria-label="Repository">
                     <button
@@ -171,7 +205,7 @@ export function ScaffoldForm({bounty, onScaffolded}: ScaffoldFormProps) {
                 </div>
             )}
             {mode === 'link' && bounty.requestId && (
-                <form className={styles.form} onSubmit={handleLink}>
+                <form className={styles.form} onSubmit={(e) => void handleLink(e)}>
                     <label className={styles.field}>
                         <span className={styles.label}>Repository URL</span>
                         <input
@@ -204,7 +238,7 @@ export function ScaffoldForm({bounty, onScaffolded}: ScaffoldFormProps) {
                 </form>
             )}
             {canScaffold && mode === 'create' && (
-                <form className={styles.form} onSubmit={handleSubmit}>
+                <form className={styles.form} onSubmit={(e) => void handleSubmit(e)}>
                     <div className={styles.grid}>
                         <label className={styles.field}>
                             <span className={styles.label}>Repository name</span>
@@ -219,7 +253,11 @@ export function ScaffoldForm({bounty, onScaffolded}: ScaffoldFormProps) {
                         <label className={styles.field}>
                             <span className={styles.label}>Organization</span>
                             {owners ? (
-                                <select className={styles.input} value={owner} onChange={(e) => setOwner(e.target.value)}>
+                                <select
+                                    className={styles.input}
+                                    value={owner}
+                                    onChange={(e) => setOwner(e.target.value)}
+                                >
                                     {owners.map((o, i) => (
                                         <option key={o.login} value={i === 0 ? '' : o.login}>
                                             {i === 0 ? `${o.login} (your account)` : o.login}
@@ -295,4 +333,9 @@ export function ScaffoldForm({bounty, onScaffolded}: ScaffoldFormProps) {
             </div>
         </div>
     );
+}
+
+/** "owner/repo" for a GitHub URL, the URL itself otherwise. */
+function repoLabel(url: string | null) {
+    return url?.replace(/^https?:\/\/(www\.)?github\.com\//, '').replace(/\/$/, '') ?? '';
 }

@@ -22,7 +22,8 @@ import {EmptyState} from '@/components/ui/EmptyState/EmptyState';
 
 function matchesStatus(bounty: PluginBounty, filter: StatusFilter) {
     if (filter === 'all') return true;
-    if (filter === 'motion') return bounty.status === BOUNTY_STATUS.IN_PROGRESS || bounty.status === BOUNTY_STATUS.SCOPED;
+    if (filter === 'motion')
+        return bounty.status === BOUNTY_STATUS.IN_PROGRESS || bounty.status === BOUNTY_STATUS.SCOPED;
     if (filter === 'coming-soon') return bounty.status === BOUNTY_STATUS.COMING_SOON;
     return bounty.status === BOUNTY_STATUS.OPEN;
 }
@@ -44,7 +45,10 @@ export function BountyGrid() {
     const [sort, setSort] = useState<BountySort>('votes');
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [baked] = useState(getActiveBounties);
-    const live = useLiveBounties(baked, useCallback((slug: string) => setSelectedId(slug), []));
+    const live = useLiveBounties(
+        baked,
+        useCallback((slug: string) => setSelectedId(slug), []),
+    );
 
     // A bounty that shipped since the build drops off; votes break ties within a status.
     const activeBounties = live.bounties
@@ -142,7 +146,7 @@ export function BountyGrid() {
                             bounty={bounty}
                             onOpen={setSelectedId}
                             voteBusy={live.busy === `upvote:${bounty.id}`}
-                            onVote={() => live.run('upvote', bounty)}
+                            onVote={() => void live.run('upvote', bounty)}
                         />
                     ))}
                 </div>
@@ -159,8 +163,8 @@ export function BountyGrid() {
                     setSelectedId(null);
                     live.clearError();
                 }}
-                onVote={(bounty) => live.run('upvote', bounty)}
-                onClaim={(bounty) => live.run('claim', bounty)}
+                onVote={(bounty) => void live.run('upvote', bounty)}
+                onClaim={(bounty) => void live.run('claim', bounty)}
                 onScaffolded={live.setClaimers}
             />
         </div>

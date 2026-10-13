@@ -28,7 +28,7 @@ export type TabulariumSession =
     | {state: 'checking'}
     | {state: 'signed-out'}
     | {state: 'unreachable'}
-    | {state: 'signed-in'; user: string};
+    | {state: 'signed-in'; user: string; username: string};
 
 export type SendResult = {ok: true; request: CreatedRequest} | {ok: false; error: string; signedOut?: boolean};
 
@@ -64,7 +64,7 @@ export async function fetchSession(): Promise<TabulariumSession> {
         const res = await fetch(`${TABULARIUM_URL}/auth/me`, {credentials: 'include'});
         if (!res.ok) return {state: 'signed-out'};
         const me = (await res.json()) as {username: string; displayName?: string};
-        return {state: 'signed-in', user: me.displayName || me.username};
+        return {state: 'signed-in', user: me.displayName || me.username, username: me.username};
     } catch {
         return {state: 'unreachable'};
     }

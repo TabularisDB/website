@@ -1,7 +1,7 @@
 'use client';
 
 import {useCallback, useEffect, useMemo, useState} from 'react';
-import {BOUNTY_STATUS, bountyStatus, type BountyClaimer, type PluginBounty} from '@/lib/plugins/bounties';
+import {BOUNTY_STATUS, bountyStatus, type PluginBounty} from '@/lib/plugins/bounties';
 import {
     fetchLiveRequests,
     fetchSession,
@@ -28,7 +28,7 @@ function merge(bounty: PluginBounty, live: LiveRequest | undefined): BoardBounty
         ...bounty,
         requestId: live.id,
         upvotes: live.upvotes,
-        claimers: live.claimers as BountyClaimer[],
+        claimers: live.claimers,
         claims: live.claims,
         claimedByMe: live.claimedByMe,
         votedByMe: live.votedByMe,

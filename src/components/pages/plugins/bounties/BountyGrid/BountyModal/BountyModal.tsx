@@ -39,6 +39,10 @@ interface BountyModalProps {
 export function BountyModal({bounty, session, busy, error, onClose, onVote, onClaim, onScaffolded}: BountyModalProps) {
     const shipped = bounty?.status === BOUNTY_STATUS.SHIPPED;
     const signedOut = session.state === 'signed-out';
+    const myRepoUrl =
+        session.state === 'signed-in'
+            ? (bounty?.claimers.find((claimer) => claimer.username === session.username)?.repoUrl ?? null)
+            : null;
 
     return (
         <Modal
@@ -102,9 +106,14 @@ export function BountyModal({bounty, session, busy, error, onClose, onVote, onCl
                         )}
 
                         {!shipped && bounty.claimedByMe && (
-                            <Modal.Section title="Start building" icon={<GitBranchIcon aria-hidden="true" />}>
+                            <Modal.Section
+                                title={myRepoUrl ? 'Your repository' : 'Start building'}
+                                icon={<GitBranchIcon aria-hidden="true" />}
+                            >
                                 <ScaffoldForm
+                                    key={bounty.id}
                                     bounty={bounty}
+                                    currentRepoUrl={myRepoUrl}
                                     onScaffolded={(claimers) => onScaffolded(bounty.id, claimers)}
                                 />
                             </Modal.Section>

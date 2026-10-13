@@ -141,3 +141,25 @@
         color: var(--color-bg);
     }
 }
+
+.current {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+
+    strong {
+        color: var(--color-text-primary);
+        font-family: var(--font-mono), var(--font-mono-fallback);
+        overflow-wrap: anywhere;
+    }
+}
+
+.cancel {
+    align-self: flex-start;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    text-decoration: underline;
+
+    &:hover {
+        color: var(--color-text-primary);
+    }
+}
