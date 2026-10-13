@@ -250,6 +250,54 @@ export function scaffoldRepository(requestId: string, options: ScaffoldOptions) 
     });
 }
 
+export interface LinkedRepo {
+    repoUrl: string;
+    fullName: string;
+    submitUrl: string;
+    claimers: LiveRequest['claimers'];
+}
+
+/** Records a repository the claimer already maintains as the work for their claim. */
+export function linkRepository(requestId: string, repoUrl: string) {
+    return postAction<LinkedRepo>(`/api/requests/${encodeURIComponent(requestId)}/repo`, {
+        repoUrl,
+        returnTo: window.location.href.split('#')[0],
+    });
+}
+
+export interface RepoOwner {
+    login: string;
+    type: 'user' | 'org';
+}
+
+/** The visitor's GitHub account first, then their organizations, or null when unavailable. */
+export async function fetchRepoOwners(): Promise<RepoOwner[] | null> {
+    try {
+        const res = await fetch(`${TABULARIUM_URL}/api/submit/owners`, {credentials: 'include'});
+        if (!res.ok) return null;
+        return ((await res.json()) as {owners: RepoOwner[]}).owners;
+    } catch {
+        return null;
+    }
+}
+
+export interface MaintainedRepo {
+    fullName: string;
+    url: string;
+}
+
+/** Repositories the visitor can maintain on their linked accounts (first page of each), as link suggestions. */
+export async function fetchMaintainedRepos(): Promise<MaintainedRepo[]> {
+    try {
+        const res = await fetch(`${TABULARIUM_URL}/api/submit/repos?page=1`, {credentials: 'include'});
+        if (!res.ok) return [];
+        const body = (await res.json()) as {groups: Array<{repos: MaintainedRepo[]}>};
+        return body.groups.flatMap((group) => group.repos.map(({fullName, url}) => ({fullName, url})));
+    } catch {
+        return [];
+    }
+}
+
 /** Local alternative to the hosted scaffold, for any forge. */
 export function localScaffoldCommand(slug: string, kind: string | null): string {
     return kind === 'theme'

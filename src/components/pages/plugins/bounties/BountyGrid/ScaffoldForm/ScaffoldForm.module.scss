@@ -109,3 +109,35 @@
         overflow-wrap: anywhere;
     }
 }
+
+.modes {
+    display: flex;
+    width: fit-content;
+    max-width: 100%;
+    gap: 0.25rem;
+    padding: 0.3rem;
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--radius-full);
+}
+
+.mode {
+    padding: 0.4rem 0.875rem;
+    border-radius: var(--radius-full);
+    font-size: 0.825rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    transition: all 0.2s ease;
+
+    &:hover {
+        color: var(--color-text-primary);
+    }
+}
+
+.modeActive {
+    background-color: var(--color-text-primary);
+    color: var(--color-bg);
+
+    &:hover {
+        color: var(--color-bg);
+    }
+}
