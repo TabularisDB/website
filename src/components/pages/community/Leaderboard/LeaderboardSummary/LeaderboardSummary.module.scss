@@ -26,6 +26,10 @@
     padding: 0.25rem 0.7rem;
     font-size: 0.8rem;
     font-weight: 600;
+
+    @media (max-width: 767px) {
+        padding-inline: 0;
+    }
 }
 
 .live {

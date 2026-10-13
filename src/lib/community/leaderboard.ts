@@ -5,23 +5,15 @@ import {
     CONTRIBUTIONS_SINCE,
     CONTRIBUTORS,
 } from './contributions';
-import {GIVEAWAY, GIVEAWAY_ENTRANTS} from './giveaway';
+import {GIVEAWAYS, type Giveaway} from './giveaway';
 import type {Contribution} from './types';
 
 export {CONTRIBUTIONS_FETCHED_AT, CONTRIBUTIONS_SINCE};
 
-/** Times without an explicit offset (URL params, the range inputs) are read in this zone. */
+/** Times without an explicit offset (the giveaway bounds) are read in this zone. */
 export const LEADERBOARD_TIME_ZONE = 'Europe/Rome';
 
-export {GIVEAWAY};
-
-/** A date range as two "YYYY-MM-DDTHH:mm" wall times in LEADERBOARD_TIME_ZONE. */
-export interface LeaderboardRange {
-    from: string;
-    to: string;
-}
-
-export const GIVEAWAY_RANGE: LeaderboardRange = {from: GIVEAWAY.from, to: GIVEAWAY.to};
+export type {Giveaway};
 
 /**
  * A PR opened up to this long before the range still counts when it is merged
@@ -77,7 +69,8 @@ export const SCORE_RULES: ScoreRule[] = [
     {
         points: 3,
         title: 'Resolved issue',
-        description: "An issue you opened that someone else closes as completed, by hand or with their own pull request.",
+        description:
+            'An issue you opened that someone else closes as completed, by hand or with their own pull request.',
     },
     {
         points: 2,
@@ -119,15 +112,9 @@ export function contributionKey(c: Contribution): string {
     return c.type === 'plugin' ? `plugin:${c.repo}` : `${c.type}:${c.repo}#${c.number}`;
 }
 
-const ENTRANTS = new Set(GIVEAWAY_ENTRANTS.map((login) => login.toLowerCase()));
-
 /** GitHub avatar URL at twice the displayed size, for sharp rendering on high-density screens. */
 export function avatarUrl(url: string, size: number): string {
     return `${url}${url.includes('?') ? '&' : '?'}s=${size * 2}`;
-}
-
-export function isEntrant(login: string): boolean {
-    return ENTRANTS.has(login.toLowerCase());
 }
 
 /**
@@ -167,9 +154,12 @@ export interface LeaderboardSummary {
 export interface LeaderboardFilters {
     includeTeam: boolean;
     entrantsOnly: boolean;
+    /** GitHub usernames of the giveaway entrants. */
+    entrants: string[];
 }
 
-export function buildLeaderboard(from: Date, to: Date, {includeTeam, entrantsOnly}: LeaderboardFilters) {
+export function buildLeaderboard(from: Date, to: Date, {includeTeam, entrantsOnly, entrants}: LeaderboardFilters) {
+    const entrantSet = new Set(entrants.map((login) => login.toLowerCase()));
     const rows = new Map<string, LeaderboardRow>();
     const repos = new Set<string>();
     const summary: LeaderboardSummary = {contributors: 0, prs: 0, merged: 0, issues: 0, repos: 0};
@@ -181,7 +171,7 @@ export function buildLeaderboard(from: Date, to: Date, {includeTeam, entrantsOnl
         if (!profile) continue;
         const team = profile.team || TEAM.has(c.author.toLowerCase());
         if (team && !includeTeam) continue;
-        const entrant = isEntrant(c.author);
+        const entrant = entrantSet.has(c.author.toLowerCase());
         if (entrantsOnly && !entrant) continue;
 
         let row = rows.get(c.author);
@@ -235,8 +225,7 @@ export function buildLeaderboard(from: Date, to: Date, {includeTeam, entrantsOnl
 }
 
 // ---------------------------------------------------------------------------
-// Dates. Range values are "YYYY-MM-DDTHH:mm" wall times in LEADERBOARD_TIME_ZONE,
-// which is what the leaderboard date fields read and write.
+// Dates. Giveaway bounds are "YYYY-MM-DDTHH:mm" wall times in LEADERBOARD_TIME_ZONE.
 
 const PARTS_FORMAT = new Intl.DateTimeFormat('en-US', {
     timeZone: LEADERBOARD_TIME_ZONE,
@@ -268,13 +257,6 @@ function fromZonedWallTime(year: number, month: number, day: number, hour: numbe
     const guess = wall - zoneOffset(wall);
     // Second pass settles the offset when the guess crosses a DST change.
     return new Date(wall - zoneOffset(guess));
-}
-
-/** Date to the "YYYY-MM-DDTHH:mm" wall time of LEADERBOARD_TIME_ZONE. */
-export function toZonedInput(date: Date): string {
-    const p = zoneParts(date);
-    const pad = (n: number) => String(n).padStart(2, '0');
-    return `${p.year}-${pad(p.month)}-${pad(p.day)}T${pad(p.hour)}:${pad(p.minute)}`;
 }
 
 /**
@@ -315,8 +297,16 @@ const SHORT_FORMAT = new Intl.DateTimeFormat('en-US', {
     day: 'numeric',
 });
 
+/**
+ * "Oct 7, 2026 at 16:00". Built from the parts rather than DISPLAY_FORMAT.format():
+ * the separator between date and time differs between Node and recent browsers,
+ * which made the server and client render different text.
+ */
 export function formatLeaderboardDate(date: Date | string): string {
-    return DISPLAY_FORMAT.format(new Date(date));
+    const parts = Object.fromEntries(
+        DISPLAY_FORMAT.formatToParts(new Date(date)).map((part) => [part.type, part.value]),
+    );
+    return `${parts.month} ${parts.day}, ${parts.year} at ${parts.hour}:${parts.minute}`;
 }
 
 export function formatShortDate(date: Date | string): string {
@@ -331,4 +321,25 @@ export function formatCountdown(ms: number): string {
     if (days > 0) return `${days}d ${hours}h`;
     if (hours > 0) return `${hours}h ${minutes % 60}m`;
     return `${minutes}m`;
+}
+
+/** The start and end of a giveaway window as instants. */
+export function giveawayDates(giveaway: Giveaway): {from: Date; to: Date} {
+    return {from: parseRangeBound(giveaway.from, 'from')!, to: parseRangeBound(giveaway.to, 'to')!};
+}
+
+const byStart = (a: Giveaway, b: Giveaway) => giveawayDates(a).from.getTime() - giveawayDates(b).from.getTime();
+
+/** The giveaway that is running or announced: the page shows its rules and lets people enter. */
+export function getCurrentGiveaway(now = new Date()): Giveaway | null {
+    return GIVEAWAYS.filter((giveaway) => giveawayDates(giveaway).to > now).sort(byStart)[0] ?? null;
+}
+
+/** The most recent giveaway that has ended: the page keeps its final standings. */
+export function getLastGiveaway(now = new Date()): Giveaway | null {
+    return (
+        GIVEAWAYS.filter((giveaway) => giveawayDates(giveaway).to <= now)
+            .sort(byStart)
+            .at(-1) ?? null
+    );
 }

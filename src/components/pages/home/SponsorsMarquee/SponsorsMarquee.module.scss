@@ -99,14 +99,19 @@
 
     .track {
         animation: none;
-        flex-wrap: wrap;
-        justify-content: center;
         width: 100%;
         will-change: auto;
         transform: none;
     }
 
-    .item[aria-hidden='true'] {
-        display: none;
+    .group {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem;
+        width: 100%;
+
+        &[aria-hidden='true'] {
+            display: none;
+        }
     }
 }

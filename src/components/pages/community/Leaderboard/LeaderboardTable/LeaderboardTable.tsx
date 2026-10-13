@@ -22,7 +22,8 @@ const COLUMNS: Array<{label: string; value: (row: LeaderboardRow) => number}> = 
 
 interface LeaderboardTableProps {
     rows: LeaderboardRow[];
-    onJoin: (login: string) => void;
+    /** Shown only while the giveaway is open. */
+    onJoin?: (login: string) => void;
 }
 
 export function LeaderboardTable({rows, onJoin}: LeaderboardTableProps) {
@@ -89,7 +90,9 @@ export function LeaderboardTable({rows, onJoin}: LeaderboardTableProps) {
                                             First-timer
                                         </span>
                                     )}
-                                    {!row.entrant && !row.team && <JoinButton onClick={() => onJoin(row.login)} />}
+                                    {onJoin && !row.entrant && !row.team && (
+                                        <JoinButton onClick={() => onJoin(row.login)} />
+                                    )}
                                 </span>
                             </span>
 

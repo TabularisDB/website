@@ -10,7 +10,8 @@ const PLACE_CLASSES = [styles.place1, styles.place2, styles.place3];
 interface PodiumProps {
     /** The top three rows, in rank order. */
     rows: LeaderboardRow[];
-    onJoin: (login: string) => void;
+    /** Shown only while the giveaway is open. */
+    onJoin?: (login: string) => void;
 }
 
 /** The top three, first place in the middle and raised. Hidden on mobile, where the table ranks carry the medals. */
@@ -35,7 +36,7 @@ export function Podium({rows, onJoin}: PodiumProps) {
                         />
                         <span className={styles.login}>@{row.login}</span>
                     </a>
-                    {!row.entrant && !row.team && <JoinButton onClick={() => onJoin(row.login)} />}
+                    {onJoin && !row.entrant && !row.team && <JoinButton onClick={() => onJoin(row.login)} />}
                     <span className={styles.score}>
                         {row.score} <small>pts</small>
                     </span>

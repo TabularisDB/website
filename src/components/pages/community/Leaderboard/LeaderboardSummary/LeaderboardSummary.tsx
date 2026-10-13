@@ -17,7 +17,7 @@ function rangeStatus(from: Date, to: Date, now: number) {
         return {tone: 'upcoming', text: `Starts in ${formatCountdown(from.getTime() - now)}`} as const;
     if (now < to.getTime())
         return {tone: 'live', text: `Live · ends in ${formatCountdown(to.getTime() - now)}`} as const;
-    return {tone: 'ended', text: 'Window closed'} as const;
+    return {tone: 'ended', text: 'Giveaway ended'} as const;
 }
 
 export function LeaderboardSummary({from, to, now, summary}: LeaderboardSummaryProps) {

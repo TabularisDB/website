@@ -7,6 +7,7 @@ import {Card} from '@/components/ui/Card/Card';
 import {CardGrid} from '@/components/ui/CardGrid/CardGrid';
 import {DiscordIcon, GitHubIcon} from '@/components/ui/Icons/SocialIcons';
 import {formatIssueDate, getIssueStats, ISSUES_FETCHED_AT} from '@/lib/community';
+import {formatShortDate, getCurrentGiveaway, getLastGiveaway, giveawayDates} from '@/lib/community/leaderboard';
 import {ogImages} from '@/lib/og/registry';
 import {getAllInitiativeMetas} from '@/lib/roadmap';
 import {buildBreadcrumbJsonLd} from '@/lib/seo';
@@ -103,6 +104,8 @@ const WAYS_TO_HELP: WayToHelp[] = [
 export default function ContributePage() {
     const stats = getIssueStats();
     const activeInitiatives = getAllInitiativeMetas().filter((meta) => meta.status === 'in-progress');
+    const currentGiveaway = getCurrentGiveaway();
+    const giveaway = currentGiveaway ?? getLastGiveaway();
 
     return (
         <div className="container with-gap">
@@ -143,18 +146,25 @@ export default function ContributePage() {
                 ))}
             </CardGrid>
 
-            <CalloutBlock
-                title="Community giveaway: Oct 7 to Oct 13"
-                actions={
-                    <Button href="/contribute/leaderboard">
-                        <TrophyIcon />
-                        See the leaderboard
-                    </Button>
-                }
-            >
-                The top three contributors win a prize. Every PR and issue opened in the window shows up on the
-                leaderboard.
-            </CalloutBlock>
+            {giveaway && (
+                <CalloutBlock
+                    title={
+                        currentGiveaway
+                            ? `${giveaway.title}: ${formatShortDate(giveawayDates(giveaway).from)} to ${formatShortDate(giveawayDates(giveaway).to)}`
+                            : `${giveaway.title}: final standings`
+                    }
+                    actions={
+                        <Button href="/contribute/leaderboard">
+                            <TrophyIcon />
+                            {currentGiveaway ? 'See the leaderboard' : 'See the results'}
+                        </Button>
+                    }
+                >
+                    {currentGiveaway
+                        ? `The top ${giveaway.winners} contributors win a prize. Every PR and issue opened in the window shows up on the leaderboard.`
+                        : 'Thanks to everyone who took part. See who moved Tabularis forward, and watch Discord for the next giveaway.'}
+                </CalloutBlock>
+            )}
 
             <section id="issues" className={styles.section}>
                 <header className="section-header">
