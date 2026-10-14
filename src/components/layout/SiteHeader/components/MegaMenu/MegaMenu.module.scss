@@ -19,7 +19,7 @@
     visibility: hidden;
     pointer-events: none;
     background-color: var(--color-bg);
-    border-bottom: 0.1rem solid var(--color-border);
+    border-bottom: var(--border);
 
     &.open {
         visibility: visible;
@@ -33,7 +33,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 4rem;
     overflow: hidden;
-    width: var(--max-width);
+    width: var(--max-width-xl);
     max-width: 100%;
     margin-inline: auto;
 }
@@ -127,7 +127,7 @@
 
 .link {
     padding-top: 1rem;
-    border-top: 0.1rem solid var(--color-border);
+    border-top: var(--border);
     gap: 0.25rem;
     color: var(--color-accent-teal);
 }

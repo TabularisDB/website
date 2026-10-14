@@ -3,7 +3,7 @@
     flex-direction: column;
     gap: 4rem;
     width: 100%;
-    max-width: 800px;
+    max-width: var(--max-width-sm);
     margin-inline: auto;
 }
 

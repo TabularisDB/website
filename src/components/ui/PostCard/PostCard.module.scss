@@ -11,7 +11,7 @@
     grid-template-columns: 1.25fr 1fr;
     gap: 2rem;
     padding: 1.5rem;
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
 
     @media (max-width: 700px) {
         grid-template-columns: 1fr;

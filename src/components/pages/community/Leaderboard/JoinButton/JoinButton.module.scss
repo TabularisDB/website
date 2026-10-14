@@ -7,7 +7,7 @@
     position: relative;
     flex-shrink: 0;
     padding: 0.1rem 0.55rem;
-    border: 0.1rem solid color-mix(in srgb, var(--join-color) 55%, transparent);
+    border: var(--border-width) solid color-mix(in srgb, var(--join-color) 55%, transparent);
     border-radius: var(--radius-full);
     background-color: color-mix(in srgb, var(--join-color) 10%, transparent);
     font-size: 0.7rem;

@@ -1,7 +1,10 @@
 :root {
     // Layout
-    --max-width: 1200px;
-    --max-width-lg: 1350px;
+    --max-width-sm: 800px;
+    --max-width-md: 900px;
+    --max-width-lg: 1100px;
+    --max-width-xl: 1200px;
+    --max-width-2xl: 1350px;
     --header-height: 5rem;
 
     // Spacing scale
@@ -13,7 +16,6 @@
     --spacing-xl: 2rem;
     --spacing-2xl: 3rem;
     --spacing-3xl: 4rem;
-    --spacing-section: 7rem;
 
     // Radius
     --radius-xs: 0.25rem;
@@ -21,6 +23,10 @@
     --radius-md: 0.75rem;
     --radius-lg: 1rem;
     --radius-full: 999px;
+
+    // Borders
+    --border-width: 0.1rem;
+    --border: var(--border-width) solid var(--color-border);
 
     // Z-index scale
     --z-dropdown: 10; // menus and panels anchored in the page

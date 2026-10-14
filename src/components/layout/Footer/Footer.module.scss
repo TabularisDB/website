@@ -9,7 +9,7 @@
 
 .footerContent {
     margin-top: 6rem;
-    width: min(var(--max-width), 100%);
+    width: min(var(--max-width-xl), 100%);
     margin-inline: auto;
     display: flex;
     justify-content: space-between;
@@ -114,7 +114,7 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 1rem;
-    width: min(var(--max-width), 100%);
+    width: min(var(--max-width-xl), 100%);
     margin-inline: auto;
     margin-top: 7rem;
     font-size: 0.85rem;

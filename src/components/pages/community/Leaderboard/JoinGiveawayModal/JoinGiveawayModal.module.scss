@@ -49,7 +49,7 @@
         place-content: center;
         width: 1.75rem;
         height: 1.75rem;
-        border: 0.1rem solid color-mix(in srgb, var(--join-color) 55%, transparent);
+        border: var(--border-width) solid color-mix(in srgb, var(--join-color) 55%, transparent);
         border-radius: var(--radius-full);
         background: color-mix(in srgb, var(--join-color) 12%, transparent);
         font-size: 0.8rem;

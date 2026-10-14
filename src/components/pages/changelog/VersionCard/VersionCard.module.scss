@@ -94,10 +94,10 @@
 .entryList {
     display: flex;
     flex-direction: column;
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
 
     & .entry:not(:last-child) {
-        border-bottom: 0.1rem solid var(--color-border);
+        border-bottom: var(--border);
     }
 }
 

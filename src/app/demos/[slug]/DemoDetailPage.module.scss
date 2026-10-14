@@ -9,8 +9,8 @@
 }
 
 .videoDemoPlayer {
-    border: 0.1rem solid var(--color-border);
-    max-width: 900px;
+    border: var(--border);
+    max-width: var(--max-width-md);
     margin-inline: auto;
     border-radius: var(--radius-md);
     overflow: hidden;

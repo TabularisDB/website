@@ -1,5 +1,5 @@
 .article {
-    max-width: 760px;
+    max-width: var(--max-width-sm);
     width: 100%;
     margin-inline: auto;
     margin-top: 2rem;
@@ -100,7 +100,7 @@
 
     :global(.badge) {
         padding: 0.125rem 0.5rem;
-        border: 0.1rem solid var(--color-border);
+        border: var(--border);
         border-radius: var(--radius-full);
         font-family: var(--font-mono);
         font-size: 0.625rem;
@@ -131,7 +131,7 @@
 
     :is(th, td) {
         padding: 0.65rem 0.75rem;
-        border-bottom: 0.1rem solid var(--color-border);
+        border-bottom: var(--border);
         text-align: left;
         vertical-align: top;
     }

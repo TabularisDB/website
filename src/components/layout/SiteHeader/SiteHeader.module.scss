@@ -9,7 +9,7 @@
     display: flex;
     align-items: center;
     background-color: var(--color-bg);
-    border-bottom: 0.1rem solid transparent;
+    border-bottom: var(--border-width) solid transparent;
 
     &.border {
         border-bottom-color: var(--color-border);
@@ -19,11 +19,11 @@
 .container {
     display: flex;
     align-items: center;
-    width: var(--max-width);
+    width: var(--max-width-xl);
     margin: 0 auto;
     gap: 2rem;
 
     &.containerWide {
-        width: var(--max-width-lg);
+        width: var(--max-width-2xl);
     }
 }

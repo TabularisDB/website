@@ -47,7 +47,7 @@
     width: 100%;
     padding: 0.6rem 0.85rem;
     border-radius: var(--radius-md);
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     background: var(--color-surface-raised);
     color: var(--color-text-primary);
     font-size: 0.9rem;
@@ -73,7 +73,7 @@
 .kind {
     padding: 0.35rem 0.75rem;
     border-radius: var(--radius-full);
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     font-size: 0.8rem;
     color: var(--color-text-secondary);
     transition:

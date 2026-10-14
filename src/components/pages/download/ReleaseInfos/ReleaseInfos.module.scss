@@ -13,7 +13,7 @@
     --size: 6rem;
     width: var(--size);
     height: var(--size);
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     border-radius: var(--radius-lg);
     background-color: #0f172a;
     overflow: hidden;

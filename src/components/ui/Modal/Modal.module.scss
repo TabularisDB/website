@@ -26,7 +26,7 @@
     max-height: 84vh;
     overflow: hidden;
     background: var(--color-surface);
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     border-radius: var(--radius-md);
     box-shadow: 0 20px 60px rgb(var(--rgb-shadow) / calc(0.5 * var(--shadow-scale)));
 }
@@ -95,7 +95,7 @@
     flex-shrink: 0;
     gap: 0.5rem;
     padding: 1rem 1.5rem;
-    border-top: 0.1rem solid var(--color-border);
+    border-top: var(--border);
 
     svg {
         width: 0.875rem;

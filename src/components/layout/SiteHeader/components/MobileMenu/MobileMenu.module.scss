@@ -31,7 +31,7 @@
     }
 
     @media (min-width: 541px) {
-        border-left: 0.1rem solid var(--color-border);
+        border-left: var(--border);
     }
 }
 
@@ -55,7 +55,7 @@
     width: 100%;
     padding: 0 1rem;
     background-color: var(--color-surface);
-    border-top: 0.1rem solid var(--color-border);
+    border-top: var(--border);
     width: min(100%, 540px);
 }
 

@@ -1,11 +1,11 @@
 .accordion {
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     background-color: var(--color-bg);
     width: 100%;
 }
 
 .item {
-    border-bottom: 0.1rem solid var(--color-border);
+    border-bottom: var(--border);
 
     &:last-child {
         border-bottom: 0;

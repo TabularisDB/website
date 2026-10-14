@@ -30,9 +30,7 @@
     --color-danger: #f87171;
     --color-success: #22c55e;
     --color-star: #facc15;
-    --color-highlight: #facc15;
     --color-check: #14b8a6;
-    --color-link-blue: #4f8dea;
 
     // Colors — section eyebrows and tags
     --color-eyebrow-orange: #fdba74;
@@ -44,10 +42,6 @@
     --rgb-tint: 255 255 255;
     --rgb-shadow: 0 0 0;
     --shadow-scale: 1;
-
-    // Background aurora
-    --aurora-blend: screen;
-    --aurora-scale: 1;
 }
 
 // Light theme.
@@ -82,9 +76,7 @@
     --color-danger: #dc2626;
     --color-success: #15803d;
     --color-star: #ca8a04;
-    --color-highlight: #ca8a04;
     --color-check: #0d9488;
-    --color-link-blue: #2563eb;
 
     // Colors — section eyebrows and tags
     --color-eyebrow-orange: #c2410c;
@@ -96,8 +88,4 @@
     --rgb-tint: 15 23 42;
     --rgb-shadow: 15 23 42;
     --shadow-scale: 0.3;
-
-    // Background aurora
-    --aurora-blend: multiply;
-    --aurora-scale: 0.45;
 }

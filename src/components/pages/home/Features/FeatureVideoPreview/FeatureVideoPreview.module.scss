@@ -5,7 +5,7 @@
     max-width: 525px;
     border-radius: var(--radius-sm);
     overflow: hidden;
-    outline: 0.1rem solid var(--color-border-hover);
+    outline: var(--border-width) solid var(--color-border-hover);
     background: var(--color-surface);
     box-shadow: 0 20px 45px rgb(var(--rgb-shadow) / calc(0.4 * var(--shadow-scale)));
 }

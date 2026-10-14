@@ -16,7 +16,7 @@
     align-items: flex-end;
     gap: 0.75rem;
     width: 100%;
-    max-width: 900px;
+    max-width: var(--max-width-md);
     outline: none;
 
     &:focus-visible {
@@ -28,7 +28,7 @@
 .frame {
     width: 100%;
     overflow: hidden;
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     border-radius: var(--radius-md);
 }
 

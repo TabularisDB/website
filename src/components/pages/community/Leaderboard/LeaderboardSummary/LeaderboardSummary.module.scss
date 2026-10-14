@@ -61,8 +61,8 @@
 .stats {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    border-top: 0.1rem solid var(--color-border);
-    border-left: 0.1rem solid var(--color-border);
+    border-top: var(--border);
+    border-left: var(--border);
 
     @media (max-width: 767px) {
         grid-template-columns: repeat(2, 1fr);
@@ -74,8 +74,8 @@
     flex-direction: column-reverse;
     gap: 0.25rem;
     padding: 1.25rem 1.5rem;
-    border-right: 0.1rem solid var(--color-border);
-    border-bottom: 0.1rem solid var(--color-border);
+    border-right: var(--border);
+    border-bottom: var(--border);
 
     @media (max-width: 767px) {
         padding: 0.85rem 1rem;

@@ -1,5 +1,5 @@
 .wrapper {
-    max-width: 1000px;
+    max-width: var(--max-width-md);
     width: 100%;
     margin-inline: auto;
     margin-block: 5rem;
@@ -15,13 +15,13 @@
     table-layout: fixed;
     border-collapse: separate;
     border-spacing: 0;
-    border-top: 0.1rem solid var(--color-border);
-    border-left: 0.1rem solid var(--color-border);
+    border-top: var(--border);
+    border-left: var(--border);
 
     th,
     td {
-        border-right: 0.1rem solid var(--color-border);
-        border-bottom: 0.1rem solid var(--color-border);
+        border-right: var(--border);
+        border-bottom: var(--border);
         padding: 1.5rem;
         text-align: center;
         vertical-align: middle;

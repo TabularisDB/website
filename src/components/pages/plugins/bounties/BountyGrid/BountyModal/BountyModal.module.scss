@@ -14,7 +14,7 @@
 
 .capability {
     padding: 0.2rem 0.625rem;
-    border: 0.1rem solid transparent;
+    border: var(--border-width) solid transparent;
     border-radius: var(--radius-full);
     font-size: 0.75rem;
     font-weight: 600;

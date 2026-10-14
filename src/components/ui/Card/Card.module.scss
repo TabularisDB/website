@@ -4,7 +4,7 @@
     flex-direction: column;
     gap: 1.25rem;
     padding: var(--card-padding, var(--spacing-xl));
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     transition: background-color 0.2s ease;
 
     &:has(> .cover) {
@@ -29,6 +29,7 @@
 .cover {
     aspect-ratio: 1200 / 630;
     overflow: hidden;
+    background-color: var(--color-surface);
 
     img {
         display: block;
@@ -40,7 +41,7 @@
     }
 
     .card:hover & img {
-        transform: scale(1.03);
+        transform: scale(1.02);
     }
 }
 
@@ -120,7 +121,7 @@
     align-items: center;
     gap: 0.375rem;
     padding: 0.3rem 0.625rem;
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     border-radius: var(--radius-full);
     font-size: 0.75rem;
     color: var(--color-text-secondary);

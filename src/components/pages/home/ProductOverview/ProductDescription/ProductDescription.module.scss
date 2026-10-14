@@ -1,9 +1,8 @@
 .productDescription {
-    width: 100%;
     display: flex;
     gap: 4rem;
-    width: 85vw;
-    max-width: 900px;
+    width: 100%;
+    max-width: var(--max-width-md);
     margin-block: 1rem;
     margin-inline: auto;
 
@@ -30,28 +29,27 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
     width: 2.5rem;
     height: 2.5rem;
     border-radius: var(--radius-md);
     background: color-mix(in srgb, var(--color-accent-teal) 10%, transparent);
     color: var(--color-accent-teal);
-    flex-shrink: 0;
 
-    & svg {
+    svg {
         height: 80%;
     }
 }
 
 .title {
-    color: var(--color-text-primary);
     font-size: 1.125rem;
     font-weight: 500;
-    line-height: 120%;
+    line-height: 1.2;
+    color: var(--color-text-primary);
 }
 
 .text {
-    color: var(--color-text-secondary);
     font-size: 1rem;
-    font-weight: 400;
-    line-height: 140%;
+    line-height: 1.4;
+    color: var(--color-text-secondary);
 }

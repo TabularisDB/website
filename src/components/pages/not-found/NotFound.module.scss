@@ -32,7 +32,7 @@
     border-radius: var(--radius-full);
     font-size: 0.9rem;
     font-weight: 600;
-    border: 0.1rem solid color-mix(in srgb, var(--color-danger) 35%, transparent);
+    border: var(--border-width) solid color-mix(in srgb, var(--color-danger) 35%, transparent);
     background: color-mix(in srgb, var(--color-danger) 10%, transparent);
     color: var(--color-danger);
 }
@@ -91,7 +91,7 @@
 .dotGreen {
     width: 0.75rem;
     aspect-ratio: 1;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
 }
 
 .dotRed {
