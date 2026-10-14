@@ -1,5 +1,10 @@
 .newsletter {
     width: 100%;
-    max-width: 800px;
+    max-width: var(--max-width-sm);
     margin-inline: auto;
+    margin-top: var(--spacing-3xl);
+
+    @media (max-width: 767px) {
+        margin-top: var(--spacing-2xl);
+    }
 }
