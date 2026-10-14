@@ -1,4 +1,6 @@
-import {GaugeIcon, LayersIcon} from 'lucide-react';
+import {DatabaseIcon, GaugeIcon, LayersIcon, PaletteIcon, PlugIcon} from 'lucide-react';
+import clsx from 'clsx';
+import {getKindBadge} from '@/components/pages/plugins/Plugin.data';
 import {BountyClaimers} from '@/components/pages/plugins/bounties/BountyGrid/BountyClaimers/BountyClaimers';
 import {BountyIcon} from '@/components/pages/plugins/bounties/BountyGrid/BountyIcon/BountyIcon';
 import {BountyStatus} from '@/components/pages/plugins/bounties/BountyGrid/BountyStatus/BountyStatus';
@@ -16,6 +18,8 @@ interface BountyCardProps {
 }
 
 export function BountyCard({bounty, onOpen, onVote, voteBusy}: BountyCardProps) {
+    const KindIcon = bounty.kind === 'theme' ? PaletteIcon : bounty.kind === 'driver' ? DatabaseIcon : PlugIcon;
+
     return (
         <Card>
             <Card.Header
@@ -23,6 +27,12 @@ export function BountyCard({bounty, onOpen, onVote, voteBusy}: BountyCardProps) 
                 aside={<BountyStatus status={bounty.status} className={styles.status} />}
             />
             <Card.Content>
+                <Card.Label className={clsx(styles.kind, bounty.kind === 'theme' && styles.theme)}>
+                    <span className={styles.kindIcon}>
+                        <KindIcon aria-hidden="true" />
+                    </span>
+                    {bounty.kind ? getKindBadge(bounty.kind) : 'Plugin'}
+                </Card.Label>
                 <Card.Title>{bounty.name}</Card.Title>
                 <Card.Description>{bounty.tagline}</Card.Description>
             </Card.Content>

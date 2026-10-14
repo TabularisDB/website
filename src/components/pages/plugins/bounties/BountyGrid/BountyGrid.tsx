@@ -19,6 +19,7 @@ import {XIcon} from 'lucide-react';
 import {BountyCard} from '@/components/pages/plugins/bounties/BountyGrid/BountyCard/BountyCard';
 import {BountyModal} from '@/components/pages/plugins/bounties/BountyGrid/BountyModal/BountyModal';
 import {EmptyState} from '@/components/ui/EmptyState/EmptyState';
+import type {PluginRequestKind} from '@/lib/plugins/requests';
 
 function matchesStatus(bounty: PluginBounty, filter: StatusFilter) {
     if (filter === 'all') return true;
@@ -45,11 +46,13 @@ function bountyFromPath(pathname: string) {
 }
 
 interface BountyGridProps {
+    kinds: PluginRequestKind[];
     /** Bounty whose modal is open on load, from its `/plugins/bounties/<slug>` page. */
     initialBountyId?: string;
 }
 
-export function BountyGrid({initialBountyId}: BountyGridProps) {
+export function BountyGrid({initialBountyId, kinds}: BountyGridProps) {
+    const [kind, setKind] = useState<string | null>(null);
     const [status, setStatus] = useState<StatusFilter>('all');
     const [focus, setFocus] = useState<FocusFilter>('all');
     const [difficulty, setDifficulty] = useState<DifficultyFilter>('all');
@@ -101,6 +104,7 @@ export function BountyGrid({initialBountyId}: BountyGridProps) {
 
     const filtered = activeBounties.filter(
         (bounty) =>
+            (kind === null || bounty.kind === kind) &&
             matchesStatus(bounty, status) &&
             matchesFocus(bounty, focus) &&
             (difficulty === 'all' || bounty.difficulty === (difficulty as BOUNTY_DIFFICULTY)) &&
@@ -111,6 +115,13 @@ export function BountyGrid({initialBountyId}: BountyGridProps) {
     );
 
     const activeChips: Array<{key: string; label: string; onRemove: () => void}> = [];
+    if (kind !== null) {
+        activeChips.push({
+            key: 'kind',
+            label: kinds.find((item) => item.key === kind)?.label ?? kind,
+            onRemove: () => setKind(null),
+        });
+    }
     if (query.trim()) {
         activeChips.push({key: 'query', label: `"${query.trim()}"`, onRemove: () => setQuery('')});
     }
@@ -139,6 +150,13 @@ export function BountyGrid({initialBountyId}: BountyGridProps) {
     return (
         <div className={styles.wrapper}>
             <BountyFilters
+                kind={kind}
+                onKindChange={setKind}
+                kinds={kinds.map((item) => ({
+                    ...item,
+                    count: activeBounties.filter((bounty) => bounty.kind === item.key).length,
+                }))}
+                total={activeBounties.length}
                 query={query}
                 onQueryChange={setQuery}
                 status={status}
@@ -191,6 +209,7 @@ export function BountyGrid({initialBountyId}: BountyGridProps) {
             )}
 
             <BountyModal
+                key={selected?.id ?? 'none'}
                 bounty={selected}
                 session={live.session}
                 busy={live.busy}

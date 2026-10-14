@@ -36,7 +36,7 @@ export function BountyBoardPage({bountyId}: {bountyId?: string}) {
                     <HandCoinsIcon />
                     Plugin Bounty Board
                 </span>
-                <h1 className="title">Help ship the next driver.</h1>
+                <h1 className="title">Help ship the next plugin.</h1>
                 <p className="description">
                     See what the community is building, upvote what you need, or claim a target and get a repository
                     scaffolded for it. Every bounty is a reviewed request on the Tabularium registry, and ships as soon
@@ -62,7 +62,7 @@ export function BountyBoardPage({bountyId}: {bountyId?: string}) {
                             <h3 className={styles.title}>{stats.activeCount} Open targets</h3>
                         </div>
                         <p className={styles.text}>
-                            Drivers and integrations waiting for scope, funding, or a maintainer.
+                            Drivers, themes and integrations waiting for scope, funding, or a maintainer.
                         </p>
                     </div>
                     <div className={styles.stat}>
@@ -87,11 +87,11 @@ export function BountyBoardPage({bountyId}: {bountyId?: string}) {
                     </span>
                     <h2 className="title">Find the right target.</h2>
                     <p className="description">
-                        Search by database or filter by status, focus and difficulty, then pick a bounty to upvote it,
-                        claim it, sponsor it or discuss it with the community.
+                        Search by plugin or filter by kind, status, focus and difficulty, then pick a bounty to upvote
+                        it, claim it, sponsor it or discuss it with the community.
                     </p>
                 </header>
-                <BountyGrid initialBountyId={bountyId} />
+                <BountyGrid initialBountyId={bountyId} kinds={kinds} />
             </section>
 
             <CalloutBlock

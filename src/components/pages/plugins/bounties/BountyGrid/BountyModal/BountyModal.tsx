@@ -1,5 +1,6 @@
 'use client';
 
+import {useState} from 'react';
 import {BountyClaimers} from '@/components/pages/plugins/bounties/BountyGrid/BountyClaimers/BountyClaimers';
 import {BountyIcon} from '@/components/pages/plugins/bounties/BountyGrid/BountyIcon/BountyIcon';
 import {BountyMeta} from '@/components/pages/plugins/bounties/BountyGrid/BountyMeta/BountyMeta';
@@ -37,12 +38,51 @@ interface BountyModalProps {
 }
 
 export function BountyModal({bounty, session, busy, error, onClose, onVote, onClaim, onScaffolded}: BountyModalProps) {
+    const [confirmingClaim, setConfirmingClaim] = useState(false);
     const shipped = bounty?.status === BOUNTY_STATUS.SHIPPED;
     const signedOut = session.state === 'signed-out';
     const myRepoUrl =
         session.state === 'signed-in'
             ? (bounty?.claimers.find((claimer) => claimer.username === session.username)?.repoUrl ?? null)
             : null;
+
+    if (bounty && confirmingClaim) {
+        return (
+            <Modal
+                open
+                onClose={() => setConfirmingClaim(false)}
+                title="Claim this bounty?"
+                icon={<HammerIcon aria-hidden="true" />}
+            >
+                <Modal.Body>
+                    <Modal.Text>
+                        You&apos;re about to claim <strong>{bounty.name}</strong> and appear among the people working on
+                        it. You can release your claim later.
+                    </Modal.Text>
+                    <Modal.Text>
+                        {signedOut
+                            ? 'After confirming, you\u2019ll sign in and return here to create or link your repository.'
+                            : 'After confirming, you can create or link your repository.'}
+                    </Modal.Text>
+                </Modal.Body>
+                <Modal.Actions>
+                    <Button variant="secondary" size="sm" onClick={() => setConfirmingClaim(false)}>
+                        Cancel
+                    </Button>
+                    <Button
+                        size="sm"
+                        onClick={() => {
+                            setConfirmingClaim(false);
+                            trackEvent('Bounty', 'Claim', bounty.id);
+                            onClaim(bounty);
+                        }}
+                    >
+                        {signedOut ? 'Confirm & sign in' : 'Confirm claim'}
+                    </Button>
+                </Modal.Actions>
+            </Modal>
+        );
+    }
 
     return (
         <Modal
@@ -171,16 +211,16 @@ export function BountyModal({bounty, session, busy, error, onClose, onVote, onCl
                                     className={styles.ctaButton}
                                     disabled={busy === `claim:${bounty.id}` || session.state === 'checking'}
                                     onClick={() => {
-                                        trackEvent('Bounty', bounty.claimedByMe ? 'Release' : 'Claim', bounty.id);
-                                        onClaim(bounty);
+                                        if (bounty.claimedByMe) {
+                                            trackEvent('Bounty', 'Release', bounty.id);
+                                            onClaim(bounty);
+                                        } else {
+                                            setConfirmingClaim(true);
+                                        }
                                     }}
                                 >
                                     <HammerIcon />
-                                    {bounty.claimedByMe
-                                        ? 'Release claim'
-                                        : signedOut
-                                          ? 'Sign in & claim'
-                                          : 'Claim this bounty'}
+                                    {bounty.claimedByMe ? 'Release claim' : 'Claim this bounty'}
                                 </Button>
                             </>
                         )}
