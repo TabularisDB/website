@@ -5,7 +5,7 @@
     flex-shrink: 0;
     width: 2rem;
     height: 2rem;
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     border-radius: var(--radius-sm);
     background-color: var(--color-surface);
     color: var(--color-text-secondary);
@@ -21,5 +21,15 @@
     svg {
         width: 1rem;
         height: 1rem;
+    }
+}
+
+.sm {
+    width: 1.625rem;
+    height: 1.625rem;
+
+    svg {
+        width: 0.875rem;
+        height: 0.875rem;
     }
 }
