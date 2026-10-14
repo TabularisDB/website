@@ -18,7 +18,7 @@ There is a new plugin in the registry: **Hacker News**.
 
 It exposes the [public HN Firebase API](https://github.com/HackerNews/API) as a queryable SQL database. Stories, comments, users, and poll options become real in-memory tables powered by DuckDB. No API key, no authentication, no setup beyond installing the plugin.
 
-Fair warning upfront: this is as much a **stress test for the new per-plugin settings system** (introduced in [v0.9.7](/posts/v097-plugin-settings-connection-groups)) as it is a genuinely useful tool. HN made an ideal guinea pig — public API, no auth, rich enough data variety to exercise different configuration combinations. But it does actually work, and the queries below are real.
+Fair warning upfront: this is as much a **stress test for the new per-plugin settings system** (introduced in [v0.9.7](/blog/v097-plugin-settings-connection-groups)) as it is a genuinely useful tool. HN made an ideal guinea pig — public API, no auth, rich enough data variety to exercise different configuration combinations. But it does actually work, and the queries below are real.
 
 ---
 
@@ -69,7 +69,7 @@ Enabling `comments` and `users` increases the number of API calls on the first q
 
 ## Plugin Settings in Practice
 
-This plugin was designed to exercise the [declarable plugin settings](/posts/v097-plugin-settings-connection-groups#declarable-plugin-settings-via-manifestjson) feature from v0.9.7. It declares its full configuration schema in `manifest.json`, and Tabularis renders the settings UI automatically — no app changes needed:
+This plugin was designed to exercise the [declarable plugin settings](/blog/v097-plugin-settings-connection-groups#declarable-plugin-settings-via-manifestjson) feature from v0.9.7. It declares its full configuration schema in `manifest.json`, and Tabularis renders the settings UI automatically — no app changes needed:
 
 | Setting                  | Type   | Default | Description                                                                    |
 | ------------------------ | ------ | ------- | ------------------------------------------------------------------------------ |
@@ -85,7 +85,7 @@ This plugin was designed to exercise the [declarable plugin settings](/posts/v09
 
 The three `include_*` toggles are the main cost knobs. With all three off (the default), only `stories` are fetched — fast, minimal API calls. Enabling comments at depth 3 with a large story count can trigger thousands of requests; the `Max Comments` cap and `Timeout` exist to keep that bounded.
 
-It also uses the [`no_connection_required`](/posts/v097-plugin-settings-connection-groups#no_connection_required-capability-flag) flag — since there is no host or credentials to enter, Tabularis hides the connection form entirely. You give the connection a name and start querying.
+It also uses the [`no_connection_required`](/blog/v097-plugin-settings-connection-groups#no_connection_required-capability-flag) flag — since there is no host or credentials to enter, Tabularis hides the connection form entirely. You give the connection a name and start querying.
 
 ---
 

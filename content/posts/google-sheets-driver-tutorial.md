@@ -1,18 +1,18 @@
 ---
-title: "Your First Tabularis Driver in 20 Minutes: Google Sheets, Step by Step"
-date: "2026-04-21T12:00:00"
-tags: ["plugins", "tutorial", "google-sheets", "rust", "oauth", "extensibility"]
-excerpt: "A hands-on walkthrough of @tabularis/create-plugin and @tabularis/plugin-api — from an empty directory to a working Google Sheets driver with OAuth, custom connection form, and sheets-as-SQL tables."
+title: 'Your First Tabularis Driver in 20 Minutes: Google Sheets, Step by Step'
+date: '2026-04-21T12:00:00'
+tags: ['plugins', 'tutorial', 'google-sheets', 'rust', 'oauth', 'extensibility']
+excerpt: 'A hands-on walkthrough of @tabularis/create-plugin and @tabularis/plugin-api — from an empty directory to a working Google Sheets driver with OAuth, custom connection form, and sheets-as-SQL tables.'
 og:
-  title: "Your First Driver"
-  accent: "in 20 Minutes."
-  claim: "A step-by-step tutorial: scaffold, wire, install — and end up with Google Sheets as a SQL database in Tabularis."
-  image: "/img/tabularis-plugin-manager.png"
+    title: 'Your First Driver'
+    accent: 'in 20 Minutes.'
+    claim: 'A step-by-step tutorial: scaffold, wire, install — and end up with Google Sheets as a SQL database in Tabularis.'
+    image: '/img/tabularis-plugin-manager.png'
 ---
 
 # Your First Tabularis Driver in 20 Minutes: Google Sheets, Step by Step
 
-Tabularis' plugin system has had three missing pieces since [v0.9.0](/posts/plugin-ecosystem) launched it:
+Tabularis' plugin system has had three missing pieces since [v0.9.0](/blog/plugin-ecosystem) launched it:
 
 1. A **published npm package** with the plugin UI types — so authors stop copying type definitions from the host repo by hand.
 2. A **scaffolder CLI** — so nobody has to write 33 JSON-RPC stubs, a cross-platform release workflow, and a manifest against a 230-line JSON schema from scratch.
@@ -30,7 +30,7 @@ I wrote it while scaffolding a **Google Sheets** driver from zero, so every comm
 
 Two reasons.
 
-**It's not a database.** Real drivers don't wrap RDBMSs exclusively — a registry plugin can expose anything queryable as SQL. Hacker News ([posted here](/posts/hackernews-plugin)) exposes the HN Firebase API. A CSV-folder plugin exposes a directory. Google Sheets is another point on that axis: a row-oriented data source where each tab is a table and the first row is the header. No host, no port, no password — just OAuth.
+**It's not a database.** Real drivers don't wrap RDBMSs exclusively — a registry plugin can expose anything queryable as SQL. Hacker News ([posted here](/blog/hackernews-plugin)) exposes the HN Firebase API. A CSV-folder plugin exposes a directory. Google Sheets is another point on that axis: a row-oriented data source where each tab is a table and the first row is the header. No host, no port, no password — just OAuth.
 
 **It exercises two UI extension slots.** The tutorial walks through both. Most plugins touch zero slots; some touch one. Two is the point at which the scaffolder's `--with-ui` defaults stop fitting and you learn how the IIFE loader actually works.
 
@@ -279,7 +279,6 @@ cargo build --release
 
 ---
 
-
 :::star:::
 
 ## 6. UI extensions, the typed way
@@ -324,35 +323,33 @@ That's the whole protocol contract: **the host injects the globals, the bundle c
 Slot: `connection-modal.connection_content`. When the user picks "Google Sheets" as the driver in the new-connection modal, the host renders this component **in place of** the usual host/port/user/pass grid. One labeled text input for the spreadsheet ID or URL.
 
 ```tsx
-import { defineSlot, type TypedSlotProps } from "@tabularis/plugin-api";
-import { PLUGIN_ID } from "./styles";
+import {defineSlot, type TypedSlotProps} from '@tabularis/plugin-api';
+import {PLUGIN_ID} from './styles';
 
 // plugin-api v0.1.0 types this slot's context as { driver: string }, but the
 // host also passes `database` and `onDatabaseChange`. Augment locally until
 // the next plugin-api release tightens the shape.
-type FieldContext =
-  TypedSlotProps<"connection-modal.connection_content">["context"]
-  & { database?: string; onDatabaseChange?: (value: string) => void };
+type FieldContext = TypedSlotProps<'connection-modal.connection_content'>['context'] & {
+    database?: string;
+    onDatabaseChange?: (value: string) => void;
+};
 
-const GoogleSheetsDatabaseField = defineSlot(
-  "connection-modal.connection_content",
-  ({ context }) => {
+const GoogleSheetsDatabaseField = defineSlot('connection-modal.connection_content', ({context}) => {
     const c = context as FieldContext;
-    if (c.driver !== PLUGIN_ID) return null;  // don't render for other drivers
+    if (c.driver !== PLUGIN_ID) return null; // don't render for other drivers
 
     return (
-      <div>
-        <label>Spreadsheet ID or URL</label>
-        <input
-          type="text"
-          value={c.database ?? ""}
-          onChange={e => c.onDatabaseChange?.(e.target.value)}
-          placeholder="https://docs.google.com/spreadsheets/d/…"
-        />
-      </div>
+        <div>
+            <label>Spreadsheet ID or URL</label>
+            <input
+                type="text"
+                value={c.database ?? ''}
+                onChange={(e) => c.onDatabaseChange?.(e.target.value)}
+                placeholder="https://docs.google.com/spreadsheets/d/…"
+            />
+        </div>
     );
-  },
-);
+});
 
 export default GoogleSheetsDatabaseField.component;
 ```
@@ -368,8 +365,8 @@ Slot: `settings.plugin.before_settings`. Renders in the plugin's row in Settings
 Three plugin-api hooks do the heavy lifting:
 
 ```tsx
-const { getSetting, setSetting, setSettings } = usePluginSetting(PLUGIN_ID);
-const { openModal, closeModal }               = usePluginModal();
+const {getSetting, setSetting, setSettings} = usePluginSetting(PLUGIN_ID);
+const {openModal, closeModal} = usePluginModal();
 // plus the standalone `openUrl` helper
 ```
 
@@ -380,25 +377,24 @@ const { openModal, closeModal }               = usePluginModal();
 Slot component outline:
 
 ```tsx
-const GoogleSheetsOAuth = defineSlot(
-  "settings.plugin.before_settings",
-  ({ context }) => {
-    if (context.targetPluginId !== PLUGIN_ID) return null;  // typed!
-    const { getSetting, setSetting, setSettings } = usePluginSetting(PLUGIN_ID);
-    const { openModal, closeModal } = usePluginModal();
+const GoogleSheetsOAuth = defineSlot('settings.plugin.before_settings', ({context}) => {
+    if (context.targetPluginId !== PLUGIN_ID) return null; // typed!
+    const {getSetting, setSetting, setSettings} = usePluginSetting(PLUGIN_ID);
+    const {openModal, closeModal} = usePluginModal();
 
-    const isConnected = !!(getSetting("refresh_token") || getSetting("access_token"));
+    const isConnected = !!(getSetting('refresh_token') || getSetting('access_token'));
 
     return (
-      <div className="google-account-panel">
-        <Header connected={isConnected} />
-        {isConnected
-          ? <ConnectedActions onReauth={/* openModal(...) */} onDisconnect={/* setSettings(...) */} />
-          : <ConnectButton onClick={/* openModal(...) */} />}
-      </div>
+        <div className="google-account-panel">
+            <Header connected={isConnected} />
+            {isConnected ? (
+                <ConnectedActions onReauth={/* openModal(...) */} onDisconnect={/* setSettings(...) */} />
+            ) : (
+                <ConnectButton onClick={/* openModal(...) */} />
+            )}
+        </div>
     );
-  },
-);
+});
 export default GoogleSheetsOAuth.component;
 ```
 
@@ -406,18 +402,20 @@ Inside the wizard, the exchange is plain `fetch`:
 
 ```tsx
 async function exchangeCode(clientId, clientSecret, code) {
-  const body = new URLSearchParams({
-    code, client_id: clientId, client_secret: clientSecret,
-    redirect_uri: "http://127.0.0.1",
-    grant_type: "authorization_code",
-  });
-  const resp = await fetch("https://oauth2.googleapis.com/token", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: body.toString(),
-  });
-  if (!resp.ok) throw new Error(await resp.text());
-  return resp.json();
+    const body = new URLSearchParams({
+        code,
+        client_id: clientId,
+        client_secret: clientSecret,
+        redirect_uri: 'http://127.0.0.1',
+        grant_type: 'authorization_code',
+    });
+    const resp = await fetch('https://oauth2.googleapis.com/token', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: body.toString(),
+    });
+    if (!resp.ok) throw new Error(await resp.text());
+    return resp.json();
 }
 ```
 
@@ -491,6 +489,6 @@ The 20-minute budget was honest. These each deserve their own post:
 - **[`tabularis-google-sheets-plugin`](https://github.com/TabularisDB/tabularis-google-sheets-plugin)** — the finished plugin from this tutorial. Clone it for the full working state.
 - **[Plugin registry](https://github.com/TabularisDB/tabularis/blob/main/plugins/registry.json)** — eight community drivers with eight different shapes worth copying from.
 
-The promise from [v0.9.0](/posts/plugin-ecosystem) was that adding a database to Tabularis should not require a patch to the core app. With the scaffolder and the plugin-api package, it now takes about twenty minutes.
+The promise from [v0.9.0](/blog/plugin-ecosystem) was that adding a database to Tabularis should not require a patch to the core app. With the scaffolder and the plugin-api package, it now takes about twenty minutes.
 
 Write one. It's faster than you think.
