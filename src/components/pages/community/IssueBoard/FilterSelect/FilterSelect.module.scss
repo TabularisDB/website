@@ -8,7 +8,7 @@
     align-items: center;
     gap: 0.45rem;
     width: 100%;
-    padding: 0.65rem 2.25rem 0.65rem 0.75rem;
+    padding: 0.65rem 2.25rem 0.65rem var(--space-3);
     border: var(--border);
     border-radius: var(--radius-md);
     background-color: transparent;
@@ -63,8 +63,8 @@
 .search {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.6rem 0.75rem;
+    gap: var(--space-2);
+    padding: 0.6rem var(--space-3);
     border-bottom: var(--border);
 
     svg {
@@ -117,7 +117,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0.75rem;
+    gap: var(--space-3);
     padding: 0.45rem 0.6rem;
     border-radius: var(--radius-sm);
     color: var(--color-text-secondary);
@@ -151,7 +151,7 @@
 }
 
 .empty {
-    padding: 0.75rem 0.6rem;
+    padding: var(--space-3) 0.6rem;
     color: var(--color-text-muted);
     font-size: 0.85rem;
 }

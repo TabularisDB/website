@@ -1,14 +1,14 @@
 .header {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 2.5rem;
+    gap: var(--space-4);
+    margin-bottom: var(--space-10);
 }
 
 .tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .tag {
@@ -40,7 +40,7 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.75rem 1rem;
+    gap: var(--space-3) var(--space-4);
     font-size: 0.875rem;
     color: var(--color-text-secondary);
 }
@@ -48,7 +48,7 @@
 .authors {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: var(--space-3);
 }
 
 .authorLink {

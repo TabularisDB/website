@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     gap: 0.4rem;
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-4);
 }
 
 .dot {
@@ -20,7 +20,7 @@
 .form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-4);
 }
 
 .fieldset {
@@ -29,13 +29,13 @@
     border: none;
     margin: 0;
     padding: 0;
-    gap: 1rem;
+    gap: var(--space-4);
 }
 
 .field {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .question {
@@ -51,8 +51,8 @@
 .options {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    margin-top: 1rem;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
 }
 
 .option {
@@ -171,7 +171,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     font-size: 0.85rem;
     color: var(--color-text-secondary);
     cursor: pointer;
@@ -207,7 +207,7 @@
 .actions {
     display: flex;
     justify-content: flex-end;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .button {
@@ -217,7 +217,7 @@
 .credit {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     justify-content: center;
     font-size: 0.8rem;
     color: var(--color-text-secondary);

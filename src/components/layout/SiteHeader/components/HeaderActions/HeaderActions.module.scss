@@ -11,12 +11,12 @@
 .githubStars {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     color: var(--color-text-primary);
     font-weight: 500;
     opacity: 0.8;
     font-size: 0.9rem;
-    margin-right: 0.5rem;
+    margin-right: var(--space-2);
 
     svg {
         min-width: 1.125rem;
@@ -48,10 +48,10 @@
 .searchTrigger {
     display: flex;
     align-items: center;
-    gap: 0.5rem !important;
+    gap: var(--space-2) !important;
     color: var(--color-text-secondary) !important;
     font-weight: 500;
-    padding-inline: 0.75rem !important;
+    padding-inline: var(--space-3) !important;
 
     svg {
         min-width: 1rem;
@@ -94,7 +94,7 @@
 .mobileToggle {
     display: none !important;
     color: var(--color-text-secondary) !important;
-    padding-inline: 0.75rem !important;
+    padding-inline: var(--space-3) !important;
 
     svg {
         min-width: 1.125rem;

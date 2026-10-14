@@ -2,7 +2,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: var(--spacing-xs);
+    gap: var(--space-2);
     font-weight: 600;
     border-radius: var(--radius-md);
     cursor: pointer;
@@ -78,7 +78,7 @@
 
 .md {
     font-size: 0.875rem;
-    padding-block: 0.5rem;
+    padding-block: var(--space-2);
     padding-inline: 0.9rem;
 
     &.ghost {
@@ -89,7 +89,7 @@
 .lg {
     font-size: 1.05rem;
     padding-block: 0.8rem;
-    padding-inline: 1.5rem;
+    padding-inline: var(--space-6);
 
     &.ghost {
         padding-inline: 0;

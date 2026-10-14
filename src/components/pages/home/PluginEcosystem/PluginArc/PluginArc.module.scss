@@ -33,7 +33,7 @@
     overflow: hidden;
     display: flex;
     justify-content: center;
-    padding-top: 3rem;
+    padding-top: var(--space-12);
     mask-image: linear-gradient(to bottom, black 55%, transparent 98%);
     -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 98%);
 }
@@ -111,9 +111,9 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.75rem;
+    gap: var(--space-3);
     margin-inline: auto;
-    padding-top: 1rem;
+    padding-top: var(--space-4);
 }
 
 .gridTile {
@@ -137,9 +137,9 @@
 
 .actions {
     position: relative;
-    margin-top: 2rem;
+    margin-top: var(--space-8);
 
     @media (max-width: 767px) {
-        margin-top: 4rem;
+        margin-top: var(--space-16);
     }
 }

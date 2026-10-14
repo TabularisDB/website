@@ -1,7 +1,7 @@
 .content {
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: var(--space-16);
     width: 100%;
     max-width: var(--max-width-sm);
     margin-inline: auto;
@@ -10,7 +10,7 @@
 .section {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: var(--space-5);
 }
 
 .sectionTitle {

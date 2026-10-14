@@ -1,22 +1,22 @@
 .wrapper {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
 }
 
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(330px, 100%), 1fr));
-    gap: 1rem;
-    margin-top: 0.5rem;
+    gap: var(--space-4);
+    margin-top: var(--space-2);
 }
 
 .resultsRow {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: var(--space-3);
     min-height: 2rem;
 }
 
@@ -31,7 +31,7 @@
 .chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .chip {

@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     color: var(--color-text-secondary) !important;
-    padding-inline: 0.75rem !important;
+    padding-inline: var(--space-3) !important;
 
     svg {
         --size: 1.125rem;

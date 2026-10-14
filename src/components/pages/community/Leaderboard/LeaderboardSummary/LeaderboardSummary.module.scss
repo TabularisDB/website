@@ -1,14 +1,14 @@
 .summary {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: var(--space-6);
 }
 
 .statusRow {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.75rem 1rem;
+    gap: var(--space-3) var(--space-4);
 }
 
 .range {
@@ -22,8 +22,8 @@
 .status {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.25rem 0.7rem;
+    gap: var(--space-2);
+    padding: var(--space-1) 0.7rem;
     font-size: 0.8rem;
     font-weight: 600;
 
@@ -72,13 +72,13 @@
 .stat {
     display: flex;
     flex-direction: column-reverse;
-    gap: 0.25rem;
-    padding: 1.25rem 1.5rem;
+    gap: var(--space-1);
+    padding: var(--space-5) var(--space-6);
     border-right: var(--border);
     border-bottom: var(--border);
 
     @media (max-width: 767px) {
-        padding: 0.85rem 1rem;
+        padding: 0.85rem var(--space-4);
 
         // Five tiles in two columns: the last one takes the full row.
         &:last-child {

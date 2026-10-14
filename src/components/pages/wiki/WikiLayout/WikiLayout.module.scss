@@ -1,7 +1,7 @@
 .layout {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 4rem;
+    gap: var(--space-16);
     max-width: var(--max-width-2xl);
     margin-inline: auto;
 
@@ -73,11 +73,11 @@
 .mobileToggle {
     display: none !important;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     color: var(--color-text-primary);
     font-size: 0.9rem;
     font-weight: 500;
-    margin-bottom: 2rem;
+    margin-bottom: var(--space-8);
     width: fit-content;
 
     @media (max-width: 1024px) {

@@ -5,7 +5,7 @@
 }
 
 .pageHeader {
-    margin-top: 1rem;
+    margin-top: var(--space-4);
 }
 
 .videoDemoPlayer {
@@ -14,5 +14,5 @@
     margin-inline: auto;
     border-radius: var(--radius-md);
     overflow: hidden;
-    margin-block: 3rem;
+    margin-block: var(--space-12);
 }

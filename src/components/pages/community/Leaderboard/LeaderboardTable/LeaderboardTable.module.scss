@@ -9,8 +9,8 @@
     display: grid;
     grid-template-columns: 2.5rem minmax(0, 1fr) repeat(5, 5.5rem);
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1rem;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
     border-bottom: var(--border);
     font-size: 0.9rem;
     color: var(--color-text-primary);
@@ -162,9 +162,9 @@
 .badge {
     display: inline-flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-1);
     flex-shrink: 0;
-    padding: 0.1rem 0.5rem;
+    padding: 0.1rem var(--space-2);
     border: var(--border);
     border-radius: var(--radius-full);
     font-size: 0.7rem;

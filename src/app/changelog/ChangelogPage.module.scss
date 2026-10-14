@@ -1,5 +1,5 @@
 .githubButton {
-    margin-top: 1rem;
+    margin-top: var(--space-4);
 
     & svg {
         width: 1rem;
@@ -8,9 +8,9 @@
 }
 
 .timeline {
-    margin-top: 4rem;
+    margin-top: var(--space-16);
 
     @media (max-width: 767px) {
-        margin-top: 3rem;
+        margin-top: var(--space-12);
     }
 }

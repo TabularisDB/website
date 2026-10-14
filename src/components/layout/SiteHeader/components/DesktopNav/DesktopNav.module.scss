@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     margin-right: auto;
-    gap: 0.25rem;
+    gap: var(--space-1);
 
     @media (max-width: 1023px) {
         display: none;

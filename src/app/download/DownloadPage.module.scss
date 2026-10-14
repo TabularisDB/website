@@ -2,21 +2,21 @@
     max-width: var(--max-width-md);
     width: 100%;
     margin-inline: auto;
-    margin-top: 4rem;
+    margin-top: var(--space-16);
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: var(--space-8);
 }
 
 .secondaryGrid {
     width: 100%;
-    margin-bottom: 4rem;
+    margin-bottom: var(--space-16);
 }
 
 .links {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: var(--space-2);
     margin-top: auto;
 }

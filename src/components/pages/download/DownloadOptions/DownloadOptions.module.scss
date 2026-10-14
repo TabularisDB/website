@@ -1,20 +1,20 @@
 .optionList {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: var(--space-6);
 }
 
 .optionCommand {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: var(--space-3);
 }
 
 .optionFile {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
+    gap: var(--space-4);
 }
 
 .optionLabel {
@@ -26,15 +26,15 @@
 .commandList {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .commandRow {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     min-width: 0;
-    padding: 0.75rem 1rem;
+    padding: var(--space-3) var(--space-4);
     border: var(--border);
     border-radius: var(--radius-sm);
     background: rgb(var(--rgb-tint) / 2%);
@@ -68,8 +68,8 @@
 .note {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 0.75rem;
+    gap: var(--space-2);
+    padding: var(--space-3);
     border-radius: var(--radius-sm);
     background-color: color-mix(in srgb, var(--color-accent-amber) 8%, transparent);
     font-size: 0.9rem;
@@ -78,7 +78,7 @@
     span {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: var(--space-2);
         color: var(--color-accent-amber);
 
         @media (max-width: 500px) {

@@ -4,7 +4,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    padding: 0rem 1.5rem;
+    padding: 0rem var(--space-6);
     height: var(--header-height);
     display: flex;
     align-items: center;
@@ -21,7 +21,7 @@
     align-items: center;
     width: var(--max-width-xl);
     margin: 0 auto;
-    gap: 2rem;
+    gap: var(--space-8);
 
     &.containerWide {
         width: var(--max-width-2xl);

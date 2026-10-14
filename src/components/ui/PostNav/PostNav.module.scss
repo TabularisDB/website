@@ -1,9 +1,9 @@
 .nav {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-top: 3rem;
-    padding-top: 2rem;
+    gap: var(--space-4);
+    margin-top: var(--space-12);
+    padding-top: var(--space-8);
     border-top: var(--border);
 
     @media (max-width: 600px) {
@@ -15,9 +15,9 @@
     a {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: var(--space-2);
         height: 100%;
-        padding: var(--spacing-lg);
+        padding: var(--space-6);
         border: var(--border);
         transition: background-color 0.2s ease;
 
@@ -40,7 +40,7 @@
 .label {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-1);
     font-size: 0.8rem;
     font-weight: 600;
     letter-spacing: 0.04em;

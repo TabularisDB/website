@@ -9,13 +9,13 @@
     display: grid;
     align-items: center;
     grid-template-columns: 1.25fr 1fr;
-    gap: 2rem;
-    padding: 1.5rem;
+    gap: var(--space-8);
+    padding: var(--space-6);
     border: var(--border);
 
     @media (max-width: 700px) {
         grid-template-columns: 1fr;
-        gap: 1.25rem;
+        gap: var(--space-5);
     }
 
     .title {
@@ -68,7 +68,7 @@
 
     li::after {
         content: '•';
-        margin-inline: 0.5rem;
+        margin-inline: var(--space-2);
         font-weight: 900;
     }
 

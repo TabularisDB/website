@@ -1,9 +1,9 @@
 .section {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: var(--space-12);
     scroll-margin-top: calc(var(--header-height) + 2.5rem);
-    padding-block: 3rem;
+    padding-block: var(--space-12);
 }
 
 .ways {
@@ -13,7 +13,7 @@
 .roadmapGrid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+    gap: var(--space-3);
 
     @media (max-width: 800px) {
         grid-template-columns: 1fr;

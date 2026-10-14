@@ -6,18 +6,18 @@
     width: 100%;
     max-width: 500px;
     margin-inline: auto;
-    margin-top: var(--spacing-3xl);
-    padding: var(--spacing-xl);
+    margin-top: var(--space-16);
+    padding: var(--space-8);
 
     @media (max-width: 767px) {
-        margin-top: var(--spacing-2xl);
+        margin-top: var(--space-12);
     }
 }
 
 .form {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: var(--space-5);
     width: 100%;
     text-align: left;
 }

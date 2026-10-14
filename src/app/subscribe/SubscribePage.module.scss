@@ -2,9 +2,9 @@
     width: 100%;
     max-width: var(--max-width-sm);
     margin-inline: auto;
-    margin-top: var(--spacing-3xl);
+    margin-top: var(--space-16);
 
     @media (max-width: 767px) {
-        margin-top: var(--spacing-2xl);
+        margin-top: var(--space-12);
     }
 }

@@ -1,12 +1,12 @@
 .wrapper {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: var(--space-12);
 }
 
 .showMore {
     align-self: center;
-    padding: 0.625rem 1.5rem;
+    padding: 0.625rem var(--space-6);
     border: var(--border);
     border-radius: var(--radius-full);
     background: var(--color-accent-blue);

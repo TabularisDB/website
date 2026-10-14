@@ -2,8 +2,8 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
-    padding: var(--card-padding, var(--spacing-xl));
+    gap: var(--space-5);
+    padding: var(--card-padding, var(--space-8));
     border: var(--border);
     transition: background-color 0.2s ease;
 
@@ -49,15 +49,15 @@
     display: flex;
     flex: 1;
     flex-direction: column;
-    gap: 1.25rem;
-    padding: var(--spacing-lg);
+    gap: var(--space-5);
+    padding: var(--space-6);
 }
 
 .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
+    gap: var(--space-4);
 }
 
 .icon {
@@ -74,7 +74,7 @@
 .aside {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .label {
@@ -88,7 +88,7 @@
 .content {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-2xs);
+    gap: var(--space-1);
 }
 
 .title {
@@ -143,7 +143,7 @@
     display: inline-flex;
     align-items: center;
     align-self: flex-start;
-    gap: var(--spacing-2xs);
+    gap: var(--space-1);
     margin-top: auto;
     font-size: 0.9rem;
     font-weight: 500;
