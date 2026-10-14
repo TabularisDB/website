@@ -1,0 +1,73 @@
+// Dashed frame with a square on each corner, shared by CalloutBlock and the
+// callouts generated in Markdown (prose.scss).
+@mixin callout-frame {
+    --corner-size: 0.6rem;
+    --corner: linear-gradient(var(--color-border), var(--color-border));
+    --corner-fill: linear-gradient(var(--color-bg), var(--color-bg));
+    --dash-width: 0.1rem;
+    --dash: var(--color-border);
+    --corner-offset: 0.05rem;
+
+    position: relative;
+    background:
+        repeating-linear-gradient(90deg, var(--dash) 0 6px, transparent 6px 12px) top / 100% var(--dash-width) no-repeat,
+        repeating-linear-gradient(90deg, var(--dash) 0 6px, transparent 6px 12px) bottom / 100% var(--dash-width)
+            no-repeat,
+        repeating-linear-gradient(180deg, var(--dash) 0 6px, transparent 6px 12px) left / var(--dash-width) 100%
+            no-repeat,
+        repeating-linear-gradient(180deg, var(--dash) 0 6px, transparent 6px 12px) right / var(--dash-width) 100%
+            no-repeat;
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        left: calc((var(--dash-width) - var(--corner-size)) / 2 + var(--corner-offset));
+        right: calc((var(--dash-width) - var(--corner-size)) / 2 + var(--corner-offset));
+        height: var(--corner-size);
+        background:
+            var(--corner) left / var(--corner-size) 100% no-repeat,
+            var(--corner) right / var(--corner-size) 100% no-repeat,
+            var(--corner-fill) left / var(--corner-size) 100% no-repeat,
+            var(--corner-fill) right / var(--corner-size) 100% no-repeat;
+        pointer-events: none;
+    }
+
+    &::before {
+        top: calc((var(--dash-width) - var(--corner-size)) / 2 + var(--corner-offset));
+    }
+
+    &::after {
+        bottom: calc((var(--dash-width) - var(--corner-size)) / 2 + var(--corner-offset));
+    }
+}
+
+// Same look as <Button variant="secondary" size="sm">, for links in HTML generated
+// from Markdown, where the component can't be used.
+@mixin button-secondary {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.875rem;
+    border: var(--border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition:
+        filter 0.15s ease,
+        border-color 0.15s ease;
+
+    &:hover {
+        border-color: var(--color-border-hover);
+        filter: brightness(1.1);
+    }
+
+    svg {
+        width: 1rem;
+        height: 1rem;
+    }
+}
