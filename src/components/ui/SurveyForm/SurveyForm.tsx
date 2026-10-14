@@ -272,7 +272,20 @@ export function SurveyForm({source, onSubmitted}: SurveyFormProps) {
 
                 <a className={styles.credit} href="https://www.emailchef.com" target="_blank" rel="noopener noreferrer">
                     Made with
-                    <Image src="/img/emailchef-logo.svg" alt="emailchef" width={174} height={34} />
+                    <Image
+                        src="/img/emailchef-logo.svg"
+                        alt="emailchef"
+                        width={174}
+                        height={34}
+                        className="theme-dark-only"
+                    />
+                    <Image
+                        src="/img/emailchef-logo-light.svg"
+                        alt="emailchef"
+                        width={174}
+                        height={34}
+                        className="theme-light-only"
+                    />
                 </a>
             </form>
         </>

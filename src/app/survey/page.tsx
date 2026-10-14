@@ -1,10 +1,10 @@
-import {SurveyForm} from '@/components/ui/SurveyForm/SurveyForm';
-import {MessagesSquareIcon} from 'lucide-react';
-import {Metadata} from 'next';
-import styles from './SurveyPage.module.scss';
-import {buildBreadcrumbJsonLd} from '@/lib/seo';
 import {JsonLd} from '@/components/layout/JsonLd';
+import {SurveyForm} from '@/components/ui/SurveyForm/SurveyForm';
 import {ogImages} from '@/lib/og/registry';
+import {buildBreadcrumbJsonLd} from '@/lib/seo';
+import {MessagesSquareIcon} from 'lucide-react';
+import type {Metadata} from 'next';
+import styles from './SurveyPage.module.scss';
 
 const path = '/survey';
 const title = 'Help shape Tabularis | Tabularis';
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 
 export default function SurveyPage() {
     return (
-        <div className="container with-gap">
+        <div className="container">
             <JsonLd
                 data={[
                     buildBreadcrumbJsonLd([
@@ -36,6 +36,7 @@ export default function SurveyPage() {
                     ]),
                 ]}
             />
+
             <header className="page-header">
                 <span className="eyebrow">
                     <MessagesSquareIcon />
@@ -47,8 +48,11 @@ export default function SurveyPage() {
                     roadmap.
                 </p>
             </header>
+
             <section className={styles.survey}>
-                <SurveyForm source={'page'} />
+                <div className={styles.form}>
+                    <SurveyForm source="page" />
+                </div>
             </section>
         </div>
     );

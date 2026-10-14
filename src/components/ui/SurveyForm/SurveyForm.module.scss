@@ -8,7 +8,7 @@
 .dot {
     width: 0.4rem;
     height: 0.4rem;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     background: var(--color-border);
     transition: background-color 0.2s ease;
 }
@@ -61,7 +61,7 @@
     gap: 0.6rem;
     padding: 0.6rem 0.85rem;
     border-radius: var(--radius-md);
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     font-size: 0.9rem;
     color: var(--color-text-secondary);
     cursor: pointer;
@@ -94,11 +94,11 @@
     flex-shrink: 0;
     width: 1.1rem;
     height: 1.1rem;
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
 }
 
 .indicatorRadio {
-    border-radius: 50%;
+    border-radius: var(--radius-full);
 
     &::after {
         content: '';
@@ -107,7 +107,7 @@
         left: 50%;
         width: 0.5rem;
         height: 0.5rem;
-        border-radius: 50%;
+        border-radius: var(--radius-full);
         background: var(--color-accent-teal);
         transform: translate(-50%, -50%) scale(0);
     }
@@ -151,7 +151,7 @@
     width: 100%;
     padding: 0.6rem 0.85rem;
     border-radius: var(--radius-md);
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     background: var(--color-surface-raised);
     color: var(--color-text-primary);
     font-size: 0.9rem;
@@ -212,11 +212,6 @@
 
 .button {
     width: 100%;
-
-    &:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
 }
 
 .credit {
