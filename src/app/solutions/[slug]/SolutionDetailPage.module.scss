@@ -1,11 +1,8 @@
 .wrapper {
-    max-width: 760px;
+    width: 100%;
+    max-width: var(--max-width-sm);
+    margin-top: var(--spacing-2xl);
     margin-inline: auto;
-
-    & h1 {
-        font-size: clamp(1.5rem, 9.23vw, 2.5rem);
-        padding-bottom: 1.5rem;
-        border-bottom: 0.1rem solid var(--color-border);
-        margin-bottom: 1rem;
-    }
+    padding-top: var(--spacing-2xl);
+    border-top: var(--border);
 }

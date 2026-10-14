@@ -7,7 +7,7 @@ import {Breadcrumbs} from '@/components/ui/Breadcrumbs/Breadcrumbs';
 import {SeoCapture} from '@/components/ui/SeoCapture/SeoCapture';
 import {getProduct} from '@/lib/compare/products';
 import {buildArticleJsonLd, buildBreadcrumbJsonLd} from '@/lib/seo';
-import {getSeoPageBySlug, getSeoPagePath, getSeoPagesBySection} from '@/lib/seo/seoPages';
+import {getSeoPageBySlug, getSeoPagePath, getSeoPagesBySection, stripFirstH1} from '@/lib/seo/seoPages';
 import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import styles from './CompareDetailPage.module.scss';
@@ -44,10 +44,6 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
 
 interface PageProps {
     params: Promise<{slug: string}>;
-}
-
-export function stripFirstH1(html: string): string {
-    return html.replace(/<h1[^>]*>[\s\S]*?<\/h1>/i, '');
 }
 
 function ProductLogo({id}: {id: string}) {
@@ -101,9 +97,9 @@ export default async function CompareDetailPage({params}: PageProps) {
             <div className={styles.content}>
                 <h2 className={styles.contentTitle}>Explore more about {page.meta.title}</h2>
                 <WikiContent html={stripFirstH1(page.html)} />
-            </div>
 
-            <SeoCapture section="compare" title={page.meta.title} />
+                <SeoCapture section="compare" title={page.meta.title} />
+            </div>
         </div>
     );
 }
