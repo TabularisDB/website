@@ -2,7 +2,7 @@
     --bounty-kind-color: var(--color-accent-teal);
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     margin-bottom: 0.375rem;
 }
 
@@ -48,5 +48,5 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0.75rem;
+    gap: var(--space-3);
 }

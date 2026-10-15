@@ -1,14 +1,14 @@
 ---
-title: "v0.9.20: Clipboard Import, Visual EXPLAIN Import, and a Community Look & Feel"
-date: "2026-04-21T12:00:00"
-release: "v0.9.20"
-tags: ["release", "import", "explain", "website", "community", "themes"]
-excerpt: "v0.9.20 is a community-shaped release: clipboard data import lands in the app, Visual EXPLAIN gains import support for existing plans, every built-in theme gets a readability pass, and the website goes from static screenshots to dynamic video demos across the hero, wiki, and feature pages."
+title: 'v0.9.20: Clipboard Import, Visual EXPLAIN Import, and a Community Look & Feel'
+date: '2026-04-21T12:00:00'
+release: 'v0.9.20'
+tags: ['release', 'import', 'explain', 'website', 'community', 'themes']
+excerpt: 'v0.9.20 is a community-shaped release: clipboard data import lands in the app, Visual EXPLAIN gains import support for existing plans, every built-in theme gets a readability pass, and the website goes from static screenshots to dynamic video demos across the hero, wiki, and feature pages.'
 og:
-  title: "v0.9.20:"
-  accent: "Clipboard Import, Visual EXPLAIN Import, Videos Everywhere."
-  claim: "A community-shaped release: paste-to-import in the app, plan import for Visual EXPLAIN, a readability pass across every theme, and dynamic video demos across the website."
-  image: "/img/overview.png"
+    title: 'v0.9.20:'
+    accent: 'Clipboard Import, Visual EXPLAIN Import, Videos Everywhere.'
+    claim: 'A community-shaped release: paste-to-import in the app, plan import for Visual EXPLAIN, a readability pass across every theme, and dynamic video demos across the website.'
+    image: '/img/overview.png'
 ---
 
 # v0.9.20: Clipboard Import, Visual EXPLAIN Import, and a Community Look & Feel
@@ -75,7 +75,6 @@ Makes it much easier to share a plan and reason about it together, instead of tr
 
 ---
 
-
 :::star:::
 
 ## Comparison Pages and Other Website Work
@@ -86,7 +85,7 @@ Alongside them:
 
 - The website now reads the app version from a single `APP_VERSION` source of truth, so release-tied strings stay in sync automatically.
 - The sitemap is referenced from `robots.txt`, which helps the new comparison pages get indexed faster.
-- A new long-form post, [*Databases Are Not Becoming Chatbots*](/blog/databases-are-not-becoming-chatbots), ships alongside the release.
+- A new long-form post, [_Databases Are Not Becoming Chatbots_](/blog/building-tabularis-future-of-databases-ai), ships alongside the release.
 
 ---
 

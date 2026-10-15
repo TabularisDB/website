@@ -31,15 +31,15 @@
     }
 
     @media (min-width: 541px) {
-        border-left: 0.1rem solid var(--color-border);
+        border-left: var(--border);
     }
 }
 
 .mobileNav {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 1rem;
+    gap: var(--space-2);
+    padding: var(--space-4);
     height: calc(100% - var(--header-height) - var(--footer-height));
     overflow: auto;
 }
@@ -48,14 +48,14 @@
     display: flex;
     align-items: center;
     position: fixed;
-    gap: 0.5rem;
+    gap: var(--space-2);
     height: var(--footer-height);
     right: 0;
     bottom: 0;
     width: 100%;
-    padding: 0 1rem;
+    padding: 0 var(--space-4);
     background-color: var(--color-surface);
-    border-top: 0.1rem solid var(--color-border);
+    border-top: var(--border);
     width: min(100%, 540px);
 }
 

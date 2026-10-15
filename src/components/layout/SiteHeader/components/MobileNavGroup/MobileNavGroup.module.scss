@@ -9,7 +9,7 @@
     justify-content: space-between;
     list-style: none;
     cursor: pointer;
-    padding: 0.75rem 0.5rem;
+    padding: var(--space-3) var(--space-2);
     color: var(--color-text-primary);
     font-size: 1.05rem;
     font-weight: 500;
@@ -32,16 +32,16 @@
 .body {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    padding: 0 0.5rem;
-    border-top: 0.1rem solid var(--color-border);
+    gap: var(--space-3);
+    padding: 0 var(--space-2);
+    border-top: var(--border);
 }
 
 .row {
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-    padding-top: 1rem;
+    padding-top: var(--space-4);
 }
 
 .rowTitle {
@@ -55,8 +55,8 @@
 .subLink {
     display: flex;
     align-items: flex-start;
-    gap: 0.75rem;
-    padding: 0.5rem 0;
+    gap: var(--space-3);
+    padding: var(--space-2) 0;
     color: var(--color-text-primary);
 }
 
@@ -103,10 +103,10 @@
     font-size: 1rem;
     color: var(--color-text-secondary);
     font-weight: 500;
-    padding-top: 1rem;
-    border-top: 0.1rem solid var(--color-border);
+    padding-top: var(--space-4);
+    border-top: var(--border);
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-1);
     color: var(--color-accent-teal);
 }

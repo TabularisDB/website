@@ -1,7 +1,7 @@
 .form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-4);
     text-align: left;
 }
 
@@ -21,7 +21,7 @@
 .row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: var(--space-4);
 
     @media (max-width: 480px) {
         grid-template-columns: 1fr;

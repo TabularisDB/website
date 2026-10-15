@@ -1,19 +1,19 @@
 .footerWrapper {
     width: 100%;
-    padding: 3rem 1rem;
+    padding: var(--space-12) var(--space-4);
 
     @media (max-width: 767px) {
-        padding: 3rem 0.5rem;
+        padding: var(--space-12) var(--space-2);
     }
 }
 
 .footerContent {
     margin-top: 6rem;
-    width: min(var(--max-width), 100%);
+    width: min(var(--max-width-xl), 100%);
     margin-inline: auto;
     display: flex;
     justify-content: space-between;
-    gap: 4rem;
+    gap: var(--space-16);
     flex-wrap: wrap;
 }
 
@@ -25,7 +25,7 @@
 .footerBrand {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--space-2);
     flex-shrink: 0;
     min-width: 0;
 }
@@ -39,8 +39,8 @@
 .footerSocial {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.25rem;
-    margin-top: 1.25rem;
+    gap: var(--space-5);
+    margin-top: var(--space-5);
 }
 
 .socialLink {
@@ -60,13 +60,13 @@
     min-width: 0;
 
     @media (max-width: 900px) {
-        gap: 2.5rem;
+        gap: var(--space-10);
     }
 
     @media (max-width: 768px) {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
+        gap: var(--space-8);
         width: 100%;
     }
 
@@ -79,7 +79,7 @@
 .footerColumn {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: var(--space-3);
     min-width: 8rem;
 
     @media (max-width: 768px) {
@@ -93,7 +93,7 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--color-text-primary);
-    margin-bottom: 0.25rem;
+    margin-bottom: var(--space-1);
 }
 
 .footerLink {
@@ -113,15 +113,15 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 1rem;
-    width: min(var(--max-width), 100%);
+    gap: var(--space-4);
+    width: min(var(--max-width-xl), 100%);
     margin-inline: auto;
     margin-top: 7rem;
     font-size: 0.85rem;
     color: var(--color-text-secondary);
 
     @media (max-width: 768px) {
-        margin-top: 4rem;
+        margin-top: var(--space-16);
         flex-direction: column;
         align-items: flex-start;
         text-align: left;
@@ -141,7 +141,7 @@
 
 .footerLinksBottom {
     display: flex;
-    gap: 1rem;
+    gap: var(--space-4);
     flex-wrap: wrap;
 
     a {

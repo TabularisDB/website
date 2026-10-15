@@ -96,3 +96,8 @@ export function getSeoSectionLabel(section: SeoSection): string {
 export function getSeoPagePath(section: SeoSection, slug: string): string {
     return `/${section}/${slug}`;
 }
+
+/** Removes the page's first <h1>, for pages that render the title in their own header. */
+export function stripFirstH1(html: string): string {
+    return html.replace(/<h1[^>]*>[\s\S]*?<\/h1>/i, '');
+}

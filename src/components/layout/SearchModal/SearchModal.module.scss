@@ -21,12 +21,12 @@
 
 .modal {
     width: min(560px, calc(100vw - 2rem));
-    padding: 0.5rem 0.25rem;
+    padding: var(--space-2) var(--space-1);
     max-height: 70vh;
     display: flex;
     flex-direction: column;
     background: var(--color-surface);
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     border-radius: var(--radius-md);
     overflow: hidden;
     box-shadow: 0 20px 60px rgb(var(--rgb-shadow) / calc(0.5 * var(--shadow-scale)));
@@ -35,8 +35,8 @@
 .header {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 1.25rem;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
 }
 
 .iconWrap {
@@ -70,7 +70,7 @@
 }
 
 .suggestions {
-    padding: 1rem 1.25rem;
+    padding: var(--space-4) var(--space-5);
 }
 
 .sectionLabel {
@@ -78,22 +78,22 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-accent-teal);
-    margin-bottom: 0.75rem;
+    margin-bottom: var(--space-3);
     font-weight: 500;
 }
 
 .sectionLabelResults {
-    padding: 0.75rem 1.25rem 0;
+    padding: var(--space-3) var(--space-5) 0;
 }
 
 .chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .chip {
-    padding: 0.375rem 0.75rem;
+    padding: 0.375rem var(--space-3);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-full);
     font-size: 0.85rem;
@@ -107,14 +107,14 @@
 
 .results {
     overflow-y: auto;
-    padding: 0.5rem;
+    padding: var(--space-2);
 }
 
 .resultItem {
     display: flex;
     align-items: flex-start;
-    gap: 0.75rem;
-    padding: 0.75rem;
+    gap: var(--space-3);
+    padding: var(--space-3);
     border-radius: var(--radius-md);
     cursor: pointer;
 
@@ -156,13 +156,13 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 0.25rem;
+    gap: var(--space-1);
     flex-shrink: 0;
 }
 
 .resultTypeBadge {
     font-size: 0.7rem;
-    padding: 0.125rem 0.5rem;
+    padding: 0.125rem var(--space-2);
     border: 1px solid;
     border-radius: var(--radius-full);
 }
@@ -173,7 +173,7 @@
 }
 
 .empty {
-    padding: 2.5rem 1.25rem;
+    padding: var(--space-10) var(--space-5);
     text-align: center;
     color: var(--color-text-secondary);
     font-size: 0.9rem;
@@ -181,15 +181,15 @@
 
 .emptyIcon {
     opacity: 0.3;
-    margin: 0 auto 0.75rem;
+    margin: 0 auto var(--space-3);
     display: block;
 }
 
 .footer {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 0.75rem 1.25rem;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-5);
     font-size: 0.75rem;
     color: var(--color-text-muted);
 }
@@ -197,7 +197,7 @@
 .hint {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-1);
 
     kbd {
         font-family: var(--font-mono);

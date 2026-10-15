@@ -1,3 +1,5 @@
+@use 'mixins' as *;
+
 .post-content {
     line-height: 1.75;
     color: var(--color-text-secondary);
@@ -12,7 +14,7 @@
         font-size: 1.875rem;
         font-weight: 600;
         color: var(--color-text-primary);
-        margin-bottom: 1rem;
+        margin-bottom: var(--space-4);
         line-height: 1.2;
     }
 
@@ -20,10 +22,10 @@
         font-size: 1.25rem;
         font-weight: 600;
         color: var(--color-text-primary);
-        padding-bottom: 0.75rem;
-        margin: 2rem 0 1.5rem;
+        padding-bottom: var(--space-3);
+        margin: var(--space-8) 0 var(--space-6);
         text-transform: capitalize;
-        border-bottom: 0.1rem solid var(--color-border);
+        border-bottom: var(--border);
 
         &::before {
             display: none;
@@ -34,14 +36,14 @@
         font-size: 1rem;
         font-weight: 600;
         color: var(--color-text-primary);
-        margin: 1rem 0 0.5rem;
+        margin: var(--space-4) 0 var(--space-2);
     }
 
     h4 {
         font-size: 0.85rem;
         font-weight: 500;
         color: var(--color-text-secondary);
-        margin: 1.75rem 0 0.5rem;
+        margin: 1.75rem 0 var(--space-2);
     }
 
     h5,
@@ -49,7 +51,7 @@
         font-size: 0.88rem;
         font-weight: 600;
         color: var(--color-text-muted);
-        margin: 1.5rem 0 0.4rem;
+        margin: var(--space-6) 0 0.4rem;
         text-transform: uppercase;
         letter-spacing: 0.04em;
     }
@@ -70,7 +72,7 @@
 
     ul,
     ol {
-        margin: 0 0 1.1rem 1.5rem;
+        margin: 0 0 1.1rem var(--space-6);
     }
 
     ul {
@@ -108,11 +110,11 @@
     pre {
         position: relative;
         background-color: var(--color-surface);
-        padding: 0.9rem 1rem;
+        padding: 0.9rem var(--space-4);
         border-radius: var(--radius-md);
-        border: 0.1rem solid var(--color-border);
+        border: var(--border);
         overflow-x: auto;
-        margin-bottom: 1.5rem;
+        margin-bottom: var(--space-6);
         line-height: 1.65;
 
         code {
@@ -130,10 +132,10 @@
     blockquote {
         border-left: 3px solid var(--color-accent-teal);
         background: color-mix(in srgb, var(--color-accent-teal) 8%, transparent);
-        padding: 0.75rem 1rem;
+        padding: var(--space-3) var(--space-4);
         border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
         color: var(--color-text-secondary);
-        margin-bottom: 1.5rem;
+        margin-bottom: var(--space-6);
 
         p:first-child {
             margin-top: 0;
@@ -147,13 +149,13 @@
     hr {
         border: none;
         border-top: 1px solid var(--color-border);
-        margin: 2rem 0;
+        margin: var(--space-8) 0;
         display: none;
     }
 
     // -- Links ----------------------------------------------------------------------
 
-    a:not(.post-tag) {
+    a:not(.post-tag, .star-cta__button, .plugin-link) {
         color: var(--color-accent-teal);
         text-decoration: none;
         transition: filter 0.15s ease;
@@ -171,12 +173,12 @@
         border-radius: var(--radius-md);
         border: 1px solid var(--color-border-hover);
         display: block;
-        margin-block: 1.5rem;
+        margin-block: var(--space-6);
         box-shadow: 0 4px 20px rgb(var(--rgb-shadow) / calc(0.4 * var(--shadow-scale)));
         background-color: var(--color-surface);
 
         &:has(+ p > em:only-child) {
-            margin-bottom: 0.75rem;
+            margin-bottom: var(--space-3);
         }
 
         // Opt-out for artwork that draws its own frame (e.g. partnership banners)
@@ -205,7 +207,7 @@
         font-size: 0.8rem;
         color: var(--color-text-muted);
         text-align: center;
-        margin-bottom: 1.5rem;
+        margin-bottom: var(--space-6);
         font-style: italic;
     }
 
@@ -218,8 +220,8 @@
     .post-gallery {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-        margin: 1.5rem 0 0.5rem;
+        gap: var(--space-4);
+        margin: var(--space-6) 0 var(--space-2);
 
         img {
             margin: 0;
@@ -237,7 +239,7 @@
         font-size: 0.8rem;
         color: var(--color-text-muted);
         text-align: center;
-        margin-block: 1rem;
+        margin-block: var(--space-4);
         font-style: italic;
     }
 
@@ -263,7 +265,7 @@
         text-align: left;
         font-weight: 500;
         color: var(--color-text-primary);
-        padding: 1rem 4rem;
+        padding: var(--space-4) var(--space-16);
         border-bottom: 0.075rem solid var(--color-border);
         white-space: nowrap;
         line-height: 1;
@@ -275,7 +277,7 @@
     }
 
     td {
-        padding: 0.6rem 1rem;
+        padding: 0.6rem var(--space-4);
         border-bottom: 0.075rem solid var(--color-border);
         color: var(--color-text-secondary);
         vertical-align: top;
@@ -303,148 +305,185 @@
 .plugin-list {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    gap: var(--space-4);
+    margin: var(--space-10) 0;
 }
 
 .plugin-entry {
+    @include callout-frame;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.5rem;
-    padding: 1rem 1.25rem;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    transition: border-color 0.2s;
+    gap: var(--space-6);
+    padding: 1.75rem var(--space-8);
 
-    &:hover {
-        border-color: var(--color-border-hover);
+    @media (max-width: 620px) {
+        flex-direction: column;
+        text-align: center;
     }
 }
 
 .plugin-entry-info {
+    display: flex;
     flex: 1;
+    flex-direction: column;
+    gap: var(--space-2);
     min-width: 0;
+
+    @media (max-width: 620px) {
+        align-items: center;
+    }
 }
 
 .plugin-entry-header {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 0.6rem;
-    margin-bottom: 0.35rem;
-    flex-wrap: wrap;
+
+    @media (max-width: 620px) {
+        justify-content: center;
+    }
 }
 
 .plugin-name {
+    font-size: 1.125rem;
     font-weight: 600;
     color: var(--color-text-primary);
-    font-size: 0.95rem;
-    text-decoration: none;
+}
+
+.plugin-badge {
+    padding: 0.1rem var(--space-2);
+    border: var(--border-width) solid color-mix(in srgb, var(--color-accent-blue) 30%, transparent);
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--color-accent-blue) 12%, transparent);
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--color-accent-blue);
+}
+
+.plugin-desc {
+    max-width: 28rem;
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+}
+
+.plugin-meta {
+    margin: 0 !important;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+.plugin-links {
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: column;
+    gap: var(--space-2);
+
+    @media (max-width: 620px) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--space-2) var(--space-5);
+    }
+}
+
+.plugin-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    transition: color 0.15s ease;
 
     &:hover {
         color: var(--color-accent-teal);
     }
-}
 
-.plugin-badge {
-    font-size: 0.68rem;
-    padding: 0.1rem 0.5rem;
-    border-radius: var(--radius-full);
-    background: rgba(91, 141, 239, 0.12);
-    border: 1px solid rgba(91, 141, 239, 0.3);
-    color: var(--color-accent-blue);
-    letter-spacing: 0.02em;
-}
-
-.plugin-desc {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-    margin-bottom: 0.4rem;
-}
-
-.plugin-meta {
-    font-size: 0.78rem;
-    color: var(--color-text-muted);
-}
-
-.plugin-platforms {
-    opacity: 0.65;
+    svg {
+        width: 0.875rem;
+        height: 0.875rem;
+    }
 }
 
 // -- Star CTA (":::star:::") ------------------------------------------------
 
 .star-cta {
+    @include callout-frame;
+
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 1rem;
-    margin: 2.5rem 0;
-    padding: 1.1rem 1.3rem;
-    border: 1px solid var(--color-border);
-    border-left: 3px solid var(--color-highlight);
-    border-radius: var(--radius-lg);
-    background: var(--color-surface);
-    color: var(--color-text-secondary);
-    text-decoration: none !important;
-    filter: none !important;
-    transition:
-        border-color 0.15s ease,
-        background 0.15s ease;
-
-    &:hover {
-        border-color: var(--color-border-hover);
-        border-left-color: var(--color-highlight);
-        background: var(--color-surface-raised);
-    }
-
-    &__mark {
-        display: inline-flex;
-        flex: 0 0 auto;
-        color: var(--color-text-primary);
-    }
+    justify-content: space-between;
+    gap: var(--space-4) var(--space-6);
+    margin: var(--space-10) 0;
+    padding: 1.75rem var(--space-8);
 
     &__body {
         display: flex;
+        flex: 1 1 20rem;
         flex-direction: column;
-        gap: 0.2rem;
-        flex: 1 1 auto;
-
-        strong {
-            font-size: 0.98rem;
-            color: var(--color-text-primary);
-        }
-
-        span {
-            font-size: 0.88rem;
-            color: var(--color-text-muted);
-            line-height: 1.45;
-        }
+        gap: var(--space-1);
     }
 
-    &__btn {
+    &__title {
+        font-size: 1.125rem;
+        font-weight: 500;
+        color: var(--color-text-primary);
+    }
+
+    &__text {
+        max-width: 28rem;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: var(--color-text-secondary);
+    }
+
+    // Same look as <Button variant="secondary" size="sm">, which can't be used in
+    // HTML generated from Markdown.
+    &__button {
         display: inline-flex;
+        flex-shrink: 0;
         align-items: center;
-        gap: 0.4rem;
-        flex: 0 0 auto;
-        padding: 0.55rem 0.95rem;
+        gap: var(--space-2);
+        padding: 0.4rem 0.875rem;
+        border: var(--border);
         border-radius: var(--radius-md);
-        background: #facc15;
-        color: #1a1205;
+        background: var(--color-surface);
+        color: var(--color-text-primary);
         font-size: 0.85rem;
-        font-weight: 700;
-        white-space: nowrap;
+        font-weight: 600;
+        transition:
+            filter 0.15s ease,
+            border-color 0.15s ease;
+
+        &:hover {
+            border-color: var(--color-border-hover);
+            filter: brightness(1.1);
+        }
+
+        svg {
+            width: 1rem;
+            height: 1rem;
+        }
     }
 
-    &:hover &__btn {
-        background: #fde047;
+    &__star {
+        color: var(--color-star);
     }
 
-    @media (max-width: 640px) {
-        flex-wrap: wrap;
+    @media (max-width: 620px) {
+        flex-direction: column;
+        text-align: center;
 
-        .star-cta__btn {
-            width: 100%;
-            justify-content: center;
+        .star-cta__body {
+            flex: none;
+            align-items: center;
         }
     }
 }
@@ -452,9 +491,9 @@
 // -- Contributors block (":::contributors:::") -------------------------------
 
 .contributors-block {
-    margin: 2rem 0;
-    padding-top: 1.5rem;
-    border-top: 0.1rem solid var(--color-border);
+    margin: var(--space-8) 0;
+    padding-top: var(--space-6);
+    border-top: var(--border);
 }
 
 .contributors-label {
@@ -464,7 +503,7 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-text-secondary);
-    margin-bottom: 1.25rem;
+    margin-bottom: var(--space-5);
 }
 
 .contributors-list {
@@ -476,7 +515,7 @@
 .contributor-item {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     padding: 0.375rem 0.875rem 0.375rem 0.375rem;
     background: var(--color-surface-raised);
     border: 1px solid var(--color-border);
@@ -514,7 +553,7 @@
     position: relative;
     width: 100%;
     aspect-ratio: 1656 / 1080;
-    margin: 1.5rem 0 0.4rem;
+    margin: var(--space-6) 0 0.4rem;
     border-radius: var(--radius-md);
     overflow: hidden;
     border: 1px solid var(--color-border);
@@ -583,7 +622,7 @@
     z-index: 2;
     flex-direction: column;
     gap: 0.6rem;
-    padding: 1rem;
+    padding: var(--space-4);
     text-align: center;
     background: color-mix(in srgb, var(--color-bg) 80%, transparent);
     color: var(--color-text-primary);
@@ -604,8 +643,8 @@
     display: inline-flex;
     align-items: center;
     gap: 0.375rem;
-    padding: 0.375rem 0.75rem;
-    border: 0.1rem solid var(--color-border);
+    padding: 0.375rem var(--space-3);
+    border: var(--border);
     border-radius: var(--radius-full);
     background: transparent;
     color: var(--color-text-primary);

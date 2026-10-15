@@ -1,9 +1,10 @@
 import clsx from 'clsx';
-import styles from './BlogOverview.module.scss';
-import {Button} from '@/components/ui/Button/Button';
 import {ArrowRight, NewspaperIcon} from 'lucide-react';
-import {getAllPosts} from '@/lib/blog/posts';
+import {Button} from '@/components/ui/Button/Button';
+import {CardGrid} from '@/components/ui/CardGrid/CardGrid';
 import {PostCard} from '@/components/ui/PostCard/PostCard';
+import {getAllPosts} from '@/lib/blog/posts';
+import styles from './BlogOverview.module.scss';
 
 export function BlogOverview() {
     const latestPosts = getAllPosts().slice(0, 2);
@@ -21,11 +22,11 @@ export function BlogOverview() {
                 </p>
             </header>
 
-            <div className={styles.latestPosts}>
+            <CardGrid minWidth={480} className={styles.latestPosts}>
                 {latestPosts.map((post) => (
                     <PostCard key={post.slug} post={post} />
                 ))}
-            </div>
+            </CardGrid>
 
             <Button href="/blog">
                 View all posts <ArrowRight size={16} />

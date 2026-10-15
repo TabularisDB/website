@@ -1,7 +1,7 @@
 .catalogue {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: var(--space-6);
 }
 
 .filters {
@@ -13,9 +13,9 @@
 .filter {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 0.875rem;
-    border: 0.1rem solid var(--color-border);
+    gap: var(--space-2);
+    padding: var(--space-2) 0.875rem;
+    border: var(--border);
     border-radius: var(--radius-full);
     font-size: 0.9rem;
     font-weight: 500;

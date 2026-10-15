@@ -1,10 +1,10 @@
-import type {Metadata} from 'next';
-import {MailIcon} from 'lucide-react';
 import {JsonLd} from '@/components/layout/JsonLd';
 import {NewsletterForm} from '@/components/ui/NewsletterForm/NewsletterForm';
-import {buildBreadcrumbJsonLd} from '@/lib/seo';
-import styles from './SubscribePage.module.scss';
 import {ogImages} from '@/lib/og/registry';
+import {buildBreadcrumbJsonLd} from '@/lib/seo';
+import {MailIcon} from 'lucide-react';
+import type {Metadata} from 'next';
+import styles from './SubscribePage.module.scss';
 
 const path = '/subscribe';
 const title = 'Subscribe | Tabularis';
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 
 export default function SubscribePage() {
     return (
-        <div className="container with-gap">
+        <div className="container">
             <JsonLd
                 data={[
                     buildBreadcrumbJsonLd([
@@ -49,11 +49,7 @@ export default function SubscribePage() {
             </header>
 
             <section className={styles.newsletter}>
-                <NewsletterForm
-                    title="Subscribe to the newsletter"
-                    description="Get release announcements, development insights, tips, and project updates delivered to your inbox. No spam, unsubscribe anytime."
-                    buttonLabel="Subscribe"
-                />
+                <NewsletterForm />
             </section>
         </div>
     );

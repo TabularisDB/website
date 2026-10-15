@@ -1,13 +1,13 @@
 .wrapper {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-4);
 }
 
 .bar {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr auto;
-    gap: 0.75rem;
+    gap: var(--space-3);
 
     @media (max-width: 767px) {
         grid-template-columns: 1fr;
@@ -17,9 +17,9 @@
 .searchWrap {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     padding: 0.65rem 0.9rem;
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     border-radius: var(--radius-md);
 
     svg {
@@ -51,14 +51,14 @@
     opacity: 0.8;
     font-weight: 400;
     font-style: italic;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-2);
 }
 
 .resultsRow {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: var(--space-3);
     min-height: 2rem;
 }
 
@@ -72,7 +72,7 @@
 .chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .chip {
@@ -80,7 +80,7 @@
     align-items: center;
     gap: 0.35rem;
     padding: 0.3rem 0.6rem;
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     border-radius: var(--radius-full);
     background: var(--color-surface);
     color: var(--color-text-secondary);
@@ -102,7 +102,7 @@
 .githubLink {
     display: inline-flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-1);
     margin-left: auto;
     font-size: 0.85rem;
     font-weight: 500;
@@ -120,11 +120,11 @@
 
     @media (max-width: 767px) {
         margin-left: 0;
-        margin-top: 1rem;
+        margin-top: var(--space-4);
     }
 }
 
 .more {
     align-self: center;
-    margin-top: 0.5rem;
+    margin-top: var(--space-2);
 }

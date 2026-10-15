@@ -32,14 +32,14 @@
 .list {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .item {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     font-size: 0.875rem;
 
     a {
@@ -54,7 +54,7 @@
 .repo {
     display: inline-flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-1);
     min-width: 0;
     font-family: var(--font-mono);
     font-size: 0.8rem;

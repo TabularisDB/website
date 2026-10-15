@@ -61,6 +61,7 @@ export function Turnstile({action, onToken, className}: TurnstileProps) {
                     sitekey: TURNSTILE_SITE_KEY,
                     action,
                     appearance: 'interaction-only',
+                    theme: document.documentElement.dataset.theme === 'light' ? 'light' : 'dark',
                     callback: (token: string) => onTokenRef.current(token),
                     'expired-callback': () => onTokenRef.current(null),
                     'error-callback': () => onTokenRef.current(null),

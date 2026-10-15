@@ -1,23 +1,25 @@
 'use client';
 
-import {useId} from 'react';
-import {Mail, SendIcon} from 'lucide-react';
-import styles from './NewsletterForm.module.scss';
-import {NEWSLETTER_EMAILCHEF} from '@/lib/siteConfig';
-import {useProtectedForm} from '@/lib/forms';
+import {Button} from '@/components/ui/Button/Button';
+import {CalloutBlock} from '@/components/ui/CalloutBlock/CalloutBlock';
 import {Honeypot} from '@/components/ui/Honeypot/Honeypot';
-import {Turnstile} from '@/components/ui/Turnstile/Turnstile';
 import {PrivacyConsent} from '@/components/ui/PrivacyConsent/PrivacyConsent';
+import {Turnstile} from '@/components/ui/Turnstile/Turnstile';
+import {useProtectedForm} from '@/lib/forms';
+import {NEWSLETTER_EMAILCHEF} from '@/lib/siteConfig';
+import {MailIcon} from 'lucide-react';
+import {useId} from 'react';
+import styles from './NewsletterForm.module.scss';
 
-interface NewsletterFormProps {
-    title: string;
-    description: string;
-    buttonLabel: string;
+interface NewsletterSignupProps {
+    buttonLabel?: string;
 }
 
-export function NewsletterForm({title, description, buttonLabel}: NewsletterFormProps) {
+/** The sign-up form on its own: email field, consent and anti-spam checks. */
+export function NewsletterSignup({buttonLabel = 'Subscribe'}: NewsletterSignupProps) {
     const guard = useProtectedForm('newsletter', NEWSLETTER_EMAILCHEF.redirect);
     const consentId = useId();
+    const errorId = useId();
 
     function onSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -25,16 +27,13 @@ export function NewsletterForm({title, description, buttonLabel}: NewsletterForm
     }
 
     return (
-        <div className={styles.box}>
-            <h3 className={styles.title}>{title}</h3>
-            <p className={styles.description}>{description}</p>
-
+        <>
             <form className={styles.form} autoComplete="off" onSubmit={onSubmit}>
                 <Honeypot />
 
                 <div className={styles.field}>
-                    <div className={styles.inputWrapper}>
-                        <Mail className={styles.inputIcon} aria-hidden="true" />
+                    <label className={styles.inputWrapper}>
+                        <MailIcon className={styles.inputIcon} aria-hidden="true" />
                         <input
                             type="email"
                             name="field[-1]"
@@ -43,30 +42,43 @@ export function NewsletterForm({title, description, buttonLabel}: NewsletterForm
                             className={styles.input}
                             aria-label="Email address"
                             aria-invalid={guard.error ? true : undefined}
-                            aria-describedby={guard.error ? 'newsletter-error' : undefined}
+                            aria-describedby={guard.error ? errorId : undefined}
                             autoComplete="email"
                             onChange={() => guard.setError(null)}
                         />
-                    </div>
+                    </label>
 
-                    <button type="submit" className={styles.button} disabled={guard.pending}>
-                        <span className={styles.buttonLabel}>{buttonLabel}</span>
-                        <SendIcon className={styles.sendIcon} aria-hidden="true" />
-                    </button>
+                    <Button type="submit" className={styles.button} disabled={guard.pending}>
+                        {buttonLabel}
+                    </Button>
                 </div>
 
-                <PrivacyConsent id={consentId} className={styles.consent}>
+                <PrivacyConsent id={consentId}>
                     I agree to receive the Tabularis newsletter and to the processing of my email address
                 </PrivacyConsent>
+
+                {guard.error && (
+                    <p id={errorId} className={styles.error} role="alert">
+                        {guard.error}
+                    </p>
+                )}
             </form>
 
             <Turnstile key={guard.widgetKey} action="newsletter" onToken={guard.onToken} />
+        </>
+    );
+}
 
-            {guard.error && (
-                <p id="newsletter-error" className={styles.error} role="alert">
-                    {guard.error}
-                </p>
-            )}
-        </div>
+interface NewsletterFormProps extends NewsletterSignupProps {
+    title?: string;
+    description?: string;
+}
+
+/** The sign-up form in a callout block, for the end of a page. */
+export function NewsletterForm({title, description, buttonLabel}: NewsletterFormProps) {
+    return (
+        <CalloutBlock title={title} actions={<NewsletterSignup buttonLabel={buttonLabel} />}>
+            {description}
+        </CalloutBlock>
     );
 }

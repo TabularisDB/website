@@ -1,8 +1,23 @@
+@use '../../styles/mixins' as *;
+
 .survey {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    @include callout-frame;
+
+    width: 100%;
     max-width: 500px;
     margin-inline: auto;
+    margin-top: var(--space-16);
+    padding: var(--space-8);
+
+    @media (max-width: 767px) {
+        margin-top: var(--space-12);
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
     width: 100%;
+    text-align: left;
 }

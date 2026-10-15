@@ -1,8 +1,8 @@
 .filterBar {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
-    margin-block: 3rem 2rem;
+    gap: var(--space-5);
+    margin-block: var(--space-12) var(--space-8);
 }
 
 .count {
@@ -15,8 +15,8 @@
 .archive {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
-    margin-block: 3rem;
+    gap: var(--space-5);
+    margin-block: var(--space-12);
 }
 
 .archiveTitle {
@@ -28,7 +28,5 @@
 
 .newsletter {
     width: 100%;
-    max-width: 800px;
-    margin-inline: auto;
-    margin-top: 3rem;
+    margin-top: var(--space-12);
 }

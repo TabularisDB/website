@@ -1,8 +1,8 @@
 .tools {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
-    margin-bottom: 1rem;
+    gap: var(--space-5);
+    margin-bottom: var(--space-4);
 }
 
 .logo {
@@ -18,16 +18,15 @@
 }
 
 .content {
-    max-width: 1000px;
+    max-width: var(--max-width-sm);
     margin-inline: auto;
 }
 
 .contentTitle {
     font-size: clamp(1.5rem, 9.23vw, 2.25rem);
     font-weight: 500;
-    max-width: 800px;
     color: var(--color-text-primary);
-    margin-bottom: 1.25rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 0.1rem solid var(--color-border);
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-6);
+    border-bottom: var(--border);
 }

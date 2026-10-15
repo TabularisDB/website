@@ -1,7 +1,7 @@
 .block {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    gap: var(--space-16);
     align-items: center;
 
     @media (min-width: 901px) {
@@ -18,8 +18,8 @@
 
     @media (max-width: 900px) {
         grid-template-columns: 1fr;
-        gap: 2rem;
-        padding-block: 1rem;
+        gap: var(--space-8);
+        padding-block: var(--space-4);
         max-width: 700px;
         margin-inline: auto;
     }
@@ -29,7 +29,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--space-2);
     align-items: flex-start;
 
     &::before {
@@ -57,7 +57,7 @@
 .eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     font-size: 0.9rem;
     font-weight: 600;
     color: var(--color-accent-teal);
@@ -79,7 +79,7 @@
     font-size: 1rem;
     line-height: 1.5;
     color: var(--color-text-secondary);
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-2);
     font-weight: 400;
 }
 

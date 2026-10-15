@@ -1,17 +1,17 @@
 .heroDemo {
     position: relative;
-    margin-top: 2rem;
     display: block;
     width: 100%;
-    max-width: 950px;
+    max-width: var(--max-width-lg);
     aspect-ratio: 1592 / 1080;
+    margin-top: var(--space-8);
     overflow: visible;
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     border-radius: var(--radius-md);
     background: var(--color-surface);
     box-shadow:
         0 24px 55px rgb(var(--rgb-shadow) / calc(0.48 * var(--shadow-scale))),
-        0 0 0 1px rgba(59, 130, 246, 0.06);
+        0 0 0 1px color-mix(in srgb, var(--color-accent-blue) 6%, transparent);
 }
 
 .heroDemoImage {

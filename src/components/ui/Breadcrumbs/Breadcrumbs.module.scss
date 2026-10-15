@@ -4,11 +4,11 @@
     flex-wrap: wrap;
     gap: 0.35rem;
     font-size: 0.85rem;
-    margin-block: -1rem 3rem;
+    margin-block: -1rem var(--space-12);
     width: 100%;
 
     @media (max-width: 767px) {
-        margin-block: -0.5rem 2rem;
+        margin-block: -0.5rem var(--space-8);
     }
 }
 

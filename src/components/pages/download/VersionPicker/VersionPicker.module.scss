@@ -1,9 +1,9 @@
 .toggle {
     display: flex;
     width: fit-content;
-    gap: 0.25rem;
+    gap: var(--space-1);
     padding: 0.3rem;
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     border-radius: var(--radius-full);
 }
 
@@ -11,7 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     padding: 0.4rem 0;
     border-radius: var(--radius-full);
     transition: all 0.2s ease;

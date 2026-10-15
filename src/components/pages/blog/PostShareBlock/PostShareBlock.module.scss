@@ -1,7 +1,7 @@
 .block {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: var(--space-3);
 }
 
 .eyebrow {
@@ -24,7 +24,7 @@
     justify-content: center;
     width: 2.5rem;
     height: 2.5rem;
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     border-radius: var(--radius-full);
     color: var(--color-text-secondary);
     cursor: pointer;

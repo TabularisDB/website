@@ -1,11 +1,11 @@
 .categoriesWrapper {
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: var(--space-16);
 }
 
 .category {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-4);
 }

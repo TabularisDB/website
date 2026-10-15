@@ -1,11 +1,11 @@
 .accordion {
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     background-color: var(--color-bg);
     width: 100%;
 }
 
 .item {
-    border-bottom: 0.1rem solid var(--color-border);
+    border-bottom: var(--border);
 
     &:last-child {
         border-bottom: 0;
@@ -25,8 +25,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    padding: 1.125rem 1.5rem;
+    gap: var(--space-4);
+    padding: 1.125rem var(--space-6);
     color: var(--color-text-primary);
     font-size: 1rem;
     font-weight: 500;
@@ -51,7 +51,7 @@
 .label {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: var(--space-3);
 }
 
 .questionIcon {
@@ -69,7 +69,7 @@
 }
 
 .answer {
-    padding: 0 1.5rem 1.25rem;
+    padding: 0 var(--space-6) var(--space-5);
     color: var(--color-text-secondary);
     font-size: 0.9rem;
     line-height: 1.6;

@@ -1,13 +1,17 @@
 'use client';
-import {useEffect, useRef, useState} from 'react';
-import Link from 'next/link';
-import {usePathname} from 'next/navigation';
-import {trackEvent} from '@/lib/analytics';
-import {SURVEY_CONFIGURED} from '@/lib/siteConfig';
-import {formatStars, REPO_STARS} from '@/lib/github';
+
+import {Button} from '@/components/ui/Button/Button';
+import {CloseButton} from '@/components/ui/CloseButton/CloseButton';
 import {GitHubIcon} from '@/components/ui/Icons/SocialIcons';
+import {SURVEY_STORAGE_KEY, SurveyForm} from '@/components/ui/SurveyForm/SurveyForm';
+import {trackEvent} from '@/lib/analytics';
+import {formatStars, REPO_STARS} from '@/lib/github';
+import {SURVEY_CONFIGURED} from '@/lib/siteConfig';
 import {SOCIAL_URLS} from '@/lib/social';
-import {SurveyForm, SURVEY_STORAGE_KEY} from '@/components/ui/SurveyForm/SurveyForm';
+import {StarIcon} from 'lucide-react';
+import Image from 'next/image';
+import {usePathname} from 'next/navigation';
+import {useEffect, useRef, useState} from 'react';
 import styles from './EngagementPrompt.module.scss';
 
 const EXCLUDED_PATHS = ['/survey', '/thanks-survey', '/thanks-newsletter', '/sponsors/confirm', '/download'];
@@ -130,9 +134,7 @@ export function EngagementPrompt() {
             role="dialog"
             aria-label={content === 'survey' ? 'Quick product survey' : 'Tabularis quick promo'}
         >
-            <button type="button" className={styles.surveyClose} onClick={dismiss} aria-label="Dismiss">
-                ×
-            </button>
+            <CloseButton onClick={dismiss} size="sm" label="Dismiss" className={styles.surveyClose} />
 
             {content === 'survey' && <SurveyForm source="popup" />}
 
@@ -144,47 +146,32 @@ export function EngagementPrompt() {
                     <p className={styles.promoCtaText}>
                         Enjoying Tabularis? A star on GitHub helps more developers discover it.
                     </p>
-                    <a
+                    <Button
                         href={SOCIAL_URLS.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
                         className={styles.promoCtaBtn}
                         onClick={() => trackEvent(EVENT_CATEGORY.star, 'click')}
                     >
+                        <StarIcon size={16} aria-hidden="true" />
                         Star on GitHub · {formatStars(REPO_STARS)}
-                    </a>
+                    </Button>
                 </div>
             )}
 
             {content === 'download' && (
                 <div className={styles.promoCta}>
                     <span className={styles.promoCtaIcon}>
-                        <svg
-                            width="22"
-                            height="22"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            aria-hidden="true"
-                        >
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                            <polyline points="7 10 12 15 17 10" />
-                            <line x1="12" y1="15" x2="12" y2="3" />
-                        </svg>
+                        <Image src="/img/brand/tabularis-icon-color.svg" alt="" width={40} height={40} />
                     </span>
                     <p className={styles.promoCtaText}>
                         Haven&apos;t tried Tabularis yet? It&apos;s free to download for your platform.
                     </p>
-                    <Link
+                    <Button
                         href="/download"
                         className={styles.promoCtaBtn}
                         onClick={() => trackEvent(EVENT_CATEGORY.download, 'click')}
                     >
                         Download for free
-                    </Link>
+                    </Button>
                 </div>
             )}
         </div>

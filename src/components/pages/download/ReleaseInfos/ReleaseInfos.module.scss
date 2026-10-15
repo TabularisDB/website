@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.25rem;
+    gap: var(--space-5);
 }
 
 .iconTile {
@@ -13,7 +13,7 @@
     --size: 6rem;
     width: var(--size);
     height: var(--size);
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     border-radius: var(--radius-lg);
     background-color: #0f172a;
     overflow: hidden;
@@ -29,7 +29,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .version {
@@ -41,7 +41,7 @@
 .sub {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: var(--space-4);
     font-size: 0.95rem;
     color: var(--color-text-secondary);
 }
@@ -52,7 +52,7 @@
     font-weight: 500;
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-1);
     font-size: 0.9rem;
-    margin-top: 0.5rem;
+    margin-top: var(--space-2);
 }

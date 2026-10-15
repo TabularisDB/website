@@ -1,14 +1,14 @@
 .resources {
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: var(--space-16);
     width: 100%;
 }
 
 .group {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: var(--space-6);
 }
 
 .sectionTitle {
@@ -21,9 +21,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    padding-top: 2.5rem;
-    border-top: 0.1rem solid var(--color-border);
+    gap: var(--space-4);
+    padding-top: var(--space-10);
+    border-top: var(--border);
 }
 
 .followLabel {
@@ -39,15 +39,15 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .followPill {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    border: 0.1rem solid var(--color-border);
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    border: var(--border);
     border-radius: var(--radius-full);
     color: var(--color-text-secondary);
     font-size: 0.9rem;

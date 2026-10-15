@@ -1,49 +1,14 @@
-.callout {
-    --corner-size: 0.6rem;
-    --corner: linear-gradient(var(--color-border), var(--color-border));
-    --corner-fill: linear-gradient(var(--color-bg), var(--color-bg));
-    --dash-width: 0.1rem;
-    --dash: var(--color-border);
-    --corner-offset: 0.05rem;
+@use '../../../styles/mixins' as *;
 
-    position: relative;
+.callout {
+    @include callout-frame;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
-    padding: 3rem 1.5rem;
-    background:
-        repeating-linear-gradient(90deg, var(--dash) 0 6px, transparent 6px 12px) top / 100% var(--dash-width) no-repeat,
-        repeating-linear-gradient(90deg, var(--dash) 0 6px, transparent 6px 12px) bottom / 100% var(--dash-width)
-            no-repeat,
-        repeating-linear-gradient(180deg, var(--dash) 0 6px, transparent 6px 12px) left / var(--dash-width) 100%
-            no-repeat,
-        repeating-linear-gradient(180deg, var(--dash) 0 6px, transparent 6px 12px) right / var(--dash-width) 100%
-            no-repeat;
+    gap: var(--space-2);
+    padding: var(--space-12) var(--space-6);
     text-align: center;
-
-    &::before,
-    &::after {
-        content: '';
-        position: absolute;
-        left: calc((var(--dash-width) - var(--corner-size)) / 2 + var(--corner-offset));
-        right: calc((var(--dash-width) - var(--corner-size)) / 2 + var(--corner-offset));
-        height: var(--corner-size);
-        background:
-            var(--corner) left / var(--corner-size) 100% no-repeat,
-            var(--corner) right / var(--corner-size) 100% no-repeat,
-            var(--corner-fill) left / var(--corner-size) 100% no-repeat,
-            var(--corner-fill) right / var(--corner-size) 100% no-repeat;
-        pointer-events: none;
-    }
-
-    &::before {
-        top: calc((var(--dash-width) - var(--corner-size)) / 2 + var(--corner-offset));
-    }
-
-    &::after {
-        bottom: calc((var(--dash-width) - var(--corner-size)) / 2 + var(--corner-offset));
-    }
 }
 
 .title {
@@ -52,7 +17,7 @@
 }
 
 .text {
-    max-width: 600px;
+    max-width: 640px;
     color: var(--color-text-secondary);
     line-height: 1.5;
 
@@ -65,8 +30,12 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.75rem;
-    margin-top: 1rem;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+
+    &:first-child {
+        margin-top: 0;
+    }
 
     svg {
         width: 1rem;

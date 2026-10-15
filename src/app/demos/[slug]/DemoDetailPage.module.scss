@@ -5,14 +5,14 @@
 }
 
 .pageHeader {
-    margin-top: 1rem;
+    margin-top: var(--space-4);
 }
 
 .videoDemoPlayer {
-    border: 0.1rem solid var(--color-border);
-    max-width: 900px;
+    border: var(--border);
+    max-width: var(--max-width-md);
     margin-inline: auto;
     border-radius: var(--radius-md);
     overflow: hidden;
-    margin-block: 3rem;
+    margin-block: var(--space-12);
 }

@@ -2,9 +2,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    gap: var(--space-6);
     width: 100%;
-    padding-bottom: 5rem;
+    padding-bottom: var(--space-20);
 }
 
 .releaseInfos {
@@ -21,13 +21,13 @@
 
 .warning {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--space-2);
     font-size: 0.85rem;
     line-height: 1.5;
     color: var(--color-text-secondary);
-    margin-top: 1.5rem;
-    border-top: 0.1rem solid var(--color-border);
-    padding-top: 1rem;
+    margin-top: var(--space-6);
+    border-top: var(--border);
+    padding-top: var(--space-4);
     font-style: italic;
 }
 
@@ -35,8 +35,8 @@
     display: grid;
     grid-template-columns: 1fr 600px;
     width: 100%;
-    margin-top: 2rem;
-    gap: 2rem;
+    margin-top: var(--space-8);
+    gap: var(--space-8);
 
     @media (max-width: 800px) {
         grid-template-columns: 1fr;
@@ -50,24 +50,24 @@
 .platformList {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: var(--space-12);
 }
 
 .platformSection {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: var(--space-6);
 }
 
 .platformHeading {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: var(--space-3);
     font-size: 1rem;
     font-weight: 500;
     color: var(--color-text-primary);
-    padding: 0 0 1rem 0.5rem;
-    border-bottom: 0.1rem solid var(--color-border);
+    padding: 0 0 var(--space-4) var(--space-2);
+    border-bottom: var(--border);
 
     svg {
         width: 1.375rem;
@@ -76,7 +76,7 @@
 }
 
 .detectedBadge {
-    padding: 0.25rem;
+    padding: var(--space-1);
     color: var(--color-accent-teal);
     font-size: 0.7rem;
     font-weight: 600;

@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client';
-import {useState, useEffect} from 'react';
-import Link from 'next/link';
-import styles from './CookieConsent.module.scss';
 import {Button} from '@/components/ui/Button/Button';
-import {ArrowRight, CheckIcon, XIcon} from 'lucide-react';
+import Link from 'next/link';
+import {useEffect, useState} from 'react';
+import styles from './CookieConsent.module.scss';
 
 type CookiePrefs = {
     necessary: true;
@@ -57,10 +56,12 @@ export function CookieConsent() {
     const [measurement, setMeasurement] = useState(false);
     const [marketing, setMarketing] = useState(false);
     const [showDetailedView, setShowDetailedView] = useState(false);
+    const [hasChoice, setHasChoice] = useState(false);
 
     useEffect(() => {
         const raw = localStorage.getItem(STORAGE_KEY);
         setShowDetailedView(!!raw);
+        setHasChoice(!!raw);
 
         if (!raw) {
             initMatomo(false);
@@ -80,6 +81,7 @@ export function CookieConsent() {
         function handleManage() {
             const raw = localStorage.getItem(STORAGE_KEY);
             setShowDetailedView(!!raw);
+            setHasChoice(!!raw);
 
             if (raw) {
                 try {
@@ -107,7 +109,14 @@ export function CookieConsent() {
         setMeasurement(measurementVal);
         setMarketing(marketingVal);
         setVisible(false);
+        setHasChoice(true);
         initMatomo(measurementVal);
+    }
+
+    function handleTextButton() {
+        if (!showDetailedView) setShowDetailedView(true);
+        else if (hasChoice) setVisible(false);
+        else setShowDetailedView(false);
     }
 
     if (!visible) return null;
@@ -161,30 +170,34 @@ export function CookieConsent() {
 
             <div className={styles.actions}>
                 {showDetailedView ? (
-                    <Button className={styles.button} onClick={() => save(measurement, marketing)}>
-                        Save preferences <CheckIcon size={14} />
+                    <Button size="sm" className={styles.button} onClick={() => save(measurement, marketing)}>
+                        Save preferences
                     </Button>
                 ) : (
                     <>
-                        <Button className={styles.button} onClick={() => save(true, true)}>
-                            Yes <CheckIcon size={14} />
+                        <Button
+                            variant="secondary"
+                            size="sm"
+                            className={styles.button}
+                            onClick={() => save(false, false)}
+                        >
+                            No
                         </Button>
-                        <Button className={styles.button} onClick={() => save(false, false)}>
-                            No <XIcon size={14} />
+                        <Button
+                            variant="secondary"
+                            size="sm"
+                            className={styles.button}
+                            onClick={() => save(true, true)}
+                        >
+                            Yes
                         </Button>
                     </>
                 )}
             </div>
 
-            {showDetailedView ? (
-                <button type="button" className={styles.closeButton} onClick={() => setVisible(false)}>
-                    Close <XIcon size={14} />
-                </button>
-            ) : (
-                <button type="button" className={styles.customizeButton} onClick={() => setShowDetailedView(true)}>
-                    Customize <ArrowRight size={14} />
-                </button>
-            )}
+            <button type="button" className={styles.textButton} onClick={handleTextButton}>
+                {!showDetailedView ? 'Customize' : hasChoice ? 'Close' : 'Back'}
+            </button>
         </div>
     );
 }

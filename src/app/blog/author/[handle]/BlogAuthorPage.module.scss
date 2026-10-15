@@ -1,22 +1,20 @@
 .layout {
     display: flex;
     flex-direction: column;
-    max-width: 72rem;
-    margin: 0 auto;
 }
 
 .header {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
-    padding-bottom: 3rem;
-    border-bottom: 0.1rem solid var(--color-border);
-    margin-block: 1rem 3rem;
+    gap: var(--space-5);
+    padding-bottom: var(--space-12);
+    border-bottom: var(--border);
+    margin-block: var(--space-4) var(--space-12);
 
     @media (max-width: 640px) {
         flex-direction: column;
         align-items: flex-start;
-        gap: 1rem;
+        gap: var(--space-4);
     }
 }
 
@@ -47,8 +45,8 @@
 .meta {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.25rem;
+    gap: var(--space-2);
+    margin-top: var(--space-1);
 }
 
 .github {

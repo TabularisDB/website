@@ -1,5 +1,5 @@
 .github {
-    padding-inline: 1.25rem;
+    padding-inline: var(--space-5);
 
     & svg {
         --size: 1.25rem;
@@ -9,7 +9,7 @@
     }
 
     .divider {
-        margin-inline: 0.25rem;
+        margin-inline: var(--space-1);
     }
 }
 
@@ -17,7 +17,7 @@
     color: var(--color-star);
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-1);
 
     & svg {
         --size: 1rem;

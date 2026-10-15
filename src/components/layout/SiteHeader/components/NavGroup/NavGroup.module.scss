@@ -20,7 +20,7 @@
     align-items: center;
     justify-content: center;
     gap: 0.35rem;
-    padding: 0.5rem 0.25rem 0.5rem 0.75rem;
+    padding: var(--space-2) var(--space-1) var(--space-2) var(--space-3);
     color: var(--color-text-secondary);
     font-weight: 500;
     font-size: 0.9rem;

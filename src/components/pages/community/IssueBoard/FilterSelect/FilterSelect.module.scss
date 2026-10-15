@@ -8,8 +8,8 @@
     align-items: center;
     gap: 0.45rem;
     width: 100%;
-    padding: 0.65rem 2.25rem 0.65rem 0.75rem;
-    border: 0.1rem solid var(--color-border);
+    padding: 0.65rem 2.25rem 0.65rem var(--space-3);
+    border: var(--border);
     border-radius: var(--radius-md);
     background-color: transparent;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23949eae' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
@@ -43,7 +43,7 @@
     flex-shrink: 0;
     width: 0.55rem;
     height: 0.55rem;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
 }
 
 .panel {
@@ -53,7 +53,7 @@
     left: 0;
     width: max(100%, 18rem);
     max-width: calc(100vw - 2rem);
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     border-radius: var(--radius-md);
     background: var(--color-surface);
     box-shadow: 0 0.75rem 2rem rgb(var(--rgb-shadow) / calc(0.35 * var(--shadow-scale)));
@@ -63,9 +63,9 @@
 .search {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.6rem 0.75rem;
-    border-bottom: 0.1rem solid var(--color-border);
+    gap: var(--space-2);
+    padding: 0.6rem var(--space-3);
+    border-bottom: var(--border);
 
     svg {
         flex-shrink: 0;
@@ -117,7 +117,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0.75rem;
+    gap: var(--space-3);
     padding: 0.45rem 0.6rem;
     border-radius: var(--radius-sm);
     color: var(--color-text-secondary);
@@ -151,7 +151,7 @@
 }
 
 .empty {
-    padding: 0.75rem 0.6rem;
+    padding: var(--space-3) 0.6rem;
     color: var(--color-text-muted);
     font-size: 0.85rem;
 }

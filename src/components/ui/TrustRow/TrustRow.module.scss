@@ -2,8 +2,8 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 0.25rem;
+    gap: var(--space-3);
+    margin-top: var(--space-1);
     font-size: 0.95rem;
     font-weight: 500;
 
@@ -34,7 +34,7 @@
 .featuredOn {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     color: var(--color-text-secondary);
 }
 

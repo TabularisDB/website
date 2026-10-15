@@ -13,6 +13,7 @@ import {SOCIAL_URLS} from '@/lib/social';
 import {ArrowRightIcon, GitBranchIcon, HandCoinsIcon, PackageCheckIcon, TargetIcon} from 'lucide-react';
 import Link from 'next/link';
 import styles from './BountyBoardPage.module.scss';
+import {getAllPlugins} from '@/lib/plugins';
 
 /** The bounty board; `bountyId` opens that bounty's modal on load (the `/plugins/bounties/<slug>` pages). */
 export function BountyBoardPage({bountyId}: {bountyId?: string}) {
@@ -45,7 +46,7 @@ export function BountyBoardPage({bountyId}: {bountyId?: string}) {
 
                 <Link href="/plugins" className={styles.shipped}>
                     <PackageCheckIcon aria-hidden="true" />
-                    {stats.shippedCount} plugins already shipped from this board
+                    {getAllPlugins().length} plugins already shipped from this board
                     <ArrowRightIcon aria-hidden="true" />
                 </Link>
 

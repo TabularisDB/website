@@ -1,5 +1,5 @@
 .downloadAll {
-    margin-top: 1rem;
+    margin-top: var(--space-4);
 
     svg {
         width: 1rem;
@@ -10,18 +10,18 @@
 .categoriesWrapper {
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: var(--space-16);
 }
 
 .category {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-4);
 }
 
 .grid {
     display: grid;
-    gap: 0.75rem;
+    gap: var(--space-3);
 }
 
 .assetsGrid {
@@ -55,7 +55,7 @@
 .card {
     display: flex;
     flex-direction: column;
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
 }
 
 .preview {
@@ -63,9 +63,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
+    gap: var(--space-4);
     height: 13rem;
-    padding: 2rem;
+    padding: var(--space-8);
 
     &[data-tone='dark'] {
         background-color: #030712;
@@ -121,9 +121,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    padding: 1rem 1.25rem;
-    border-top: 0.1rem solid var(--color-border);
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    border-top: var(--border);
 }
 
 .cardText {

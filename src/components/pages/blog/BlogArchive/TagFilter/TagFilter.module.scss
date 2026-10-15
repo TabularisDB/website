@@ -13,8 +13,8 @@
 }
 
 .tag {
-    padding: 0.5rem 0.875rem;
-    border: 0.1rem solid var(--color-border);
+    padding: var(--space-2) 0.875rem;
+    border: var(--border);
     border-radius: var(--radius-full);
     font-size: 0.9rem;
     font-weight: 500;

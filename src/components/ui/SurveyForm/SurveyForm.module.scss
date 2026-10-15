@@ -2,13 +2,13 @@
     display: flex;
     justify-content: center;
     gap: 0.4rem;
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-4);
 }
 
 .dot {
     width: 0.4rem;
     height: 0.4rem;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     background: var(--color-border);
     transition: background-color 0.2s ease;
 }
@@ -20,7 +20,7 @@
 .form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-4);
 }
 
 .fieldset {
@@ -29,13 +29,13 @@
     border: none;
     margin: 0;
     padding: 0;
-    gap: 1rem;
+    gap: var(--space-4);
 }
 
 .field {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .question {
@@ -51,8 +51,8 @@
 .options {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    margin-top: 1rem;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
 }
 
 .option {
@@ -61,7 +61,7 @@
     gap: 0.6rem;
     padding: 0.6rem 0.85rem;
     border-radius: var(--radius-md);
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     font-size: 0.9rem;
     color: var(--color-text-secondary);
     cursor: pointer;
@@ -94,11 +94,11 @@
     flex-shrink: 0;
     width: 1.1rem;
     height: 1.1rem;
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
 }
 
 .indicatorRadio {
-    border-radius: 50%;
+    border-radius: var(--radius-full);
 
     &::after {
         content: '';
@@ -107,7 +107,7 @@
         left: 50%;
         width: 0.5rem;
         height: 0.5rem;
-        border-radius: 50%;
+        border-radius: var(--radius-full);
         background: var(--color-accent-teal);
         transform: translate(-50%, -50%) scale(0);
     }
@@ -151,7 +151,7 @@
     width: 100%;
     padding: 0.6rem 0.85rem;
     border-radius: var(--radius-md);
-    border: 0.1rem solid var(--color-border);
+    border: var(--border);
     background: var(--color-surface-raised);
     color: var(--color-text-primary);
     font-size: 0.9rem;
@@ -171,7 +171,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     font-size: 0.85rem;
     color: var(--color-text-secondary);
     cursor: pointer;
@@ -207,22 +207,17 @@
 .actions {
     display: flex;
     justify-content: flex-end;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .button {
     width: 100%;
-
-    &:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
 }
 
 .credit {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     justify-content: center;
     font-size: 0.8rem;
     color: var(--color-text-secondary);

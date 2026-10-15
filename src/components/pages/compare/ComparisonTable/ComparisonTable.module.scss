@@ -1,12 +1,12 @@
 .wrapper {
-    max-width: 1000px;
+    max-width: var(--max-width-md);
     width: 100%;
     margin-inline: auto;
-    margin-block: 5rem;
+    margin-block: var(--space-20);
 
     @media (max-width: 767px) {
         overflow-x: auto;
-        margin-block: 2.5rem;
+        margin-block: var(--space-10);
     }
 }
 
@@ -15,14 +15,14 @@
     table-layout: fixed;
     border-collapse: separate;
     border-spacing: 0;
-    border-top: 0.1rem solid var(--color-border);
-    border-left: 0.1rem solid var(--color-border);
+    border-top: var(--border);
+    border-left: var(--border);
 
     th,
     td {
-        border-right: 0.1rem solid var(--color-border);
-        border-bottom: 0.1rem solid var(--color-border);
-        padding: 1.5rem;
+        border-right: var(--border);
+        border-bottom: var(--border);
+        padding: var(--space-6);
         text-align: center;
         vertical-align: middle;
         word-break: break-word;
@@ -45,7 +45,7 @@
 
         th,
         td {
-            padding: 1rem;
+            padding: var(--space-4);
         }
     }
 }
@@ -65,7 +65,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .logo {
