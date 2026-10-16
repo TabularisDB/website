@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="730" viewBox="0 0 1200 730" role="img" aria-labelledby="title desc" font-family="DejaVu Sans, sans-serif">
+<title id="title">Downloads of this week's builds</title><desc id="desc">About 5,100 downloads, as of October 16, 2026, of builds published October 7 to 13: v0.27.0 2,475, v0.28.0 2,256, six nightly builds 360. By operating system: macOS 53%, Windows 27%, Linux 20%.</desc>
+<rect x="0.0" y="0.0" width="1200.0" height="730.0" rx="18" fill="#111214"/>
+<text x="40.0" y="43.0" font-size="15" fill="#b6bdc9" font-weight="600" text-anchor="start">TABULARIS  /  OCTOBER 7–13, 2026</text>
+<text x="40.0" y="91.0" font-size="31" fill="#f5f5f7" font-weight="650" text-anchor="start">~5,100 downloads and counting</text>
+<text x="40.0" y="126.0" font-size="21" fill="#b6bdc9" font-weight="400" text-anchor="start">Every one of them a build that didn't exist a week earlier</text>
+<text x="40.0" y="182.0" font-size="15" fill="#b6bdc9" font-weight="600" text-anchor="start">BY BUILD</text>
+<text x="40.0" y="217.0" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="start">v0.27.0</text>
+<text x="40.0" y="239.0" font-size="15" fill="#b6bdc9" font-weight="400" text-anchor="start">released Oct 8</text>
+<path d="M330,202 h669.6000 q4,0 4,4 v26 q0,4 -4,4 h-669.6000 z" fill="#619cff"/>
+<text x="1017.6" y="226.0" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="start">2,475</text>
+<text x="40.0" y="279.0" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="start">v0.28.0</text>
+<text x="40.0" y="301.0" font-size="15" fill="#b6bdc9" font-weight="400" text-anchor="start">released Oct 13</text>
+<path d="M330,264 h609.9966 q4,0 4,4 v26 q0,4 -4,4 h-609.9966 z" fill="#619cff"/>
+<text x="958.0" y="288.0" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="start">2,256</text>
+<text x="40.0" y="341.0" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="start">6 nightly builds</text>
+<text x="40.0" y="363.0" font-size="15" fill="#b6bdc9" font-weight="400" text-anchor="start">Oct 8–13</text>
+<path d="M330,326 h93.9782 q4,0 4,4 v26 q0,4 -4,4 h-93.9782 z" fill="#619cff"/>
+<text x="442.0" y="350.0" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="start">360</text>
+<text x="40.0" y="420.0" font-size="15" fill="#b6bdc9" font-weight="600" text-anchor="start">BY OPERATING SYSTEM</text>
+<text x="40.0" y="463.0" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="start">macOS</text>
+<path d="M330,440 h579.2809 q4,0 4,4 v26 q0,4 -4,4 h-579.2809 z" fill="#61d6b0"/>
+<text x="927.3" y="464.0" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="start">53%</text>
+<text x="40.0" y="525.0" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="start">Windows</text>
+<path d="M330,502 h293.1431 q4,0 4,4 v26 q0,4 -4,4 h-293.1431 z" fill="#61d6b0"/>
+<text x="641.1" y="526.0" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="start">27%</text>
+<text x="40.0" y="587.0" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="start">Linux</text>
+<path d="M330,564 h216.1060 q4,0 4,4 v26 q0,4 -4,4 h-216.1060 z" fill="#61d6b0"/>
+<text x="564.1" y="588.0" font-size="19" fill="#f5f5f7" font-weight="600" text-anchor="start">20%</text>
+<line x1="40.0" y1="624.0" x2="1160.0" y2="624.0" stroke="#30343c" stroke-width="1.5" stroke-dasharray=""/>
+<text x="40.0" y="661.0" font-size="17" fill="#b6bdc9" font-weight="400" text-anchor="start">Source: GitHub release asset download counts · TabularisDB/tabularis</text>
+<text x="40.0" y="690.0" font-size="17" fill="#b6bdc9" font-weight="400" text-anchor="start">Counts as of October 16 · installers and update bundles only · Apple Silicon alone: 2,212.</text>
+</svg>

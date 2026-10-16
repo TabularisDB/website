@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc" font-family="DejaVu Sans, sans-serif">
+<title id="title">Repository activity per day</title><desc id="desc">TabularisDB/tabularis, October 7 to 13, 2026. New stars per day: 8, 6, 8, 23, 23, 10, 9 (87 total). Page views: 486, 525, 1035, 969, 563, 719, 515 (4,812). Git clones: 337, 1319, 1262, 4866, 1196, 898, 766 (10,644).</desc>
+<rect x="0.0" y="0.0" width="1200.0" height="640.0" rx="18" fill="#111214"/>
+<text x="40.0" y="43.0" font-size="15" fill="#b6bdc9" font-weight="600" text-anchor="start">TABULARIS  /  OCTOBER 7–13, 2026</text>
+<text x="40.0" y="91.0" font-size="31" fill="#f5f5f7" font-weight="650" text-anchor="start">The repo was on fire</text>
+<text x="40.0" y="126.0" font-size="21" fill="#b6bdc9" font-weight="400" text-anchor="start">Stars peaked over the weekend, clones on October 10</text>
+<text x="40.0" y="176.0" font-size="15" fill="#b6bdc9" font-weight="600" text-anchor="start">NEW STARS</text>
+<text x="40.0" y="208.0" font-size="26" fill="#f5f5f7" font-weight="650" text-anchor="start">+87</text>
+<rect x="190.3" y="224.0" width="94.9" height="286.0" rx="8" fill="#1c232b"/>
+<line x1="40.0" y1="470.0" x2="386.0" y2="470.0" stroke="#30343c" stroke-width="1.5" stroke-dasharray=""/>
+<path d="M48.71428571428572,470.0 v-72.8 q0,-4 4,-4 h24 q4,0 4,4 v72.8 z" fill="#619cff"/>
+<text x="64.7" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">7</text>
+<path d="M98.14285714285714,470.0 v-53.6 q0,-4 4,-4 h24 q4,0 4,4 v53.6 z" fill="#619cff"/>
+<text x="114.1" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">8</text>
+<path d="M147.57142857142858,470.0 v-72.8 q0,-4 4,-4 h24 q4,0 4,4 v72.8 z" fill="#619cff"/>
+<text x="163.6" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">9</text>
+<path d="M197.0,470.0 v-216.8 q0,-4 4,-4 h24 q4,0 4,4 v216.8 z" fill="#619cff"/>
+<text x="213.0" y="239.2" font-size="17" fill="#f5f5f7" font-weight="600" text-anchor="middle">23</text>
+<text x="213.0" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">10</text>
+<path d="M246.42857142857144,470.0 v-216.8 q0,-4 4,-4 h24 q4,0 4,4 v216.8 z" fill="#619cff"/>
+<text x="262.4" y="239.2" font-size="17" fill="#f5f5f7" font-weight="600" text-anchor="middle">23</text>
+<text x="262.4" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">11</text>
+<path d="M295.8571428571429,470.0 v-92.0 q0,-4 4,-4 h24 q4,0 4,4 v92.0 z" fill="#619cff"/>
+<text x="311.9" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">12</text>
+<path d="M345.2857142857143,470.0 v-82.4 q0,-4 4,-4 h24 q4,0 4,4 v82.4 z" fill="#619cff"/>
+<text x="361.3" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">13</text>
+<text x="427.0" y="176.0" font-size="15" fill="#b6bdc9" font-weight="600" text-anchor="start">PAGE VIEWS</text>
+<text x="427.0" y="208.0" font-size="26" fill="#f5f5f7" font-weight="650" text-anchor="start">4,812</text>
+<rect x="577.3" y="224.0" width="94.9" height="286.0" rx="8" fill="#1c232b"/>
+<line x1="427.0" y1="470.0" x2="773.0" y2="470.0" stroke="#30343c" stroke-width="1.5" stroke-dasharray=""/>
+<path d="M435.7142857142857,470.0 v-102.03636363636363 q0,-4 4,-4 h24 q4,0 4,4 v102.03636363636363 z" fill="#619cff"/>
+<text x="451.7" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">7</text>
+<path d="M485.1428571428571,470.0 v-110.54545454545455 q0,-4 4,-4 h24 q4,0 4,4 v110.54545454545455 z" fill="#619cff"/>
+<text x="501.1" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">8</text>
+<path d="M534.5714285714286,470.0 v-221.8181818181818 q0,-4 4,-4 h24 q4,0 4,4 v221.8181818181818 z" fill="#619cff"/>
+<text x="550.6" y="234.2" font-size="17" fill="#f5f5f7" font-weight="600" text-anchor="middle">1,035</text>
+<text x="550.6" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">9</text>
+<path d="M584.0,470.0 v-207.4181818181818 q0,-4 4,-4 h24 q4,0 4,4 v207.4181818181818 z" fill="#619cff"/>
+<text x="600.0" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">10</text>
+<path d="M633.4285714285714,470.0 v-118.83636363636364 q0,-4 4,-4 h24 q4,0 4,4 v118.83636363636364 z" fill="#619cff"/>
+<text x="649.4" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">11</text>
+<path d="M682.8571428571429,470.0 v-152.87272727272727 q0,-4 4,-4 h24 q4,0 4,4 v152.87272727272727 z" fill="#619cff"/>
+<text x="698.9" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">12</text>
+<path d="M732.2857142857143,470.0 v-108.36363636363636 q0,-4 4,-4 h24 q4,0 4,4 v108.36363636363636 z" fill="#619cff"/>
+<text x="748.3" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">13</text>
+<text x="814.0" y="176.0" font-size="15" fill="#b6bdc9" font-weight="600" text-anchor="start">GIT CLONES</text>
+<text x="814.0" y="208.0" font-size="26" fill="#f5f5f7" font-weight="650" text-anchor="start">10,644</text>
+<rect x="964.3" y="224.0" width="94.9" height="286.0" rx="8" fill="#1c232b"/>
+<line x1="814.0" y1="470.0" x2="1160.0" y2="470.0" stroke="#30343c" stroke-width="1.5" stroke-dasharray=""/>
+<path d="M822.7142857142857,470.0 v-11.553846153846154 q0,-4 4,-4 h24 q4,0 4,4 v11.553846153846154 z" fill="#619cff"/>
+<text x="838.7" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">7</text>
+<path d="M872.1428571428571,470.0 v-56.87692307692308 q0,-4 4,-4 h24 q4,0 4,4 v56.87692307692308 z" fill="#619cff"/>
+<text x="888.1" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">8</text>
+<path d="M921.5714285714286,470.0 v-54.246153846153845 q0,-4 4,-4 h24 q4,0 4,4 v54.246153846153845 z" fill="#619cff"/>
+<text x="937.6" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">9</text>
+<path d="M971.0,470.0 v-220.58461538461538 q0,-4 4,-4 h24 q4,0 4,4 v220.58461538461538 z" fill="#619cff"/>
+<text x="987.0" y="235.4" font-size="17" fill="#f5f5f7" font-weight="600" text-anchor="middle">4,866</text>
+<text x="987.0" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">10</text>
+<path d="M1020.4285714285716,470.0 v-51.2 q0,-4 4,-4 h24 q4,0 4,4 v51.2 z" fill="#619cff"/>
+<text x="1036.4" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">11</text>
+<path d="M1069.857142857143,470.0 v-37.44615384615385 q0,-4 4,-4 h24 q4,0 4,4 v37.44615384615385 z" fill="#619cff"/>
+<text x="1085.9" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">12</text>
+<path d="M1119.2857142857143,470.0 v-31.353846153846153 q0,-4 4,-4 h24 q4,0 4,4 v31.353846153846153 z" fill="#619cff"/>
+<text x="1135.3" y="498.0" font-size="16" fill="#b6bdc9" font-weight="400" text-anchor="middle">13</text>
+<text x="1160.0" y="524.0" font-size="15" fill="#b6bdc9" font-weight="400" text-anchor="end">Oct 10–11 shaded: weekend</text>
+<line x1="40.0" y1="534.0" x2="1160.0" y2="534.0" stroke="#30343c" stroke-width="1.5" stroke-dasharray=""/>
+<text x="40.0" y="571.0" font-size="17" fill="#b6bdc9" font-weight="400" text-anchor="start">Source: GitHub stargazers and traffic APIs · TabularisDB/tabularis · Days in UTC</text>
+</svg>

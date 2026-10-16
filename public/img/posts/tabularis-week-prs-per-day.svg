@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc" font-family="DejaVu Sans, sans-serif">
+<title id="title">Pull requests opened and merged per day</title><desc id="desc">TabularisDB/tabularis, October 7 to 13, 2026. Opened: 7, 20, 18, 18, 18, 14, 26 (121 total). Merged by merge date: 6, 9, 17, 10, 18, 23, 7 (90 total).</desc>
+<rect x="0.0" y="0.0" width="1200.0" height="640.0" rx="18" fill="#111214"/>
+<text x="40.0" y="43.0" font-size="15" fill="#b6bdc9" font-weight="600" text-anchor="start">TABULARIS  /  OCTOBER 7–13, 2026</text>
+<text x="40.0" y="91.0" font-size="31" fill="#f5f5f7" font-weight="650" text-anchor="start">A steady flood, every single day</text>
+<text x="40.0" y="126.0" font-size="21" fill="#b6bdc9" font-weight="400" text-anchor="start">121 pull requests opened and 90 merged in seven days</text>
+<rect x="40.0" y="151.0" width="16.0" height="16.0" rx="0" fill="#619cff"/>
+<text x="65.0" y="165.0" font-size="18" fill="#f5f5f7" font-weight="400" text-anchor="start">Opened</text>
+<rect x="168.0" y="151.0" width="16.0" height="16.0" rx="0" fill="#61d6b0"/>
+<text x="193.0" y="165.0" font-size="18" fill="#f5f5f7" font-weight="400" text-anchor="start">Merged</text>
+<line x1="98.0" y1="482.0" x2="1142.0" y2="482.0" stroke="#30343c" stroke-width="1.5" stroke-dasharray=""/>
+<text x="82.0" y="488.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="end">0</text>
+<line x1="98.0" y1="430.0" x2="1142.0" y2="430.0" stroke="#30343c" stroke-width="1.5" stroke-dasharray=""/>
+<text x="82.0" y="436.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="end">5</text>
+<line x1="98.0" y1="378.0" x2="1142.0" y2="378.0" stroke="#30343c" stroke-width="1.5" stroke-dasharray=""/>
+<text x="82.0" y="384.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="end">10</text>
+<line x1="98.0" y1="326.0" x2="1142.0" y2="326.0" stroke="#30343c" stroke-width="1.5" stroke-dasharray=""/>
+<text x="82.0" y="332.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="end">15</text>
+<line x1="98.0" y1="274.0" x2="1142.0" y2="274.0" stroke="#30343c" stroke-width="1.5" stroke-dasharray=""/>
+<text x="82.0" y="280.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="end">20</text>
+<line x1="98.0" y1="222.0" x2="1142.0" y2="222.0" stroke="#30343c" stroke-width="1.5" stroke-dasharray=""/>
+<text x="82.0" y="228.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="end">25</text>
+<path d="M125.57142857142856,482.0 v-68.8 q0,-4 4,-4 h38 q4,0 4,4 v68.8 z" fill="#619cff"/>
+<text x="148.6" y="399.2" font-size="18" fill="#f5f5f7" font-weight="600" text-anchor="middle">7</text>
+<path d="M173.57142857142856,482.0 v-58.4 q0,-4 4,-4 h38 q4,0 4,4 v58.4 z" fill="#61d6b0"/>
+<text x="196.6" y="409.6" font-size="18" fill="#f5f5f7" font-weight="600" text-anchor="middle">6</text>
+<text x="172.6" y="515.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="middle">Wed 7</text>
+<path d="M274.7142857142857,482.0 v-204.0 q0,-4 4,-4 h38 q4,0 4,4 v204.0 z" fill="#619cff"/>
+<text x="297.7" y="264.0" font-size="18" fill="#f5f5f7" font-weight="600" text-anchor="middle">20</text>
+<path d="M322.7142857142857,482.0 v-89.6 q0,-4 4,-4 h38 q4,0 4,4 v89.6 z" fill="#61d6b0"/>
+<text x="345.7" y="378.4" font-size="18" fill="#f5f5f7" font-weight="600" text-anchor="middle">9</text>
+<text x="321.7" y="515.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="middle">Thu 8</text>
+<path d="M423.85714285714283,482.0 v-183.2 q0,-4 4,-4 h38 q4,0 4,4 v183.2 z" fill="#619cff"/>
+<text x="446.9" y="284.8" font-size="18" fill="#f5f5f7" font-weight="600" text-anchor="middle">18</text>
+<path d="M471.85714285714283,482.0 v-172.8 q0,-4 4,-4 h38 q4,0 4,4 v172.8 z" fill="#61d6b0"/>
+<text x="494.9" y="295.2" font-size="18" fill="#f5f5f7" font-weight="600" text-anchor="middle">17</text>
+<text x="470.9" y="515.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="middle">Fri 9</text>
+<path d="M573.0,482.0 v-183.2 q0,-4 4,-4 h38 q4,0 4,4 v183.2 z" fill="#619cff"/>
+<text x="596.0" y="284.8" font-size="18" fill="#f5f5f7" font-weight="600" text-anchor="middle">18</text>
+<path d="M621.0,482.0 v-100.0 q0,-4 4,-4 h38 q4,0 4,4 v100.0 z" fill="#61d6b0"/>
+<text x="644.0" y="368.0" font-size="18" fill="#f5f5f7" font-weight="600" text-anchor="middle">10</text>
+<text x="620.0" y="515.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="middle">Sat 10</text>
+<path d="M722.1428571428571,482.0 v-183.2 q0,-4 4,-4 h38 q4,0 4,4 v183.2 z" fill="#619cff"/>
+<text x="745.1" y="284.8" font-size="18" fill="#f5f5f7" font-weight="600" text-anchor="middle">18</text>
+<path d="M770.1428571428571,482.0 v-183.2 q0,-4 4,-4 h38 q4,0 4,4 v183.2 z" fill="#61d6b0"/>
+<text x="793.1" y="284.8" font-size="18" fill="#f5f5f7" font-weight="600" text-anchor="middle">18</text>
+<text x="769.1" y="515.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="middle">Sun 11</text>
+<path d="M871.2857142857142,482.0 v-141.6 q0,-4 4,-4 h38 q4,0 4,4 v141.6 z" fill="#619cff"/>
+<text x="894.3" y="326.4" font-size="18" fill="#f5f5f7" font-weight="600" text-anchor="middle">14</text>
+<path d="M919.2857142857142,482.0 v-235.2 q0,-4 4,-4 h38 q4,0 4,4 v235.2 z" fill="#61d6b0"/>
+<text x="942.3" y="232.8" font-size="18" fill="#f5f5f7" font-weight="600" text-anchor="middle">23</text>
+<text x="918.3" y="515.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="middle">Mon 12</text>
+<path d="M1020.4285714285716,482.0 v-266.4 q0,-4 4,-4 h38 q4,0 4,4 v266.4 z" fill="#619cff"/>
+<text x="1043.4" y="201.6" font-size="18" fill="#f5f5f7" font-weight="600" text-anchor="middle">26</text>
+<path d="M1068.4285714285716,482.0 v-68.8 q0,-4 4,-4 h38 q4,0 4,4 v68.8 z" fill="#61d6b0"/>
+<text x="1091.4" y="399.2" font-size="18" fill="#f5f5f7" font-weight="600" text-anchor="middle">7</text>
+<text x="1067.4" y="515.0" font-size="18" fill="#b6bdc9" font-weight="400" text-anchor="middle">Tue 13</text>
+<line x1="40.0" y1="534.0" x2="1160.0" y2="534.0" stroke="#30343c" stroke-width="1.5" stroke-dasharray=""/>
+<text x="40.0" y="571.0" font-size="17" fill="#b6bdc9" font-weight="400" text-anchor="start">Source: GitHub REST API · TabularisDB/tabularis · Days in UTC</text>
+<text x="40.0" y="600.0" font-size="17" fill="#b6bdc9" font-weight="400" text-anchor="start">Opened counts PRs created that day; merged counts PRs merged that day, whenever they were opened.</text>
+</svg>
