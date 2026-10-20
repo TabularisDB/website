@@ -17,7 +17,7 @@ The following drivers are registered at startup and available natively, with no 
 
 | Driver ID | Database | Default Port | Multi-database |
 | :--- | :--- | :--- | :--- |
-| `postgres` | PostgreSQL | 5432 | — (uses schemas) |
+| `postgres` | PostgreSQL | 5432 | Opt-in, database → schema (see [below](#multi-database-support-postgresql)) |
 | `mysql` | MySQL / MariaDB | 3306 | Yes |
 | `sqlite` | SQLite | *(file path)* | — (file-based) |
 
@@ -55,6 +55,8 @@ A search bar filters by name or host in real time.
 
 Double-click a card or row to connect immediately.
 
+When a connection fails to open, an error banner appears at the top of the page. Technical details are collapsed behind **Show details**, and since v0.29.0 a **Copy** button copies the complete error, technical details included, to the clipboard.
+
 Since v0.27.0 connections can be reordered within a group, in both views: drag a card or row onto another connection of the same group (or both ungrouped) and it takes that slot, with a dashed outline marking the target. The order is saved. Dropping onto a connection in a different group moves it there, at the end of that group. New, duplicated and imported connections sort after the ones you have ordered.
 
 With **Reopen Last Connections** (Settings → General, on by default), Tabularis reconnects at startup to the connections that were open when you last closed it.
@@ -77,6 +79,8 @@ When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`)
 | **SSH profile** | — | **Use Existing SSH Connection** picks a saved SSH profile; **Configure SSH Inline** defines the tunnel on this connection only |
 | **Allow SSH password/PIN prompt** | No | Lets the SSH tunnel prompt in-app for a key passphrase, security-key PIN, or password when it can't authenticate silently. See [SSH Tunneling → Interactive Authentication](/wiki/ssh-tunneling#interactive-authentication-passphrases--security-keys). |
 | **Startup script** | No | SQL run on every new pooled connection (see [Startup Script](#startup-script) below). |
+| **Pooler mode** | No | PostgreSQL only, since v0.29.0. Declares that the connection goes through PgBouncer in transaction or session mode (see [Pooler Mode](#pooler-mode-pgbouncer) below). |
+| **Browse multiple databases on this connection** | No | PostgreSQL only, since v0.29.0. Switches the connection to multi-database browsing (see [Multi-Database Support (PostgreSQL)](#multi-database-support-postgresql) below). |
 | **Kubernetes** | No | Tunnels the connection through a managed `kubectl port-forward`. Mutually exclusive with SSH and AWS SSM. See [Kubernetes Tunneling](/wiki/kubernetes-tunneling). |
 | **AWS SSM** | No | Since v0.25.0. Forwards the connection through an AWS Systems Manager Session Manager port-forwarding session opened with the AWS CLI. Takes a managed node id plus optional profile and region. Mutually exclusive with SSH and Kubernetes. See [AWS SSM Tunneling](/wiki/aws-ssm-tunneling). |
 | **CA Certificate** | No | Path to a PEM bundle to trust for TLS (PostgreSQL and MySQL/MariaDB). See [TLS & CA Certificates](#tls--ca-certificates) below. |
@@ -144,11 +148,21 @@ SELECT set_config('app.bypass_rls', 'on', false);
 
 applies to every subsequent query instead of randomly depending on which pooled connection you landed on. Any `SET` or session-setup statement works; multiple statements can be separated normally, and blank or whitespace-only scripts are skipped. The script is stored with the connection profile as non-secret configuration.
 
+### Pooler Mode (PgBouncer)
+
+Since v0.29.0, PostgreSQL connections have a **Pooler mode** field in the **Advanced** tab, with three options: **None (direct connection)**, **PgBouncer transaction** and **PgBouncer session**. Tabularis does not detect a pooler at runtime; the field is a declaration, stored as `pooler_mode` in the connection profile (omitted for direct connections) and passed to the driver.
+
+The [PostgreSQL plugin](https://github.com/TabularisDB/tabularis-postgresql-plugin) reads it: in transaction mode it skips its own named prepared statements, which a transaction-mode pooler can lose between two messages, and explains the errors that custom types can still trigger. With **PgBouncer transaction** selected, the form recommends setting `max_prepared_statements > 0` in `pgbouncer.ini` when the database uses custom types (enums, composites, extension types), so named statements survive connection reassignment. The deprecated built-in `postgres` driver ignores the field.
+
 ### SQLite
 
 For SQLite, provide the absolute path to the `.db` or `.sqlite` file using the file picker. There is no host, port, or authentication.
 
 You can also create the file from inside Tabularis: **New SQLite Database…** in the Connections menu and empty state, or the **+ New** button in the SQLite file picker inside the connection modal. Existing files are never overwritten, and `create_if_missing` stays disabled — a typo in a path cannot silently produce an empty database. A database created from the quick-create flow is auto-named and opened; created from the modal, it only fills in the path and leaves the usual Test/Save flow alone.
+
+### In-memory databases (plugin drivers)
+
+Since v0.29.0, a file-based plugin driver that declares the `in_memory` capability gets an **In-memory** button next to the file picker. It fills in the path `:memory:` and shows as pressed while that path is selected; **Test Connection** then skips the file existence check. The database lives in the plugin process: connections that use `:memory:` share it, and its data is lost when the plugin process stops. DuckDB is the first plugin to declare it. The built-in SQLite driver does not offer the button, because each pooled connection would get its own empty `:memory:` database.
 
 ### Testing before saving
 
@@ -345,6 +359,8 @@ MySQL and MariaDB allow a single connection to read and write across multiple da
 
 **Choose databases** is the explicit mode: click **Load Databases** to fetch every database visible to your user, check the ones you want, and save. The "select at least one database" save block only applies here. Narrowing an all-databases connection to a subset from the sidebar's manage popover persists that choice and exits all-databases mode.
 
+Since v0.29.0, **Choose databases** mode also has a **Default database** selector: new query tabs open on the database you pick there, even when another one comes first in the server's list. The default is stored as the first entry of the selection, so existing connections keep theirs. Reloading the database list preserves the order and deselections; removing the default from the selection makes the next selected database the default. **All databases** mode keeps its current behavior.
+
 An all-databases connection has no default schema, so it always issues database-qualified queries — including when the server happens to hold a single database.
 
 Each selected database appears as its own collapsible node in the Explorer sidebar. Expand a node to see its tables and views. Double-click a table to open it in the editor.
@@ -353,7 +369,7 @@ Cross-database references use fully qualified names (`database_name.table_name`)
 
 The connection format accepts either a plain string (`"mydb"`) or an array (`["db1", "db2", "db3"]`). Existing single-database connections continue to work without any changes.
 
-This feature applies only to drivers that support cross-database access from a single connection. SQLite (file-based) and PostgreSQL (schema-based) are unaffected.
+This flat database → table layout applies only to drivers that support cross-database access from a single connection. SQLite (file-based) is unaffected; PostgreSQL uses its own nested layout, described in [Multi-Database Support (PostgreSQL)](#multi-database-support-postgresql).
 
 ### Cleartext Password Plugin (MySQL bastions)
 
@@ -370,6 +386,21 @@ For MySQL/MariaDB on AWS RDS, enable **Use AWS IAM Authentication (RDS)** and pa
 ### PIPES_AS_CONCAT
 
 MySQL connections run with the `PIPES_AS_CONCAT` SQL mode by default (**Set PIPES_AS_CONCAT sql_mode on connect**), so `||` concatenates strings as in standard SQL. Servers that reject the setting, such as Vitess and PlanetScale, are detected and the mode is skipped automatically, so the option can stay enabled.
+
+## Multi-Database Support (PostgreSQL)
+
+Since v0.29.0 a PostgreSQL connection can browse several databases on the same server. It is opt-in: an existing connection with a single database name keeps the schema-only layout described below, and is not reclassified.
+
+1. In the connection form, check **Browse multiple databases on this connection**. The single **Database** field is cleared and the **Databases** tab opens.
+2. Pick a mode, as for MySQL: **All databases** loads every database on the server at connect time; **Choose databases** lets you load the list, check the databases you want and choose the **Default database**.
+
+Each database becomes a top-level node in the Explorer sidebar, with its own schema picker, and expands into its schemas and then their tables, views, routines and triggers. Everything available on a single-database connection works inside each node: create and drop tables, columns, indexes, foreign keys, views and triggers; run, edit and drop routines; open a console; open the [ER diagram](/wiki/er-diagram), whose window has a schema switcher; [dump and import](/wiki/dump-import). Every command is sent to the database you clicked, on the built-in driver and on the PostgreSQL plugin's RPC path. The command palette's object search covers the nested databases as well.
+
+Persisted schema selections and preferences are kept per database. The [MCP server](/wiki/mcp-server) tools `list_tables`, `describe_table` and `run_query` take an optional `database` argument to target one of these databases.
+
+The ER diagram window shows a schema picker, and a schema-load error is shown instead of an empty canvas. When a [trigger](/wiki/triggers) is created, its backing function is schema-qualified in both the `CREATE FUNCTION` and the `CREATE TRIGGER` statement.
+
+<video src="/videos/posts/tabularis-postgres-multi-database.mp4" poster="/videos/posts/tabularis-postgres-multi-database.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
 ## Multi-Schema Support (PostgreSQL)
 

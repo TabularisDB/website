@@ -7,7 +7,7 @@ category: "Database Objects"
 
 ![SQL Dump & Import](/img/tabularis-sql-dump-import.png)
 
-Tabularis lets you dump a database to a `.sql` file and import an existing `.sql` file back into a PostgreSQL, MySQL/MariaDB or SQLite connection — right from the sidebar, without leaving the app.
+Tabularis lets you dump a database to a `.sql` file and import an existing `.sql` file back into a PostgreSQL, MySQL/MariaDB or SQLite connection — or, since v0.29.0, a plugin driver connection — right from the sidebar, without leaving the app.
 
 ## Dump a Database
 
@@ -38,11 +38,17 @@ The import can be cancelled at any time. Tabularis will close the modal automati
 
 ## Schemas (PostgreSQL)
 
-On PostgreSQL connections, dump and import work on the **active schema**: the dump reads the selected tables from it, and the import runs with `search_path` set to it. There are no separate schema-level menu entries.
+On PostgreSQL connections, dump and import work on the **active schema**: the dump reads the selected tables from it, and the import runs with `search_path` set to it. There are no separate schema-level menu entries. On a [PostgreSQL multi-database connection](/wiki/connections#multi-database-support-postgresql) (since v0.29.0), each database node has its own **Dump Database** and **Run SQL File...**, which target that database.
 
 ## How to Access
 
 - Right-click a database node in the left sidebar → **Dump Database** / **Run SQL File...**
 - The same two actions are in the actions menu and buttons at the top of the Explorer.
 
-Both actions are available for the built-in drivers only (PostgreSQL, MySQL/MariaDB, SQLite); plugin drivers are not supported.
+## Plugin Drivers
+
+Before v0.29.0 both actions were available for the built-in drivers only. Since v0.29.0 they also work on plugin drivers, including the [PostgreSQL plugin](https://github.com/TabularisDB/tabularis-postgresql-plugin):
+
+- The dump lists tables and reads their DDL through the plugin's `get_tables` and `get_table_ddl`, and exports data page by page through `execute_query`. JSON columns are written as JSON literals.
+- String and boolean literals follow the driver's declared `sql_dialect` / `sql_syntax`, not its driver id.
+- The import sends each statement of the file to the plugin one at a time through `execute_query`. There is no transaction across a plugin, so a failure stops the import but does not roll back the statements already executed.

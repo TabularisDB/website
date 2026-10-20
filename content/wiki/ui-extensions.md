@@ -29,15 +29,17 @@ Each slot passes its component a `context` object (and a `pluginId` prop). The f
 |------|----------|---------|-------------|
 | `row-edit-modal.field.after` | After each field in the New Row modal | `connectionId`, `tableName`, `schema`, `driver`, `columnName`, `rowData`, `onFieldChange(value)` | Validation hints, field previews |
 | `row-edit-modal.footer.before` | Before Save/Cancel in the New Row modal | `connectionId`, `tableName`, `schema`, `driver`, `rowData` | Batch actions, templates |
-| `row-editor-sidebar.field.after` | After each field in the Row Editor sidebar | `connectionId`, `tableName`, `schema`, `columnName`, `rowData`, `rowIndex`, `isInsertion`, `onFieldChange(value)` | Field-level previews, lookups |
-| `row-editor-sidebar.header.actions` | Row Editor sidebar header | `connectionId`, `tableName`, `schema`, `rowData`, `rowIndex`, `isInsertion` | "Copy as JSON", audit links |
-| `data-grid.toolbar.actions` | Table toolbar | *(empty)* | Export buttons, analysis tools |
+| `row-editor-sidebar.field.after` | After each field in the Row Editor sidebar | `connectionId`, `tableName`, `schema`, `database`, `driver`, `columnName`, `rowData`, `rowIndex`, `isInsertion`, `onFieldChange(value)` | Field-level previews, lookups |
+| `row-editor-sidebar.header.actions` | Row Editor sidebar header | `connectionId`, `tableName`, `schema`, `database`, `driver`, `rowData`, `rowIndex`, `isInsertion` | "Copy as JSON", audit links |
+| `data-grid.toolbar.actions` | Table toolbar | `connectionId`, `tableName`, `schema`, `driver` | Export buttons, analysis tools |
 | `data-grid.context-menu.items` | Right-click menu on grid rows | `connectionId`, `tableName`, `schema`, `columnName`, `rowIndex`, `rowData` | Row-level custom actions |
 | `sidebar.footer.actions` | Sidebar footer | *(empty)* | Status indicators, quick actions |
 | `settings.plugin.actions` | Per-plugin actions in Settings | `targetPluginId` | Diagnostics, re-auth buttons |
 | `settings.plugin.before_settings` | Above the plugin settings form | `targetPluginId` | OAuth panels, status banners |
 | `connection-modal.connection_content` | Replaces the connection form for `no_connection_required` drivers | `driver`, `database`, `onDatabaseChange`, `connectionName` | Custom connection forms |
-| `connection-modal.extra_fields` | Below host/port in the connection form | `driver`, `extra`, `setExtraField`, `credentialFieldsHidden`, `setCredentialFieldsHidden` | Plugin-specific connection settings |
+| `connection-modal.extra_fields` | Below host/port in the connection form | `driver`, `extra`, `setExtraField`, `credentialFieldsHidden`, `setCredentialFieldsHidden`, `secretFields`, `setSecretField` | Plugin-specific connection settings and secrets |
+
+Since v0.29.0 the row editor slots resolve `driver` from the row's own connection rather than the globally active one, so in [split view](/wiki/split-view) a plugin filtered to one driver no longer appears on another driver's rows; if that connection is missing, `driver` is `null`. The toolbar slot receives the table's own schema (an explicit `null` stays schema-less).
 
 The `SlotContextMap` types in `@tabularis/plugin-api` describe some slots with more fields than the host currently passes; rely on the fields listed above. In slots with an empty context, read the active connection with `usePluginConnection()`.
 
@@ -46,6 +48,8 @@ The `SlotContextMap` types in `@tabularis/plugin-api` describe some slots with m
 Since v0.19.0, `connection-modal.extra_fields` is backed by an opaque `extra` string map on the connection parameters: values set with `setExtraField` are persisted verbatim and forwarded to the driver, so a plugin can carry its own connection settings (an AWS region, say) without a core schema change.
 
 Since v0.25.0 the same slot also exposes `credentialFieldsHidden` and `setCredentialFieldsHidden(hidden)`. A driver that authenticates without a database login (integrated authentication, IAM tokens, Kerberos) can hide the host username and password inputs. Hiding them clears both values, ignores the login part of an imported connection string and removes a previously stored password on save. The flag resets whenever the driver changes.
+
+Since v0.29.0 the slot also exposes `secretFields` and `setSecretField(key, value)` for credentials. `setSecretField` keeps the value out of `connections.json` and stores it for the saved connection in the OS keychain; an empty value clears the entry. On edit, `secretFields[key]` exposes only `{ value, hasStoredValue, dirty }`: an existing secret is shown by `hasStoredValue` and its value is never returned to the extension. Keys are 1–64 ASCII letters, digits, `.`, `_` or `-`. The driver receives the value as `params.extra[key]`; see [Plugin-owned Connection Secrets](/wiki/plugin-protocol#plugin-owned-connection-secrets-since-v0290). Both properties are optional in the `@tabularis/plugin-api` types, so an extension that also supports older hosts must check that `setSecretField` exists. To relabel or hide the common host, port, username, password and database inputs instead, use the manifest's [`connection_fields`](/wiki/plugins#connection-fields).
 
 ## Declaring Extensions in the Manifest
 

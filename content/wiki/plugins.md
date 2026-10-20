@@ -94,6 +94,7 @@ Every plugin ships one manifest that tells Tabularis its capabilities and the da
 | `routine_management` | bool | `true` to enable routine management actions (run with parameters, create from template, edit, drop). The backing RPCs are optional — the host falls back to dialect-neutral SQL. Defaults to `false`. |
 | `triggers` | bool | `true` if the database supports triggers. Enables trigger listing and management for drivers that implement the trigger RPCs. Defaults to `false`. |
 | `file_based` | bool | `true` for local file databases (e.g. SQLite, DuckDB). Replaces host/port with a file path field. |
+| `in_memory` | bool | Since v0.29.0. Requires `file_based`. `true` if the driver also opens the path `:memory:` as a temporary database (e.g. DuckDB). Adds an **In-memory** button next to the file path input and skips the file existence check for that path. The database lives in the plugin process: connections that use `:memory:` share it until the plugin process stops. `inMemory` is also accepted. Defaults to `false`. |
 | `identifier_quote` | string | Character used to quote SQL identifiers: `"\""` (ANSI) or `` "`" `` (MySQL). |
 | `alter_primary_key` | bool | `true` if the database supports altering primary keys after table creation. Defaults to `true`. |
 | `alter_column` | bool | `true` to enable ALTER TABLE MODIFY COLUMN operations in the schema editor. |
@@ -106,7 +107,11 @@ Every plugin ships one manifest that tells Tabularis its capabilities and the da
 | `manage_tables` | bool | `true` to enable table and column management UI (Create Table, Add/Modify/Drop Column, Drop Table). Does not control index or FK operations. Defaults to `true`. |
 | `readonly` | bool | When `true`, the driver is read-only: all data modification operations (INSERT, UPDATE, DELETE) are disabled in the UI. Table and column management is also hidden regardless of `manage_tables`. Defaults to `false`. |
 | `explain` | bool | `true` if the driver implements the `explain_query` method (EXPLAIN / query plan support). Enables the Visual EXPLAIN button in the SQL editor and notebook cells; when `false` or omitted, the Visual EXPLAIN UI is hidden for connections using this driver. Defaults to `false`. |
-| `sql_dialect` | string | Optional statement-splitting dialect: `postgres`, `mysql`, `mssql`, `sqlite`, `oracle`, or `generic`. Oracle-like plugins, including DM/Dameng, should use `"oracle"`. |
+| `sql_dialect` | string | Optional SQL dialect preset: `postgres`, `mysql`, `mssql`, `sqlite`, `oracle`, or `generic`. Drives statement splitting, the AI/MCP read-only check, generated SQL and literals. Oracle-like plugins, including DM/Dameng, should use `"oracle"`. A dialect the host does not know loads as `generic`. |
+| `sql_syntax` | object | Since v0.29.0. Optional declarative syntax that extends a preset, for engines no preset describes. See [SQL Syntax](#sql-syntax-sql_syntax) below. |
+| `column_comments` | bool | Since v0.29.0. The DDL generation RPCs honour `ColumnDefinition.comment`, so the column editor (Modify Column) shows a description field. Defaults to `false`. |
+| `column_stats` | bool | Since v0.29.0. Opts the data grid's **Column statistics** popover into the optional `get_column_stats` RPC (see [Column Statistics](/wiki/plugin-protocol#column-statistics-optional-since-v0290)). Defaults to `false`: plugins whose `sql_dialect` is `postgres`, `mysql` or `sqlite` get the host's generic SQL, the others do not show the menu entry. |
+| `drop_table_sql` | bool | Since v0.29.0. Opts the explorer's **Drop table** action into the optional `get_drop_table_sql` RPC, so the plugin can return its own statement (for example `DROP SNAPSHOT TABLE`). Defaults to `false`: the host runs a generic `DROP TABLE` with your `identifier_quote`. |
 | `supports_ssl` | bool | `true` to show the SSL/TLS configuration tab (mode + CA/client cert/key) in the connection modal. The values are forwarded to the plugin as `ssl_mode`, `ssl_ca`, `ssl_cert`, and `ssl_key` in `ConnectionParams`. Network drivers only. Defaults to `false`. |
 | `table_query_templates` | bool | Since v0.26.0. Opts the **Generate SQL** dialog into the optional `get_table_query_template` RPC for SELECT, UPDATE and DELETE previews (see [Table Query Templates](/wiki/plugin-protocol#table-query-templates-optional)). Defaults to `false`; built-in drivers and plugins without it keep the host's templates. |
 | `single_database` | bool | `true` for drivers exposing a single implicit database (e.g. a flat search/document store like Meilisearch). Skips the database tab and the database-name field in the connection modal. |
@@ -118,6 +123,49 @@ Every plugin ships one manifest that tells Tabularis its capabilities and the da
 | `inline_pk` | bool | `true` if the primary key is declared inline in the column definition (e.g. SQLite `AUTOINCREMENT`). Defaults to `false`. |
 
 When the manifest includes a `capabilities` object, `schemas`, `views`, `routines` and `file_based` are required; the other flags fall back to the defaults listed above.
+
+### Declaring the SQL dialect
+
+Always set `sql_dialect` to the closest preset. A plugin that declares no dialect, or only `generic`, still loads, but the host cannot know how its SQL is tokenized and assumes the worst: the AI/MCP read-only check lexes every query under every preset and rejects reads they disagree on (a `#` outside a string, a backslash in a string literal, `$$` bodies, and similar), and generated SQL (filters, dumps, notebook cell CTEs, Copy as INSERT) falls back to standard quoting. Since v0.29.0 the **Copy SQL Without Comments** editor action is also hidden for such drivers.
+
+### SQL Syntax (`sql_syntax`)
+
+Since v0.29.0, a driver whose engine lexes SQL differently from every preset (GoogleSQL's triple-quoted strings, `#` comments and procedural scripts, for example) can describe the difference in `capabilities.sql_syntax`. It is data only; the host never runs code from it. `extends` names the preset to start from (it defaults to `sql_dialect`), and every other field overrides one rule of that preset:
+
+| Field | Meaning |
+|-------|---------|
+| `extends` | Preset to extend: `postgres`, `mysql`, `mssql`, `sqlite`, `oracle` or `generic`. |
+| `quotes` | Replaces the quote rules: 1–8 objects `{ "open", "close"?, "kind", "escape"? }`, with `kind` `string` or `identifier` and `escape` `double`, `backslash`, `both` or `none`. |
+| `triple_quoted_strings` | `'''…'''` and `"""…"""` strings that may span lines. |
+| `string_prefixes` | Letter prefixes accepted before a string (e.g. `r`, `b`, `rb`). |
+| `hash_comments`, `nested_block_comments`, `line_comment_requires_space` | Comment rules. |
+| `script_blocks` | Procedural blocks (`BEGIN … END`, `IF … END IF`, loops, `CREATE PROCEDURE` bodies) stay one statement. |
+| `dollar_quoting` | `$tag$ … $tag$` strings. |
+| `string_escape` | How the host writes string literals: `standard` (`'it''s'`) or `backslash` (`'it\'s'`). |
+| `like_escape` | Whether `LIKE … ESCAPE '!'` is supported. |
+| `boolean_literals` | `keywords` (`TRUE`/`FALSE`) or `numeric` (`1`/`0`) in generated SQL. |
+| `formatter` | `sql-formatter` language used by **Format SQL** (for example `bigquery`, `duckdb`, `trino`). |
+| `keywords`, `functions` | Extra autocomplete words, up to 1000 each. |
+
+The statement splitter, **Format SQL**, autocomplete, the filter bar, Copy as INSERT, imports, dumps, notebook literals and the MCP read-only check all read it. For the read-only check a declared syntax adds a tokenization pass, so it can make the check stricter, never looser. An invalid field is logged and ignored, unknown fields are ignored, and hosts that predate `sql_syntax` keep using `sql_dialect`, so keep `sql_dialect` set to the closest preset (e.g. `mysql` for GoogleSQL). Connection metadata cannot override it. The full field reference, with the GoogleSQL descriptor of the BigQuery driver as an example, is in the [plugin guide](https://github.com/TabularisDB/tabularis/blob/main/plugins/PLUGIN_GUIDE.md#sql-syntax-sql_syntax).
+
+### Connection Fields
+
+Since v0.29.0 the optional manifest object `connection_fields` adapts the host's connection inputs to a driver that does not use them as-is. Each of `host`, `port`, `username`, `password` and `database` accepts `hidden` (boolean), `label` (up to 80 characters) and `placeholder` (up to 200 characters):
+
+```json
+{
+  "connection_fields": {
+    "host": { "hidden": true },
+    "port": { "hidden": true },
+    "username": { "hidden": true },
+    "password": { "hidden": true },
+    "database": { "label": "Project ID", "placeholder": "billing-project" }
+  }
+}
+```
+
+Overrides are presentation only: a hidden input is not rendered, but a value already saved for it is kept and still sent to the driver. A hidden `database` is not required on Test Connection or Save, and hiding `host` also hides **Load Databases**. Collect what the driver needs instead through the `connection-modal.extra_fields` [UI extension](/wiki/ui-extensions#custom-connection-fields), with `setSecretField` for credentials, which are kept in the OS keychain.
 
 ### Data Type Categories
 

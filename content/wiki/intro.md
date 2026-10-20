@@ -17,7 +17,7 @@ excerpt: 'Welcome to the Tabularis Wiki. Learn how to get started with the most 
 - **Builds queries visually** with a drag-and-drop canvas that generates SQL in real time.
 - **Generates ER diagrams** from your live schema using the Dagre layout engine.
 - **Manages schema** — creates tables, alters columns, adds indexes and foreign keys — with a DDL preview before applying.
-- **Generates AI SQL** from natural language using OpenAI, Anthropic, OpenRouter, MiniMax, Ollama, or any OpenAI-compatible endpoint.
+- **Generates AI SQL** from natural language using a ChatGPT Plus or Pro plan, OpenAI, Anthropic, OpenRouter, Requesty, MiniMax, Ollama, or any OpenAI-compatible endpoint.
 - **Exports** query results to CSV, JSON, or Markdown (streamed, cancellable).
 - **Dumps and imports** databases to/from `.sql` files, with progress tracking and cancellation support.
 - **Extends** via plugins: any executable that speaks JSON-RPC over stdin/stdout becomes a new database driver.

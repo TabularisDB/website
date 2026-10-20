@@ -33,6 +33,7 @@ For every `tools/call` MCP request, Tabularis writes one line to the audit log w
 | `timestamp`      | ISO 8601, UTC.                                                                                     |
 | `tool`           | `list_connections` · `list_databases` · `list_tables` · `describe_table` · `run_query`.            |
 | `connectionId` / `connectionName` | The connection the call hit (null for `list_connections`).                        |
+| `database`       | Since v0.29.0. The target database when the tool call passed a `database` argument (`list_tables`, `describe_table`, `run_query`); omitted otherwise. Recorded for blocked, denied and timed-out calls too. |
 | `query`          | Full SQL text — only for `run_query`.                                                              |
 | `queryKind`      | `select` · `write` · `ddl` · `unknown`. Conservative: anything ambiguous → `unknown`.              |
 | `durationMs`     | Wall time the MCP server spent on the call.                                                        |
@@ -43,6 +44,8 @@ For every `tools/call` MCP request, Tabularis writes one line to the audit log w
 | `approvalId`     | Set when the call went through the [approval gate](/wiki/mcp-approval-gates).                       |
 
 Clicking any row opens the **Event details** modal with the full record — including the complete query text, the originating client, and the approval id when present.
+
+When an event has a target database, the events table and the details modal show the connection as `connection / database`, the same format as the approval dialog.
 
 ![Event details modal](/img/tabularis-ai-audit-log-event-details.png)
 
@@ -94,7 +97,7 @@ The log lives at:
 
 It's **append-only JSON Lines** — one event per line, written atomically. When the active file reaches `aiAuditMaxEntries` (default **5,000**) it gets rotated to `ai_activity.1.jsonl`, the previous archives shift down, and the oldest (`ai_activity.5.jsonl`) is dropped. The Events tab reads across all five archive files plus the active one, so the rotation is invisible to you.
 
-You can clear the entire log from the panel (**Clear** button — confirmation required), or export everything as JSONL or CSV before clearing.
+You can clear the entire log from the panel (**Clear** button — confirmation required), or export everything as JSONL or CSV before clearing. Since v0.29.0 the CSV export has a `database` column after `connection_name`. Lines written by older builds, without the field, still load.
 
 ## Configuration
 

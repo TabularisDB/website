@@ -118,6 +118,8 @@ When the plan comes from `EXPLAIN ANALYZE` (or MariaDB `ANALYZE`), an **Actual R
 
 ![Table view showing the Actual Rows column next to Est. Rows](/img/posts/tabularis-explain-actual-rows.png)
 
+Since v0.29.0 an **Export CSV** button saves the whole plan table to a CSV file, collapsed branches included. Rows are in plan order (pre-order), with the columns `index`, `depth` (0 for the root), `node_type`, `relation`, `cost`, `est_rows`, `actual_rows`, `self_time_ms`, `estimate_gap` and `filter`. A metric the plan does not carry, such as actual rows on an estimates-only plan or a branch that never ran, is written as an empty field rather than zero.
+
 ### Diagram View
 
 One row per node in plan order: index number, indentation showing the tree structure, node type and relation, a bar proportional to the selected metric, and the formatted value. The metric switches between **time, rows, cost, and buffers** — only metrics the plan actually carries are offered, defaulting to time when ANALYZE data is present and cost otherwise. Selection is shared with the graph, so a node picked in one view stays picked in the other.
@@ -133,6 +135,8 @@ Plan-wide aggregates: node counts and depth, total self time, **time by operatio
 ### Raw Output
 
 The raw view shows the database response in a read-only Monaco editor with syntax highlighting, word wrap, and search. No transformation — exactly what the server returned. JSON output from PostgreSQL or MySQL is detected automatically and highlighted as JSON; text-based output (like MySQL ANALYZE trees) renders as plain text. Since v0.23.0 XML plans are detected from the leading tag and highlighted as XML, and a single-line XML document (SQL Server SHOWPLAN output arrives this way) is indented one node per line for reading; already formatted XML passes through unchanged.
+
+Since v0.29.0 **Save raw plan…** writes the original output to a file, unchanged and without re-running EXPLAIN. The proposed extension follows the detected format: `.json` for JSON plans, `.xml` for XML plans such as SQL Server SHOWPLAN, and `.txt` for plain text. The button is disabled when there is no raw output.
 
 <div class="post-gallery">
 

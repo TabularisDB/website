@@ -39,7 +39,7 @@ Since v0.25.0, hovering a column header shows the column's database comment next
 
 ### Sorting
 
-Click the sort icon in a column header (revealed on hover) to sort by that column (ascending). Click again to sort descending. A third click removes the sort. Since v0.22.0 a plain click on the header itself selects the column instead of sorting; see [Column-level copy](#column-level-copy). Sorting is applied server-side — a new query is issued with an `ORDER BY` clause so the sort is consistent across all pages.
+Click the sort icon in a column header (revealed on hover) to sort by that column (ascending). Click again to sort descending. A third click removes the sort. Since v0.29.0, **Settings → Appearance → Data Grid → Default sort direction** (**Ascending** or **Descending**, `defaultSortDirection` in `config.json`) sets the direction of the first click; the second click switches to the opposite direction and the third clears the sort. Since v0.22.0 a plain click on the header itself selects the column instead of sorting; see [Column-level copy](#column-level-copy). Sorting is applied server-side — a new query is issued with an `ORDER BY` clause so the sort is consistent across all pages.
 
 > **LIMIT / OFFSET preservation** — if your query includes a `LIMIT` or `OFFSET` clause, sorting from a column header will preserve it. Only the `ORDER BY` portion is replaced.
 
@@ -79,9 +79,42 @@ Since v0.28.0 a **Pick from values** button next to the value field lists the co
 
 <video src="/videos/posts/tabularis-filter-by-value.mp4" poster="/videos/posts/tabularis-filter-by-value.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
-Since v0.27.0, right-clicking a cell in a table tab offers filters built from that cell: **Filter: `col` = this value** and **Filter: `col` <> this value**, or **Filter: `col` IS NULL** and **Filter: `col` IS NOT NULL** on a `NULL` cell. The condition is combined with the current filter as `(existing) AND new`, written into the **WHERE** input where you can edit it, and the grid reloads from page 1.
+Since v0.27.0, right-clicking a cell in a table tab offers filters built from that cell. Since v0.29.0 they are grouped in a **Filter by this value** submenu, which also opens on click or `Enter`, and the operators depend on the column type:
+
+| Cell | Operators |
+| :--- | :--- |
+| Numeric, date/time | **Equal to**, **Not equal to**, **Greater than**, **Greater than or equal to**, **Less than**, **Less than or equal to** |
+| Text | **Equal to**, **Not equal to**, **Contains** |
+| Other types (uuid, boolean, enum, geometry, unknown) | **Equal to**, **Not equal to** |
+| `NULL` or masked cell | `IS NULL`, `IS NOT NULL` |
+
+**Contains** generates `col LIKE '%value%' ESCAPE '!'`, with the same escaping as the filter panel's [text operators](#text-operators). The condition is combined with the current filter as `(existing) AND new`, written into the **WHERE** input where you can edit it, and the grid reloads from page 1.
 
 The value is formatted by column type: numbers are unquoted in numeric columns, a numeric-looking string stays quoted in a text column, booleans become `TRUE`/`FALSE`, and quotes are escaped. Identifiers are quoted for the active driver. The items are not offered on BLOB or JSON cells, on unsaved new rows, or in ad-hoc query results. A [masked](#column-masking) cell only offers `IS NULL` / `IS NOT NULL`, so its real value never reaches the filter.
+
+### Column Statistics
+
+Since v0.29.0 the column header menu of a table tab has **Column statistics**. It opens a popover for that column with:
+
+- **Rows**, **Distinct** and **NULLs** (with the `NULL` share as a percentage), plus a **unique** chip when every non-`NULL` value is distinct;
+- **Min** and **Max**, for numeric and date/time columns;
+- the ten most frequent values, each with its count and a bar for its share. Clicking a value filters the table by it (`col = value`) and closes the popover.
+
+The statistics count the rows that match the tab's current filter, and the popover says so when a filter is active; sort and the toolbar LIMIT are ignored, as for the row count. Not every column type gets every part:
+
+| Column | Rows / NULLs | Distinct | Min / max | Top values |
+| :--- | :--- | :--- | :--- | :--- |
+| Numeric, date/time | Yes | Yes | Yes | Yes |
+| Text, uuid, boolean, enum, … | Yes | Yes | No | Yes |
+| BLOB / binary | Yes | Yes | No | No |
+| JSON, XML, geometric types | Yes | No | No | No |
+| [Masked](#column-masking) column (not revealed) | Yes | Yes | No | No |
+
+JSON, XML and the PostgreSQL geometric types have no equality operator, so distinct and top values are skipped; a masked column never shows min, max or top values, since they would reveal the hidden data. The popover says why a part is missing. The entry is not offered on query results.
+
+On plugin drivers the popover uses the plugin's own `get_column_stats` RPC when the plugin declares the `column_stats` capability, the generic SQL queries when the plugin declares a `sql_dialect` of `postgres`, `mysql` or `sqlite`, and is hidden otherwise. A plugin can compute the values from a sample, in which case the popover notes the sample size. See [Plugin Protocol](/wiki/plugin-protocol).
+
+<video src="/videos/posts/tabularis-column-statistics.mp4" poster="/videos/posts/tabularis-column-statistics.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
 ### Auto-Refresh
 
@@ -122,6 +155,30 @@ Double-click a cell to enter edit mode. Type the new value and press `Enter` to 
 
 Click the **+** button (**New Row**) in the results toolbar. A new empty row appears at the end. Fill in the values for each cell and commit when ready. **Duplicate Row** in the row context menu stages a copy of an existing row as a new insertion.
 
+On an editable UUID column (PostgreSQL and MariaDB `uuid`, SQL Server `uniqueidentifier`), the cell context menu has **Set random UUID** since v0.29.0. It stages a random UUID v4 as a pending change.
+
+### Editing a Selection in Bulk
+
+Since v0.29.0, right-clicking inside a selection shows an **Edit selection** submenu that applies one change to every selected cell:
+
+- **Fill down**: copies the first selected cell of each column into the cells below it, `NULL` included.
+- **Set to value…**: opens a dialog with a **Value** field; `Enter` applies, `Escape` cancels.
+- **Set NULL**
+- **Trim whitespace**, **UPPERCASE**, **lowercase**, **Title Case**: only touch plain text values.
+
+Which cells are edited depends on where you right-click:
+
+| Right-clicked cell is in | Cells edited |
+| :--- | :--- |
+| The cell range | The whole rectangle |
+| A selected column | Every loaded row of the selected columns |
+| A selected row | The selected rows, minus primary key columns |
+| None of them | The clicked cell |
+
+Each change is staged as a pending edit, to be reviewed, submitted or rolled back like a manual one. Only cells whose value actually changes are staged, so running the same edit twice stages nothing the second time. Edits follow the same guards as [paste](#pasting-data): generated and masked cells are skipped, and existing rows need a usable key. On a result that cannot be edited the submenu is disabled with the reason: **read-only result**, **no source table** or **no primary key**.
+
+<video src="/videos/posts/tabularis-grid-bulk-edit.mp4" poster="/videos/posts/tabularis-grid-bulk-edit.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
 ### Deleting Rows
 
 Select one or more rows by clicking the row header checkbox, then click the **−** button (**Delete Row**) in the results toolbar, pick **Delete Row** from the row context menu, or press `Delete` / `Backspace` with the rows selected (works whenever no cell is being edited and the grid isn't read-only). The rows are only **marked for deletion** as pending changes; nothing is deleted until you submit.
@@ -131,6 +188,10 @@ Select one or more rows by clicking the row header checkbox, then click the **�
 ### Committing Changes
 
 Pending edits (cell modifications, new rows, deleted rows) are shown with a visual indicator. Click **Submit** to generate and execute the corresponding `INSERT`, `UPDATE`, or `DELETE` statements, or **Rollback** to discard the pending changes without touching the database. With rows selected and **Apply to all** unchecked (the default), both act only on the pending changes of the selected rows; check **Apply to all**, or clear the selection, to act on every pending change. **Revert Selected** in the row context menu discards the pending changes of the selected rows.
+
+### Undo and Redo
+
+Since v0.29.0, pending changes can be undone with `Cmd/Ctrl + Z` and redone with `Cmd/Ctrl + Shift + Z` or `Ctrl + Y`, or with the **Undo** and **Redo** buttons in the pending changes banner. Cell edits, inserted rows, deleted rows and rollbacks are all undoable. A multi-cell paste or a multi-row delete is one step, and quick consecutive edits on the same row are merged into one step. The history keeps the last 50 steps per tab and is cleared when changes are submitted or the tab is refreshed. The shortcuts are ignored while a text input or cell editor has focus.
 
 On a connection marked as production, submitting asks for confirmation first (see [Production Write Guard](/wiki/connections#production-write-guard)).
 
@@ -209,6 +270,10 @@ The default format is **CSV**; you can change it in **Settings → General → D
 
 The setting maps to the `copyFormat` key in `config.json` (see [Configuration](/wiki/configuration)).
 
+CSV fields that contain the delimiter, a double quote or a line break are wrapped in quotes, with inner quotes doubled (RFC 4180), so a value such as `Rome, Italy` stays in one cell when pasted into a spreadsheet.
+
+Since v0.29.0 the cell context menu also has **Copy as HTML table**, next to **Copy Selected**. It copies the selected rows (or the right-clicked row) as an HTML `<table>` with a header row, and puts the regular copy output on the clipboard as the plain-text alternative. Pasting into Google Sheets, Excel, Docs or an email keeps the rows and columns; pasting into a plain-text field is unchanged.
+
 ### Column-level copy
 
 Since v0.17.0 you can copy all values of a single column — from the cell context menu (applies to the clicked column, using the selected rows or all visible rows when nothing is selected) or from the column header context menu:
@@ -235,7 +300,9 @@ Since v0.20.0 the grid also supports spreadsheet-style paste with `Cmd/Ctrl + V`
 - **Bounds** — the pasted matrix clips at the grid edges (rows are not auto-created; add pending-insertion rows first). Alias and computed result columns are skipped under the same guard as inline editing, and existing rows must be identifiable — in a keyless grid only pending-insertion rows accept a paste.
 - Pasting a cell's original value back clears its pending change, just like typing it would.
 
-Known limitations: values containing the copy delimiter don't survive a copy→paste round-trip (the grid's CSV copy output doesn't quote them yet), Excel cells containing quoted newlines are split on the newline, and a copied `NULL` pastes as the literal string `null` rather than SQL NULL.
+Known limitations: Excel cells containing quoted newlines are split on the newline, and a copied `NULL` pastes as the literal string `null` rather than SQL NULL.
+
+Pending changes made by a paste can be undone in one step (see [Undo and Redo](#undo-and-redo)).
 
 ## Row Editor Sidebar
 
@@ -304,6 +371,21 @@ Choose **JSON** from the export menu. The full result set is written as a JSON a
 
 Choose **Markdown** to write the result as a Markdown table to a `.md` file, with the same streaming and cancellation support.
 
+### Export loaded rows as HTML or NDJSON
+
+Since v0.29.0 the export menu of a query result has **Export loaded rows as HTML…** and **Export loaded rows as NDJSON…**. Both write the rows already loaded in the grid, without re-running the query:
+
+- **HTML** writes a UTF-8 document with a `<table>`, a header row and every loaded row, with the same escaping as **Copy as HTML table**. It is also available for a result with columns and no rows.
+- **NDJSON** writes one JSON object per line (`.ndjson`), with column names as keys.
+
+When only part of a paged result is loaded, the export reports how many of the total rows were written.
+
+### File names
+
+Since v0.29.0 the save dialog proposes `<table>_<YYYY-MM-DD>.<ext>` for a table tab (for example `orders_2026-10-20.csv`) and `result_<YYYY-MM-DD>_<HHMM>.<ext>` in local time for a console result, instead of a timestamp in milliseconds. Characters that are invalid in file names are replaced.
+
+CSV exports write `NULL` for a `NULL` value in both export paths, and every CSV and NDJSON record ends with a newline.
+
 > Exports are always performed on the **complete result set** — all rows that match the current filter, not just the visible page.
 >
 > The exception is a **multi-statement result** (Run All / Execute Selection): since v0.21.0 the active result tab exports the rows already loaded rather than re-running the script on a fresh connection, so scripts that build temp tables can be saved. When only part of the result was loaded, the progress modal says how many of the total rows were exported; page through the result or raise the tab's rows-per-page (or pick **All**) before exporting if you need more.
@@ -331,7 +413,11 @@ JSON cells additionally show a **braces icon**. Clicking it opens the cell in a 
 
 Double-clicking a JSON cell opens the viewer directly in edit mode (skipping the chevron). Since v0.25.0 the viewer also opens from read-only query and notebook result grids, by double-click or Enter, including on generated columns; the blob editor and the row editor sidebar stay behind the read-only guard. Since v0.26.0 the right-click menu on a read-only result also offers **Open in JSON Editor**, while mutation actions such as Set NULL, paste, duplicate and delete stay hidden.
 
+Since v0.29.0 the JSON tree has **Expand all** and **Collapse all** buttons next to the search box, in both view-only and editable modes. They only change which nodes are open: the value and any edit in progress are untouched. They are disabled when the root is a scalar.
+
 Since v0.28.0 the JSON viewer decorates string values: `http`, `https` and `mailto` strings get a button that opens them in the system browser, and hex, `rgb()` / `rgba()` and `hsl()` / `hsla()` colors get a color swatch. Values stay editable.
+
+In the grid itself, a cell whose trimmed value is an `http(s)://` URL or a `mailto:` address has **Open link** in its context menu since v0.29.0, which opens it in the system browser or mail client. Other schemes never show the entry, and neither does a masked cell.
 
 There is no separate viewer window for plain text cells — text values aren't compared across windows as often as JSON, and the inline chevron is the entry point that mattered.
 
@@ -404,6 +490,8 @@ Right-click any column header to open the header context menu. Available actions
 | **Copy column name**               | Copies the column name as plain text to the clipboard. Useful when building queries or referencing column names in other tools. |
 | **Copy as `column`**               | Copies the column name quoted as an identifier.                                                                                 |
 | **Copy as table.column**           | Copies the column name qualified with the table name.                                                                           |
+| **Copy column names**              | Since v0.29.0. Submenu that copies all column names of the result, in grid order: **One per line**, **As JSON array**, or **As SQL list** (comma-separated, quoted for the driver). |
+| **Column statistics**              | Since v0.29.0, table tabs only. Opens the [column statistics](#column-statistics) popover.                                      |
 | **Copy column values**             | Copies the column's values, newline-separated (see [Column-level copy](#column-level-copy)).                                    |
 | **Copy column values as SQL IN**   | Copies the column's values as a ready-to-paste SQL `IN` list.                                                                   |
 
@@ -427,3 +515,5 @@ The same menu offers other value shortcuts when they apply to the column: **Set 
 | Next page                                          | `Ctrl/Cmd + Right`     |
 | Previous page                                      | `Ctrl/Cmd + Left`      |
 | Mark selected rows for deletion                    | `Delete` / `Backspace` |
+| Undo pending change (since v0.29.0)                | `Ctrl/Cmd + Z`         |
+| Redo pending change (since v0.29.0)                | `Ctrl/Cmd + Shift + Z` / `Ctrl + Y` |

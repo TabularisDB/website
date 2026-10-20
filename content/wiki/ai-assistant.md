@@ -43,16 +43,31 @@ Plugins return structured metadata only. Tabularis keeps ownership of truncation
 
 ## Supported Providers & Local Privacy
 
-Tabularis is provider-agnostic. Configure your preferred engine in Settings:
+Tabularis is provider-agnostic. Configure your preferred engine in **Settings → AI**. Providers are shown as cards, each labelled with how it connects: **ChatGPT plan**, **API key**, **Local models** or **Custom endpoint**. The account (for ChatGPT) or the API key sits above the model selector, and the prompt editors are grouped below.
 
-### 1. Cloud Providers
+### 1. ChatGPT Plan
+
+Since v0.29.0, the **ChatGPT** provider (`chatgpt`) lets an eligible **ChatGPT Plus or Pro** account power the AI features with its plan, without an API key. It covers SQL generation, query explanations, Visual Explain analysis, and tab and cell naming.
+
+1. In **Settings → AI**, select the **ChatGPT** card.
+2. Click **Continue with ChatGPT**. Sign-in happens in your browser, following [OpenAI's Sign in with ChatGPT guide](https://developers.openai.com/cookbook/articles/sign-in-with-chatgpt) (OAuth with PKCE). Complete sign-in and allow plan usage there.
+3. Back in Tabularis, the account shows its plan status. The model list is the one available to that account; leave the model empty to use the first available model.
+
+You can register more than one account with **Add account** and switch between them, **Sign out** of an account, or open **Manage usage**. A saved account whose session is no longer valid asks you to sign in again.
+
+Credentials are encrypted locally with a key stored in the system keychain, and tokens are renewed in the background. Connecting does not give Tabularis access to your ChatGPT conversations: the AI features send their prompt and context to OpenAI, as they do with an API key. Switching provider or account clears the stored model, so a ChatGPT model is never carried over to another provider.
+
+![Settings, AI: the provider cards with ChatGPT selected, the Continue with ChatGPT button and the note on locally encrypted credentials](/img/tabularis-ai-settings-chatgpt.png)
+
+### 2. Cloud Providers (API key)
 - **OpenAI** (`openai`): Uses your own API key. The model list shipped with the app is merged with the GPT models your key can access (cached for 24 hours; use the refresh button in **Settings → AI** to reload it), and you can add custom model entries.
 - **Anthropic** (`anthropic`): Good for complex query explanations and structured reasoning.
 - **MiniMax** (`minimax`): Available as a first-class provider in the AI settings.
 - **OpenRouter** (`openrouter`): Access a broader multi-model catalog through a unified API.
-- **Custom OpenAI-compatible** (`custom-openai`): Any endpoint that speaks the OpenAI API (e.g. LM Studio, vLLM, Groq-compatible gateways). Set `aiCustomOpenaiUrl` and choose a model in Settings.
+- **Requesty** (`requesty`): An OpenAI-compatible LLM router. The model list loads Requesty's managed routing policies first, then its full chat model catalog. The key can also come from the `REQUESTY_API_KEY` environment variable. Requesty is only used when you select it; automatic provider detection skips it.
+- **Custom OpenAI-compatible** (`custom-openai`, shown as **OpenAI Compatible**): Any endpoint that speaks the OpenAI API (e.g. LM Studio, vLLM, Groq-compatible gateways). Set `aiCustomOpenaiUrl` and choose a model in Settings.
 
-### 2. Local Execution (Zero-Knowledge Privacy)
+### 3. Local Execution (Zero-Knowledge Privacy)
 For enterprise databases with strict compliance requirements, you cannot send schema data to third-party servers. Tabularis natively integrates with **Ollama**.
 1. Install [Ollama](https://ollama.com/) on your machine.
 2. Pull a coding model: `ollama pull codellama` or `ollama pull llama3`.

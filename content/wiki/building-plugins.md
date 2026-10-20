@@ -60,13 +60,15 @@ A driver that serves several engines can also report capabilities and data types
 
 ## UI extensions
 
-Add `--with-ui` to the scaffold and the plugin also gets a React/Vite subworkspace in `ui/` with a hello-world contribution for `data-grid.toolbar.actions`. `just dev-install` copies `ui/dist/index.js` into the plugin folder when it exists. The host only loads modules declared in the manifest, so add the matching entry to `.tabularium` yourself:
+Add `--with-ui` to the scaffold and the plugin also gets a React/Vite subworkspace in `ui/` with a hello-world contribution for `data-grid.toolbar.actions`, and a `locales/` folder for its strings. The host only loads modules declared in the manifest; since `@tabularis/create-plugin` 0.4.2 the scaffolder writes the matching entry into `.tabularium` for you (with older versions, add it yourself):
 
 ```json
 "ui_extensions": [
   { "slot": "data-grid.toolbar.actions", "module": "ui/dist/index.js" }
 ]
 ```
+
+`just dev-install` copies the binary, the manifest, `ui/dist/index.js` and `locales/` (when they exist) into the plugin folder, and the generated release workflow packages `locales/` too. The binary is taken from the directory Cargo actually builds into, so `CARGO_TARGET_DIR` and `build.target-dir` work.
 
 If you add more bundles, extend the `dev-install` recipe to copy them too.
 

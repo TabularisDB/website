@@ -24,14 +24,35 @@ Open the Explorer's **Favorites** tab. The saved-query list is separated from th
 
 ![Favorites tab in the Explorer sidebar](/img/tabularis-favorites-sidebar.png)
 
-Each entry displays the query name, a highlighted preview of its SQL, the database it was saved against (when set) and when it was last updated. Use the **Search favorites...** box at the top to filter the list. Click once to select an entry; **double-click** it, or press `Enter` on the selected entry, to execute it immediately in a new editor tab.
+Each entry displays the query name, a highlighted preview of its SQL, the database it was saved against (when set) and when it was last updated. Use the **Search favorites...** box at the top to filter the list by name or SQL text. Since v0.29.0, when the SQL matches, the entry shows the line containing the first match, shortened to about 80 characters, with the matched text highlighted; the term is matched literally and case-insensitively. Search covers every folder and shows where each result is filed. Click once to select an entry; **double-click** it, or press `Enter` on the selected entry, to execute it immediately in a new editor tab.
+
+## Folders
+
+Since v0.29.0 saved queries can be grouped in folders. Folders belong to a connection and are not nested.
+
+- **New folder** creates one. Names are trimmed, 1–64 characters, and unique per connection (case-insensitive).
+- **Rename folder** and **Delete folder** are in the folder's context menu. Only an empty folder can be deleted; a folder that still contains queries is refused with an explanation, and queries are never moved or deleted implicitly.
+- **Move to folder...** in a query's context menu moves it to a folder or back to **Unfiled (no folder)**. Moving does not change the SQL, the database or the update time.
+
+Folders are collapsible. Queries saved before v0.29.0, or not filed, appear under **Unfiled**.
+
+![Saved queries grouped into the Data cleanup and Reports folders, with an Unfiled section](/img/tabularis-saved-query-folders.png)
 
 ## Executing a Saved Query
 
 - **Double-click** the query in the sidebar (or select it and press `Enter`), or
 - **Right-click → Execute** from the context menu.
 
-The SQL is loaded into a new editor tab and executed against the current connection — on the database saved with the query, when it has one. The tab title is set to the query name for easy identification.
+The SQL is loaded into a new editor tab and executed against the current connection — on the database saved with the query, when it has one. The tab title is set to the query name for easy identification. On a multi-database connection, the tab title and the toolbar database selector show the query's database.
+
+## Using a Query Without Running It
+
+Since v0.29.0 the context menu also offers:
+
+- **Open in Editor** — opens the SQL in a new editor tab, on the saved database, without executing it.
+- **Copy Query** — copies the SQL to the clipboard.
+- **Export as SQL…** — saves the SQL to a `.sql` file through a save dialog. The proposed file name is derived from the query name. Nothing is executed and the saved query is not changed.
+- **Duplicate** — saves a copy named `<name> (copy)` (or `(copy 2)`, `(copy 3)` and so on), with the same SQL and database.
 
 ## Editing a Saved Query
 
@@ -49,7 +70,8 @@ Saved queries are scoped to a connection. When you switch the active connection 
 
 | File | Location | Content |
 | :--- | :--- | :--- |
-| `meta.json` | `{app_config_dir}/saved_queries/` | Array of `{ id, name, filename, connection_id, database, created_at, updated_at }` |
+| `meta.json` | `{app_config_dir}/saved_queries/` | Array of `{ id, name, filename, connection_id, database, folder_id, created_at, updated_at }`. `folder_id` is omitted for unfiled queries |
+| `folders.json` | `{app_config_dir}/saved_queries/` | Saved-query folders, per connection. Created with the first folder |
 | `{uuid}.sql` | `{app_config_dir}/saved_queries/` | Raw SQL text |
 
 The `app_config_dir` is `~/.config/tabularis` on Linux, `~/Library/Application Support/tabularis` on macOS, and `%APPDATA%\tabularis` on Windows — or the folder chosen as a [custom storage location](/wiki/configuration#custom-storage-location) (including `TABULARIS_DATA_DIR`).

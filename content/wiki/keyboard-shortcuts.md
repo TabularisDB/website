@@ -25,7 +25,7 @@ Tabularis ships with a set of keyboard shortcuts for common actions across navig
 | Open connections page | `⌘+Shift+C` | `Ctrl+Shift+C` |
 | New connection (opens modal) | `⌘+Shift+N` | `Ctrl+Shift+N` |
 | Switch to Nth open connection | `⌘+Shift+1–9` | `Ctrl+Shift+1–9` |
-| Paste / import from clipboard | `⌘+Shift+V` | `Ctrl+Shift+V` |
+| Import data (clipboard or file) | `⌘+Shift+V` | `Ctrl+Shift+V` |
 
 ---
 
@@ -45,6 +45,9 @@ Tabularis ships with a set of keyboard shortcuts for common actions across navig
 | Switch tab, most recently used first (since v0.28.0; `Ctrl+Shift+Tab` walks back) | `Ctrl+Tab` | `Ctrl+Tab` |
 | Copy selection | `⌘+C` | `Ctrl+C` |
 | Format SQL (buffer or selection) | `⇧+⌥+F` | `Shift+Alt+F` |
+| Editor zoom in, 1px (since v0.29.0; `+` also works) | `⌘+=` | `Ctrl+=` |
+| Editor zoom out, 1px (since v0.29.0) | `⌘+-` | `Ctrl+-` |
+| Reset editor zoom to 14px (since v0.29.0) | `⌘+0` | `Ctrl+0` |
 | Multi-Cursor (click) | `⌘+Click` | `Ctrl+Click` |
 | Add next occurrence | `⌘+D` | `Ctrl+D` |
 | Select all occurrences | `⌘+Shift+L` | `Ctrl+Shift+L` |
@@ -88,8 +91,12 @@ On Linux, where `Ctrl+Shift+A` opens the actions palette, `Shift+Alt+A` toggles 
 | Select all loaded rows | `⌘+A` | `Ctrl+A` |
 | Copy the current selection | `⌘+C` | `Ctrl+C` |
 | Paste at the selection (staged as pending changes) | `⌘+V` | `Ctrl+V` |
+| Undo a pending change (since v0.29.0) | `⌘+Z` | `Ctrl+Z` |
+| Redo a pending change (since v0.29.0) | `⌘+Shift+Z` | `Ctrl+Shift+Z` or `Ctrl+Y` |
 
 Cell navigation is bound to the grid you last interacted with, so a notebook with one grid per SQL cell does not move them all at once. Keys are left alone inside text inputs, open cell editors, the foreign-key and BLOB buttons, and the sort buttons in column headers. See [Data Grid → Keyboard Navigation](/wiki/data-grid#keyboard-navigation).
+
+Grid undo and redo apply to pending edits, inserted rows and deleted rows of the active tab, and are ignored while a text input or cell editor has focus; see [Data Grid → Undo and Redo](/wiki/data-grid#undo-and-redo). They are not listed in **Settings → Keyboard Shortcuts**. The editor zoom shortcuts are, and can be rebound.
 
 Since v0.22.0 the selection shortcuts (`Shift+Arrow`, `Ctrl/Cmd+Arrow`, `Shift+Space`, `Ctrl/Cmd+Space`) are relative to the focused cell and are not overridable. `Ctrl/Cmd+Shift+Space` is offered as an alternative for column selection because plain `Ctrl+Space` is often captured by an input method (ibus, fcitx) on Linux or by Spotlight on macOS. Note that with a focused cell, `Ctrl/Cmd+←` / `→` jumps to the grid edge; the **Next page** / **Previous page** shortcuts still apply when no cell is focused and from the pagination buttons.
 

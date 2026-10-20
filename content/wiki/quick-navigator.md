@@ -21,9 +21,11 @@ The action palette runs app commands, filtered as you type, with the same keyboa
 | :--- | :--- |
 | **Navigation** | Open settings, open the connection manager |
 | **Connection** | Every saved connection: connect to it, or switch to it if it is already open |
-| **Editor** | Open a new console, run query, run all statements, save the SQL file (file-backed tabs), close the active tab |
+| **Editor** | Open a new console, run query, run all statements, save the SQL file (file-backed tabs), close the active tab, **Enable word wrap** / **Disable word wrap** (since v0.29.0; toggles the `editorWordWrap` preference for every SQL editor) |
 | **Results** | Copy the selected cells, rows or columns, copy a column's values as a SQL `IN (...)` list, copy all rows |
 | **Table** | Open the current table in a SQL console, inspect it, generate SQL, count rows |
+
+Since v0.29.0 command rows show their keyboard shortcut on the right, including overrides from **Settings → Keyboard Shortcuts**. A hint is shown only where the shortcut would fire from the place the palette was opened: Run and Run all only when it was opened from the SQL editor, Copy cells only when focus was not in a text field, New console only when an editor is mounted. Save SQL file has no hint, since `Cmd/Ctrl + S` saves the file only on a file-backed tab.
 
 Result actions work in both tabbed and stacked [multi-result](/wiki/editor) views and include pending inserted rows; each copy label states the number of rows the command will copy. The navigation commands stay available while the editor is loading or showing an error, so the palette is always a way back to Settings or the connection manager.
 
@@ -37,6 +39,7 @@ The object palette filters **tables, views, routines, and triggers** as you type
 
 - A [multi-database MySQL/MariaDB connection](/wiki/connections#multi-database-support-mysql--mariadb) is searched across every selected database.
 - A [multi-schema PostgreSQL connection](/wiki/connections#multi-schema-support-postgresql) is searched across every visible schema.
+- A [multi-database PostgreSQL connection](/wiki/connections#multi-database-support-postgresql) (since v0.29.0) is searched across the schemas of every selected database.
 
 Results are grouped under separator headers by database/schema, so `users` in `app_prod` and `users` in `app_staging` are unambiguous.
 

@@ -14,16 +14,18 @@ The **ER Diagram** viewer generates a live, interactive entity-relationship diag
 The diagram opens in a new window dedicated to the connection and schema. You can open it from:
 
 - **View Schema Diagram** in the Explorer header's actions menu, for the active schema.
-- **View ER Diagram** in the context menu of a database (on connections that show several databases), or the diagram icon on its row.
+- **View ER Diagram** in the context menu of a database (on connections that show several databases, including [PostgreSQL multi-database connections](/wiki/connections#multi-database-support-postgresql) since v0.29.0), or the diagram icon on its row.
 - **View ER Diagram** in a **table**'s context menu, which opens the diagram focused on that table.
 
 ## Interface
 
 The diagram window has a minimal header with:
 
-- **Connection / Database / Schema** — shown at the top so you always know which schema you're viewing.
+- **Connection / Database / Schema** — shown at the top so you always know which schema you're viewing. Since v0.29.0, on drivers with schemas (PostgreSQL), the schema is a dropdown: pick another schema to redraw the diagram without reopening the window.
 - **Refresh** button — reloads the schema and redraws the diagram. Schema data is cached for five minutes, so a refresh within that window may show the cached structure.
 - **Fullscreen** toggle — expands the diagram to fill the entire display. Press `Esc` to exit.
+
+If the schema cannot be loaded, the window shows *Failed to load diagram* with the error instead of an empty canvas.
 
 ### Nodes
 

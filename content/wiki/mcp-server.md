@@ -123,7 +123,7 @@ Since v0.25.0 every tool accepts an optional `output_format` argument with the v
 
 ### `list_connections`
 
-Returns the same safe connection list exposed by `tabularis://connections`. For multi-database connections (MySQL / MariaDB), every selected database is serialized — not just the first.
+Returns the same safe connection list exposed by `tabularis://connections`. For multi-database connections (MySQL / MariaDB, and PostgreSQL since v0.29.0), every selected database is serialized — not just the first.
 
 ### `list_databases`
 
@@ -145,6 +145,7 @@ Lists tables for a connection.
 |-----------|------|-------------|
 | `connection_id` | `string` | Connection UUID or exact name |
 | `schema` | `string` | Optional schema name. Defaults to `public` for PostgreSQL. |
+| `database` | `string` | Optional, since v0.29.0. Database to target on a multi-database connection. Defaults to the connection's first database. |
 
 ### `describe_table`
 
@@ -157,6 +158,7 @@ Returns columns, foreign keys, and indexes for one table.
 | `connection_id` | `string` | Connection UUID or exact name |
 | `table_name` | `string` | Table to inspect |
 | `schema` | `string` | Optional schema name. Defaults to `public` for PostgreSQL. |
+| `database` | `string` | Optional, since v0.29.0. Database to target on a multi-database connection. Defaults to the connection's first database. |
 
 ### `run_query`
 
@@ -168,10 +170,13 @@ Executes a SQL query on a specific connection and returns the results.
 |-----------|------|-------------|
 | `connection_id` | `string` | Connection UUID or exact name |
 | `query` | `string` | The SQL query to execute |
+| `database` | `string` | Optional, since v0.29.0. Database to run the query on, for a multi-database connection. Defaults to the connection's first database. |
 | `limit` | `integer` | Optional. Maximum number of rows to return (default `100`). If the query already has a smaller `LIMIT`, the query's `LIMIT` wins. |
 | `output_format` | `string` | Optional. `json` (default) or `toon`. Available on every tool since v0.25.0. |
 
 **Returns:** query results as JSON, or as TOON when requested. Results are capped at 100 rows per call unless the agent passes a different `limit`.
+
+Before v0.29.0 these three tools always used the first selected database, so a query meant for another database returned no rows. When a `run_query` call with `database` needs [approval](/wiki/mcp-approval-gates), the approval dialog shows the target as `connection / database`, and the [AI Activity log](/wiki/ai-audit-log) records it.
 
 **Example prompts:**
 

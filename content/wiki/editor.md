@@ -79,6 +79,21 @@ The Monaco integration brings powerful developer features:
 | **Copy Line Up** | `Option + Shift + ↑` | `Shift + Alt + ↑` (Windows) / `Ctrl + Shift + Alt + ↑` (Linux) | Duplicate the current line above. |
 | **Copy Line Down** | `Option + Shift + ↓` | `Shift + Alt + ↓` (Windows) / `Ctrl + Shift + Alt + ↓` (Linux) | Duplicate the current line below. |
 | **Command Palette**| `F1` | `F1` | Open the Monaco command palette. |
+| **Zoom In** | `Cmd + =` | `Ctrl + =` | Since v0.29.0. Increases the editor font size by 1px (`+` also works). |
+| **Zoom Out** | `Cmd + -` | `Ctrl + -` | Since v0.29.0. Decreases the editor font size by 1px. |
+| **Reset Zoom** | `Cmd + 0` | `Ctrl + 0` | Since v0.29.0. Resets the editor font size to 14px. |
+
+### Zoom
+
+The zoom shortcuts change the same `editorFontSize` setting as the font size slider in **Settings → Appearance**, within its 10–20px range. The size is saved, every open editor follows it, and the slider stays in sync. The three shortcuts are listed in **Settings → Keyboard Shortcuts** (*Editor: increase font size*, *decrease font size*, *reset font size*) and can be rebound.
+
+### Context Menu Actions
+
+Since v0.29.0 the editor context menu has these additional actions:
+
+- **Select current statement** selects the statement under the cursor, using the same dialect-aware boundaries as Run. The caret can also sit after the delimiter on the statement's own line; on a blank line between statements the selection is left unchanged. It has no default shortcut.
+- **Transform to Uppercase** / **Transform to Lowercase**, shown only with a selection, change the case of every selection (multi-cursor included) in one undo step. They apply to the whole selection, string literals and comments included.
+- **Copy SQL Without Comments** copies the selection, or the whole document when nothing is selected, with line and block comments removed. Quoted identifiers, string literals, dollar-quoted bodies, optimizer hints and MySQL/MariaDB executable comments (`/*! … */`, `/*M! … */`) are kept, and a comment between two tokens is replaced with a space so they do not merge. A toast confirms the copy. The action is hidden on plugin connections that declare only the `generic` dialect without a `sql_syntax`.
 
 ### Running-Tab Indicators
 
@@ -96,6 +111,12 @@ Since v0.28.0, `Ctrl/Cmd + Shift + T` reopens the last closed tab, also availabl
 
 **Duplicate Tab** in the tab context menu opens a copy right after the original, with the same SQL and parameters. A duplicated read-only tab, such as a materialized-view definition, stays read-only.
 
+### Renaming Tabs
+
+Since v0.29.0 console tabs that are not bound to a `.sql` file can be renamed, as notebook tabs already could: pick **Rename** in the tab context menu or double-click the title. `Enter` confirms, `Escape` cancels, and an empty name is ignored. Table tabs and file-backed console tabs do not offer **Rename**.
+
+Hovering a tab shows its full name as a tooltip, qualified with the schema (and database, on a PostgreSQL multi-database connection) when the tab has them; screen readers get the same name.
+
 ### Switching Tabs by Recency
 
 Since v0.28.0, `Ctrl + Tab` goes back to the tab you used before instead of the next one in the bar: after visiting A, C and A again, `Ctrl + Tab` selects C. The order stays fixed while `Ctrl` is held, repeated `Tab` presses walk through it, and `Ctrl + Shift + Tab` walks back. Each connection keeps its own history.
@@ -103,6 +124,8 @@ Since v0.28.0, `Ctrl + Tab` goes back to the tab you used before instead of the 
 ### Reordering Tabs
 
 Since v0.18.0 tabs can be dragged along the tab bar to reorder them. Console, table, query-builder and notebook tabs share one tab bar, so any tab type can be moved — there is no console-only restriction. Reordering is scoped to the active connection: dragging reshuffles only that connection's tabs and leaves the others where they are. An insertion line shows where the tab will land, and dragging near an edge auto-scrolls the bar. The new order is persisted with the rest of your tabs in `preferences.json`.
+
+Since v0.29.0 the tab context menu also has **Move Tab Left** and **Move Tab Right**, which move the tab one position among the connection's tabs without dragging. **Move Tab Left** is disabled on the first tab and **Move Tab Right** on the last. The move keeps the tab's SQL, results and pending changes, and the order is saved as for a drag.
 
 <video src="/videos/posts/tabularis-reorder-tabs.mp4" poster="/videos/posts/tabularis-reorder-tabs.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
@@ -306,6 +329,10 @@ Both the SQL editor and notebook cells guard against the queries that are easies
 
 The detection is not a naïve substring match — it ignores comments and string literals (including backslash-escaped quotes), understands data-modifying CTEs, and handles multi-statement batches.
 
+### Result Status Bar
+
+Since v0.29.0 the status bar of a result shows the column count after the row count, for example `120 rows retrieved · 8 columns`, in the single result bar, the result tabs and the stacked view. On PostgreSQL, MySQL and SQLite, hovering the duration shows a breakdown: **Execution** (until the first row arrives), **Fetch** (reading the remaining rows) and **Total**. Plugin drivers and statements without a result set show only the total.
+
 ### Total Row Count
 
 The pager shows the exact size of the current result — `{total} rows` next to the page indicator — counted against the *reconstructed filtered query*, so a filtered grid reports the filtered total rather than the base table's. The count resets when the query or filter changes and is preserved across pagination.
@@ -374,12 +401,16 @@ The History tab supports:
 - **Outcome** (any, succeeded, failed) and **Time range** (last hour, today, last 7 or 30 days) filters, since v0.28.0, combined with the search box
 - **Date grouping** such as Today / Yesterday / older buckets
 - **Double-click** (or `Enter`) to open a query in a new console tab and run it
-- **Context menu actions**: **Copy Query**, **Run Query**, **Insert to Editor** / **Open in New Tab** (both open the query in a console without running it), **Add to Favorites**, and delete the entry
+- **Context menu actions**: **Copy Query**, **Copy Details** (since v0.29.0: database, execution time, duration, rows affected and status or error message as plain text, followed by the SQL; values that were not recorded are left out), **Run Query**, **Insert to Editor** / **Open in New Tab** (both open the query in a console without running it), **Add to Favorites**, and delete the entry
 - **Clear All** for the current connection only
 
 ![Query History filtered to Failed and Today, showing 3 of 7 entries](/img/tabularis-query-history-filters.png)
 
 This makes the sidebar history a fast iteration loop: run a query, tweak it, and jump back to any earlier version without digging through editor tabs.
+
+### Pausing history capture
+
+Since v0.29.0 the History tab has a **Pause history capture** toggle. While it is paused, queries still run normally but are not recorded, and the panel shows *Query history capture paused*. **Resume history capture** records new queries again; queries run while paused are not added afterwards. The pause lasts for the current session only: capture is active again after a restart.
 
 ### History retention
 
@@ -410,5 +441,5 @@ The results grid is heavily optimized to handle thousands of rows without droppi
 - **Inline Editing**: Double-click any cell to modify its content. Changes are marked in yellow and can be committed back to the database with a single click (generating `UPDATE` statements securely via primary keys).
 - **Rich Data Types**: JSON / JSONB columns and long text columns open in a Monaco editor with diff and side-by-side toggles; JSON cells additionally open in a standalone Tauri window (see [Data Grid → JSON & long text cells](/wiki/data-grid#json--long-text-cells)). Spatial data displays coordinates.
 - **Foreign Key Navigation**: FK cells get a click-to-navigate affordance and a context-menu entry that opens the referenced table filtered to the matching row. See [Data Grid → Foreign Key Navigation](/wiki/data-grid#foreign-key-navigation).
-- **Exporting**: Export the current view to CSV, JSON or Markdown instantly.
+- **Exporting**: Export the current view to CSV, JSON or Markdown, or the loaded rows to HTML or NDJSON (see [Data Grid → Exporting Results](/wiki/data-grid#exporting-results)).
 - **Copying with headers**: The **Export column names** toggle in the results toolbar adds a header row to CSV and Markdown copies, so data pastes cleanly into Excel or Google Sheets.

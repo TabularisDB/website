@@ -232,6 +232,49 @@ Since v0.26.0, a driver that declares `table_query_templates: true` is asked for
 
 `kind` is `select`, `update` or `delete`. Table, schema and column names are unquoted identifiers that the driver must quote and escape. `columns` defaults to `[]` (SELECT uses `*`); `schema` and `limit` may be null. SELECT All passes no limit, SELECT Fields passes 100, and UPDATE/DELETE reject a limit. UPDATE and DELETE templates must include `WHERE 1 = 0`, and UPDATE values use the editor's `:value_1`, `:value_2` placeholders. Only a `-32601` error falls back to the host template; other errors are shown to the user. Older hosts ignore the capability, so it does not require a higher `min_runtime_version`. The [SQL Server plugin](https://github.com/TabularisDB/tabularis-sqlserver-plugin) uses it from 1.0.0-beta.3.
 
+### Column Statistics *(optional, since v0.29.0)*
+
+The data grid's **Column statistics** popover (see [Data Grid](/wiki/data-grid#column-statistics)) gets its numbers from one of three sources:
+
+| Driver | Source |
+|--------|--------|
+| Plugin with `column_stats: true` | the plugin's `get_column_stats` RPC |
+| Built-in driver, or plugin whose `sql_dialect` is explicitly `postgres`, `mysql` or `sqlite` | the host's generic SQL (`COUNT(DISTINCT col)`, `MIN` / `MAX`, `GROUP BY col ORDER BY 2 DESC, 1 LIMIT 10`) |
+| Any other plugin | none: the menu entry is hidden |
+
+An omitted `sql_dialect` does not count as SQL-compatible, and `mssql`, `oracle` and `generic` plugins need `column_stats` to get the popover. A non-SQL engine that declares a dialect only for quoting or splitting should opt in.
+
+```json
+{
+  "params": ConnectionParams,
+  "request": {
+    "table": "orders",
+    "schema": null,
+    "column": "total",
+    "data_type": "decimal",
+    "filter": "status = 'open'",
+    "top_values_limit": 10,
+    "include": { "distinct": true, "min_max": true, "top_values": true }
+  }
+}
+```
+
+`table`, `schema` and `column` are unquoted identifiers; `schema` is null unless the driver has `schemas: true`. `filter` is the tab's current filter as a WHERE clause without the keyword, or null. `include` says which optional parts to compute; the host turns parts off for column types where they make no sense and for masked columns, and drops any part it did not ask for.
+
+```json
+{
+  "row_count": 120,
+  "null_count": 3,
+  "distinct_count": 40,
+  "min": 1.5,
+  "max": 980,
+  "top_values": [{ "value": 25, "count": 12 }],
+  "sample_size": null
+}
+```
+
+`row_count` and `null_count` are required, with `null_count <= row_count`. The other fields may be null or omitted. Set `sample_size` when distinct count, min / max and top values were computed over a sample of that many non-NULL values; the popover then says so and skips the **unique** chip. A `-32601` error falls back to the generic SQL for SQL-compatible plugins and otherwise shows that the driver does not provide statistics; other errors are shown in the popover. Closing the popover does not cancel the RPC, so keep it cheap on large tables. Older hosts ignore the capability, and the Tabularium driver schema must declare `column_stats` before a plugin publishes with it.
+
 ### Materialized Views *(optional)*
 
 Declare `materialized_views: true` in capabilities to enable the UI. If the plugin returns a "Method not found" error, the host falls back to empty results for `get_materialized_views` and `get_materialized_view_columns`; `get_materialized_view_definition` and `refresh_materialized_view` surface a "not supported by this driver" error instead.
@@ -256,16 +299,35 @@ The host also calls the following methods, depending on the capabilities you dec
 
 | Area | Methods |
 |------|---------|
-| Schema metadata | `get_schemas`, `get_foreign_keys`, `get_indexes` |
+| Schema metadata | `get_schemas`, `get_foreign_keys`, `get_indexes`, `get_table_ddl` (used by [Dump Database](/wiki/dump-import#plugin-drivers) since v0.29.0) |
 | Batch / ER diagram | `get_schema_snapshot`, `get_all_columns_batch`, `get_all_foreign_keys_batch`, `execute_query_batch` (falls back to one `execute_query` per statement) |
 | Row editing | `insert_record`, `update_record`, `delete_record` |
-| DDL generation | `get_create_table_sql`, `get_add_column_sql`, `get_alter_column_sql`, `get_create_index_sql`, `get_create_foreign_key_sql`, `drop_index`, `drop_foreign_key` |
+| DDL generation | `get_create_table_sql`, `get_add_column_sql`, `get_alter_column_sql`, `get_create_index_sql`, `get_create_foreign_key_sql`, `drop_index`, `drop_foreign_key`, `get_drop_table_sql` (`drop_table_sql`, since v0.29.0) |
 | Views | `get_views`, `get_view_definition`, `get_view_columns`, `create_view`, `alter_view`, `drop_view` |
 | Routines | `get_routines`, `get_routine_parameters`, `get_routine_definition` |
 | Routine management (`routine_management`) | `build_routine_call_sql`, `routine_create_template`, `get_routine_edit_script`, `drop_routine` — each optional, with a host fallback |
 | Triggers (`triggers`) | `get_triggers`, `get_trigger_definition`, `create_trigger`, `drop_trigger` |
 | User management (`user_management`) | `get_db_privilege_catalog`, `get_db_users`, `get_db_user_grants`, `create_db_user`, `drop_db_user`, `set_db_user_password`, `get_db_user_privileges`, `apply_db_user_privileges` |
 | Sessions | `release_session` |
+
+#### DDL builders and connection context *(since v0.29.0)*
+
+Every DDL generation request carries `params` (`ConnectionParams`) with the database the user is browsing already applied: on a multi-database connection, `params.database` is the selected database, not the first one saved on the connection. Plugins can use it to qualify names (`project.dataset.table`). These are pure SQL builders: no SSH, SSM or Kubernetes tunnel is opened for them, so `host` and `port` are the saved values. The keychain password, the connection URI and plugin-owned secrets (`params.extra[key]`) are passed when they can be read; an unreadable secret is left unset and the request is still sent. Results are an array of statements, executed in order.
+
+- **`column_comments`**: `ColumnDefinition` gains an optional `comment`, present only when the user entered a description in the column editor. In `get_alter_column_sql`, a missing `new_column.comment` while `old_column.comment` was set means the description was cleared.
+- **`get_drop_table_sql`** (only with `drop_table_sql: true`): params `{ "params", "table", "schema", "database" }`, returns the statement to run when the user drops a table. Return `null` or a `-32601` error to let the host build its generic `DROP TABLE` with your `identifier_quote`.
+
+Dumps and notebook literals are also built from driver capabilities (`sql_dialect`, `sql_syntax`) rather than from driver ids.
+
+### Plugin-owned Connection Secrets *(since v0.29.0)*
+
+A plugin can store its own credentials per connection in the OS keychain through `setSecretField` in the `connection-modal.extra_fields` [UI extension](/wiki/ui-extensions#custom-connection-fields). The values are never written to `connections.json` or `config.json` and never returned to the plugin UI. At runtime the host resolves them into `params.extra[key]` before every RPC call, Test Connection, Load Databases and the MCP server, so method shapes stay unchanged. Export with credentials and backups carry them, duplicating a connection copies them, deleting it removes them, and switching the connection to another driver drops them.
+
+A stored secret can be missing at runtime (connections file synced to another machine, keychain reset, locked or denied). The host does not fail the call: it logs the key name and calls the driver with `params.extra[key]` unset, so the plugin must check for the value and return a clear error asking the user to set it again. Older Tabularis versions drop the reference (`plugin_secret_keys`) when they rewrite `connections.json`; setting the secret again restores it.
+
+### Shutdown grace period
+
+When a plugin is stopped, in-flight calls get a grace period to finish before the process is killed: 2 seconds by default, configurable since v0.29.0 globally (`pluginShutdownGraceSeconds`) or per plugin (`plugins.<id>.shutdownGraceSeconds`), with a minimum of 1 second. See [Installing Plugins → Call timeout](/wiki/installing-plugins#call-timeout-and-cancellation).
 
 ### `explain_query` *(optional)*
 
