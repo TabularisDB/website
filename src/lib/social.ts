@@ -4,6 +4,7 @@ export const SOCIAL_URLS = {
   bluesky: "https://bsky.app/profile/tabularis.bsky.social",
   x: "https://x.com/tabularisdb",
   mastodon: "https://mastodon.social/@tabularis",
+  linkedin: "https://www.linkedin.com/company/tabularisdb",
 } as const;
 
 interface SocialShareInput {

@@ -32,7 +32,7 @@ export function buildOrganizationJsonLd() {
         name: 'Tabularis',
         url: SITE_URL,
         logo: toAbsoluteUrl('/img/brand/tabularis-logo-color.png'),
-        sameAs: [SOCIAL_URLS.github, SOCIAL_URLS.discord, SOCIAL_URLS.bluesky, SOCIAL_URLS.x, SOCIAL_URLS.mastodon],
+        sameAs: [SOCIAL_URLS.github, SOCIAL_URLS.discord, SOCIAL_URLS.bluesky, SOCIAL_URLS.x, SOCIAL_URLS.mastodon, SOCIAL_URLS.linkedin],
     };
 }
 

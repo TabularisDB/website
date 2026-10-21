@@ -1,5 +1,5 @@
 import type {ComponentType} from 'react';
-import {GitHubIcon, DiscordIcon, BlueskyIcon, XBrandIcon, MastodonIcon} from '@/components/ui/Icons/SocialIcons';
+import {GitHubIcon, DiscordIcon, BlueskyIcon, XBrandIcon, MastodonIcon, LinkedInIcon} from '@/components/ui/Icons/SocialIcons';
 import {SOCIAL_URLS} from '@/lib/social';
 
 interface IconProps {
@@ -21,6 +21,7 @@ export const SOCIAL_LINKS: Social[] = [
     {label: 'Bluesky', href: SOCIAL_URLS.bluesky, Icon: BlueskyIcon},
     {label: 'X', href: SOCIAL_URLS.x, Icon: XBrandIcon},
     {label: 'Mastodon', href: SOCIAL_URLS.mastodon, Icon: MastodonIcon, rel: 'me'},
+    {label: 'LinkedIn', href: SOCIAL_URLS.linkedin, Icon: LinkedInIcon},
 ];
 
 interface SocialLinksProps {
