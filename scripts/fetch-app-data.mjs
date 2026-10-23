@@ -8,11 +8,11 @@ const TABULARIUM = (process.env.TABULARIUM_REGISTRY_URL ?? 'https://registry.tab
 
 const targets = [
     {
-        url: `${BASE}/src/version.ts`,
+        url: `${BASE}/packages/web-ui/src/version.ts`,
         out: 'src/lib/download/version.ts',
         transform: (body) => {
             const match = body.match(/APP_VERSION\s*=\s*(['"`])([^'"`]+)\1/);
-            if (!match) throw new Error('Could not parse APP_VERSION from upstream src/version.ts');
+            if (!match) throw new Error('Could not parse APP_VERSION from upstream packages/web-ui/src/version.ts');
             return `export const APP_VERSION = "${match[2]}";\n`;
         },
     },

@@ -43,7 +43,7 @@ Three pieces of data are fetched from `TabularisDB/tabularis` at build time by `
 
 | Upstream                | Local file                                                         | Consumer                                                                                 |
 | ----------------------- | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
-| `src/version.ts`        | `src/lib/version.ts` (re-emitted as a single `APP_VERSION` export) | download links, SEO metadata, JSON-LD                                                    |
+| `packages/web-ui/src/version.ts` | `src/lib/download/version.ts` (re-emitted as a single `APP_VERSION` export) | download links, SEO metadata, JSON-LD                                                    |
 | `CHANGELOG.md`          | `CHANGELOG.md`                                                     | `/changelog` page via `src/lib/changelog.ts`                                             |
 | `plugins/registry.json` | `plugins/registry.json`                                            | `/plugins` page via `src/lib/plugins.ts`, and the `:::plugin <id>:::` markdown extension |
 
