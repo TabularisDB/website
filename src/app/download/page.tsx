@@ -1,5 +1,6 @@
 import {JsonLd} from '@/components/layout/JsonLd';
 import {DownloadSection} from '@/components/pages/download/DownloadSection/DownloadSection';
+import {SelfHostSection} from '@/components/pages/download/SelfHostSection/SelfHostSection';
 import {Card} from '@/components/ui/Card/Card';
 import {CardGrid} from '@/components/ui/CardGrid/CardGrid';
 import {NewsletterForm} from '@/components/ui/NewsletterForm/NewsletterForm';
@@ -15,7 +16,7 @@ import styles from './DownloadPage.module.scss';
 const path = '/download';
 const title = 'Download | Tabularis';
 const description =
-    'Download Tabularis for Windows, macOS, and Linux. Available via WinGet, Homebrew, Snap, AUR and more.';
+    'Download Tabularis for Windows, macOS, and Linux, or self-host it with Docker or Helm. Available via WinGet, Homebrew, Snap, AUR and more.';
 
 export const metadata: Metadata = {
     title,
@@ -58,6 +59,8 @@ export default function DownloadPage() {
 
             <section className={styles.layout}>
                 <DownloadSection stableVersion={APP_VERSION} stableDate={rawDate ? formatDate(rawDate) : ''} />
+
+                <SelfHostSection />
 
                 <CardGrid variant="joined" className={styles.secondaryGrid}>
                     <Card>
