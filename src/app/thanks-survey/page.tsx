@@ -15,7 +15,7 @@ const RESOURCES: ThankYouResource[] = [
         icon: <DownloadIcon />,
         title: 'Download Tabularis',
         linkLabel: 'Download',
-        desc: 'Try it on Windows, macOS or Linux and start working with your databases.',
+        desc: 'Try it on Windows, macOS, Linux or in your browser and start working with your databases.',
     },
     {
         href: '/roadmap',

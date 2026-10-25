@@ -13,7 +13,7 @@ export const COMPARE_PREVIEW_MAP: Record<string, ComparePreview> = {
     'tableplus-alternative': {
         tools: ['tabularis', 'tableplus'],
         accent: 'Cross-platform SQL workflow',
-        highlights: ['Open-source', 'Cross-platform (Win/macOS/Linux)', 'SQL notebooks'],
+        highlights: ['Open-source', 'Cross-platform (Win/macOS/Linux/Web)', 'SQL notebooks'],
     },
     'datagrip-alternative': {
         tools: ['tabularis', 'datagrip'],

@@ -5,7 +5,7 @@ order: 1
 excerpt: 'Welcome to the Tabularis Wiki. Learn how to get started with the most modern database management tool.'
 ---
 
-**Tabularis** is a desktop database management tool built with **Tauri** (Rust backend) and **React** (frontend). It natively supports PostgreSQL, MySQL, MariaDB, and SQLite, and can be extended to any other database engine via its JSON-RPC plugin system. Since v0.30.0 it can also run as a server and be used from a browser: see [Tabularis Web](/wiki/web-mode).
+**Tabularis** is a database management tool built with **Tauri** (Rust backend) and **React** (frontend). It runs as a desktop app on macOS, Windows and Linux, or, since v0.30.0, in a browser with [Tabularis Web](/wiki/web-mode), self-hosted on your own machine or server. It natively supports PostgreSQL, MySQL, MariaDB, and SQLite, and can be extended to any other database engine via its JSON-RPC plugin system.
 
 ## What Tabularis Actually Does
 
@@ -22,7 +22,7 @@ excerpt: 'Welcome to the Tabularis Wiki. Learn how to get started with the most 
 - **Dumps and imports** databases to/from `.sql` files, with progress tracking and cancellation support, and backs them up on a daily schedule.
 - **Extends** via plugins: any executable that speaks JSON-RPC over stdin/stdout becomes a new database driver.
 - **Runs as an MCP server** so external AI agents (Claude Desktop, Cursor) can query your local databases.
-- **Runs in a browser** with `tabularis web`, locally or self-hosted with Docker, Compose or Helm.
+- **Runs in a browser** with [Tabularis Web](/wiki/web-mode), locally or self-hosted with Docker, Compose or Helm.
 
 ## System Requirements
 
@@ -31,6 +31,7 @@ excerpt: 'Welcome to the Tabularis Wiki. Learn how to get started with the most 
 | **macOS**   | 10.15+        | Separate builds for Apple Silicon (`aarch64`) and Intel (`x64`) |
 | **Windows** | 10/11         | WebView2 required (pre-installed with Edge) |
 | **Linux**   | Ubuntu 22.04+ | x86_64 only. Requires `webkit2gtk-4.1` and `libsecret-1` |
+| **Web**     | A current browser | Served by the container image (`linux/amd64`, `linux/arm64`) or by `tabularis web` on a desktop install |
 
 ### Linux dependency install
 
@@ -56,11 +57,12 @@ sudo dnf install webkit2gtk4.1-devel libsecret-devel
 
 ### 1. Install
 
-Download the right package from [GitHub Releases](https://github.com/TabularisDB/tabularis/releases):
+Download the right package from [GitHub Releases](https://github.com/TabularisDB/tabularis/releases), or self-host it to use it from a browser:
 
 - macOS → `.dmg`
 - Windows → `.msi` or `.exe`
 - Linux → `.AppImage`, `.deb`, or `.rpm`
+- Browser → the [Docker image](/wiki/docker-helm) or `tabularis web`; see [Tabularis Web](/wiki/web-mode)
 
 ### 2. Create a connection
 

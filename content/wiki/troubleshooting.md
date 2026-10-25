@@ -95,6 +95,35 @@ When reporting a bug, export the logs and attach them to your issue on [GitHub](
 
 On distributions with a recent Mesa (Arch, Solus, …), AppImages of v0.13.3 through v0.18.0 could open a black window: the bundle shipped a stale `libwayland` that the host `libEGL` bound to, and WebKitWebProcess aborted with `EGL_BAD_PARAMETER`. Fixed in **v0.19.0** — the AppImage no longer bundles libwayland at all. If you're stuck on an affected version, download the v0.19.0 (or newer) AppImage from the [releases page](https://github.com/TabularisDB/tabularis/releases).
 
+## Tabularis Web Problems
+
+These apply to [Tabularis Web](/wiki/web-mode), started with `tabularis web` or from the container image.
+
+### The server does not start
+
+- **Address already in use:** choose a free port, for example `--port 8081`. Tabularis does not look for one itself.
+- **Non-loopback bind rejected:** a remote bind needs `--auth`, `--public-url` and `--allowed-origin`; see [Remote Access & Reverse Proxy](/wiki/web-remote-access).
+- **Password or proxy secret rejected:** set `TABULARIS_WEB_PASSWORD` (12+ characters) or `TABULARIS_WEB_PROXY_SECRET` (32+ characters) in the service's environment.
+- **Web UI assets not found:** reinstall the complete package.
+
+### The browser cannot sign in or keeps losing the session
+
+| Response | Likely cause | Fix |
+| :--- | :--- | :--- |
+| **401** locally | The one-time access URL expired or was already used | Restart `tabularis web` and let it open a fresh URL; don't bookmark it |
+| **401** remotely | Wrong password, or the proxy doesn't replace both identity headers | Check the password or the proxy configuration |
+| **403** | Unexpected `Host` or `Origin`, or an action a remote session isn't allowed to run | Check the public URL, the allowed origins and that the proxy keeps the `Host` header |
+| **429** | Too many failed sign-ins from this client | Wait five minutes, then use the right credentials |
+| Progress stops or disconnects | The proxy drops WebSockets | Enable WebSocket upgrades and longer idle timeouts on the proxy |
+
+### Features fail after signing in
+
+- **Saved passwords are missing:** the server runs under another account or home folder, or can't unlock its credential store. Copying configuration files does not copy credentials.
+- **An import, export, dump or BLOB download expired:** start it again from the UI. Transfer links are short-lived and often single-use.
+- **A large query fails:** results are capped at 10,000 rows per page and 16 MiB per response. Paginate, select fewer columns or export.
+- **A plugin won't start:** the plugin release must support the server's operating system and architecture. Check its startup error in the server logs.
+- **Clipboard, notifications, new tabs or links are blocked:** allow them in the browser for the Tabularis site.
+
 ## FAQ
 
 ### Where are my connections stored?

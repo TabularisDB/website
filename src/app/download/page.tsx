@@ -51,7 +51,8 @@ export default function DownloadPage() {
                 </span>
                 <h1 className="title">Get Tabularis running in one click.</h1>
                 <p className="description">
-                    Trusted by {formatDownloads(TOTAL_DOWNLOADS)} downloads across macOS, Windows, and Linux.
+                    Trusted by {formatDownloads(TOTAL_DOWNLOADS)} downloads. Get it for macOS, Windows and Linux, or
+                    self-host it for your browser.
                 </p>
             </header>
 

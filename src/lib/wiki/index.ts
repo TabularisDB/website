@@ -6,6 +6,7 @@ import {wrapVideosInHtml} from '@/lib/videos/markdownVideos';
 
 export type WikiCategory =
     | 'Getting Started'
+    | 'Self-Hosting'
     | 'Core Features'
     | 'Database Objects'
     | 'Security & Networking'
@@ -16,6 +17,7 @@ export type WikiCategory =
 
 export const WIKI_CATEGORIES: WikiCategory[] = [
     'Getting Started',
+    'Self-Hosting',
     'Core Features',
     'Database Objects',
     'Security & Networking',

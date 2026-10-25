@@ -1,11 +1,11 @@
 ---
 title: "Command Line Interface"
 order: 14.5
-excerpt: "Launch Tabularis from the terminal with flags for Visual EXPLAIN files, MCP server mode, and debugging."
+excerpt: "Launch Tabularis from the terminal: serve it to a browser with `web`, open Visual EXPLAIN files, run the MCP server, and debug."
 category: "Reference"
 ---
 
-Tabularis is primarily a desktop application, but its binary accepts a small set of command-line flags that extend how the app can be launched. You can serve the app to a browser with `tabularis web`, open a saved EXPLAIN plan straight into the Visual EXPLAIN viewer, start Tabularis as an MCP server for AI clients, or open the developer tools for troubleshooting.
+Tabularis is primarily a desktop application, but its binary accepts a small set of command-line flags that extend how the app can be launched. You can serve the interface to a browser with `web`, open a saved EXPLAIN plan straight into the Visual EXPLAIN viewer, start Tabularis as an MCP server for AI clients, or open the developer tools for troubleshooting.
 
 The flags are parsed with [clap](https://docs.rs/clap), so `--help` and `--version` are always available.
 
@@ -57,6 +57,30 @@ If the file is not in one of the supported formats, Tabularis shows an error in 
 - Opening a `.json` or `.txt` file from your file manager does not open it in Tabularis: the app registers no file associations, so pass the file with `--explain` instead.
 - If Tabularis is already running, a second `tabularis --explain FILE` only brings the existing window to the front and the flag is ignored. Quit Tabularis first.
 
+## `web`
+
+Since v0.30.0, starts [Tabularis Web](/wiki/web-mode): an HTTP and WebSocket server that serves the Tabularis interface to a browser, without opening a desktop window. By default it opens your browser with a one-time sign-in link and runs until you stop it with `Ctrl+C`.
+
+```bash
+tabularis web
+# Tabularis Web is available at http://127.0.0.1:8080
+```
+
+| Option | Purpose |
+| :--- | :--- |
+| `--host` | Bind address, `127.0.0.1` by default. A non-loopback address is refused unless remote authentication is fully configured. |
+| `--port` | Bind port, `8080` by default. There is no fallback when the port is taken. |
+| `--no-open` | Do not open a browser, and do not print the one-time access URL. For services and remote deployments. |
+| `--auth` | Remote authentication: `password` or `proxy`. Requires `--public-url` and `--allowed-origin`. |
+| `--public-url` | Public origin the browser uses, for example `https://tabularis.example.com`. HTTPS, or HTTP on a loopback host only. No path, query or credentials. |
+| `--allowed-origin` | Allowed browser origin. Repeat it for each origin; the public URL must be one of them. |
+| `--trusted-proxy` | Source CIDR of a proxy allowed to send `X-Forwarded-For`. Repeatable, empty by default. |
+| `--allow-high-risk` | Give remote sessions administrator rights (tunnels, plugins, backups, settings). Never for shared deployments. |
+| `--server-file-browser-root` | A server directory the browser may browse. Repeatable; remote sessions also need `--allow-high-risk`. |
+| `--web-root` | Serve the UI from another built folder. For development only: the server and the UI must come from the same release. |
+
+The login password and the proxy secret are read from `TABULARIS_WEB_PASSWORD` and `TABULARIS_WEB_PROXY_SECRET`, never from the command line. See [Remote Access & Reverse Proxy](/wiki/web-remote-access) for remote deployments.
+
 ## `--mcp`
 
 Starts Tabularis in **Model Context Protocol** mode instead of launching the GUI. In this mode the process speaks JSON-RPC 2.0 over `stdin`/`stdout` and is meant to be spawned as a child process by an MCP host like Claude Desktop, Claude Code, Codex, Cursor, Windsurf, or Antigravity.
@@ -66,17 +90,6 @@ tabularis --mcp
 ```
 
 You will normally never run this command yourself — the one-click install on the **MCP** page (sidebar) configures each client, either by writing its config file or by running its CLI (Codex). See the [MCP Server](mcp-server) page for the full integration.
-
-## `web`
-
-Since v0.30.0, the `web` subcommand starts Tabularis as a server for the browser instead of opening the desktop window:
-
-```bash
-tabularis web
-# Tabularis Web is available at http://127.0.0.1:8080
-```
-
-It binds to `127.0.0.1:8080`, opens your default browser with a one-time sign-in link, and runs until you stop it with `Ctrl+C`. Options such as `--host`, `--port`, `--no-open`, `--auth` and `--public-url` configure the address and remote access. It conflicts with `--mcp` and `--explain`. See [Tabularis Web](web-mode) for every option, remote deployments and the Docker image.
 
 ## `--debug`
 
@@ -109,10 +122,10 @@ tabularis --help
 
 Some flags are mutually exclusive by behaviour:
 
+- **`web` conflicts with `--mcp` and `--explain`.** It starts the browser server only, so it cannot be combined with either.
 - **`--mcp` wins over everything.** If `--mcp` is set, Tabularis runs the MCP server loop and never builds the Tauri GUI, so `--explain` is ignored and `--debug` only raises the log level (since v0.28.0).
 - **`--explain` suppresses the main window.** Only the Visual EXPLAIN window opens; closing it exits the app.
 - **`--debug`** opens DevTools on the main window only. Combined with `--explain`, the main window is closed, so the Visual EXPLAIN window gets no DevTools.
-- **`web` never starts the desktop window**, and cannot be combined with `--mcp` or `--explain`.
 - **A running instance takes over.** If Tabularis is already open, launching it again (with or without `--explain` or `--debug`) only focuses the existing main window. `--mcp` is not affected, because it never starts the GUI.
 
 If the flags fail to parse for any reason (for instance, because the OS passes non-standard arguments at GUI launch time on certain platforms, or a bare file path is passed without `--explain`), Tabularis ignores all of them and falls back to the default GUI launch rather than crashing.

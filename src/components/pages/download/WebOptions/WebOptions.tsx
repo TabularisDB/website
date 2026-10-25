@@ -1,9 +1,9 @@
 import {CopyButton} from '@/components/ui/CopyButton/CopyButton';
 import {Notice} from '@/components/ui/Notice/Notice';
-import {ArrowUpRightIcon, CopyIcon} from 'lucide-react';
+import {ArrowRightIcon, CopyIcon} from 'lucide-react';
+import Link from 'next/link';
 import styles from './WebOptions.module.scss';
 
-const GUIDE_URL = 'https://github.com/TabularisDB/tabularis/blob/main/web-ui-project/docs/WEB_MODE_CONTAINERS.md';
 const COMPOSE_URL = 'https://raw.githubusercontent.com/TabularisDB/tabularis/main/docker/compose.yaml';
 
 const METHODS: {label: string; command: string; hint: string}[] = [
@@ -55,9 +55,9 @@ export function WebOptions() {
                 </div>
             ))}
 
-            <a className={styles.guide} href={GUIDE_URL} target="_blank" rel="noopener noreferrer">
-                Read the container guide <ArrowUpRightIcon aria-hidden="true" />
-            </a>
+            <Link className={styles.guide} href="/wiki/docker-helm">
+                Read the self-hosting guide <ArrowRightIcon aria-hidden="true" />
+            </Link>
         </div>
     );
 }

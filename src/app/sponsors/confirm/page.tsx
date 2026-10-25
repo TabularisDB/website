@@ -15,7 +15,7 @@ const RESOURCES: ThankYouResource[] = [
         icon: <DownloadIcon />,
         title: 'Try Tabularis',
         linkLabel: 'Download',
-        desc: 'Get to know the product your brand will sit next to. Free on Windows, macOS and Linux.',
+        desc: 'Get to know the product your brand will sit next to. Free on Windows, macOS, Linux and the web.',
     },
     {
         href: SOCIAL_URLS.github,

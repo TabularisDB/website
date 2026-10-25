@@ -2,10 +2,13 @@
 category: 'Getting Started'
 title: 'Installation'
 order: 1.5
-excerpt: 'Download and install Tabularis on macOS, Windows, or Linux.'
+excerpt: 'Install Tabularis on macOS, Windows or Linux, or self-host it and use it from a browser.'
 ---
 
-Tabularis ships as a native desktop application built with Tauri. There are no servers, no sign-ups, and no internet connection required to run it.
+Tabularis runs in two ways:
+
+- **Desktop app** for macOS, Windows and Linux, built with Tauri. There are no servers, no sign-ups, and no internet connection required to run it.
+- **Tabularis Web**, used from any browser and self-hosted with Docker, Helm or `tabularis web`. See [Tabularis Web (self-hosted)](#tabularis-web-self-hosted) below.
 
 ## System Requirements
 
@@ -14,6 +17,7 @@ Tabularis ships as a native desktop application built with Tauri. There are no s
 | **macOS**   | 10.15+        | Separate builds for Apple Silicon (`aarch64`) and Intel (`x64`) |
 | **Windows** | 10 / 11       | WebView2 required (pre-installed with Edge) |
 | **Linux**   | Ubuntu 22.04+ | x86_64 only. Requires `webkit2gtk-4.1` and `libsecret-1` |
+| **Web**     | A current browser | Served by the container image (`linux/amd64`, `linux/arm64`) or by `tabularis web` on a desktop install |
 
 ## macOS
 
@@ -138,9 +142,18 @@ Since v0.26.0 the [nightly channel](/wiki/updates#release-channels) is on the AU
 yay -S tabularis-nightly-bin
 ```
 
-## Self-hosting in the browser
+## Tabularis Web (self-hosted)
 
-Since v0.30.0 Tabularis can also run on a server and be used from a browser, with `tabularis web` or the official Docker image `ghcr.io/tabularisdb/tabularis` (Compose and Helm are supported too). See [Tabularis Web](/wiki/web-mode).
+Since v0.30.0 the same interface also runs in a browser. Start it from an installed Tabularis with `tabularis web`, or run the official container image:
+
+```bash
+docker run -d --name tabularis -p 127.0.0.1:8080:8080 -v tabularis-data:/data ghcr.io/tabularisdb/tabularis
+docker logs tabularis   # prints the generated login password
+```
+
+Then open `http://localhost:8080`.
+
+See [Tabularis Web](/wiki/web-mode) for how it works and [Docker & Helm](/wiki/docker-helm) for Docker Compose, Helm and configuration.
 
 ## Updates
 

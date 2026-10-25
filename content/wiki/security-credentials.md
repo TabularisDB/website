@@ -19,6 +19,12 @@ Tabularis can keep every password, API key, and passphrase in your operating sys
 
 Tabularis uses the [`keyring`](https://docs.rs/keyring) Rust crate, which abstracts across all three platforms.
 
+## Encrypted File Store
+
+Servers and containers often have no keychain. Setting `TABULARIS_SECRET_STORE=file` keeps every secret Tabularis would put in the keychain (database and SSH passwords, connection URIs, plugin secrets, AI keys) in an encrypted `secrets.enc.json` file instead, encrypted with AES-256-GCM under a key derived from `TABULARIS_SECRET_KEY` with Argon2id. `TABULARIS_SECRET_STORE_PATH` moves the file.
+
+The [container image](/wiki/docker-helm#stored-credentials) uses this store by default. When `TABULARIS_SECRET_KEY` is unset, the image generates a random key in `/data/secrets.key`: secrets survive restarts, but anyone who can read the volume can read them. Set your own key in production and back it up separately, because a lost key makes the stored credentials unrecoverable.
+
 ## What Is Stored Where
 
 ### In the OS Keychain (encrypted)

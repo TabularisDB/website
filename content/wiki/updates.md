@@ -94,6 +94,17 @@ brew upgrade --cask tabularis@nightly
 winget upgrade --id Debba.Tabularis
 ```
 
+## Tabularis Web Servers
+
+A [Tabularis Web](/wiki/web-mode) server is never updated from the browser: the built-in updater does not apply, and **Settings → Info → Updates** shows the server's version and build instead. Upgrade with the method that installed it (package manager, release artifact, container image or Helm chart).
+
+1. Note the version shown in **Settings → Info → Updates**, and the server's launch options, account and data locations.
+2. Back up the configuration and data folders. Credentials live in the OS credential store or the encrypted secret file, so back those up separately.
+3. Stop `tabularis web` or its service, install the new release, and start it again with the same account, environment and options.
+4. Check the reported version, sign in, open a connection, run a read-only query and confirm live progress works before reopening access.
+
+The server ships its matching browser UI, so never copy a UI bundle from another release onto it. If a check fails, stop the server, restore the previous installation and its deployment files, and restart it with the original configuration. Keep the failed version's logs for diagnosis. Release notes take precedence when a version needs a migration or has rollback constraints.
+
 ## Which Version Am I Running?
 
 The current version is always visible in **Settings → Info**, in the top-right badge on the Info card, and as a badge at the top of the [home page](/).
