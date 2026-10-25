@@ -71,3 +71,22 @@
         height: 1rem;
     }
 }
+
+// Small inline tag, used on the download page and modal.
+@mixin tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    height: 1.75rem;
+    padding-inline: 0.625rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+
+    svg {
+        flex-shrink: 0;
+        width: 0.875rem;
+        height: 0.875rem;
+    }
+}

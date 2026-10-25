@@ -1,0 +1,62 @@
+@use '../../../../styles/mixins' as *;
+
+.picker {
+    position: relative;
+}
+
+.tag {
+    @include tag;
+
+    font-weight: 600;
+
+    &:focus-visible {
+        outline: 2px solid var(--color-accent-teal);
+        outline-offset: 2px;
+    }
+}
+
+.stable {
+    background-color: color-mix(in srgb, var(--color-eyebrow-blue) 12%, transparent);
+    color: var(--color-eyebrow-blue);
+}
+
+.nightly {
+    background-color: color-mix(in srgb, var(--color-accent-amber) 12%, transparent);
+    color: var(--color-accent-amber);
+}
+
+.separator {
+    height: 1rem;
+    width: 1.5px;
+    margin-inline: var(--space-1);
+    background-color: currentColor;
+    opacity: 0.35;
+}
+
+.chevron {
+    transition: transform 0.15s ease;
+}
+
+.chevronOpen {
+    transform: rotate(180deg);
+}
+
+.menu {
+    position: absolute;
+    z-index: var(--z-dropdown);
+    top: calc(100% + 0.35rem);
+    left: 0;
+    padding: 0.35rem;
+    border: var(--border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: 0 0.75rem 2rem rgb(var(--rgb-shadow) / calc(0.35 * var(--shadow-scale)));
+
+    .tag {
+        transition: filter 0.15s ease;
+
+        &:hover {
+            filter: brightness(1.15);
+        }
+    }
+}

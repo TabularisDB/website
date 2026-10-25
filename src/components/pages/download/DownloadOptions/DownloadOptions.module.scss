@@ -18,9 +18,30 @@
 }
 
 .optionLabel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-1) var(--space-3);
     font-size: 0.95rem;
     font-weight: 600;
     color: var(--color-text-primary);
+}
+
+.desc {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--color-text-secondary);
+}
+
+.badge {
+    padding: 0.125rem var(--space-2);
+    border-radius: var(--radius-full);
+    background-color: color-mix(in srgb, var(--color-accent-teal) 12%, transparent);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--color-accent-teal);
 }
 
 .commandList {
@@ -62,34 +83,5 @@
         &:hover {
             text-decoration: underline;
         }
-    }
-}
-
-.note {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-    padding: var(--space-3);
-    border-radius: var(--radius-sm);
-    background-color: color-mix(in srgb, var(--color-accent-amber) 8%, transparent);
-    font-size: 0.9rem;
-    color: var(--color-text-secondary);
-
-    span {
-        display: flex;
-        align-items: center;
-        gap: var(--space-2);
-        color: var(--color-accent-amber);
-
-        @media (max-width: 500px) {
-            flex-direction: column;
-            align-items: start;
-        }
-    }
-
-    code {
-        font-family: var(--font-mono);
-        font-size: 0.8rem;
-        color: var(--color-text-primary);
     }
 }

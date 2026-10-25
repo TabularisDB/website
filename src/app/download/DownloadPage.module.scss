@@ -1,22 +1,28 @@
-.layout {
-    max-width: var(--max-width-md);
-    width: 100%;
-    margin-inline: auto;
-    margin-top: var(--space-16);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-8);
+.appIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 22.7%;
+    border: var(--border);
 }
 
-.secondaryGrid {
+.more {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
     width: 100%;
-    margin-bottom: var(--space-16);
+    max-width: var(--max-width-md);
+    margin-inline: auto;
+    margin-top: var(--space-20);
+}
+
+.explore {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
 }
 
 .links {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-2);
+    gap: var(--space-4);
     margin-top: auto;
 }
