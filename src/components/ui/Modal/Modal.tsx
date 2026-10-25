@@ -3,7 +3,7 @@
 import {CloseButton} from '@/components/ui/CloseButton/CloseButton';
 import {useScrollLock} from '@/hooks/useScrollLock';
 import clsx from 'clsx';
-import {useEffect, useId, useState, type ReactNode} from 'react';
+import {useEffect, useId, useRef, useState, type ReactNode} from 'react';
 import {createPortal} from 'react-dom';
 import styles from './Modal.module.scss';
 
@@ -78,7 +78,23 @@ interface ModalPartProps {
 }
 
 function ModalBody({children, className}: ModalPartProps) {
-    return <div className={clsx(styles.body, className)}>{children}</div>;
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const body = ref.current;
+        if (!body) return;
+        const update = () => body.style.setProperty('--scrollbar-width', `${body.offsetWidth - body.clientWidth}px`);
+        update();
+        const observer = new ResizeObserver(update);
+        observer.observe(body);
+        return () => observer.disconnect();
+    }, []);
+
+    return (
+        <div ref={ref} className={clsx(styles.body, className)}>
+            {children}
+        </div>
+    );
 }
 
 interface ModalSectionProps extends ModalPartProps {

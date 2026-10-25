@@ -1,23 +1,5 @@
-// Dashed frame with a square on each corner, shared by CalloutBlock and the
-// callouts generated in Markdown (prose.scss).
-@mixin callout-frame {
-    --corner-size: 0.6rem;
-    --corner: linear-gradient(var(--color-border), var(--color-border));
-    --corner-fill: linear-gradient(var(--color-bg), var(--color-bg));
-    --dash-width: 0.1rem;
-    --dash: var(--color-border);
-    --corner-offset: 0.05rem;
-
-    position: relative;
-    background:
-        repeating-linear-gradient(90deg, var(--dash) 0 6px, transparent 6px 12px) top / 100% var(--dash-width) no-repeat,
-        repeating-linear-gradient(90deg, var(--dash) 0 6px, transparent 6px 12px) bottom / 100% var(--dash-width)
-            no-repeat,
-        repeating-linear-gradient(180deg, var(--dash) 0 6px, transparent 6px 12px) left / var(--dash-width) 100%
-            no-repeat,
-        repeating-linear-gradient(180deg, var(--dash) 0 6px, transparent 6px 12px) right / var(--dash-width) 100%
-            no-repeat;
-
+// A square on each corner of a frame, drawn with ::before and ::after.
+@mixin frame-corners {
     &::before,
     &::after {
         content: '';
@@ -40,6 +22,49 @@
     &::after {
         bottom: calc((var(--dash-width) - var(--corner-size)) / 2 + var(--corner-offset));
     }
+}
+
+// Dashed frame with a square on each corner, shared by CalloutBlock and the
+// callouts generated in Markdown (prose.scss).
+@mixin callout-frame {
+    --corner-size: 0.6rem;
+    --corner: linear-gradient(var(--color-border), var(--color-border));
+    --corner-fill: linear-gradient(var(--color-bg), var(--color-bg));
+    --dash-width: 0.1rem;
+    --dash: var(--color-border);
+    --corner-offset: 0.05rem;
+
+    position: relative;
+    background:
+        repeating-linear-gradient(90deg, var(--dash) 0 6px, transparent 6px 12px) top / 100% var(--dash-width) no-repeat,
+        repeating-linear-gradient(90deg, var(--dash) 0 6px, transparent 6px 12px) bottom / 100% var(--dash-width)
+            no-repeat,
+        repeating-linear-gradient(180deg, var(--dash) 0 6px, transparent 6px 12px) left / var(--dash-width) 100%
+            no-repeat,
+        repeating-linear-gradient(180deg, var(--dash) 0 6px, transparent 6px 12px) right / var(--dash-width) 100%
+            no-repeat;
+
+    @include frame-corners;
+}
+
+// Solid frame with a square on each corner, filled with $fill. Used by the modals.
+@mixin solid-frame($fill) {
+    --corner-size: 0.6rem;
+    --corner: linear-gradient(var(--color-border-strong), var(--color-border-strong));
+    --corner-fill: linear-gradient(#{$fill}, #{$fill});
+    --dash-width: 0.1rem;
+    --dash: var(--color-border-strong);
+    --corner-offset: 0.05rem;
+
+    position: relative;
+    background:
+        linear-gradient(var(--dash), var(--dash)) top / 100% var(--dash-width) no-repeat,
+        linear-gradient(var(--dash), var(--dash)) bottom / 100% var(--dash-width) no-repeat,
+        linear-gradient(var(--dash), var(--dash)) left / var(--dash-width) 100% no-repeat,
+        linear-gradient(var(--dash), var(--dash)) right / var(--dash-width) 100% no-repeat,
+        #{$fill};
+
+    @include frame-corners;
 }
 
 // Same look as <Button variant="secondary" size="sm">, for links in HTML generated
@@ -72,7 +97,7 @@
     }
 }
 
-// Small inline tag, used on the download page and modal.
+// Small inline tag with a light fill, set by the caller.
 @mixin tag {
     display: inline-flex;
     align-items: center;

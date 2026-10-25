@@ -66,7 +66,7 @@ export function LightboxOverlay({
                 </button>
             )}
 
-            <CloseButton onClick={onClose} className={styles.close} />
+            <CloseButton onClick={onClose} tone="onDark" className={styles.close} />
 
             {counter && (
                 <div className={styles.footer}>
