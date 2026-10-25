@@ -2,9 +2,10 @@
 
 import clsx from 'clsx';
 import Image from 'next/image';
-import {ArrowUpRightIcon, GiftIcon, InfoIcon, SparklesIcon} from 'lucide-react';
+import {ArrowUpRightIcon, CircleCheckIcon, GiftIcon} from 'lucide-react';
 import {Button} from '@/components/ui/Button/Button';
 import {Modal} from '@/components/ui/Modal/Modal';
+import {Notice} from '@/components/ui/Notice/Notice';
 import type {Sponsor} from '@/lib/sponsors';
 import styles from './SponsorModal.module.scss';
 
@@ -42,29 +43,24 @@ export function SponsorModal({sponsor, onClose}: SponsorModalProps) {
             {sponsor && (
                 <>
                     <Modal.Body>
-                        <Modal.Section title="Overview" icon={<InfoIcon aria-hidden="true" />}>
-                            <Modal.Text>{sponsor.modalDescription}</Modal.Text>
-                        </Modal.Section>
+                        {sponsor.modalDescription && <Modal.Text>{sponsor.modalDescription}</Modal.Text>}
+
+                        {sponsor.offer && (
+                            <Notice variant="accent" icon={GiftIcon} title={sponsor.offer.title}>
+                                {sponsor.offer.description}
+                            </Notice>
+                        )}
 
                         {sponsor.features && (
-                            <Modal.Section title="Why it matters" icon={<SparklesIcon aria-hidden="true" />}>
+                            <Modal.Section title="Highlights">
                                 <ul className={styles.features}>
                                     {sponsor.features.map((feature) => (
                                         <li key={feature.text}>
-                                            <span aria-hidden="true">{feature.icon}</span>
+                                            <CircleCheckIcon aria-hidden="true" />
                                             {feature.text}
                                         </li>
                                     ))}
                                 </ul>
-                            </Modal.Section>
-                        )}
-
-                        {sponsor.offer && (
-                            <Modal.Section title="Offer for Tabularis users" icon={<GiftIcon aria-hidden="true" />}>
-                                <div className={styles.highlight}>
-                                    <p className={styles.highlightTitle}>{sponsor.offer.title}</p>
-                                    <Modal.Text>{sponsor.offer.description}</Modal.Text>
-                                </div>
                             </Modal.Section>
                         )}
                     </Modal.Body>

@@ -54,12 +54,12 @@
 
 @media (max-width: 480px) {
     .rail {
-        .labeled:not(.selected) {
+        .labeled.withIcon:not(.selected) {
             width: 2rem;
             padding-inline: 0;
         }
 
-        .segment:not(.selected) .label {
+        .withIcon:not(.selected) .label {
             position: absolute;
             width: 1px;
             height: 1px;

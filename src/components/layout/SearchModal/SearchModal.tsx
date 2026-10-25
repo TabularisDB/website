@@ -1,10 +1,11 @@
 'use client';
 
-import {useEffect, useRef, useState, useCallback} from 'react';
+import {useEffect, useRef, useState, useCallback, type CSSProperties} from 'react';
 import {useRouter, usePathname} from 'next/navigation';
 import clsx from 'clsx';
 import {searchIndex, type SearchDoc} from '@/lib/search';
 import {trackSiteSearch} from '@/lib/analytics';
+import {CloseButton} from '@/components/ui/CloseButton/CloseButton';
 import styles from './SearchModal.module.scss';
 import {useScrollLock} from '@/hooks/useScrollLock';
 
@@ -20,10 +21,10 @@ type SearchResult = {
 };
 
 const TYPE_CONFIG = {
-    post: {label: 'Blog', color: 'var(--color-accent-amber)', glyph: '\u2726'},
-    wiki: {label: 'Wiki', color: 'var(--color-accent-teal)', glyph: '\u25C8'},
-    plugin: {label: 'Plugin', color: 'var(--color-accent-purple)', glyph: '\u2B21'},
-    page: {label: 'Guide', color: 'var(--color-accent-blue)', glyph: null},
+    post: {label: 'Blog', color: 'var(--color-accent-amber)'},
+    wiki: {label: 'Wiki', color: 'var(--color-accent-teal)'},
+    plugin: {label: 'Plugin', color: 'var(--color-accent-purple)'},
+    page: {label: 'Guide', color: 'var(--color-accent-blue)'},
 } as const;
 
 const SUGGESTIONS: ({label: string; query: string} | {label: string; href: string})[] = [
@@ -36,24 +37,6 @@ const SUGGESTIONS: ({label: string; query: string} | {label: string; href: strin
     {label: 'Getting started', query: 'Getting started'},
     {label: 'Download', href: '/download'},
 ];
-
-function ResultGlyph({type}: {type: SearchResult['type']}) {
-    if (type === 'page') {
-        return (
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path
-                    d="M7 3.75h7.5L19.25 8.5v11.75a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-15.5a1 1 0 0 1 1-1Z"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinejoin="round"
-                />
-                <path d="M14.5 3.75V8.5h4.75" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-                <path d="M9 12h6M9 15.5h6M9 19h4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-            </svg>
-        );
-    }
-    return <>{TYPE_CONFIG[type].glyph}</>;
-}
 
 export function SearchModal() {
     const pathname = usePathname();
@@ -224,42 +207,11 @@ export function SearchModal() {
         <div className={clsx(styles.overlay, open && styles.open)} onClick={handleOverlayClick}>
             <div className={styles.modal}>
                 <div className={styles.header}>
-                    <span className={styles.iconWrap}>
-                        <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <circle cx="11" cy="11" r="8" />
-                            <path d="m21 21-4.35-4.35" />
-                        </svg>
-                    </span>
-                    <input
-                        ref={inputRef}
-                        className={styles.input}
-                        type="text"
-                        placeholder={wikiOnly ? 'Search docs...' : 'Search docs, blog, guides, plugins...'}
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        onKeyDown={handleKeyboardNav}
-                        autoComplete="off"
-                        spellCheck={false}
-                    />
-                    {query && (
-                        <button
-                            className={styles.clearBtn}
-                            onClick={() => setQuery('')}
-                            type="button"
-                            aria-label="Clear"
-                        >
+                    <div className={styles.field}>
+                        <span className={styles.iconWrap}>
                             <svg
-                                width="14"
-                                height="14"
+                                width="16"
+                                height="16"
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
@@ -267,10 +219,23 @@ export function SearchModal() {
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
                             >
-                                <path d="M18 6 6 18M6 6l12 12" />
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
                             </svg>
-                        </button>
-                    )}
+                        </span>
+                        <input
+                            ref={inputRef}
+                            className={styles.input}
+                            type="text"
+                            placeholder={wikiOnly ? 'Search docs...' : 'Search docs, blog, guides, plugins...'}
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            onKeyDown={handleKeyboardNav}
+                            autoComplete="off"
+                            spellCheck={false}
+                        />
+                    </div>
+                    <CloseButton onClick={closeModal} label="Close search" />
                 </div>
 
                 {showSuggestions && (
@@ -313,9 +278,6 @@ export function SearchModal() {
                                         onClick={() => navigateResult(result)}
                                         onMouseEnter={() => setActiveIndex(i)}
                                     >
-                                        <span className={styles.resultTypeIcon} style={{color: cfg.color}}>
-                                            <ResultGlyph type={result.type} />
-                                        </span>
                                         <div className={styles.resultBody}>
                                             <div className={styles.resultTitle}>{result.title}</div>
                                             {result.excerpt && (
@@ -325,7 +287,7 @@ export function SearchModal() {
                                         <div className={styles.resultAside}>
                                             <span
                                                 className={styles.resultTypeBadge}
-                                                style={{color: cfg.color, borderColor: cfg.color}}
+                                                style={{'--tag-color': cfg.color} as CSSProperties}
                                             >
                                                 {result.type === 'page' && result.meta ? result.meta : cfg.label}
                                             </span>

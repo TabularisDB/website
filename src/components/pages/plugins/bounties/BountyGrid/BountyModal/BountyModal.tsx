@@ -47,17 +47,18 @@ export function BountyModal({bounty, session, busy, error, onClose, onVote, onCl
             : null;
 
     if (bounty && confirmingClaim) {
+        const joining = bounty.claimers.length > 0;
         return (
             <Modal
                 open
                 onClose={() => setConfirmingClaim(false)}
-                title="Claim this bounty?"
+                title={joining ? 'Join the work?' : 'Claim this bounty?'}
                 icon={<HammerIcon aria-hidden="true" />}
             >
                 <Modal.Body>
                     <Modal.Text>
-                        You&apos;re about to claim <strong>{bounty.name}</strong> and appear among the people working on
-                        it. You can release your claim later.
+                        You&apos;re about to {joining ? 'join the work on' : 'claim'} <strong>{bounty.name}</strong> and
+                        appear among the people working on it. You can release your claim later.
                     </Modal.Text>
                     <Modal.Text>
                         {signedOut
@@ -77,7 +78,7 @@ export function BountyModal({bounty, session, busy, error, onClose, onVote, onCl
                             onClaim(bounty);
                         }}
                     >
-                        {signedOut ? 'Confirm & sign in' : 'Confirm claim'}
+                        {signedOut ? 'Confirm & sign in' : joining ? 'Join the work' : 'Confirm claim'}
                     </Button>
                 </Modal.Actions>
             </Modal>
@@ -175,19 +176,17 @@ export function BountyModal({bounty, session, busy, error, onClose, onVote, onCl
                     <Modal.Actions>
                         <Button
                             href={SOCIAL_URLS.discord}
-                            className={styles.button}
                             variant="secondary"
                             size="sm"
                             onClick={() => trackEvent('Bounty', 'Discuss', bounty.id)}
                         >
                             <DiscordIcon />
-                            Discuss
+                            <span className={styles.secondaryLabel}>Discuss</span>
                         </Button>
                         {shipped ? (
                             <Button
                                 href="/plugins"
                                 size="sm"
-                                className={styles.ctaButton}
                                 onClick={() => trackEvent('Bounty', 'View Plugin', bounty.id)}
                             >
                                 <PackageCheckIcon />
@@ -197,18 +196,16 @@ export function BountyModal({bounty, session, busy, error, onClose, onVote, onCl
                             <>
                                 <Button
                                     href={bounty.sponsorUrl}
-                                    className={styles.button}
                                     variant="secondary"
                                     size="sm"
                                     onClick={() => trackEvent('Bounty', 'Sponsor', bounty.id)}
                                 >
                                     <StarIcon />
-                                    Sponsor
+                                    <span className={styles.secondaryLabel}>Sponsor</span>
                                 </Button>
                                 <Button
                                     size="sm"
                                     variant={bounty.claimedByMe ? 'secondary' : 'primary'}
-                                    className={styles.ctaButton}
                                     disabled={busy === `claim:${bounty.id}` || session.state === 'checking'}
                                     onClick={() => {
                                         if (bounty.claimedByMe) {
@@ -220,7 +217,11 @@ export function BountyModal({bounty, session, busy, error, onClose, onVote, onCl
                                     }}
                                 >
                                     <HammerIcon />
-                                    {bounty.claimedByMe ? 'Release claim' : 'Claim this bounty'}
+                                    {bounty.claimedByMe
+                                        ? 'Release claim'
+                                        : bounty.claimers.length > 0
+                                          ? 'Join the work'
+                                          : 'Claim it'}
                                 </Button>
                             </>
                         )}

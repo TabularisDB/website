@@ -99,7 +99,7 @@ export function VideoModal({
                 aria-label={ariaLabel}
                 tabIndex={-1}
             >
-                <CloseButton onClick={onClose} label="Close video" />
+                <CloseButton onClick={onClose} label="Close video" tone="onDark" />
                 <div className={styles.frame}>
                     <VideoPlayer
                         src={src}

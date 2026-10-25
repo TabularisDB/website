@@ -6,14 +6,15 @@ interface CloseButtonProps {
     onClick: () => void;
     label?: string;
     size?: 'sm' | 'md';
+    tone?: 'default' | 'onDark';
     className?: string;
 }
 
-export function CloseButton({onClick, label = 'Close', size = 'md', className}: CloseButtonProps) {
+export function CloseButton({onClick, label = 'Close', size = 'md', tone = 'default', className}: CloseButtonProps) {
     return (
         <button
             type="button"
-            className={clsx(styles.close, size === 'sm' && styles.sm, className)}
+            className={clsx(styles.close, size === 'sm' && styles.sm, tone === 'onDark' && styles.onDark, className)}
             onClick={onClick}
             aria-label={label}
         >

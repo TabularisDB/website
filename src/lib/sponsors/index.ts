@@ -40,7 +40,7 @@ export const SPONSORS: Sponsor[] = [
         logoImgCompact: '/img/logos/sponsors/turbosmtp_compact.png',
         logoImgBg: '#ffffff',
         modalDescription:
-            'turboSMTP is a professional SMTP relay service trusted by 100,000+ businesses worldwide. Its infrastructure spans Europe, USA, Middle East and Asia, ensuring your transactional emails, notifications, and newsletters land in the inbox, not the spam folder. Built for developers who need email to just work, with real-time tracking, webhooks, and 24/7 multilingual support.',
+            'An SMTP relay trusted by 100,000+ businesses to deliver transactional emails, notifications and newsletters to the inbox.',
         features: [
             {icon: '📬', text: 'Industry-leading deliverability vs. standard providers'},
             {icon: '🌍', text: 'Global infrastructure: EU, USA, Middle East, Asia'},
@@ -64,7 +64,7 @@ export const SPONSORS: Sponsor[] = [
         logoImg: '/img/logos/sponsors/kilocode.png',
         logoImgCompact: '/img/logos/sponsors/kilocode_compact.png',
         modalDescription:
-            'Kilo Code is the most popular open source AI coding agent, running directly inside VS Code and JetBrains IDEs. It gives you access to 500+ models from any provider, supports local execution for full privacy, and never trains on your code. From quick edits to long-running cloud agents, it adapts to how you actually work, with zero telemetry by default.',
+            'An open-source AI coding agent for VS Code and JetBrains IDEs, from quick edits to long-running cloud agents.',
         features: [
             {icon: '🔓', text: '100% open source: Apache 2.0, fully inspectable'},
             {icon: '🤖', text: '500+ models: OpenAI, Anthropic, Gemini, Ollama and more'},
@@ -92,7 +92,7 @@ export const SPONSORS: Sponsor[] = [
         logoImgBg: '#ffffff',
         kind: 'supporter',
         modalDescription:
-            'OpenAI supports Tabularis through Codex for Open Source, providing Codex access to help maintain and improve the project.',
+            'OpenAI supports Tabularis through Codex for Open Source, giving the team Codex to maintain and improve the project.',
         features: [
             {icon: '⌨️', text: 'Codex access for open-source maintenance'},
             {icon: '🔍', text: 'Support for issue investigation, implementation, and review'},
@@ -112,7 +112,7 @@ export const SPONSORS: Sponsor[] = [
         logoImgBg: '#FAF9F5',
         kind: 'supporter',
         modalDescription:
-            'Anthropic supports Tabularis through Claude for Startups, helping the team build and improve the project with Claude. This support helps us keep developing Tabularis as a free and open-source database client.',
+            'Anthropic supports Tabularis through Claude for Startups, giving the team Claude to build and improve the project.',
         features: [
             {icon: '🤝', text: 'Support through the Claude for Startups program'},
             {icon: '⌨️', text: 'Claude to help build and improve Tabularis'},
@@ -129,7 +129,7 @@ export const SPONSORS: Sponsor[] = [
         logoImg: '/img/logos/sponsors/digitalocean.png',
         logoImgCompact: '/img/logos/sponsors/digitalocean_compact.png',
         modalDescription:
-            "DigitalOcean is the developer cloud built for shipping. Droplets, managed databases, App Platform, Spaces object storage and Kubernetes, all with predictable pricing and documentation developers actually want to read. Tabularis was accepted into the DigitalOcean Open Source Credits Program, and we're using that credit to host the upcoming plugin registry infrastructure.",
+            'A developer cloud with predictable pricing. Its Open Source Credits Program pays for hosting the upcoming Tabularis plugin registry.',
         features: [
             {icon: '💧', text: 'Droplets, App Platform and Kubernetes: the full developer cloud'},
             {icon: '🗄️', text: 'Managed PostgreSQL, MySQL, Redis and MongoDB'},
@@ -155,7 +155,7 @@ export const SPONSORS: Sponsor[] = [
         logoImgCompact: '/img/logos/sponsors/vercel_compact.svg',
         invertLogoOnLight: true,
         modalDescription:
-            'Vercel is the platform for building and deploying the modern web, with Git-based deploys, a preview URL for every change, a global edge network, and a developer experience that turns shipping into a non-event. tabularis.dev itself is an open-source Next.js app deployed on Vercel. Tabularis was accepted into the Vercel Open Source Program for the Spring 2026 cohort.',
+            'The platform for building and deploying the modern web. tabularis.dev runs on Vercel through its Open Source Program, Spring 2026 cohort.',
         features: [
             {icon: '▲', text: 'Git-based deploys with a live preview URL for every push'},
             {icon: '⚡', text: 'Global edge network, fast everywhere by default'},
@@ -179,7 +179,7 @@ export const SPONSORS: Sponsor[] = [
         logoImg: '/img/logos/sponsors/usero.png',
         logoImgCompact: '/img/logos/sponsors/usero_compact.png',
         modalDescription:
-            'Usero turns user feedback into merged pull requests. Collect feedback through a lightweight widget, GitHub Issues, or API. AI clusters duplicates, prioritizes what matters, then Claude reads your codebase and opens a PR with the actual fix.',
+            'Turns user feedback into merged pull requests: it groups duplicate reports, prioritizes them, then opens a PR with the fix.',
         features: [
             {icon: '🧩', text: 'Multiple inputs: embed widget (7.6KB), GitHub Issues, or API'},
             {icon: '🧠', text: 'AI clustering & prioritization that surfaces what matters from the noise'},
@@ -203,7 +203,7 @@ export const SPONSORS: Sponsor[] = [
         logoImg: '/img/logos/sponsors/devglobe.png',
         logoImgCompact: '/img/logos/sponsors/devglobe_compact.png',
         modalDescription:
-            'Connect your IDE, appear live on the globe, and showcase your projects to a community of builders. Track your coding stats, discover what others are working on, and get noticed. Free and open source. 25+ editors supported.',
+            'A live globe of developers: connect your IDE, show what you are building and discover other projects.',
         features: [
             {icon: '🌍', text: 'Connect your IDE and appear live on the globe'},
             {icon: '🚀', text: 'Ship your project and get discovered by the community'},
@@ -226,7 +226,7 @@ export const SPONSORS: Sponsor[] = [
         logoImg: '/img/logos/sponsors/tolgee.svg',
         logoImgCompact: '/img/logos/sponsors/tolgee_compact.svg',
         modalDescription:
-            'Tolgee is an open-source localization platform built for developers. Translate your app in context with an in-place editor, leverage AI-assisted translations and translation memory, and keep your team in sync, all without copy-pasting strings into spreadsheets. Tabularis uses Tolgee to manage its translations across every supported language.',
+            'An open-source localization platform for developers. Tabularis uses it to manage its translations in every supported language.',
         features: [
             {icon: '🌍', text: 'In-context editing directly inside your running app'},
             {icon: '🤖', text: 'AI-powered translations, machine translation & translation memory'},
@@ -251,7 +251,7 @@ export const SPONSORS: Sponsor[] = [
         logoImgCompact: '/img/logos/sponsors/1password_compact.png',
         logoImgBg: '#ffffff',
         modalDescription:
-            "1Password keeps passwords, passkeys, SSH keys and secrets in one end-to-end encrypted vault, with your data secured by a key only you hold. It's also built for developers: a secret manager for GitHub Actions via op:// references, an SSH agent that approves connections with biometrics, and CLI integration that keeps secrets out of your dotfiles. Tabularis was accepted into 1Password's free plan for open-source projects, and uses it to manage the team's accounts, with CI secrets next.",
+            "An end-to-end encrypted vault for passwords, passkeys, SSH keys and secrets. Tabularis uses its free open-source plan for the team's accounts, with CI secrets next.",
         features: [
             {icon: '🔐', text: 'End-to-end encrypted vaults, with data secured by a key only you hold'},
             {icon: '🤖', text: 'Secret manager for CI: op:// references resolved by load-secrets-action'},
@@ -277,7 +277,7 @@ export const SPONSORS: Sponsor[] = [
         logoImg: '/img/logos/sponsors/jetbrains.png',
         logoImgCompact: '/img/logos/sponsors/jetbrains_compact.png',
         modalDescription:
-            'JetBrains makes the IDEs a huge share of professional developers reach for every day: IntelliJ IDEA, WebStorm, PyCharm, GoLand, RustRover and the rest of the lineup, all built on the same fast, deeply-integrated tooling philosophy. Tabularis was accepted into the JetBrains Open Source Support program, which provides maintainers with a free All Products Pack license to build with the same tools their users rely on.',
+            'The maker of IntelliJ IDEA, WebStorm, DataGrip and other IDEs. Its Open Source Support program gives the Tabularis maintainers a free All Products Pack license.',
         features: [
             {icon: '🧠', text: 'IntelliJ-based IDEs for every language: one philosophy, many tools'},
             {icon: '🔍', text: 'Deep static analysis, refactoring and debugging built in'},
@@ -302,7 +302,7 @@ export const SPONSORS: Sponsor[] = [
         logoImgCompact: '/img/logos/sponsors/signpath_compact.png',
         logoImgBg: '#ffffff',
         modalDescription:
-            "SignPath.io is a code signing platform that keeps private keys on Hardware Security Modules and plugs signing directly into CI pipelines, with no USB tokens and no keys on build machines. Through the SignPath Foundation, it provides free code signing certificates to qualifying open source projects, verifying that every signed binary was built from the project's public repository. Tabularis was accepted into the program, and signing is being wired into the release pipeline so Windows builds ship signed.",
+            'Code signing for open source, with keys kept on hardware security modules. It is being wired into the Tabularis release pipeline so Windows builds ship signed.',
         features: [
             {icon: '✍️', text: 'Free code signing certificates for open source projects'},
             {icon: '🔐', text: 'Private keys on HSMs, never on build machines or USB tokens'},

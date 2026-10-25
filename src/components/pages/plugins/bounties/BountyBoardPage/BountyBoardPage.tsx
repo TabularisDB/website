@@ -10,6 +10,7 @@ import {getBountyStats} from '@/lib/plugins/bounties';
 import {getRequestKinds} from '@/lib/plugins/kinds';
 import {buildBreadcrumbJsonLd} from '@/lib/seo';
 import {SOCIAL_URLS} from '@/lib/social';
+import {TABULARIUM_REQUESTS_URL} from '@/lib/tabularium';
 import {ArrowRightIcon, GitBranchIcon, HandCoinsIcon, PackageCheckIcon, TargetIcon} from 'lucide-react';
 import Link from 'next/link';
 import styles from './BountyBoardPage.module.scss';
@@ -107,8 +108,11 @@ export function BountyBoardPage({bountyId}: {bountyId?: string}) {
                     </>
                 }
             >
-                Suggest the integration you need. Once a maintainer reviews it, it lands here as a bounty the community
-                can upvote and claim.
+                Request the driver or theme you need. A maintainer reviews it on the{' '}
+                <a href={TABULARIUM_REQUESTS_URL} target="_blank" rel="noopener noreferrer">
+                    Tabularium wishlist
+                </a>
+                , then it lands here as a bounty the community can upvote and claim.
             </CalloutBlock>
         </div>
     );

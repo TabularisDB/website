@@ -15,6 +15,14 @@
         color: var(--notice-color);
     }
 
+    a {
+        color: var(--color-accent-teal);
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
     code {
         display: inline-block;
         max-width: 100%;
@@ -25,10 +33,26 @@
     }
 }
 
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-width: 0;
+}
+
+.title {
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
 .info {
     --notice-color: var(--color-eyebrow-blue);
 }
 
 .warning {
     --notice-color: var(--color-accent-amber);
+}
+
+.accent {
+    --notice-color: var(--color-accent-teal);
 }

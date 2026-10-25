@@ -15,6 +15,10 @@
         background 0.15s ease;
     white-space: nowrap;
 
+    svg {
+        flex-shrink: 0;
+    }
+
     &:disabled {
         opacity: 0.5;
         cursor: not-allowed;

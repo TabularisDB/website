@@ -1,3 +1,5 @@
+@use '../../../styles/mixins' as *;
+
 .overlay {
     position: fixed;
     inset: 0;
@@ -20,14 +22,12 @@
 }
 
 .panel {
+    @include solid-frame(var(--color-surface));
+
     display: flex;
     flex-direction: column;
     width: min(560px, calc(100vw - 2rem));
     max-height: 84vh;
-    overflow: hidden;
-    background: var(--color-surface);
-    border: var(--border);
-    border-radius: var(--radius-md);
     box-shadow: 0 20px 60px rgb(var(--rgb-shadow) / calc(0.5 * var(--shadow-scale)));
 }
 
@@ -44,7 +44,7 @@
     display: flex;
     align-items: center;
     gap: var(--space-3);
-    font-size: 1rem;
+    font-size: 1.125rem;
     font-weight: 600;
     color: var(--color-text-primary);
 }
@@ -53,10 +53,13 @@
     display: flex;
     flex: 1;
     flex-direction: column;
-    gap: 1.75rem;
+    gap: var(--space-6);
     min-height: 0;
-    padding: var(--space-5) var(--space-6) var(--space-6);
+    padding: var(--space-8) var(--space-6);
+    padding-right: max(0px, calc(var(--space-6) - var(--scrollbar-width, 0px)));
     overflow-y: auto;
+    scrollbar-color: var(--color-border) transparent;
+    scrollbar-width: thin;
 }
 
 .section {
@@ -90,16 +93,39 @@
 
 .actions {
     display: flex;
-    flex-wrap: wrap-reverse;
+    flex-wrap: nowrap;
     justify-content: flex-end;
     flex-shrink: 0;
     gap: var(--space-2);
-    padding: var(--space-4) var(--space-6);
-    border-top: var(--border);
+    padding: 0 var(--space-6) var(--space-6);
 
     svg {
         width: 0.875rem;
         min-height: 0.875rem;
         height: 0.875rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .overlay {
+        align-items: stretch;
+        padding-top: 0;
+        background: var(--color-bg);
+        transition: none;
+    }
+
+    .panel {
+        --dash: transparent;
+        --corner: linear-gradient(transparent, transparent);
+        --corner-fill: linear-gradient(transparent, transparent);
+
+        background: var(--color-bg);
+
+        width: 100%;
+        height: 100dvh;
+        max-height: none;
+        padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+            env(safe-area-inset-left);
+        box-shadow: none;
     }
 }

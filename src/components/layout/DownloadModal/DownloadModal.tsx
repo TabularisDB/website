@@ -47,7 +47,7 @@ export function DownloadModal({platform, onClose}: DownloadModalProps) {
         >
             {config && (
                 <>
-                    <Modal.Body className={styles.body}>
+                    <Modal.Body>
                         <ChannelPicker channel={channel} stableVersion={APP_VERSION} onChange={setChannel} />
                         <DownloadNotices nightly={channel === 'nightly'} note={config.note} />
                         <DownloadOptions options={config.options} />
