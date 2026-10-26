@@ -53,9 +53,12 @@ export function DownloadModal({platform, onClose}: DownloadModalProps) {
                         <DownloadOptions options={config.options} />
                     </Modal.Body>
 
-                    <Modal.Actions>
+                    <Modal.Actions className={styles.actions}>
                         <Link href="/download?platform=web" className={styles.more} onClick={onClose}>
-                            Use Tabularis in your browser <ArrowRightIcon size={14} aria-hidden="true" />
+                            Self-host it for your browser <ArrowRightIcon size={14} aria-hidden="true" />
+                        </Link>
+                        <Link href="/changelog" className={styles.more} onClick={onClose}>
+                            Changelog <ArrowRightIcon size={14} aria-hidden="true" />
                         </Link>
                     </Modal.Actions>
                 </>

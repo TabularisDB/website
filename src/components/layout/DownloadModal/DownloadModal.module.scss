@@ -8,11 +8,16 @@
     border-top: var(--border);
 }
 
+.actions {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: var(--space-2) var(--space-6);
+}
+
 .more {
     display: inline-flex;
     align-items: center;
     gap: var(--space-1);
-    margin-right: auto;
     font-size: 0.85rem;
     font-weight: 500;
     color: var(--color-text-secondary);

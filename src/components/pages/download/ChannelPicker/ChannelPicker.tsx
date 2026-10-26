@@ -82,21 +82,19 @@ export function ChannelPicker({channel, stableVersion, onChange}: ChannelPickerP
                 <ChevronDownIcon aria-hidden="true" className={clsx(styles.chevron, open && styles.chevronOpen)} />
             </button>
 
-            {open && (
-                <div id={menuId} className={styles.menu}>
-                    <button
-                        type="button"
-                        className={clsx(styles.tag, channelClass(other))}
-                        onClick={() => {
-                            onChange(other);
-                            setOpen(false);
-                            triggerRef.current?.focus();
-                        }}
-                    >
-                        <ChannelLabel channel={other} version={versions[other]} />
-                    </button>
-                </div>
-            )}
+            <div id={menuId} className={styles.menu} hidden={!open}>
+                <button
+                    type="button"
+                    className={clsx(styles.tag, channelClass(other))}
+                    onClick={() => {
+                        onChange(other);
+                        setOpen(false);
+                        triggerRef.current?.focus();
+                    }}
+                >
+                    <ChannelLabel channel={other} version={versions[other]} />
+                </button>
+            </div>
         </div>
     );
 }
