@@ -125,7 +125,7 @@
     height: 1.5rem;
     padding-inline: var(--space-2);
     border-radius: var(--radius-sm);
-    background-color: rgb(var(--rgb-tint) / 8%);
+    background-color: var(--color-fill-subtle);
     font-size: 0.75rem;
     max-width: 100%;
     min-width: 0;
@@ -137,10 +137,6 @@
         width: 0.875rem;
         height: 0.875rem;
         flex-shrink: 0;
-    }
-
-    :global(:root[data-theme='light']) & {
-        background-color: rgb(var(--rgb-tint) / 5%);
     }
 }
 

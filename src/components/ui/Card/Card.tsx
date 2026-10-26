@@ -67,10 +67,7 @@ interface CardMetaItemProps extends CardPartProps {
 
 function CardMetaItem({icon, title, children, className}: CardMetaItemProps) {
     return (
-        <span
-            className={clsx(styles.metaItem, className)}
-            title={title ?? (typeof children === 'string' ? children : undefined)}
-        >
+        <span className={clsx(styles.metaItem, className)} title={title}>
             {icon}
             <span className={styles.metaText}>{children}</span>
         </span>

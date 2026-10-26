@@ -24,7 +24,9 @@ export function BountyCard({bounty, onOpen, onVote, voteBusy}: BountyCardProps) 
                 aside={
                     <>
                         <PluginKindLabel kind={bounty.kind} />
-                        <BountyStatus status={bounty.status} className={styles.status} />
+                        <Card.Label>
+                            <BountyStatus status={bounty.status} className={styles.status} />
+                        </Card.Label>
                     </>
                 }
             />
