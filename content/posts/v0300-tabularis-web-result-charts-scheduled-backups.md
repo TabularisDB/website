@@ -8,7 +8,7 @@ og:
     title: 'v0.30.0:'
     accent: 'Tabularis in the browser'
     claim: 'Run the same Tabularis on a server and open it from any browser, chart a query result, and back up a database every night.'
-    image: '/img/tabularis-result-chart.png'
+    image: '/img/tabularis-web-browser.png'
 ---
 
 # v0.30.0: Tabularis in the Browser, Charts for Query Results, and Scheduled Database Backups
@@ -29,6 +29,8 @@ tabularis web
 ```
 
 Tabularis starts the server and opens your browser. Running `tabularis` without `web` still opens the desktop app, and both modes use the same configuration and data directories, so the connections, saved queries, settings and history you already have are there.
+
+![Tabularis Web in Google Chrome at 127.0.0.1:8090: the explorer of a SQLite connection, a query on daily_sales and its result drawn as a line chart of orders and new customers](/img/tabularis-web-browser.png)
 
 ### What works
 

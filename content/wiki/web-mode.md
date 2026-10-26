@@ -18,6 +18,8 @@ tabularis web
 
 Tabularis binds to `127.0.0.1:8080` and opens your default browser. See [Command Line Interface](cli) for where the `tabularis` binary lives on each platform.
 
+![Tabularis Web in Google Chrome: the explorer of a SQLite connection and a query on daily_sales with its result in the grid](/img/tabularis-web-browser-grid.png)
+
 The local mode is authenticated even though it only listens on loopback:
 
 1. Startup creates a single-use token that expires after 60 seconds, and the browser opens with it.
