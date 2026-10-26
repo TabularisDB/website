@@ -333,6 +333,19 @@ The detection is not a naïve substring match — it ignores comments and string
 
 Since v0.29.0 the status bar of a result shows the column count after the row count, for example `120 rows retrieved · 8 columns`, in the single result bar, the result tabs and the stacked view. On PostgreSQL, MySQL and SQLite, hovering the duration shows a breakdown: **Execution** (until the first row arrives), **Fetch** (reading the remaining rows) and **Total**. Plugin drivers and statements without a result set show only the total.
 
+### Result Charts
+
+Since v0.30.0 the result status bar has a **Grid | Chart** switch, in query tabs, in the result tabs of the multi-result panel and in the detached results window. **Chart** draws the result as a **Bar** or **Line** chart, with one column on the **X axis** and one or more numeric columns on the **Y axis**.
+
+<video src="/videos/posts/tabularis-result-chart.mp4" poster="/videos/posts/tabularis-result-chart.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
+- **Defaults.** When the result has a date column, it goes on X and the chart starts as a line; otherwise the first text column goes on X and the chart starts as bars. Y takes the first numeric column that is not X, skipping `id` and `*_id` columns when there is another choice. A column whose values are all numbers or numeric strings counts as numeric, so `DECIMAL` values sent as strings work.
+- **Rows.** Only the rows already loaded are drawn, up to 1,000 points, without running another query. The toolbar shows *Rows plotted* and says when more rows were not loaded or the cap applies. `NULL` values leave a gap.
+- **State.** The view and the chart settings are kept per tab and per result while the tab is open. Switching back to **Grid** keeps the selection, pending edits and scroll position; pending edits can still be submitted or rolled back from the chart view. Re-running a query that changes the columns falls back to new defaults.
+- **Look.** Colors follow the theme, lines after the first are dashed, and the chart honors reduced motion. With the keyboard, the arrow keys move between points and the tooltip follows.
+
+A result with no numeric column shows an empty state with **Show grid**. Table tabs and the stacked multi-result view have no chart view. The chart works the same with every driver, plugins included, because it only reads the loaded result. For charts saved with a document, see [Notebooks](notebooks#charts).
+
 ### Total Row Count
 
 The pager shows the exact size of the current result — `{total} rows` next to the page indicator — counted against the *reconstructed filtered query*, so a filtered grid reports the filtered total rather than the base table's. The count resets when the query or filter changes and is preserved across pagination.
@@ -399,12 +412,14 @@ The History tab supports:
 
 - **Search** by SQL text
 - **Outcome** (any, succeeded, failed) and **Time range** (last hour, today, last 7 or 30 days) filters, since v0.28.0, combined with the search box
+- **Database** filter, since v0.30.0: **All databases**, one of the databases recorded in the loaded entries, or **No database recorded** when some entries have none
+- **Custom range…** in the time-range select, since v0.30.0: **From** and **To** dates, both inclusive and computed in the display timezone. Either side can stay empty; an inverted or invalid range is refused with a message. **Clear filters** resets the time range to all time and the database to all databases
 - **Date grouping** such as Today / Yesterday / older buckets
 - **Double-click** (or `Enter`) to open a query in a new console tab and run it
 - **Context menu actions**: **Copy Query**, **Copy Details** (since v0.29.0: database, execution time, duration, rows affected and status or error message as plain text, followed by the SQL; values that were not recorded are left out), **Run Query**, **Insert to Editor** / **Open in New Tab** (both open the query in a console without running it), **Add to Favorites**, and delete the entry
 - **Clear All** for the current connection only
 
-![Query History filtered to Failed and Today, showing 3 of 7 entries](/img/tabularis-query-history-filters.png)
+![Query History filtered to the blog_demo database and a custom range from October 20 to October 26, showing 3 of 5 entries](/img/tabularis-query-history-database-range.png)
 
 This makes the sidebar history a fast iteration loop: run a query, tweak it, and jump back to any earlier version without digging through editor tabs.
 

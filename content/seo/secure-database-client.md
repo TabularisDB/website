@@ -55,9 +55,9 @@ For staging, production replicas, or customer-managed environments behind SSH, b
 
 ### Scoped proxy routing
 
-Since v0.24.0, [Network settings](/wiki/configuration#network--proxies) support HTTP CONNECT and SOCKS5 proxies, with separate opt-in scopes for application requests, database connections, AI providers and SSH bastions. Individual database connections and AI providers can inherit, override or bypass the global proxy. Proxy passwords stay in the OS keychain. Routing through a proxy does not replace TLS or turn the client into an access-governance platform.
+[Network settings](/wiki/configuration#network--proxies) support HTTP CONNECT and SOCKS5 proxies, with a separate mode for application requests, database connections, AI providers and SSH bastions: the system proxy (for application and AI requests), a custom proxy, or none. Individual database connections and AI providers can inherit, override or bypass the global proxy. Proxy passwords stay in the OS keychain. Routing through a proxy does not replace TLS or turn the client into an access-governance platform.
 
-![HTTP/SOCKS5 proxy settings with independent traffic scopes](/img/tabularis-network-proxy.png)
+![HTTP/SOCKS5 proxy settings with a System, Custom or Disabled mode per traffic category](/img/tabularis-network-proxy-modes.png)
 
 ### Local AI-assisted workflows
 

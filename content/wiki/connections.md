@@ -337,6 +337,23 @@ Since v0.16.0, the manual export has an automated counterpart: a **Backup** tab 
 
 Settings changes apply without a restart, and each backup run is logged — including which trigger fired it — in the Logs tab. A backup file is a regular encrypted export: restore it through the normal [Import](#export--import) flow.
 
+### Scheduled Database Backups
+
+The backups above save connection profiles, not data. Since v0.30.0 the same tab has a second section, **Scheduled Database Content Backups**, which writes a daily SQL dump of a database through the [dump pipeline](dump-import).
+
+A plan has:
+
+- a **connection** and, for multi-database connections, the **database** to dump;
+- a **daily time** (default `02:00`) and a **timezone**, an IANA name or the local one;
+- a **destination folder** and how many backups to keep (default 7);
+- whether to dump the **structure**, the **data** or both.
+
+The daily time is evaluated in the plan's timezone: on a daylight-saving gap the run moves one hour later, and on a fold it runs at the first occurrence. A failed run is retried after 15 minutes. A failed or cancelled run removes its partial file and leaves the existing backups alone, and pruning only touches the files of that plan (`tabularis-db-backup-<connection>--<database>--…`). The section shows the last run, its outcome and the next run, with **Run now** and **Cancel**.
+
+![The Scheduled Database Content Backups section in Settings, Backup, enabled for a SQLite connection at 02:00 local time, keeping 7 backups of structure and data, with the last run successful](/img/tabularis-scheduled-database-backups.png)
+
+Backups run only while Tabularis is open. Plugin drivers are supported when they declare a SQL dialect and are neither connectionless nor folder-based; otherwise the section explains why the connection can't be dumped. In [Tabularis Web](web-mode) the schedule runs on the server and needs local-administrator rights. A dump is restored like any other, through [Import](dump-import).
+
 ## Import From Other SQL Clients (Beta)
 
 Since v0.15.0, the **Import** dropup next to *Add Connection* can also read saved connections directly from other clients installed on your machine: **DBeaver**, **Beekeeper Studio**, **TablePlus**, **DataGrip**, and **Sequel Ace**. Each source is parsed into a neutral format, and stored credentials are decrypted or read from the source client's keychain when you opt in.

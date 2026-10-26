@@ -138,6 +138,10 @@ Since v0.26.0 the [nightly channel](/wiki/updates#release-channels) is on the AU
 yay -S tabularis-nightly-bin
 ```
 
+## Self-hosting in the browser
+
+Since v0.30.0 Tabularis can also run on a server and be used from a browser, with `tabularis web` or the official Docker image `ghcr.io/tabularisdb/tabularis` (Compose and Helm are supported too). See [Tabularis Web](/wiki/web-mode).
+
 ## Updates
 
 Tabularis checks for new releases against the GitHub Releases API two seconds after startup (if `autoCheckUpdatesOnStartup` is enabled, which is the default). On the stable channel the result is cached for 12 hours, so not every launch contacts GitHub. When an update is available, a notification appears in the UI with the option to download and install it automatically.

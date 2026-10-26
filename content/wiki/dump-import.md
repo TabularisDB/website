@@ -25,6 +25,8 @@ Since v0.23.0 string literals are escaped per dialect (MySQL doubles backslashes
 
 Click **Export** to open the OS file save dialog. The default filename is `<database>_dump_<date>.sql`. Tabularis streams the dump to disk as it runs — you can see the elapsed time in real time. Click **Cancel** at any time to abort the operation.
 
+To dump a database every day without opening this modal, use [Scheduled Database Backups](connections#scheduled-database-backups) (since v0.30.0) in **Settings → Backup**.
+
 ## Import a Database
 
 Right-click a database in the sidebar and choose **Run SQL File...**, then select a `.sql` file — or a `.zip` archive, in which case the first `.sql` file inside it is used. After you confirm the warning that the import may overwrite existing data, the import starts and shows:

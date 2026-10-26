@@ -21,7 +21,7 @@ The action palette runs app commands, filtered as you type, with the same keyboa
 | :--- | :--- |
 | **Navigation** | Open settings, open the connection manager |
 | **Connection** | Every saved connection: connect to it, or switch to it if it is already open |
-| **Editor** | Open a new console, run query, run all statements, save the SQL file (file-backed tabs), close the active tab, **Enable word wrap** / **Disable word wrap** (since v0.29.0; toggles the `editorWordWrap` preference for every SQL editor) |
+| **Editor** | Open a new console, run query, run all statements, save the SQL file (file-backed tabs), close the active tab, **Enable word wrap** / **Disable word wrap** (since v0.29.0; toggles the `editorWordWrap` preference for every SQL editor), **AI Assist: Generate SQL** and **AI Query Explanation** (since v0.30.0; in console tabs with AI enabled and an active connection, Explain only when the query is not empty) |
 | **Results** | Copy the selected cells, rows or columns, copy a column's values as a SQL `IN (...)` list, copy all rows |
 | **Table** | Open the current table in a SQL console, inspect it, generate SQL, count rows |
 

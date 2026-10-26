@@ -176,7 +176,7 @@ Executes a SQL query on a specific connection and returns the results.
 
 **Returns:** query results as JSON, or as TOON when requested. Results are capped at 100 rows per call unless the agent passes a different `limit`.
 
-Before v0.29.0 these three tools always used the first selected database, so a query meant for another database returned no rows. When a `run_query` call with `database` needs [approval](/wiki/mcp-approval-gates), the approval dialog shows the target as `connection / database`, and the [AI Activity log](/wiki/ai-audit-log) records it.
+Before v0.29.0 these three tools always used the first selected database, so a query meant for another database returned no rows. Since v0.30.0 the `database` argument must name exactly one of the databases selected on the connection, and it is refused on file-based, folder-based and single-database drivers, so a tool call cannot reach a database the connection does not expose or open another SQLite file ([GHSA-9x4c-wq7x-5fjq](https://github.com/TabularisDB/tabularis/security/advisories/GHSA-9x4c-wq7x-5fjq)). When a `run_query` call with `database` needs [approval](/wiki/mcp-approval-gates), the approval dialog shows the target as `connection / database`, and the [AI Activity log](/wiki/ai-audit-log) records it.
 
 **Example prompts:**
 

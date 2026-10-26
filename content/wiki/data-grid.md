@@ -31,6 +31,18 @@ The grid only renders the rows on screen. Since v0.27.0 column widths are measur
 
 <video src="/videos/posts/tabularis-stable-column-widths.mp4" poster="/videos/posts/tabularis-stable-column-widths.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
+#### Resizing a Column
+
+Since v0.30.0 every column header has a resize handle on its right edge. Drag it to make that column wider or narrower, between 48 and 2000 pixels; `Esc` during a drag restores the previous width. The handle is also reachable with `Tab`: `←` / `→` change the width by 10 pixels, `Shift + ←` / `→` by 50, and `Home` / `End` jump to the limits. Pressing or dragging the handle never sorts or selects the column. A header name longer than its column is cut with an ellipsis.
+
+Resized widths follow the same rules as measured ones: they are kept while scrolling, paging and refreshing, and reset when the column set changes. They are not saved across sessions.
+
+#### Freezing the First Column
+
+Since v0.30.0 the column header menu has **Freeze first column**. The first data column then stays in place next to the row numbers while you scroll horizontally, so an `id` or an email stays in view on a wide result. Row tints, selections and pending edits are drawn correctly under it, a frozen cell can be edited in place, and keyboard navigation stops the active cell to the right of the frozen column. **Unfreeze first column** turns it off. Only the first column can be frozen, and the choice lasts until the tab is closed.
+
+<video src="/videos/posts/tabularis-grid-resize-freeze.mp4" poster="/videos/posts/tabularis-grid-resize-freeze.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
 ### Column Comments
 
 Since v0.25.0, hovering a column header shows the column's database comment next to its type when the driver provides one (PostgreSQL and MySQL/MariaDB built in; plugins that return `comment` metadata). See [Schema Management → Table and Column Comments](/wiki/schema-management#table-and-column-comments).
@@ -56,6 +68,12 @@ The toolbar at the top of a table tab has three inputs (**WHERE** and **ORDER BY
 The **Filters** button opens a **structured filter panel** in place of the WHERE input: **Add filter** builds a condition from a column, an operator suited to the column type and a value; each filter can be applied on its own (**Apply**) or together with the others (**Apply All**), duplicated or removed. **Unset** clears the filters, and the **SQL** button (*Switch to SQL WHERE input*) goes back to the free-text field.
 
 Since v0.28.0 the panel is part of the layout rather than an overlay: it sits above the grid and pushes it down, with a maximum height and its own scroll for long filter lists, so the rows a filter returns stay visible. A click outside no longer closes it; `Esc`, the close button and the **Filters** button do. The panel resets when you switch to another table tab. Incomplete rows, such as the empty row added when the panel opens, are skipped by both **Apply All** and the per-row **Apply**.
+
+#### Match Case (PostgreSQL)
+
+Since v0.30.0, on PostgreSQL connections and on plugins with the PostgreSQL SQL dialect, the **contains**, **starts with** and **ends with** operators show a **Match case** checkbox. Ticked, the default, the filter uses `LIKE`; unticked, it uses `ILIKE` for a case-insensitive match. Other dialects keep `LIKE`.
+
+![A PostgreSQL products table filtered with name contains laptop and Match case unticked: the WHERE preview uses ILIKE and two rows match](/img/tabularis-filter-match-case.png)
 
 #### Match All / Match Any
 
@@ -254,6 +272,9 @@ Selecting and copying are separate actions: selecting rows never writes to the c
 | :-------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Copy Selected (N)** | The rows currently selected, from the loaded page.                                                                                                                                                                                                   |
 | **Copy All (M)**      | Every row of the result. The query is re-run unpaginated with the tab's total-row limit stripped, preserving the on-screen sort order. When the total is unknown, the label omits the count and the toast reports the actual number of rows fetched. |
+| **Export Selected (N)…** | Since v0.30.0. Writes the same rows as **Copy Selected** to a **CSV** or **JSON** file, or only the right-clicked row when nothing is selected. Only loaded rows are written, with the same formatter, `NULL` marker and CSV delimiter as the full export. |
+
+![Three selected rows with the row menu open on Export Selected (3), showing the CSV and JSON options](/img/tabularis-grid-export-selected.png)
 
 Since v0.28.0 **Copy All** also works in the multi-result panel (tab and stacked views) and in the detached results window. In a console tab it re-runs only the last executed statement, in the tab's own session, so uncommitted rows of an open transaction are included.
 
@@ -491,6 +512,7 @@ Right-click any column header to open the header context menu. Available actions
 | **Copy as `column`**               | Copies the column name quoted as an identifier.                                                                                 |
 | **Copy as table.column**           | Copies the column name qualified with the table name.                                                                           |
 | **Copy column names**              | Since v0.29.0. Submenu that copies all column names of the result, in grid order: **One per line**, **As JSON array**, or **As SQL list** (comma-separated, quoted for the driver). |
+| **Freeze first column** / **Unfreeze first column** | Since v0.30.0. Keeps the first data column in view while scrolling horizontally (see [Freezing the First Column](#freezing-the-first-column)). |
 | **Column statistics**              | Since v0.29.0, table tabs only. Opens the [column statistics](#column-statistics) popover.                                      |
 | **Copy column values**             | Copies the column's values, newline-separated (see [Column-level copy](#column-level-copy)).                                    |
 | **Copy column values as SQL IN**   | Copies the column's values as a ready-to-paste SQL `IN` list.                                                                   |

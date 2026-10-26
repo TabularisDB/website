@@ -5,13 +5,13 @@ order: 1
 excerpt: 'Welcome to the Tabularis Wiki. Learn how to get started with the most modern database management tool.'
 ---
 
-**Tabularis** is a desktop database management tool built with **Tauri** (Rust backend) and **React** (frontend). It natively supports PostgreSQL, MySQL, MariaDB, and SQLite, and can be extended to any other database engine via its JSON-RPC plugin system.
+**Tabularis** is a desktop database management tool built with **Tauri** (Rust backend) and **React** (frontend). It natively supports PostgreSQL, MySQL, MariaDB, and SQLite, and can be extended to any other database engine via its JSON-RPC plugin system. Since v0.30.0 it can also run as a server and be used from a browser: see [Tabularis Web](/wiki/web-mode).
 
 ## What Tabularis Actually Does
 
 - **Connects** to PostgreSQL, MySQL, MariaDB, and SQLite — including databases behind SSH tunnels.
 - **Browses** schemas, tables, views, indexes, foreign keys, and stored procedures/functions.
-- **Runs SQL** in a Monaco-based editor with live autocomplete on real table/column names, with multi-statement execution and multi-result tabs.
+- **Runs SQL** in a Monaco-based editor with live autocomplete on real table/column names, with multi-statement execution and multi-result tabs, and draws results as bar or line charts.
 - **Notebooks** — interactive multi-cell workspaces combining SQL, Markdown, charts, and cross-cell variables.
 - **Edits data** inline in a virtualized data grid with pending change tracking.
 - **Builds queries visually** with a drag-and-drop canvas that generates SQL in real time.
@@ -19,9 +19,10 @@ excerpt: 'Welcome to the Tabularis Wiki. Learn how to get started with the most 
 - **Manages schema** — creates tables, alters columns, adds indexes and foreign keys — with a DDL preview before applying.
 - **Generates AI SQL** from natural language using a ChatGPT Plus or Pro plan, OpenAI, Anthropic, OpenRouter, Requesty, MiniMax, Ollama, or any OpenAI-compatible endpoint.
 - **Exports** query results to CSV, JSON, or Markdown (streamed, cancellable).
-- **Dumps and imports** databases to/from `.sql` files, with progress tracking and cancellation support.
+- **Dumps and imports** databases to/from `.sql` files, with progress tracking and cancellation support, and backs them up on a daily schedule.
 - **Extends** via plugins: any executable that speaks JSON-RPC over stdin/stdout becomes a new database driver.
 - **Runs as an MCP server** so external AI agents (Claude Desktop, Cursor) can query your local databases.
+- **Runs in a browser** with `tabularis web`, locally or self-hosted with Docker, Compose or Helm.
 
 ## System Requirements
 

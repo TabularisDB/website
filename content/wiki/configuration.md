@@ -27,18 +27,22 @@ Open the Settings panel from:
 
 ## Network & Proxies
 
-Since v0.24.0, **Settings → Network** configures a shared **HTTP CONNECT** or **SOCKS5** proxy. Supply its host, port and optional username/password, then opt in the traffic scopes you need:
+Since v0.24.0, **Settings → Network** configures a shared **HTTP CONNECT** or **SOCKS5** proxy server: its host, port and optional username/password. Since v0.30.0, each traffic category has its own mode:
 
-- **App network requests**: update checks, plugin downloads, registry requests and WebDAV backups.
-- **Database connections**: direct database TCP traffic.
-- **AI / LLM endpoints**: provider requests.
-- **SSH tunnels**: the outbound bastion connection.
+| Category | Covers | Modes | Default |
+|---|---|---|---|
+| **App network requests** | Update checks and downloads, plugin downloads, registry requests and WebDAV backups | System, Custom, Disabled | System |
+| **AI / LLM endpoints** | Provider requests | System, Custom, Disabled | System |
+| **Database connections** | Direct database TCP traffic | Custom, Disabled | Disabled |
+| **SSH tunnels** | The outbound bastion connection | Custom, Disabled | Disabled |
 
-The global proxy is disabled by default and scopes are opt-in. Database connections (**Advanced**) and individual AI providers (**Settings → AI**) can inherit the global setting, use a custom proxy or explicitly disable proxying. Target overrides take precedence. Passwords are stored in the OS keychain, not in configuration files.
+**System** follows the proxy configured on the machine, **Custom** routes the category through the proxy server above (every Custom category shares it), and **Disabled** connects directly. Custom needs a host and port. Database connections (**Advanced**) and individual AI providers (**Settings → AI**) can still inherit, use their own custom proxy or disable proxying, and those overrides take precedence. Passwords are stored in the OS keychain, not in configuration files.
+
+Settings from before v0.30.0 are migrated: a category that was opted in becomes Custom, or Disabled if the global proxy was switched off; a category that was explicitly left out becomes Disabled; categories that were never set take the defaults above.
 
 SSH and Kubernetes tunnel endpoints are not proxied a second time on their local database leg. SSH profiles do not have their own proxy picker: use the global SSH scope or the database connection's override. Saving global proxy settings stops existing SSH tunnels and cached forwards; reconnect afterward. This does not configure arbitrary networking implemented inside third-party plugins, and proxy routing does not replace endpoint TLS.
 
-![Settings → Network with a SOCKS5 endpoint, empty authentication fields and the AI traffic scope selected](/img/tabularis-network-proxy.png)
+![Settings → Network with App network requests on System, Database connections on Disabled, AI on Custom and SSH tunnels on Disabled, and a SOCKS5 custom proxy server at 127.0.0.1:1080](/img/tabularis-network-proxy-modes.png)
 
 ## Result Font
 
@@ -155,7 +159,7 @@ Any key omitted from the file falls back to its default value. You do not need a
 | `editorTheme` | `string` | `null` | Monaco editor theme ID. |
 | `editorFontFamily` | `string` | `"JetBrains Mono"` | SQL editor font family. The picker offers bundled families that need no system install — JetBrains Mono, plus the ExtraBold and ExtraBold Italic weights added in v0.18.0 — alongside system fonts. |
 | `resultFontFamily` | `string` | `"JetBrains Mono"` | Since v0.24.0. Font for result cells and inline editors. `"inherit"` follows the interface font; other values select a bundled or custom family. |
-| `proxy` | `object` | disabled | Since v0.24.0. Global proxy with `enabled`, `endpoint` (`protocol`, `host`, `port`, optional `username`) and opt-in `scopes` (`app_http`, `database`, `ai`, `ssh_tunnel`). Passwords stay in the keychain. |
+| `proxy` | `object` | see [Network](#network--proxies) | Since v0.24.0. Shared proxy `endpoint` (`protocol`, `host`, `port`, optional `username`) and, since v0.30.0, `modes` per category: `app_http` and `ai` (`system`, `custom`, `disabled`), `database` and `ssh_tunnel` (`custom`, `disabled`). The pre-v0.30.0 `enabled` and `scopes` fields are read once and migrated. Passwords stay in the keychain. |
 | `aiProviderProxies` | `object` | `{}` | Since v0.24.0. Per-provider proxy settings with `mode`: `inherit`, `custom` or `disabled`, and an `endpoint` for custom mode. |
 | `editorFontSize` | `number` | `14` | SQL editor font size in pixels (10–20). Since v0.29.0 also changed by the editor zoom shortcuts (`Cmd/Ctrl + =`, `-`, `0`). |
 | `editorLineHeight` | `number` | `1.5` | SQL editor line height multiplier. |
@@ -182,6 +186,7 @@ Any key omitted from the file falls back to its default value. You do not need a
 | `backupTarget` | `string` | `"local"` | Backup destination: `local` or `webdav`. |
 | `backupWebdavUrl` | `string` | `null` | WebDAV collection URL backups are uploaded to. |
 | `backupWebdavUsername` | `string` | `null` | WebDAV username. The password is stored in the OS keychain. |
+| `databaseBackupPlan` | `object` | `null` | Since v0.30.0. The [scheduled database backup](/wiki/connections#scheduled-database-backups) plan: `enabled`, `connectionId`, optional `database`, `time` (`HH:mm`, default `02:00`), `timezone` (IANA name or `local`), `destinationDirectory`, `retention` (default 7), `includeStructure`, `includeData`. |
 
 The in-app log viewer has its own backend settings and commands, but those are not stored as `loggingEnabled` or `maxLogEntries` fields in `config.json`.
 
