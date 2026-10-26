@@ -1,4 +1,5 @@
-import {getKindBadge, getPluginIcon} from '@/components/pages/plugins/Plugin.data';
+import {getPluginIcon} from '@/components/pages/plugins/Plugin.data';
+import {PluginKindLabel} from '@/components/pages/plugins/PluginKindLabel/PluginKindLabel';
 import {getAllPlugins, getLatestRelease} from '@/lib/plugins';
 import {getKindSlug, getPublishedKinds} from '@/lib/plugins/kinds';
 import clsx from 'clsx';
@@ -75,7 +76,7 @@ function PluginCard({plugin}: {plugin: Plugin}) {
                         fallbackIcon
                     )
                 }
-                aside={<Card.Label>{getKindBadge(kind)}</Card.Label>}
+                aside={<PluginKindLabel kind={kind} />}
             />
             <Card.Content>
                 <Card.Title>{plugin.name}</Card.Title>

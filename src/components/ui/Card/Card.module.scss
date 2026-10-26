@@ -119,23 +119,25 @@
 .metaItem {
     display: inline-flex;
     align-items: center;
-    gap: 0.375rem;
-    padding: 0.3rem 0.625rem;
-    border: var(--border);
-    border-radius: var(--radius-full);
+    gap: var(--space-1);
+    height: 1.5rem;
+    padding-inline: var(--space-2);
+    border-radius: var(--radius-sm);
+    background-color: rgb(var(--rgb-tint) / 8%);
     font-size: 0.75rem;
+    font-weight: 500;
     color: var(--color-text-secondary);
-    background-color: var(--color-surface-raised);
+    white-space: nowrap;
 
     svg,
     img {
-        width: 0.9rem;
-        height: 0.9rem;
+        width: 0.875rem;
+        height: 0.875rem;
         flex-shrink: 0;
     }
 
-    svg {
-        color: var(--color-accent-teal);
+    :global(:root[data-theme='light']) & {
+        background-color: rgb(var(--rgb-tint) / 5%);
     }
 }
 
