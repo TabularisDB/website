@@ -42,7 +42,7 @@ export function MobileMenu({isOpen, onClose}: MobileMenuProps) {
                         <DownloadIcon />
                         <span>Download</span>
                     </Button>
-                    <ThemeToggle />
+                    <ThemeToggle className={styles.themeToggle} />
                 </footer>
             </div>
         </>
