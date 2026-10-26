@@ -23,7 +23,7 @@ export function BountyCard({bounty, onOpen, onVote, voteBusy}: BountyCardProps) 
                 icon={<BountyIcon bounty={bounty} className={styles.logo} />}
                 aside={
                     <>
-                        <PluginKindLabel kind={bounty.kind} className={styles.kind} />
+                        <PluginKindLabel kind={bounty.kind} />
                         <BountyStatus status={bounty.status} className={styles.status} />
                     </>
                 }
