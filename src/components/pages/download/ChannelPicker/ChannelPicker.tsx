@@ -47,14 +47,16 @@ export function ChannelPicker({channel, stableVersion, onChange}: ChannelPickerP
         };
         const onKeyDown = (event: KeyboardEvent) => {
             if (event.key !== 'Escape') return;
+            event.stopPropagation();
             setOpen(false);
             triggerRef.current?.focus();
         };
         document.addEventListener('pointerdown', onPointerDown);
-        document.addEventListener('keydown', onKeyDown);
+        // Capture on window so Escape closes the list before the modal's document listener sees it.
+        window.addEventListener('keydown', onKeyDown, true);
         return () => {
             document.removeEventListener('pointerdown', onPointerDown);
-            document.removeEventListener('keydown', onKeyDown);
+            window.removeEventListener('keydown', onKeyDown, true);
         };
     }, [open]);
 

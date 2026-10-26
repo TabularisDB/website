@@ -30,7 +30,7 @@ const METHODS: {label: string; command: string; hint: string}[] = [
             '  --set publicUrl=https://tabularis.example.com \\',
             '  --set ingress.enabled=true',
         ].join('\n'),
-        hint: 'The chart generates the login password and secret key and keeps them across upgrades.',
+        hint: 'Without a password or secret key, the container generates them on the data volume, so keep the volume across upgrades.',
     },
 ];
 
