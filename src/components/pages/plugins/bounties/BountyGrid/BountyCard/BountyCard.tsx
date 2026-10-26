@@ -39,6 +39,7 @@ export function BountyCard({bounty, onOpen, onVote, voteBusy}: BountyCardProps) 
             <BountyClaimers claimers={bounty.claimers} compact />
             <div className={styles.footer}>
                 <Card.Link
+                    className={styles.detailsLink}
                     onClick={() => {
                         trackEvent('Bounty', 'Open Details', bounty.id);
                         onOpen(bounty.id);

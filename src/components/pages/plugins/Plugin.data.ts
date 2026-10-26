@@ -1,4 +1,5 @@
 import {BOUNTY_STATUS} from '@/lib/plugins/bounties';
+import {DatabaseIcon, PaletteIcon, PlugIcon, type LucideIcon} from 'lucide-react';
 
 export const PLUGIN_ICONS: Record<string, string | null> = {
     redis: 'redis',
@@ -79,6 +80,12 @@ export const PLUGINS_PAGE_COPY: Record<string, PluginsPageCopy> = {
 };
 
 // Singular, human label for a kind key: "driver" -> "Driver", "sql-template" -> "Sql template".
+const KIND_ICONS: Record<string, LucideIcon> = {driver: DatabaseIcon, theme: PaletteIcon};
+
+export function getKindIcon(kind?: string | null): LucideIcon {
+    return (kind && KIND_ICONS[kind]) || PlugIcon;
+}
+
 export function getKindBadge(key: string): string {
     const words = key.replace(/[-_]+/g, ' ');
     return words.charAt(0).toUpperCase() + words.slice(1);

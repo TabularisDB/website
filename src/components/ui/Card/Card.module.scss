@@ -127,9 +127,10 @@
     border-radius: var(--radius-sm);
     background-color: rgb(var(--rgb-tint) / 8%);
     font-size: 0.75rem;
+    max-width: 100%;
+    min-width: 0;
     font-weight: 500;
     color: var(--color-text-secondary);
-    white-space: nowrap;
 
     svg,
     img {
@@ -141,6 +142,13 @@
     :global(:root[data-theme='light']) & {
         background-color: rgb(var(--rgb-tint) / 5%);
     }
+}
+
+.metaText {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .link {
