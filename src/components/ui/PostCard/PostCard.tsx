@@ -1,6 +1,7 @@
 import {Card} from '@/components/ui/Card/Card';
 import {authorAvatarUrl, resolveAuthors} from '@/lib/blog/authors';
-import {formatDate, PostMeta, postOgImage} from '@/lib/blog/posts';
+import {PostMeta, postOgImage} from '@/lib/blog/posts';
+import {formatDate} from '@/lib/date';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './PostCard.module.scss';

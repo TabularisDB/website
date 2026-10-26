@@ -1,5 +1,6 @@
 import {GitHubIcon} from '@/components/ui/Icons/SocialIcons';
 import type {ChangelogVersion, SectionType} from '@/lib/changelog';
+import {formatDate} from '@/lib/date';
 import styles from './VersionCard.module.scss';
 import {Button} from '@/components/ui/Button/Button';
 
@@ -19,18 +20,11 @@ export function VersionCard({version: v}: VersionCardProps) {
     const totalEntries = v.sections.reduce((s, sec) => s + sec.entries.length, 0);
     if (totalEntries === 0) return null;
 
-    const formattedDate = new Date(v.date + 'T12:00:00Z').toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        timeZone: 'UTC',
-    });
-
     return (
         <div className={styles.row}>
             <div className={styles.meta}>
                 <time className={styles.date} dateTime={v.date}>
-                    {formattedDate}
+                    {formatDate(v.date)}
                 </time>
                 {v.isMajor && <span className={styles.majorBadge}>Major</span>}
             </div>

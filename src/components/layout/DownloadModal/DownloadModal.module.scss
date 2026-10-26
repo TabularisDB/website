@@ -1,43 +1,29 @@
 .logo {
-    width: 2rem;
-    height: 2rem;
     object-fit: contain;
+    border: var(--border);
 }
 
-.meta {
-    display: flex;
-    align-items: center;
+.body {
+    margin-top: var(--space-5);
+    border-top: var(--border);
+}
+
+.actions {
     flex-wrap: wrap;
-    gap: var(--space-3) var(--space-6);
-    flex-shrink: 0;
-    margin-top: 0.375rem;
-    padding: var(--space-3) var(--space-6) var(--space-5);
-    border-bottom: var(--border);
+    justify-content: flex-start;
+    gap: var(--space-2) var(--space-6);
 }
 
-.versionTag {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    color: var(--color-text-secondary);
-}
-
-.releasesLink {
-    display: flex;
+.more {
+    display: inline-flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-1);
     font-size: 0.85rem;
-    color: var(--color-accent-teal);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    transition: color 0.15s ease;
 
     &:hover {
-        text-decoration: underline;
+        color: var(--color-text-primary);
     }
-
-    svg {
-        width: 0.9rem;
-        height: 0.9rem;
-    }
-}
-
-.warning {
-    font-style: italic;
 }

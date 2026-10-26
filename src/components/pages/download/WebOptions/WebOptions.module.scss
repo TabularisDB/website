@@ -1,0 +1,70 @@
+.optionList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.intro {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+
+    code {
+        font-family: var(--font-mono);
+        font-size: 0.85em;
+    }
+}
+
+.option {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.optionLabel {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.codeBlock {
+    position: relative;
+    border: var(--border);
+    border-radius: var(--radius-sm);
+    background: rgb(var(--rgb-tint) / 2%);
+}
+
+.code {
+    margin: 0;
+    padding: var(--space-3) var(--space-12) var(--space-3) var(--space-4);
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+}
+
+.copy {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+}
+
+.guide {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    width: fit-content;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+
+    &:hover {
+        color: var(--color-accent-teal);
+    }
+
+    svg {
+        width: 0.9rem;
+        height: 0.9rem;
+    }
+}

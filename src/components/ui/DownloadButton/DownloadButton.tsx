@@ -1,20 +1,13 @@
 'use client';
 
 import {DownloadModal} from '@/components/layout/DownloadModal/DownloadModal';
-import {Platform} from '@/lib/download/downloadConfig';
+import {detectPlatform} from '@/lib/download/detectPlatform';
+import type {Platform} from '@/lib/download/downloadConfig';
 import clsx from 'clsx';
 import {useEffect, useState} from 'react';
 import {Button} from '@/components/ui/Button/Button';
 import {LinuxIcon, MacOsIcon, WindowsIcon} from '@/components/ui/Icons/PlatformIcons';
 import styles from './DownloadButton.module.scss';
-
-function detectPlatform(): Platform {
-    if (typeof navigator === 'undefined') return 'windows';
-    const ua = navigator.userAgent.toLowerCase();
-    if (ua.includes('mac')) return 'macos';
-    if (ua.includes('linux')) return 'linux';
-    return 'windows';
-}
 
 const PLATFORM_LABELS: Record<Platform, string> = {
     windows: 'Windows',
@@ -37,7 +30,7 @@ export function DownloadButton({className}: DownloadButtonProps) {
     const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
-        setUserPlatform(detectPlatform());
+        setUserPlatform(detectPlatform() ?? 'windows');
     }, []);
 
     return (

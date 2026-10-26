@@ -17,7 +17,7 @@ const RESOURCES: ThankYouResource[] = [
         icon: <DownloadIcon />,
         title: 'Download Tabularis',
         linkLabel: 'Download',
-        desc: 'Get the latest version for Windows, macOS or Linux and start working with your databases.',
+        desc: 'Get the latest version for Windows, macOS or Linux, or self-host it for your browser, and start working with your databases.',
     },
     {
         href: SOCIAL_URLS.discord,

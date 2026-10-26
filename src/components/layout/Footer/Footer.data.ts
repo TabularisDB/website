@@ -18,7 +18,7 @@ const CLOSING_CTA_RULES: ClosingCtaRule[] = [
         content: {
             title: 'No trial. No account. Just the app.',
             description:
-                'Free and open source (Apache 2.0). Download it for Windows, macOS, Linux, or Docker. If it looks useful, a star on GitHub helps more developers discover it.',
+                'Free and open source (Apache 2.0). Download it for Windows, macOS or Linux, or self-host it for your browser. If it looks useful, a star on GitHub helps more developers discover it.',
         },
     },
     {
@@ -26,7 +26,7 @@ const CLOSING_CTA_RULES: ClosingCtaRule[] = [
         content: {
             title: 'Get the latest version.',
             description:
-                'Every release above ships to Windows, macOS, and Linux. Tabularis is free and open source (Apache 2.0), and a star on GitHub helps more developers discover it.',
+                'Every release above ships to Windows, macOS and Linux, and to the self-hosted web version. Tabularis is free and open source (Apache 2.0), and a star on GitHub helps more developers discover it.',
         },
     },
     {
@@ -36,7 +36,7 @@ const CLOSING_CTA_RULES: ClosingCtaRule[] = [
         content: {
             title: 'Enjoyed this post? Try Tabularis.',
             description:
-                'Free and open source (Apache 2.0). Download it for Windows, macOS, or Linux, or Docker. If you like what you read, a star on GitHub helps more developers discover it.',
+                'Free and open source (Apache 2.0). Download it for Windows, macOS or Linux, or self-host it for your browser. If you like what you read, a star on GitHub helps more developers discover it.',
         },
     },
     {
@@ -53,7 +53,7 @@ const CLOSING_CTA_RULES: ClosingCtaRule[] = [
         content: {
             title: 'Like what you just saw?',
             description:
-                'This demo is a quick way to evaluate the workflow before installing Tabularis locally. If it matches your use case, download the desktop app and test it against a real development database.',
+                'This demo is a quick way to evaluate the workflow before installing Tabularis locally. If it matches your use case, download the app or self-host it, and test it against a real development database.',
         },
     },
     {

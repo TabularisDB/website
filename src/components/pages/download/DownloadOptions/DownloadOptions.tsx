@@ -1,12 +1,11 @@
 import {Button} from '@/components/ui/Button/Button';
-import type {DownloadOption, PlatformConfig} from '@/lib/download/downloadConfig';
-import {AlertCircleIcon, CopyIcon} from 'lucide-react';
+import type {DownloadOption} from '@/lib/download/downloadConfig';
+import {CopyIcon} from 'lucide-react';
 import {CopyButton} from '@/components/ui/CopyButton/CopyButton';
 import styles from './DownloadOptions.module.scss';
 
 interface DownloadOptionsProps {
     options: DownloadOption[];
-    note?: PlatformConfig['note'];
 }
 
 function Option({option}: {option: DownloadOption}) {
@@ -14,7 +13,11 @@ function Option({option}: {option: DownloadOption}) {
         const commands = Array.isArray(option.command) ? option.command : [option.command];
         return (
             <div className={styles.optionCommand}>
-                <span className={styles.optionLabel}>{option.label}</span>
+                <span className={styles.optionLabel}>
+                    {option.label}
+                    {option.desc && <span className={styles.desc}>{option.desc}</span>}
+                    {option.recommended && <span className={styles.badge}>Recommended</span>}
+                </span>
                 <div className={styles.commandList}>
                     {commands.map((cmd) => (
                         <div key={cmd} className={styles.commandRow}>
@@ -34,7 +37,10 @@ function Option({option}: {option: DownloadOption}) {
 
     return (
         <div className={styles.optionFile}>
-            <span className={styles.optionLabel}>{option.label}</span>
+            <span className={styles.optionLabel}>
+                {option.label}
+                {option.desc && <span className={styles.desc}>{option.desc}</span>}
+            </span>
             <Button size="sm" href={`/download/thank-you?url=${encodeURIComponent(option.url)}`}>
                 {option.ext}
             </Button>
@@ -42,21 +48,12 @@ function Option({option}: {option: DownloadOption}) {
     );
 }
 
-export function DownloadOptions({options, note}: DownloadOptionsProps) {
+export function DownloadOptions({options}: DownloadOptionsProps) {
     return (
         <div className={styles.optionList}>
             {options.map((option) => (
                 <Option key={option.label} option={option} />
             ))}
-
-            {note && (
-                <div className={styles.note}>
-                    <span>
-                        <AlertCircleIcon size={16} /> {note.text}
-                    </span>
-                    {note.command && <code>{note.command}</code>}
-                </div>
-            )}
         </div>
     );
 }

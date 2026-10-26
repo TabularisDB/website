@@ -1,15 +1,14 @@
 import {JsonLd} from '@/components/layout/JsonLd';
 import {DownloadSection} from '@/components/pages/download/DownloadSection/DownloadSection';
-import {SelfHostSection} from '@/components/pages/download/SelfHostSection/SelfHostSection';
 import {Card} from '@/components/ui/Card/Card';
 import {CardGrid} from '@/components/ui/CardGrid/CardGrid';
 import {NewsletterForm} from '@/components/ui/NewsletterForm/NewsletterForm';
-import {formatDate, getReleaseDate} from '@/lib/blog/posts';
+import {getReleaseDate} from '@/lib/blog/posts';
 import {APP_VERSION} from '@/lib/download/version';
 import {formatDownloads, TOTAL_DOWNLOADS} from '@/lib/github';
 import {ogImages} from '@/lib/og/registry';
 import {buildBreadcrumbJsonLd, buildSoftwareApplicationJsonLd} from '@/lib/seo';
-import {DownloadIcon} from 'lucide-react';
+import {CompassIcon} from 'lucide-react';
 import type {Metadata} from 'next';
 import styles from './DownloadPage.module.scss';
 
@@ -33,8 +32,6 @@ export const metadata: Metadata = {
 };
 
 export default function DownloadPage() {
-    const rawDate = getReleaseDate(APP_VERSION);
-
     return (
         <div className="container">
             <JsonLd
@@ -48,72 +45,61 @@ export default function DownloadPage() {
             />
             <header className="page-header">
                 <span className="eyebrow">
-                    <DownloadIcon />
+                    <img src="/img/tabularis-app-icon.svg" alt="" className={styles.appIcon} />
                     Download
                 </span>
                 <h1 className="title">Get Tabularis running in one click.</h1>
                 <p className="description">
-                    Trusted by {formatDownloads(TOTAL_DOWNLOADS)} downloads across macOS, Windows, and Linux.
+                    Trusted by {formatDownloads(TOTAL_DOWNLOADS)} downloads. Get it for macOS, Windows and Linux, or
+                    self-host it for your browser.
                 </p>
             </header>
 
-            <section className={styles.layout}>
-                <DownloadSection stableVersion={APP_VERSION} stableDate={rawDate ? formatDate(rawDate) : ''} />
+            <DownloadSection stableVersion={APP_VERSION} stableDate={getReleaseDate(APP_VERSION)} />
 
-                <SelfHostSection />
+            <div className={styles.more}>
+                <section className={styles.explore}>
+                    <h2 className="category-title">
+                        <CompassIcon aria-hidden="true" />
+                        Keep exploring
+                    </h2>
+                    <CardGrid variant="joined">
+                        <Card>
+                            <Card.Content>
+                                <Card.Title>Releases &amp; roadmap</Card.Title>
+                                <Card.Description>
+                                    Browse what changed in every release, then see what the team is working on next.
+                                </Card.Description>
+                            </Card.Content>
+                            <div className={styles.links}>
+                                <Card.Link href="/changelog" stretched={false}>
+                                    Changelog
+                                </Card.Link>
+                                <Card.Link href="/roadmap" stretched={false}>
+                                    Roadmap
+                                </Card.Link>
+                            </div>
+                        </Card>
 
-                <CardGrid variant="joined" className={styles.secondaryGrid}>
-                    <Card>
-                        <Card.Content>
-                            <Card.Title as="h2">Alternative Mirrors</Card.Title>
-                            <Card.Description>
-                                Prefer a secondary download mirror? Tabularis is also available on SourceForge. The
-                                primary and most up-to-date release channel remains GitHub Releases.
-                            </Card.Description>
-                        </Card.Content>
-                        <Card.Link href="https://sourceforge.net/projects/tabularis/files/latest/download">
-                            Download from SourceForge
-                        </Card.Link>
-                    </Card>
-
-                    <Card>
-                        <Card.Content>
-                            <Card.Title as="h2">Explore by Workflow</Card.Title>
-                            <Card.Description>
-                                Not every download starts from the same use case. If you are here because of PostgreSQL,
-                                MySQL, secure access, notebooks, or plugin extensibility, see how Tabularis fits your
-                                workflow.
-                            </Card.Description>
-                        </Card.Content>
-                        <Card.Link href="/solutions">Explore solutions</Card.Link>
-                    </Card>
-
-                    <Card>
-                        <Card.Content>
-                            <Card.Title as="h2">Release notes</Card.Title>
-                            <Card.Description>
-                                See what changed in v{APP_VERSION}, or browse every previous release and its assets.
-                            </Card.Description>
-                        </Card.Content>
-                        <div className={styles.links}>
-                            <Card.Link
-                                href={`https://github.com/TabularisDB/tabularis/releases/tag/v${APP_VERSION}`}
-                                stretched={false}
-                            >
-                                Read the v{APP_VERSION} release notes
-                            </Card.Link>
-                            <Card.Link href="https://github.com/TabularisDB/tabularis/releases" stretched={false}>
-                                All releases
-                            </Card.Link>
-                        </div>
-                    </Card>
-                </CardGrid>
+                        <Card>
+                            <Card.Content>
+                                <Card.Title>Explore by Workflow</Card.Title>
+                                <Card.Description>
+                                    Not every download starts from the same use case. If you are here because of
+                                    PostgreSQL, MySQL, secure access, notebooks, or plugin extensibility, see how
+                                    Tabularis fits your workflow.
+                                </Card.Description>
+                            </Card.Content>
+                            <Card.Link href="/solutions">Explore solutions</Card.Link>
+                        </Card>
+                    </CardGrid>
+                </section>
                 <NewsletterForm
                     title="Stay in the loop"
                     description="Get release notes, tips, and project updates. No spam, unsubscribe anytime."
                     buttonLabel="Subscribe"
                 />
-            </section>
+            </div>
         </div>
     );
 }
