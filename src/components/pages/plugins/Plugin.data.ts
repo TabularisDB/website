@@ -79,10 +79,15 @@ export const PLUGINS_PAGE_COPY: Record<string, PluginsPageCopy> = {
     },
 };
 
-const KIND_ICONS: Record<string, LucideIcon> = {driver: DatabaseIcon, theme: PaletteIcon};
-
 export function getKindIcon(kind?: string | null): LucideIcon {
-    return (kind && KIND_ICONS[kind]) || PlugIcon;
+    switch (kind) {
+        case 'driver':
+            return DatabaseIcon;
+        case 'theme':
+            return PaletteIcon;
+        default:
+            return PlugIcon;
+    }
 }
 
 // Singular, human label for a kind key: "driver" -> "Driver", "sql-template" -> "Sql template".
