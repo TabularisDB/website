@@ -1,8 +1,9 @@
-import {getKindBadge, getPluginIcon} from '@/components/pages/plugins/Plugin.data';
+import {getKindIcon, getPluginIcon} from '@/components/pages/plugins/Plugin.data';
+import {PluginKindLabel} from '@/components/pages/plugins/PluginKindLabel/PluginKindLabel';
 import {getAllPlugins, getLatestRelease} from '@/lib/plugins';
 import {getKindSlug, getPublishedKinds} from '@/lib/plugins/kinds';
 import clsx from 'clsx';
-import {PaletteIcon, PlugIcon, TagIcon, UserIcon} from 'lucide-react';
+import {TagIcon, UserIcon} from 'lucide-react';
 import Link from 'next/link';
 import {Card} from '@/components/ui/Card/Card';
 import {CardGrid} from '@/components/ui/CardGrid/CardGrid';
@@ -63,7 +64,7 @@ function PluginCard({plugin}: {plugin: Plugin}) {
     const kind = kindOf(plugin);
     const iconSlug = getPluginIcon(plugin.id);
     const minVersion = getLatestRelease(plugin)?.min_tabularis_version;
-    const fallbackIcon = kind === 'theme' ? <PaletteIcon /> : <PlugIcon />;
+    const KindIcon = getKindIcon(kind);
 
     return (
         <Card>
@@ -72,10 +73,10 @@ function PluginCard({plugin}: {plugin: Plugin}) {
                     iconSlug ? (
                         <img src={`/img/logos/plugins/${iconSlug}.svg`} alt="" className={styles.logo} />
                     ) : (
-                        fallbackIcon
+                        <KindIcon />
                     )
                 }
-                aside={<Card.Label>{getKindBadge(kind)}</Card.Label>}
+                aside={<PluginKindLabel kind={kind} />}
             />
             <Card.Content>
                 <Card.Title>{plugin.name}</Card.Title>

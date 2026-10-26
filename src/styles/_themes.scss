@@ -40,6 +40,7 @@
 
     // Overlays and shadows
     --rgb-tint: 255 255 255;
+    --color-fill-subtle: rgb(var(--rgb-tint) / 8%);
     --rgb-shadow: 0 0 0;
     --shadow-scale: 1;
 }
@@ -86,6 +87,7 @@
 
     // Overlays and shadows
     --rgb-tint: 15 23 42;
+    --color-fill-subtle: rgb(var(--rgb-tint) / 5%);
     --rgb-shadow: 15 23 42;
     --shadow-scale: 0.3;
 }

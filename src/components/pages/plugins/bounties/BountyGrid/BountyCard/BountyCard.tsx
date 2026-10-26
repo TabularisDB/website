@@ -1,6 +1,5 @@
-import {DatabaseIcon, GaugeIcon, LayersIcon, PaletteIcon, PlugIcon} from 'lucide-react';
-import clsx from 'clsx';
-import {getKindBadge} from '@/components/pages/plugins/Plugin.data';
+import {GaugeIcon, LayersIcon} from 'lucide-react';
+import {PluginKindLabel} from '@/components/pages/plugins/PluginKindLabel/PluginKindLabel';
 import {BountyClaimers} from '@/components/pages/plugins/bounties/BountyGrid/BountyClaimers/BountyClaimers';
 import {BountyIcon} from '@/components/pages/plugins/bounties/BountyGrid/BountyIcon/BountyIcon';
 import {BountyStatus} from '@/components/pages/plugins/bounties/BountyGrid/BountyStatus/BountyStatus';
@@ -18,21 +17,20 @@ interface BountyCardProps {
 }
 
 export function BountyCard({bounty, onOpen, onVote, voteBusy}: BountyCardProps) {
-    const KindIcon = bounty.kind === 'theme' ? PaletteIcon : bounty.kind === 'driver' ? DatabaseIcon : PlugIcon;
-
     return (
         <Card>
             <Card.Header
                 icon={<BountyIcon bounty={bounty} className={styles.logo} />}
-                aside={<BountyStatus status={bounty.status} className={styles.status} />}
+                aside={
+                    <>
+                        <PluginKindLabel kind={bounty.kind} />
+                        <Card.Label>
+                            <BountyStatus status={bounty.status} className={styles.status} />
+                        </Card.Label>
+                    </>
+                }
             />
             <Card.Content>
-                <Card.Label className={clsx(styles.kind, bounty.kind === 'theme' && styles.theme)}>
-                    <span className={styles.kindIcon}>
-                        <KindIcon aria-hidden="true" />
-                    </span>
-                    {bounty.kind ? getKindBadge(bounty.kind) : 'Plugin'}
-                </Card.Label>
                 <Card.Title>{bounty.name}</Card.Title>
                 <Card.Description>{bounty.tagline}</Card.Description>
             </Card.Content>
@@ -40,7 +38,18 @@ export function BountyCard({bounty, onOpen, onVote, voteBusy}: BountyCardProps) 
                 <Card.MetaItem icon={<LayersIcon aria-hidden="true" />}>{bounty.target}</Card.MetaItem>
                 <Card.MetaItem icon={<GaugeIcon aria-hidden="true" />}>{bounty.difficulty} difficulty</Card.MetaItem>
             </Card.Meta>
+            <BountyClaimers claimers={bounty.claimers} compact />
             <div className={styles.footer}>
+                <Card.Link
+                    className={styles.detailsLink}
+                    onClick={() => {
+                        trackEvent('Bounty', 'Open Details', bounty.id);
+                        onOpen(bounty.id);
+                    }}
+                    ariaLabel={`View ${bounty.name} details`}
+                >
+                    View details
+                </Card.Link>
                 <BountyVote
                     count={bounty.upvotes}
                     voted={bounty.votedByMe}
@@ -50,17 +59,7 @@ export function BountyCard({bounty, onOpen, onVote, voteBusy}: BountyCardProps) 
                         onVote();
                     }}
                 />
-                <BountyClaimers claimers={bounty.claimers} compact />
             </div>
-            <Card.Link
-                onClick={() => {
-                    trackEvent('Bounty', 'Open Details', bounty.id);
-                    onOpen(bounty.id);
-                }}
-                ariaLabel={`View ${bounty.name} details`}
-            >
-                View details
-            </Card.Link>
         </Card>
     );
 }

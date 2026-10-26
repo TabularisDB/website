@@ -1,4 +1,5 @@
 import {BOUNTY_STATUS} from '@/lib/plugins/bounties';
+import {DatabaseIcon, PaletteIcon, PlugIcon, type LucideIcon} from 'lucide-react';
 
 export const PLUGIN_ICONS: Record<string, string | null> = {
     redis: 'redis',
@@ -77,6 +78,17 @@ export const PLUGINS_PAGE_COPY: Record<string, PluginsPageCopy> = {
             'Theme packages restyle the whole app, usually with a light and a dark variant. They are declarative and never run code.',
     },
 };
+
+export function getKindIcon(kind?: string | null): LucideIcon {
+    switch (kind) {
+        case 'driver':
+            return DatabaseIcon;
+        case 'theme':
+            return PaletteIcon;
+        default:
+            return PlugIcon;
+    }
+}
 
 // Singular, human label for a kind key: "driver" -> "Driver", "sql-template" -> "Sql template".
 export function getKindBadge(key: string): string {

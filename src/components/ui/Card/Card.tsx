@@ -69,7 +69,7 @@ function CardMetaItem({icon, title, children, className}: CardMetaItemProps) {
     return (
         <span className={clsx(styles.metaItem, className)} title={title}>
             {icon}
-            {children}
+            <span className={styles.metaText}>{children}</span>
         </span>
     );
 }
