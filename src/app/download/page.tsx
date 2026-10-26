@@ -4,7 +4,6 @@ import {Card} from '@/components/ui/Card/Card';
 import {CardGrid} from '@/components/ui/CardGrid/CardGrid';
 import {NewsletterForm} from '@/components/ui/NewsletterForm/NewsletterForm';
 import {getReleaseDate} from '@/lib/blog/posts';
-import {NIGHTLY_RELEASE} from '@/lib/download/nightly';
 import {APP_VERSION} from '@/lib/download/version';
 import {formatDownloads, TOTAL_DOWNLOADS} from '@/lib/github';
 import {ogImages} from '@/lib/og/registry';
@@ -67,21 +66,17 @@ export default function DownloadPage() {
                     <CardGrid variant="joined">
                         <Card>
                             <Card.Content>
-                                <Card.Title>Release notes</Card.Title>
+                                <Card.Title>Releases &amp; roadmap</Card.Title>
                                 <Card.Description>
-                                    See what changed in the stable v{APP_VERSION} or the latest nightly build, or browse
-                                    every previous release and its assets.
+                                    Browse what changed in every release, then see what the team is working on next.
                                 </Card.Description>
                             </Card.Content>
                             <div className={styles.links}>
-                                <Card.Link
-                                    href={`https://github.com/TabularisDB/tabularis/releases/tag/v${APP_VERSION}`}
-                                    stretched={false}
-                                >
-                                    Stable version
+                                <Card.Link href="/changelog" stretched={false}>
+                                    Changelog
                                 </Card.Link>
-                                <Card.Link href={NIGHTLY_RELEASE.url} stretched={false}>
-                                    Nightly version
+                                <Card.Link href="/roadmap" stretched={false}>
+                                    Roadmap
                                 </Card.Link>
                             </div>
                         </Card>

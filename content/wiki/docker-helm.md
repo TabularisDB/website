@@ -5,7 +5,7 @@ excerpt: "Run Tabularis Web from the official container image with Docker, Docke
 category: "Self-Hosting"
 ---
 
-The official image `ghcr.io/tabularisdb/tabularis` runs [Tabularis Web](/wiki/web-mode) on a server. It is published to the GitHub Container Registry for `linux/amd64` and `linux/arm64`, available since v0.30.0 and tagged `latest`, with the minor version (`0.30`) and with the exact version (`0.30.0`). Prereleases only get their exact version tag.
+The official image `ghcr.io/tabularisdb/tabularis` runs [Tabularis Web](/wiki/web-mode) on a server. It is published to the GitHub Container Registry for `linux/amd64` and `linux/arm64`, tagged `latest`, with the minor version (for example `0.30`) and with the exact version (`0.30.0`). Prereleases only get their exact version tag.
 
 The image is based on Debian slim, so registry driver plugins run unchanged, and it weighs about 60 MB. It runs as UID `10001`, keeps all state in `/data`, and includes `ssh` for SSH tunnels. `kubectl` and the AWS CLI are not included: extend the image if you use [Kubernetes](/wiki/kubernetes-tunneling) or [AWS SSM](/wiki/aws-ssm-tunneling) tunnels.
 

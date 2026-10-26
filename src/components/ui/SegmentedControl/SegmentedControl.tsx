@@ -28,15 +28,14 @@ export function SegmentedControl<T extends string>({
     className,
 }: SegmentedControlProps<T>) {
     return (
-        <div role="radiogroup" aria-label={ariaLabel} className={clsx(styles.rail, className)}>
+        <div role="group" aria-label={ariaLabel} className={clsx(styles.rail, className)}>
             {options.map(({value: optionValue, label, icon: Icon, ariaLabel: optionLabel}) => {
                 const selected = optionValue === value;
                 return (
                     <button
                         key={optionValue}
                         type="button"
-                        role="radio"
-                        aria-checked={selected}
+                        aria-pressed={selected}
                         aria-label={optionLabel}
                         title={label ? undefined : optionLabel}
                         onClick={() => onChange(optionValue)}

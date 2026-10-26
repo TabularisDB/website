@@ -6,6 +6,7 @@ import {DownloadOptions} from '@/components/pages/download/DownloadOptions/Downl
 import {WebOptions} from '@/components/pages/download/WebOptions/WebOptions';
 import {LinuxIcon, MacOsIcon, WindowsIcon} from '@/components/ui/Icons/PlatformIcons';
 import {SegmentedControl, type SegmentedOption} from '@/components/ui/SegmentedControl/SegmentedControl';
+import {formatDate} from '@/lib/date';
 import {detectPlatform} from '@/lib/download/detectPlatform';
 import {ALL_PLATFORMS, getPlatformConfig, type Platform, type ReleaseChannel} from '@/lib/download/downloadConfig';
 import {NIGHTLY_RELEASE} from '@/lib/download/nightly';
@@ -24,15 +25,6 @@ const TARGETS: SegmentedOption<Target>[] = [
     {value: 'web', label: 'Web', icon: GlobeIcon},
 ];
 
-function formatReleaseDate(iso: string): string {
-    return new Date(`${iso.slice(0, 10)}T12:00:00Z`).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        timeZone: 'UTC',
-    });
-}
-
 interface DownloadSectionProps {
     stableVersion: string;
     stableDate: string | null;
@@ -42,7 +34,8 @@ export function DownloadSection({stableVersion, stableDate}: DownloadSectionProp
     const [target, setTarget] = useState<Target>('windows');
     const [channel, setChannel] = useState<ReleaseChannel>('stable');
     const isWeb = target === 'web';
-    const isNightly = channel === 'nightly' && !isWeb;
+    const activeChannel = isWeb ? 'stable' : channel;
+    const isNightly = activeChannel === 'nightly';
     const releaseDate = isNightly ? NIGHTLY_RELEASE.publishedAt : stableDate;
 
     useEffect(() => {
@@ -59,16 +52,16 @@ export function DownloadSection({stableVersion, stableDate}: DownloadSectionProp
                     <SegmentedControl options={TARGETS} value={target} onChange={setTarget} ariaLabel="Platform" />
                     <div className={styles.release}>
                         <ChannelPicker
-                            channel={isNightly ? 'nightly' : 'stable'}
+                            channel={activeChannel}
                             stableVersion={stableVersion}
                             onChange={isWeb ? undefined : setChannel}
                         />
-                        {releaseDate && <span className={styles.date}>{formatReleaseDate(releaseDate)}</span>}
+                        {releaseDate && <span className={styles.date}>{formatDate(releaseDate.slice(0, 10))}</span>}
                     </div>
                 </div>
 
                 {ALL_PLATFORMS.map((platform) => {
-                    const config = getPlatformConfig(platform, isNightly ? 'nightly' : 'stable');
+                    const config = getPlatformConfig(platform, activeChannel);
                     return (
                         <div key={platform} hidden={target !== platform} className={styles.options}>
                             <DownloadNotices nightly={isNightly} note={config.note} />

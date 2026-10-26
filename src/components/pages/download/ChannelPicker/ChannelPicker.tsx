@@ -4,7 +4,7 @@ import type {ReleaseChannel} from '@/lib/download/downloadConfig';
 import {NIGHTLY_RELEASE} from '@/lib/download/nightly';
 import clsx from 'clsx';
 import {BadgeCheckIcon, ChevronDownIcon, MoonIcon} from 'lucide-react';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useId, useRef, useState} from 'react';
 import styles from './ChannelPicker.module.scss';
 
 const CHANNELS = {
@@ -36,6 +36,8 @@ export function ChannelPicker({channel, stableVersion, onChange}: ChannelPickerP
     const versions = {stable: stableVersion, nightly: NIGHTLY_RELEASE.version ?? stableVersion};
     const [open, setOpen] = useState(false);
     const rootRef = useRef<HTMLDivElement>(null);
+    const triggerRef = useRef<HTMLButtonElement>(null);
+    const menuId = useId();
     const other: ReleaseChannel = channel === 'stable' ? 'nightly' : 'stable';
 
     useEffect(() => {
@@ -44,7 +46,9 @@ export function ChannelPicker({channel, stableVersion, onChange}: ChannelPickerP
             if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
         };
         const onKeyDown = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') setOpen(false);
+            if (event.key !== 'Escape') return;
+            setOpen(false);
+            triggerRef.current?.focus();
         };
         document.addEventListener('pointerdown', onPointerDown);
         document.addEventListener('keydown', onKeyDown);
@@ -65,10 +69,11 @@ export function ChannelPicker({channel, stableVersion, onChange}: ChannelPickerP
     return (
         <div ref={rootRef} className={styles.picker}>
             <button
+                ref={triggerRef}
                 type="button"
                 className={clsx(styles.tag, channelClass(channel))}
-                aria-haspopup="menu"
                 aria-expanded={open}
+                aria-controls={menuId}
                 aria-label={`Release channel: ${CHANNELS[channel].label} v${versions[channel]}`}
                 onClick={() => setOpen((prev) => !prev)}
             >
@@ -78,14 +83,14 @@ export function ChannelPicker({channel, stableVersion, onChange}: ChannelPickerP
             </button>
 
             {open && (
-                <div role="menu" className={styles.menu}>
+                <div id={menuId} className={styles.menu}>
                     <button
                         type="button"
-                        role="menuitem"
                         className={clsx(styles.tag, channelClass(other))}
                         onClick={() => {
                             onChange(other);
                             setOpen(false);
+                            triggerRef.current?.focus();
                         }}
                     >
                         <ChannelLabel channel={other} version={versions[other]} />
