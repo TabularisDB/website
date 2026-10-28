@@ -25,6 +25,16 @@ Each built-in driver renders with its own branded icon in the Connections page â
 
 Additional drivers can be installed as [plugins](/wiki/installing-plugins).
 
+### Guides from Database Vendors
+
+These databases document Tabularis in their official docs, with their own connection steps:
+
+- [MariaDB](https://mariadb.com/docs/server/clients-and-utilities/graphical-and-enhanced-clients/tabularis): built-in `mysql` driver
+- [Apache Cloudberry](https://cloudberry.apache.org/docs/ecosystem/sql-clients/tabularis): PostgreSQL connection type
+- [Redis](https://redis.io/docs/latest/develop/tools/#tabularis): Redis plugin
+- [ClickHouse](https://clickhouse.com/docs/integrations/connectors/tools/gui#tabularis): ClickHouse plugin
+- [Trino](https://trino.io/ecosystem/client-application#tabularis): Trino plugin (read-only)
+
 ### Deprecated Built-in PostgreSQL Driver and Plugin Migration
 
 Since v0.23.0 the built-in `postgres` driver is **deprecated** in favour of the [PostgreSQL plugin](https://github.com/TabularisDB/tabularis-postgresql-plugin) (`postgresql`), with a tentative removal date of 2026-10-05. The migration is opt-in in this release: nothing changes unless you click.
