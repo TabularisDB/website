@@ -6,6 +6,7 @@ import {getShippedBounties} from '@/lib/plugins/bounties';
 import styles from './PluginArc.module.scss';
 import {Button} from '@/components/ui/Button/Button';
 import {ArrowRight} from 'lucide-react';
+import {OfficialDocs} from '@/components/pages/home/OfficialDocs/OfficialDocs';
 
 const FEATURED_IDS = [
     'hackernews',
@@ -125,6 +126,7 @@ export function PluginArc() {
                     Browse all plugins
                     <ArrowRight size={16} />
                 </Button>
+                <OfficialDocs />
             </div>
         </div>
     );
