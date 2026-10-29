@@ -140,6 +140,32 @@ export const SPONSORS: Sponsor[] = [
         ],
     },
     {
+        id: 'blacksmith',
+        name: 'Blacksmith',
+        tagline: 'Faster, cheaper GitHub Actions runners, powering the CI behind Tabularis.',
+        url: 'https://www.blacksmith.sh',
+        accentColor: '#000000',
+        highlightColor: '#e5e7eb',
+        ctaTextColor: '#ffffff',
+        logoImg: '/img/logos/sponsors/blacksmith.svg',
+        logoImgCompact: '/img/logos/sponsors/blacksmith_compact.svg',
+        invertLogoOnLight: true,
+        modalDescription:
+            'Blacksmith is a drop-in replacement for GitHub-hosted Actions runners: workflows run on bare-metal CPUs with high single-core performance, with co-located dependency caching and a managed Docker layer cache. Switching is a one-line change to runs-on. Blacksmith sponsors Tabularis by powering its CI, so the builds, tests and checks behind every pull request and release run on Blacksmith runners.',
+        features: [
+            {icon: '⚡', text: 'Bare-metal runners with high single-core performance'},
+            {icon: '🔁', text: 'Drop-in for GitHub Actions: change one runs-on line'},
+            {icon: '📦', text: 'Co-located dependency cache and managed Docker layer cache'},
+            {icon: '🔍', text: 'CI observability: search logs and spot slow or failing jobs'},
+            {icon: '❤️', text: 'Powering the Tabularis CI as a sponsor'},
+        ],
+        offer: {
+            title: '3,000 free minutes every month',
+            description:
+                'Blacksmith includes 3,000 free CI minutes per month, no credit card required. Swap the runs-on label in your workflow and your next run is on Blacksmith.',
+        },
+    },
+    {
         id: 'digitalocean',
         name: 'DigitalOcean',
         tagline: 'Simple, predictable cloud infrastructure for developers and growing teams.',
