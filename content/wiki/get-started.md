@@ -29,6 +29,17 @@ Fill in the required fields:
 
 For SQLite, select the **sqlite** driver and use the file picker to choose your `.db` or `.sqlite` file. There is no host, port, or authentication.
 
+### Use a managed Postgres database with Neon
+
+If you want a hosted database instead of installing PostgreSQL locally, [Neon](https://neon.com) is a managed Postgres option.
+
+1. Create a project in the [Neon Console](https://console.neon.tech), then click **Connect** and choose your branch, database, and role.
+2. Turn **Connection pooling** off and copy the direct connection string, keeping its TLS settings (`sslmode=require`).
+3. In Tabularis, select PostgreSQL ([install the PostgreSQL plugin](/wiki/installing-plugins) if needed), paste the URL into **Connection String**, and name the connection.
+4. Click **Test Connection**, then **Save**. You can now explore the schema and run queries as described below.
+
+See [Connection Management → Managed PostgreSQL with Neon](/wiki/connections#managed-postgresql-with-neon) for manual settings and pooled connections, or Neon's [official connection guide](https://neon.com/docs/connect/connect-from-any-app).
+
 ### Test before saving
 
 Click **Test Connection** to verify the connection before saving. Tabularis makes a real connection attempt and returns the exact error message from the database engine if it fails. Click **Save** once the test succeeds.

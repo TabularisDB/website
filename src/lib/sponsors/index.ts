@@ -120,6 +120,26 @@ export const SPONSORS: Sponsor[] = [
         ],
     },
     {
+        id: 'neon',
+        name: 'Neon',
+        tagline: 'Managed Postgres with database branching, supporting Tabularis through the Neon Open Source Program.',
+        url: 'https://neon.com',
+        accentColor: '#34D59A',
+        highlightColor: '#34D59A',
+        ctaTextColor: '#000000',
+        logoImg: '/img/logos/sponsors/neon.svg',
+        logoImgCompact: '/img/logos/sponsors/neon_compact.svg',
+        logoImgBg: '#ffffff',
+        kind: 'supporter',
+        modalDescription:
+            'Neon is a managed Postgres platform with database branching. Connect from Tabularis using the PostgreSQL driver to browse schemas, edit data, and run SQL. Neon supports Tabularis through its Open Source Program with Postgres and AI Gateway credits.',
+        features: [
+            {icon: '🗄️', text: 'Managed Postgres, accessible with standard PostgreSQL clients'},
+            {icon: '🌿', text: 'Database branches for development and testing'},
+            {icon: '❤️', text: 'Postgres and AI Gateway credits for Tabularis through the Open Source Program'},
+        ],
+    },
+    {
         id: 'digitalocean',
         name: 'DigitalOcean',
         tagline: 'Simple, predictable cloud infrastructure for developers and growing teams.',

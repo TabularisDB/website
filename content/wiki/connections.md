@@ -54,6 +54,27 @@ Since v0.23.0 the built-in `postgres` driver is **deprecated** in favour of the 
 
 </div>
 
+## Managed PostgreSQL with Neon
+
+[Neon](https://neon.com) is a managed Postgres option for Tabularis. Use the [PostgreSQL plugin](/wiki/installing-plugins) (`postgresql`) to connect; no Neon-specific driver is needed.
+
+1. Open your project in the [Neon Console](https://console.neon.tech) and click **Connect**.
+2. Select the branch, compute, database, and role. Turn **Connection pooling** off to copy a direct connection string. Direct connections are a good default for desktop browsing and administration, including dumps and session settings.
+3. In Tabularis, create a connection, select the PostgreSQL driver, and paste the URL into **Connection String**. Give the connection a name, such as `Neon development`.
+4. Keep TLS enabled (`sslmode=require` in the URL). Click **Test Connection**, then **Save**.
+
+A direct connection string has this shape; replace the placeholders with the values from Neon:
+
+```text
+postgresql://ROLE:PASSWORD@ep-YOUR-ENDPOINT.REGION.aws.neon.tech:5432/DATABASE?sslmode=require
+```
+
+If entering fields manually, use the host, database, role, and password from Neon, port **5432**, and set **SSL Mode** to `require` or a stricter verification mode. For a different Neon branch, copy that branch's connection details into a separate Tabularis connection.
+
+If you deliberately use Neon's pooled URL (the hostname contains `-pooler`), select **PgBouncer transaction** under **Advanced → Pooler mode**; see [Pooler Mode](#pooler-mode-pgbouncer). Use a direct URL for dumps and operations that need persistent session settings.
+
+See Neon's [connection guide](https://neon.com/docs/connect/connect-from-any-app) and [pooling documentation](https://neon.com/docs/connect/connection-pooling) for details.
+
 ## Connections Page
 
 The Connections page (`Cmd/Ctrl + Shift + C`) lists all saved profiles and supports two display modes, switchable from the toolbar:
