@@ -8,6 +8,12 @@ export interface DocsListing {
 
 export const DOCS_LISTINGS: DocsListing[] = [
     {
+        id: 'postgresql',
+        name: 'PostgreSQL',
+        href: 'https://wiki.postgresql.org/wiki/PostgreSQL_Clients#Tabularis',
+        logoImg: '/img/logos/plugins/postgresql.svg',
+    },
+    {
         id: 'mariadb',
         name: 'MariaDB',
         href: 'https://mariadb.com/docs/server/clients-and-utilities/graphical-and-enhanced-clients/tabularis',
