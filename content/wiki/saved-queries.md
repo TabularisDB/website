@@ -58,6 +58,18 @@ Since v0.29.0 the context menu also offers:
 
 Right-click a saved query in the sidebar and choose **Edit**. The Query Modal opens pre-populated with the current name and SQL. Modify either field, then click **Save** to update both the metadata and the `.sql` file on disk.
 
+## Version History
+
+Since v0.31.0 right-click a saved query and choose **History…** to see its previous SQL, newest first. Each save that changes the SQL keeps the content it replaces, up to fifty versions. Saving unchanged SQL creates no version. Select a version to compare it against the current SQL, then choose **Restore this version**.
+
+![Saved query History comparing an earlier SQL version with the current SQL and offering Restore this version](/img/tabularis-saved-query-history.png)
+
+Restore keeps the query's current name and database and changes only the SQL. The replaced content is saved as another version, so a restore can be reversed. Deleting the saved query deletes its version history too. Versions are stored in `{app_config_dir}/saved_queries/versions/{uuid}.json`.
+
+## Exporting a Collection
+
+Since v0.31.0 **Export all as SQL…** saves the active connection's saved queries to one `.sql` file. A folder's context menu can export that whole folder. The export includes the full collection or folder even when the sidebar search hides some entries. It does not execute SQL. For exporting past executions instead, see [Query History](/wiki/editor#exporting-history-as-sql).
+
 ## Deleting a Saved Query
 
 Right-click → **Delete**. A confirmation dialog is shown before the query file and its metadata entry are removed.

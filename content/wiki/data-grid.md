@@ -25,7 +25,11 @@ Since v0.21.0 the pagination bar also has a **rows-per-page selector** that over
 
 The total row count is not fetched automatically. Click the **#** button (**Load row count**) next to the pagination controls to run a `COUNT(*)` over the current filtered query; the total then replaces the button.
 
+Since v0.31.0 the current-page label is an editable page-number field. Type a number and press **Enter** to load it. If the total is known, out-of-range values are clamped to the available pages. **Escape** or leaving the field restores the current page without navigating.
+
 ### Column Widths
+
+Since v0.31.0 you can **double-click a column's resize handle** to fit its header and loaded cell values. The calculation uses the rendered font and the current NULL display label. It does not fetch additional rows.
 
 The grid only renders the rows on screen. Since v0.27.0 column widths are measured once from the header and the first visible rows and then held, so scrolling into longer or shorter values no longer widens or narrows the columns; longer values are truncated with an ellipsis and stay readable in the tooltip and the cell expander. Widths are measured again when the column set changes (another query or table) or when rows first arrive in an empty result. Paging and refreshing keep them.
 
@@ -42,6 +46,24 @@ Resized widths follow the same rules as measured ones: they are kept while scrol
 Since v0.30.0 the column header menu has **Freeze first column**. The first data column then stays in place next to the row numbers while you scroll horizontally, so an `id` or an email stays in view on a wide result. Row tints, selections and pending edits are drawn correctly under it, a frozen cell can be edited in place, and keyboard navigation stops the active cell to the right of the frozen column. **Unfreeze first column** turns it off. Only the first column can be frozen, and the choice lasts until the tab is closed.
 
 <video src="/videos/posts/tabularis-grid-resize-freeze.mp4" poster="/videos/posts/tabularis-grid-resize-freeze.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
+
+### Transposed Layout
+
+Since v0.31.0 the results header has a **Transpose** toggle. Fields become rows, records become columns, and field labels stay sticky on the left. This works on table tabs and query results, and the choice is saved per tab. Arrow keys follow the visible layout; editing, selections and copy still refer to the underlying records. Click a record header to select it, or double-click it to open the row editor. **Freeze first column** becomes **Freeze first row** in this layout. Record widths are fixed, so column-width reset is unavailable while transposed.
+
+![CRM customer fields shown as rows in the transposed result grid](/img/tabularis-grid-transposed.png)
+
+### Hiding Columns
+
+Since v0.31.0 the column header menu offers **Hide column**, **Hide N columns** for selected columns, **Show hidden columns** and **Choose columns…**. The status bar's hidden-column chip opens a searchable checkbox list with **Show all**. You cannot hide the last visible column.
+
+Visibility lasts for the current result's column set, per tab or result entry, and is not saved across restarts. Hidden fields remain in the row data, including primary keys used for editing. Keyboard navigation, paste, selection editing, selection copy/export and Find skip hidden columns. SQL UPDATE copy can still use a hidden key in `WHERE` while omitting other hidden fields from `SET`.
+
+### Find in Loaded Results
+
+Since v0.31.0 press **Cmd/Ctrl+F** with the grid focused to open Find. It searches the loaded cells without running SQL, highlights matches and shows the current position. **Enter** / **Shift+Enter** move forward/backward with wraparound, **Aa** enables case-sensitive matching, and **Escape** closes Find and returns focus to the matched cell. Pending edits are searchable; hidden columns, unrevealed masked values and NULL cells are skipped. **Loaded rows only** indicates when the result contains more rows than the grid currently holds. The shortcut can be rebound in Settings. Find inside the SQL editor remains Monaco's own search.
+
+<video src="/videos/posts/tabularis-grid-transpose-find.mp4" poster="/videos/posts/tabularis-grid-transpose-find.jpg" controls muted playsinline loop></video>
 
 ### Column Comments
 
@@ -102,11 +124,13 @@ Since v0.27.0, right-clicking a cell in a table tab offers filters built from th
 | Cell | Operators |
 | :--- | :--- |
 | Numeric, date/time | **Equal to**, **Not equal to**, **Greater than**, **Greater than or equal to**, **Less than**, **Less than or equal to** |
-| Text | **Equal to**, **Not equal to**, **Contains** |
+| Text | **Equal to**, **Not equal to**, **Contains**, **Does not contain**, **Starts with**, **Ends with** |
 | Other types (uuid, boolean, enum, geometry, unknown) | **Equal to**, **Not equal to** |
 | `NULL` or masked cell | `IS NULL`, `IS NOT NULL` |
 
 **Contains** generates `col LIKE '%value%' ESCAPE '!'`, with the same escaping as the filter panel's [text operators](#text-operators). The condition is combined with the current filter as `(existing) AND new`, written into the **WHERE** input where you can edit it, and the grid reloads from page 1.
+
+Since v0.31.0 **Does not contain** uses `NOT LIKE`, while **Starts with** and **Ends with** put the wildcard on one side only. Literal `%`, `_` and `!` characters are escaped.
 
 The value is formatted by column type: numbers are unquoted in numeric columns, a numeric-looking string stays quoted in a text column, booleans become `TRUE`/`FALSE`, and quotes are escaped. Identifiers are quoted for the active driver. The items are not offered on BLOB or JSON cells, on unsaved new rows, or in ad-hoc query results. A [masked](#column-masking) cell only offers `IS NULL` / `IS NOT NULL`, so its real value never reaches the filter.
 
@@ -274,7 +298,7 @@ Selecting and copying are separate actions: selecting rows never writes to the c
 | **Copy All (M)**      | Every row of the result. The query is re-run unpaginated with the tab's total-row limit stripped, preserving the on-screen sort order. When the total is unknown, the label omits the count and the toast reports the actual number of rows fetched. |
 | **Export Selected (N)…** | Since v0.30.0. Writes the same rows as **Copy Selected** to a **CSV** or **JSON** file, or only the right-clicked row when nothing is selected. Only loaded rows are written, with the same formatter, `NULL` marker and CSV delimiter as the full export. |
 
-![Three selected rows with the row menu open on Export Selected (3), showing the CSV and JSON options](/img/tabularis-grid-export-selected.png)
+![Export Selected submenu offering CSV, JSON, Markdown and SQL INSERT for five selected rows](/img/tabularis-export-selected-v0310.png)
 
 Since v0.28.0 **Copy All** also works in the multi-result panel (tab and stacked views) and in the detached results window. In a console tab it re-runs only the last executed statement, in the tab's own session, so uncommitted rows of an open transaction are included.
 
@@ -288,8 +312,17 @@ The default format is **CSV**; you can change it in **Settings → General → D
 | **JSON**       | A JSON array of objects with column names as keys.                                                                                                                                                                  |
 | **SQL INSERT** | A sequence of `INSERT INTO \`table\` (col1, col2, …) VALUES (…);`statements, one per row. NULLs render as`NULL`, booleans as `TRUE`/`FALSE`, numbers unquoted, strings single-quoted with single quotes doubled-up. |
 | **Markdown**   | A Markdown table, with a header row when **Export column names** is on.                                                                                                                                              |
+| **SQL UPDATE** | Since v0.31.0, one driver-quoted `UPDATE` per row. Primary keys form `WHERE` and are excluded from `SET`; composite keys are supported. |
 
 The setting maps to the `copyFormat` key in `config.json` (see [Configuration](/wiki/configuration)).
+
+**Copy as SQL UPDATE** is also available explicitly in the cell context menu. It is disabled when the result has no usable primary key, a key is missing from the result or selected rows, or there are no non-key values to set. When SQL UPDATE is the default format and cannot be used, a normal copy falls back to SQL INSERT and the toast explains why. Copying does not execute SQL.
+
+Since v0.31.0 **Export Selected** also offers **Markdown** and **SQL INSERT** alongside CSV and JSON, using only the selected loaded rows. Hidden columns are omitted.
+
+### NULL Display and Copy
+
+Since v0.31.0 **Settings → General → Data Editor → NULL Display** chooses the usual label, `(null)`, `∅` or an empty cell for NULL values in the grid. This affects display only. **NULL in copied rows** separately chooses `null`, `NULL` or an empty value for CSV and Markdown copies. JSON and SQL retain their own null representation. See [Configuration](/wiki/configuration#null-display-and-copy).
 
 CSV fields that contain the delimiter, a double quote or a line break are wrapped in quotes, with inner quotes doubled (RFC 4180), so a value such as `Rome, Italy` stays in one cell when pasted into a spreadsheet.
 

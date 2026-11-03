@@ -54,6 +54,14 @@ The type picker includes types from popular PostgreSQL extensions — `hstore`, 
 ### Safe DDL Generation
 When you make visual changes, Tabularis does not apply them blindly. Each modal compiles your input into the exact DDL (`CREATE`, `ALTER`, `DROP`) and shows it in an inline **SQL Preview** (the Create Table modal has a **Show SQL Preview** toggle), so you can review or copy it before running it with the modal's own button (**Create Table**, **Add Column** / **Save Changes**, **Create Index**, **Create Foreign Key**).
 
+## Explorer Pins and Object Details
+
+Since v0.31.0 right-click a table, view or materialized view and choose **Pin** to add it to a **Pinned** group above its schema or database list. Pins are scoped to connection, database and schema and survive restarts. Objects remain in their regular list too.
+
+![Customers table pinned in the explorer, with a pinned query tab open](/img/tabularis-pinned-tabs-tables.png)
+
+Right-click an index or foreign key and choose **View Details** for a read-only dialog with ordered columns, index uniqueness, referenced tables/columns and update/delete actions. Copy buttons expose the metadata and any complete DDL the backend can provide. When a definition cannot be represented completely, such as some expression indexes or composite foreign keys, metadata remains visible without an incomplete SQL statement.
+
 ## Generate SQL
 
 Right-click any table in the sidebar and choose **Generate SQL** to open a modal with ready-made statements for that table. Starting with v0.13.0, the modal is organized into tabs:

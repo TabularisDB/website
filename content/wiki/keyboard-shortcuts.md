@@ -102,6 +102,8 @@ Since v0.22.0 the selection shortcuts (`Shift+Arrow`, `Ctrl/Cmd+Arrow`, `Shift+S
 
 ---
 
+Since v0.31.0 **Cmd/Ctrl+F** with the data grid focused opens [Find in loaded results](/wiki/data-grid#find-in-loaded-results). **Enter** / **Shift+Enter** move between matches and **Escape** closes the bar. The binding is listed under Data Grid as **Find in results** and can be customized. The SQL editor retains its own Find action.
+
 ## Customizing Shortcuts
 
 Most shortcuts can be reassigned from **Settings → Keyboard Shortcuts**. Each row in the table shows:

@@ -76,7 +76,7 @@ An approval gate only helps if you notice it. When a pending approval appears, T
 | **Bring approval dialog to the front** (`mcpApprovalAlwaysOnTop`) | Focuses Tabularis with a user-attention request and keeps it temporarily above other windows while the request is pending. |
 | **Send notification and play sound** (`mcpApprovalNotifySound`) | Shows a native OS notification with a localized title and body and plays a short alert sound (on Linux the alert plays through the OS notification sound). |
 
-Both labels are localized across all eleven UI languages.
+Both labels are localized across all thirteen UI languages.
 
 ## What the agent experiences
 

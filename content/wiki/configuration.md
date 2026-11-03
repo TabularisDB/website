@@ -14,9 +14,9 @@ Open the Settings panel from:
 
 ## General Settings
 
-![General settings panel with startup, data editor, query execution, and connection health check options](/img/tabularis-settings-general.png)
+![General settings with startup options, SQL UPDATE copy format and independent NULL display and copy controls](/img/tabularis-settings-general-v0310.png)
 
-- **Language Support**: Native translations for **English**, **Italian**, **Spanish**, **Chinese (Simplified)**, **French**, **German**, **Japanese**, **Russian**, **Tagalog** (added in v0.15.0), **Korean** (added in v0.16.0), and **Brazilian Portuguese** (added in v0.17.0). The app defaults to your OS locale — Filipino (`fil`) systems map to Tagalog automatically, and region-coded locales like `pt-BR` resolve correctly — and changing the language applies immediately. With eleven languages the picker is now a searchable select showing each language's native name.
+- **Language Support**: Native translations for **English**, **Italian**, **Spanish**, **Chinese (Simplified)**, **French**, **German**, **Japanese**, **Russian**, **Tagalog** (added in v0.15.0), **Korean** (added in v0.16.0), **Brazilian Portuguese** (added in v0.17.0), **Vietnamese** and **Chinese (Traditional)** (both added in v0.31.0). The app defaults to your OS locale. Filipino (`fil`) systems map to Tagalog automatically, and region-coded locales like `pt-BR` resolve correctly. Changing the language applies immediately. With thirteen languages the picker is now a searchable select showing each language's native name.
 - **Display Timezone**: A searchable picker of IANA timezones (with current UTC-offset labels) under **Settings → Localization**, defaulting to **Auto** (your OS zone). The selected zone drives every UI timestamp — AI activity log, query history, favorites — plus CSV / JSON / notebook exports and their default filenames. Query-history date grouping (today / yesterday / older) is classified in the same zone, so headers and per-row times always agree.
 - **Window Decorations** (since v0.22.0): **Automatic** (default), **Always show** or **Always hide** for the native titlebar. In Automatic mode Tabularis hides native decorations on Linux when it detects a tiling window manager (Hyprland, Sway, i3, Niri, River, bspwm, awesome, dwm, leftwm, qtile, xmonad) through the session's environment variables, and keeps them on everywhere else. The choice applies to open windows immediately and to secondary windows when they are created. Stored as `windowDecorations` in `config.json`.
 - **Delay safety confirmations** (since v0.21.0): off by default. When enabled, the confirm button of the destructive-query and production-write dialogs stays disabled for five seconds so the warning is actually read. Stored as `safetyConfirmationDelayEnabled` in `config.json`.
@@ -24,6 +24,20 @@ Open the Settings panel from:
 - **Group open connections by folder** (since v0.29.0): under **Sidebar**, off by default. When on, open connections that belong to a [connection group](/wiki/connections#connection-groups) are shown inside collapsible folders in the sidebar rail, following the group tree (nested groups depth-first), with ungrouped connections after the folders. Only folders with at least one open connection appear, and the tooltip shows the full path. Folder collapse state lasts for the session and is independent of the Connections page. Drag reordering works within a folder. Stored as `groupSidebarConnectionsByFolder`.
 - **Long-query notifications** (since v0.28.0): under **Query Execution**, **Notify when long queries finish** (on by default) sends a desktop notification when a query that ran at least the **Notification threshold** (20 seconds by default) finishes while Tabularis is in the background. Stored as `notifyLongQueries` and `notifyLongQueriesThresholdSec`. See [SQL Editor → Long-Query Notifications](/wiki/editor#long-query-notifications).
 - **Update Checks**: Lives in **Settings → Info**, not General. **Check for updates on startup** enables or disables the automatic check at launch, and **Release channel** picks **Stable** (tested releases) or **Nightly** (builds from the latest `main`). Checks query the GitHub Releases API — no version data is sent, only a GET request is made.
+
+### Traditional Chinese Locale Detection
+
+Since v0.31.0 `zh-TW`, `zh-Hant`, `zh-HK` and `zh-MO` resolve to Traditional Chinese. `zh`, `zh-CN` and `zh-Hans` keep Simplified Chinese.
+
+![Searchable language picker with Simplified and Traditional Chinese entries](/img/tabularis-languages-v0310.png)
+
+## NULL Display and Copy
+
+Since v0.31.0 **Settings → General → Data Editor → NULL Display** chooses the translated NULL label (default), `(null)`, `∅` or an empty grid cell. Stored as `nullDisplay`: `default`, `parenthesized`, `emptySet` or `empty`. This changes display only.
+
+![General Data Editor showing independent NULL display and copied NULL preferences](/img/tabularis-null-settings.png)
+
+**NULL in copied rows** independently controls CSV and Markdown copies: `null` (default), `NULL` or empty, stored as `copyNullLabel`. JSON and SQL preserve their own null representation. **Default Copy Format** also accepts **SQL UPDATE** (`copyFormat: "sql-update"`); see [SQL UPDATE copy](/wiki/data-grid#copying-data).
 
 ## Network & Proxies
 
@@ -99,7 +113,7 @@ Any key omitted from the file falls back to its default value. You do not need a
 | `lightThemeId` | `string` | `null` | Since v0.22.0. Theme applied when the OS is in light mode and `followSystemTheme` is on. |
 | `darkThemeId` | `string` | `null` | Since v0.22.0. Theme applied when the OS is in dark mode and `followSystemTheme` is on. |
 | `windowDecorations` | `string` | `"automatic"` | Since v0.22.0. `automatic`, `alwaysShow` or `alwaysHide`. Automatic hides native window decorations on Linux tiling window managers. Configurable from **Settings → General → Window Decorations**. |
-| `language` | `string` | `"auto"` | Preferred locale: `en`, `it`, `es`, `zh`, `fr`, `de`, `ja`, `ru`, `tl`, `ko`, `pt-BR`, or `auto` (follows OS; `fil` falls back to `tl`). |
+| `language` | `string` | `"auto"` | Preferred locale: `en`, `it`, `es`, `zh`, `fr`, `de`, `ja`, `ru`, `tl`, `ko`, `pt-BR`, `vi`, `zh-TW`, or `auto` (follows OS; `fil` falls back to `tl`). |
 | `displayTimezone` | `string` | `"auto"` | IANA timezone (e.g. `"Asia/Tokyo"`) used for UI timestamps and exports, or `auto` (OS zone). Configurable from **Settings → Localization → Timezone**. |
 | `resultPageSize` | `number` | `500` | Default rows fetched per pagination request in the Data Grid. Since v0.21.0 the pagination bar's rows-per-page selector can override this for a single tab. |
 | `safetyConfirmationDelayEnabled` | `boolean` | `false` | Adds a five-second countdown to destructive-query and production-write confirmations (Settings → General → Delay safety confirmations). |

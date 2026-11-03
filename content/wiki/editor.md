@@ -107,9 +107,15 @@ Since v0.24.0, a tab with a query in flight replaces its type icon with a spinne
 
 Since v0.28.0, `Ctrl/Cmd + Shift + T` reopens the last closed tab, also available as **Reopen Closed Tab** in the tab context menu. Closed tabs go onto a stack of 20 per connection, kept in memory only, and come back at their previous position with their SQL, title, filter, sort and parameters; results are not kept, so the query has to be run again. Every close path feeds the stack, including **Close Others** and **Close to the Right**. The shortcut can be rebound in **Settings → Keyboard Shortcuts**.
 
-![Tab context menu with Duplicate Tab and Reopen Closed Tab](/img/tabularis-tab-context-menu.png)
+![Query tab context menu with Duplicate Tab, Pin Tab and Reopen Closed Tab](/img/tabularis-tab-context-menu-v0310.png)
 
 **Duplicate Tab** in the tab context menu opens a copy right after the original, with the same SQL and parameters. A duplicated read-only tab, such as a materialized-view definition, stays read-only.
+
+### Pinned Tabs
+
+Since v0.31.0 **Pin Tab** in a query tab's context menu moves it before unpinned tabs and adds a pin marker. **Unpin Tab** returns it to the start of the unpinned group. **Close Others**, **Close Left/Right** and **Close All** leave pinned tabs open; closing one directly still works. Pins survive restarts. Dragging and Move Tab Left/Right stay within each group, and duplicates start unpinned.
+
+![Pinned Active customers query tab beside the explorer Pinned customers table](/img/tabularis-pinned-tabs-tables.png)
 
 ### Renaming Tabs
 
@@ -344,6 +350,8 @@ Since v0.30.0 the result status bar has a **Grid | Chart** switch, in query tabs
 - **State.** The view and the chart settings are kept per tab and per result while the tab is open. Switching back to **Grid** keeps the selection, pending edits and scroll position; pending edits can still be submitted or rolled back from the chart view. Re-running a query that changes the columns falls back to new defaults.
 - **Look.** Colors follow the theme, lines after the first are dashed, and the chart honors reduced motion. With the keyboard, the arrow keys move between points and the tooltip follows.
 
+Since v0.31.0 a single numeric column with multiple rows plots against **Row number** by default. Duplicate column names are distinguished (for example `id (2)`), and series refer to column positions. A single scalar asks for more rows or another column. Chart code is loaded when needed; a load failure offers **Try again** or **Show grid**.
+
 A result with no numeric column shows an empty state with **Show grid**. Table tabs and the stacked multi-result view have no chart view. The chart works the same with every driver, plugins included, because it only reads the loaded result. For charts saved with a document, see [Notebooks](notebooks#charts).
 
 ### Total Row Count
@@ -388,6 +396,10 @@ This ensures that you see relevant completions regardless of how many schemas or
 
 When you execute a query, Tabularis handles the results asynchronously, streaming them into the integrated Data Grid.
 
+## Editor Crash Reports
+
+Since v0.31.0 an editor crash screen offers **Copy report**, **Create issue** and, when AI is configured, **Analyze with AI**. The report contains the app version, platform, error and stacks. Known credential patterns are redacted. **Create issue** opens a prefilled GitHub form for you to review and submit; **Analyze with AI** explicitly sends the redacted report to the configured provider and shows the response inline. Review reports before sharing them because pattern-based redaction cannot identify every secret.
+
 ## Query History Sidebar
 
 Every execution is also written to the Explorer's **History** tab for the active connection.
@@ -422,6 +434,12 @@ The History tab supports:
 ![Query History filtered to the blog_demo database and a custom range from October 20 to October 26, showing 3 of 5 entries](/img/tabularis-query-history-database-range.png)
 
 This makes the sidebar history a fast iteration loop: run a query, tweak it, and jump back to any earlier version without digging through editor tabs.
+
+### Exporting History as SQL
+
+Since v0.31.0 **Export history as SQL** saves exactly the entries matching the active search, outcome, time and database filters, in their displayed order. Each entry includes a timestamp in the display timezone, outcome and recorded duration as comments, followed by its SQL; errors are commented too. The action is disabled when nothing matches. Exporting writes a file and does not execute the statements.
+
+![Execution History toolbar with Export history as SQL and the current filters](/img/tabularis-history-export-v0310.png)
 
 ### Pausing history capture
 

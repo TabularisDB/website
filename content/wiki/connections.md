@@ -179,6 +179,12 @@ SELECT set_config('app.bypass_rls', 'on', false);
 
 applies to every subsequent query instead of randomly depending on which pooled connection you landed on. Any `SET` or session-setup statement works; multiple statements can be separated normally, and blank or whitespace-only scripts are skipped. The script is stored with the connection profile as non-secret configuration.
 
+### Per-Connection Connect Timeout
+
+Since v0.31.0 PostgreSQL and MySQL profiles have **Connect timeout** in the **Advanced** tab, in seconds (up to 3600). It bounds connection setup and **Test Connection** for that profile; unset or zero keeps existing defaults. PostgreSQL startup scripts also use the chosen budget. Other driver implementations retain their own timeout behavior.
+
+![PostgreSQL connection Advanced tab with Connect timeout in seconds](/img/tabularis-connect-timeout.png)
+
 ### Pooler Mode (PgBouncer)
 
 Since v0.29.0, PostgreSQL connections have a **Pooler mode** field in the **Advanced** tab, with three options: **None (direct connection)**, **PgBouncer transaction** and **PgBouncer session**. Tabularis does not detect a pooler at runtime; the field is a declaration, stored as `pooler_mode` in the connection profile (omitted for direct connections) and passed to the driver.
@@ -387,7 +393,7 @@ Backups run only while Tabularis is open. Plugin drivers are supported when they
 
 ## Import From Other SQL Clients (Beta)
 
-Since v0.15.0, the **Import** dropup next to *Add Connection* can also read saved connections directly from other clients installed on your machine: **DBeaver**, **Beekeeper Studio**, **TablePlus**, **DataGrip**, and **Sequel Ace**. Each source is parsed into a neutral format, and stored credentials are decrypted or read from the source client's keychain when you opt in.
+The **Import → Import from App** menu next to *Add Connection* reads saved connections from **DBeaver**, **Beekeeper Studio**, **TablePlus**, **DataGrip**, **Sequel Ace**, and, since v0.31.0, **HeidiSQL**, **Navicat** and **MySQL Workbench**. Credential import depends on the source; the three new importers do not import passwords.
 
 ![Import from App modal reviewing connections found in DBeaver, with per-connection action and target-group selectors](/img/tabularis-import-from-app.png)
 
@@ -395,7 +401,15 @@ Nothing is merged blindly: a preview lists every connection found, flags duplica
 
 If TablePlus stores its data outside the default Application Support location, auto-discovery reports the source as unavailable; since v0.21.0 you can point the importer at the TablePlus `Data` directory (or a plist inside it) instead.
 
-The feature is marked **beta**: parser coverage across five apps and three platforms will keep improving, and the modal links directly to the [issue tracker](https://github.com/TabularisDB/tabularis/issues) for files that don't parse cleanly.
+### HeidiSQL, Navicat and MySQL Workbench
+
+- **HeidiSQL:** choose the text file written by **File → Export settings**, or the portable build's `portable_settings.txt`. Supported sessions and their folder structure are imported; obfuscated passwords are left out.
+- **Navicat:** choose a `.ncx` connection export. Supported types and enabled SSH settings are mapped; unsupported connection types are skipped and encrypted passwords are left out.
+- **MySQL Workbench:** use automatic discovery of `connections.xml`, or choose the file or its data folder manually. TCP/IP and TCP/IP over SSH connections retain the default schema, TLS mode, certificate paths and SSH settings. Local socket connections and other drivers are skipped. Passwords in Workbench's vault or the OS keychain are not imported.
+
+![Import from App source picker including HeidiSQL, MySQL Workbench and Navicat](/img/tabularis-import-sources-v0310.png)
+
+Review the imported profiles and enter their passwords before connecting. The feature is marked **beta**: parser coverage across eight apps and three platforms will keep improving, and the modal links directly to the [issue tracker](https://github.com/TabularisDB/tabularis/issues) for files that do not parse cleanly.
 
 ## Multi-Database Support (MySQL / MariaDB)
 

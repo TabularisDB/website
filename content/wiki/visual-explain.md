@@ -25,6 +25,12 @@ The header shows the connection name, driver icon, database, and schema so you a
 
 ![Notebook SQL cell with its inline Query Plan section in Table view, estimated costs and Analyze disabled](/img/tabularis-notebook-query-plan.png)
 
+### Open in a Separate Window
+
+Since v0.31.0 **Open in new window** gives the current plan its own window. It carries the loaded plan and its context, so you can inspect it alongside the editor without running the query again.
+
+<video src="/videos/posts/tabularis-explain-loops-window.mp4" poster="/videos/posts/tabularis-explain-loops-window.jpg" controls muted playsinline loop></video>
+
 ## Which Queries Can Be Explained
 
 Visual EXPLAIN accepts DML statements: **SELECT**, **INSERT**, **UPDATE**, **DELETE**, **REPLACE**, **MERGE**, **WITH** (CTEs), and **TABLE**.
@@ -112,13 +118,13 @@ Better when you need exact numbers. The left panel is an expandable tree table w
 
 Selecting a row opens the **detail panel** on the right, which displays every metric available for that node: cost breakdown (startup to total), actual vs estimated rows, loops, buffer hits and reads, index conditions, hash conditions, join types, and any engine-specific fields.
 
-![Table view with hierarchical tree, cost columns, and node detail panel](/img/posts/tabularis-visual-explain-table-view-detail-panel.png)
+![Real PostgreSQL ANALYZE plan table with Actual Rows, Loops and a node detail panel](/img/tabularis-explain-loops.png)
 
-When the plan comes from `EXPLAIN ANALYZE` (or MariaDB `ANALYZE`), an **Actual Rows** column appears next to Est. Rows, so you can see where the optimizer's estimate diverged from what the query actually scanned.
+When the plan comes from `EXPLAIN ANALYZE` (or MariaDB `ANALYZE`), **Actual Rows** and, since v0.31.0, **Loops** columns appear next to Est. Rows, so you can see where the optimizer's estimate diverged from what the query actually scanned.
 
-![Table view showing the Actual Rows column next to Est. Rows](/img/posts/tabularis-explain-actual-rows.png)
+Since v0.29.0 an **Export CSV** button saves the whole plan table to a CSV file, collapsed branches included. Rows are in plan order (pre-order), with the columns `index`, `depth` (0 for the root), `node_type`, `relation`, `startup_cost`, `total_cost`, `est_rows`, `actual_rows`, `actual_loops`, `self_time_ms`, `estimate_gap` and `filter`. A metric the plan does not carry, such as actual rows on an estimates-only plan or a branch that never ran, is written as an empty field rather than zero.
 
-Since v0.29.0 an **Export CSV** button saves the whole plan table to a CSV file, collapsed branches included. Rows are in plan order (pre-order), with the columns `index`, `depth` (0 for the root), `node_type`, `relation`, `cost`, `est_rows`, `actual_rows`, `self_time_ms`, `estimate_gap` and `filter`. A metric the plan does not carry, such as actual rows on an estimates-only plan or a branch that never ran, is written as an empty field rather than zero.
+Since v0.31.0 plan-table columns can be reordered by dragging their headers. The CSV export includes loop counts as well. A node without a reported loop count has an empty Loops cell.
 
 ### Diagram View
 
@@ -150,7 +156,7 @@ Since v0.29.0 **Save raw plan…** writes the original output to a file, unchang
 
 The AI tab sends the query and the raw EXPLAIN output to the configured AI provider and returns a structured analysis: what the query is doing, where the bottlenecks are, which indexes might help, and which rewrites are worth testing.
 
-When you pick a language explicitly in Tabularis (any of the eleven supported UI languages, from Italian to Japanese to Korean), the analysis is generated in that language, so you do not need to reason about plans in English if that is not your working language. With the language set to **Auto** (the default), the analysis is always in English.
+The analysis uses the selected UI language, one of thirteen supported languages. With **Auto** (the default), it follows the resolved system language and falls back to English when no supported language matches.
 
 This tab only appears when AI is enabled in **Settings > AI**. If no AI provider is selected, the tab shows a warning above the analysis, which then fails. It works with all supported providers: OpenAI, Anthropic, Ollama, OpenRouter, MiniMax, and custom OpenAI-compatible endpoints.
 
