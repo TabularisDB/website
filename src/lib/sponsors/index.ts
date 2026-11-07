@@ -362,4 +362,23 @@ export const SPONSORS: Sponsor[] = [
                 'SignPath Foundation issues free code signing certificates to qualifying open source projects. Apply through their program and ship signed releases without buying a certificate.',
         },
     },
+    {
+        id: 'zeny',
+        name: 'Zeny',
+        tagline: 'A multi-purpose Discord Bot — Done Right',
+        url: 'https://zeny.gg/',
+        accentColor: '#46B0CE',
+        ctaTextColor: '#000000',
+        logoImg: '/img/logos/sponsors/zeny.svg',
+        logoImgCompact: '/img/logos/sponsors/zeny.svg',
+        kind: 'sponsor',
+        modalDescription:
+            'Zeny is an all-in-one Discord bot with 40+ modules to help your community stay safe, connected and active. Bring moderation, AutoMod, anti-raid protection, tickets, modmail, leveling and giveaways together, and keep members up to date with social feeds for YouTube, Twitch, Bluesky and Reddit. Go beyond the built-in tools with Lua scripting for custom commands and automations, and use automatic backups to help protect your server setup. Manage it all from one web dashboard, available in 12 languages, with fewer bots and less setup to juggle. Free to use, with optional Premium for additional features and higher limits.',
+        features: [
+            {icon: '🛡️', text: 'AutoMod, anti-raid measures and member verification'},
+            {icon: '💬', text: 'Tickets with transcripts and modmail for community support'},
+            {icon: '👋', text: 'Welcome messages, onboarding and role management'},
+            {icon: '⚙️', text: 'Social feeds, scheduled posts and custom Lua automations'},
+        ],
+    },
 ];

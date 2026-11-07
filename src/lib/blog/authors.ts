@@ -20,6 +20,12 @@ export interface Author {
 export const DEFAULT_AUTHOR_HANDLE = 'debba';
 
 export const AUTHORS: Record<string, Author> = {
+    lejyfps: {
+        handle: 'lejyfps',
+        name: 'lejy',
+        github: 'lejyfps',
+        bio: 'Developer of Zeny, an all-in-one Discord bot for community management and automation.',
+    },
     debba: {
         handle: 'debba',
         name: 'Andrea Debernardi',

@@ -49,10 +49,10 @@ export async function renderScreenshotSplitOgImage({
                                 maxHeight: 520,
                                 overflow: 'hidden',
                                 alignItems: 'center',
-                                background: '#11121c',
                                 ...(frameless
                                     ? {}
                                     : {
+                                          background: '#11121c',
                                           border: '1.6px solid rgba(148, 163, 184, 0.16)',
                                           borderRight: 'none',
                                           borderRadius: '8px 0 0 8px',
