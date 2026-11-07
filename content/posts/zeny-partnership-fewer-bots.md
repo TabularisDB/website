@@ -13,6 +13,8 @@ og:
 
 # Tabularis × Zeny: Fewer Bots, More Possibilities for Our Discord
 
+<p style="text-align:center;margin:1.5rem 0 2rem;"><img class="no-lightbox borderless" src="/img/posts/zeny-partnership.svg" alt="Zeny and Tabularis — partnering for our Discord community" style="width:100%;max-width:800px;height:auto;display:block;margin:0 auto;" /></p>
+
 **Tabularis is partnering with [Zeny](https://zeny.gg/), an all-in-one Discord bot.** The appeal is straightforward: Zeny can cover the jobs we would otherwise spread across separate bots, and gives us room to do more for the community from one dashboard.
 
 Our [Discord](https://discord.com/invite/K2hmhfHRSt) is where people ask for help, discuss plugins, report problems and share what they're building with Tabularis. Running that space takes work beyond answering questions: onboarding, roles, moderation, support requests and keeping people informed. Adding a new bot for each task is easy. Keeping track of every bot's access, settings and operator gets harder with each addition.
