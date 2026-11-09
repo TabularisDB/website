@@ -762,12 +762,12 @@
             "kind": "driver",
             "name": "SurrealDB",
             "target": "Multi-model plugin",
-            "status": "open",
+            "status": "shipped",
             "boardStatus": "open",
-            "tagline": "Explore a focused SurrealQL workflow inside Tabularis.",
-            "description": "SurrealDB needs a deliberately scoped plugin: connection, namespaces/databases, SurrealQL execution, result inspection, and docs before broad multi-model UI work.",
-            "stage": "Open brief",
-            "nextStep": "Define the smallest useful SurrealQL workflow and document what should not be part of v1.",
+            "tagline": "Browse and query SurrealDB from Tabularis.",
+            "description": "The SurrealDB driver connects to a namespace and database, browses tables and fields, and runs SurrealQL.",
+            "stage": "Shipped",
+            "nextStep": "Install the driver from Plugins.",
             "difficulty": "Medium",
             "accent": "#c084fc",
             "radar": {
@@ -776,33 +776,33 @@
                 "scale": 0.86
             },
             "tags": [
-                "multi-model",
+                "shipped",
                 "surrealql",
-                "docs"
+                "multi-model"
             ],
             "capabilities": [
                 {
                     "label": "namespace",
-                    "state": "needed"
+                    "state": "ready"
                 },
                 {
                     "label": "database",
-                    "state": "needed"
+                    "state": "ready"
                 },
                 {
                     "label": "query",
-                    "state": "needed"
+                    "state": "ready"
                 },
                 {
                     "label": "docs",
-                    "state": "needed"
+                    "state": "ready"
                 }
             ],
-            "signal": "Interesting ecosystem signal, but should stay query-first until the product shape is clear.",
-            "sponsorUrl": "/sponsors",
+            "signal": "SurrealDB driver released by @itsmunzir.",
+            "sponsorUrl": "/plugins",
             "upvotes": 0,
             "claimers": [],
-            "pluginId": null
+            "pluginId": "surrealdb"
         },
         {
             "id": "trino-presto",
@@ -1350,7 +1350,7 @@
             "status": "shipped",
             "boardStatus": "scoped",
             "tagline": "Browse, query and edit CockroachDB with the first public driver alpha.",
-            "description": "CockroachDB 0.1.0-alpha.1 ships TLS connections, schema browsing, paged queries, transactions, row editing and BLOB cells. EXPLAIN, DDL helpers, view mutations and ER diagrams are not implemented yet.",
+            "description": "CockroachDB 0.1.0-alpha.2 adds schema management for tables, columns, indexes, foreign keys and views. EXPLAIN and ER diagrams are not implemented yet.",
             "stage": "Shipped",
             "nextStep": "Install the alpha from Plugins or the GitHub release and read its documented limitations before use.",
             "difficulty": "Medium",

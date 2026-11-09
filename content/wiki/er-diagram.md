@@ -96,3 +96,9 @@ To save the diagram as an image instead, take a screenshot of the window — `Cm
 - Node positions are **not persisted** — each time you open the diagram, Dagre recalculates the layout from scratch.
 - Nodes are **locked by default**, so panning and zooming cannot nudge them out of place. Click the lock icon in the zoom controls (tooltip **Unlock nodes to move them**) before dragging a node, and click it again (**Lock node positions**) to freeze them.
 - Since v0.18.0 the layout estimates each node's real rendered width and height from its content instead of assuming a fixed width, so wide tables — a column with a long `enum(...)` definition, for example — no longer overlap their neighbours.
+
+## Export Markdown
+
+Since v0.32.0, export the loaded schema diagram as Markdown.
+
+![The ER diagram export menu with the Markdown option](/img/tabularis-er-markdown-export.png)

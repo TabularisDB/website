@@ -244,3 +244,9 @@ Click the **Re-run** button in the footer to execute the EXPLAIN again with the 
 - Plans from `EXPLAIN ANALYZE` on PostgreSQL include buffer statistics (shared hits and reads), which help distinguish between cached and disk I/O operations.
 - For large plans with many nodes, the graph view may need zooming. Use the fit-to-view control in the bottom-left corner to see the full tree.
 - The AI analysis is a second-pass interpretation of the plan. It is not a replacement for understanding the execution plan yourself, but it can point you toward issues that are not immediately obvious in a large or unfamiliar plan.
+
+## Plan Snapshots and Comparison
+
+Since v0.32.0, save the current plan as a snapshot and select a compatible snapshot as a baseline. The comparison shows available metric changes and operator differences. Pin or delete snapshots in the snapshots dialog. Comparisons require the same engine, and the viewer flags estimated versus analyzed plans.
+
+![Visual EXPLAIN with a saved SQLite plan selected as a baseline](/img/tabularis-explain-comparison.png)

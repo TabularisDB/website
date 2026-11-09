@@ -572,3 +572,9 @@ The same menu offers other value shortcuts when they apply to the column: **Set 
 | Mark selected rows for deletion                    | `Delete` / `Backspace` |
 | Undo pending change (since v0.29.0)                | `Ctrl/Cmd + Z`         |
 | Redo pending change (since v0.29.0)                | `Ctrl/Cmd + Shift + Z` / `Ctrl + Y` |
+
+## Conditional Formatting
+
+Since v0.32.0, choose **Conditional formatting** from a table column header to color a cell or row when a rule matches. Rules are saved per connection, schema and table. The first matching rule wins, and pending edits retain their own styling. Rules also apply in the transposed layout.
+
+![A table with a row highlighted by a conditional formatting rule](/img/tabularis-conditional-formatting.png)
