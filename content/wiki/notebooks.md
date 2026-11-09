@@ -197,3 +197,13 @@ Individual cell results can be exported to CSV or JSON using the result toolbar,
 | Undo / Redo notebook edits | `Cmd + Z` / `Cmd + Shift + Z` | `Ctrl + Z` / `Ctrl + Shift + Z` or `Ctrl + Y` |
 
 The Run All shortcut can be changed in **Settings → Keyboard Shortcuts**.
+
+## Clear Outputs and Export SQL
+
+Since v0.32.0, the notebook toolbar can clear outputs, and SQL cell source can be exported to a `.sql` file.
+
+![A notebook SQL cell showing six SQLite rows](/img/tabularis-notebook-output.png)
+
+![The Clear Outputs confirmation in a notebook with query results](/img/tabularis-notebook-clear.png)
+
+![The notebook export menu with the SQL export option](/img/tabularis-notebook-export.png)

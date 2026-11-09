@@ -54,3 +54,11 @@ Before v0.29.0 both actions were available for the built-in drivers only. Since 
 - The dump lists tables and reads their DDL through the plugin's `get_tables` and `get_table_ddl`, and exports data page by page through `execute_query`. JSON columns are written as JSON literals.
 - String and boolean literals follow the driver's declared `sql_dialect` / `sql_syntax`, not its driver id.
 - The import sends each statement of the file to the plugin one at a time through `execute_query`. There is no transaction across a plugin, so a failure stops the import but does not roll back the statements already executed.
+
+## Transfer One Table as SQL
+
+Since v0.32.0, use **Export table to SQL** in a table context menu and **Import table from SQL** on the target database. The file contains the table structure, indexes and rows and requires the same driver on the target. Preview the import and choose fail, drop and recreate, or append if the table exists.
+
+![The table export dialog offering structure and data or structure only](/img/tabularis-table-transfer.png)
+
+![The import preview showing the source table and SQLite target](/img/tabularis-table-import.png)

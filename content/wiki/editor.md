@@ -476,3 +476,13 @@ The results grid is heavily optimized to handle thousands of rows without droppi
 - **Foreign Key Navigation**: FK cells get a click-to-navigate affordance and a context-menu entry that opens the referenced table filtered to the matching row. See [Data Grid → Foreign Key Navigation](/wiki/data-grid#foreign-key-navigation).
 - **Exporting**: Export the current view to CSV, JSON or Markdown, or the loaded rows to HTML or NDJSON (see [Data Grid → Exporting Results](/wiki/data-grid#exporting-results)).
 - **Copying with headers**: The **Export column names** toggle in the results toolbar adds a header row to CSV and Markdown copies, so data pastes cleanly into Excel or Google Sheets.
+
+## SQL Snippets and Diagnostics
+
+Since v0.32.0, **Settings → Snippets** manages personal snippets by prefix and dialect. The dialect picker follows enabled drivers; a plugin-scoped snippet appears for that driver. The editor and previews highlight SQL, using general SQL highlighting where Monaco has no dedicated grammar. Insert a snippet through completion and use Tab or Shift+Tab to move through placeholders.
+
+**Settings → Appearance → SQL diagnostics** enables optional metadata-based diagnostics for a subset of PostgreSQL SELECT queries. It is off by default, does not execute SQL, and depends on available metadata; the server remains authoritative.
+
+![Creating an Oracle-scoped SQL snippet with a tab-stop placeholder](/img/tabularis-sql-snippets.png)
+
+![PostgreSQL SQL diagnostics warns that a table is absent from loaded metadata](/img/tabularis-sql-diagnostics.png)
