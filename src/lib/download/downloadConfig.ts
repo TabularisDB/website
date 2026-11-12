@@ -59,9 +59,9 @@ export const PLATFORM_CONFIG: Record<Platform, PlatformConfig> = {
             {
                 kind: 'file',
                 label: 'Portable',
-                desc: 'Runs without installing',
-                ext: '.exe',
-                url: `${BASE}/tabularis_${APP_VERSION}_x64-portable.exe`,
+                desc: 'Unzip and run, no install needed',
+                ext: '.zip',
+                url: `${BASE}/tabularis_${APP_VERSION}_x64-portable.zip`,
             },
         ],
     },
@@ -162,8 +162,8 @@ export const NIGHTLY_PLATFORM_CONFIG: Record<Platform, PlatformConfig> = {
             nightlyFile('MSI Package', 'For IT deployment and group policy', '.msi', (name) =>
                 name.endsWith('_x64_en-US.msi'),
             ),
-            nightlyFile('Portable', 'Runs without installing', '.exe', (name) =>
-                name.endsWith('_x64-portable.exe'),
+            nightlyFile('Portable', 'Unzip and run, no install needed', '.zip', (name) =>
+                name.endsWith('_x64-portable.zip'),
             ),
         ]),
     },
