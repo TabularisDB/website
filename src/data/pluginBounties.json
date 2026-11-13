@@ -9,6 +9,525 @@
     ],
     "bounties": [
         {
+            "id": "trino",
+            "requestId": "01M4VG6ZAPK8QG3KQNX4GR8TXH",
+            "kind": "driver",
+            "name": "Trino / Presto",
+            "target": "Driver plugin",
+            "status": "shipped",
+            "boardStatus": "open",
+            "tagline": "Connect Tabularis notebooks to federated SQL engines.",
+            "description": "Trino and Presto support should focus on catalogs, schemas, query execution, result paging, and docs for federated analytics workflows.",
+            "stage": "Open brief",
+            "nextStep": "Scope catalog/schema discovery and test against Trino first, then decide Presto compatibility.",
+            "difficulty": "Medium",
+            "accent": "#ec4899",
+            "radar": {
+                "x": 38,
+                "y": 82,
+                "scale": 0.88
+            },
+            "tags": [
+                "federated-sql",
+                "analytics",
+                "features",
+                "docs"
+            ],
+            "capabilities": [
+                {
+                    "label": "catalogs",
+                    "state": "needed"
+                },
+                {
+                    "label": "schemas",
+                    "state": "needed"
+                },
+                {
+                    "label": "query",
+                    "state": "needed"
+                },
+                {
+                    "label": "paging",
+                    "state": "stretch"
+                }
+            ],
+            "signal": "Pairs well with SQL notebooks because the value is federated analysis, not table editing.",
+            "sponsorUrl": "/sponsors",
+            "upvotes": 2,
+            "claimers": [],
+            "pluginId": "trino"
+        },
+        {
+            "id": "influxdb",
+            "requestId": "01M70ZMMT4AVY400GBTMXTVVQ9",
+            "kind": "driver",
+            "name": "InfluxDB",
+            "target": "Driver plugin",
+            "status": "in-progress",
+            "boardStatus": "open",
+            "tagline": "Telemetry, edge devices, and physical AI generate data that most databases can’t handle.",
+            "description": "Telemetry, edge devices, and physical AI generate data that most databases can’t handle. InfluxDB handles continuous, high-resolution data with precision and speed.",
+            "stage": "Open brief",
+            "nextStep": "Claim it, create the repository from this page, then publish a release and submit it to the registry.",
+            "difficulty": "Medium",
+            "accent": "#a855f7",
+            "radar": {
+                "x": 34,
+                "y": 32,
+                "scale": 1
+            },
+            "tags": [],
+            "capabilities": [],
+            "signal": "",
+            "sponsorUrl": "/sponsors",
+            "upvotes": 1,
+            "claimers": [
+                {
+                    "username": "lejyfps",
+                    "displayName": "lejyfps",
+                    "avatarUrl": "https://avatars.githubusercontent.com/u/9866190?v=4",
+                    "repoUrl": null
+                }
+            ],
+            "pluginId": null
+        },
+        {
+            "id": "meilisearch",
+            "requestId": "01M4VG6ZEC1PC1ETYAKGG8ZS8M",
+            "kind": "driver",
+            "name": "Meilisearch",
+            "target": "Search plugin",
+            "status": "shipped",
+            "boardStatus": "scoped",
+            "tagline": "Browse indexes, documents and run search queries against Meilisearch.",
+            "description": "Meilisearch support brings index browsing, document inspection, settings and search queries into Tabularis. Implementation is currently in progress.",
+            "stage": "In progress",
+            "nextStep": "Development is underway on index discovery, document reads, and search execution.",
+            "difficulty": "Medium",
+            "accent": "#ff5caa",
+            "radar": {
+                "x": 28,
+                "y": 80,
+                "scale": 0.86
+            },
+            "tags": [
+                "search",
+                "indexes",
+                "features"
+            ],
+            "capabilities": [
+                {
+                    "label": "indexes",
+                    "state": "needed"
+                },
+                {
+                    "label": "documents",
+                    "state": "needed"
+                },
+                {
+                    "label": "search",
+                    "state": "needed"
+                },
+                {
+                    "label": "settings",
+                    "state": "stretch"
+                }
+            ],
+            "signal": "Claimed and in active development as a search-engine driver.",
+            "sponsorUrl": "/sponsors",
+            "upvotes": 1,
+            "claimers": [],
+            "pluginId": "meilisearch"
+        },
+        {
+            "id": "snowflake",
+            "requestId": "01M4VG6ZC8TN3DK7M8ZX2X3VKR",
+            "kind": "driver",
+            "name": "Snowflake",
+            "target": "Warehouse plugin",
+            "status": "coming-soon",
+            "boardStatus": "coming-soon",
+            "tagline": "Cloud warehouse access for analytics teams using Tabularis notebooks.",
+            "description": "Connection setup, warehouse/database/schema switching, result pagination and notebook-first analytics workflows for Snowflake users.",
+            "stage": "Coming soon",
+            "nextStep": "Validate auth, warehouse switching, pagination, and notebook fit before opening implementation issues.",
+            "difficulty": "High",
+            "accent": "#38bdf8",
+            "radar": {
+                "x": 67,
+                "y": 62,
+                "scale": 0.96
+            },
+            "tags": [
+                "warehouse",
+                "analytics",
+                "notebooks",
+                "coming-soon"
+            ],
+            "capabilities": [
+                {
+                    "label": "auth",
+                    "state": "needed"
+                },
+                {
+                    "label": "warehouse",
+                    "state": "needed"
+                },
+                {
+                    "label": "schema",
+                    "state": "needed"
+                },
+                {
+                    "label": "notebooks",
+                    "state": "stretch"
+                }
+            ],
+            "signal": "Best fit when paired with notebooks and repeatable reporting flows.",
+            "sponsorUrl": "/sponsors",
+            "upvotes": 1,
+            "claimers": [],
+            "pluginId": null
+        },
+        {
+            "id": "amazon-redshift",
+            "requestId": "01M4VG6Z2CJXY4NN5A1HQXNS5P",
+            "kind": "driver",
+            "name": "Amazon Redshift",
+            "target": "Warehouse compatibility",
+            "status": "scoped",
+            "boardStatus": "scoped",
+            "tagline": "Validate Redshift as a first-class analytical warehouse workflow.",
+            "description": "Redshift speaks a PostgreSQL-derived dialect, but full support still needs warehouse-specific validation for metadata, pagination, auth, explain output, and query behavior.",
+            "stage": "Compat lab",
+            "nextStep": "Build a Redshift test matrix around connection auth, schema discovery, query execution, exports, and docs.",
+            "difficulty": "Medium",
+            "accent": "#ef4444",
+            "radar": {
+                "x": 66,
+                "y": 20,
+                "scale": 0.92
+            },
+            "tags": [
+                "warehouse",
+                "aws",
+                "postgres-compatible",
+                "features"
+            ],
+            "capabilities": [
+                {
+                    "label": "connect",
+                    "state": "needed"
+                },
+                {
+                    "label": "schema",
+                    "state": "needed"
+                },
+                {
+                    "label": "query",
+                    "state": "needed"
+                },
+                {
+                    "label": "exports",
+                    "state": "stretch"
+                },
+                {
+                    "label": "docs",
+                    "state": "stretch"
+                }
+            ],
+            "signal": "Good candidate for a compatibility bounty because it can reuse parts of the PostgreSQL path only after real warehouse testing.",
+            "sponsorUrl": "/sponsors",
+            "upvotes": 1,
+            "claimers": [],
+            "pluginId": null
+        },
+        {
+            "id": "firebird",
+            "requestId": "01M4VG6Z7G81RR5G9A694JCPGR",
+            "kind": "driver",
+            "name": "Firebird",
+            "target": "SQL driver plugin",
+            "status": "shipped",
+            "boardStatus": "open",
+            "tagline": "Bring a durable embedded/server SQL database into the plugin ecosystem.",
+            "description": "Firebird support needs connection setup, metadata inspection, query execution, type handling, and docs for both local and server deployments.",
+            "stage": "Open brief",
+            "nextStep": "Choose the driver/runtime approach and define the first read-only feature set.",
+            "difficulty": "Medium",
+            "accent": "#f59e0b",
+            "radar": {
+                "x": 24,
+                "y": 76,
+                "scale": 0.84
+            },
+            "tags": [
+                "sql",
+                "embedded",
+                "features",
+                "docs"
+            ],
+            "capabilities": [
+                {
+                    "label": "connect",
+                    "state": "needed"
+                },
+                {
+                    "label": "schema",
+                    "state": "needed"
+                },
+                {
+                    "label": "query",
+                    "state": "needed"
+                },
+                {
+                    "label": "types",
+                    "state": "stretch"
+                }
+            ],
+            "signal": "Strong fit for the plugin model because it expands SQL coverage without changing the core binary.",
+            "sponsorUrl": "/sponsors",
+            "upvotes": 1,
+            "claimers": [
+                {
+                    "username": "lejyfps",
+                    "displayName": "lejyfps",
+                    "avatarUrl": "https://avatars.githubusercontent.com/u/9866190?v=4",
+                    "repoUrl": "https://github.com/lejyfps/tabularis-firebird-plugin"
+                }
+            ],
+            "pluginId": "firebird"
+        },
+        {
+            "id": "bigquery",
+            "requestId": "01M4VG6ZCGBPZVM7J8Z3H0HG6Y",
+            "kind": "driver",
+            "name": "Google BigQuery",
+            "target": "Cloud SQL plugin",
+            "status": "shipped",
+            "boardStatus": "scoped",
+            "tagline": "Run warehouse queries from the same workspace as local and app databases.",
+            "description": "A BigQuery plugin connects cloud analytics with Tabularis notebooks, query history, exports and AI-assisted SQL workflows. Implementation is currently in progress.",
+            "stage": "In progress",
+            "nextStep": "Development is underway on OAuth, dataset discovery, query jobs, and cost guardrails.",
+            "difficulty": "High",
+            "accent": "#facc15",
+            "radar": {
+                "x": 52,
+                "y": 72,
+                "scale": 1
+            },
+            "tags": [
+                "google-cloud",
+                "warehouse",
+                "analytics"
+            ],
+            "capabilities": [
+                {
+                    "label": "oauth",
+                    "state": "needed"
+                },
+                {
+                    "label": "datasets",
+                    "state": "needed"
+                },
+                {
+                    "label": "jobs",
+                    "state": "needed"
+                },
+                {
+                    "label": "cost guard",
+                    "state": "stretch"
+                }
+            ],
+            "signal": "High leverage for teams that mix app databases with analytics data. Now claimed and in active development.",
+            "sponsorUrl": "/sponsors",
+            "upvotes": 1,
+            "claimers": [],
+            "pluginId": "bigquery"
+        },
+        {
+            "id": "cockroachdb",
+            "requestId": "01M4VG6Z2MJF7CAPWV6CZFGGGD",
+            "kind": "driver",
+            "name": "CockroachDB",
+            "target": "PostgreSQL-compatible workflow",
+            "status": "shipped",
+            "boardStatus": "scoped",
+            "tagline": "Make distributed SQL feel native instead of merely connectable.",
+            "description": "CockroachDB uses the PostgreSQL wire protocol, but full support needs validation around schemas, introspection, transactions, explain output, and docs.",
+            "stage": "Compat lab",
+            "nextStep": "Create a CockroachDB fixture and document which PostgreSQL flows work unchanged and which need dialect handling.",
+            "difficulty": "Medium",
+            "accent": "#f97316",
+            "radar": {
+                "x": 72,
+                "y": 26,
+                "scale": 0.98
+            },
+            "tags": [
+                "distributed-sql",
+                "postgres-compatible",
+                "features",
+                "docs"
+            ],
+            "capabilities": [
+                {
+                    "label": "connect",
+                    "state": "needed"
+                },
+                {
+                    "label": "schema",
+                    "state": "needed"
+                },
+                {
+                    "label": "query",
+                    "state": "needed"
+                },
+                {
+                    "label": "transactions",
+                    "state": "stretch"
+                },
+                {
+                    "label": "docs",
+                    "state": "needed"
+                }
+            ],
+            "signal": "Likely starts as compatibility validation, not a separate driver.",
+            "sponsorUrl": "/sponsors",
+            "upvotes": 1,
+            "claimers": [
+                {
+                    "username": "1-DARK",
+                    "displayName": "1-DARK",
+                    "avatarUrl": "https://avatars.githubusercontent.com/u/161078235?v=4",
+                    "repoUrl": "https://github.com/TabularisDB/tabularis-cockroachdb-plugin"
+                }
+            ],
+            "pluginId": "cockroachdb"
+        },
+        {
+            "id": "neon",
+            "requestId": "01M68WZQWKJ20E2QTTVCTRTWBA",
+            "kind": "driver",
+            "name": "Neon",
+            "target": "Driver plugin",
+            "status": "shipped",
+            "boardStatus": "open",
+            "tagline": "Neon is an open-source, serverless PostgreSQL database platform designed for cloud-native development.",
+            "description": "Neon is an open-source, serverless PostgreSQL database platform designed for cloud-native development.",
+            "stage": "Shipped",
+            "nextStep": "Claim it, create the repository from this page, then publish a release and submit it to the registry.",
+            "difficulty": "Medium",
+            "accent": "#ec4899",
+            "radar": {
+                "x": 25,
+                "y": 73,
+                "scale": 1
+            },
+            "tags": [],
+            "capabilities": [],
+            "signal": "",
+            "sponsorUrl": "/sponsors",
+            "upvotes": 0,
+            "claimers": [
+                {
+                    "username": "NewtTheWolf",
+                    "displayName": "NewtTheWolf",
+                    "avatarUrl": "https://avatars.githubusercontent.com/u/59208097?v=4",
+                    "repoUrl": null
+                }
+            ],
+            "pluginId": "neon"
+        },
+        {
+            "id": "dameng",
+            "requestId": "01M4VG6Z9EB3MXX342N8BY74WQ",
+            "kind": "driver",
+            "name": "DM (Dameng)",
+            "target": "SQL driver plugin",
+            "status": "shipped",
+            "boardStatus": "open",
+            "tagline": "Connect to DM (Dameng) databases widely deployed across Chinese enterprises.",
+            "description": "DM (Dameng) support brings the Chinese enterprise database into Tabularis through the plugin ecosystem, with connection setup, schema inspection and query execution. Requires a user-provided Dameng JDBC driver jar.",
+            "stage": "Shipped",
+            "nextStep": "Use the shipped DM (Dameng) plugin as a reference for enterprise SQL drivers.",
+            "difficulty": "High",
+            "accent": "#c8102e",
+            "radar": {
+                "x": 18,
+                "y": 58,
+                "scale": 0.8
+            },
+            "tags": [
+                "shipped",
+                "enterprise",
+                "sql"
+            ],
+            "capabilities": [
+                {
+                    "label": "connect",
+                    "state": "ready"
+                },
+                {
+                    "label": "schema",
+                    "state": "ready"
+                },
+                {
+                    "label": "query",
+                    "state": "ready"
+                }
+            ],
+            "signal": "Shipped through the plugin registry as a community-contributed enterprise SQL driver.",
+            "sponsorUrl": "/plugins",
+            "upvotes": 0,
+            "claimers": [],
+            "pluginId": "dameng"
+        },
+        {
+            "id": "db2",
+            "requestId": "01M4VG6ZJ0KMXKPYQCG10S0JRT",
+            "kind": "driver",
+            "name": "IBM Db2",
+            "target": "SQL driver plugin",
+            "status": "shipped",
+            "boardStatus": "open",
+            "tagline": "Connect to IBM Db2 for schema browsing and query execution.",
+            "description": "The IBM Db2 plugin brings Db2 databases into Tabularis through the plugin ecosystem, pairing naturally with the IBM Informix driver for IBM data platforms.",
+            "stage": "Shipped",
+            "nextStep": "Use the shipped IBM Db2 plugin as a reference for enterprise SQL drivers.",
+            "difficulty": "High",
+            "accent": "#1f70c1",
+            "radar": {
+                "x": 8,
+                "y": 42,
+                "scale": 0.8
+            },
+            "tags": [
+                "shipped",
+                "enterprise",
+                "sql"
+            ],
+            "capabilities": [
+                {
+                    "label": "connect",
+                    "state": "ready"
+                },
+                {
+                    "label": "schema",
+                    "state": "ready"
+                },
+                {
+                    "label": "query",
+                    "state": "ready"
+                }
+            ],
+            "signal": "Shipped through the plugin registry as an enterprise SQL driver.",
+            "sponsorUrl": "/plugins",
+            "upvotes": 0,
+            "claimers": [],
+            "pluginId": "db2"
+        },
+        {
             "id": "cloudflare-d1",
             "requestId": "01M4VG6ZJH2YT330QXPC3QKGVD",
             "kind": "driver",
@@ -51,6 +570,95 @@
             "upvotes": 0,
             "claimers": [],
             "pluginId": "cloudflare-d1"
+        },
+        {
+            "id": "firestore",
+            "requestId": "01M4VG6ZGWCNGX70DV9XYFC1VA",
+            "kind": "driver",
+            "name": "Firestore",
+            "target": "Document plugin",
+            "status": "shipped",
+            "boardStatus": "open",
+            "tagline": "Browse Cloud Firestore collections and documents from the desktop.",
+            "description": "Firestore support brings Google Cloud's document database into Tabularis through the plugin ecosystem, with collection browsing, document inspection and query workflows.",
+            "stage": "Shipped",
+            "nextStep": "Use the shipped Firestore plugin as a reference for document/NoSQL integrations.",
+            "difficulty": "Medium",
+            "accent": "#ffa000",
+            "radar": {
+                "x": 30,
+                "y": 66,
+                "scale": 0.82
+            },
+            "tags": [
+                "shipped",
+                "nosql",
+                "documents"
+            ],
+            "capabilities": [
+                {
+                    "label": "collections",
+                    "state": "ready"
+                },
+                {
+                    "label": "documents",
+                    "state": "ready"
+                },
+                {
+                    "label": "query",
+                    "state": "ready"
+                }
+            ],
+            "signal": "Shipped through the plugin registry as a document database driver.",
+            "sponsorUrl": "/plugins",
+            "upvotes": 0,
+            "claimers": [],
+            "pluginId": "firestore"
+        },
+        {
+            "id": "informix",
+            "requestId": "01M4VG6Z924ANCDEWW7Z840HKR",
+            "kind": "driver",
+            "name": "IBM Informix",
+            "target": "SQL driver plugin",
+            "status": "shipped",
+            "boardStatus": "open",
+            "tagline": "Reach the IBM Informix installations still running critical workloads.",
+            "description": "Informix support brings long-lived IBM Informix systems into Tabularis through the plugin ecosystem, with connection setup, schema inspection and query execution.",
+            "stage": "Shipped",
+            "nextStep": "Use the shipped IBM Informix plugin as a reference for enterprise SQL drivers.",
+            "difficulty": "High",
+            "accent": "#0f62fe",
+            "radar": {
+                "x": 12,
+                "y": 50,
+                "scale": 0.8
+            },
+            "tags": [
+                "shipped",
+                "enterprise",
+                "legacy",
+                "sql"
+            ],
+            "capabilities": [
+                {
+                    "label": "connect",
+                    "state": "ready"
+                },
+                {
+                    "label": "schema",
+                    "state": "ready"
+                },
+                {
+                    "label": "query",
+                    "state": "ready"
+                }
+            ],
+            "signal": "Shipped through the plugin registry, pairing naturally with the IBM Db2 plugin.",
+            "sponsorUrl": "/plugins",
+            "upvotes": 0,
+            "claimers": [],
+            "pluginId": "informix"
         },
         {
             "id": "google-sheets",
@@ -97,48 +705,52 @@
             "pluginId": "google-sheets"
         },
         {
-            "id": "db2",
-            "requestId": "01M4VG6ZJ0KMXKPYQCG10S0JRT",
+            "id": "etcd",
+            "requestId": "01M4VG6ZEM7PDJZR55Q0M8DTB6",
             "kind": "driver",
-            "name": "IBM Db2",
-            "target": "SQL driver plugin",
-            "status": "shipped",
+            "name": "Etcd",
+            "target": "Key-value plugin",
+            "status": "open",
             "boardStatus": "open",
-            "tagline": "Connect to IBM Db2 for schema browsing and query execution.",
-            "description": "The IBM Db2 plugin brings Db2 databases into Tabularis through the plugin ecosystem, pairing naturally with the IBM Informix driver for IBM data platforms.",
-            "stage": "Shipped",
-            "nextStep": "Use the shipped IBM Db2 plugin as a reference for enterprise SQL drivers.",
-            "difficulty": "High",
-            "accent": "#1f70c1",
+            "tagline": "Browse keys, prefixes and revisions of a distributed coordination store.",
+            "description": "Etcd support should focus on key/prefix browsing, value inspection, revision history and safe reads, without turning Tabularis into a cluster administration console.",
+            "stage": "Open brief",
+            "nextStep": "Scope a read-first workflow around key/prefix listing, value decoding, and revision inspection.",
+            "difficulty": "Medium",
+            "accent": "#419eda",
             "radar": {
-                "x": 8,
-                "y": 42,
-                "scale": 0.8
+                "x": 16,
+                "y": 88,
+                "scale": 0.82
             },
             "tags": [
-                "shipped",
-                "enterprise",
-                "sql"
+                "key-value",
+                "distributed",
+                "features"
             ],
             "capabilities": [
                 {
-                    "label": "connect",
-                    "state": "ready"
+                    "label": "keys",
+                    "state": "needed"
                 },
                 {
-                    "label": "schema",
-                    "state": "ready"
+                    "label": "prefixes",
+                    "state": "needed"
                 },
                 {
-                    "label": "query",
-                    "state": "ready"
+                    "label": "revisions",
+                    "state": "needed"
+                },
+                {
+                    "label": "watch",
+                    "state": "stretch"
                 }
             ],
-            "signal": "Shipped through the plugin registry as an enterprise SQL driver.",
-            "sponsorUrl": "/plugins",
+            "signal": "Good plugin candidate because it expands key-value coverage without touching the core binary.",
+            "sponsorUrl": "/sponsors",
             "upvotes": 0,
             "claimers": [],
-            "pluginId": "db2"
+            "pluginId": null
         },
         {
             "id": "hackernews",
@@ -229,146 +841,6 @@
             "pluginId": "csv"
         },
         {
-            "id": "firestore",
-            "requestId": "01M4VG6ZGWCNGX70DV9XYFC1VA",
-            "kind": "driver",
-            "name": "Firestore",
-            "target": "Document plugin",
-            "status": "shipped",
-            "boardStatus": "open",
-            "tagline": "Browse Cloud Firestore collections and documents from the desktop.",
-            "description": "Firestore support brings Google Cloud's document database into Tabularis through the plugin ecosystem, with collection browsing, document inspection and query workflows.",
-            "stage": "Shipped",
-            "nextStep": "Use the shipped Firestore plugin as a reference for document/NoSQL integrations.",
-            "difficulty": "Medium",
-            "accent": "#ffa000",
-            "radar": {
-                "x": 30,
-                "y": 66,
-                "scale": 0.82
-            },
-            "tags": [
-                "shipped",
-                "nosql",
-                "documents"
-            ],
-            "capabilities": [
-                {
-                    "label": "collections",
-                    "state": "ready"
-                },
-                {
-                    "label": "documents",
-                    "state": "ready"
-                },
-                {
-                    "label": "query",
-                    "state": "ready"
-                }
-            ],
-            "signal": "Shipped through the plugin registry as a document database driver.",
-            "sponsorUrl": "/plugins",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": "firestore"
-        },
-        {
-            "id": "clickhouse",
-            "requestId": "01M4VG6ZFMMQFYWP9TY3NTKQJX",
-            "kind": "driver",
-            "name": "ClickHouse",
-            "target": "OLAP plugin",
-            "status": "shipped",
-            "boardStatus": "open",
-            "tagline": "Columnar database workflows for fast analytical systems.",
-            "description": "ClickHouse support extends Tabularis into high-volume analytical databases without bloating the core binary.",
-            "stage": "Shipped",
-            "nextStep": "Use the shipped ClickHouse plugin as a reference for OLAP database drivers.",
-            "difficulty": "Medium",
-            "accent": "#eab308",
-            "radar": {
-                "x": 60,
-                "y": 82,
-                "scale": 0.82
-            },
-            "tags": [
-                "shipped",
-                "olap",
-                "plugin"
-            ],
-            "capabilities": [
-                {
-                    "label": "connect",
-                    "state": "ready"
-                },
-                {
-                    "label": "query",
-                    "state": "ready"
-                },
-                {
-                    "label": "schema",
-                    "state": "ready"
-                },
-                {
-                    "label": "exports",
-                    "state": "ready"
-                }
-            ],
-            "signal": "Shipped through the plugin registry.",
-            "sponsorUrl": "/plugins",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": "clickhouse"
-        },
-        {
-            "id": "duckdb",
-            "requestId": "01M4VG6ZFB02Q7B8M2D7T89YBP",
-            "kind": "driver",
-            "name": "DuckDB",
-            "target": "Analytics plugin",
-            "status": "shipped",
-            "boardStatus": "open",
-            "tagline": "Local analytical database support through the plugin ecosystem.",
-            "description": "DuckDB gives Tabularis a fast path for local analytics, CSV-heavy workflows and embedded analytical workloads.",
-            "stage": "Shipped",
-            "nextStep": "Use the shipped DuckDB plugin as a reference for local analytical engines.",
-            "difficulty": "Medium",
-            "accent": "#f97316",
-            "radar": {
-                "x": 46,
-                "y": 48,
-                "scale": 0.84
-            },
-            "tags": [
-                "shipped",
-                "analytics",
-                "local"
-            ],
-            "capabilities": [
-                {
-                    "label": "connect",
-                    "state": "ready"
-                },
-                {
-                    "label": "query",
-                    "state": "ready"
-                },
-                {
-                    "label": "tables",
-                    "state": "ready"
-                },
-                {
-                    "label": "exports",
-                    "state": "ready"
-                }
-            ],
-            "signal": "Shipped as a standalone driver plugin.",
-            "sponsorUrl": "/plugins",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": "duckdb"
-        },
-        {
             "id": "redis",
             "requestId": "01M4VG6ZF1MDYZK9D98YXRH654",
             "kind": "driver",
@@ -412,1044 +884,6 @@
             ],
             "signal": "Shipped through the plugin registry in two independent implementations, Go and Rust.",
             "sponsorUrl": "/plugins",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": null
-        },
-        {
-            "id": "etcd",
-            "requestId": "01M4VG6ZEM7PDJZR55Q0M8DTB6",
-            "kind": "driver",
-            "name": "Etcd",
-            "target": "Key-value plugin",
-            "status": "open",
-            "boardStatus": "open",
-            "tagline": "Browse keys, prefixes and revisions of a distributed coordination store.",
-            "description": "Etcd support should focus on key/prefix browsing, value inspection, revision history and safe reads, without turning Tabularis into a cluster administration console.",
-            "stage": "Open brief",
-            "nextStep": "Scope a read-first workflow around key/prefix listing, value decoding, and revision inspection.",
-            "difficulty": "Medium",
-            "accent": "#419eda",
-            "radar": {
-                "x": 16,
-                "y": 88,
-                "scale": 0.82
-            },
-            "tags": [
-                "key-value",
-                "distributed",
-                "features"
-            ],
-            "capabilities": [
-                {
-                    "label": "keys",
-                    "state": "needed"
-                },
-                {
-                    "label": "prefixes",
-                    "state": "needed"
-                },
-                {
-                    "label": "revisions",
-                    "state": "needed"
-                },
-                {
-                    "label": "watch",
-                    "state": "stretch"
-                }
-            ],
-            "signal": "Good plugin candidate because it expands key-value coverage without touching the core binary.",
-            "sponsorUrl": "/sponsors",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": null
-        },
-        {
-            "id": "meilisearch",
-            "requestId": "01M4VG6ZEC1PC1ETYAKGG8ZS8M",
-            "kind": "driver",
-            "name": "Meilisearch",
-            "target": "Search plugin",
-            "status": "scoped",
-            "boardStatus": "scoped",
-            "tagline": "Browse indexes, documents and run search queries against Meilisearch.",
-            "description": "Meilisearch support brings index browsing, document inspection, settings and search queries into Tabularis. Implementation is currently in progress.",
-            "stage": "In progress",
-            "nextStep": "Development is underway on index discovery, document reads, and search execution.",
-            "difficulty": "Medium",
-            "accent": "#ff5caa",
-            "radar": {
-                "x": 28,
-                "y": 80,
-                "scale": 0.86
-            },
-            "tags": [
-                "search",
-                "indexes",
-                "features"
-            ],
-            "capabilities": [
-                {
-                    "label": "indexes",
-                    "state": "needed"
-                },
-                {
-                    "label": "documents",
-                    "state": "needed"
-                },
-                {
-                    "label": "search",
-                    "state": "needed"
-                },
-                {
-                    "label": "settings",
-                    "state": "stretch"
-                }
-            ],
-            "signal": "Claimed and in active development as a search-engine driver.",
-            "sponsorUrl": "/sponsors",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": null
-        },
-        {
-            "id": "elasticsearch",
-            "requestId": "01M4VG6ZE358RJVBP0XW1VDDJE",
-            "kind": "driver",
-            "name": "Elasticsearch",
-            "target": "Search plugin",
-            "status": "shipped",
-            "boardStatus": "open",
-            "tagline": "Inspect indices, sample documents and run SQL, ES|QL and REST queries from Tabularis.",
-            "description": "The community Elasticsearch plugin ships index browsing, a mapping viewer, document sampling, and query execution in three modes: Elasticsearch SQL, ES|QL, and raw REST requests.",
-            "stage": "Shipped",
-            "nextStep": "Install the Elasticsearch plugin from the registry and file issues on its repository for anything missing.",
-            "difficulty": "Medium",
-            "accent": "#a78bfa",
-            "radar": {
-                "x": 21,
-                "y": 73,
-                "scale": 0.92
-            },
-            "tags": [
-                "shipped",
-                "search",
-                "indices",
-                "json"
-            ],
-            "capabilities": [
-                {
-                    "label": "indices",
-                    "state": "ready"
-                },
-                {
-                    "label": "mappings",
-                    "state": "ready"
-                },
-                {
-                    "label": "search",
-                    "state": "ready"
-                },
-                {
-                    "label": "bulk ops",
-                    "state": "stretch"
-                }
-            ],
-            "signal": "Shipped by the community as v0.1.0 — scoped around inspection and query workflows, not cluster ops.",
-            "sponsorUrl": "/plugins",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": "elasticsearch"
-        },
-        {
-            "id": "bigquery",
-            "requestId": "01M4VG6ZCGBPZVM7J8Z3H0HG6Y",
-            "kind": "driver",
-            "name": "Google BigQuery",
-            "target": "Cloud SQL plugin",
-            "status": "scoped",
-            "boardStatus": "scoped",
-            "tagline": "Run warehouse queries from the same workspace as local and app databases.",
-            "description": "A BigQuery plugin connects cloud analytics with Tabularis notebooks, query history, exports and AI-assisted SQL workflows. Implementation is currently in progress.",
-            "stage": "In progress",
-            "nextStep": "Development is underway on OAuth, dataset discovery, query jobs, and cost guardrails.",
-            "difficulty": "High",
-            "accent": "#facc15",
-            "radar": {
-                "x": 52,
-                "y": 72,
-                "scale": 1
-            },
-            "tags": [
-                "google-cloud",
-                "warehouse",
-                "analytics"
-            ],
-            "capabilities": [
-                {
-                    "label": "oauth",
-                    "state": "needed"
-                },
-                {
-                    "label": "datasets",
-                    "state": "needed"
-                },
-                {
-                    "label": "jobs",
-                    "state": "needed"
-                },
-                {
-                    "label": "cost guard",
-                    "state": "stretch"
-                }
-            ],
-            "signal": "High leverage for teams that mix app databases with analytics data. Now claimed and in active development.",
-            "sponsorUrl": "/sponsors",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": null
-        },
-        {
-            "id": "snowflake",
-            "requestId": "01M4VG6ZC8TN3DK7M8ZX2X3VKR",
-            "kind": "driver",
-            "name": "Snowflake",
-            "target": "Warehouse plugin",
-            "status": "coming-soon",
-            "boardStatus": "coming-soon",
-            "tagline": "Cloud warehouse access for analytics teams using Tabularis notebooks.",
-            "description": "Connection setup, warehouse/database/schema switching, result pagination and notebook-first analytics workflows for Snowflake users.",
-            "stage": "Coming soon",
-            "nextStep": "Validate auth, warehouse switching, pagination, and notebook fit before opening implementation issues.",
-            "difficulty": "High",
-            "accent": "#38bdf8",
-            "radar": {
-                "x": 67,
-                "y": 62,
-                "scale": 0.96
-            },
-            "tags": [
-                "warehouse",
-                "analytics",
-                "notebooks",
-                "coming-soon"
-            ],
-            "capabilities": [
-                {
-                    "label": "auth",
-                    "state": "needed"
-                },
-                {
-                    "label": "warehouse",
-                    "state": "needed"
-                },
-                {
-                    "label": "schema",
-                    "state": "needed"
-                },
-                {
-                    "label": "notebooks",
-                    "state": "stretch"
-                }
-            ],
-            "signal": "Best fit when paired with notebooks and repeatable reporting flows.",
-            "sponsorUrl": "/sponsors",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": null
-        },
-        {
-            "id": "mongodb",
-            "requestId": "01M4VG6ZBZB7MCVXRVP5TNMT6G",
-            "kind": "driver",
-            "name": "MongoDB",
-            "target": "Document plugin",
-            "status": "shipped",
-            "boardStatus": "open",
-            "tagline": "Browse MongoDB databases, collections and documents from Tabularis.",
-            "description": "MongoDB ships through two plugins: the community MongoDB plugin (6.0+) with multi-database browsing, schema inference, native find, aggregate and CRUD queries, index management, exports and ObjectId-aware editing, and the official MongoDB Atlas plugin with mongodb+srv connection support.",
-            "stage": "Shipped",
-            "nextStep": "Install either MongoDB plugin from the registry and file issues on its repository for anything missing.",
-            "difficulty": "High",
-            "accent": "#22c55e",
-            "radar": {
-                "x": 24,
-                "y": 60,
-                "scale": 0.96
-            },
-            "tags": [
-                "shipped",
-                "nosql",
-                "documents",
-                "community"
-            ],
-            "capabilities": [
-                {
-                    "label": "collections",
-                    "state": "ready"
-                },
-                {
-                    "label": "filter",
-                    "state": "ready"
-                },
-                {
-                    "label": "json grid",
-                    "state": "ready"
-                },
-                {
-                    "label": "writes",
-                    "state": "ready"
-                }
-            ],
-            "signal": "Shipped through the plugin registry as a community driver plus an official Atlas-ready (mongodb+srv) driver.",
-            "sponsorUrl": "/plugins",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": "mongodb"
-        },
-        {
-            "id": "dynamodb",
-            "requestId": "01M4VG6ZBHKCX82N5X6CZH1BEV",
-            "kind": "driver",
-            "name": "DynamoDB",
-            "target": "AWS NoSQL plugin",
-            "status": "shipped",
-            "boardStatus": "open",
-            "tagline": "Browse tables, keys and indexes, run PartiQL queries and edit items from Tabularis.",
-            "description": "The community DynamoDB plugin ships table browsing, key and GSI/LSI index inspection, PartiQL query execution with scan/query/get modes, inline item editing, flexible AWS credential handling, and DynamoDB Local support.",
-            "stage": "Shipped",
-            "nextStep": "Install the DynamoDB plugin from the registry and file issues on its repository for anything missing.",
-            "difficulty": "High",
-            "accent": "#facc15",
-            "radar": {
-                "x": 82,
-                "y": 76,
-                "scale": 0.92
-            },
-            "tags": [
-                "shipped",
-                "aws",
-                "nosql",
-                "community"
-            ],
-            "capabilities": [
-                {
-                    "label": "auth",
-                    "state": "ready"
-                },
-                {
-                    "label": "tables",
-                    "state": "ready"
-                },
-                {
-                    "label": "indexes",
-                    "state": "ready"
-                },
-                {
-                    "label": "items",
-                    "state": "ready"
-                }
-            ],
-            "signal": "Shipped through the plugin registry by a community contributor, with PartiQL queries and DynamoDB Local support.",
-            "sponsorUrl": "/plugins",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": "dynamodb"
-        },
-        {
-            "id": "surrealdb",
-            "requestId": "01M4VG6ZB72WRN6ZZR132AD4V7",
-            "kind": "driver",
-            "name": "SurrealDB",
-            "target": "Multi-model plugin",
-            "status": "shipped",
-            "boardStatus": "open",
-            "tagline": "Browse and query SurrealDB from Tabularis.",
-            "description": "The SurrealDB driver connects to a namespace and database, browses tables and fields, and runs SurrealQL.",
-            "stage": "Shipped",
-            "nextStep": "Install the driver from Plugins.",
-            "difficulty": "Medium",
-            "accent": "#c084fc",
-            "radar": {
-                "x": 41,
-                "y": 68,
-                "scale": 0.86
-            },
-            "tags": [
-                "shipped",
-                "surrealql",
-                "multi-model"
-            ],
-            "capabilities": [
-                {
-                    "label": "namespace",
-                    "state": "ready"
-                },
-                {
-                    "label": "database",
-                    "state": "ready"
-                },
-                {
-                    "label": "query",
-                    "state": "ready"
-                },
-                {
-                    "label": "docs",
-                    "state": "ready"
-                }
-            ],
-            "signal": "SurrealDB driver released by @itsmunzir.",
-            "sponsorUrl": "/plugins",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": "surrealdb"
-        },
-        {
-            "id": "trino-presto",
-            "requestId": "01M4VG6ZAPK8QG3KQNX4GR8TXH",
-            "kind": "driver",
-            "name": "Trino / Presto",
-            "target": "Federated query plugin",
-            "status": "open",
-            "boardStatus": "open",
-            "tagline": "Connect Tabularis notebooks to federated SQL engines.",
-            "description": "Trino and Presto support should focus on catalogs, schemas, query execution, result paging, and docs for federated analytics workflows.",
-            "stage": "Open brief",
-            "nextStep": "Scope catalog/schema discovery and test against Trino first, then decide Presto compatibility.",
-            "difficulty": "Medium",
-            "accent": "#ec4899",
-            "radar": {
-                "x": 38,
-                "y": 82,
-                "scale": 0.88
-            },
-            "tags": [
-                "federated-sql",
-                "analytics",
-                "features",
-                "docs"
-            ],
-            "capabilities": [
-                {
-                    "label": "catalogs",
-                    "state": "needed"
-                },
-                {
-                    "label": "schemas",
-                    "state": "needed"
-                },
-                {
-                    "label": "query",
-                    "state": "needed"
-                },
-                {
-                    "label": "paging",
-                    "state": "stretch"
-                }
-            ],
-            "signal": "Pairs well with SQL notebooks because the value is federated analysis, not table editing.",
-            "sponsorUrl": "/sponsors",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": null
-        },
-        {
-            "id": "dameng",
-            "requestId": "01M4VG6Z9EB3MXX342N8BY74WQ",
-            "kind": "driver",
-            "name": "DM (Dameng)",
-            "target": "SQL driver plugin",
-            "status": "shipped",
-            "boardStatus": "open",
-            "tagline": "Connect to DM (Dameng) databases widely deployed across Chinese enterprises.",
-            "description": "DM (Dameng) support brings the Chinese enterprise database into Tabularis through the plugin ecosystem, with connection setup, schema inspection and query execution. Requires a user-provided Dameng JDBC driver jar.",
-            "stage": "Shipped",
-            "nextStep": "Use the shipped DM (Dameng) plugin as a reference for enterprise SQL drivers.",
-            "difficulty": "High",
-            "accent": "#c8102e",
-            "radar": {
-                "x": 18,
-                "y": 58,
-                "scale": 0.8
-            },
-            "tags": [
-                "shipped",
-                "enterprise",
-                "sql"
-            ],
-            "capabilities": [
-                {
-                    "label": "connect",
-                    "state": "ready"
-                },
-                {
-                    "label": "schema",
-                    "state": "ready"
-                },
-                {
-                    "label": "query",
-                    "state": "ready"
-                }
-            ],
-            "signal": "Shipped through the plugin registry as a community-contributed enterprise SQL driver.",
-            "sponsorUrl": "/plugins",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": "dameng"
-        },
-        {
-            "id": "informix",
-            "requestId": "01M4VG6Z924ANCDEWW7Z840HKR",
-            "kind": "driver",
-            "name": "IBM Informix",
-            "target": "SQL driver plugin",
-            "status": "shipped",
-            "boardStatus": "open",
-            "tagline": "Reach the IBM Informix installations still running critical workloads.",
-            "description": "Informix support brings long-lived IBM Informix systems into Tabularis through the plugin ecosystem, with connection setup, schema inspection and query execution.",
-            "stage": "Shipped",
-            "nextStep": "Use the shipped IBM Informix plugin as a reference for enterprise SQL drivers.",
-            "difficulty": "High",
-            "accent": "#0f62fe",
-            "radar": {
-                "x": 12,
-                "y": 50,
-                "scale": 0.8
-            },
-            "tags": [
-                "shipped",
-                "enterprise",
-                "legacy",
-                "sql"
-            ],
-            "capabilities": [
-                {
-                    "label": "connect",
-                    "state": "ready"
-                },
-                {
-                    "label": "schema",
-                    "state": "ready"
-                },
-                {
-                    "label": "query",
-                    "state": "ready"
-                }
-            ],
-            "signal": "Shipped through the plugin registry, pairing naturally with the IBM Db2 plugin.",
-            "sponsorUrl": "/plugins",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": "informix"
-        },
-        {
-            "id": "sql-anywhere",
-            "requestId": "01M4VG6Z8Q1SW01RKD04SQWAM2",
-            "kind": "driver",
-            "name": "SQL Anywhere",
-            "target": "SQL driver plugin",
-            "status": "open",
-            "boardStatus": "open",
-            "tagline": "Support long-lived enterprise and embedded SQL Anywhere installations.",
-            "description": "SQL Anywhere is niche but valuable for teams maintaining existing systems. The first target should be reliable read-only access and schema inspection.",
-            "stage": "Open brief",
-            "nextStep": "Find a maintainer with SQL Anywhere access and define the driver dependency strategy.",
-            "difficulty": "High",
-            "accent": "#fb7185",
-            "radar": {
-                "x": 11,
-                "y": 28,
-                "scale": 0.78
-            },
-            "tags": [
-                "enterprise",
-                "embedded",
-                "sql"
-            ],
-            "capabilities": [
-                {
-                    "label": "connect",
-                    "state": "needed"
-                },
-                {
-                    "label": "schema",
-                    "state": "needed"
-                },
-                {
-                    "label": "query",
-                    "state": "needed"
-                },
-                {
-                    "label": "docs",
-                    "state": "stretch"
-                }
-            ],
-            "signal": "Good bounty candidate if a real user can provide access, test cases, and review feedback.",
-            "sponsorUrl": "/sponsors",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": null
-        },
-        {
-            "id": "libsql",
-            "requestId": "01M4VG6Z88G6KX44WFD8S8EWT2",
-            "kind": "driver",
-            "name": "LibSQL / Turso",
-            "target": "SQLite-family plugin",
-            "status": "shipped",
-            "boardStatus": "open",
-            "tagline": "Extend SQLite workflows toward LibSQL and remote Turso-style databases.",
-            "description": "LibSQL sits close to SQLite but adds remote workflows and sync-oriented assumptions. The driver ships as a standalone plugin from the tabularis-libsql-plugin repository, covering local files and remote Turso-style databases.",
-            "stage": "Shipped",
-            "nextStep": "Install the LibSQL plugin and report issues or contribute improvements in the tabularis-libsql-plugin repository.",
-            "difficulty": "Medium",
-            "accent": "#14b8a6",
-            "radar": {
-                "x": 33,
-                "y": 84,
-                "scale": 0.82
-            },
-            "tags": [
-                "shipped",
-                "sqlite-family",
-                "turso",
-                "remote"
-            ],
-            "capabilities": [
-                {
-                    "label": "local",
-                    "state": "ready"
-                },
-                {
-                    "label": "remote",
-                    "state": "ready"
-                },
-                {
-                    "label": "auth",
-                    "state": "ready"
-                },
-                {
-                    "label": "schema",
-                    "state": "ready"
-                }
-            ],
-            "signal": "Shipped as a standalone driver plugin for SQLite-local and Turso-remote workflows.",
-            "sponsorUrl": "/plugins",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": "libsql"
-        },
-        {
-            "id": "firebird",
-            "requestId": "01M4VG6Z7G81RR5G9A694JCPGR",
-            "kind": "driver",
-            "name": "Firebird",
-            "target": "SQL driver plugin",
-            "status": "open",
-            "boardStatus": "open",
-            "tagline": "Bring a durable embedded/server SQL database into the plugin ecosystem.",
-            "description": "Firebird support needs connection setup, metadata inspection, query execution, type handling, and docs for both local and server deployments.",
-            "stage": "Open brief",
-            "nextStep": "Choose the driver/runtime approach and define the first read-only feature set.",
-            "difficulty": "Medium",
-            "accent": "#f59e0b",
-            "radar": {
-                "x": 24,
-                "y": 76,
-                "scale": 0.84
-            },
-            "tags": [
-                "sql",
-                "embedded",
-                "features",
-                "docs"
-            ],
-            "capabilities": [
-                {
-                    "label": "connect",
-                    "state": "needed"
-                },
-                {
-                    "label": "schema",
-                    "state": "needed"
-                },
-                {
-                    "label": "query",
-                    "state": "needed"
-                },
-                {
-                    "label": "types",
-                    "state": "stretch"
-                }
-            ],
-            "signal": "Strong fit for the plugin model because it expands SQL coverage without changing the core binary.",
-            "sponsorUrl": "/sponsors",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": null
-        },
-        {
-            "id": "scylladb",
-            "requestId": "01M4VG6Z5V86CF7329FAKVTMD5",
-            "kind": "driver",
-            "name": "ScyllaDB",
-            "target": "Cassandra-compatible workflow",
-            "status": "shipped",
-            "boardStatus": "open",
-            "tagline": "Use the Cassandra plugin against ScyllaDB, verified end to end.",
-            "description": "ScyllaDB is served by the Cassandra plugin (0.1.0) over the shared CQL protocol, verified against a real ScyllaDB container for connection, schema discovery, querying and row editing. Shard-aware and tablet-aware routing are not implemented yet.",
-            "stage": "Shipped",
-            "nextStep": "Install the Cassandra plugin from the registry and report any ScyllaDB-specific gaps in the tabularis-cassandra-plugin repository.",
-            "difficulty": "Medium",
-            "accent": "#a78bfa",
-            "radar": {
-                "x": 14,
-                "y": 59,
-                "scale": 0.84
-            },
-            "tags": [
-                "shipped",
-                "wide-column",
-                "cassandra-compatible"
-            ],
-            "capabilities": [
-                {
-                    "label": "keyspaces",
-                    "state": "ready"
-                },
-                {
-                    "label": "tables",
-                    "state": "ready"
-                },
-                {
-                    "label": "cql",
-                    "state": "ready"
-                },
-                {
-                    "label": "docs",
-                    "state": "ready"
-                }
-            ],
-            "signal": "Shipped through the Cassandra plugin, so the board did not split into two driver efforts.",
-            "sponsorUrl": "/plugins",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": "cassandra"
-        },
-        {
-            "id": "cassandra",
-            "requestId": "01M4VG6Z5HZX4XB54FFTM5D2QQ",
-            "kind": "driver",
-            "name": "Cassandra",
-            "target": "Wide-column plugin",
-            "status": "shipped",
-            "boardStatus": "open",
-            "tagline": "Browse keyspaces, page through CQL results and edit rows from the desktop.",
-            "description": "Cassandra ships as a community plugin (0.1.0) written in Rust on scylla-rust-driver: keyspace, table, column and index discovery, CQL queries with native forward paging, and row editing for single-column primary keys. TLS and grid edits on composite keys are not supported yet.",
-            "stage": "Shipped",
-            "nextStep": "Install the Cassandra plugin from the registry, test it against your clusters, and report gaps in the tabularis-cassandra-plugin repository.",
-            "difficulty": "High",
-            "accent": "#60a5fa",
-            "radar": {
-                "x": 18,
-                "y": 43,
-                "scale": 0.95
-            },
-            "tags": [
-                "shipped",
-                "wide-column",
-                "cql"
-            ],
-            "capabilities": [
-                {
-                    "label": "keyspaces",
-                    "state": "ready"
-                },
-                {
-                    "label": "tables",
-                    "state": "ready"
-                },
-                {
-                    "label": "cql",
-                    "state": "ready"
-                },
-                {
-                    "label": "paging",
-                    "state": "ready"
-                }
-            ],
-            "signal": "Shipped from the bounty as one plugin for Cassandra and ScyllaDB.",
-            "sponsorUrl": "/plugins",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": "cassandra"
-        },
-        {
-            "id": "oracle",
-            "requestId": "01M4VG6Z56TTAFDGJ188PG5PC4",
-            "kind": "driver",
-            "name": "Oracle",
-            "target": "Driver plugin",
-            "status": "shipped",
-            "boardStatus": "open",
-            "tagline": "A serious Oracle workflow without forcing users into heavyweight tooling.",
-            "description": "Oracle ships as a dedicated plugin (0.1.0, requires Tabularis 0.25.0 or later) for 12c+, Free/XE, Autonomous Database and RDS: multi-schema browsing, query execution, Visual EXPLAIN with runtime statistics, row editing, DDL, views, routines and table/column comments. Requires the Oracle Instant Client.",
-            "stage": "Shipped",
-            "nextStep": "Install the Oracle plugin from the registry, test it against your databases, and report gaps in the tabularis-oracle-plugin repository.",
-            "difficulty": "Extreme",
-            "accent": "#f43f5e",
-            "radar": {
-                "x": 25,
-                "y": 33,
-                "scale": 1.08
-            },
-            "tags": [
-                "shipped",
-                "enterprise",
-                "plugin"
-            ],
-            "capabilities": [
-                {
-                    "label": "driver",
-                    "state": "ready"
-                },
-                {
-                    "label": "schema",
-                    "state": "ready"
-                },
-                {
-                    "label": "select",
-                    "state": "ready"
-                },
-                {
-                    "label": "writes",
-                    "state": "ready"
-                },
-                {
-                    "label": "routines",
-                    "state": "ready"
-                },
-                {
-                    "label": "explain",
-                    "state": "ready"
-                }
-            ],
-            "signal": "Shipped as a plugin: the highest-impact enterprise driver after SQL Server, now installable from the registry.",
-            "sponsorUrl": "/sponsors",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": "oracle"
-        },
-        {
-            "id": "tidb",
-            "requestId": "01M4VG6Z4V1H15SXCV1GNMGAN6",
-            "kind": "driver",
-            "name": "TiDB",
-            "target": "MySQL-compatible workflow",
-            "status": "scoped",
-            "boardStatus": "scoped",
-            "tagline": "Validate TiDB compatibility without pretending MySQL support is enough.",
-            "description": "TiDB speaks the MySQL protocol, but distributed SQL behavior, metadata, transactions, and explain output need targeted validation before claiming full support.",
-            "stage": "Compat lab",
-            "nextStep": "Run the MySQL/MariaDB workflow against TiDB and document gaps before deciding if a dialect layer is needed.",
-            "difficulty": "Medium",
-            "accent": "#22c55e",
-            "radar": {
-                "x": 84,
-                "y": 46,
-                "scale": 0.92
-            },
-            "tags": [
-                "distributed-sql",
-                "mysql-compatible",
-                "features"
-            ],
-            "capabilities": [
-                {
-                    "label": "connect",
-                    "state": "needed"
-                },
-                {
-                    "label": "schema",
-                    "state": "needed"
-                },
-                {
-                    "label": "query",
-                    "state": "needed"
-                },
-                {
-                    "label": "explain",
-                    "state": "stretch"
-                }
-            ],
-            "signal": "A compatibility bounty can turn protocol support into a real support claim.",
-            "sponsorUrl": "/sponsors",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": null
-        },
-        {
-            "id": "mariadb",
-            "requestId": "01M4VG6Z47KGNJ4772W0E3W4PE",
-            "kind": "driver",
-            "name": "MySQL / MariaDB",
-            "target": "Built-in MySQL/MariaDB driver",
-            "status": "shipped",
-            "boardStatus": "open",
-            "tagline": "MariaDB is covered by the built-in MySQL/MariaDB workflow.",
-            "description": "The site already positions MariaDB support as part of the core database set. The bounty opportunity is documentation, compatibility coverage, and MariaDB-specific polish.",
-            "stage": "Shipped",
-            "nextStep": "Expand MariaDB-specific docs and edge-case tests around metadata, types, and version differences.",
-            "difficulty": "Medium",
-            "accent": "#0ea5e9",
-            "radar": {
-                "x": 47,
-                "y": 30,
-                "scale": 0.9
-            },
-            "tags": [
-                "shipped",
-                "built-in",
-                "mysql-compatible",
-                "features"
-            ],
-            "capabilities": [
-                {
-                    "label": "connect",
-                    "state": "ready"
-                },
-                {
-                    "label": "schema",
-                    "state": "ready"
-                },
-                {
-                    "label": "query",
-                    "state": "ready"
-                },
-                {
-                    "label": "writes",
-                    "state": "ready"
-                },
-                {
-                    "label": "docs",
-                    "state": "stretch"
-                }
-            ],
-            "signal": "Already supported through the core MySQL/MariaDB driver; future work should focus on confidence and docs.",
-            "sponsorUrl": "/plugins/bounties#mariadb",
-            "upvotes": 0,
-            "claimers": [],
-            "pluginId": null
-        },
-        {
-            "id": "cockroachdb",
-            "requestId": "01M4VG6Z2MJF7CAPWV6CZFGGGD",
-            "kind": "driver",
-            "name": "CockroachDB",
-            "target": "PostgreSQL-compatible workflow",
-            "status": "shipped",
-            "boardStatus": "scoped",
-            "tagline": "Browse, query and edit CockroachDB with the first public driver alpha.",
-            "description": "CockroachDB 0.1.0-alpha.2 adds schema management for tables, columns, indexes, foreign keys and views. EXPLAIN and ER diagrams are not implemented yet.",
-            "stage": "Shipped",
-            "nextStep": "Install the alpha from Plugins or the GitHub release and read its documented limitations before use.",
-            "difficulty": "Medium",
-            "accent": "#f97316",
-            "radar": {
-                "x": 72,
-                "y": 26,
-                "scale": 0.98
-            },
-            "tags": [
-                "shipped",
-                "alpha",
-                "distributed-sql",
-                "postgres-compatible"
-            ],
-            "capabilities": [
-                {
-                    "label": "connect",
-                    "state": "ready"
-                },
-                {
-                    "label": "schema",
-                    "state": "ready"
-                },
-                {
-                    "label": "query",
-                    "state": "ready"
-                },
-                {
-                    "label": "transactions",
-                    "state": "ready"
-                },
-                {
-                    "label": "docs",
-                    "state": "ready"
-                }
-            ],
-            "signal": "First public alpha released by @1-DARK with downloads for Linux, macOS and Windows.",
-            "sponsorUrl": "/plugins",
-            "upvotes": 1,
-            "claimers": [
-                {
-                    "username": "1-DARK",
-                    "displayName": "1-DARK",
-                    "avatarUrl": "https://avatars.githubusercontent.com/u/161078235?v=4",
-                    "repoUrl": "https://github.com/TabularisDB/tabularis-cockroachdb-plugin"
-                }
-            ],
-            "pluginId": "cockroachdb"
-        },
-        {
-            "id": "amazon-redshift",
-            "requestId": "01M4VG6Z2CJXY4NN5A1HQXNS5P",
-            "kind": "driver",
-            "name": "Amazon Redshift",
-            "target": "Warehouse compatibility",
-            "status": "scoped",
-            "boardStatus": "scoped",
-            "tagline": "Validate Redshift as a first-class analytical warehouse workflow.",
-            "description": "Redshift speaks a PostgreSQL-derived dialect, but full support still needs warehouse-specific validation for metadata, pagination, auth, explain output, and query behavior.",
-            "stage": "Compat lab",
-            "nextStep": "Build a Redshift test matrix around connection auth, schema discovery, query execution, exports, and docs.",
-            "difficulty": "Medium",
-            "accent": "#ef4444",
-            "radar": {
-                "x": 66,
-                "y": 20,
-                "scale": 0.92
-            },
-            "tags": [
-                "warehouse",
-                "aws",
-                "postgres-compatible",
-                "features"
-            ],
-            "capabilities": [
-                {
-                    "label": "connect",
-                    "state": "needed"
-                },
-                {
-                    "label": "schema",
-                    "state": "needed"
-                },
-                {
-                    "label": "query",
-                    "state": "needed"
-                },
-                {
-                    "label": "exports",
-                    "state": "stretch"
-                },
-                {
-                    "label": "docs",
-                    "state": "stretch"
-                }
-            ],
-            "signal": "Good candidate for a compatibility bounty because it can reuse parts of the PostgreSQL path only after real warehouse testing.",
-            "sponsorUrl": "/sponsors",
             "upvotes": 0,
             "claimers": [],
             "pluginId": null
@@ -1509,6 +943,647 @@
             "upvotes": 0,
             "claimers": [],
             "pluginId": "sqlserver"
+        },
+        {
+            "id": "mariadb",
+            "requestId": "01M4VG6Z47KGNJ4772W0E3W4PE",
+            "kind": "driver",
+            "name": "MySQL / MariaDB",
+            "target": "Built-in MySQL/MariaDB driver",
+            "status": "shipped",
+            "boardStatus": "open",
+            "tagline": "MariaDB is covered by the built-in MySQL/MariaDB workflow.",
+            "description": "The site already positions MariaDB support as part of the core database set. The bounty opportunity is documentation, compatibility coverage, and MariaDB-specific polish.",
+            "stage": "Shipped",
+            "nextStep": "Expand MariaDB-specific docs and edge-case tests around metadata, types, and version differences.",
+            "difficulty": "Medium",
+            "accent": "#0ea5e9",
+            "radar": {
+                "x": 47,
+                "y": 30,
+                "scale": 0.9
+            },
+            "tags": [
+                "shipped",
+                "built-in",
+                "mysql-compatible",
+                "features"
+            ],
+            "capabilities": [
+                {
+                    "label": "connect",
+                    "state": "ready"
+                },
+                {
+                    "label": "schema",
+                    "state": "ready"
+                },
+                {
+                    "label": "query",
+                    "state": "ready"
+                },
+                {
+                    "label": "writes",
+                    "state": "ready"
+                },
+                {
+                    "label": "docs",
+                    "state": "stretch"
+                }
+            ],
+            "signal": "Already supported through the core MySQL/MariaDB driver; future work should focus on confidence and docs.",
+            "sponsorUrl": "/plugins/bounties#mariadb",
+            "upvotes": 0,
+            "claimers": [],
+            "pluginId": null
+        },
+        {
+            "id": "tidb",
+            "requestId": "01M4VG6Z4V1H15SXCV1GNMGAN6",
+            "kind": "driver",
+            "name": "TiDB",
+            "target": "MySQL-compatible workflow",
+            "status": "scoped",
+            "boardStatus": "scoped",
+            "tagline": "Validate TiDB compatibility without pretending MySQL support is enough.",
+            "description": "TiDB speaks the MySQL protocol, but distributed SQL behavior, metadata, transactions, and explain output need targeted validation before claiming full support.",
+            "stage": "Compat lab",
+            "nextStep": "Run the MySQL/MariaDB workflow against TiDB and document gaps before deciding if a dialect layer is needed.",
+            "difficulty": "Medium",
+            "accent": "#22c55e",
+            "radar": {
+                "x": 84,
+                "y": 46,
+                "scale": 0.92
+            },
+            "tags": [
+                "distributed-sql",
+                "mysql-compatible",
+                "features"
+            ],
+            "capabilities": [
+                {
+                    "label": "connect",
+                    "state": "needed"
+                },
+                {
+                    "label": "schema",
+                    "state": "needed"
+                },
+                {
+                    "label": "query",
+                    "state": "needed"
+                },
+                {
+                    "label": "explain",
+                    "state": "stretch"
+                }
+            ],
+            "signal": "A compatibility bounty can turn protocol support into a real support claim.",
+            "sponsorUrl": "/sponsors",
+            "upvotes": 0,
+            "claimers": [],
+            "pluginId": null
+        },
+        {
+            "id": "scylladb",
+            "requestId": "01M4VG6Z5V86CF7329FAKVTMD5",
+            "kind": "driver",
+            "name": "ScyllaDB",
+            "target": "Cassandra-compatible workflow",
+            "status": "shipped",
+            "boardStatus": "open",
+            "tagline": "Use the Cassandra plugin against ScyllaDB, verified end to end.",
+            "description": "ScyllaDB is served by the Cassandra plugin (0.1.0) over the shared CQL protocol, verified against a real ScyllaDB container for connection, schema discovery, querying and row editing. Shard-aware and tablet-aware routing are not implemented yet.",
+            "stage": "Shipped",
+            "nextStep": "Install the Cassandra plugin from the registry and report any ScyllaDB-specific gaps in the tabularis-cassandra-plugin repository.",
+            "difficulty": "Medium",
+            "accent": "#a78bfa",
+            "radar": {
+                "x": 14,
+                "y": 59,
+                "scale": 0.84
+            },
+            "tags": [
+                "shipped",
+                "wide-column",
+                "cassandra-compatible"
+            ],
+            "capabilities": [
+                {
+                    "label": "keyspaces",
+                    "state": "ready"
+                },
+                {
+                    "label": "tables",
+                    "state": "ready"
+                },
+                {
+                    "label": "cql",
+                    "state": "ready"
+                },
+                {
+                    "label": "docs",
+                    "state": "ready"
+                }
+            ],
+            "signal": "Shipped through the Cassandra plugin, so the board did not split into two driver efforts.",
+            "sponsorUrl": "/plugins",
+            "upvotes": 0,
+            "claimers": [],
+            "pluginId": "cassandra"
+        },
+        {
+            "id": "libsql",
+            "requestId": "01M4VG6Z88G6KX44WFD8S8EWT2",
+            "kind": "driver",
+            "name": "LibSQL / Turso",
+            "target": "SQLite-family plugin",
+            "status": "shipped",
+            "boardStatus": "open",
+            "tagline": "Extend SQLite workflows toward LibSQL and remote Turso-style databases.",
+            "description": "LibSQL sits close to SQLite but adds remote workflows and sync-oriented assumptions. The driver ships as a standalone plugin from the tabularis-libsql-plugin repository, covering local files and remote Turso-style databases.",
+            "stage": "Shipped",
+            "nextStep": "Install the LibSQL plugin and report issues or contribute improvements in the tabularis-libsql-plugin repository.",
+            "difficulty": "Medium",
+            "accent": "#14b8a6",
+            "radar": {
+                "x": 33,
+                "y": 84,
+                "scale": 0.82
+            },
+            "tags": [
+                "shipped",
+                "sqlite-family",
+                "turso",
+                "remote"
+            ],
+            "capabilities": [
+                {
+                    "label": "local",
+                    "state": "ready"
+                },
+                {
+                    "label": "remote",
+                    "state": "ready"
+                },
+                {
+                    "label": "auth",
+                    "state": "ready"
+                },
+                {
+                    "label": "schema",
+                    "state": "ready"
+                }
+            ],
+            "signal": "Shipped as a standalone driver plugin for SQLite-local and Turso-remote workflows.",
+            "sponsorUrl": "/plugins",
+            "upvotes": 0,
+            "claimers": [],
+            "pluginId": "libsql"
+        },
+        {
+            "id": "sql-anywhere",
+            "requestId": "01M4VG6Z8Q1SW01RKD04SQWAM2",
+            "kind": "driver",
+            "name": "SQL Anywhere",
+            "target": "SQL driver plugin",
+            "status": "open",
+            "boardStatus": "open",
+            "tagline": "Support long-lived enterprise and embedded SQL Anywhere installations.",
+            "description": "SQL Anywhere is niche but valuable for teams maintaining existing systems. The first target should be reliable read-only access and schema inspection.",
+            "stage": "Open brief",
+            "nextStep": "Find a maintainer with SQL Anywhere access and define the driver dependency strategy.",
+            "difficulty": "High",
+            "accent": "#fb7185",
+            "radar": {
+                "x": 11,
+                "y": 28,
+                "scale": 0.78
+            },
+            "tags": [
+                "enterprise",
+                "embedded",
+                "sql"
+            ],
+            "capabilities": [
+                {
+                    "label": "connect",
+                    "state": "needed"
+                },
+                {
+                    "label": "schema",
+                    "state": "needed"
+                },
+                {
+                    "label": "query",
+                    "state": "needed"
+                },
+                {
+                    "label": "docs",
+                    "state": "stretch"
+                }
+            ],
+            "signal": "Good bounty candidate if a real user can provide access, test cases, and review feedback.",
+            "sponsorUrl": "/sponsors",
+            "upvotes": 0,
+            "claimers": [],
+            "pluginId": null
+        },
+        {
+            "id": "elasticsearch",
+            "requestId": "01M4VG6ZE358RJVBP0XW1VDDJE",
+            "kind": "driver",
+            "name": "Elasticsearch",
+            "target": "Search plugin",
+            "status": "shipped",
+            "boardStatus": "open",
+            "tagline": "Inspect indices, sample documents and run SQL, ES|QL and REST queries from Tabularis.",
+            "description": "The community Elasticsearch plugin ships index browsing, a mapping viewer, document sampling, and query execution in three modes: Elasticsearch SQL, ES|QL, and raw REST requests.",
+            "stage": "Shipped",
+            "nextStep": "Install the Elasticsearch plugin from the registry and file issues on its repository for anything missing.",
+            "difficulty": "Medium",
+            "accent": "#a78bfa",
+            "radar": {
+                "x": 21,
+                "y": 73,
+                "scale": 0.92
+            },
+            "tags": [
+                "shipped",
+                "search",
+                "indices",
+                "json"
+            ],
+            "capabilities": [
+                {
+                    "label": "indices",
+                    "state": "ready"
+                },
+                {
+                    "label": "mappings",
+                    "state": "ready"
+                },
+                {
+                    "label": "search",
+                    "state": "ready"
+                },
+                {
+                    "label": "bulk ops",
+                    "state": "stretch"
+                }
+            ],
+            "signal": "Shipped by the community as v0.1.0 — scoped around inspection and query workflows, not cluster ops.",
+            "sponsorUrl": "/plugins",
+            "upvotes": 0,
+            "claimers": [],
+            "pluginId": "elasticsearch"
+        },
+        {
+            "id": "dynamodb",
+            "requestId": "01M4VG6ZBHKCX82N5X6CZH1BEV",
+            "kind": "driver",
+            "name": "DynamoDB",
+            "target": "AWS NoSQL plugin",
+            "status": "shipped",
+            "boardStatus": "open",
+            "tagline": "Browse tables, keys and indexes, run PartiQL queries and edit items from Tabularis.",
+            "description": "The community DynamoDB plugin ships table browsing, key and GSI/LSI index inspection, PartiQL query execution with scan/query/get modes, inline item editing, flexible AWS credential handling, and DynamoDB Local support.",
+            "stage": "Shipped",
+            "nextStep": "Install the DynamoDB plugin from the registry and file issues on its repository for anything missing.",
+            "difficulty": "High",
+            "accent": "#facc15",
+            "radar": {
+                "x": 82,
+                "y": 76,
+                "scale": 0.92
+            },
+            "tags": [
+                "shipped",
+                "aws",
+                "nosql",
+                "community"
+            ],
+            "capabilities": [
+                {
+                    "label": "auth",
+                    "state": "ready"
+                },
+                {
+                    "label": "tables",
+                    "state": "ready"
+                },
+                {
+                    "label": "indexes",
+                    "state": "ready"
+                },
+                {
+                    "label": "items",
+                    "state": "ready"
+                }
+            ],
+            "signal": "Shipped through the plugin registry by a community contributor, with PartiQL queries and DynamoDB Local support.",
+            "sponsorUrl": "/plugins",
+            "upvotes": 0,
+            "claimers": [],
+            "pluginId": "dynamodb"
+        },
+        {
+            "id": "mongodb",
+            "requestId": "01M4VG6ZBZB7MCVXRVP5TNMT6G",
+            "kind": "driver",
+            "name": "MongoDB",
+            "target": "Document plugin",
+            "status": "shipped",
+            "boardStatus": "open",
+            "tagline": "Browse MongoDB databases, collections and documents from Tabularis.",
+            "description": "MongoDB ships through two plugins: the community MongoDB plugin (6.0+) with multi-database browsing, schema inference, native find, aggregate and CRUD queries, index management, exports and ObjectId-aware editing, and the official MongoDB Atlas plugin with mongodb+srv connection support.",
+            "stage": "Shipped",
+            "nextStep": "Install either MongoDB plugin from the registry and file issues on its repository for anything missing.",
+            "difficulty": "High",
+            "accent": "#22c55e",
+            "radar": {
+                "x": 24,
+                "y": 60,
+                "scale": 0.96
+            },
+            "tags": [
+                "shipped",
+                "nosql",
+                "documents",
+                "community"
+            ],
+            "capabilities": [
+                {
+                    "label": "collections",
+                    "state": "ready"
+                },
+                {
+                    "label": "filter",
+                    "state": "ready"
+                },
+                {
+                    "label": "json grid",
+                    "state": "ready"
+                },
+                {
+                    "label": "writes",
+                    "state": "ready"
+                }
+            ],
+            "signal": "Shipped through the plugin registry as a community driver plus an official Atlas-ready (mongodb+srv) driver.",
+            "sponsorUrl": "/plugins",
+            "upvotes": 0,
+            "claimers": [],
+            "pluginId": "mongodb"
+        },
+        {
+            "id": "surrealdb",
+            "requestId": "01M4VG6ZB72WRN6ZZR132AD4V7",
+            "kind": "driver",
+            "name": "SurrealDB",
+            "target": "Multi-model plugin",
+            "status": "shipped",
+            "boardStatus": "open",
+            "tagline": "Explore a focused SurrealQL workflow inside Tabularis.",
+            "description": "SurrealDB needs a deliberately scoped plugin: connection, namespaces/databases, SurrealQL execution, result inspection, and docs before broad multi-model UI work.",
+            "stage": "Open brief",
+            "nextStep": "Define the smallest useful SurrealQL workflow and document what should not be part of v1.",
+            "difficulty": "Medium",
+            "accent": "#c084fc",
+            "radar": {
+                "x": 41,
+                "y": 68,
+                "scale": 0.86
+            },
+            "tags": [
+                "multi-model",
+                "surrealql",
+                "docs"
+            ],
+            "capabilities": [
+                {
+                    "label": "namespace",
+                    "state": "needed"
+                },
+                {
+                    "label": "database",
+                    "state": "needed"
+                },
+                {
+                    "label": "query",
+                    "state": "needed"
+                },
+                {
+                    "label": "docs",
+                    "state": "needed"
+                }
+            ],
+            "signal": "Interesting ecosystem signal, but should stay query-first until the product shape is clear.",
+            "sponsorUrl": "/sponsors",
+            "upvotes": 0,
+            "claimers": [],
+            "pluginId": "surrealdb"
+        },
+        {
+            "id": "oracle",
+            "requestId": "01M4VG6Z56TTAFDGJ188PG5PC4",
+            "kind": "driver",
+            "name": "Oracle",
+            "target": "Driver plugin",
+            "status": "shipped",
+            "boardStatus": "open",
+            "tagline": "A serious Oracle workflow without forcing users into heavyweight tooling.",
+            "description": "Oracle ships as a dedicated plugin (0.1.0, requires Tabularis 0.25.0 or later) for 12c+, Free/XE, Autonomous Database and RDS: multi-schema browsing, query execution, Visual EXPLAIN with runtime statistics, row editing, DDL, views, routines and table/column comments. Requires the Oracle Instant Client.",
+            "stage": "Shipped",
+            "nextStep": "Install the Oracle plugin from the registry, test it against your databases, and report gaps in the tabularis-oracle-plugin repository.",
+            "difficulty": "Extreme",
+            "accent": "#f43f5e",
+            "radar": {
+                "x": 25,
+                "y": 33,
+                "scale": 1.08
+            },
+            "tags": [
+                "shipped",
+                "enterprise",
+                "plugin"
+            ],
+            "capabilities": [
+                {
+                    "label": "driver",
+                    "state": "ready"
+                },
+                {
+                    "label": "schema",
+                    "state": "ready"
+                },
+                {
+                    "label": "select",
+                    "state": "ready"
+                },
+                {
+                    "label": "writes",
+                    "state": "ready"
+                },
+                {
+                    "label": "routines",
+                    "state": "ready"
+                },
+                {
+                    "label": "explain",
+                    "state": "ready"
+                }
+            ],
+            "signal": "Shipped as a plugin: the highest-impact enterprise driver after SQL Server, now installable from the registry.",
+            "sponsorUrl": "/sponsors",
+            "upvotes": 0,
+            "claimers": [],
+            "pluginId": "oracle"
+        },
+        {
+            "id": "duckdb",
+            "requestId": "01M4VG6ZFB02Q7B8M2D7T89YBP",
+            "kind": "driver",
+            "name": "DuckDB",
+            "target": "Analytics plugin",
+            "status": "shipped",
+            "boardStatus": "open",
+            "tagline": "Local analytical database support through the plugin ecosystem.",
+            "description": "DuckDB gives Tabularis a fast path for local analytics, CSV-heavy workflows and embedded analytical workloads.",
+            "stage": "Shipped",
+            "nextStep": "Use the shipped DuckDB plugin as a reference for local analytical engines.",
+            "difficulty": "Medium",
+            "accent": "#f97316",
+            "radar": {
+                "x": 46,
+                "y": 48,
+                "scale": 0.84
+            },
+            "tags": [
+                "shipped",
+                "analytics",
+                "local"
+            ],
+            "capabilities": [
+                {
+                    "label": "connect",
+                    "state": "ready"
+                },
+                {
+                    "label": "query",
+                    "state": "ready"
+                },
+                {
+                    "label": "tables",
+                    "state": "ready"
+                },
+                {
+                    "label": "exports",
+                    "state": "ready"
+                }
+            ],
+            "signal": "Shipped as a standalone driver plugin.",
+            "sponsorUrl": "/plugins",
+            "upvotes": 0,
+            "claimers": [],
+            "pluginId": "duckdb"
+        },
+        {
+            "id": "clickhouse",
+            "requestId": "01M4VG6ZFMMQFYWP9TY3NTKQJX",
+            "kind": "driver",
+            "name": "ClickHouse",
+            "target": "OLAP plugin",
+            "status": "shipped",
+            "boardStatus": "open",
+            "tagline": "Columnar database workflows for fast analytical systems.",
+            "description": "ClickHouse support extends Tabularis into high-volume analytical databases without bloating the core binary.",
+            "stage": "Shipped",
+            "nextStep": "Use the shipped ClickHouse plugin as a reference for OLAP database drivers.",
+            "difficulty": "Medium",
+            "accent": "#eab308",
+            "radar": {
+                "x": 60,
+                "y": 82,
+                "scale": 0.82
+            },
+            "tags": [
+                "shipped",
+                "olap",
+                "plugin"
+            ],
+            "capabilities": [
+                {
+                    "label": "connect",
+                    "state": "ready"
+                },
+                {
+                    "label": "query",
+                    "state": "ready"
+                },
+                {
+                    "label": "schema",
+                    "state": "ready"
+                },
+                {
+                    "label": "exports",
+                    "state": "ready"
+                }
+            ],
+            "signal": "Shipped through the plugin registry.",
+            "sponsorUrl": "/plugins",
+            "upvotes": 0,
+            "claimers": [],
+            "pluginId": "clickhouse"
+        },
+        {
+            "id": "cassandra",
+            "requestId": "01M4VG6Z5HZX4XB54FFTM5D2QQ",
+            "kind": "driver",
+            "name": "Cassandra",
+            "target": "Wide-column plugin",
+            "status": "shipped",
+            "boardStatus": "open",
+            "tagline": "Browse keyspaces, page through CQL results and edit rows from the desktop.",
+            "description": "Cassandra ships as a community plugin (0.1.0) written in Rust on scylla-rust-driver: keyspace, table, column and index discovery, CQL queries with native forward paging, and row editing for single-column primary keys. TLS and grid edits on composite keys are not supported yet.",
+            "stage": "Shipped",
+            "nextStep": "Install the Cassandra plugin from the registry, test it against your clusters, and report gaps in the tabularis-cassandra-plugin repository.",
+            "difficulty": "High",
+            "accent": "#60a5fa",
+            "radar": {
+                "x": 18,
+                "y": 43,
+                "scale": 0.95
+            },
+            "tags": [
+                "shipped",
+                "wide-column",
+                "cql"
+            ],
+            "capabilities": [
+                {
+                    "label": "keyspaces",
+                    "state": "ready"
+                },
+                {
+                    "label": "tables",
+                    "state": "ready"
+                },
+                {
+                    "label": "cql",
+                    "state": "ready"
+                },
+                {
+                    "label": "paging",
+                    "state": "ready"
+                }
+            ],
+            "signal": "Shipped from the bounty as one plugin for Cassandra and ScyllaDB.",
+            "sponsorUrl": "/plugins",
+            "upvotes": 0,
+            "claimers": [],
+            "pluginId": "cassandra"
         }
     ]
 }

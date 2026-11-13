@@ -38,6 +38,7 @@ export const PLUGIN_ICONS: Record<string, string | null> = {
     snowflake: 'snowflake',
     bigquery: 'bigquery',
     meilisearch: 'meilisearch',
+    influxdb: 'influxdb',
     etcd: 'etcd',
 };
 

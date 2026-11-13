@@ -45,7 +45,7 @@ This repository powers [tabularis.dev](https://tabularis.dev), the official webs
 - **Blog:** release notes and long-form posts from `content/posts/`, with RSS and JSON feeds.
 - **Changelog:** generated from the app's `CHANGELOG.md`.
 - **Download:** stable and nightly builds, always pointing at the latest release.
-- **Plugins:** the plugin registry and the [bounty board](https://tabularis.dev/plugins/bounties).
+- **Plugins:** 30 published driver plugins, 6 themes, the Neon cloud integration and the Google Gemini AI assistant, plus the [bounty board](https://tabularis.dev/plugins/bounties). Drivers include Meilisearch and Firebird; InfluxDB is in progress. Browse the current [plugin catalog](https://tabularis.dev/plugins).
 - **Roadmap, demos and sponsors** pages.
 
 Every page also gets an Open Graph image, rendered at build time (`src/lib/og/`). The site is exported with `output: "export"`, so it runs on any static host without a server.

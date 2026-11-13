@@ -101,6 +101,12 @@
           "type": "boolean",
           "required": false,
           "description": "Opt in to get_connection_metadata, which returns connection-specific capabilities, data_types and type_mappings. Static manifest values remain the fallback."
+        },
+        {
+          "key": "connection_fields",
+          "type": "object",
+          "required": false,
+          "description": "Optional presentation overrides for host-owned connection fields. Omitted fields keep the standard Tabularis behavior."
         }
       ],
       "example": {
@@ -130,6 +136,144 @@
       "example": {
         "yaml": "id: example\nname: example\nversion: example\ndescription: example\ncategory: example\nkind: theme\ntags:\n  - example\nlicense: example\nicon: example\nscreenshots:\n  - url: example\n    caption: example\n    alt: example\nreadme: example\nreadmes: {}\ndocumentation_url: example\nhomepage: example\nsupport:\n  email: example\n  issues_url: example\nmin_runtime_version: example\ntheme_schema_version: 1\ntheme_variants:\n  - id: example\n    name: example\n    file: example\n",
         "json": "{\n  \"id\": \"example\",\n  \"name\": \"example\",\n  \"version\": \"example\",\n  \"description\": \"example\",\n  \"category\": \"example\",\n  \"kind\": \"theme\",\n  \"tags\": [\n    \"example\"\n  ],\n  \"license\": \"example\",\n  \"icon\": \"example\",\n  \"screenshots\": [\n    {\n      \"url\": \"example\",\n      \"caption\": \"example\",\n      \"alt\": \"example\"\n    }\n  ],\n  \"readme\": \"example\",\n  \"readmes\": {},\n  \"documentation_url\": \"example\",\n  \"homepage\": \"example\",\n  \"support\": {\n    \"email\": \"example\",\n    \"issues_url\": \"example\"\n  },\n  \"min_runtime_version\": \"example\",\n  \"theme_schema_version\": 1,\n  \"theme_variants\": [\n    {\n      \"id\": \"example\",\n      \"name\": \"example\",\n      \"file\": \"example\"\n    }\n  ]\n}"
+      }
+    },
+    {
+      "key": "cloud",
+      "label": "Cloud",
+      "description": "Cloud provider integrations for databases and backend services, including account onboarding and connection-scoped management.",
+      "catalogue_url": "https://registry.tabularis.dev/c/cloud",
+      "fields": [
+        {
+          "key": "engine",
+          "type": "string",
+          "required": true,
+          "description": "Concrete database this driver connects to (e.g. \"firestore\", \"postgres\", \"qdrant\"). Tabularis groups the connection catalogue by engine: every driver targeting the same database shares one engine value, so two \"firestore\" drivers collapse into a single Firestore entry and the user picks which driver."
+        },
+        {
+          "key": "paradigms",
+          "type": "array<string>",
+          "required": true,
+          "description": "Data-model families the engine supports, most representative first. Single-model drivers declare one (e.g. [\"sql\"]); multi-model declare several (SurrealDB: [\"document\",\"graph\",\"relational\",\"key-value\",\"vector\"]). The first entry is the primary model used to place the engine in the catalogue; every entry feeds the filter chips, so a multi-model engine appears when ANY of its models is selected. Allowed values come from the registry's admin-managed paradigm list (facets), not a fixed enum, so new models never need a schema release."
+        },
+        {
+          "key": "color",
+          "type": "string",
+          "required": false,
+          "description": "Hex accent colour shown on the catalogue card and sidebar (e.g. \"#f97316\")."
+        },
+        {
+          "key": "default_port",
+          "type": "integer",
+          "required": false,
+          "description": "Default TCP port pre-filled in the connection modal. Omit for file-, folder-, and API-based drivers."
+        },
+        {
+          "key": "default_username",
+          "type": "string",
+          "required": false,
+          "description": "Default username pre-filled in the connection modal (e.g. \"postgres\", \"root\")."
+        },
+        {
+          "key": "is_builtin",
+          "type": "boolean",
+          "required": false,
+          "description": "True for drivers shipped with Tabularis. External plugins should omit this or leave it false."
+        },
+        {
+          "key": "executable",
+          "type": "string",
+          "required": true,
+          "description": "Relative path to the plugin executable inside the plugin folder. No extension on Linux/macOS; Tabularis appends .exe on Windows automatically."
+        },
+        {
+          "key": "interpreter",
+          "type": "string",
+          "required": false,
+          "description": "Optional interpreter for script-based plugins (e.g. \"python3\", \"node\"). Omit for native binaries."
+        },
+        {
+          "key": "capabilities",
+          "type": "object",
+          "required": true,
+          "description": "Feature flags that control which UI elements Tabularis renders for this driver."
+        },
+        {
+          "key": "settings",
+          "type": "array<object>",
+          "required": false,
+          "description": "Optional list of configuration fields the plugin exposes to the user via the Tabularis settings modal."
+        },
+        {
+          "key": "data_types",
+          "type": "array<object>",
+          "required": false,
+          "description": "List of data types this driver supports for column creation in the UI."
+        },
+        {
+          "key": "supports_ssl",
+          "type": "boolean",
+          "required": false,
+          "description": "true to show the SSL/TLS configuration tab (mode + CA/client cert/key) in the connection modal for this network driver. Defaults to false."
+        },
+        {
+          "key": "ui_extensions",
+          "type": "array<object>",
+          "required": false,
+          "description": "UI extension contributions rendered into named slots of the Tabularis interface. Only needed by plugins that ship a frontend module; driver-only plugins omit it."
+        },
+        {
+          "key": "type_mappings",
+          "type": "object",
+          "required": false,
+          "description": "Optional map of generic inferred type names to driver-native types, resolved by the host during paste/import (map_inferred_type). Keys are uppercase generic names (e.g. DATETIME, JSON); values are the driver-native equivalents (e.g. TIMESTAMP, JSONB). Lookup is case-insensitive; unmapped types pass through unchanged."
+        },
+        {
+          "key": "explain_parsers",
+          "type": "array<object>",
+          "required": false,
+          "description": "Plugin-owned raw EXPLAIN parser IIFE bundles loaded by Tabularis when the plugin is enabled."
+        },
+        {
+          "key": "connection_metadata",
+          "type": "boolean",
+          "required": false,
+          "description": "Opt in to get_connection_metadata, which returns connection-specific capabilities, data_types and type_mappings. Static manifest values remain the fallback."
+        },
+        {
+          "key": "connection_fields",
+          "type": "object",
+          "required": false,
+          "description": "Optional presentation overrides for host-owned connection fields. Omitted fields keep the standard Tabularis behavior."
+        }
+      ],
+      "example": {
+        "yaml": "id: example\nname: example\nversion: example\ndescription: example\ncategory: example\nkind: cloud\ntags:\n  - example\nlicense: example\nicon: example\nscreenshots:\n  - url: example\n    caption: example\n    alt: example\nreadme: example\nreadmes: {}\ndocumentation_url: example\nhomepage: example\nsupport:\n  email: example\n  issues_url: example\nmin_runtime_version: example\nengine: example\nparadigms:\n  - example\ncolor: example\ndefault_port: 1\ndefault_username: example\nis_builtin: true\nexecutable: example\ninterpreter: example\ncapabilities:\n  schemas: true\n  views: true\n  routines: true\n  triggers: true\n  file_based: true\n  in_memory: true\n  folder_based: true\n  connection_string: true\n  connection_string_example: example\n  identifier_quote: '\"'\n  alter_primary_key: true\n  auto_increment_keyword: example\n  serial_type: example\n  inline_pk: true\n  alter_column: true\n  create_foreign_keys: true\n  no_connection_required: true\n  single_database: true\n  manage_tables: true\n  readonly: true\n  materialized_views: true\n  routine_management: true\n  explain: true\n  supports_ssl: true\n  sql_dialect: postgres\n  connection_uri: true\n  connection_uri_schemes:\n    - example\n  table_query_templates: true\n  column_comments: true\n  sql_syntax:\n    extends: postgres\n    quotes:\n      - open: \"'\"\n        close: \"'\"\n        kind: string\n        escape: double\n    triple_quoted_strings: true\n    string_prefixes:\n      - example\n    hash_comments: true\n    nested_block_comments: true\n    line_comment_requires_space: true\n    script_blocks: true\n    dollar_quoting: true\n    string_escape: standard\n    like_escape: true\n    boolean_literals: keywords\n    formatter: bigquery\n    keywords:\n      - example\n    functions:\n      - example\n  drop_table_sql: true\nsettings:\n  - key: example\n    label: example\n    type: string\n    description: example\n    required: true\n    options:\n      - example\ndata_types:\n  - name: example\n    category: numeric\n    requires_length: true\n    requires_precision: true\n    default_length: example\nsupports_ssl: true\nui_extensions:\n  - slot: example\n    module: example\n    order: 1\n    driver: example\ntype_mappings: {}\nexplain_parsers:\n  - engine: example\n    format: example\n    module: example\n    label: example\nconnection_metadata: true\nconnection_fields: {}\n",
+        "json": "{\n  \"id\": \"example\",\n  \"name\": \"example\",\n  \"version\": \"example\",\n  \"description\": \"example\",\n  \"category\": \"example\",\n  \"kind\": \"cloud\",\n  \"tags\": [\n    \"example\"\n  ],\n  \"license\": \"example\",\n  \"icon\": \"example\",\n  \"screenshots\": [\n    {\n      \"url\": \"example\",\n      \"caption\": \"example\",\n      \"alt\": \"example\"\n    }\n  ],\n  \"readme\": \"example\",\n  \"readmes\": {},\n  \"documentation_url\": \"example\",\n  \"homepage\": \"example\",\n  \"support\": {\n    \"email\": \"example\",\n    \"issues_url\": \"example\"\n  },\n  \"min_runtime_version\": \"example\",\n  \"engine\": \"example\",\n  \"paradigms\": [\n    \"example\"\n  ],\n  \"color\": \"example\",\n  \"default_port\": 1,\n  \"default_username\": \"example\",\n  \"is_builtin\": true,\n  \"executable\": \"example\",\n  \"interpreter\": \"example\",\n  \"capabilities\": {\n    \"schemas\": true,\n    \"views\": true,\n    \"routines\": true,\n    \"triggers\": true,\n    \"file_based\": true,\n    \"in_memory\": true,\n    \"folder_based\": true,\n    \"connection_string\": true,\n    \"connection_string_example\": \"example\",\n    \"identifier_quote\": \"\\\"\",\n    \"alter_primary_key\": true,\n    \"auto_increment_keyword\": \"example\",\n    \"serial_type\": \"example\",\n    \"inline_pk\": true,\n    \"alter_column\": true,\n    \"create_foreign_keys\": true,\n    \"no_connection_required\": true,\n    \"single_database\": true,\n    \"manage_tables\": true,\n    \"readonly\": true,\n    \"materialized_views\": true,\n    \"routine_management\": true,\n    \"explain\": true,\n    \"supports_ssl\": true,\n    \"sql_dialect\": \"postgres\",\n    \"connection_uri\": true,\n    \"connection_uri_schemes\": [\n      \"example\"\n    ],\n    \"table_query_templates\": true,\n    \"column_comments\": true,\n    \"sql_syntax\": {\n      \"extends\": \"postgres\",\n      \"quotes\": [\n        {\n          \"open\": \"'\",\n          \"close\": \"'\",\n          \"kind\": \"string\",\n          \"escape\": \"double\"\n        }\n      ],\n      \"triple_quoted_strings\": true,\n      \"string_prefixes\": [\n        \"example\"\n      ],\n      \"hash_comments\": true,\n      \"nested_block_comments\": true,\n      \"line_comment_requires_space\": true,\n      \"script_blocks\": true,\n      \"dollar_quoting\": true,\n      \"string_escape\": \"standard\",\n      \"like_escape\": true,\n      \"boolean_literals\": \"keywords\",\n      \"formatter\": \"bigquery\",\n      \"keywords\": [\n        \"example\"\n      ],\n      \"functions\": [\n        \"example\"\n      ]\n    },\n    \"drop_table_sql\": true\n  },\n  \"settings\": [\n    {\n      \"key\": \"example\",\n      \"label\": \"example\",\n      \"type\": \"string\",\n      \"description\": \"example\",\n      \"required\": true,\n      \"options\": [\n        \"example\"\n      ]\n    }\n  ],\n  \"data_types\": [\n    {\n      \"name\": \"example\",\n      \"category\": \"numeric\",\n      \"requires_length\": true,\n      \"requires_precision\": true,\n      \"default_length\": \"example\"\n    }\n  ],\n  \"supports_ssl\": true,\n  \"ui_extensions\": [\n    {\n      \"slot\": \"example\",\n      \"module\": \"example\",\n      \"order\": 1,\n      \"driver\": \"example\"\n    }\n  ],\n  \"type_mappings\": {},\n  \"explain_parsers\": [\n    {\n      \"engine\": \"example\",\n      \"format\": \"example\",\n      \"module\": \"example\",\n      \"label\": \"example\"\n    }\n  ],\n  \"connection_metadata\": true,\n  \"connection_fields\": {}\n}"
+      }
+    },
+    {
+      "key": "ai-assistant",
+      "label": "AI assistants",
+      "description": "Declarative AI providers for Tabularis. No plugin code is executed.",
+      "catalogue_url": "https://registry.tabularis.dev/c/ai-assistant",
+      "fields": [
+        {
+          "key": "ai_assistant",
+          "type": "object",
+          "required": true,
+          "description": null
+        },
+        {
+          "key": "settings",
+          "type": "array<object>",
+          "required": false,
+          "description": null
+        }
+      ],
+      "example": {
+        "yaml": "id: gemini\nname: Google Gemini\nversion: 1.0.1\nkind: ai-assistant\ndescription: Google Gemini assistant using the native generateContent API.\nai_assistant:\n  api_version: 1\n  authentication: api-key\n  api_key_env: GEMINI_API_KEY\n  api_key_header: x-goog-api-key\n  api_key_prefix: \"\"\n  default_models:\n    - models/gemini-flash-latest\n  generate:\n    requests:\n      - url: https://generativelanguage.googleapis.com/v1beta/{{model}}:generateContent\n        body:\n          systemInstruction:\n            parts:\n              - text: \"{{system_prompt}}\"\n          contents:\n            - role: user\n              parts:\n                - text: \"{{prompt}}\"\n    response:\n      path: /candidates/0/content/parts\n      select:\n        path: /thought\n        equals: false\n        missing_matches: true\n      value_path: /text\n  models:\n    sources:\n      - request:\n          url: https://generativelanguage.googleapis.com/v1beta/models\n        items_path: /models\n        id_path: /name\n        filters:\n          - path: /supportedGenerationMethods\n            contains: generateContent\n    cache_seconds: 86400\nsettings: []\nlicense: Apache-2.0\nicon: https://raw.githubusercontent.com/TabularisDB/tabularis-gemini-plugin/main/icon.svg\n",
+        "json": "{\n  \"id\": \"gemini\",\n  \"name\": \"Google Gemini\",\n  \"version\": \"1.0.1\",\n  \"kind\": \"ai-assistant\",\n  \"description\": \"Google Gemini assistant using the native generateContent API.\",\n  \"ai_assistant\": {\n    \"api_version\": 1,\n    \"authentication\": \"api-key\",\n    \"api_key_env\": \"GEMINI_API_KEY\",\n    \"api_key_header\": \"x-goog-api-key\",\n    \"api_key_prefix\": \"\",\n    \"default_models\": [\n      \"models/gemini-flash-latest\"\n    ],\n    \"generate\": {\n      \"requests\": [\n        {\n          \"url\": \"https://generativelanguage.googleapis.com/v1beta/{{model}}:generateContent\",\n          \"body\": {\n            \"systemInstruction\": {\n              \"parts\": [\n                {\n                  \"text\": \"{{system_prompt}}\"\n                }\n              ]\n            },\n            \"contents\": [\n              {\n                \"role\": \"user\",\n                \"parts\": [\n                  {\n                    \"text\": \"{{prompt}}\"\n                  }\n                ]\n              }\n            ]\n          }\n        }\n      ],\n      \"response\": {\n        \"path\": \"/candidates/0/content/parts\",\n        \"select\": {\n          \"path\": \"/thought\",\n          \"equals\": false,\n          \"missing_matches\": true\n        },\n        \"value_path\": \"/text\"\n      }\n    },\n    \"models\": {\n      \"sources\": [\n        {\n          \"request\": {\n            \"url\": \"https://generativelanguage.googleapis.com/v1beta/models\"\n          },\n          \"items_path\": \"/models\",\n          \"id_path\": \"/name\",\n          \"filters\": [\n            {\n              \"path\": \"/supportedGenerationMethods\",\n              \"contains\": \"generateContent\"\n            }\n          ]\n        }\n      ],\n      \"cache_seconds\": 86400\n    }\n  },\n  \"settings\": [],\n  \"license\": \"Apache-2.0\",\n  \"icon\": \"https://raw.githubusercontent.com/TabularisDB/tabularis-gemini-plugin/main/icon.svg\"\n}"
       }
     }
   ]
