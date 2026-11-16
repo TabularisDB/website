@@ -113,3 +113,5 @@ From a clone of the repository:
 docker build -f docker/Dockerfile -t tabularis .
 docker/smoke-test.sh tabularis
 ```
+
+To serve the UI under a path such as `/tools/database/`, add `--build-arg TABULARIS_BASE_PATH=/tools/database/` (since v0.33.0). It is a build argument, not a runtime variable; see [Remote Access → Serving Under a Sub-Path](/wiki/web-remote-access#serving-under-a-sub-path) for the reverse proxy side.

@@ -106,6 +106,20 @@ The **SSH** tab of the connection modal has its own **Test SSH** button — avai
 
 A full connection test (the **Test Connection** button) reports its steps as it runs — SSH tunnel, Kubernetes port-forward, database connect — and opens a diagnostics modal on failure with a classified error and a timestamped step log. With a tunnel active, a "connection refused" is attributed to the tunnel rather than to the database host. See [Testing before saving](/wiki/connections#testing-before-saving).
 
+## Remote Unix Sockets
+
+Since v0.33.0 a connection with SSH can target a Unix socket on the SSH server instead of a host and port: switch the endpoint from **Host / Port** to **Socket Path** in the connection form while **Use SSH Tunnel** is on, and enter the socket's absolute path on the SSH server. The local port is then forwarded to that socket (OpenSSH stream-local forwarding with System SSH, the equivalent channel with Russh), including through a proxied bastion. Because the forward ends at a local port, this works for any driver that connects by host and port (drivers that declare the `connection_uri` capability do not get the option). Database TLS is turned off for a socket, and the SSH tunnel encrypts the path. This form also works on Windows, which has no local Unix sockets. Kubernetes and AWS SSM tunnels stay TCP-only. See [Connection Management → Unix Sockets](/wiki/connections#unix-sockets).
+
+## SOCKS5 Proxy for Multi-Host Drivers
+
+A single port forward cannot serve a driver that discovers and connects to several hosts, such as a MongoDB replica set or a `mongodb+srv://` URI. Since v0.33.0 a plugin driver can declare the `socks5_proxy` capability; for those drivers SSH opens a SOCKS5 proxy on `127.0.0.1` over the session (like `ssh -D`) instead of a fixed forward, and the host, port and connection URI are left as you entered them. The driver reaches each node through the proxy by name, so the bastion resolves the hostnames. Drivers without the capability keep the fixed forward.
+
+- With **Russh** (password auth) the proxy requires per-tunnel random credentials passed to the plugin. With **System SSH** (`ssh -D`) the listener has no authentication: while the tunnel is open, any local process can use it to reach what the bastion can reach.
+- Lookups the driver makes before connecting, such as the SRV and TXT records of `mongodb+srv://`, still use the local resolver. If those records exist only in the private network, use a seedlist URI.
+- One SOCKS5 tunnel is shared by every connection through the same SSH user, host and port.
+
+The MongoDB plugin is the first driver to use it, from its next release.
+
 ## HTTP / SOCKS5 Proxies
 
 Since v0.24.0, the global **Settings → Network → SSH tunnels** scope can route the outbound bastion connection through an HTTP CONNECT or SOCKS5 proxy. A database connection's **Advanced** proxy override can inherit that choice, provide a custom endpoint or disable proxying. Reusable SSH profiles do not have a separate proxy picker. The local tunnel-to-database leg is not proxied again.
@@ -133,8 +147,8 @@ Set the SSH profile host to `db-host`, auth type to `ssh_key`, and leave the pas
 ## Tunnel Lifecycle
 
 - Tunnels are created the first time a connection needs them and stay open until Tabularis quits (or the proxy settings change). **Disconnect** closes the database pool but leaves the tunnel running.
-- Tunnels are shared: connections that use the same SSH user, host, and port and the same database host and port (and the same proxy) reuse one tunnel.
-- An existing tunnel is reused without a liveness check. If it drops (network interruption, bastion reboot), queries fail and disconnecting and reconnecting does not rebuild it; restart Tabularis to re-establish the tunnel.
+- Tunnels are shared: connections that use the same SSH user, host, and port and the same database host and port (and the same proxy) reuse one tunnel. A [SOCKS5 tunnel](#socks5-proxy-for-multi-host-drivers) is keyed by the SSH user, host and port only.
+- Since v0.33.0 both backends send SSH keepalives every 15 seconds and treat the session as dropped after 3 unanswered ones (`ServerAliveInterval=15`, `ServerAliveCountMax=3` for System SSH). A cached tunnel whose session has ended is reopened on the next connect instead of being reused. Before v0.33.0 a dropped tunnel stayed cached until Tabularis was restarted.
 
 ## Troubleshooting
 

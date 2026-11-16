@@ -43,7 +43,7 @@ Plugins return structured metadata only. Tabularis keeps ownership of truncation
 
 ## Supported Providers & Local Privacy
 
-Tabularis is provider-agnostic. Configure your preferred engine in **Settings → AI**. Providers are shown as cards, each labelled with how it connects: **ChatGPT plan**, **API key**, **Local models** or **Custom endpoint**. The account (for ChatGPT) or the API key sits above the model selector, and the prompt editors are grouped below.
+Tabularis is provider-agnostic. Configure your preferred engine in **Settings → AI**. Providers are shown as cards, each labelled with how it connects: **ChatGPT plan**, **API key** or **Local models**. The account (for ChatGPT) or the API key sits above the model selector, and the prompt editors are grouped below.
 
 ### 1. ChatGPT Plan
 
@@ -65,7 +65,8 @@ Credentials are encrypted locally with a key stored in the system keychain, and 
 - **MiniMax** (`minimax`): Available as a first-class provider in the AI settings.
 - **OpenRouter** (`openrouter`): Access a broader multi-model catalog through a unified API.
 - **Requesty** (`requesty`): An OpenAI-compatible LLM router. The model list loads Requesty's managed routing policies first, then its full chat model catalog. The key can also come from the `REQUESTY_API_KEY` environment variable. Requesty is only used when you select it; automatic provider detection skips it.
-- **Custom OpenAI-compatible** (`custom-openai`, shown as **OpenAI Compatible**): Any endpoint that speaks the OpenAI API (e.g. LM Studio, vLLM, Groq-compatible gateways). Set `aiCustomOpenaiUrl` and choose a model in Settings.
+- **API Route** (`api-route`): Since v0.33.0. Uses the OpenAI-compatible Chat Completions endpoint at `https://global.api-route.com/v1`. Save a key (or set `API_ROUTE_API_KEY`), refresh the model list from your account and select a model. A failed refresh keeps the last model list that loaded. API Route is only used when you select it.
+- **Custom OpenAI-compatible** (`custom-openai`, shown as **OpenAI Compatible**): Any endpoint that speaks the OpenAI API (e.g. LM Studio, vLLM, llama.cpp, Groq-compatible gateways). Set `aiCustomOpenaiUrl` and choose a model in Settings. Since v0.33.0 the API key is optional: without one, the model list and requests are sent without an `Authorization` header, so a local server that needs no key works as is. A configured key is still sent as a Bearer token.
 
 ### 3. Local Execution (Zero-Knowledge Privacy)
 For enterprise databases with strict compliance requirements, you cannot send schema data to third-party servers. Tabularis natively integrates with **Ollama**.
@@ -74,9 +75,33 @@ For enterprise databases with strict compliance requirements, you cannot send sc
 3. In Tabularis Settings, set the provider to **Ollama**. The default port is `11434`; change it via `aiOllamaPort` if needed.
 **Result**: Powerful AI assistance with a guarantee that zero bytes of data ever leave your network.
 
+### External Providers
+
+Since v0.33.0 an AI provider can also ship as a declarative package (plugin kind `ai-assistant`) installed from the plugin registry. Tabularis keeps the credentials, configuration, proxy routing and timeouts; the package only describes the HTTP API. OpenAI, Anthropic, Ollama, OpenRouter, Requesty, MiniMax, OpenAI Compatible and API Route stay built in, and their cards are labelled **Built in**; ChatGPT sign-in also stays built in. A package cannot replace, shadow or remove a built-in provider.
+
+In **Settings → AI**, the **Available providers** list shows the packages you can add. **Install and use** installs one, selects it and opens its settings. A failed install leaves the saved provider unchanged. Installed packages can be removed there or in the Plugin Center, which also handles updates, and they stay usable when the registry is offline. If the active provider is removed, AI is disabled until you select another provider. The first external package is [Google Gemini](https://github.com/TabularisDB/tabularis-gemini-plugin), which takes a Gemini API key or `GEMINI_API_KEY`.
+
+Existing provider settings, keys, saved models, custom endpoints and the Ollama port are carried over unchanged.
+
 ### Provider Proxy Overrides
 
 Since v0.24.0, the selected provider in **Settings → AI** can inherit the global [Network proxy](/wiki/configuration#network--proxies), use a custom HTTP CONNECT/SOCKS5 proxy or disable proxying for that provider. An explicit provider choice wins over the global AI scope. Proxy passwords are kept in the OS keychain. A proxy changes the route, not which provider receives the prompt; choose your endpoint and TLS configuration accordingly.
+
+## Inline Completion
+
+Since v0.33.0 SQL console tabs can show AI continuations as ghost text while you type. Enable **Suggest SQL while typing** under **AI inline completion** in **Settings → AI**; it is off by default and uses the provider and model selected there, including Ollama and local OpenAI-compatible endpoints.
+
+<video src="/videos/posts/tabularis-ai-inline-completion.mp4" poster="/videos/posts/tabularis-ai-inline-completion.jpg" autoplay loop muted playsinline></video>
+
+- `Tab` accepts the suggestion and `Escape` dismisses it. Regular autocomplete and indentation take priority. Accepting inserts text only and never runs the query, and one undo removes it.
+- Requests wait for a 600 ms pause in typing and are cancelled when you edit, move the cursor, switch tab or connection, change provider, or leave the editor. A request times out after 20 seconds; after an error, suggestions pause for 30 seconds and normal editing is unaffected.
+- **What is sent:** at most 4,000 characters before the cursor, 1,000 after it and up to 8,000 characters of already-cached table and column names for the active connection, database and schema. Result rows, table comments and connection credentials are never added, and no extra database queries are made. String literals in your SQL are part of the editor text and are sent with it.
+
+The setting applies to SQL console tabs; notebook cells and editors inside dialogs do not show inline suggestions.
+
+## Fix with AI
+
+Since v0.33.0, when AI is enabled and a query fails, the error in the results area has a **Fix with AI** button next to **Copy**. It opens the AI dialog with a prompt containing the error message (without stack details) and the tab's SQL, which you can edit before generating. The corrected query replaces the editor text and is not run automatically. The SQL is taken from the whole editor, so if you ran only a selection the prompt still contains all of it.
 
 ## Explain & Optimize Queries
 

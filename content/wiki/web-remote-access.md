@@ -98,6 +98,20 @@ Requests with an unexpected `Host` or `Origin` get HTTP 403, and state-changing 
 --allowed-origin https://admin.example.com
 ```
 
+## Serving Under a Sub-Path
+
+Since v0.33.0 the browser UI can be built for a mount path such as `/tools/database/` instead of `/`. `TABULARIS_BASE_PATH` is a **build-time** setting: changing it means rebuilding the frontend, not restarting the server, and the published image is built for `/`.
+
+```bash
+TABULARIS_BASE_PATH=/tools/database/ pnpm build
+# or a custom image
+docker build -f docker/Dockerfile --build-arg TABULARIS_BASE_PATH=/tools/database/ -t tabularis:custom-path .
+```
+
+The router, static assets, HTTP API, WebSocket events, transfers, connection icons and browser windows all use the prefix. The path must start with `/`; origins, query strings, fragments, dot segments and empty segments fail the build, and the trailing slash is optional.
+
+The server itself still serves its routes at `/`, so the reverse proxy must strip the prefix, preserve the public `Host`, forward WebSocket upgrades and rewrite the session cookie path to the mount path. Keep `--public-url` / `TABULARIS_PUBLIC_URL` an origin without a path. Proxy mode works without further changes. The built-in password page still uses root-relative form actions and redirects, so password mode under a sub-path needs extra rewriting at the proxy. The repository's [`docs/web/WEB_BASE_PATH.md`](https://github.com/TabularisDB/tabularis/blob/main/docs/web/WEB_BASE_PATH.md) has Apache examples for both modes.
+
 ## What Remote Sessions Can Do
 
 Remote sessions are limited to database work by default: connections, metadata, queries, data editing and notebooks. Denied operations return HTTP 403.

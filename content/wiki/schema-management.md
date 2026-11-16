@@ -33,6 +33,8 @@ Schema changes are made from the Explorer sidebar, each through its own modal:
 
 Since v0.25.0 Tabularis reads table and column comments from PostgreSQL and MySQL/MariaDB. They appear as the table description and a comment column in **View Schema**, as tooltips on tables and columns in the sidebar, and in the data grid's column header tooltip next to the type. Generated DDL preserves them: inline `COMMENT` clauses for MySQL, `COMMENT ON` statements for PostgreSQL and Oracle, with apostrophes escaped. SQLite has no comment syntax. Plugins opt in by returning an optional `comment` from `get_tables` and `get_columns`; the ClickHouse plugin already does.
 
+Since v0.33.0 column comments can also be edited on built-in PostgreSQL and MySQL/MariaDB connections: **Add Column** and **Modify Column** show a multiline **Description** field. On PostgreSQL a comment-only change generates just `COMMENT ON COLUMN`, and clearing it sets the comment to `NULL`; on MySQL the column definition is restated with its comment, default and `ON UPDATE` preserved. Plugin drivers get the field when they declare the `column_comments` capability.
+
 ![Table and column descriptions in the PostgreSQL schema inspector](/img/tabularis-schema-comments.png)
 
 ### Auto-Increment Handling (PostgreSQL)
@@ -61,6 +63,12 @@ Since v0.31.0 right-click a table, view or materialized view and choose **Pin** 
 ![Customers table pinned in the explorer, with a pinned query tab open](/img/tabularis-pinned-tabs-tables.png)
 
 Right-click an index or foreign key and choose **View Details** for a read-only dialog with ordered columns, index uniqueness, referenced tables/columns and update/delete actions. Copy buttons expose the metadata and any complete DDL the backend can provide. When a definition cannot be represented completely, such as some expression indexes or composite foreign keys, metadata remains visible without an incomplete SQL statement.
+
+### Column Usage
+
+Since v0.33.0 right-click a column in the explorer and choose **Show Usage** to collect evidence of where that column is used: declared foreign keys (in both directions), references in view definitions, and matches in this connection's Tabularis query history. Each item shows its source, an excerpt and a confidence level (**Confirmed**, **Parsed references** or **Uncertain**, with the reason). The panel states that this is not complete lineage: applications, scripts and other databases are not searched, and it says when a source was only partly read. **Open** goes to the related table or view, and **Open in editor** loads a history entry without running it. Excerpts and the copied summary replace literals with `?` and drop comments.
+
+![Show Usage panel for orders.customer_id with a declared foreign key, a view reference and query-history matches](/img/tabularis-column-usage.png)
 
 ## Generate SQL
 

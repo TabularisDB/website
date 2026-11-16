@@ -187,6 +187,8 @@ The detail panel appears on the right side of the graph, diagram and table views
 - **Analyze Data** — actual rows, actual time, loops, buffers hit, buffers read (only when ANALYZE was used)
 - **Extra Details** — any additional fields from the engine that don't fit the standard categories (e.g., MariaDB's `r_filtered`, MySQL's `using_temporary_table`)
 
+Since v0.33.0 the panel header has a **Copy Details** button that copies the selected node's fields and metrics as plain text, in a fixed order, for notes or sharing. Metrics the plan does not provide are left out rather than shown as zero. It works in the graph, diagram and table views.
+
 ## Database Support
 
 Visual EXPLAIN adapts to each database engine. The differences between engines are handled automatically — you don't need to configure anything.

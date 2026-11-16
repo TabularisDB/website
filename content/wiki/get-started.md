@@ -48,6 +48,10 @@ Click **Test Connection** to verify the connection before saving. Tabularis make
 
 If your database is in a private network, enable the **SSH** tab before saving. Create an SSH profile (host, port, user, and either a password or a key file) and associate it with the connection. See [Connection Management](/wiki/connections) for details.
 
+### Or open a data file
+
+To look at a CSV, TSV, JSON, NDJSON or Parquet file, there is no connection to set up: use **Open data file…** on the Connections page or in the command palette, and the file opens as a table. It needs the DuckDB plugin, which Tabularis offers to install. See [Connection Management → Open a Data File](/wiki/connections#open-a-data-file).
+
 ## 2. Explore the schema
 
 Once connected, the Explorer opens on the **Structure** tab and shows schemas, tables, views, and routines for that connection. Expand any node to browse its children.
@@ -92,7 +96,7 @@ Double-click any cell in the Data Grid to edit it inline. Modified cells are hig
 
 ## 5. Export results
 
-Use the **Export** button in the results toolbar to export the current result set to **CSV**, **JSON**, or **Markdown**. Large exports are streamed and can be cancelled.
+Use the **Export** button in the results toolbar to export the result set to **CSV**, **JSON**, **NDJSON**, **Markdown** or **HTML**. When the grid holds only part of the result, choose **All rows** to stream the full query to the file or **Current results** for the loaded rows. Exports are streamed and can be cancelled.
 
 ## Next steps
 

@@ -90,6 +90,12 @@ Right-click any routine in the sidebar:
 
 The **Run…** / **Edit** / **Drop** actions appear only when the connection's driver declares the `routine_management` capability.
 
+## Debugging a Routine (Plugin Drivers)
+
+Since v0.33.0 a plugin driver that declares the `routine_debug` capability adds **Debug routine** to the routine context menu. The dialog first shows a preview of the target and its parameters, which reads the catalog and source without executing anything. **Start debugging** then runs the routine once and stops at entry, so you can set breakpoints, **Step into** / **Step over** / **Step out**, **Continue**, and inspect the call stack, named variables, and OUT parameters and return value. **Stop and release resources** cancels the execution.
+
+Starting or continuing a routine executes database code, which may commit transactions or cause external effects; the debugger never grants privileges, recompiles routines or installs helper objects. A connection saved in read-only mode refuses to start a debugging session. There is no SQL fallback: the menu entry only appears for drivers that implement the protocol. At the v0.33.0 release no published plugin implements it yet; the Oracle implementation is in review.
+
 ## Driver Support
 
 | Feature | PostgreSQL | MySQL / MariaDB | SQLite | Plugin drivers |

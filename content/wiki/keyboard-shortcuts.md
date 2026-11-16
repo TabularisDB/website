@@ -121,6 +121,10 @@ Shortcuts also record the physical key (`code`) next to the character (`key`), s
 
 To revert a customized shortcut to its default, click the **↺** (reset) button on its row.
 
+### Searching Shortcuts
+
+Since v0.33.0 the tab has a search field (*Search actions or shortcuts*) that filters the list by action name or by key combination, including your overrides. Matching ignores case and spacing around `+`, accepts a space as a separator (`ctrl enter`), and treats symbol and word forms of modifiers as the same key (`⌘`/`Cmd`, `⌥`/`Alt`, `⇧`/`Shift`, `⌃`/`Ctrl`), as well as `Esc`/`Escape`, `Enter`/`Return` and `Del`/`Delete`. On Windows and Linux a `Cmd+P` query finds `Ctrl+P`; on macOS Cmd and Ctrl stay distinct. Categories without matches are hidden, and editing and resetting work on the filtered rows. The query is not saved.
+
 ---
 
 ## keybindings.json

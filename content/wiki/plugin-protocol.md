@@ -306,7 +306,7 @@ The host also calls the following methods, depending on the capabilities you dec
 | Views | `get_views`, `get_view_definition`, `get_view_columns`, `create_view`, `alter_view`, `drop_view` |
 | Routines | `get_routines`, `get_routine_parameters`, `get_routine_definition` |
 | Routine management (`routine_management`) | `build_routine_call_sql`, `routine_create_template`, `get_routine_edit_script`, `drop_routine` — each optional, with a host fallback |
-| Triggers (`triggers`) | `get_triggers`, `get_trigger_definition`, `create_trigger`, `drop_trigger` |
+| Triggers (`triggers`) | `get_triggers`, `get_trigger_definition`, `create_trigger`, `drop_trigger`. Since v0.33.0, drivers whose dialect is not `postgres`, `mysql` or `sqlite` get a complete-SQL editor: the whole statement is sent to `create_trigger` once and the existing trigger is never dropped first, so return an engine-native edit script (such as `CREATE OR ALTER TRIGGER`) from `get_trigger_definition` and keep the old trigger when the replacement fails |
 | User management (`user_management`) | `get_db_privilege_catalog`, `get_db_users`, `get_db_user_grants`, `create_db_user`, `drop_db_user`, `set_db_user_password`, `get_db_user_privileges`, `apply_db_user_privileges` |
 | Sessions | `release_session` |
 
@@ -324,6 +324,39 @@ Dumps and notebook literals are also built from driver capabilities (`sql_dialec
 A plugin can store its own credentials per connection in the OS keychain through `setSecretField` in the `connection-modal.extra_fields` [UI extension](/wiki/ui-extensions#custom-connection-fields). The values are never written to `connections.json` or `config.json` and never returned to the plugin UI. At runtime the host resolves them into `params.extra[key]` before every RPC call, Test Connection, Load Databases and the MCP server, so method shapes stay unchanged. Export with credentials and backups carry them, duplicating a connection copies them, deleting it removes them, and switching the connection to another driver drops them.
 
 A stored secret can be missing at runtime (connections file synced to another machine, keychain reset, locked or denied). The host does not fail the call: it logs the key name and calls the driver with `params.extra[key]` unset, so the plugin must check for the value and return a clear error asking the user to set it again. Older Tabularis versions drop the reference (`plugin_secret_keys`) when they rewrite `connections.json`; setting the secret again restores it.
+
+### Read-only Mode and Query Classification *(optional, since v0.33.0)*
+
+A saved connection can be put in **Read-only mode** (see [Connections](/wiki/connections)). A plugin driver supports it by declaring `read_only_queries: true` and implementing `execute_read_only_query`, which has the same request and result shape as `execute_query` but must enforce write protection in the database (transaction, session or equivalent), also for calls whose SQL looks like a read. If protection cannot be enabled, return an error: the host never falls back to `execute_query`. `ConnectionParams.read_only` is forwarded to every call, and the saved `startup_script` is skipped while it is on. This is different from `readonly: true`, which describes a driver that can never write.
+
+A driver whose query language is not SQL also declares `query_classification: true` and implements `classify_query`. The host sends the exact text about to run and expects `{ "kind": "select" | "write" | "ddl" | "unknown" }`. The verdict feeds the MCP read-only mode, the MCP approval gate and read-only connections. Classify with the same parser `execute_query` uses, and answer `unknown` when in doubt. Errors, timeouts and malformed results count as `unknown`, and a `select` verdict only counts when the driver also declares `read_only_queries` (or `readonly`). Without the capability the host keeps reading every query as SQL.
+
+### Data Files *(optional, since v0.33.0)*
+
+A `file_based` driver can list formats in `data_files` (`csv`, `tsv`, `json`, `ndjson`, `parquet`, `xlsx`) to back **Open data file**. The host calls `open_data_file` with `{ "params", "path", "format", "table" }`: `params.database` is a workspace database the host owns per driver (`data-files/<driver id>/workspace.db`), `path` is an absolute path to the file, and `table` is an unquoted identifier the driver must quote. Return `null` after creating a relation (typically a lazy view) named `table` that `get_views` or `get_tables` lists and `execute_query` can read; opening the same `table` again replaces it. Fail the call when the file cannot be read as `format`. Users close a file with `drop_view`. When no installed driver declares a file's format, the host offers to install the DuckDB plugin.
+
+### Unix Sockets and SOCKS5 over SSH *(optional, since v0.33.0)*
+
+- **`unix_socket: true`** lets the connection form switch between Host/Port and a socket path. On a local socket the plugin receives `unix_socket_path` in `ConnectionParams`. Over SSH, the SSH server forwards to the socket and the plugin receives a normal local TCP forward without `unix_socket_path`.
+- **`socks5_proxy: true`** is for drivers that reach several hosts from one connection (a replica set, a `mongodb+srv://` URI). With SSH enabled, the host opens a SOCKS5 proxy through the SSH session instead of a single port forward, leaves `host`, `port` and `connection_uri` unchanged, and adds `socks5_proxy_host`, `socks5_proxy_port` and, when the proxy authenticates, `socks5_proxy_username` / `socks5_proxy_password`. The driver must route every connection through the proxy with hostnames unresolved, and fail clearly when the user's connection already sets a different proxy.
+
+### Whole-database Transfers *(optional, since v0.33.0)*
+
+[Dump Database and Run SQL File](/wiki/dump-import#plugin-drivers) can be handled entirely by the plugin through three RPCs. A `-32601` error or a `null` result keeps the host's table-by-table path.
+
+| Method | Purpose |
+|--------|---------|
+| `get_database_sql_capabilities` | Returns `null` or `{ format, native_backup?, create_database, requires_empty_target, target_label }`. `native_backup` is `{ format, extension, label, description? }` and adds the plugin's own backup format (for example `.fbk`) to the dump dialog. |
+| `export_database_sql` | Writes the dump (SQL, or the native format when `options.format` echoes `native_backup.format`) to a host-owned pending file. Never fall back to SQL when a native format was requested. |
+| `import_database_sql` | Restores a file. Validate it before modifying the destination; a new target must never overwrite an existing database. |
+
+The host never infers a native format from the driver id. Whole-file transfers do not use the default plugin call timeout; explicit timeouts and cancellation still apply. Database data dumps also use the plugin's `render_insert_statements` RPC when it is implemented.
+
+### Routine Debugging *(optional, since v0.33.0)*
+
+`routine_debug` is a protocol version number, not a boolean: declare `"routine_debug": 1` only when every debugger operation works. The host then adds **Debug routine** to the routine context menu and sends `routine_debug` RPCs with `{ params, version: 1, command }`, where `command.action` is `preview`, `start`, `continue`, `step`, `set_breakpoints`, `read_stack`, `read_variables`, `status` or `stop`. Previewing must never execute code, and there is no SQL fallback. The full contract, including lifetime and safety rules, is in [`plugins/ROUTINE_DEBUG.md`](https://github.com/TabularisDB/tabularis/blob/main/plugins/ROUTINE_DEBUG.md).
+
+Older hosts ignore `data_files` and `query_classification` and never call their methods; as with other new flags, the Tabularium driver schema must declare a capability before a plugin publishes with it.
 
 ### Shutdown grace period
 

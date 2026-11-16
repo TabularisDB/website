@@ -5,7 +5,7 @@ excerpt: "Launch Tabularis from the terminal: serve it to a browser with `web`, 
 category: "Reference"
 ---
 
-Tabularis is primarily a desktop application, but its binary accepts a small set of command-line flags that extend how the app can be launched. You can serve the interface to a browser with `web`, open a saved EXPLAIN plan straight into the Visual EXPLAIN viewer, start Tabularis as an MCP server for AI clients, or open the developer tools for troubleshooting.
+Tabularis is primarily a desktop application, but its binary accepts a small set of command-line flags that extend how the app can be launched. You can serve the interface to a browser with `web`, open data files as tables, open a saved EXPLAIN plan straight into the Visual EXPLAIN viewer, start Tabularis as an MCP server for AI clients, or open the developer tools for troubleshooting.
 
 The flags are parsed with [clap](https://docs.rs/clap), so `--help` and `--version` are always available.
 
@@ -21,6 +21,16 @@ The executable is named `tabularis` on all platforms. Where it lives depends on 
 | **Windows** | `%LOCALAPPDATA%\Programs\tabularis\tabularis.exe` |
 
 All examples below use the short form `tabularis`. Substitute the full path if the binary is not on your `PATH`.
+
+## Data Files
+
+Since v0.33.0, passing only data files opens each of them as a table, as [Open data file…](/wiki/connections#open-a-data-file) does:
+
+```bash
+tabularis orders.csv trips.parquet
+```
+
+The launch counts as a data-file launch only when every argument is a data file (`.csv`, `.tsv`, `.tab`, `.json`, `.ndjson`, `.jsonl`, `.parquet`, `.pq`), given as a path or a `file://` URL. Relative paths resolve against the current directory, and files that do not exist are skipped. With any flag or other argument, the usual parsing applies. If Tabularis is already running, the files are handed to that instance. This is also how a file manager's **Open with** starts the app; see [Connection Management](/wiki/connections#open-a-data-file) for the registered file types.
 
 ## `--explain <FILE>`
 
@@ -54,7 +64,7 @@ If the file is not in one of the supported formats, Tabularis shows an error in 
 - The Visual EXPLAIN window offers the same views as the in-app EXPLAIN button: Graph, Diagram, Table, Stats, Raw and AI. The AI tab only appears when AI is enabled in **Settings → AI**.
 - The file name appears in the window header (hover it for the full path), so you can keep multiple plans straight when comparing them.
 - **Open file** loads another plan (the picker filters `.json` and `.txt`), and **Reload** re-reads the current file from disk.
-- Opening a `.json` or `.txt` file from your file manager does not open it in Tabularis: the app registers no file associations, so pass the file with `--explain` instead.
+- Opening a plan file from your file manager does not open it in Visual EXPLAIN. Since v0.33.0 Tabularis is registered as an alternate handler for data files, `.json` included, so **Open with** on a `.json` plan opens it as a data table; pass plan files with `--explain` instead.
 - If Tabularis is already running, a second `tabularis --explain FILE` only brings the existing window to the front and the flag is ignored. Quit Tabularis first.
 
 ## `web`
@@ -126,6 +136,6 @@ Some flags are mutually exclusive by behaviour:
 - **`--mcp` wins over everything.** If `--mcp` is set, Tabularis runs the MCP server loop and never builds the Tauri GUI, so `--explain` is ignored and `--debug` only raises the log level (since v0.28.0).
 - **`--explain` suppresses the main window.** Only the Visual EXPLAIN window opens; closing it exits the app.
 - **`--debug`** opens DevTools on the main window only. Combined with `--explain`, the main window is closed, so the Visual EXPLAIN window gets no DevTools.
-- **A running instance takes over.** If Tabularis is already open, launching it again (with or without `--explain` or `--debug`) only focuses the existing main window. `--mcp` is not affected, because it never starts the GUI.
+- **A running instance takes over.** If Tabularis is already open, launching it again (with or without `--explain` or `--debug`) only focuses the existing main window. Since v0.33.0, data files passed to the second launch are opened by the running instance. `--mcp` is not affected, because it never starts the GUI.
 
-If the flags fail to parse for any reason (for instance, because the OS passes non-standard arguments at GUI launch time on certain platforms, or a bare file path is passed without `--explain`), Tabularis ignores all of them and falls back to the default GUI launch rather than crashing.
+Platform launch arguments (macOS `-psn_*` and `tabularis:` URLs) are ignored, and a launch made only of them starts the default GUI. Any other argument that fails to parse, such as a bare path that is not a data file, prints clap's error and exits.

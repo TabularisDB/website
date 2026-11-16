@@ -16,7 +16,7 @@ Use it to work with Tabularis on a headless machine, keep it next to your databa
 | **Local** | `tabularis web` from an installed Tabularis | One person, on the same machine as the browser |
 | **Container** | Docker, Docker Compose or Helm | A server, a homelab or a Kubernetes cluster; see [Docker & Helm](/wiki/docker-helm) |
 
-Both serve the browser UI over plain HTTP. Access from another machine always goes through an HTTPS reverse proxy with authentication; see [Remote Access & Reverse Proxy](/wiki/web-remote-access).
+Both serve the browser UI over plain HTTP. Access from another machine always goes through an HTTPS reverse proxy with authentication; see [Remote Access & Reverse Proxy](/wiki/web-remote-access). Since v0.33.0 the UI can also be built for a sub-path such as `/tools/database/`; see [Serving Under a Sub-Path](/wiki/web-remote-access#serving-under-a-sub-path).
 
 ## Running It Locally
 
@@ -45,7 +45,7 @@ All options are listed in [Command Line Interface](/wiki/cli#web).
 
 The browser cannot use native operating-system features, so a few workflows are adapted:
 
-- **Files:** imports go through authenticated uploads, and exports, dumps and BLOB downloads become expiring, usually single-use browser downloads. A path typed in the browser is never treated as a path on the server.
+- **Files:** imports go through authenticated uploads, and exports, dumps and BLOB downloads become expiring, usually single-use browser downloads. A path typed in the browser is never treated as a path on the server. Since v0.33.0 a data file (CSV, TSV, JSON, NDJSON, Parquet) can be dropped on the window to [open it as a table](/wiki/connections#open-a-data-file).
 - **Server files:** browsing folders on the server (for example to open or create a SQLite file) is disabled unless you allow specific directories with `--server-file-browser-root`.
 - **Windows:** result, diagram, EXPLAIN, task and connection windows open as browser tabs or routes. A popup blocker can stop them from opening.
 - **Clipboard and notifications** depend on the browser's permissions. When one is denied, the UI says so instead of failing silently.

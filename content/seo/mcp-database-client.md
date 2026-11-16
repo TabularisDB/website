@@ -78,7 +78,7 @@ The MCP server runs on your machine. Queries execute against your databases dire
 
 ### Every major provider for in-app AI too
 
-If you also want Text-to-SQL and query explanation inside Tabularis itself, pick from a ChatGPT Plus or Pro plan (no API key needed), OpenAI, Anthropic, MiniMax, OpenRouter, Requesty, **Ollama (fully local)**, or any OpenAI-compatible endpoint (Groq, Perplexity, Azure, LocalAI).
+If you also want Text-to-SQL and query explanation inside Tabularis itself, pick from a ChatGPT Plus or Pro plan (no API key needed), OpenAI, Anthropic, MiniMax, OpenRouter, Requesty, API Route, **Ollama (fully local)**, any OpenAI-compatible endpoint (Groq, Perplexity, Azure, LocalAI), or an installable assistant package such as Google Gemini.
 
 ## Get started in under 2 minutes
 

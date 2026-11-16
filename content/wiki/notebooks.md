@@ -59,6 +59,14 @@ Configure the chart by selecting a **label column** (X axis / categories) and on
 
 ![Line and pie chart examples](/img/posts/tabularis-notebook-line-chart-pie-chart-variety.png)
 
+### KPI Card
+
+Since v0.33.0, a SQL cell whose query returns a single row can show one value as a large **KPI** card under the results. Open the **KPI** section in the result area and set the **Column**, **Label**, **Decimals** (**Auto** keeps the value's own digits), **Prefix** and **Suffix**. The first time it opens, the first numeric column is picked. The result table stays where it is, and the section is collapsible like the chart.
+
+![Notebook with an outline and two SQL cells showing their one-row results as KPI cards](/img/tabularis-notebook-kpi.png)
+
+Instead of guessing a value, the card states why there is nothing to show: the cell has not run, the query failed, it returned no rows or more than one row, the configured column is missing, the value is NULL, or the value is not a number. Large numbers and decimals are formatted exactly, with the locale's grouping and decimal separator. Changing a KPI setting does not run the query; the configuration is saved with the notebook and is undoable. The card only reads the result the cell already returned, so it works the same for every driver.
+
 ### Execution History
 
 Each SQL cell keeps a local history of its last 10 executions. Click the **History** icon in the cell header to browse previous queries and results. This is useful for comparing how results change as you iterate on a query.
@@ -107,6 +115,14 @@ Click the cell name in the header to rename it. Cell names appear in the outline
 
 Drag and drop cells to reorder them. Grab the drag handle on the left side of the cell header and move the cell to a new position, or use the **Move Up** / **Move Down** arrows in the cell header.
 
+### Duplicating Cells
+
+**Duplicate to End** in the cell header appends a copy of a SQL or Markdown cell as the last cell of the notebook. Existing cells keep their position, so `{{cell_N}}` references keep pointing where they did. The copy keeps the content, name, schema and chart settings, but not the result, error or execution history, and its query plan starts closed. Nothing is executed, and the button is disabled while a cell or Run All is running. The duplication is a single undoable edit.
+
+### Copying the Source
+
+**Copy source** in the cell header copies the cell's content exactly as written, including comments and unresolved `@param` or `{{cell_N}}` placeholders. It works on collapsed cells and is disabled when the cell is empty. Results are not copied.
+
 ### Collapsing
 
 Click the collapse arrow in the cell header to minimize a cell — useful for hiding setup queries you don't need to see while working on later cells. The toolbar provides **Collapse All** and **Expand All** buttons for bulk operations.
@@ -133,6 +149,8 @@ Toggle **Parallel Execution (Run All)** in a SQL cell header to mark it as paral
 ## Outline
 
 The **Outline** side panel shows the notebook structure at a glance — every cell listed with its name (or a content preview for unnamed cells). Click any entry to scroll directly to that cell. The outline updates in real time as you add, rename, or reorder cells.
+
+Since v0.33.0, the **Filter outline...** field at the top narrows the entries to those whose displayed text (cell name, Markdown heading or fallback label) contains the typed text, case-insensitively; `Escape` clears it. The filter is not saved with the notebook. SQL entries also show an execution status icon: **Running**, **Failed** or **Output available**. The status reflects the current session, so clearing outputs removes it.
 
 ![Outline panel with cell navigation](/img/posts/tabularis-notebook-outline-panel-cell-navigation.png)
 
