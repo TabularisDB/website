@@ -132,7 +132,7 @@ Connection profiles are in `connections.json` inside the app config directory. P
 
 ### Can I use Tabularis with a read-only database user?
 
-Yes. A read-only database user is the most reliable way to prevent writes. Tabularis has no per-connection read-only toggle; marking the connection as **production** adds a confirmation before any statement that isn't provably read-only (see [Production Write Guard](/wiki/connections#production-write-guard)), and [MCP Read-Only Mode](/wiki/mcp-readonly-mode) blocks writes from AI clients.
+Yes. A read-only database user is the most reliable way to prevent writes. Since v0.33.0 a connection can also be locked with [Read-only mode](/wiki/connections#read-only-mode), which blocks writes and, on the built-in PostgreSQL, MySQL/MariaDB and SQLite drivers, has the database refuse them too. Marking the connection as **production** adds a confirmation before any statement that isn't provably read-only (see [Production Write Guard](/wiki/connections#production-write-guard)), and [MCP Read-Only Mode](/wiki/mcp-readonly-mode) blocks writes from AI clients.
 
 ### How do I reset Tabularis to default settings?
 

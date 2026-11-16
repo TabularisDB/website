@@ -39,6 +39,8 @@ Each table is a node showing:
 
 Foreign key constraints are drawn as directed edges from the referencing column to the referenced table. The direction follows the FK definition — the arrow points from the child (referencing) table to the parent (referenced) table.
 
+Since v0.33.0 a collapsible **Legend** in the diagram controls explains the **Primary Key** and **Foreign Key** markers and the **Relationship** connectors. It closes with `Esc`.
+
 ### Navigation
 
 | Action | Result |

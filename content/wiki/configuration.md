@@ -58,6 +58,10 @@ SSH and Kubernetes tunnel endpoints are not proxied a second time on their local
 
 ![Settings → Network with App network requests on System, Database connections on Disabled, AI on Custom and SSH tunnels on Disabled, and a SOCKS5 custom proxy server at 127.0.0.1:1080](/img/tabularis-network-proxy-modes.png)
 
+## Interface Scale
+
+Since v0.33.0 **Settings → Appearance → General → Interface scale** resizes the whole desktop interface, including tabs, icons, dialogs and editors, from 75% to 200% in 25% steps (default 100%). The choice is stored as `interfaceScale` and applied again at the next launch. In [Tabularis Web](/wiki/web-mode) the setting is replaced by a hint to use the browser's zoom controls.
+
 ## Result Font
 
 Since v0.24.0, **Settings → Appearance → Data Grid → Result font** controls result cells, inline edit inputs and multiline textareas independently of SQL editor typography. Choose **Same as interface**, a bundled font or a custom family. The default remains JetBrains Mono. See [Themes](/wiki/themes#typography-configuration).
@@ -119,6 +123,7 @@ Any key omitted from the file falls back to its default value. You do not need a
 | `safetyConfirmationDelayEnabled` | `boolean` | `false` | Adds a five-second countdown to destructive-query and production-write confirmations (Settings → General → Delay safety confirmations). |
 | `fontFamily` | `string` | `"System"` | Interface font (Settings → Appearance). The SQL editor uses `editorFontFamily`. |
 | `fontSize` | `number` | `14` | Base interface font size in pixels. The SQL editor uses `editorFontSize`. |
+| `interfaceScale` | `number` | `100` | Since v0.33.0. Desktop interface zoom in percent, 75 to 200 (**Settings → Appearance → General → Interface scale**). See [Interface Scale](#interface-scale). |
 | `showWelcome` | `boolean` | `true` | Show the welcome screen at startup (Settings → General → Startup). |
 | `autoConnectLastConnection` | `boolean` | `true` | Reconnect to the connections that were open when the app was last closed (**Reopen Last Connections**). The app tracks them itself in `lastActiveConnectionId` and `lastOpenConnectionIds`. |
 | `startMaximized` | `boolean` | `false` | Open the main window maximized. |
@@ -134,7 +139,8 @@ Any key omitted from the file falls back to its default value. You do not need a
 | `columnMaskingPatterns` | `string[]` | built-in list | Column-name patterns (case-insensitive substrings) that trigger masking. |
 | `columnMaskingOverrides` | `object` | `{}` | Per-connection overrides, keyed by connection ID, each with `include` (always mask) and `exclude` (never mask) lists of `table.column` entries. |
 | `aiEnabled` | `boolean` | `false` | Master toggle for all AI features. |
-| `aiProvider` | `string` | `null` | Active AI provider: `chatgpt` (since v0.29.0), `openai`, `anthropic`, `minimax`, `openrouter`, `requesty` (since v0.29.0), `ollama`, `custom-openai`. See [AI Assistant](/wiki/ai-assistant#supported-providers--local-privacy). |
+| `aiInlineCompletionEnabled` | `boolean` | `false` | Since v0.33.0. AI ghost-text completion in SQL editors (**Settings → AI → AI inline completion → Suggest SQL while typing**). See [AI Assistant](/wiki/ai-assistant). |
+| `aiProvider` | `string` | `null` | Active AI provider: `chatgpt` (since v0.29.0), `openai`, `anthropic`, `minimax`, `openrouter`, `requesty` (since v0.29.0), `api-route` (since v0.33.0), `ollama`, `custom-openai`, or since v0.33.0 the id of an installed external AI assistant package. See [AI Assistant](/wiki/ai-assistant#supported-providers--local-privacy). |
 | `aiModel` | `string` | `null` | The model identifier string sent to the provider. |
 | `aiCustomModels` | `object` | `null` | Custom model lists per provider (map of provider ID → string[]). |
 | `aiOllamaPort` | `number` | `11434` | Local port for the Ollama daemon. |
@@ -164,6 +170,7 @@ Any key omitted from the file falls back to its default value. You do not need a
 | `csvDelimiter` | `string` | `","` | Default delimiter used when copying or exporting CSV. |
 | `csvIncludeHeaders` | `boolean` | `true` | Include column names when copying rows as CSV or Markdown. |
 | `pingInterval` | `number` | `30` | Connection health check interval in seconds. `0` disables pings. See [Connection Health Check](/wiki/connections#connection-health-check). |
+| `autoReconnect` | `boolean` | `false` | Since v0.33.0. Try one reconnect before closing a connection that failed its health check (**Settings → General → Connection Health Check → Reconnect automatically**). See [Connection Health Check](/wiki/connections#connection-health-check). |
 | `activeExternalDrivers` | `string[]` | `[]` | List of plugin driver IDs loaded at startup. |
 | `tabulariumRegistryUrl` | `string` | `null` | Base URL of the Tabularium plugin registry. Defaults to the official instance at `https://registry.tabularis.dev` when unset — point it at your own [self-hosted Tabularium](https://docs.tabularium.wiki/deploy/) to use a private registry. |
 | `customRegistryUrl` | `string` | `null` | Legacy pre-Tabularium registry override. Read once during config migration, then cleared — use `tabulariumRegistryUrl` instead. |
@@ -181,6 +188,9 @@ Any key omitted from the file falls back to its default value. You do not need a
 | `editorWordWrap` | `boolean` | `true` | Whether the SQL editor wraps long lines. |
 | `editorShowLineNumbers` | `boolean` | `true` | Whether the SQL editor shows line numbers. |
 | `editorHighlightInvisibleCharacters` | `boolean` | `true` | Since v0.28.0. Highlight hidden Unicode and look-alike characters in the SQL editor (**Settings → Appearance → SQL Editor → Show invisible characters**). |
+| `editorVimMode` | `boolean` | `false` | Since v0.33.0. Vim keybindings in SQL editors, notebook cells included (**Settings → Appearance → SQL Editor → Vim Mode**). |
+| `editorMinimap` | `boolean` | `false` | Since v0.33.0. Show the Monaco minimap in SQL editors (**Show Minimap**). |
+| `editorRenderWhitespace` | `string` | `"selection"` | Since v0.33.0. Space and tab markers in SQL editors: `none`, `selection` or `all` (**Show spaces and tabs**). |
 | `autocompleteKeywordCase` | `string` | `"match"` | Since v0.28.0. Case of keywords inserted by autocomplete: `match` (follows what you typed), `upper` or `lower`. |
 | `editorAcceptSuggestionOnEnter` | `boolean` | `true` | Accept the highlighted autocomplete suggestion with Enter (**Settings → Appearance → SQL Editor → Accept Suggestion with Enter**). |
 | `notifyLongQueries` | `boolean` | `true` | Since v0.28.0. Desktop notification when a long query finishes while the window is unfocused (**Settings → General → Query Execution**). |

@@ -155,6 +155,25 @@ Since v0.23.0 the editor can work on files on disk. A folder icon in the tab str
 
 Reads are capped at 50 MB and go through the Rust backend, so files anywhere on disk can be opened and saved, not only those under the app data directory.
 
+### SQL Files Tab
+
+Since v0.33.0 the Explorer has a **SQL Files** tab. **Link folder** picks a local folder through the native dialog, and the tab lists its subfolders and `.sql`, `.psql` and `.pgsql` scripts. Folders load lazily, up to 1,000 entries per folder and 16 levels deep; symbolic links are followed only when they stay inside the linked folder. Up to 16 folders can be linked, and the list is kept in `linked_folders.json` in the config folder.
+
+A script opens in a regular editor tab, and opening a script that is already open focuses its tab with its draft. Unsaved changes are marked in the tree. When the file was changed or deleted outside Tabularis since you opened or last saved it, saving writes nothing and asks you to choose **Overwrite file** (or **Recreate file**), **Save as copy…**, **Reload from disk** or Cancel; the draft is never discarded without asking.
+
+Linking a folder needs the desktop app. In `tabularis web` the tab explains that it is not available and points to **Open SQL file**, so the server's file system is never exposed.
+
+### Reviewing and Committing Git Changes
+
+Since v0.33.0, when a linked folder is inside a Git repository, the branch icon next to it (**Review Git changes**, desktop only) opens a dialog listing its changed scripts as modified, added, deleted or untracked; a rename appears as a deletion and an addition. Select a script to review its diff, check the ones to include, write a **Commit message** and click **Commit selected scripts**.
+
+<video src="/videos/posts/tabularis-sql-files-git.mp4" poster="/videos/posts/tabularis-sql-files-git.jpg" autoplay loop muted playsinline></video>
+
+- Commits use the saved files on disk; unsaved editor drafts are not included. Only checked, reviewed scripts are committed; other files you had already staged stay staged and are left out of the commit.
+- Commit hooks run and commit signing is honored. A review that no longer matches the files, the index or `HEAD`, a conflict or an in-progress merge stops the commit.
+- Tabularis performs no reset, clean, push or other remote operation.
+- Git 2.36 or later and a checked-out branch with at least one commit are required. Binary or non-UTF-8 scripts and files or diffs above 2 MiB are refused, and the list is capped at 1,000 scripts.
+
 ## Statement Folding
 
 Since v0.21.0 every multiline statement in the main query editor gets its own fold range in the Monaco gutter, computed with the same dialect-aware splitter that powers run-at-cursor, so dollar-quoted bodies and custom-`DELIMITER` blocks fold as one unit. Fold controls stay visible instead of appearing only on hover. Hovering a collapsed statement shows a syntax-highlighted preview of its content; you can move into the preview and scroll it without expanding the fold.
@@ -188,6 +207,16 @@ becomes `'alice@example.com', 'bob@example.com'`.
 Since v0.28.0 the editor highlights invisible and look-alike characters that often come with SQL copied from chat apps, PDFs and documents: zero-width spaces, non-breaking spaces, bidi markers, curly quotes and similar. **Clean up pasted characters** in the editor context menu replaces them, on the selection or the whole document, in one undo step. Characters inside string literals and quoted identifiers are left alone. The highlight can be turned off with **Settings → Appearance → SQL Editor → Show invisible characters** (`editorHighlightInvisibleCharacters` in `config.json`).
 
 ![Pasted SQL with invisible characters and curly quotes highlighted, with Clean up pasted characters in the context menu](/img/tabularis-editor-invisible-characters.png)
+
+## Vim Mode, Minimap and Whitespace Markers
+
+Since v0.33.0, **Settings → Appearance → SQL Editor** has three more options. All are saved in `config.json` and apply to open editors without a restart.
+
+<video src="/videos/posts/tabularis-vim-mode.mp4" poster="/videos/posts/tabularis-vim-mode.jpg" autoplay loop muted playsinline></video>
+
+- **Vim Mode** (`editorVimMode`, off by default) enables Vim keybindings, with normal, visual and insert modes, in SQL editors including notebook cells. The status and command line follow the theme, and the run shortcuts such as `Ctrl/Cmd + Enter` keep working.
+- **Show Minimap** (`editorMinimap`, off by default) shows a miniature overview of the script for quick navigation. Small SQL previews, JSON and diff editors keep the minimap hidden.
+- **Show spaces and tabs** (`editorRenderWhitespace`) chooses where ordinary whitespace markers are drawn: **None**, **Selection** (the default) or **All**. It does not change the SQL text and is independent of **Show invisible characters**.
 
 ## SQL Formatting
 
@@ -335,6 +364,18 @@ Both the SQL editor and notebook cells guard against the queries that are easies
 
 The detection is not a naïve substring match — it ignores comments and string literals (including backslash-escaped quotes), understands data-modifying CTEs, and handles multi-statement batches.
 
+Since v0.33.0 the bodies of a `WITH` statement are checked too: `WITH gone AS (DELETE FROM users RETURNING *) SELECT count(*) FROM gone` asks for confirmation like a top-level `DELETE` without `WHERE`, and an `INSERT`, `UPDATE`, `DELETE` or `MERGE` in a CTE body counts as a write for the production prompt. PRAGMA setters and action pragmas (for example `PRAGMA user_version = 42` or `PRAGMA optimize`) and `SELECT … INTO` also count as writes, so they ask first on a production connection; reading pragmas such as `PRAGMA table_info(users)` do not.
+
+### Preview Changes (PostgreSQL)
+
+Since v0.33.0, on a connection whose dialect is PostgreSQL, the editor's context menu and toolbar offer **Preview changes** for a single-table `UPDATE` or `DELETE`. The dialog shows the current and proposed values of each matching row for an `UPDATE`, the matching rows for a `DELETE`, and the **Preview SQL** it ran. Notices warn when the statement has no `WHERE` clause, when only the first rows are shown, and when the table has triggers or rules, which run on execution but not in the preview.
+
+<video src="/videos/posts/tabularis-preview-dml-changes.mp4" poster="/videos/posts/tabularis-preview-dml-changes.jpg" autoplay loop muted playsinline></video>
+
+Nothing is written: the preview is a `SELECT` built from the parsed statement and run in a read-only transaction. **Run statement** then executes the original statement through the normal path, with its usual confirmations. Concurrent writes and triggers can still make the final effect differ.
+
+Only a modelled subset is accepted. Several statements, joins, `FROM`, `USING`, `RETURNING`, `WITH`, subqueries, `DEFAULT` and functions other than a short list of immutable ones (so side-effecting calls such as `nextval` are never run) are rejected with the reason. Views, foreign tables and columns whose types come from extensions, such as `citext`, are rejected too. Cascading foreign-key actions are not reported yet.
+
 ### Result Status Bar
 
 Since v0.29.0 the status bar of a result shows the column count after the row count, for example `120 rows retrieved · 8 columns`, in the single result bar, the result tabs and the stacked view. On PostgreSQL, MySQL and SQLite, hovering the duration shows a breakdown: **Execution** (until the first row arrives), **Fetch** (reading the remaining rows) and **Total**. Plugin drivers and statements without a result set show only the total.
@@ -422,7 +463,7 @@ History is stored per connection, newest first. If you run the exact same SQL tw
 
 The History tab supports:
 
-- **Search** by SQL text
+- **Search** by SQL text. Since v0.33.0 the **Include error messages** toggle next to the search box also matches the recorded error of failed entries. It is off by default and **Clear filters** turns it off
 - **Outcome** (any, succeeded, failed) and **Time range** (last hour, today, last 7 or 30 days) filters, since v0.28.0, combined with the search box
 - **Database** filter, since v0.30.0: **All databases**, one of the databases recorded in the loaded entries, or **No database recorded** when some entries have none
 - **Custom range…** in the time-range select, since v0.30.0: **From** and **To** dates, both inclusive and computed in the display timezone. Either side can stay empty; an inverted or invalid range is refused with a message. **Clear filters** resets the time range to all time and the database to all databases
@@ -434,6 +475,14 @@ The History tab supports:
 ![Query History filtered to the blog_demo database and a custom range from October 20 to October 26, showing 3 of 5 entries](/img/tabularis-query-history-database-range.png)
 
 This makes the sidebar history a fast iteration loop: run a query, tweak it, and jump back to any earlier version without digging through editor tabs.
+
+### Insights
+
+Since v0.33.0 the History tab switches between **Entries** and **Insights**. Insights groups executions by query shape and shows for each the call count, average and total time and failure rate, compared with the previous period. **Comparison time window** offers **Last 24h vs prior 24h**, **Last 7d vs prior 7d** and **Last 30d vs prior 30d**. Each shape is marked **Regressed**, **Improved**, **Stable** or as having insufficient samples, and can be sorted by **Regressions first**, **Total time**, **Average time** or **Call count**, or narrowed with **Regressions only**. Expanding a shape lists its contributing executions.
+
+![Query history Insights grouping executions by query shape with call counts, average and total time](/img/tabularis-query-insights.png)
+
+Insights reads a separate execution log, so repeated runs are counted even when the history list collapses identical consecutive queries. The timings are measured by Tabularis on the client side, so they work with every driver, plugins included, and no monitoring SQL is run on the database. The view notes when the log has reached its retention cap or executions have no recorded duration.
 
 ### Exporting History as SQL
 
@@ -479,7 +528,9 @@ The results grid is heavily optimized to handle thousands of rows without droppi
 
 ## SQL Snippets and Diagnostics
 
-Since v0.32.0, **Settings → Snippets** manages personal snippets by prefix and dialect. The dialect picker follows enabled drivers; a plugin-scoped snippet appears for that driver. The editor and previews highlight SQL, using general SQL highlighting where Monaco has no dedicated grammar. Insert a snippet through completion and use Tab or Shift+Tab to move through placeholders.
+Since v0.32.0, **Settings → SQL Snippets** manages personal snippets by prefix and dialect. The dialect picker follows enabled drivers; a plugin-scoped snippet appears for that driver. The editor and previews highlight SQL, using general SQL highlighting where Monaco has no dedicated grammar. Insert a snippet through completion and use Tab or Shift+Tab to move through placeholders.
+
+Since v0.33.0 the library can be searched by name, prefix or description and filtered by scope, with **All scopes** or **Generic (all dialects)** as separate choices. **Duplicate** opens the creation form prefilled from a snippet; the copy needs a different prefix and is created only when you save. **Export JSON** saves the whole saved library as `tabularis-snippets.json`, in the same `{ "version": 1, "snippets": [...] }` format used for storage; unsaved form edits are not included.
 
 **Settings → Appearance → SQL diagnostics** enables optional metadata-based diagnostics for a subset of PostgreSQL SELECT queries. It is off by default, does not execute SQL, and depends on available metadata; the server remains authoritative.
 

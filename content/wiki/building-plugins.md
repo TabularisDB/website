@@ -58,6 +58,8 @@ Every step is independently shippable. A plugin with only the first three is alr
 
 A driver that serves several engines can also report capabilities and data types per connection — see [Connection-specific Metadata](/wiki/plugin-protocol#connection-specific-metadata-optional-since-v0240).
 
+Since v0.33.0 a driver can also opt into a connection's **Read-only mode** (`read_only_queries`), classify a non-SQL query language for the read-only checks (`query_classification`), back **Open data file** (`data_files`, file-based drivers), connect through a Unix socket (`unix_socket`) or a SOCKS5 proxy over SSH (`socks5_proxy`), take over whole-database dumps with a native backup format, and host the routine debugger (`routine_debug`). Each is optional and described in [Plugin Protocol](/wiki/plugin-protocol#read-only-mode-and-query-classification-optional-since-v0330).
+
 ## UI extensions
 
 Add `--with-ui` to the scaffold and the plugin also gets a React/Vite subworkspace in `ui/` with a hello-world contribution for `data-grid.toolbar.actions`, and a `locales/` folder for its strings. The host only loads modules declared in the manifest; since `@tabularis/create-plugin` 0.4.2 the scaffolder writes the matching entry into `.tabularium` for you (with older versions, add it yourself):

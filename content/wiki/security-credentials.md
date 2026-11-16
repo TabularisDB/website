@@ -113,4 +113,4 @@ Re-enter an API key from **Settings → AI** if it stops working — the old key
 
 ## Guarding Against Accidental Writes
 
-There is no per-connection read-only toggle in the connection editor. Marking a connection as **production** enables the [Production Write Guard](/wiki/connections#production-write-guard), which asks for confirmation before any statement that isn't provably read-only, and [MCP Read-Only Mode](/wiki/mcp-readonly-mode) blocks writes coming from AI clients. For a hard guarantee, connect with a database user that only has read privileges.
+Since v0.33.0 the connection editor has **Read-only mode** in its **Advanced** tab, which blocks writes on that connection from the app, Tabularis Web and MCP (see [Read-Only Mode](/wiki/connections#read-only-mode)). Marking a connection as **production** enables the [Production Write Guard](/wiki/connections#production-write-guard), which asks for confirmation before any statement that isn't provably read-only, and [MCP Read-Only Mode](/wiki/mcp-readonly-mode) blocks writes coming from AI clients. For a hard guarantee, connect with a database user that only has read privileges.

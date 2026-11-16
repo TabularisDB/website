@@ -49,7 +49,7 @@ Since v0.28.0 the classifier is no longer the only check. Every query on a read-
 | MySQL / MariaDB | `START TRANSACTION READ ONLY` |
 | SQLite | `PRAGMA query_only` turned on inside a transaction |
 
-The transaction is always rolled back, so a write the classifier missed is refused by the database itself. If the reset fails or the call is dropped, the connection is closed instead of being returned to the pool, so the read-only setting cannot leak into your own editor session. Plugin drivers have no read-only session and keep the previous behavior, where the classifier is the only safeguard.
+The transaction is always rolled back, so a write the classifier missed is refused by the database itself. If the reset fails or the call is dropped, the connection is closed instead of being returned to the pool, so the read-only setting cannot leak into your own editor session. Plugin drivers keep the previous behavior, where the classifier is the only safeguard, unless they declare `read_only_queries` (since v0.33.0): the host then runs these queries through the plugin's protected `execute_read_only_query` path. See [Plugin Protocol](/wiki/plugin-protocol#read-only-mode-and-query-classification-optional-since-v0330).
 
 Some PostgreSQL functions act outside the transaction (`lo_export` writes a server file even inside `BEGIN READ ONLY`; backend-signal and `dblink_*` functions affect other sessions), so for those the classifier remains the check that blocks them.
 

@@ -55,6 +55,14 @@ Before v0.29.0 both actions were available for the built-in drivers only. Since 
 - String and boolean literals follow the driver's declared `sql_dialect` / `sql_syntax`, not its driver id.
 - The import sends each statement of the file to the plugin one at a time through `execute_query`. There is no transaction across a plugin, so a failure stops the import but does not roll back the statements already executed.
 
+Since v0.33.0 a plugin can take over the whole transfer instead (see [Whole-database transfers](/wiki/plugin-protocol#whole-database-transfers-optional-since-v0330)):
+
+- **Native backup format.** When the plugin declares one, **Dump Database** shows a **Backup format** selector with **SQL script (.sql)** and the plugin's own option, with its label and file extension (for example a Firebird `.fbk` backup). A native backup always covers the entire database, so the structure, data and table options are hidden for it.
+- **Restore.** **Run SQL File...** recognizes a native backup by its extension and restores it into a new database, with the destination path or name taken from the plugin's own field label. A restore never overwrites an existing database.
+- **SQL dumps.** Data dumps use the plugin's own `INSERT` renderer when it provides one. Each dump is written to a temporary file and only replaces the destination once it succeeds, so a failed or cancelled dump leaves an existing file intact.
+
+The [Firebird plugin](https://github.com/TabularisDB/tabularis-firebird-plugin) 1.0 is the first to use this.
+
 ## Transfer One Table as SQL
 
 Since v0.32.0, use **Export table to SQL** in a table context menu and **Import table from SQL** on the target database. The file contains the table structure, indexes and rows and requires the same driver on the target. Preview the import and choose fail, drop and recreate, or append if the table exists.
@@ -62,3 +70,17 @@ Since v0.32.0, use **Export table to SQL** in a table context menu and **Import 
 ![The table export dialog offering structure and data or structure only](/img/tabularis-table-transfer.png)
 
 ![The import preview showing the source table and SQLite target](/img/tabularis-table-import.png)
+
+## Copy Rows to Another Connection
+
+Since v0.33.0, **Transfer to another connection…** in the context menu of a PostgreSQL table copies its rows directly into an existing table on another PostgreSQL or SQLite connection, without an intermediate file.
+
+![Transfer plan from a PostgreSQL orders table to a SQLite orders_archive table with column mapping and conversions](/img/tabularis-table-row-transfer.png)
+
+1. Pick the **Target connection**, database or schema, and **Target table**. The target table must already exist; a transfer never creates, truncates, drops or replaces tables.
+2. **Review plan** maps columns by name, or lets you pick a target column or **Skip this column** for each source column, and shows each column's conversion. The plan is blocked when a table is missing, a required target column has no source, types are incompatible or unsupported, a generated column is targeted, the source and target are the same table, or the target connection is read-only.
+3. Choose what happens **When a row already exists**: **Stop at the first rejected row** or **Skip duplicate rows** (unique and primary key conflicts only), then **Start transfer**.
+
+Values are checked row by row and rejected, not converted, when they would lose information (numeric precision or range, text length, timestamp precision, and similar). Rows are appended in batches that each commit separately; cancelling stops between batches, and the summary reports how many rows were written and skipped and how many already committed rows remain in the target. The production write confirmation runs before the transfer starts.
+
+Plugin drivers do not offer this action.

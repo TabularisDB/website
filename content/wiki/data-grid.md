@@ -57,6 +57,8 @@ Since v0.31.0 the results header has a **Transpose** toggle. Fields become rows,
 
 Since v0.31.0 the column header menu offers **Hide column**, **Hide N columns** for selected columns, **Show hidden columns** and **Choose columns…**. The status bar's hidden-column chip opens a searchable checkbox list with **Show all**. You cannot hide the last visible column.
 
+Since v0.33.0, typing a search in that list offers **Show only matching**: one click shows every matching column and hides the rest, keeping their original order. The picker stays open, and **Show all** restores every column. The action is disabled when nothing matches.
+
 Visibility lasts for the current result's column set, per tab or result entry, and is not saved across restarts. Hidden fields remain in the row data, including primary keys used for editing. Keyboard navigation, paste, selection editing, selection copy/export and Find skip hidden columns. SQL UPDATE copy can still use a hidden key in `WHERE` while omitting other hidden fields from `SET`.
 
 ### Find in Loaded Results
@@ -192,6 +194,8 @@ Double-click a cell to enter edit mode. Type the new value and press `Enter` to 
 **ENUM columns** (MySQL and PostgreSQL) render a **dropdown of the allowed values** instead of a free-text input — both in the grid and in the row-editor sidebar. Nullable ENUM columns include a NULL option. The allowed values are introspected from the database (`information_schema` on MySQL, `pg_enum` on PostgreSQL), and MySQL SET columns get the same treatment with multi-value checkboxes.
 
 ![Editing a MySQL SET cell in the grid: a dropdown lists the allowed values with checkboxes and a NULL option](/img/tabularis-enum-dropdown.png)
+
+**Boolean columns** render as **checkboxes** since v0.33.0, in the grid (normal and transposed layouts) and in the row-editor sidebar. They are recognized for `BOOL` / `BOOLEAN`, MySQL/MariaDB `TINYINT(1)` and `BIT(1)`, and SQL Server `BIT`, including on plugin drivers whose column metadata identifies a Boolean. A nullable checkbox cycles `NULL` → true → false → `NULL`. Toggles are pending changes like any other edit, and toggling back to the original value removes the change. A bare `tinyint`, wider bit fields, PostgreSQL bit strings and Boolean arrays keep their usual editor.
 
 ### Adding a Row
 
@@ -413,26 +417,16 @@ Masking is **on by default** and configured under **Settings → Privacy**: an o
 
 Any query result — whether from a table browse or an SQL editor query — can be exported.
 
-### Export to CSV
+Click the **Export** button in the toolbar and choose a format: **CSV**, **JSON** (an array of objects with column names as keys), **NDJSON** (one JSON object per line), **Markdown** (a Markdown table) or **HTML** (a standalone document with a `<table>`). A progress indicator tracks the export; you can cancel it at any time.
 
-Click the **Export** button in the toolbar and choose **CSV**. Tabularis streams the full result set (not just the current page) to a file. A progress indicator tracks the export; you can cancel it at any time.
+### All rows or Current results
 
-### Export to JSON
+Since v0.33.0 every format streams through the backend, including NDJSON and HTML, which earlier versions could only write from the loaded rows. When the grid holds fewer rows than the query returns (a paged result, or a non-paginated result the driver truncated), the top of the export menu shows a **Rows to export** choice:
 
-Choose **JSON** from the export menu. The full result set is written as a JSON array of objects, with column names as keys. Same streaming and cancellation support as CSV.
+- **All rows** (the default) runs the query again and streams the full result to the file.
+- **Current results** writes only the rows already loaded in the grid and warns how many of the total rows were exported.
 
-### Export to Markdown
-
-Choose **Markdown** to write the result as a Markdown table to a `.md` file, with the same streaming and cancellation support.
-
-### Export loaded rows as HTML or NDJSON
-
-Since v0.29.0 the export menu of a query result has **Export loaded rows as HTML…** and **Export loaded rows as NDJSON…**. Both write the rows already loaded in the grid, without re-running the query:
-
-- **HTML** writes a UTF-8 document with a `<table>`, a header row and every loaded row, with the same escaping as **Copy as HTML table**. It is also available for a result with columns and no rows.
-- **NDJSON** writes one JSON object per line (`.ndjson`), with column names as keys.
-
-When only part of a paged result is loaded, the export reports how many of the total rows were written.
+When the grid already holds the complete result, the choice is not shown and the loaded rows are written without re-running the query. The choice is remembered per tab and result. Plugin drivers use the same streaming path.
 
 ### File names
 
@@ -440,7 +434,7 @@ Since v0.29.0 the save dialog proposes `<table>_<YYYY-MM-DD>.<ext>` for a table 
 
 CSV exports write `NULL` for a `NULL` value in both export paths, and every CSV and NDJSON record ends with a newline.
 
-> Exports are always performed on the **complete result set** — all rows that match the current filter, not just the visible page.
+> With **All rows**, exports cover the **complete result set** — all rows that match the current filter, not just the visible page.
 >
 > The exception is a **multi-statement result** (Run All / Execute Selection): since v0.21.0 the active result tab exports the rows already loaded rather than re-running the script on a fresh connection, so scripts that build temp tables can be saved. When only part of the result was loaded, the progress modal says how many of the total rows were exported; page through the result or raise the tab's rows-per-page (or pick **All**) before exporting if you need more.
 
@@ -455,7 +449,7 @@ CSV exports write `NULL` for a `NULL` value in both export paths, and every CSV 
 A chevron icon appears next to the cell value. Click it to open an **inline editor pane** below the row:
 
 - For JSON / JSONB cells: Monaco runs in JSON mode with syntax highlighting and bracket matching.
-- For long text cells: Monaco runs in `plaintext` mode.
+- For long text cells: Monaco runs in `plaintext` mode. Since v0.33.0 the text viewer has a **Wrap lines** toggle (on by default) that switches to horizontal scrolling for long log lines or aligned text, in normal and diff views. The choice is not saved and never changes the value.
 
 The expansion editor supports a **Diff toggle** (off by default) that compares the original cell value against the current pending edit. A second **Side-by-side toggle** flips the diff from unified to a two-pane view. Both toggles are persisted only within the open expansion — closing it discards the toggle state.
 
@@ -468,6 +462,8 @@ JSON cells additionally show a **braces icon**. Clicking it opens the cell in a 
 Double-clicking a JSON cell opens the viewer directly in edit mode (skipping the chevron). Since v0.25.0 the viewer also opens from read-only query and notebook result grids, by double-click or Enter, including on generated columns; the blob editor and the row editor sidebar stay behind the read-only guard. Since v0.26.0 the right-click menu on a read-only result also offers **Open in JSON Editor**, while mutation actions such as Set NULL, paste, duplicate and delete stay hidden.
 
 Since v0.29.0 the JSON tree has **Expand all** and **Collapse all** buttons next to the search box, in both view-only and editable modes. They only change which nodes are open: the value and any edit in progress are untouched. They are disabled when the root is a scalar.
+
+Since v0.33.0, read-only JSON trees also have an **Expand to level** control with **1**, **2** and **3**. Level 1 opens the root, level 2 also opens its direct children, and so on; deeper collections are collapsed. Search text and key sorting are kept. Editable trees do not show the control.
 
 Since v0.28.0 the JSON viewer decorates string values: `http`, `https` and `mailto` strings get a button that opens them in the system browser, and hex, `rgb()` / `rgba()` and `hsl()` / `hsla()` colors get a color swatch. Values stay editable.
 
@@ -504,6 +500,8 @@ Since v0.28.0, hovering a BLOB cell that holds an image, or a text cell that hol
 Since v0.20.0, small generic binary values — fixed-width identifiers like `BINARY(16)`, short `bytea` payloads — render in the grid as a compact `0x…` hexadecimal string instead of opaque transport metadata. Up to 64 bytes are shown; longer values get an ellipsis. Recognized file MIME types keep showing type and size metadata.
 
 In the row-editor sidebar, any complete BLOB up to 10 KiB opens in a dedicated **hex editor**: bytes displayed as uppercase space-separated pairs, whitespace and an optional `0x` prefix accepted on input, odd-length or non-hex input rejected, and invalid edits reverted on blur. Valid edits commit on blur or `Cmd/Ctrl + Enter` and preserve the value's original MIME type. BLOBs above 10 KiB, truncated values, and file references keep the existing download/file editor.
+
+Since v0.33.0, a BLOB that the grid shows as text (complete, at most 10 KiB, generic `application/octet-stream` and valid printable UTF-8) opens in the row editor in a **Text** editor, with an **Edit as** **Text** / **Hex** switch. Saved text is encoded as UTF-8 and keeps the BLOB's MIME type. Values with CRLF line endings or a UTF-8 byte order mark stay in hex, because a text edit could not write the same bytes back.
 
 ## Foreign Key Navigation
 

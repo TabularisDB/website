@@ -92,6 +92,28 @@ Since v0.27.0 connections can be reordered within a group, in both views: drag a
 
 With **Reopen Last Connections** (Settings → General, on by default), Tabularis reconnects at startup to the connections that were open when you last closed it.
 
+## Open a Data File
+
+Since v0.33.0, **Open data file…** opens a CSV, TSV, JSON, NDJSON or Parquet file as a table in the regular data grid, without creating a connection first. It is in the Connections page (empty state and the **Add Connection** menu) and in the command palette, on the desktop and in [Tabularis Web](/wiki/web-mode). In the browser you can also drop a file on the window.
+
+<video src="/videos/posts/tabularis-open-data-file.mp4" poster="/videos/posts/tabularis-open-data-file.jpg" autoplay loop muted playsinline></video>
+
+| Format | Extensions |
+| :--- | :--- |
+| CSV | `.csv` |
+| TSV | `.tsv`, `.tab` |
+| JSON | `.json` |
+| NDJSON | `.ndjson`, `.jsonl` |
+| Parquet | `.parquet`, `.pq` |
+
+- **Plugin.** Reading the file is the job of a driver plugin that declares the `data_files` capability. When none is installed, the dialog offers **Install and open** for the [DuckDB plugin](https://github.com/TabularisDB/tabularis-duckdb-plugin) (0.3.0 or later) and then opens the waiting file. If an older version is installed, it asks you to update it.
+- **Workspace connection.** The file becomes a table in a workspace database that Tabularis keeps per driver (`data-files/<driver>/workspace.db` in the data directory), saved once as a normal connection named **Data files**. Filters, sorting, the SQL editor, exports and [MCP](/wiki/mcp-server) work on it as on any table, and opened files stay listed in the explorer until you drop them.
+- **Table names** come from the file name, reduced to letters, digits and underscores. Opening another file with the same name replaces the first. When several files open at once, the last one gets a tab and the others are listed in the explorer.
+- **Desktop** reads the file in place. **Tabularis Web** uploads it (up to 512 MiB) and keeps the upload while its table exists; it needs local-administrator rights, like other file-based drivers.
+- **Open with.** On the desktop, a launch whose arguments are only data files opens them, which covers a file manager's **Open with** and `tabularis orders.csv` from a terminal. If Tabularis is already running, the files are passed to it. The Linux and macOS packages and the Windows NSIS installer register the five formats as an alternate handler, so Tabularis is offered but never becomes the default application; the Windows MSI does not register it.
+
+Drag and drop of files is not available in the desktop app.
+
 ## Connection Profile Fields
 
 When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`):
@@ -102,6 +124,7 @@ When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`)
 | **Driver** | Yes | Selects the database type |
 | **Host** | Yes* | Hostname or IP address |
 | **Port** | Yes* | Auto-filled from the driver default |
+| **Socket Path** | No | Since v0.33.0. Replaces Host and Port with a Unix socket, locally or on the SSH server (see [Unix Sockets](#unix-sockets) below). |
 | **Database** | Yes* | The database name to connect to |
 | **Username** | Yes* | Database user |
 | **Password** | No | Stored in the OS keychain when **Save passwords in Keychain** is checked; otherwise written to `connections.json` in plain text |
@@ -110,6 +133,8 @@ When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`)
 | **SSH profile** | — | **Use Existing SSH Connection** picks a saved SSH profile; **Configure SSH Inline** defines the tunnel on this connection only |
 | **Allow SSH password/PIN prompt** | No | Lets the SSH tunnel prompt in-app for a key passphrase, security-key PIN, or password when it can't authenticate silently. See [SSH Tunneling → Interactive Authentication](/wiki/ssh-tunneling#interactive-authentication-passphrases--security-keys). |
 | **Startup script** | No | SQL run on every new pooled connection (see [Startup Script](#startup-script) below). |
+| **Read-only mode** | No | Since v0.33.0, in the **Advanced** tab. Blocks writes on this connection (see [Read-Only Mode](#read-only-mode) below). |
+| **Query timeout (seconds)** | No | PostgreSQL since v0.32.0, MySQL/MariaDB since v0.33.0, in the **Advanced** tab (see [Query Timeout](#query-timeout) below). |
 | **Pooler mode** | No | PostgreSQL only, since v0.29.0. Declares that the connection goes through PgBouncer in transaction or session mode (see [Pooler Mode](#pooler-mode-pgbouncer) below). |
 | **Browse multiple databases on this connection** | No | PostgreSQL only, since v0.29.0. Switches the connection to multi-database browsing (see [Multi-Database Support (PostgreSQL)](#multi-database-support-postgresql) below). |
 | **Kubernetes** | No | Tunnels the connection through a managed `kubectl port-forward`. Mutually exclusive with SSH and AWS SSM. See [Kubernetes Tunneling](/wiki/kubernetes-tunneling). |
@@ -122,7 +147,7 @@ When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`)
 
 ### Connection String Import
 
-The **Connection String** field of the connection form (network drivers) fills the host, port, database, credentials and SSL settings from a URL such as `postgres://user:pass@host:5432/db` or `mysql://user:pass@localhost:3306/db`. Since v0.28.0 it also accepts JDBC URLs, `jdbc:postgresql://…` and `jdbc:mysql://…`: credentials in the query string are used when the URL has none before the host, and PostgreSQL and MySQL SSL modes (including `sslMode` in any case) land in the form. Drivers that pass the raw JDBC URL through keep it untouched.
+The **Connection String** field of the connection form (network drivers) fills the host, port, database, credentials and SSL settings from a URL such as `postgres://user:pass@host:5432/db` or `mysql://user:pass@localhost:3306/db`. Since v0.28.0 it also accepts JDBC URLs, `jdbc:postgresql://…` and `jdbc:mysql://…`: credentials in the query string are used when the URL has none before the host, and PostgreSQL and MySQL SSL modes (including `sslMode` in any case) land in the form. Drivers that pass the raw JDBC URL through keep it untouched. Since v0.33.0 a MySQL URL can also carry `?socket=` to fill in the socket path.
 
 ### TLS & CA Certificates
 
@@ -184,6 +209,24 @@ applies to every subsequent query instead of randomly depending on which pooled 
 Since v0.31.0 PostgreSQL and MySQL profiles have **Connect timeout** in the **Advanced** tab, in seconds (up to 3600). It bounds connection setup and **Test Connection** for that profile; unset or zero keeps existing defaults. PostgreSQL startup scripts also use the chosen budget. Other driver implementations retain their own timeout behavior.
 
 ![PostgreSQL connection Advanced tab with Connect timeout in seconds](/img/tabularis-connect-timeout.png)
+
+### Query Timeout
+
+**Query timeout (seconds)** in the **Advanced** tab stops a query on the server once it has run that long; leave it empty for no limit. The built-in PostgreSQL driver has it since v0.32.0, and since v0.33.0 the built-in MySQL/MariaDB driver does too. On MySQL the timeout sends `KILL QUERY` over a separate connection and reports *Query stopped after N s by the connection's query timeout*; the connection stays open, so the remaining statements of a batch still run. If the server does not confirm the stop within 5 seconds, the batch fails and that connection is closed instead of returned to the pool.
+
+**Stop** in the editor also ends a MySQL query on the server since v0.33.0, instead of leaving it running and holding its locks. Plugin drivers show the field when they declare the `query_timeout` capability.
+
+### Unix Sockets
+
+Since v0.33.0, MySQL/MariaDB and PostgreSQL connections can use a Unix socket instead of a host and port. Switch the endpoint selector from **Host / Port** to **Socket Path** and enter the absolute path of the socket file, for example `/var/run/postgresql/.s.PGSQL.5432` or `/tmp/mysql.sock`. The form warns when the path is not absolute or looks like a directory.
+
+![New PostgreSQL connection using a Unix socket path, with a successful connection test](/img/tabularis-unix-socket-connection.png)
+
+- **Locally**, the socket is on this machine. Database TLS is turned off, because local socket traffic never leaves the machine, database-scope TCP proxies are bypassed, and AWS IAM authentication is rejected. Windows has no local Unix sockets and hides this form.
+- **Over SSH**, the SSH server connects to the socket on its side, including through a bastion, and the SSH tunnel encrypts the path. This works on every platform; see [SSH Tunneling → Remote Unix Sockets](/wiki/ssh-tunneling#remote-unix-sockets).
+- Kubernetes and AWS SSM tunnels are TCP-only and clear the socket path.
+
+Plugin drivers offer the local socket when they declare the `unix_socket` capability. Connection labels and connection pools distinguish socket endpoints from TCP ones.
 
 ### Pooler Mode (PgBouncer)
 
@@ -409,6 +452,17 @@ If TablePlus stores its data outside the default Application Support location, a
 
 ![Import from App source picker including HeidiSQL, MySQL Workbench and Navicat](/img/tabularis-import-sources-v0310.png)
 
+### Project Configuration (.env / Compose)
+
+Since v0.33.0 the source list includes **Project Configuration (.env / Compose)**. On the desktop you pick a project folder; in [Tabularis Web](/wiki/web-mode) you upload the files. Tabularis reads `.env` files and Docker Compose files (`compose.yaml`, `docker-compose.yml`) and offers the databases it finds as candidates in the same review modal, with the usual duplicate checks.
+
+![Connection import listing candidates found in a project .env file and compose.yaml](/img/tabularis-import-project-config.png)
+
+- The scan goes at most 3 levels deep, reads at most 50 files of up to 1 MB, skips folders such as `.git`, `node_modules`, `target`, `vendor` and `.venv`, never follows symlinks and never executes anything.
+- Variables (`${VAR}`, `${VAR:-default}`, `$VAR`) are resolved only from the project's own files, never from your environment. Unresolved or circular variables are reported as warnings instead of guessed.
+- For Compose services, only published ports are reachable from your machine; a container port that is not published gets a warning.
+- Passwords found in the files are imported as credentials, never shown in the preview or in warnings.
+
 Review the imported profiles and enter their passwords before connecting. The feature is marked **beta**: parser coverage across eight apps and three platforms will keep improving, and the modal links directly to the [issue tracker](https://github.com/TabularisDB/tabularis/issues) for files that do not parse cleanly.
 
 ## Multi-Database Support (MySQL / MariaDB)
@@ -487,6 +541,14 @@ Open **Settings → General → Connection Health Check** and set the **Ping Int
 
 The setting maps to the `pingInterval` key in `config.json` (see [Configuration](/wiki/configuration)).
 
+Since v0.33.0 missed checks no longer fire in a burst after the machine wakes from sleep: a long gap between checks counts as a resume, failures from before it are forgotten, and the connection gets a fresh check first.
+
+### Reconnect automatically
+
+**Reconnect automatically** (same section, off by default, `autoReconnect` in `config.json`) makes Tabularis try **one** reconnect, capped at 15 seconds, before it closes a connection that failed its health check. A toast shows *Connection lost. Reconnecting…* and then *Connection restored.*
+
+Nothing is replayed: interrupted queries are never re-run and open transactions are rolled back. When open query sessions had to be reset, a warning that stays until dismissed says so. If the attempt fails, the connection is reported lost as below. For plugin drivers the attempt is one more `ping`. Tabularis Web has no health-check loop yet.
+
 ### What happens on failure
 
 When a health check failure triggers a disconnection:
@@ -494,15 +556,32 @@ When a health check failure triggers a disconnection:
 - The connection pool is closed and resources are freed. Shared SSH tunnels are left running.
 - A toast notification appears with the error message and a button to navigate back to the Connections page.
 - You can reconnect at any time by clicking the connection again.
+- Since v0.33.0 a cached SSH tunnel whose session has ended is reopened on the next connect; see [SSH Tunneling → Tunnel Lifecycle](/wiki/ssh-tunneling#tunnel-lifecycle).
 
 ## Read-Only Access
 
-The connection editor has no read-only toggle. Two mechanisms cover the common cases:
+### Read-Only Mode
+
+Since v0.33.0 a connection can be locked with **Read-only mode** in the **Advanced** tab of the connection editor. It blocks writes on that connection, including SQL generated through text-to-SQL, and is kept when the connection is duplicated.
+
+![Editor with the read-only mode banner and a DELETE blocked with the message that the connection is read-only](/img/tabularis-read-only-connection.png)
+
+- The connection shows a **Read-only mode** badge, and the editor a banner with the connection name followed by *"— read-only mode"*. Editing and schema actions are disabled, split panes included.
+- The policy is enforced in the shared backend, so it applies to the desktop app, [Tabularis Web](/wiki/web-mode) and the [MCP server](/wiki/mcp-server), and covers queries, batches, row edits, schema changes and imports. A blocked write reports *"This connection is read-only. Disable read-only mode in its settings to allow writes."*
+- On the built-in PostgreSQL, MySQL/MariaDB and SQLite drivers it is also enforced by the database, through a separate protected connection pool.
+- Exports keep working.
+- It takes effect before the [Production Write Guard](#production-write-guard), whatever its "don't ask again" state.
+
+Current limits: the saved startup script is skipped while the mode is on, explicit transaction commands are rejected and batch statements run independently, and Visual EXPLAIN is unavailable (a raw `EXPLAIN` runs on the protected path).
+
+Plugin drivers support the mode when they declare `read_only_queries` (a protected read path) or are read-only by design (`readonly`, which also shows the badge); for other plugins the checkbox is disabled with *"This driver does not support protected read-only queries."* A plugin that also declares `query_classification` decides whether its own (non-SQL) queries are reads, so a MongoDB `find` is no longer rejected as a write. The saved policy also applies to [stored routine](/wiki/stored-routines) debugging sessions. See the [Plugin Protocol](/wiki/plugin-protocol).
+
+### Other Safeguards
 
 - Mark the connection as **production** to get the [Production Write Guard](#production-write-guard), which asks for confirmation before any statement that isn't provably read-only.
 - For AI clients, [MCP Read-Only Mode](/wiki/mcp-readonly-mode) blocks writes from MCP on selected connections or on all of them.
 
-Neither is a substitute for proper database-level permissions: for a hard guarantee, connect with a database user that only has read privileges.
+None of these replaces database-level permissions: for a hard guarantee, connect with a database user that only has read privileges.
 
 ## Keychain Details
 
