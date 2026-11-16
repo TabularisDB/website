@@ -1,45 +1,49 @@
 ---
-title: 'A Neon Plugin for Tabularis'
+title: 'Neon 0.4 in Tabularis'
 date: '2026-11-16T19:00:00+00:00'
 authors: ['NewtTheWolf']
 tags: ['plugins', 'neon', 'postgresql', 'cloud', 'preview']
-excerpt: 'Neon 0.3.0 is in the registry, with branches, a Function editor, and tabs for Auth, Storage, Realtime, and AI Gateway. Available for Windows, macOS, and Linux.'
+excerpt: 'Neon 0.4 adds binary file uploads and downloads, Auth organization invitations, administrator password resets, and live SQL subscriptions to Tabularis.'
 og:
     template: 'screenshot-split'
     title: 'Neon in Tabularis'
-    accent: 'The plugin is here.'
-    claim: 'Branches, Functions, and Neon services alongside your SQL.'
+    accent: 'Version 0.4'
+    claim: 'Files, Auth administration, and live queries alongside your SQL.'
     image: '/img/posts/neon-plugin-overview.png'
 ---
 
-# A Neon Plugin for Tabularis
+# Neon 0.4 in Tabularis
 
-[Neon 0.3.0](https://registry.tabularis.dev/plugins/neon) is now in the plugin registry. It adds branch management and Neon service tabs to Tabularis, alongside the SQL editor.
-
-Connecting to a Neon database through the PostgreSQL driver still works. With this plugin, you can also pick a project and branch from your account, manage Functions, and open Auth, Storage, Realtime, or AI Gateway from the Explorer.
+The [Neon plugin](https://registry.tabularis.dev/plugins/neon) puts your database branches, Functions, and Neon services in the Tabularis Explorer. Version **0.4.0** adds file transfers, Auth invitations and password resets, and live query results.
 
 ![Neon overview in Tabularis, showing the branch, database, and service tabs](/img/posts/neon-plugin-overview.png)
 
 *The overview in our test workspace.*
 
-## What's in it
+## Files in Storage
 
-The branch view lets you create a branch from a selected parent, rename it, or delete it. Opening another branch creates a separate connection, so the queries you already have open stay on their original branch.
+You can upload binary or text files, choose a bucket and destination key, and download the original object. Uploads use multipart transfers and support files up to Neon's 10 GiB limit, with progress and cancellation.
 
-Functions have a JavaScript and TypeScript editor with validation before deployment. You can change environment values, deploy, and send GET or POST requests to check the result. For external npm dependencies, you'll still need to bundle through the Neon CLI.
+The text editor still has a 1 MiB preview limit. Larger files go through the file download instead of being loaded into the editor.
 
-The other tabs cover user and role management in Auth, text objects in the private `assets` bucket, a Realtime SQL snapshot, and model selection with a test completion through AI Gateway. The overview shows usage and limits where Neon provides them.
+## Auth invitations and password resets
 
-## Still a preview
+The Auth view can list, create, and cancel invitations for your application's Auth organizations. A user's detail page also lets an Auth administrator set a new password.
 
-This is version 0.3.0, and it doesn't cover the whole Neon console. Storage currently handles UTF-8 text reads up to 1 MiB. Auth invitations and password resets aren't implemented, and Realtime is a snapshot/wait tool rather than a subscription dashboard.
+These actions use an application Auth login, separate from your Neon Console API key. Invitation emails follow your project's Auth settings; creating the invitation doesn't mean an email has been sent.
 
-One thing we ran into during testing: Neon can mark a Function deployment as completed while the endpoint still serves the previous code or environment. We sometimes saw a delay of roughly two minutes. The plugin lets you check the response separately instead of treating the deployment status as proof that the new version is running.
+## Live queries
+
+Start a live query and the results update as the database changes. You can stop the subscription when you're done. The existing snapshot and wait-for-value options are there too.
+
+Branches open as separate connections, so moving to another branch leaves your existing SQL tabs where they were. Functions have a JavaScript/TypeScript editor, validation, deployment controls, environment updates, and test requests. Auth users, AI Gateway, and usage information have their own views in the Explorer.
+
+Neon sometimes took roughly two minutes to serve updated Function code in our tests, even after reporting the deployment as completed. The plugin lets you test the response separately.
 
 ## Install it
 
-You'll need **Tabularis 0.33.0 or newer** and **Node.js 22+**, with Node matching your Tabularis architecture. The plugin itself runs on Node; the Neon CLI is optional if you sign in with an API key.
+You'll need **Tabularis 0.33.0 or newer** and **Node.js 22+**, with Node matching your Tabularis architecture. The plugin runs on Node; the Neon CLI is optional when using an API key.
 
-Packages are available for **Windows, macOS, and Linux**, on **x64 and ARM64**. All six have passed native build, runtime, and packaged-driver tests. It also works in `tabularis web`, where Node runs on the server.
+Packages are available for **Windows, macOS, and Linux**, on **x64 and ARM64**. It also works in `tabularis web`, with Node running on the server.
 
-Install it from the [registry](https://registry.tabularis.dev/plugins/neon), then choose **Add Connection → Neon** and use an API key or an existing Neon CLI profile. The [README](https://github.com/TabularisDB/neon-plugin#readme) has the setup details, and the [0.3.0 release](https://github.com/TabularisDB/neon-plugin/releases/tag/v0.3.0) has the downloads and checksums.
+Install it from the [registry](https://registry.tabularis.dev/plugins/neon), then choose **Add Connection → Neon**. The [README](https://github.com/TabularisDB/neon-plugin#readme) covers setup and permissions, and [GitHub Releases](https://github.com/TabularisDB/neon-plugin/releases) has the packages and checksums.
