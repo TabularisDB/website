@@ -38,4 +38,4 @@ Here’s how the chase looked over eight rows of SQLite in the local Tabularis d
 
 In Tabularis Web, go to **Settings → Appearance → Browse themes in Plugins**. Find **Vice City for Tabularis** and install it from the registry. Back in **Appearance**, pick **After Dark** or **Daybreak**. Set the SQL editor theme to **Same as App** for matching syntax colors.
 
-The registry package contains the two color palettes. For the panoramas and game inside a local Tabularis Web build, see the [optional setup](https://github.com/TabularisDB/tabularis-vice-city-theme#optional-animated-web-preview).
+The registry package contains the two color palettes. Want the sunset backgrounds and the getaway game inside Tabularis Web? Follow the [optional local setup](https://github.com/TabularisDB/tabularis-vice-city-theme#optional-animated-web-preview). Or just hit **Play** above.
