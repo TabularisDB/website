@@ -24,7 +24,7 @@ If you still have queries to run today, I made **Vice City for Tabularis**. Itâ€
 
 I put a tiny getaway game above the console and table tabs in the optional preview. Hit **Play**, jump over barricades, pick up stars and shields, and try to keep the patrol car off your bumper. The chase goes up to six stars, with backup patrols, a helicopter, and an armored roadblock.
 
-<video src="/videos/posts/vice-city-launch-day/chase.mp4" poster="/videos/posts/vice-city-launch-day/chase.webp" width="980" height="360" controls muted playsinline preload="none" aria-label="Vice City minigame demo showing a car jumping obstacles above a Tabularis result grid"> <a href="/videos/posts/vice-city-launch-day/chase.mp4">Download the gameplay clip</a> </video>
+<video src="/videos/posts/vice-city-launch-day/chase.mp4" poster="/videos/posts/vice-city-launch-day/chase.webp" width="980" height="360" controls muted playsinline preload="none" aria-label="Vice City minigame demo showing the chase reaching six stars, with a helicopter and an armored roadblock"> <a href="/videos/posts/vice-city-launch-day/chase.mp4">Download the gameplay clip</a> </video>
 
 *Recorded in a local Tabularis demo with a fictional SQLite garage inventory.*
 
