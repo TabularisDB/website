@@ -5,9 +5,9 @@ authors: ['NewtTheWolf']
 tags: ['themes', 'community']
 excerpt: 'Bring a little Vice City to your SQL editor with two free Tabularis themes and an optional getaway minigame.'
 og:
-    title: 'Still working on GTA VI day?'
-    accent: '#FF82B1'
-    image: '/img/posts/vice-city-launch-day/after-dark.webp'
+    title: 'Still working on'
+    accent: 'GTA VI day?'
+    image: '/img/posts/vice-city-launch-day/after-dark.png'
 ---
 
 # Still working on GTA VI day?
@@ -16,7 +16,7 @@ GTA VI is on the calendar. So is your 10 a.m. standup.
 
 If you still have queries to run today, I made **Vice City for Tabularis**. It’s an unofficial theme with two palettes. **After Dark** gives your SQL editor neon pink, mint, and deep purple. **Daybreak** goes lighter with warm peach and rose. Both color the app, SQL syntax, and result grid.
 
-![After Dark colors the SQL editor and the Vice City Garage result grid in purple, pink, and mint](/img/posts/vice-city-launch-day/after-dark.webp)
+![After Dark colors the SQL editor and the Vice City Garage result grid in purple, pink, and mint](/img/posts/vice-city-launch-day/after-dark.png)
 
 ![Daybreak shows the same SQL query and garage inventory in peach, rose, and green](/img/posts/vice-city-launch-day/daybreak.webp)
 
