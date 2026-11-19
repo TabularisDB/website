@@ -1,0 +1,344 @@
+:root {
+    --bg-elevated: #22192f;
+    --text-primary: #fff2e9;
+    --text-inverse: #281125;
+    --accent-primary: #ff82b1;
+    --accent-warning: #ffc47f;
+    --accent-error: #ff8e91;
+    --border-default: #533b60;
+    --border-focus: #ff9ec4;
+    --font-mono: ui-monospace, monospace;
+    --vice-banner-height: 208px;
+    color: var(--text-primary);
+    background: #191326;
+    font: 14px / 1.4 system-ui, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+.vice-demo {
+    text-align: center;
+}
+
+.vice-drive-workspace {
+    position: relative;
+    height: var(--vice-banner-height);
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-default);
+    background:
+        url("./retro-car.svg") 28% calc(100% - 15px) / 54px auto no-repeat,
+        linear-gradient(90deg, #191326b3, transparent),
+        url("./vice-city-sunset.webp") right 57% / cover;
+}
+
+.vice-drive-workspace h1 {
+    position: absolute;
+    top: 30%;
+    left: 0;
+    right: 0;
+    margin: 0;
+    font-size: clamp(24px, 6vw, 42px);
+    font-weight: 800;
+    text-shadow: 0 2px 16px #191326;
+}
+
+.vice-drive-active h1 {
+    display: none;
+}
+
+.vice-drive-active {
+    background-position:
+        var(--vice-car-x, 28%) calc(100% - 15px - var(--vice-car-y, 0px)),
+        center,
+        right 57%;
+}
+
+.vice-drive-toggle,
+.vice-controls button {
+    border: 1px solid var(--border-default);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.vice-drive-toggle {
+    position: absolute;
+    z-index: 2;
+    top: 64%;
+    left: 50%;
+    transform: translateX(-50%);
+    min-height: 44px;
+    padding: 0 32px;
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+    border-color: var(--accent-primary);
+}
+
+.vice-drive-active:not(.vice-drive-finished) .vice-drive-toggle {
+    top: 10px;
+    left: 10px;
+    transform: none;
+    min-height: 38px;
+    padding: 0 14px;
+    background: var(--bg-elevated);
+    border-color: var(--border-default);
+    color: var(--text-primary);
+}
+
+.vice-drive-toggle:focus-visible,
+.vice-controls button:focus-visible {
+    outline: 2px solid var(--border-focus);
+    outline-offset: 2px;
+}
+
+.vice-controls {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 11px 8px 0;
+}
+
+.vice-controls button {
+    background: var(--bg-elevated);
+    min-width: 48px;
+    min-height: 42px;
+    padding: 0 10px;
+    touch-action: none;
+}
+
+.vice-controls button:active {
+    background: #4f2c4f;
+}
+
+.vice-help {
+    margin: 7px 8px 9px;
+    font-size: 12px;
+    color: #e6cdde;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.vice-drive-game {
+    position: absolute;
+    inset: 0 0 auto;
+    height: var(--vice-banner-height);
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.vice-drive-score {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    padding: 5px 9px;
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    border-radius: 6px;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+}
+
+.vice-drive-stars {
+    letter-spacing: 0.08em;
+    color: var(--accent-warning);
+}
+
+.vice-drive-patrol,
+.vice-drive-hazard {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+}
+
+.vice-drive-patrol {
+    width: 54px;
+    aspect-ratio: 64 / 26;
+    background: url("./patrol.svg") center / contain no-repeat;
+    filter: drop-shadow(0 -2px 4px #6c9dff) drop-shadow(-4px -2px 4px #ff5787);
+}
+
+.vice-drive-danger .vice-drive-score {
+    outline: 1px solid var(--accent-error);
+}
+
+.vice-drive-hazard[data-kind="cone"] {
+    clip-path: polygon(43% 0, 57% 0, 87% 84%, 100% 84%, 100% 100%, 0 100%, 0 84%, 13% 84%);
+    background: linear-gradient(#ff8059 35%, #fff1c8 35% 53%, #ff8059 53%);
+}
+
+.vice-drive-hazard[data-kind="barrels"] {
+    clip-path: polygon(8% 0, 43% 0, 51% 23%, 59% 0, 92% 0, 100% 100%, 0 100%);
+    background:
+        linear-gradient(90deg, transparent 45%, #301b39 45% 55%, transparent 55%),
+        linear-gradient(#ad5c85 12%, #663c65 12% 21%, #f1879e 21% 63%, #663c65 63% 73%, #ad5c85 73%);
+}
+
+.vice-drive-hazard[data-kind="barricade"] {
+    clip-path: polygon(0 8%, 100% 8%, 100% 68%, 88% 68%, 88% 100%, 78% 100%, 78% 68%, 22% 68%, 22% 100%, 12% 100%, 12% 68%, 0 68%);
+    background: repeating-linear-gradient(118deg, #ffcd7b 0 8px, #4b2b52 8px 15px);
+}
+
+.vice-drive-hazard[data-kind="spike-strip"] {
+    background:
+        linear-gradient(#ffc1d6, #694165) bottom / 100% 3px no-repeat,
+        conic-gradient(from 150deg at 50% 4%, #ffc1d6 0deg 60deg, transparent 61deg) 0 0 / 12px 100%;
+}
+
+.vice-drive-result {
+    display: none;
+}
+
+.vice-drive-finished .vice-drive-result {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    justify-items: center;
+    align-content: start;
+    padding-top: 43px;
+    background: linear-gradient(90deg, #170e24e6, #291324f2 50%, #170e24bf);
+}
+
+.vice-drive-result strong {
+    color: #ffc0cd;
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(26px, 4.4vh, 42px);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: 0.16em;
+    text-shadow: 0 0 20px #ff548577;
+}
+
+.vice-drive-finished .vice-drive-score {
+    z-index: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .vice-drive-finished .vice-drive-result strong {
+        animation: vice-wasted-reveal 460ms ease-out both;
+    }
+}
+
+@keyframes vice-wasted-reveal {
+    from { transform: scale(1.22); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.vice-drive-supply,
+.vice-drive-shot {
+    position: absolute;
+    left: 0;
+}
+
+.vice-drive-supply {
+    bottom: 17px;
+    width: 22px;
+    height: 22px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    background: #21162e;
+    color: #ffcf91;
+    font: bold 15px / 20px system-ui, sans-serif;
+    text-align: center;
+    box-shadow: 0 0 8px currentColor;
+}
+
+.vice-drive-supply[data-kind="shield"] {
+    color: #7ef2d4;
+}
+
+.vice-drive-supply[data-kind="pulse"] {
+    color: #dbaaff;
+}
+
+.vice-drive-shot {
+    bottom: 23px;
+    width: 12px;
+    height: 4px;
+    border-radius: 4px;
+    background: currentColor;
+    box-shadow: 0 0 7px currentColor;
+}
+
+.vice-drive-shot-police {
+    color: #ffc380;
+}
+
+.vice-drive-shot-player {
+    color: #93fff1;
+}
+
+.vice-drive-reinforcement {
+    filter: drop-shadow(0 -2px 3px #90d8ff);
+}
+
+.vice-drive-helicopter {
+    position: absolute;
+    top: 78px;
+    left: 55%;
+    width: 67px;
+    aspect-ratio: 78 / 29;
+    background: url("./helicopter.svg") center / contain no-repeat;
+    filter: drop-shadow(0 1px 6px #bfd6ff89);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .vice-drive-helicopter {
+        animation: vice-air-patrol 3.2s ease-in-out infinite alternate;
+    }
+}
+
+@keyframes vice-air-patrol {
+    from { transform: translate(-28px, 0); }
+    to { transform: translate(28px, 4px); }
+}
+
+.vice-drive-hazard[data-kind="air-crate"] {
+    border: 2px solid #ffd393;
+    border-radius: 3px;
+    background:
+        linear-gradient(35deg, transparent 42%, #ffd393 42% 50%, transparent 50%),
+        linear-gradient(-35deg, transparent 42%, #ffd393 42% 50%, transparent 50%),
+        #665176;
+}
+
+.vice-drive-hazard[data-kind="armor"] {
+    clip-path: polygon(0 62%, 9% 45%, 24% 45%, 29% 10%, 53% 10%, 65% 30%, 97% 30%, 97% 47%, 74% 47%, 90% 57%, 100% 73%, 94% 98%, 6% 98%);
+    background:
+        radial-gradient(circle at 26% 84%, #d9c69e 0 3px, transparent 4px),
+        radial-gradient(circle at 50% 84%, #d9c69e 0 3px, transparent 4px),
+        radial-gradient(circle at 74% 84%, #d9c69e 0 3px, transparent 4px),
+        linear-gradient(#97a88b 57%, #697261 57% 77%, #3d3c43 77%);
+}
+
+.vice-drive-heat {
+    display: block;
+    width: 100%;
+    height: 4px;
+    margin-top: 3px;
+    accent-color: var(--accent-warning);
+}
+
+.vice-drive-heat[hidden] {
+    display: none;
+}
+
+.vice-drive-patrol.vice-drive-aiming {
+    filter: drop-shadow(2px 0 5px #ffc886) drop-shadow(0 -2px 4px #6c9dff);
+}
