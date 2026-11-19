@@ -28,12 +28,6 @@ Hit **Play** right here, jump the barricades, and grab stars and shields. Stick 
 
 [Open the game in its own tab](/games/vice-city).
 
-Here’s how the chase looked over eight rows of SQLite in the local Tabularis demo.
-
-<video src="/videos/posts/vice-city-launch-day/chase.mp4" poster="/videos/posts/vice-city-launch-day/chase.webp" width="980" height="360" controls muted playsinline preload="none" aria-label="Vice City minigame demo showing the chase reaching six stars, with a helicopter and an armored roadblock"> <a href="/videos/posts/vice-city-launch-day/chase.mp4">Download the gameplay clip</a> </video>
-
-*Recorded in a local Tabularis demo with a fictional SQLite garage inventory.*
-
 ## Get the theme
 
 In Tabularis Web, go to **Settings → Appearance → Browse themes in Plugins**. Find **Vice City for Tabularis** and install it from the registry. Back in **Appearance**, pick **After Dark** or **Daybreak**. Set the SQL editor theme to **Same as App** for matching syntax colors.
