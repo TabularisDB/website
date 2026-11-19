@@ -24,9 +24,9 @@ If your getaway vehicle today is a SQL client, I made **Vice City for Tabularis*
 
 Hit **Play** right here, jump the barricades, and grab stars and shields. Stick around long enough and six stars bring backup patrols, a helicopter, and an armored roadblock. Your query can wait another minute.
 
-<iframe src="/games/vice-city/index.html" title="Play Vice City Getaway" width="100%" height="309" loading="lazy" sandbox="allow-scripts" style="display:block;border:0;border-radius:10px"></iframe>
+<!-- vice-city-game -->
 
-[Open the game in its own tab](/games/vice-city/index.html).
+[Open the game in its own tab](/games/vice-city).
 
 Here’s how the chase looked over eight rows of SQLite in the local Tabularis demo.
 

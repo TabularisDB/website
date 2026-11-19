@@ -1,3 +1,4 @@
+import {getViceCityGameDocument} from '@/lib/games/viceCity';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -171,8 +172,19 @@ export async function getPostBySlug(slug: string): Promise<{meta: PostMeta; html
         }
     }
 
-    const rawHtml = marked.parse(processedContent) as string;
-    const html = wrapVideosInHtml(rawHtml);
+    let html = wrapVideosInHtml(marked.parse(processedContent) as string);
+    if (html.includes('<!-- vice-city-game -->')) {
+        const srcDoc = getViceCityGameDocument()
+            .replaceAll('&', '&amp;')
+            .replaceAll('"', '&quot;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;');
+        html = html.replace(
+            '<!-- vice-city-game -->',
+            () => `<iframe srcdoc="${srcDoc}" title="Play Vice City Getaway" width="100%" height="309" loading="lazy" sandbox="allow-scripts" style="display:block;border:0;border-radius:10px"></iframe>`,
+        );
+    }
+
     return {meta, html};
 }
 

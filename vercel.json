@@ -42,6 +42,11 @@
             "destination": "/wiki/get-started",
             "permanent": true
         },
+        {
+            "source": "/games/vice-city/index.html",
+            "destination": "/games/vice-city",
+            "permanent": true
+        },
         {"source": "/img/logo.png", "destination": "/img/brand/tabularis-logo-color.png", "permanent": true},
         {"source": "/img/sponsors/:file", "destination": "/img/logos/sponsors/:file", "permanent": true}
     ]
