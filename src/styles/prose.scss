@@ -155,7 +155,7 @@
 
     // -- Links ----------------------------------------------------------------------
 
-    a:not(.post-tag, .star-cta__button, .plugin-link) {
+    a:not(.post-tag, .star-cta__button, .plugin-link, .post-download) {
         color: var(--color-accent-teal);
         text-decoration: none;
         transition: filter 0.15s ease;
@@ -163,6 +163,20 @@
         &:hover {
             filter: brightness(1.25);
             text-decoration: underline;
+        }
+    }
+
+    .post-download {
+        display: inline-flex;
+        padding: var(--space-2) var(--space-4);
+        border-radius: var(--radius-md);
+        background: var(--color-accent-blue);
+        color: white;
+        font-weight: 600;
+        text-decoration: none;
+
+        &:hover {
+            filter: brightness(1.1);
         }
     }
 
