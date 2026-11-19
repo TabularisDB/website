@@ -8,7 +8,6 @@
     --border-default: #533b60;
     --border-focus: #ff9ec4;
     --font-mono: ui-monospace, monospace;
-    --vice-banner-height: 208px;
     color: var(--text-primary);
     background: #191326;
     font: 14px / 1.4 system-ui, sans-serif;
@@ -23,12 +22,16 @@ body {
 }
 
 .vice-demo {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
     text-align: center;
 }
 
 .vice-drive-workspace {
     position: relative;
-    height: var(--vice-banner-height);
+    flex: 1;
+    min-height: 0;
     overflow: hidden;
     border-bottom: 1px solid var(--border-default);
     background:
@@ -43,7 +46,8 @@ body {
     left: 0;
     right: 0;
     margin: 0;
-    font-size: clamp(24px, 6vw, 42px);
+    font-size: clamp(30px, 7vw, 60px);
+    line-height: 1.08;
     font-weight: 800;
     text-shadow: 0 2px 16px #191326;
 }
@@ -72,11 +76,11 @@ body {
 .vice-drive-toggle {
     position: absolute;
     z-index: 2;
-    top: 64%;
+    top: 61%;
     left: 50%;
     transform: translateX(-50%);
-    min-height: 44px;
-    padding: 0 32px;
+    min-height: 48px;
+    padding: 0 38px;
     background: var(--accent-primary);
     color: var(--text-inverse);
     border-color: var(--accent-primary);
@@ -138,7 +142,7 @@ body {
 .vice-drive-game {
     position: absolute;
     inset: 0 0 auto;
-    height: var(--vice-banner-height);
+    height: 100%;
     overflow: hidden;
     pointer-events: none;
 }

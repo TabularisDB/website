@@ -1,5 +1,5 @@
 import type {Metadata} from 'next';
-import {getViceCityGameDocument} from '@/lib/games/viceCity';
+import {getViceCityGameDocument, VICE_CITY_FRAME_HEIGHT} from '@/lib/games/viceCity';
 
 export const metadata: Metadata = {
     title: 'Vice City Getaway | Tabularis',
@@ -12,9 +12,8 @@ export default function ViceCityGamePage() {
                 srcDoc={getViceCityGameDocument()}
                 title="Play Vice City Getaway"
                 width="100%"
-                height="309"
                 sandbox="allow-scripts"
-                style={{display: 'block', border: 0, borderRadius: 10}}
+                style={{display: 'block', height: VICE_CITY_FRAME_HEIGHT, border: 0, borderRadius: 10}}
             />
         </section>
     );

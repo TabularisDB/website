@@ -1,6 +1,8 @@
 import {readFileSync} from 'node:fs';
 import {join} from 'node:path';
 
+export const VICE_CITY_FRAME_HEIGHT = 'clamp(342px, 48vw, 420px)';
+
 const source = join(process.cwd(), 'src', 'lib', 'games', 'vice-city');
 const sprite = /url\("\.\/([\w-]+\.(svg|webp))"\)/g;
 

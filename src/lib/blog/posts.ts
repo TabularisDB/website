@@ -1,4 +1,4 @@
-import {getViceCityGameDocument} from '@/lib/games/viceCity';
+import {getViceCityGameDocument, VICE_CITY_FRAME_HEIGHT} from '@/lib/games/viceCity';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -181,7 +181,7 @@ export async function getPostBySlug(slug: string): Promise<{meta: PostMeta; html
             .replaceAll('>', '&gt;');
         html = html.replace(
             '<!-- vice-city-game -->',
-            () => `<iframe srcdoc="${srcDoc}" title="Play Vice City Getaway" width="100%" height="309" loading="lazy" sandbox="allow-scripts" style="display:block;border:0;border-radius:10px"></iframe>`,
+            () => `<iframe srcdoc="${srcDoc}" title="Play Vice City Getaway" width="100%" sandbox="allow-scripts" style="display:block;height:${VICE_CITY_FRAME_HEIGHT};border:0;border-radius:10px"></iframe>`,
         );
     }
 
