@@ -122,7 +122,7 @@ export function CookieConsent() {
     if (!visible) return null;
 
     return (
-        <div className={styles.cookieModal} role="dialog" aria-label="Cookie preferences">
+        <div className={styles.cookieModal} role="dialog" aria-label="Cookie preferences" data-cookie-consent>
             <h3 className={styles.title}>{showDetailedView ? 'Customise your preferences' : 'Can we use cookies?'}</h3>
 
             {showDetailedView ? (

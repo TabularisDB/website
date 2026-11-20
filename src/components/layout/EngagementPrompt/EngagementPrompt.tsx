@@ -1,17 +1,14 @@
 'use client';
 
 import {Button} from '@/components/ui/Button/Button';
-import {CloseButton} from '@/components/ui/CloseButton/CloseButton';
 import {GitHubIcon} from '@/components/ui/Icons/SocialIcons';
-import {SURVEY_STORAGE_KEY, SurveyForm} from '@/components/ui/SurveyForm/SurveyForm';
+import {SURVEY_STORAGE_KEY} from '@/components/ui/SurveyForm/SurveyForm';
 import {trackEvent} from '@/lib/analytics';
-import {formatStars, REPO_STARS} from '@/lib/github';
 import {SURVEY_CONFIGURED} from '@/lib/siteConfig';
 import {SOCIAL_URLS} from '@/lib/social';
-import {StarIcon} from 'lucide-react';
-import Image from 'next/image';
+import {DownloadIcon, MessagesSquareIcon} from 'lucide-react';
 import {usePathname} from 'next/navigation';
-import {useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import styles from './EngagementPrompt.module.scss';
 
 const EXCLUDED_PATHS = ['/survey', '/thanks-survey', '/thanks-newsletter', '/sponsors/confirm', '/download'];
@@ -49,6 +46,7 @@ function promoInCooldown(): boolean {
 export function EngagementPrompt() {
     const [content, setContent] = useState<Content | null>(null);
     const shownRef = useRef(false);
+    const promptRef = useRef<HTMLDivElement>(null);
     const pathname = usePathname();
     const excluded = isExcluded(pathname);
     const surveyOnly = pathname?.startsWith('/blog') ?? false;
@@ -112,66 +110,106 @@ export function EngagementPrompt() {
         return cleanup;
     }, [excluded, surveyOnly]);
 
-    if (excluded || !content) return null;
-
-    const shown = content;
-
-    function dismiss() {
-        if (shown === 'survey') {
+    const dismiss = useCallback(() => {
+        if (!content) return;
+        if (content === 'survey') {
             try {
                 localStorage.setItem(SURVEY_STORAGE_KEY, 'dismissed');
             } catch {
                 // localStorage unavailable (private mode) — non-fatal.
             }
         }
-        trackEvent(EVENT_CATEGORY[shown], 'dismissed');
+        trackEvent(EVENT_CATEGORY[content], 'dismissed');
         setContent(null);
-    }
+    }, [content]);
+
+    useEffect(() => {
+        if (!content) return;
+
+        // Listens to click, not pointerdown, so a touch-scroll on mobile doesn't dismiss the prompt.
+        // The cookie banner can sit on top of the prompt; using it doesn't count as outside.
+        const onClick = (e: MouseEvent) => {
+            if (!(e.target instanceof Element)) return;
+            if (promptRef.current?.contains(e.target) || e.target.closest('[data-cookie-consent]')) return;
+            dismiss();
+        };
+
+        document.addEventListener('click', onClick);
+        return () => document.removeEventListener('click', onClick);
+    }, [content, dismiss]);
+
+    if (excluded || !content) return null;
 
     return (
         <div
+            ref={promptRef}
             className={styles.surveyPrompt}
             role="dialog"
             aria-label={content === 'survey' ? 'Quick product survey' : 'Tabularis quick promo'}
         >
-            <CloseButton onClick={dismiss} size="sm" label="Dismiss" className={styles.surveyClose} />
-
-            {content === 'survey' && <SurveyForm source="popup" />}
+            {content === 'survey' && (
+                <div className={styles.banner}>
+                    <p className={styles.promoCtaText}>
+                        What should Tabularis build next? Tell us in a 2-minute survey.
+                    </p>
+                    <div className={styles.actions}>
+                        <Button
+                            variant="secondary"
+                            size="sm"
+                            href="/survey"
+                            onClick={() => trackEvent(EVENT_CATEGORY.survey, 'click')}
+                        >
+                            <MessagesSquareIcon size={16} aria-hidden="true" />
+                            Take the survey
+                        </Button>
+                        <button type="button" className={styles.textButton} onClick={dismiss}>
+                            Not now
+                        </button>
+                    </div>
+                </div>
+            )}
 
             {content === 'star' && (
-                <div className={styles.promoCta}>
-                    <span className={styles.promoCtaIcon}>
-                        <GitHubIcon />
-                    </span>
+                <div className={styles.banner}>
                     <p className={styles.promoCtaText}>
                         Enjoying Tabularis? A star on GitHub helps more developers discover it.
                     </p>
-                    <Button
-                        href={SOCIAL_URLS.github}
-                        className={styles.promoCtaBtn}
-                        onClick={() => trackEvent(EVENT_CATEGORY.star, 'click')}
-                    >
-                        <StarIcon size={16} aria-hidden="true" />
-                        Star on GitHub · {formatStars(REPO_STARS)}
-                    </Button>
+                    <div className={styles.actions}>
+                        <Button
+                            variant="secondary"
+                            size="sm"
+                            href={SOCIAL_URLS.github}
+                            onClick={() => trackEvent(EVENT_CATEGORY.star, 'click')}
+                        >
+                            <GitHubIcon />
+                            Leave a star
+                        </Button>
+                        <button type="button" className={styles.textButton} onClick={dismiss}>
+                            Not now
+                        </button>
+                    </div>
                 </div>
             )}
 
             {content === 'download' && (
-                <div className={styles.promoCta}>
-                    <span className={styles.promoCtaIcon}>
-                        <Image src="/img/brand/tabularis-icon-color.svg" alt="" width={40} height={40} />
-                    </span>
+                <div className={styles.banner}>
                     <p className={styles.promoCtaText}>
                         Haven&apos;t tried Tabularis yet? It&apos;s free to download for your platform.
                     </p>
-                    <Button
-                        href="/download"
-                        className={styles.promoCtaBtn}
-                        onClick={() => trackEvent(EVENT_CATEGORY.download, 'click')}
-                    >
-                        Download for free
-                    </Button>
+                    <div className={styles.actions}>
+                        <Button
+                            variant="secondary"
+                            size="sm"
+                            href="/download"
+                            onClick={() => trackEvent(EVENT_CATEGORY.download, 'click')}
+                        >
+                            <DownloadIcon size={16} aria-hidden="true" />
+                            Download
+                        </Button>
+                        <button type="button" className={styles.textButton} onClick={dismiss}>
+                            Not now
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
