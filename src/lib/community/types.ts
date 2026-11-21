@@ -85,3 +85,9 @@ export interface Contribution {
     /** GitHub flagged this as the author's first contribution to the repo. */
     firstTime: boolean;
 }
+
+export interface RepoContributor {
+    login: string;
+    avatarUrl: string;
+    commits: number;
+}
