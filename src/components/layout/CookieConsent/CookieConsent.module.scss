@@ -1,84 +1,61 @@
-.cookieModal {
-    position: fixed;
-    right: 1rem;
-    bottom: 1rem;
-    z-index: var(--z-prompt);
+.categories {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: var(--space-3);
-    width: min(20rem, calc(100% - 2rem));
-    padding: var(--space-6);
-    border: var(--border);
-    border-radius: var(--radius-md);
-    background-color: var(--color-surface);
-    box-shadow: 0 12px 32px rgb(var(--rgb-shadow) / calc(0.3 * var(--shadow-scale)));
-    text-align: center;
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
-.title {
-    font-size: 1.125rem;
+.category {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-6);
+}
+
+.label {
+    font-size: 0.9rem;
     font-weight: 600;
     color: var(--color-text-primary);
 }
 
 .description {
-    font-size: 0.9rem;
+    margin-top: var(--space-1);
+    font-size: 0.85rem;
     line-height: 1.5;
     color: var(--color-text-secondary);
-    margin-block: var(--space-1) var(--space-2);
-
-    a {
-        color: var(--color-text-primary);
-        text-decoration: underline;
-    }
 }
 
-.preferences {
-    display: flex;
-    flex-direction: column;
-    align-self: stretch;
-    gap: 0.875rem;
-    margin-block: var(--space-3);
-}
-
-.cookieRow {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.cookieLabel {
-    font-size: 0.9rem;
-    color: var(--color-text-primary);
-}
-
-.cookieToggle {
+.switch {
     position: relative;
     flex-shrink: 0;
     width: 2.25rem;
     height: 1.25rem;
+    margin-top: 0.125rem;
     padding: 0;
     border: none;
     border-radius: var(--radius-full);
+    background: rgb(var(--rgb-tint) / 0.25);
     cursor: pointer;
     transition: background-color 0.2s ease;
+
+    &.on {
+        background: var(--color-accent-blue);
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--color-accent-teal);
+        outline-offset: 2px;
+    }
 }
 
-.cookieToggleOn {
-    background: var(--color-accent-blue);
-}
-
-.cookieToggleOff {
-    background: rgb(var(--rgb-tint) / 0.25);
-}
-
-.cookieToggleLocked {
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-.cookieToggleThumb {
+.thumb {
     position: absolute;
     top: 0.15rem;
     left: 0.15rem;
@@ -88,29 +65,13 @@
     background: #fff;
     box-shadow: 0 1px 3px rgb(var(--rgb-shadow) / calc(0.3 * var(--shadow-scale)));
     transition: transform 0.2s ease;
-}
 
-.cookieToggleOn .cookieToggleThumb {
-    transform: translateX(1rem);
-}
-
-.actions {
-    display: flex;
-    align-self: stretch;
-    gap: var(--space-2);
-}
-
-.button {
-    flex: 1;
-}
-
-.textButton {
-    font-size: 0.85rem;
-    color: var(--color-text-secondary);
-    text-decoration: underline;
-    transition: color 0.15s ease;
-
-    &:hover {
-        color: var(--color-text-primary);
+    .on & {
+        transform: translateX(1rem);
     }
+}
+
+.reject {
+    font-weight: 600;
+    color: var(--color-text-primary);
 }

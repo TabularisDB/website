@@ -15,6 +15,11 @@
     font-size: 0.85rem;
     color: var(--color-text-secondary);
     line-height: 1.4;
+
+    a {
+        color: var(--color-text-primary);
+        text-decoration: underline;
+    }
 }
 
 .banner {
@@ -27,7 +32,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-4);
+    gap: var(--space-1);
 
     // GitHubIcon has no intrinsic size; match the 16px lucide icons.
     svg {
@@ -37,12 +42,18 @@
 }
 
 .textButton {
+    min-height: 2rem;
+    padding: 0 0.875rem;
+    border-radius: var(--radius-md);
     font-size: 0.8rem;
     font-weight: 500;
     color: var(--color-text-secondary);
-    transition: color 0.15s ease;
+    transition:
+        color 0.15s ease,
+        background 0.15s ease;
 
     &:hover {
         color: var(--color-text-primary);
+        background: var(--color-fill-subtle);
     }
 }
