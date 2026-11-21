@@ -122,7 +122,7 @@ export function PluginArc() {
             )}
 
             <div className={styles.actions}>
-                <Button href="/plugins" size="md">
+                <Button href="/plugins" variant="secondary">
                     Browse all plugins
                     <ArrowRight size={16} />
                 </Button>

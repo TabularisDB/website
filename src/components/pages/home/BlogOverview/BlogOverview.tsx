@@ -28,7 +28,7 @@ export function BlogOverview() {
                 ))}
             </CardGrid>
 
-            <Button href="/blog">
+            <Button href="/blog" variant="secondary">
                 View all posts <ArrowRight size={16} />
             </Button>
         </section>

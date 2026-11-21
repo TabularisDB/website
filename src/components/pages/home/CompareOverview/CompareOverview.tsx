@@ -35,7 +35,7 @@ export function CompareOverview() {
                 />
             </div>
 
-            <Button href="/compare">
+            <Button href="/compare" variant="secondary">
                 See full comparison
                 <ArrowRight size={16} />
             </Button>

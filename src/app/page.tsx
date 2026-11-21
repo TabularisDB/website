@@ -1,6 +1,7 @@
 import {JsonLd} from '@/components/layout/JsonLd';
 import {BlogOverview} from '@/components/pages/home/BlogOverview/BlogOverview';
 import {CompareOverview} from '@/components/pages/home/CompareOverview/CompareOverview';
+import {ContributorsWall} from '@/components/pages/home/ContributorsWall/ContributorsWall';
 import {Features} from '@/components/pages/home/Features/Features';
 import {HomeHero} from '@/components/pages/home/HomeHero/HomeHero';
 import {PluginEcosystem} from '@/components/pages/home/PluginEcosystem/PluginEcosystem';
@@ -40,6 +41,7 @@ export default function HomePage() {
             <SolutionsOverview />
             <CompareOverview />
             <PluginEcosystem />
+            <ContributorsWall />
             <BlogOverview />
         </div>
     );

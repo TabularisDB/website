@@ -1,0 +1,63 @@
+.wall {
+    --avatar-size: 3.5rem;
+    --gap: var(--space-4);
+    --rows: 6;
+    $fade: linear-gradient(
+        to bottom,
+        #000 15%,
+        rgb(0 0 0 / 0.85) 35%,
+        rgb(0 0 0 / 0.55) 55%,
+        rgb(0 0 0 / 0.25) 75%,
+        rgb(0 0 0 / 0.08) 90%,
+        transparent
+    );
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--gap);
+    width: 100%;
+    max-width: var(--max-width-lg);
+    max-height: calc(var(--rows) * var(--avatar-size) + (var(--rows) - 1) * var(--gap));
+    margin-inline: auto;
+    padding: 0;
+    overflow: hidden;
+    list-style: none;
+    -webkit-mask-image: $fade;
+    mask-image: $fade;
+
+    @media (max-width: 767px) {
+        --avatar-size: 3rem;
+        --gap: var(--space-3);
+    }
+}
+
+.link {
+    display: block;
+    border-radius: var(--radius-full);
+
+    &:focus-visible {
+        outline: 2px solid var(--color-accent-teal);
+        outline-offset: -2px;
+    }
+}
+
+.avatar {
+    display: block;
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+    border: var(--border);
+    border-radius: var(--radius-full);
+    background: var(--color-surface);
+    transition: border-color 0.15s ease;
+
+    .link:hover & {
+        border-color: var(--color-text-secondary);
+    }
+}
+
+.team {
+    border: 2px solid var(--color-accent-purple);
+    padding: 1px;
+    background-clip: content-box;
+}
