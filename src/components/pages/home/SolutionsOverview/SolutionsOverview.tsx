@@ -35,7 +35,7 @@ export function SolutionsOverview() {
                 <SolutionsGrid items={items} />
             </div>
 
-            <Button href="/solutions" className={styles.footerLink}>
+            <Button href="/solutions" className={styles.footerLink} variant="secondary">
                 Browse all solutions <ArrowRight size={16} />
             </Button>
         </section>
