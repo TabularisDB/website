@@ -47,6 +47,7 @@ export function Modal({open, onClose, title, icon, className, children}: ModalPr
     return createPortal(
         <div
             className={clsx(styles.overlay, open && styles.open)}
+            data-modal
             onClick={(e) => e.target === e.currentTarget && onClose()}
             aria-hidden={!open}
         >

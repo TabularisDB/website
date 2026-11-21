@@ -127,10 +127,11 @@ export function EngagementPrompt() {
         if (!content) return;
 
         // Listens to click, not pointerdown, so a touch-scroll on mobile doesn't dismiss the prompt.
-        // The cookie banner can sit on top of the prompt; using it doesn't count as outside.
+        // The cookie banner and modals (portaled outside the prompt) don't count as outside.
         const onClick = (e: MouseEvent) => {
             if (!(e.target instanceof Element)) return;
-            if (promptRef.current?.contains(e.target) || e.target.closest('[data-cookie-consent]')) return;
+            if (promptRef.current?.contains(e.target) || e.target.closest('[data-cookie-consent], [data-modal]'))
+                return;
             dismiss();
         };
 
