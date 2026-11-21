@@ -73,6 +73,7 @@ export function Footer() {
                     <button
                         type="button"
                         className={styles.manageCookiesButton}
+                        data-cookie-consent
                         onClick={() => window.dispatchEvent(new Event('tabularis:manage-cookies'))}
                     >
                         Cookie Preferences

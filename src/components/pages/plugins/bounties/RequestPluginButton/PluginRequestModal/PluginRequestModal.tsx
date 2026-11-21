@@ -2,6 +2,8 @@
 
 import {Button} from '@/components/ui/Button/Button';
 import {Modal} from '@/components/ui/Modal/Modal';
+import {Notice} from '@/components/ui/Notice/Notice';
+import {SegmentedControl} from '@/components/ui/SegmentedControl/SegmentedControl';
 import {
     DESCRIPTION_MAX,
     fetchSession,
@@ -15,12 +17,13 @@ import {
     type TabulariumSession,
 } from '@/lib/plugins/requests';
 import {TABULARIUM_REQUESTS_URL} from '@/lib/tabularium';
-import clsx from 'clsx';
-import {ArrowRight, ArrowUpRight, LightbulbIcon} from 'lucide-react';
-import {useEffect, useState, type FormEvent} from 'react';
+import {ArrowRight, ArrowUpRight, CircleCheckIcon, DatabaseIcon, PaletteIcon} from 'lucide-react';
+import {useEffect, useState, type ElementType, type FormEvent} from 'react';
 import styles from './PluginRequestModal.module.scss';
 
 const FORM_ID = 'plugin-request-form';
+
+const KIND_ICONS: Record<string, ElementType> = {driver: DatabaseIcon, theme: PaletteIcon};
 
 interface PluginRequestModalProps {
     open: boolean;
@@ -33,8 +36,9 @@ interface PluginRequestModalProps {
 /** "Suggest a plugin" form that posts to the Tabularium community wishlist. */
 export function PluginRequestModal({open, onClose, kinds, resume}: PluginRequestModalProps) {
     const [session, setSession] = useState<TabulariumSession>({state: 'checking'});
+    const defaultKind = kinds.find((k) => k.key === 'driver')?.key ?? kinds[0]?.key ?? '';
     const [name, setName] = useState('');
-    const [kind, setKind] = useState('');
+    const [kind, setKind] = useState(defaultKind);
     const [description, setDescription] = useState('');
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -44,7 +48,7 @@ export function PluginRequestModal({open, onClose, kinds, resume}: PluginRequest
     useEffect(() => {
         if (!resume) return;
         setName(resume.name.slice(0, NAME_MAX));
-        setKind(kinds.some((k) => k.key === resume.kind) ? resume.kind : '');
+        setKind(kinds.some((k) => k.key === resume.kind) ? resume.kind : defaultKind);
         setDescription(resume.description.slice(0, DESCRIPTION_MAX));
         setAutoSubmit(true);
     }, [resume, kinds]);
@@ -70,7 +74,7 @@ export function PluginRequestModal({open, onClose, kinds, resume}: PluginRequest
 
         setCreated(result.request);
         setName('');
-        setKind('');
+        setKind(defaultKind);
         setDescription('');
     }
 
@@ -99,7 +103,6 @@ export function PluginRequestModal({open, onClose, kinds, resume}: PluginRequest
         redirectToSignIn();
     }
 
-    const selectedKind = kinds.find((k) => k.key === kind);
     const submitLabel = submitting
         ? 'Sending…'
         : session.state === 'signed-out'
@@ -107,24 +110,15 @@ export function PluginRequestModal({open, onClose, kinds, resume}: PluginRequest
           : 'Suggest plugin';
 
     return (
-        <Modal open={open} onClose={onClose} title="Suggest a plugin" icon={<LightbulbIcon size={18} />}>
+        <Modal open={open} onClose={onClose} title="Suggest a plugin">
             <Modal.Body>
                 {created ? (
-                    <Modal.Text className={styles.lead}>
-                        <strong>{created.name}</strong> is on the Tabularium wishlist, waiting for review. Once a
-                        maintainer approves it, it shows up on this board, where the community can upvote and claim it.
-                    </Modal.Text>
+                    <Notice variant="accent" icon={CircleCheckIcon} title={`${created.name} is on the wishlist`}>
+                        It&apos;s waiting for review. Once a maintainer approves it, it shows up on this board, where
+                        the community can upvote and claim it.
+                    </Notice>
                 ) : (
                     <form id={FORM_ID} className={styles.form} onSubmit={handleSubmit}>
-                        <Modal.Text className={styles.lead}>
-                            Describe what&apos;s missing. Requests go to the{' '}
-                            <a href={TABULARIUM_REQUESTS_URL} target="_blank" rel="noopener noreferrer">
-                                Tabularium wishlist
-                            </a>
-                            . A maintainer reviews each one before it becomes a bounty the community can vote on and
-                            claim.
-                        </Modal.Text>
-
                         <label className={styles.field}>
                             <span className={styles.label}>Plugin name</span>
                             <input
@@ -138,29 +132,21 @@ export function PluginRequestModal({open, onClose, kinds, resume}: PluginRequest
                         </label>
 
                         {kinds.length > 0 && (
-                            <div className={styles.field}>
-                                <span className={styles.label}>Kind</span>
-                                <div className={styles.kinds} role="radiogroup" aria-label="Kind">
-                                    {kinds.map((k) => (
-                                        <button
-                                            key={k.key}
-                                            type="button"
-                                            role="radio"
-                                            aria-checked={kind === k.key}
-                                            title={k.description ?? undefined}
-                                            className={clsx(styles.kind, kind === k.key && styles.kindOn)}
-                                            onClick={() => {
-                                                setKind(k.key);
-                                                setError(null);
-                                            }}
-                                        >
-                                            {k.label}
-                                        </button>
-                                    ))}
-                                </div>
-                                <span className={styles.hint}>
-                                    {selectedKind?.description ?? 'Pick the kind of plugin you need.'}
-                                </span>
+                            <div className={styles.fieldRow}>
+                                <span className={styles.label}>Type</span>
+                                <SegmentedControl
+                                    options={kinds.map((k) => ({
+                                        value: k.key,
+                                        label: k.label,
+                                        icon: KIND_ICONS[k.key],
+                                    }))}
+                                    value={kind}
+                                    onChange={(value) => {
+                                        setKind(value);
+                                        setError(null);
+                                    }}
+                                    ariaLabel="Plugin type"
+                                />
                             </div>
                         )}
 
@@ -183,9 +169,9 @@ export function PluginRequestModal({open, onClose, kinds, resume}: PluginRequest
                         </label>
 
                         {error && (
-                            <p className={styles.error} role="alert">
-                                {error}
-                            </p>
+                            <div role="alert">
+                                <Notice variant="warning">{error}</Notice>
+                            </div>
                         )}
 
                         <SessionStatus session={session} />
@@ -227,27 +213,27 @@ export function PluginRequestModal({open, onClose, kinds, resume}: PluginRequest
 
 function SessionStatus({session}: {session: TabulariumSession}) {
     return (
-        <div className={styles.status} aria-live="polite">
-            {session.state === 'checking' && <span>Checking your Tabularium session…</span>}
+        <div aria-live="polite">
+            {session.state === 'checking' && <p className={styles.status}>Checking your Tabularium session…</p>}
             {session.state === 'signed-in' && (
-                <span>
+                <p className={styles.status}>
                     Posting as <strong>{session.user}</strong> on Tabularium.
-                </span>
+                </p>
             )}
             {session.state === 'signed-out' && (
-                <span>
+                <Notice>
                     You&apos;ll sign in to Tabularium and come straight back here; the request is sent as soon as
                     you&apos;re signed in.
-                </span>
+                </Notice>
             )}
             {session.state === 'unreachable' && (
-                <span>
+                <Notice variant="warning">
                     The registry can&apos;t be reached from here. You can post the request directly on{' '}
                     <a href={TABULARIUM_REQUESTS_URL} target="_blank" rel="noopener noreferrer">
                         Tabularium
                     </a>
                     .
-                </span>
+                </Notice>
             )}
         </div>
     );

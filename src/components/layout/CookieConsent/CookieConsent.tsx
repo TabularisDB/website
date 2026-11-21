@@ -2,8 +2,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client';
 import {Button} from '@/components/ui/Button/Button';
+import {Modal} from '@/components/ui/Modal/Modal';
+import clsx from 'clsx';
 import Link from 'next/link';
 import {useEffect, useState} from 'react';
+import promptStyles from '../EngagementPrompt/EngagementPrompt.module.scss';
 import styles from './CookieConsent.module.scss';
 
 type CookiePrefs = {
@@ -15,6 +18,26 @@ type CookiePrefs = {
 const STORAGE_KEY = 'tabularis-cookie-consent';
 const MATOMO_URL = '//analytics.debbaweb.it/';
 const MATOMO_SITE_ID = '4';
+
+const CATEGORIES = [
+    {
+        key: 'necessary',
+        label: 'Necessary',
+        description:
+            'Required for the site to work: your consent choice, prompt reminders and cookieless, anonymised page-view statistics.',
+    },
+    {
+        key: 'measurement',
+        label: 'Measurement',
+        description:
+            'Cookie-based Matomo analytics to recognise returning visitors. IP addresses stay anonymised and nothing is shared.',
+    },
+    {
+        key: 'marketing',
+        label: 'Marketing',
+        description: 'Nothing is set today. Decide in advance, should we ever add a service that needs it.',
+    },
+] as const;
 
 function initMatomo(cookieConsent: boolean) {
     if (typeof window === 'undefined') return;
@@ -52,152 +75,123 @@ function initMatomo(cookieConsent: boolean) {
 }
 
 export function CookieConsent() {
-    const [visible, setVisible] = useState(false);
-    const [measurement, setMeasurement] = useState(false);
-    const [marketing, setMarketing] = useState(false);
-    const [showDetailedView, setShowDetailedView] = useState(false);
-    const [hasChoice, setHasChoice] = useState(false);
+    const [bannerOpen, setBannerOpen] = useState(false);
+    const [settingsOpen, setSettingsOpen] = useState(false);
+    const [prefs, setPrefs] = useState({measurement: false, marketing: false});
 
     useEffect(() => {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        setShowDetailedView(!!raw);
-        setHasChoice(!!raw);
-
-        if (!raw) {
-            initMatomo(false);
-            setVisible(true);
-        } else {
-            try {
-                const prefs: CookiePrefs = JSON.parse(raw);
-                setMeasurement(prefs.measurement);
-                setMarketing(prefs.marketing);
-                initMatomo(prefs.measurement);
-            } catch {
-                initMatomo(false);
-                setVisible(true);
-            }
-        }
+        const stored = readPrefs();
+        if (stored) setPrefs(stored);
+        initMatomo(stored?.measurement ?? false);
+        if (!stored) setBannerOpen(true);
 
         function handleManage() {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            setShowDetailedView(!!raw);
-            setHasChoice(!!raw);
-
-            if (raw) {
-                try {
-                    const prefs: CookiePrefs = JSON.parse(raw);
-                    setMeasurement(prefs.measurement);
-                    setMarketing(prefs.marketing);
-                } catch {
-                    // leave current state
-                }
-            }
-            setVisible(true);
+            const current = readPrefs();
+            if (current) setPrefs(current);
+            setSettingsOpen(true);
         }
 
         window.addEventListener('tabularis:manage-cookies', handleManage);
         return () => window.removeEventListener('tabularis:manage-cookies', handleManage);
     }, []);
 
-    function save(measurementVal: boolean, marketingVal: boolean) {
-        const prefs: CookiePrefs = {
-            necessary: true,
-            measurement: measurementVal,
-            marketing: marketingVal,
-        };
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
-        setMeasurement(measurementVal);
-        setMarketing(marketingVal);
-        setVisible(false);
-        setHasChoice(true);
-        initMatomo(measurementVal);
+    function save(measurement: boolean, marketing: boolean) {
+        const stored: CookiePrefs = {necessary: true, measurement, marketing};
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+        setPrefs({measurement, marketing});
+        setBannerOpen(false);
+        setSettingsOpen(false);
+        initMatomo(measurement);
     }
 
-    function handleTextButton() {
-        if (!showDetailedView) setShowDetailedView(true);
-        else if (hasChoice) setVisible(false);
-        else setShowDetailedView(false);
+    function closeSettings() {
+        setPrefs(readPrefs() ?? {measurement: false, marketing: false});
+        setSettingsOpen(false);
     }
-
-    if (!visible) return null;
 
     return (
-        <div className={styles.cookieModal} role="dialog" aria-label="Cookie preferences">
-            <h3 className={styles.title}>{showDetailedView ? 'Customise your preferences' : 'Can we use cookies?'}</h3>
-
-            {showDetailedView ? (
-                <div className={styles.preferences}>
-                    <div className={styles.cookieRow}>
-                        <span className={styles.cookieLabel}>Necessary</span>
-                        <div
-                            className={`${styles.cookieToggle} ${styles.cookieToggleOn} ${styles.cookieToggleLocked}`}
-                            title="Necessary cookies are always active"
-                        >
-                            <span className={styles.cookieToggleThumb} />
+        <>
+            {bannerOpen && !settingsOpen && (
+                <div
+                    className={promptStyles.surveyPrompt}
+                    role="dialog"
+                    aria-label="Cookie preferences"
+                    data-cookie-consent
+                >
+                    <div className={promptStyles.banner}>
+                        <p className={promptStyles.promoCtaText}>
+                            We use cookies to understand how the site is used and improve it.{' '}
+                            <Link href="/cookie-policy">Learn more</Link>
+                        </p>
+                        <div className={promptStyles.actions}>
+                            <Button variant="secondary" size="sm" onClick={() => save(true, true)}>
+                                Accept
+                            </Button>
+                            <button
+                                type="button"
+                                className={clsx(promptStyles.textButton, styles.reject)}
+                                onClick={() => save(false, false)}
+                            >
+                                Reject
+                            </button>
+                            <button
+                                type="button"
+                                className={promptStyles.textButton}
+                                onClick={() => setSettingsOpen(true)}
+                            >
+                                Privacy settings
+                            </button>
                         </div>
                     </div>
-
-                    <div className={styles.cookieRow}>
-                        <span className={styles.cookieLabel}>Measurement</span>
-                        <button
-                            className={`${styles.cookieToggle} ${measurement ? styles.cookieToggleOn : styles.cookieToggleOff}`}
-                            onClick={() => setMeasurement((v) => !v)}
-                            aria-pressed={measurement}
-                            aria-label="Toggle measurement cookies"
-                        >
-                            <span className={styles.cookieToggleThumb} />
-                        </button>
-                    </div>
-
-                    <div className={styles.cookieRow}>
-                        <span className={styles.cookieLabel}>Marketing</span>
-                        <button
-                            className={`${styles.cookieToggle} ${marketing ? styles.cookieToggleOn : styles.cookieToggleOff}`}
-                            onClick={() => setMarketing((v) => !v)}
-                            aria-pressed={marketing}
-                            aria-label="Toggle marketing cookies"
-                        >
-                            <span className={styles.cookieToggleThumb} />
-                        </button>
-                    </div>
                 </div>
-            ) : (
-                <p className={styles.description}>
-                    Tabularis uses cookies to improve your experience and for analytics.{' '}
-                    <Link href="/cookie-policy">Read our cookie policy</Link> for more details.
-                </p>
             )}
 
-            <div className={styles.actions}>
-                {showDetailedView ? (
-                    <Button size="sm" className={styles.button} onClick={() => save(measurement, marketing)}>
-                        Save preferences
+            <Modal open={settingsOpen} onClose={closeSettings} title="Privacy settings">
+                <Modal.Body>
+                    <ul className={styles.categories}>
+                        {CATEGORIES.map(({key, label, description}) => {
+                            const locked = key === 'necessary';
+                            const checked = locked || prefs[key];
+                            return (
+                                <li key={key} className={styles.category}>
+                                    <div>
+                                        <p className={styles.label}>{label}</p>
+                                        <p className={styles.description}>{description}</p>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        role="switch"
+                                        aria-checked={checked}
+                                        aria-label={`${label} cookies`}
+                                        disabled={locked}
+                                        className={clsx(styles.switch, checked && styles.on)}
+                                        onClick={() => !locked && setPrefs((p) => ({...p, [key]: !p[key]}))}
+                                    >
+                                        <span className={styles.thumb} />
+                                    </button>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </Modal.Body>
+                <Modal.Actions>
+                    <Button variant="secondary" onClick={closeSettings}>
+                        Cancel
                     </Button>
-                ) : (
-                    <>
-                        <Button
-                            variant="secondary"
-                            size="sm"
-                            className={styles.button}
-                            onClick={() => save(false, false)}
-                        >
-                            No
-                        </Button>
-                        <Button
-                            variant="secondary"
-                            size="sm"
-                            className={styles.button}
-                            onClick={() => save(true, true)}
-                        >
-                            Yes
-                        </Button>
-                    </>
-                )}
-            </div>
-
-            <button type="button" className={styles.textButton} onClick={handleTextButton}>
-                {!showDetailedView ? 'Customize' : hasChoice ? 'Close' : 'Back'}
-            </button>
-        </div>
+                    <Button onClick={() => save(prefs.measurement, prefs.marketing)}>Save preferences</Button>
+                </Modal.Actions>
+            </Modal>
+        </>
     );
+}
+
+function readPrefs(): Omit<CookiePrefs, 'necessary'> | null {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return null;
+        const prefs: CookiePrefs = JSON.parse(raw);
+        return {measurement: Boolean(prefs.measurement), marketing: Boolean(prefs.marketing)};
+    } catch {
+        return null;
+    }
 }

@@ -202,6 +202,10 @@ export function SurveyForm({source, onSubmitted}: SurveyFormProps) {
                             />
                         </div>
 
+                        <PrivacyConsent id={`survey-privacy-consent-${source}`}>
+                            I agree to the processing of my answers
+                        </PrivacyConsent>
+
                         {newsletterConfigured && (
                             <label className={styles.checkline}>
                                 <input
@@ -210,13 +214,9 @@ export function SurveyForm({source, onSubmitted}: SurveyFormProps) {
                                     onChange={(e) => setNewsletter(e.target.checked)}
                                 />
                                 <span className={`${styles.indicator} ${styles.indicatorCheckbox}`} />
-                                Also subscribe me to the newsletter
+                                Subscribe to the newsletter
                             </label>
                         )}
-
-                        <PrivacyConsent id={`survey-privacy-consent-${source}`}>
-                            I agree to the processing of my answers and email, used only to follow up on my feedback
-                        </PrivacyConsent>
 
                         <Turnstile key={guard.widgetKey} action="survey" onToken={guard.onToken} />
 

@@ -5,17 +5,20 @@
     flex-shrink: 0;
     width: 2rem;
     height: 2rem;
-    border: var(--border);
     border-radius: var(--radius-sm);
-    background-color: var(--color-surface);
     color: var(--color-text-secondary);
     transition:
-        border-color 0.15s ease,
+        background-color 0.15s ease,
         color 0.15s ease;
 
     &:hover {
-        border-color: var(--color-border-hover);
+        background-color: rgb(var(--rgb-tint) / 8%);
         color: var(--color-text-primary);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--color-accent-teal);
+        outline-offset: 2px;
     }
 
     svg {
@@ -31,5 +34,14 @@
     svg {
         width: 0.875rem;
         height: 0.875rem;
+    }
+}
+
+.onDark {
+    color: rgb(255 255 255 / 70%);
+
+    &:hover {
+        background-color: rgb(255 255 255 / 12%);
+        color: #fff;
     }
 }

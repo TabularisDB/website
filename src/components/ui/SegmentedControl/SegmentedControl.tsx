@@ -42,6 +42,7 @@ export function SegmentedControl<T extends string>({
                         className={clsx(
                             styles.segment,
                             label ? styles.labeled : styles.iconOnly,
+                            Icon && styles.withIcon,
                             selected && styles.selected,
                         )}
                     >
