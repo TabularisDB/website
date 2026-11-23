@@ -19,7 +19,6 @@ export const REPO_CONTRIBUTORS: RepoContributor[] = [
     {"login":"jonaspm","avatarUrl":"https://avatars.githubusercontent.com/u/7599554?v=4","commits":35},
     {"login":"GabrielMalava","avatarUrl":"https://avatars.githubusercontent.com/u/145515242?v=4","commits":28},
     {"login":"markankamaransheogarat-sys","avatarUrl":"https://avatars.githubusercontent.com/u/279850453?v=4","commits":27},
-    {"login":"claude","avatarUrl":"https://avatars.githubusercontent.com/u/81847?v=4","commits":26},
     {"login":"shu-chen-dot-ca","avatarUrl":"https://avatars.githubusercontent.com/u/338845574?v=4","commits":26},
     {"login":"ymadd","avatarUrl":"https://avatars.githubusercontent.com/u/18324681?v=4","commits":26},
     {"login":"Asymtode712","avatarUrl":"https://avatars.githubusercontent.com/u/115717746?v=4","commits":24},
