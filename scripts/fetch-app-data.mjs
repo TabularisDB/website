@@ -515,10 +515,14 @@ async function resolveClosers(contributions) {
                     try {
                         looked += 1;
                         if (c.type === 'pr') {
-                            const pr = await fetchJson(`https://api.github.com/repos/${ORG}/${c.repo}/pulls/${c.number}`);
+                            const pr = await fetchJson(
+                                `https://api.github.com/repos/${ORG}/${c.repo}/pulls/${c.number}`,
+                            );
                             closedBy = pr.merged_by?.login;
                         } else {
-                            const issue = await fetchJson(`https://api.github.com/repos/${ORG}/${c.repo}/issues/${c.number}`);
+                            const issue = await fetchJson(
+                                `https://api.github.com/repos/${ORG}/${c.repo}/issues/${c.number}`,
+                            );
                             closedBy = issue.closed_by?.login;
                         }
                     } catch {
@@ -661,7 +665,10 @@ async function buildContributions() {
 
 // All-time commit authors across the org's public repos, for the home page
 // contributors wall. Forks are skipped so upstream authors are not credited.
+// Bots and AI agents are left out; agents sign in as regular users, so they
+// are matched by login.
 const REPO_CONTRIBUTORS_OUT = 'src/lib/community/contributors.ts';
+const AGENT_LOGINS = new Set(['claude', 'codex']);
 
 async function buildRepoContributors() {
     const repos = await fetchJson(`https://api.github.com/orgs/${ORG}/repos?type=public&per_page=100`);
@@ -682,7 +689,7 @@ async function buildRepoContributors() {
             if (!res.ok) throw new Error(`GET ${res.url} -> ${res.status} ${res.statusText}`);
             const contributors = await res.json();
             for (const {login, avatar_url, type, contributions} of contributors) {
-                if (type !== 'User' || login.endsWith('[bot]')) continue;
+                if (type !== 'User' || login.endsWith('[bot]') || AGENT_LOGINS.has(login.toLowerCase())) continue;
                 const entry = totals.get(login) ?? {login, avatarUrl: avatar_url, commits: 0};
                 entry.commits += contributions;
                 totals.set(login, entry);
@@ -832,7 +839,9 @@ ${contributions.map((c) => `    ${JSON.stringify(c)},`).join('\n')}
 ];
 `,
         );
-        console.log(`fetched ${ORG} contributions -> ${contributionsOut} (${contributions.length} PRs, issues and plugins)`);
+        console.log(
+            `fetched ${ORG} contributions -> ${contributionsOut} (${contributions.length} PRs, issues and plugins)`,
+        );
     } catch (err) {
         // Same policy as the issue board: a stale leaderboard beats a failed deploy.
         console.warn(`contributions unavailable, keeping committed copy: ${err}`);
