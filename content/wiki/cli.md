@@ -88,8 +88,12 @@ tabularis web
 | `--allow-high-risk` | Give remote sessions administrator rights (tunnels, plugins, backups, settings). Never for shared deployments. |
 | `--server-file-browser-root` | A server directory the browser may browse. Repeatable; remote sessions also need `--allow-high-risk`. |
 | `--web-root` | Serve the UI from another built folder. For development only: the server and the UI must come from the same release. |
+| `--base-path` | Since v0.34.0. Public mount path, for example `/tools/database/`; the reverse proxy must strip it. See [Serving Under a Sub-Path](/wiki/web-remote-access#serving-under-a-sub-path). |
+| `--connection-mode` | `standalone` (default) or `managed-only`. Since v0.34.0 `managed-only` is enforced: users cannot create, change, import, export or test connections. Requires `--auth` and cannot be combined with `--allow-high-risk`. See [Managed Connections](/wiki/web-remote-access#managed-connections). |
+| `--managed-allow-branding` | With `--connection-mode`, lets users change connection colors and icons. |
+| `--managed-allow-organization` | With `--connection-mode`, lets users change connection groups and tags. |
 
-The login password and the proxy secret are read from `TABULARIS_WEB_PASSWORD` and `TABULARIS_WEB_PROXY_SECRET`, never from the command line. See [Remote Access & Reverse Proxy](/wiki/web-remote-access) for remote deployments.
+The login password and the proxy secret are read from `TABULARIS_WEB_PASSWORD` and `TABULARIS_WEB_PROXY_SECRET`, never from the command line, and the [provisioning API](/wiki/web-remote-access#provisioning-api) token from `TABULARIS_PROVISIONING_TOKEN` or `TABULARIS_PROVISIONING_TOKEN_FILE`. See [Remote Access & Reverse Proxy](/wiki/web-remote-access) for remote deployments.
 
 ## `--mcp`
 

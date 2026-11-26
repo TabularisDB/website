@@ -35,6 +35,8 @@ Table: "orders"
 ```
 By feeding this exact structural context to the LLM alongside your natural language prompt, the AI knows exactly which `JOIN` clauses to write and which data types it is dealing with.
 
+Since v0.34.0 the snapshot can also carry your own descriptions of tables and columns. [Schema Notes](/wiki/schema-management#schema-notes) are local Markdown notes per connection, table and column; with **Include these notes in AI schema context** enabled for the connection (off by default), the notes of the tables in the snapshot are appended after it, each quoted on its own line under a header that marks them as user-written, untrusted descriptive context. The section is capped in size, and an unreadable notes file is skipped without breaking the request.
+
 ### Plugin drivers
 
 AI Query Assist uses the same driver registry as the rest of Tabularis, so it also works with external database plugins. Existing plugins receive automatic support through their standard `get_tables`, `get_columns`, and `get_foreign_keys` metadata methods. A plugin can optionally implement the batched `get_ai_schema_context` JSON-RPC method when its database offers a more efficient metadata query; if that method is absent, Tabularis falls back automatically.

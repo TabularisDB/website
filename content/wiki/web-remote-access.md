@@ -66,7 +66,7 @@ After authenticating the user, the proxy must **replace** (not append) two reque
 - `X-Tabularis-User`: the authenticated, non-empty user identifier;
 - `X-Tabularis-Proxy-Secret`: the same secret as `TABULARIS_WEB_PROXY_SECRET`.
 
-Tabularis removes both headers before handling the request and rejects requests where they are missing or wrong. Never expose the listener directly: a client that bypasses the proxy could send these headers itself.
+Tabularis removes both headers before handling the request and rejects requests where they are missing or wrong. Since v0.34.0 this holds for every protected HTTP request and WebSocket upgrade, including those that already carry a valid session cookie, so a cookie alone no longer gets past a request that did not come through the proxy. A correct request reuses its session; it does not create or extend one. Never expose the listener directly: a client that bypasses the proxy could send these headers itself.
 
 Example Nginx location, after your own `auth_request`, OIDC or basic-auth configuration:
 
@@ -100,7 +100,30 @@ Requests with an unexpected `Host` or `Origin` get HTTP 403, and state-changing 
 
 ## Serving Under a Sub-Path
 
-Since v0.33.0 the browser UI can be built for a mount path such as `/tools/database/` instead of `/`. `TABULARIS_BASE_PATH` is a **build-time** setting: changing it means rebuilding the frontend, not restarting the server, and the published image is built for `/`.
+Since v0.34.0 the mount path is a runtime option. Start the server with `--base-path`, and the same build serves at `/`, `/tools/database/` or any other path:
+
+```bash
+tabularis web --no-open --auth password \
+  --public-url https://tabularis.example.com \
+  --allowed-origin https://tabularis.example.com \
+  --base-path /tools/database/
+```
+
+The path must be a local absolute path. A missing trailing slash is added; origins, empty or dot segments, backslashes, percent encodings, query strings, fragments and non-ASCII characters fail at startup. No request header, query parameter or forwarded prefix can change it. It is not part of the origin: keep `--public-url` / `TABULARIS_PUBLIC_URL` and every `--allowed-origin` without a path.
+
+The server writes the path into the page it serves, and the router, static assets, HTTP API, WebSocket events, transfers, plugin assets, connection icons and browser windows use it. The server also scopes its session and logout cookies, the login form, error-page retries and redirects to the path, so the built-in password page works under a sub-path without rewrites at the proxy, and proxy mode works as before. Pages and login responses are sent with `Cache-Control: no-store`, so the page of one mount path is never served from cache for another.
+
+The server still answers at `/`. The reverse proxy must strip the prefix, preserve the public `Host` and `Origin`, forward WebSocket upgrades, and redirect `/tools/database` to `/tools/database/`. With Apache:
+
+```apache
+ProxyPreserveHost On
+ProxyPass /tools/database/ http://127.0.0.1:8080/ upgrade=websocket
+ProxyPassReverse /tools/database/ http://127.0.0.1:8080/
+```
+
+### Build-Time `TABULARIS_BASE_PATH`
+
+The build-time setting from v0.33.0 is still supported:
 
 ```bash
 TABULARIS_BASE_PATH=/tools/database/ pnpm build
@@ -108,9 +131,7 @@ TABULARIS_BASE_PATH=/tools/database/ pnpm build
 docker build -f docker/Dockerfile --build-arg TABULARIS_BASE_PATH=/tools/database/ -t tabularis:custom-path .
 ```
 
-The router, static assets, HTTP API, WebSocket events, transfers, connection icons and browser windows all use the prefix. The path must start with `/`; origins, query strings, fragments, dot segments and empty segments fail the build, and the trailing slash is optional.
-
-The server itself still serves its routes at `/`, so the reverse proxy must strip the prefix, preserve the public `Host`, forward WebSocket upgrades and rewrite the session cookie path to the mount path. Keep `--public-url` / `TABULARIS_PUBLIC_URL` an origin without a path. Proxy mode works without further changes. The built-in password page still uses root-relative form actions and redirects, so password mode under a sub-path needs extra rewriting at the proxy. The repository's [`docs/web/WEB_BASE_PATH.md`](https://github.com/TabularisDB/tabularis/blob/main/docs/web/WEB_BASE_PATH.md) has Apache examples for both modes.
+A frontend built this way records its prefix, which the server uses when `--base-path` is omitted; a different `--base-path` fails at startup. A frontend built for `/` accepts any runtime path, but one built before v0.34.0 cannot use a non-root `--base-path` until it is rebuilt. When you move to `--base-path`, remove the cookie-path, `Location` and login-page rewrites that the build-time setting needed in password mode, because applying them twice produces wrong paths. Never mix a server and a frontend from different releases. The repository's [`docs/web/WEB_BASE_PATH.md`](https://github.com/TabularisDB/tabularis/blob/main/docs/web/WEB_BASE_PATH.md) has the Apache configurations for both setups.
 
 ## What Remote Sessions Can Do
 
@@ -130,6 +151,39 @@ These groups stay denied unless you start the server with `--allow-high-risk`:
 MCP configuration stays unavailable to remote sessions even with that option.
 
 > Enable `--allow-high-risk` only for a deployment used by a single trusted administrator, never for a shared or weakly authenticated one.
+
+## Managed Connections
+
+`--connection-mode managed-only` puts an instance's connections under the administrator's control; since v0.34.0 the server and the Web UI enforce it. Browser users can open them and query within the database account's privileges, but cannot create, edit, delete, duplicate, import, export or test connections, change the databases a connection targets, point it at another destination, or read stored credentials. The server rejects these requests before reading their payload, with HTTP 403 and the code `managed_connection_denied`. The Connections page hides the actions and shows a notice that the connections are managed, and the SSH, Backup and Credential Profiles settings tabs are hidden. Without the option (or with `--connection-mode standalone`) nothing changes, and the desktop app is not affected.
+
+```bash
+tabularis web --no-open --auth password \
+  --public-url https://tabularis.example.com \
+  --allowed-origin https://tabularis.example.com \
+  --connection-mode managed-only
+```
+
+> Every authenticated user of an instance shares all of its managed connections. There are no per-user grants and no multi-tenant isolation: run a separate instance for each group of users that needs different access.
+
+- The server refuses to start without `--auth`, together with `--allow-high-risk`, or when a stored credential is shorter than four characters.
+- `--managed-allow-branding` lets users change connection colors and icons, and `--managed-allow-organization` groups and tags. Both are stored in the instance's connections file, so a change applies to every user.
+- Connection responses never include passwords, connection URIs, SSH or proxy credentials, or plugin secrets, and error messages and live events are scrubbed of stored credentials. A credential rotated while the instance runs can appear in an event for up to 30 seconds. Query results are not scrubbed.
+- Importing a connections file cannot mark a connection as managed.
+
+Prepare the connections before starting the instance, for example by running it once without the option, or maintain them with the provisioning API.
+
+### Provisioning API
+
+Since v0.34.0 an opt-in machine API manages the connections of a managed instance while it runs. It is enabled by `TABULARIS_PROVISIONING_TOKEN` or `TABULARIS_PROVISIONING_TOKEN_FILE` (never both), a random token of at least 32 non-whitespace bytes, and needs `--connection-mode managed-only` without the branding and organization switches; otherwise the server does not start. Only `Authorization: Bearer <token>` authorizes it. Cookies, CSRF tokens and proxy user headers do not, a request carrying an `Origin` header is rejected, and the token does not authorize browser requests. Keep it out of browsers and URLs, and restrict the endpoints at the gateway as well.
+
+| Request | Effect |
+| :--- | :--- |
+| `PUT /api/v1/provisioning/connections/{external_ref}` | Create or replace a connection; retries are idempotent |
+| `GET /api/v1/provisioning/connections` | List provisioned connections (metadata only) |
+| `GET /api/v1/provisioning/connections/{external_ref}` | Read one connection's metadata |
+| `DELETE /api/v1/provisioning/connections/{external_ref}` | Remove it; retries also return 204 |
+
+The reference is 1–128 ASCII letters, digits, underscores or hyphens, and the connection id is always `provisioned-<external_ref>`. The PUT body has a `name`, the connection `params` with `driver` set to `postgres`, `mysql` or an installed plugin driver's id, and optional `plugin_secret_changes`. Responses carry only `id`, `external_ref`, `name`, `driver` and `managed`, never parameters or credentials; an omitted password keeps the stored one. PUT does not test the connection. Updates and deletes take effect without a restart: pools, cached credentials and sessions of that connection are released, but queries admitted earlier may finish, so revoke the database account too when access must end at once. Request bodies are limited to 1 MiB. The full contract, including error codes, is in [`docs/web/WEB_PROVISIONING.md`](https://github.com/TabularisDB/tabularis/blob/main/docs/web/WEB_PROVISIONING.md).
 
 ## Sessions and Audit Logs
 

@@ -37,6 +37,17 @@ Since v0.33.0 column comments can also be edited on built-in PostgreSQL and MySQ
 
 ![Table and column descriptions in the PostgreSQL schema inspector](/img/tabularis-schema-comments.png)
 
+### Schema Notes
+
+Since v0.34.0 right-click a table in the explorer and choose **Schema Notes** to keep local business notes in Markdown: a note for the connection, a note and a **Business domain** for the table, and a note for each column. Notes are kept by Tabularis and never written to the database. The window lists the documented objects grouped by domain, shows the database's own table and column comments next to the note fields, and has a Markdown **Preview**. Raw HTML is skipped, links render as plain text and images as their alt text, so a note cannot load remote content.
+
+- Notes are stored per connection in `schema_notes/<connection_id>.json` in the config folder and removed when the connection is deleted. A table is identified together with its database and schema, so `sales.orders` and `archive.orders` keep separate notes. Notes whose table or column no longer exists are kept and marked as not found.
+- A notes file that cannot be read or parsed is reported with its path and never overwritten; the window stays read-only.
+- **Export** writes only the notes: no connection details, credentials, row data or AI setting. **Import** merges by table and column and keeps the local AI setting. Both are disabled while there are unsaved edits, and closing with unsaved edits asks first.
+- **Include these notes in AI schema context** is off by default and set per connection. When on, the notes of the tables sent to the AI provider are added after the [schema snapshot](/wiki/ai-assistant#how-context-injection-works), under a header saying they were written by Tabularis users rather than read from the database. A note qualified with a schema or database is included only when the request names the same one.
+
+![Schema Notes window for the orders table with a connection note, the Sales business domain, table and column notes in Markdown preview, and the AI context checkbox](/img/tabularis-schema-notes.png)
+
 ### Auto-Increment Handling (PostgreSQL)
 
 When creating or modifying a column with auto-increment enabled, Tabularis automatically selects the correct serial type based on the column's integer type:
@@ -67,6 +78,8 @@ Right-click an index or foreign key and choose **View Details** for a read-only 
 ### Column Usage
 
 Since v0.33.0 right-click a column in the explorer and choose **Show Usage** to collect evidence of where that column is used: declared foreign keys (in both directions), references in view definitions, and matches in this connection's Tabularis query history. Each item shows its source, an excerpt and a confidence level (**Confirmed**, **Parsed references** or **Uncertain**, with the reason). The panel states that this is not complete lineage: applications, scripts and other databases are not searched, and it says when a source was only partly read. **Open** goes to the related table or view, and **Open in editor** loads a history entry without running it. Excerpts and the copied summary replace literals with `?` and drop comments.
+
+Since v0.34.0 a history match from a query that failed is tagged **Failed run**, with the error under its title; the copied summary adds the tag but not the error text, which often quotes values. Each side of a `UNION`, `INTERSECT`, `EXCEPT` or `MINUS` now resolves unqualified columns against its own tables, so `SELECT customer_id FROM orders UNION SELECT customer_id FROM archive` gives one parsed match instead of two uncertain ones flagged as reading several tables.
 
 ![Show Usage panel for orders.customer_id with a declared foreign key, a view reference and query-history matches](/img/tabularis-column-usage.png)
 

@@ -32,6 +32,7 @@ The [container image](/wiki/docker-helm#stored-credentials) uses this store by d
 | Secret | Keychain key format |
 | :--- | :--- |
 | Database password | `{connection_id}:db` |
+| Shared credential profile password (since v0.34.0) | `{profile_id}:profile:db` |
 | SSH password | `{connection_id}:ssh` |
 | SSH key passphrase | `{connection_id}:ssh_passphrase` |
 | AI provider API key | `ai_key:{provider}` |
@@ -46,7 +47,7 @@ The keychain service name is `tabularis` for all entries.
 
 | File | Content |
 | :--- | :--- |
-| `connections.json` | Connection profiles: name, host, port, username, driver, SSH profile reference. Also holds the passwords of connections saved without **Save passwords in Keychain** |
+| `connections.json` | Connection profiles: name, host, port, username, driver, SSH profile reference. Since v0.34.0 also the name and username of [shared credential profiles](/wiki/connections#shared-credential-profiles), whose passwords are never written to this file: they go to the keychain, or to the [encrypted file store](#encrypted-file-store) when it is enabled. Also holds the passwords of connections saved without **Save passwords in Keychain** |
 | `ssh_connections.json` | SSH profiles: host, port, username, key file path. The SSH password and key passphrase are also stored here in plain text if the profile's **Save passwords in Keychain** toggle (on by default) is unchecked |
 | `config.json` | App preferences, theme, editor settings |
 | `saved_queries/meta.json` | Saved query metadata |
@@ -78,6 +79,8 @@ When creating or editing a connection, the **Save passwords in Keychain** checkb
 - **Unchecked** — the password is saved in `connections.json` in plain text, together with the rest of the profile.
 
 This applies to database passwords, SSH passwords, and SSH key passphrases.
+
+Since v0.34.0 a connection can instead take its login from a [shared credential profile](/wiki/connections#shared-credential-profiles), so a rotated password is changed once for every linked connection. The profile's password lives in the keychain under its own `{profile_id}:profile:db` entry, separate from any connection's `:db` entry. A linked connection never falls back to a password of its own: if the profile or its keychain entry is missing, connecting fails.
 
 If the toggle is checked but the OS keychain refuses the write, the connection is still saved: the password stays in `connections.json`, the toggle is stored as unchecked, and the plain-text warning is shown. Saving a connection URI (plugin drivers) still requires the toggle.
 
