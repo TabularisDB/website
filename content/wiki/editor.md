@@ -135,6 +135,14 @@ Since v0.29.0 the tab context menu also has **Move Tab Left** and **Move Tab Rig
 
 <video src="/videos/posts/tabularis-reorder-tabs.mp4" poster="/videos/posts/tabularis-reorder-tabs.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
+### Vertical Tab Layout
+
+Since v0.34.0 **Settings → Appearance → General → Editor tabs → Tab layout** switches between **Horizontal** (the default tab bar along the top) and **Vertical**, which lists the open tabs in a 224 px column on the left of the editor, next to the explorer. Long names are truncated and the tooltip shows the full name. The new console, open SQL file, visual query and notebook buttons sit in a row at the top of the column.
+
+Everything the horizontal bar does works in the vertical list too: switching, closing (middle-click included), renaming, pinning, the context menu, loading and transaction indicators, the connection accent tint, and drag-to-reorder, which follows the vertical axis. In [split view](/wiki/split-view) each pane gets its own column. The choice is saved as `tabLayout` in `config.json`.
+
+<video src="/videos/posts/tabularis-vertical-tabs.mp4" poster="/videos/posts/tabularis-vertical-tabs.jpg" controls autoplay loop muted playsinline></video>
+
 ### Long-Query Notifications
 
 Since v0.28.0, when a query runs longer than a threshold and Tabularis is not the focused window when it finishes, a desktop notification shows the tab title, the outcome and the duration. **Run All** sends one notification for the whole batch, with the count of succeeded and failed statements. Table auto-refresh never notifies. Two settings under **Settings → General → Query Execution** control it: **Notify when long queries finish** (on by default) and **Notification threshold** (20 seconds by default), saved as `notifyLongQueries` and `notifyLongQueriesThresholdSec` in `config.json`.
@@ -365,6 +373,8 @@ Both the SQL editor and notebook cells guard against the queries that are easies
 The detection is not a naïve substring match — it ignores comments and string literals (including backslash-escaped quotes), understands data-modifying CTEs, and handles multi-statement batches.
 
 Since v0.33.0 the bodies of a `WITH` statement are checked too: `WITH gone AS (DELETE FROM users RETURNING *) SELECT count(*) FROM gone` asks for confirmation like a top-level `DELETE` without `WHERE`, and an `INSERT`, `UPDATE`, `DELETE` or `MERGE` in a CTE body counts as a write for the production prompt. PRAGMA setters and action pragmas (for example `PRAGMA user_version = 42` or `PRAGMA optimize`) and `SELECT … INTO` also count as writes, so they ask first on a production connection; reading pragmas such as `PRAGMA table_info(users)` do not.
+
+Since v0.34.0 the check looks past a prefix that runs its statement: `EXPLAIN ANALYZE` / `EXPLAIN ANALYSE` (optionally with `VERBOSE` or MySQL's `FORMAT=…`), `EXPLAIN (…)` when its option list turns `ANALYZE` on, and MariaDB's `ANALYZE [FORMAT=…]`. So `EXPLAIN ANALYZE DELETE FROM orders` asks for confirmation like the bare `DELETE`, because the database executes it. A plain `EXPLAIN DELETE …` or `EXPLAIN (ANALYZE false) …` only plans and runs without a prompt, and PostgreSQL's `ANALYZE orders` is not affected.
 
 ### Preview Changes (PostgreSQL)
 

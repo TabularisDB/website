@@ -95,6 +95,10 @@ Click **Test Connection** before saving. Tabularis performs a real SSH handshake
 
 When you connect, the tunnel is established first, then the database driver connects through it. If the tunnel fails, the exact SSH error is surfaced — no generic "connection refused" messages.
 
+### Per-Connection SSH User
+
+Since v0.34.0, when **Use Existing SSH Connection** is selected, the SSH tab has an **SSH User Override (optional)** field. A value there replaces the saved profile's user for this connection only, so several connections can share one bastion profile and log in as different users. The placeholder shows the profile's user; leaving the field blank, or entering only spaces, uses it. The value is trimmed, and **Test SSH** tests the effective user.
+
 ### Test SSH from the connection modal
 
 The **SSH** tab of the connection modal has its own **Test SSH** button — available for both inline SSH settings and a saved connection — which verifies the host, the credentials and the tunnel *without touching the database*. It is the fastest way to tell an SSH problem apart from a database problem.
@@ -147,7 +151,7 @@ Set the SSH profile host to `db-host`, auth type to `ssh_key`, and leave the pas
 ## Tunnel Lifecycle
 
 - Tunnels are created the first time a connection needs them and stay open until Tabularis quits (or the proxy settings change). **Disconnect** closes the database pool but leaves the tunnel running.
-- Tunnels are shared: connections that use the same SSH user, host, and port and the same database host and port (and the same proxy) reuse one tunnel. A [SOCKS5 tunnel](#socks5-proxy-for-multi-host-drivers) is keyed by the SSH user, host and port only.
+- Tunnels are shared: connections that use the same SSH user (after any [per-connection override](#per-connection-ssh-user)), host, and port and the same database host and port (and the same proxy) reuse one tunnel. A [SOCKS5 tunnel](#socks5-proxy-for-multi-host-drivers) is keyed by the SSH user, host and port only.
 - Since v0.33.0 both backends send SSH keepalives every 15 seconds and treat the session as dropped after 3 unanswered ones (`ServerAliveInterval=15`, `ServerAliveCountMax=3` for System SSH). A cached tunnel whose session has ended is reopened on the next connect instead of being reused. Before v0.33.0 a dropped tunnel stayed cached until Tabularis was restarted.
 
 ## Troubleshooting

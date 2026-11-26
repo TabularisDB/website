@@ -114,4 +114,4 @@ docker build -f docker/Dockerfile -t tabularis .
 docker/smoke-test.sh tabularis
 ```
 
-To serve the UI under a path such as `/tools/database/`, add `--build-arg TABULARIS_BASE_PATH=/tools/database/` (since v0.33.0). It is a build argument, not a runtime variable; see [Remote Access → Serving Under a Sub-Path](/wiki/web-remote-access#serving-under-a-sub-path) for the reverse proxy side.
+To serve the UI under a path such as `/tools/database/` you do not need your own image since v0.34.0: append `--base-path /tools/database/` to the container arguments, for example `docker run … ghcr.io/tabularisdb/tabularis --base-path /tools/database/`. The build argument from v0.33.0, `--build-arg TABULARIS_BASE_PATH=/tools/database/`, still works, but an image built with it only serves that path. See [Remote Access → Serving Under a Sub-Path](/wiki/web-remote-access#serving-under-a-sub-path) for the reverse proxy side.

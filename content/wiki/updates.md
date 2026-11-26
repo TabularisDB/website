@@ -13,6 +13,8 @@ Tabularis can notify you when a new version is available and, depending on how y
 
 By default, Tabularis checks the GitHub Releases API two seconds after it starts. On the stable channel the result is cached for 12 hours (the cache is discarded after the app itself is updated), so restarting several times a day does not hit GitHub each time. If a newer version is found, a notification appears in the UI with the release notes and a prompt to install it.
 
+Since v0.34.0 only the main window runs this check, so the release dialog no longer opens over a secondary window such as a JSON cell viewer. When a release is found, the sidebar shows a download icon labelled with the available version; clicking it reopens the release details after you dismissed them, from the cached result and without another network check.
+
 To disable automatic checks, turn off **Check for updates on startup** in **Settings → Info**, or set `autoCheckUpdatesOnStartup` to `false` in your `config.json`. See [Configuration](/wiki/configuration) for the full reference.
 
 > Tabularis only **downloads** an update after you confirm the prompt — it never installs anything silently. Once the update is installed, the app restarts automatically.

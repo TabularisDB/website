@@ -128,13 +128,14 @@ When creating a connection (`+` button in the sidebar or `Cmd/Ctrl + Shift + N`)
 | **Database** | Yes* | The database name to connect to |
 | **Username** | Yes* | Database user |
 | **Password** | No | Stored in the OS keychain when **Save passwords in Keychain** is checked; otherwise written to `connections.json` in plain text |
+| **Credential profile** | No | Since v0.34.0. Takes the username and password from a shared login instead of this connection (see [Shared Credential Profiles](#shared-credential-profiles) below). |
 | **Save passwords in Keychain** | — | On by default for new connections since v0.28.0 (off before). When checked, the database and SSH passwords are kept in the OS keychain and removed from `connections.json`. If the keychain refuses the write, the connection is still saved, with the password in the file and the plain-text warning shown |
 | **Use SSH Tunnel** | No | Activates the SSH tunnel for this connection |
-| **SSH profile** | — | **Use Existing SSH Connection** picks a saved SSH profile; **Configure SSH Inline** defines the tunnel on this connection only |
+| **SSH profile** | — | **Use Existing SSH Connection** picks a saved SSH profile; **Configure SSH Inline** defines the tunnel on this connection only. Since v0.34.0 **SSH User Override** replaces the saved profile's user for this connection |
 | **Allow SSH password/PIN prompt** | No | Lets the SSH tunnel prompt in-app for a key passphrase, security-key PIN, or password when it can't authenticate silently. See [SSH Tunneling → Interactive Authentication](/wiki/ssh-tunneling#interactive-authentication-passphrases--security-keys). |
 | **Startup script** | No | SQL run on every new pooled connection (see [Startup Script](#startup-script) below). |
 | **Read-only mode** | No | Since v0.33.0, in the **Advanced** tab. Blocks writes on this connection (see [Read-Only Mode](#read-only-mode) below). |
-| **Query timeout (seconds)** | No | PostgreSQL since v0.32.0, MySQL/MariaDB since v0.33.0, in the **Advanced** tab (see [Query Timeout](#query-timeout) below). |
+| **Query timeout (seconds)** | No | PostgreSQL since v0.32.0, MySQL/MariaDB since v0.33.0, SQLite since v0.34.0, in the **Advanced** tab (see [Query Timeout](#query-timeout) below). |
 | **Pooler mode** | No | PostgreSQL only, since v0.29.0. Declares that the connection goes through PgBouncer in transaction or session mode (see [Pooler Mode](#pooler-mode-pgbouncer) below). |
 | **Browse multiple databases on this connection** | No | PostgreSQL only, since v0.29.0. Switches the connection to multi-database browsing (see [Multi-Database Support (PostgreSQL)](#multi-database-support-postgresql) below). |
 | **Kubernetes** | No | Tunnels the connection through a managed `kubectl port-forward`. Mutually exclusive with SSH and AWS SSM. See [Kubernetes Tunneling](/wiki/kubernetes-tunneling). |
@@ -216,6 +217,10 @@ Since v0.31.0 PostgreSQL and MySQL profiles have **Connect timeout** in the **Ad
 
 **Stop** in the editor also ends a MySQL query on the server since v0.33.0, instead of leaving it running and holding its locks. Plugin drivers show the field when they declare the `query_timeout` capability.
 
+Since v0.34.0 the built-in SQLite driver has the field too. SQLite runs in-process, so there is no server to cancel: Tabularis checks a stop flag while the statement runs, and SQLite ends it and rolls back its write. The error reads *Query stopped after N s by the connection's query timeout*, as on PostgreSQL and MySQL, and the next statement of a batch still runs. **Stop** now ends a SQLite statement as well, so a stopped `INSERT … SELECT` no longer keeps the file's write lock and the next write does not fail with `database is locked`; the connection is detached rather than returned to the pool. A statement waiting on another connection's lock is stopped only when that wait ends, and if it has not ended within 5 seconds of the timeout the connection is closed instead. The timeout does not apply to EXPLAIN, exports or metadata queries.
+
+![SQLite connection Advanced tab with Query timeout set to 2 seconds](/img/tabularis-sqlite-query-timeout-setting.png)
+
 ### Unix Sockets
 
 Since v0.33.0, MySQL/MariaDB and PostgreSQL connections can use a Unix socket instead of a host and port. Switch the endpoint selector from **Host / Port** to **Socket Path** and enter the absolute path of the socket file, for example `/var/run/postgresql/.s.PGSQL.5432` or `/tmp/mysql.sock`. The form warns when the path is not absolute or looks like a directory.
@@ -256,6 +261,22 @@ A **diagnostics modal** opens on failure — or when you press Stop — showing 
 
 <video src="/videos/posts/tabularis-connection-diagnostics.mp4" poster="/videos/posts/tabularis-connection-diagnostics.jpg" controls muted playsinline loop autoplay controlsList="nodownload noremoteplayback noplaybackrate" disablePictureInPicture></video>
 
+## Shared Credential Profiles
+
+Since v0.34.0 a database login can be stored once and shared by several connections, so rotating the password of a shared account means editing one profile instead of every connection. A profile has a name, a username and a password. The name lives in `connections.json` with the username; the password is kept in the OS keychain under `<profile_id>:profile:db` and is never shown again.
+
+- **Settings → Credential Profiles** creates, edits and deletes profiles. Names are unique, ignoring case. When editing, leaving **New password** empty keeps the stored password.
+- In the connection modal, the **Credential profile** selector picks a profile or **Use connection credentials**. With a profile selected, the username and password come from the profile and the password is not shown on the connection. **Save as profile…** turns the username and password typed on the connection into a new profile, created when the connection is saved. It is refused for AWS IAM tokens; with [RDS IAM authentication](#aws-rds-iam-authentication-mysql) a linked profile supplies only the username and the token is still entered per connect.
+- The profile is resolved on every connect, including connections opened by the [MCP server](/wiki/mcp-server). If the profile or its keychain password is missing, the connection fails instead of falling back to a password stored on the connection. Its edit form still opens.
+- Changing a profile's password never closes an open connection, so running queries and transactions continue. Linked connections use the new password on their next connect, and Settings lists the ones still open so you can reconnect them.
+- A profile that connections still use cannot be deleted: the dialog lists them, and you unlink them first.
+
+[Export](#export--import) includes the profiles the exported connections reference, with their passwords only in the modes that include passwords. Importing as new assigns fresh ids and renames a profile whose name already exists to `<name> (Copy)`. A connection linked to a profile that is neither in the file nor saved locally is rejected before anything is written.
+
+In [Tabularis Web](/wiki/web-mode), managing profiles needs administrator rights, and the tab is hidden in [managed mode](/wiki/web-remote-access#managed-connections).
+
+<video src="/videos/posts/tabularis-credential-profiles.mp4" poster="/videos/posts/tabularis-credential-profiles.jpg" controls autoplay loop muted playsinline></video>
+
 ## SSH Tunnel System
 
 ![SSH Connections](/img/tabularis-ssh-tunneling.png)
@@ -277,6 +298,8 @@ When a tunneled connection opens, Tabularis asks the OS for a free ephemeral por
 ### SSH profiles
 
 SSH connections are stored as separate reusable profiles (`ssh_connections.json`). A single SSH profile (e.g., your production bastion) can be reused across multiple database connections. Manage SSH profiles via **Settings → SSH Connections** or the `SshConnectionsModal`.
+
+Since v0.34.0 a connection that uses a saved SSH profile can set **SSH User Override (optional)** to log in to the bastion as another user; leave it blank to use the profile's user. See [SSH Tunneling → Per-Connection SSH User](/wiki/ssh-tunneling#per-connection-ssh-user).
 
 | SSH field | Description |
 | :--- | :--- |
@@ -351,6 +374,8 @@ Every saved connection can override its driver's default icon and accent color. 
   - **Image** — upload a PNG, JPG, WebP, or SVG (max 512 KB). MIME type is validated against the file's magic bytes; SVGs are rejected if they contain `<script>`, `javascript:` URLs, or `on*=` event handlers. Custom images are stored under `<app_data>/connection-icons/` and cascade-deleted when the connection is removed.
 
 The override is persisted alongside the rest of the connection profile in `connections.json` and round-trips through Export / Import like every other field. The classic use case is differentiating two same-driver connections that would otherwise look identical in the sidebar — for example, a `MySQL local` in green next to a `MySQL prod` in red, each with its own icon.
+
+Since v0.34.0 **Settings → Appearance → General → Connection color → Color bar at the bottom** (off by default) adds a 10 px bar across the bottom of the window in the active connection's accent color, mixed toward the theme's text color so it stands out. It falls back to the theme accent when no connection is selected. See [Configuration → Editor Tab Layout and Connection Color Bar](/wiki/configuration#editor-tab-layout-and-connection-color-bar).
 
 ## Tags and Environments
 
@@ -590,6 +615,7 @@ Every keychain entry uses the service name `tabularis`; the account identifies t
 | Secret type | Keychain account |
 | :--- | :--- |
 | DB password | `<uuid>:db` |
+| Shared credential profile password | `<profile_id>:profile:db` |
 | Connection string (plugin drivers) | `<uuid>:connection_uri` |
 | SSH password | `<uuid>:ssh` |
 | SSH key passphrase | `<uuid>:ssh_passphrase` |

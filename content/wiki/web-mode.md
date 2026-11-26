@@ -16,7 +16,7 @@ Use it to work with Tabularis on a headless machine, keep it next to your databa
 | **Local** | `tabularis web` from an installed Tabularis | One person, on the same machine as the browser |
 | **Container** | Docker, Docker Compose or Helm | A server, a homelab or a Kubernetes cluster; see [Docker & Helm](/wiki/docker-helm) |
 
-Both serve the browser UI over plain HTTP. Access from another machine always goes through an HTTPS reverse proxy with authentication; see [Remote Access & Reverse Proxy](/wiki/web-remote-access). Since v0.33.0 the UI can also be built for a sub-path such as `/tools/database/`; see [Serving Under a Sub-Path](/wiki/web-remote-access#serving-under-a-sub-path).
+Both serve the browser UI over plain HTTP. Access from another machine always goes through an HTTPS reverse proxy with authentication; see [Remote Access & Reverse Proxy](/wiki/web-remote-access). The UI can also be served under a sub-path such as `/tools/database/`: since v0.34.0 with `tabularis web --base-path`, at startup, and since v0.33.0 with a build-time setting; see [Serving Under a Sub-Path](/wiki/web-remote-access#serving-under-a-sub-path). Since v0.34.0 an instance can also run in [managed mode](/wiki/web-remote-access#managed-connections), where an administrator controls the connections.
 
 ## Running It Locally
 

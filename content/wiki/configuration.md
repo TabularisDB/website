@@ -62,6 +62,13 @@ SSH and Kubernetes tunnel endpoints are not proxied a second time on their local
 
 Since v0.33.0 **Settings → Appearance → General → Interface scale** resizes the whole desktop interface, including tabs, icons, dialogs and editors, from 75% to 200% in 25% steps (default 100%). The choice is stored as `interfaceScale` and applied again at the next launch. In [Tabularis Web](/wiki/web-mode) the setting is replaced by a hint to use the browser's zoom controls.
 
+## Editor Tab Layout and Connection Color Bar
+
+Since v0.34.0 **Settings → Appearance → General** has two more sections. Their defaults keep the previous look:
+
+- **Editor tabs → Tab layout**: **Horizontal** keeps the tab bar along the top of the editor; **Vertical** lists the open tabs in a column on the left. Stored as `tabLayout`. See [SQL Editor → Vertical Tab Layout](/wiki/editor#vertical-tab-layout).
+- **Connection color → Color bar at the bottom**: a 10 px bar along the bottom of the window in the active connection's [accent color](/wiki/connections#per-connection-appearance), mixed toward the theme's text color so it stays visible on dark, light and high-contrast themes. With no connection selected it uses the theme accent. The bar takes its own row, so the rest of the layout moves up. Stored as `connectionColorBar`.
+
 ## Result Font
 
 Since v0.24.0, **Settings → Appearance → Data Grid → Result font** controls result cells, inline edit inputs and multiline textareas independently of SQL editor typography. Choose **Same as interface**, a bundled font or a custom family. The default remains JetBrains Mono. See [Themes](/wiki/themes#typography-configuration).
@@ -124,6 +131,8 @@ Any key omitted from the file falls back to its default value. You do not need a
 | `fontFamily` | `string` | `"System"` | Interface font (Settings → Appearance). The SQL editor uses `editorFontFamily`. |
 | `fontSize` | `number` | `14` | Base interface font size in pixels. The SQL editor uses `editorFontSize`. |
 | `interfaceScale` | `number` | `100` | Since v0.33.0. Desktop interface zoom in percent, 75 to 200 (**Settings → Appearance → General → Interface scale**). See [Interface Scale](#interface-scale). |
+| `tabLayout` | `string` | `"horizontal"` | Since v0.34.0. `horizontal` or `vertical` editor tabs (**Settings → Appearance → General → Editor tabs → Tab layout**). Unknown values fall back to `horizontal`. |
+| `connectionColorBar` | `boolean` | `false` | Since v0.34.0. Show the active connection's color as a bar along the bottom of the window (**Settings → Appearance → General → Connection color**). |
 | `showWelcome` | `boolean` | `true` | Show the welcome screen at startup (Settings → General → Startup). |
 | `autoConnectLastConnection` | `boolean` | `true` | Reconnect to the connections that were open when the app was last closed (**Reopen Last Connections**). The app tracks them itself in `lastActiveConnectionId` and `lastOpenConnectionIds`. |
 | `startMaximized` | `boolean` | `false` | Open the main window maximized. |
